@@ -1,0 +1,4 @@
+*.idea
+
+cypress.json
+cypress.env.json
