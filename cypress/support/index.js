@@ -16,15 +16,25 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
-before(function () {
-    cy.mysql_db('structure'); //Cretes the initial database structure
+//Set base URL from the environment variable that was set
+Cypress.config("baseUrl", Cypress.env("baseUrl"));
+
+before(() => {
+    //Create the initial database structure
+    cy.mysql_db('structure');
 });
 
-beforeEach(function () {
-    cy.mysql_db('seeds'); //Seeds the database before each test
+beforeEach(() => {
+    //Clear out the cookies
+    cy.clearCookie('PHPSESSID');
+
+    //Set the Base URL in the REDCap Configuration Database
+    const base_url = 'BASE_URL/' + Cypress.env('baseUrl').replace('http://', 'http\\:\\\\/\\\\/');
+
+    //Seeds the database before each test
+    cy.mysql_db('seeds', base_url);
 });
 
 Cypress.on('uncaught:exception', (err, runnable) => {
     return false
 });
-

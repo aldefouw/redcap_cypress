@@ -30,7 +30,7 @@ Cypress.Commands.add("visit_v", (options) => {
     cy.visit('/redcap_v' + redcap_version + '/' + options['page'] + '?' + options['params'])
 });
 
-Cypress.Commands.add("mysql_db", (type) => {
+Cypress.Commands.add("mysql_db", (type, replace = '') => {
     const mysql = Cypress.env("mysql");
 
     const cmd = 'sh test_db/db.sh' +
@@ -40,7 +40,10 @@ Cypress.Commands.add("mysql_db", (type) => {
         ' ' + mysql['db_name'] +
         ' ' + mysql['db_user'] +
         ' ' + mysql['db_pass'] +
-        ' ' + type;
+        ' ' + type +
+        ' ' + replace;
+
+    console.log(cmd);
 
     cy.exec(cmd);
 });
