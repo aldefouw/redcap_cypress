@@ -30,12 +30,5 @@ describe('Login Page', function () {
         cy.contains('button', 'Log In').click();
         cy.contains('Listed below are the REDCap projects to which you currently have access.')
     });
-
-    it('navigates to Welcome page on successful login', function () {
-        cy.get('input#username').type(username);
-        cy.get('input#password').type(password);
-        cy.contains('button', 'Log In').click();
-        cy.contains('Listed below are the REDCap projects');
-    });
-
+    
 });
