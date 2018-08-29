@@ -2,3 +2,6 @@
 
 cypress.json
 cypress.env.json
+.DS_STORE
+
+*.tmp
