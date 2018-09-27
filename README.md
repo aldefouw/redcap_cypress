@@ -29,7 +29,7 @@ Even without this simple analysis, no one needs to tell you that manual testing 
 
 And maybe you enjoy that challenge.  
 
-Maybe you even find yourself enjoying time-intensive, tedious tasks in a hyper-consistent fashion.  If you find yourself in that category - please, feel free to ignore this entire repository, and continue on with manual testing.  
+Maybe you even find yourself enjoying time-intensive, tedious tasks in a hyper-consistent fashion.  If you find yourself in that camp - perhaps this repository isn't for you.  
 
 But for the rest of us, *there is a better way*. 
 
