@@ -59,7 +59,7 @@ Because the framework is not environment-dependent, **the tests you write today 
 
 The non-platform-dependent nature of Cypress tests also opens the door for consortium members to share tests with other members of the REDCap consortium.  
 
-### Sharing Your Tests
+## Sharing Your Tests
 
 Writing a comprehensive test suite for REDCap will not be accomplished by an individual.  The software is too large and there are too many corners to test.  
 
