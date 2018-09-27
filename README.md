@@ -17,12 +17,27 @@ The non-platform-dependent nature of Cypress tests also opens the door for conso
 
 ### Vision for Testing
 
-We all want to provide our end users with the latest and greatest version of REDCap, but we also want to mitigate the risks of upgrading.
+We all want to provide our end users with the latest and greatest version of REDCap.
 
-I believe that by writing a robust and comprehensive test suite, we can exercise, test, verify, and validate REDCap to the point where the risks posed by the software itself are very low.
+But this desire to promptly serve our customers the latest and greatest version of REDcap must be tempered by risk mitigation.
 
-The vision, and the impetus to create this template repository, is that I want to see a future for REDCap where the software is thoroughly and comprehensively tested with a robust, automated test suite that each institution can run by pushing a button.
+**The reason why is quite simple:**
+We live in the real world where our data is everything and we cannot afford data loss or inadvertant modification of data.  
 
+**So, the question is this:**
+How do we provide our customers and ourselves the assurance that upgrading our REDCap server or adding home-grown features and functionality via hooks, plugins, and modules will not break negatively impact data?
+
+I believe the answer is that we need a robust and comprehensive automated test suite. I've created this template to get us started.
+
+In such a test suite, we can exercise, test, verify, and validate REDCap to the point where the risks posed by upgrading are very low.  The same test suite can also be used to protect ourselves against problems we may inadvertantely introduce by writing our own custom code via hooks, plugins, or modules.
+
+In other words, tests written in this framework can be integration tests, regression tests, or a combination thereof - depending upon what risk you are trying to mitigate.
+
+The vision, and the impetus to create this template repository is simple: 
+
+*I want to see a future for REDCap where the software is thoroughly and comprehensively tested with a robust, automated test suite that each institution can run by pushing a button.*
+
+By creating something that is trivially easy to run, we can empower each institutution to upgrade and roll out new features with confidence that you simply cannot find through manual testing.
 
 ### Consortium Power
 
