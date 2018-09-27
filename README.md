@@ -18,7 +18,7 @@ This generally means we need to try to stay on pace with the latest and greatest
 
 The tough part is that asking the question is not enough.  *Until we perform some kind of test against an instance of REDCap, we do not know the answers to the above questions.*
 
-**To test these questions, in the past, we've had to do manual testing.**  And manual testing has served many of us very well.  But manual testing has some inherent challenges.
+**To answer these questions, in the past, we've had to do manual testing.**  And manual testing has served many of us very well.  But manual testing has some inherent challenges.
 
 ### Manual Testing Challenges
 1. **Time** - it takes a lot of time to test all features
