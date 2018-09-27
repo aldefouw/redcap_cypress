@@ -189,22 +189,34 @@ The JSON array that contains several keys, which are critical for your database 
 (See **Database Structure & Seeds** section for more information about how these work.)
 
 ### mysq['host'] ### 
-The hostname or IP address of your MySQL database host.  For most of us, this will likely be either `localhost` or `127.0.0.1`.  Keep in mind that there are subtle nuances between `localhost` and `127.0.0.1` so depending on your setup, you need to choose the option best suited to your environment.
+The hostname or IP address of your MySQL database host.  
+
+For many of us, this will likely be either `localhost` or `127.0.0.1`.  Keep in mind that there are subtle nuances between `localhost` and `127.0.0.1` so depending on your setup, you need to choose the option best suited to your environment.
 
 ### mysql['path'] ### 
-The path to your mysql binary.  For many of us, this will probably be `mysql`, but you could also use a full path like `/usr/local/opt/mysql@5.7/bin/mysql` if necessary.  If you are on a Unix-like environment, you can often determine your full path by entering `which mysql` at the terminal window.
+The path to your mysql binary.  
+
+For many of us, this will probably be `mysql`, but you could also use a full path like `/usr/local/opt/mysql@5.7/bin/mysql` if necessary.  If you are on a Unix-like environment, you can often determine your full path by entering `which mysql` at the terminal window.
 
 ### mysql['port'] ### 
-The port to your MySQL instance.  This is usually 3306 on standard setups, but for many of us running Docker instances we may wish to use an alternative port so we can differentiate between the standard MySQL instance that is installed on a local operating system and the Docker instance itself.
+The port to your MySQL instance.  
+
+This is usually 3306 on standard setups, but for many of us running Docker instances we may wish to use an alternative port so we can differentiate between the standard MySQL instance that is installed on a local operating system and the Docker instance itself.
 
 ### mysql['db_name'] ### 
-The name of your MySQL REDCap database.  This is typically `redcap` but not always.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
+The name of your MySQL REDCap database.  
+
+This is typically `redcap` but not always.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
 
  ### mysql['db_user'] ### 
-The username of your MySQL REDCap database user.  This is typically `root` on local instances of MySQL or local Docker containers.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
+The username of your MySQL REDCap database user.  
+
+This is typically `root` on local instances of MySQL or local Docker containers.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
 
 ### mysql['db_pass'] ### 
-The password of your MySQL REDCap database user.  This is typically `root` on local instances of MySQL or local Docker containers.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
+The password of your MySQL REDCap database user.  
+
+This is typically `root` on local instances of MySQL or local Docker containers.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
 
 
 ## Database Structure & Seeds
