@@ -242,7 +242,7 @@ To add your own custom seeds, you simply need to do two things.
 
 1. Add a custom `your_custom_seed_name_here.sql` file into the `/test_db/` folder.  
 
-2. Ensure that your custom SQL file is wrapper in a TRANSACTION and that is specifies the correct database.
+2. Ensure that your custom SQL file is wrapped in a TRANSACTION and that is specifies the correct database.
 
 To ensure it is using the correct database, please make sure to include the following line within your transaction code:
 
