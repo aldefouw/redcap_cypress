@@ -7,6 +7,7 @@ It is intended to serve as a starting point for writing your own integration and
 ## Why Test REDCap?
 
 As REDCap administrators, we all have a common goal: 
+
 *To provide our end users with the best user experience by providing the best REDCap has to offer.*
 
 This generally means we need to try to stay on pace with the latest and greatest REDCap versions.
