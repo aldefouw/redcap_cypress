@@ -101,8 +101,6 @@ Automating your REDCap testing basically requires two things:
 - A Test Environment
 - A Test Framework
 
-Descriptions follow below:
-
 ### Test Environment
 
 This is your test server, but it can be located anywhere.  It could be remote or local.  It could be Windows or Linux.  My assumption is that many running local Docker containers.
