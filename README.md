@@ -35,9 +35,9 @@ But for the rest of us, *there is a better way*.
 
 ## Automated Testing
 
-If you'd like to escape the challenges inherent to manual testing, automated testing is your answer.
+If you'd like to escape the challenges inherent to manual testing, **automated testing is your answer**.
 
-In fact, each one of the challenges with manual testing is either alleviated or solved by automated testing.
+In fact, *each one of the challenges with manual testing is either alleviated or solved by automated testing*.
 
 ### Automated Testing Benefits
 1. **Time** - automated tests are much faster than manual testing because a computer is performing the task and not a human
