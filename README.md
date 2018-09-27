@@ -302,4 +302,4 @@ Sometimes REDCap doesn't login the first time you run a test.  This means the te
 
 So far, I do not have a good explanation for why this is happening, but perhaps someone with more expertise  can explain why this is happening and/or propose a solution to eliminate this unwanted test behavior.
 
-Since the login functionality is pretty well-proven, I don't identify this as a high priority item to fix.  It's mostly just an annoyance.
+That said, since the login functionality is pretty well-proven, I don't identify this as a high priority item to fix.  It's mostly just an annoyance.
