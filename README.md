@@ -232,7 +232,9 @@ This is typically `root` on local instances of MySQL or local Docker containers.
 
 To create non-deterministic tests, we want to reset the database state before each individual test is run.
 
-To accomplish this, a file located at `/test_db/seeds.sql` is run via the `db.sh` shell script within the beforeEach() block.  The beforeEach() block is run exactly when you'd expect it to be: before each individual test spec.
+To accomplish this, a file located at `/test_db/seeds.sql` is run via the `db.sh` shell script within the `beforeEach()` block.  The `beforeEach()` block is run exactly when you'd expect it to be: before each individual test spec.
+
+Additionally, before the entire test suite (at the `before()` block), `/test_db/structure.sql` is run to establish the initial database structure behind REDCap.
 
 ### Adding A Custom Seed
 
