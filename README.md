@@ -48,15 +48,6 @@ In fact, *each one of the challenges with manual testing is either alleviated or
 
 Now automated testing is still going to take hard some work and ingenunity.  But once you're setup, things get much, much easier.
 
-## Consortium Power
-
->"None of Us is as good as All of Us." - Ray Kroc
-
-Writing a comprehensive test suite for REDCap will not be accomplished by an individual.  The software is too large and there are too many corners to test.  
-
-It will take the power of the entire consortium.  But the good news is that it's easy to share what we do contribute individually.  
-
----
 ## Why Cypress?
 **This template uses the Cypress framework**, a library which allows non-environment-dependent testing.  
 
@@ -68,8 +59,15 @@ Because the framework is not environment-dependent, **the tests you write today 
 
 The non-platform-dependent nature of Cypress tests also opens the door for consortium members to share tests with other members of the REDCap consortium.  
 
----
 ### Sharing Your Tests
+
+Writing a comprehensive test suite for REDCap will not be accomplished by an individual.  The software is too large and there are too many corners to test.  
+
+---
+>"None of Us is as good as All of Us." - Ray Kroc
+---
+
+It will take the power of the entire consortium.  But the good news is that it's easy to share what we do contribute individually.
 
 The GitHub open source software community provides us a platform to easily share our tests via forking.
 
