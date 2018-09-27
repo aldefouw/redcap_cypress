@@ -42,10 +42,9 @@ You can share the tests you have written with the rest of the consortium communi
 My hope is that someday we can create a "master" repository that includes integration tests from several authors, which will give everyone a huge head-start on testing their environment.
 
 
+## Writing Your Tests
 
-## Writing Tests
-
-This documentation will get you started on your journey to testing REDCap, but it will not cover how to write Cypress tests.  
+This documentation will help you configure your Cypress testing environment, but it will not cover how to write Cypress tests.  
 
 To give you a feel for how tests are written, however, below is a sample Login Spec.
 
@@ -95,15 +94,25 @@ For specific information about how to write JavaScript tests in Cypress, please 
 https://www.cypress.io/
 
 
-## What do I need to perform automated tests?
+## Getting Started
 
-Automating your REDCap testing basically requires two things:
+Automating testing of REDCap requires two things:
 - Test Environment
 - Test Framework
 
 ### Test Environment
 
-This is your test server, but it can be located anywhere.  It could be remote or local.  It could be Windows or Linux.  My assumption is that many running local Docker containers.
+What is the test environment?  Well, it's basically your test server that you run REDCap on.  
+
+It can be located anywhere: local or remote.  
+
+It can run in any environment: virtualized or dedicated.  
+
+It can run any OS you want: Linux or *insert your favorite OS here*.
+
+There are really only two requirements for your test environment:
+1. It must be running prior to starting the test suite
+2. It must be accessible through HTTP protocol via the test suite
 
 If your test environment is running and functional, this part is done.
 
@@ -118,20 +127,28 @@ If your test environment is running and functional, this part is done.
 
 This is the repository you're looking at.  You will write tests on your machine and then run them against your Test Environment.
 
+If you have a *Test Environment* running and you've cloned this repository (your *Test Framework*), you are now ready to *Tell your Cypress (your Test Framework) about your Test Environment*.
 
-## Tell Cypress about your Test Environment
+
+## Tell Cypress about Your Test Environment
 
 Configuring your environment is simultaneously the most crucial and difficult step to complete.  
 
-The configuration relies on configuring several environment variables.
+You will need to define several environment variables.
 
 ### Environment Variables
 
-Cypress will understand your environment only if you tell Cypress about it.  This is accomplished by an environment variable definition file.  You will need to set the variables in this file in order for your test suite to function.
+Cypress will understand your environment only if you describe it accurately.  
+
+Your descriptoin will live inside an environment variable definition file.  
+
+**You will need to set the variables in this file in order for your test suite to function.**
+
+Let's get started by creating a `cypress.env.json` file.
 
 ### cypress.env.json
 
-In the root of this repository, you will need to create `cypress.env.json`.  
+In the root of this repository, create a file named `cypress.env.json`.  
 
 To get you started, an example file named `cypress.env.json.example` is included.  
 
@@ -160,8 +177,41 @@ Here is an example environment variable setup:
       }
     }
 
+Let's dive into these configuration values that are shown in the example above.
 
-### Database Structure & Seeds
+***baseURL*** - 
+The base URL that Cypress will use to access your REDCap instance.
+
+***redcap_version*** - 
+The version of REDCap that you are testing against.  This is a critical value to set so that Cypress knows the correct URLs to use when testing.
+
+***mysql*** - 
+The JSON array that contains several keys that are critical for your structure and seeds to be populated correctly.  
+
+(See **Database Structure & Seeds** section for more information about how these work.)
+
+***mysq['host']*** - 
+The hostname or IP address of your MySQL database host.  For most of us, this will likely be either `localhost` or `127.0.0.1`.  Keep in mind that there are subtle nuances between localhost and 127.0.0.1 so depending on your setup, you need to choose the option best suited to your environment.
+
+***mysql['path']*** - 
+The path to your mysql binary.  For many of us, this will probably be `mysql`, but you could also use a full path like `/usr/local/opt/mysql@5.7/bin/mysql` if necessary.  
+
+***mysql['port']*** - 
+The port to your MySQL instance.  This is usually 3306 on standard setups, but for many of us running Docker instances we may wish to use an alternative port so we can differentiate between the standard MySQL instance that is installed on a local operating system and the Docker instance itself.
+
+***mysql['db_name']*** - 
+The name of your MySQL REDCap database.  This is typically `redcap` but not always.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
+
+***mysql['db_user']*** - 
+The username of your MySQL REDCap database user.  This is typically `root` on local instances of MySQL or local Docker containers.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
+
+***mysql['db_pass']*** - 
+The password of your MySQL REDCap database user.  This is typically `root` on local instances of MySQL or local Docker containers.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
+                  
+
+
+
+## Database Structure & Seeds
 
 To create non-deterministic tests, we want to reset the database state before each individual test is run.
 
