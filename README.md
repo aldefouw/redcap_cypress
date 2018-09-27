@@ -4,6 +4,48 @@ This repository is a template to assist you in writing **automated tests for RED
 
 It is intended to serve as a starting point for writing your own integration tests, which can be used to validate the features and functionality of your REDCap environment.
 
+---
+### Current State of Testing
+
+We all want to provide our end users with the best user experience and the latest and greatest version of REDCap.
+
+But how do we provide assurance that the latest and greatest version will function as expected and won't break any existing features?  How do we know that new features work as expected?
+
+Well, for most of us, it probably involves some manual testing, hopefully in a non-production environment.  In other words, you or someone else clicks through projects and features and make sure they're working as expected.
+
+But **manual testing takes a lot of time, it's tedious, and it isn't always that fruitful**.  
+
+Should we just skip it?
+
+---
+### Proposed State of Testing
+
+Skipping testing is one option, and that's where many of us have landed.  
+
+But I have a different vision for testing that will provide the benefits of manual testing without the pains.
+
+I believe the answer to our testing woes is that we need to establish a **robust and comprehensive automated test suite**. 
+
+In such a test suite, we can **exercise, test, verify, and validate REDCap** to the point where the risks posed by upgrading are very low.  The same test suite can also be used to **protect ourselves against problems we may inadvertantely introduce by writing our own custom code via hooks, plugins, or modules**.
+
+In other words, **tests written in this framework can be integration tests, regression tests, or a combination thereof** - depending upon what risk you are trying to mitigate.
+
+My vision for testing is one where **REDCap is thoroughly and comprehensively tested with a robust, automated test suite** that **each institution can run by simply pushing a button on their computer**.
+
+By creating something that is trivially easy to run, we can empower each institutution to upgrade and roll out new features with confidence that you simply cannot find through manual testing.
+
+
+---
+### Consortium Power
+
+>"None of Us is as good as All of Us." - Ray Kroc
+
+Writing a comprehensive test suite for REDCap will not be accomplished by an individual.  The software is too large and there are too many corners to test.  
+
+It will take the power of the entire consortium.  But the good news is that it's easy to share what we do contribute individually.  
+
+---
+### Why Cypress?
 **This template uses the Cypress framework**, a library which allows non-environment-dependent testing.  
 
 **The choice to use Cypress for testing REDCap was strategic.**  
@@ -14,39 +56,7 @@ Because the framework is not environment-dependent, **the tests you write today 
 
 The non-platform-dependent nature of Cypress tests also opens the door for consortium members to share tests with other members of the REDCap consortium.  
 
-### Current State of Testing
-
-We all want to provide our end users with the best user experience and the latest and greatest version of REDCap.
-
-But how do we provide assurance that the latest and greatest version will function as expected and won't break any existing features?  How do we know that new features work as expected?
-
-Well, for most of us, it probably involves some manual testing, hopefully in a non-production environment.  In other words, you or someone else clicks through projects and features and make sure they're working as expected.
-
-But manual testing takes a lot of time, it's tedious, and it isn't always that fruitful.  Should we just skip it?
-
-### Proposed State of Testing
-
-Skipping testing is one option, and that's where many of us have landed.  But I have a different vision for testing that won't be so incredibly painful.
-
-I believe the answer to the pains of manual testing is that we need to establish a robust and comprehensive automated test suite. 
-
-In such a test suite, we can exercise, test, verify, and validate REDCap to the point where the risks posed by upgrading are very low.  The same test suite can also be used to protect ourselves against problems we may inadvertantely introduce by writing our own custom code via hooks, plugins, or modules.
-
-**In other words, tests written in this framework can be integration tests, regression tests, or a combination thereof - depending upon what risk you are trying to mitigate.**
-
-My vision for testing is a place where REDCap is thoroughly and comprehensively tested with a robust, automated test suite that each institution can run by simply pushing a button on their computer.*
-
-By creating something that is trivially easy to run, we can empower each institutution to upgrade and roll out new features with confidence that you simply cannot find through manual testing.
-
-### Consortium Power
-
->"None of Us is as good as All of Us." - Ray Kroc
-
-Writing a comprehensive test suite for REDCap will not be accomplished by an individual.  The software is too large and there are too many corners to test.  
-
-It will take the power of the entire consortium.  But the good news is that it's easy to share what we do contribute individually.  
-
-
+---
 ### Sharing Your Tests
 
 The GitHub open source software community provides us a platform to easily share our tests via forking.
