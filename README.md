@@ -98,23 +98,25 @@ https://www.cypress.io/
 ## What do I need to perform automated tests?
 
 Automating your REDCap testing basically requires two things:
+- A Test Environment
+- A Test Framework
 
-1. A Test Environment
+Descriptions follow below:
+
+### Test Environment
 
 This is your test server, but it can be located anywhere.  It could be remote or local.  It could be Windows or Linux.  My assumption is that many running local Docker containers.
 
 If your test environment is running and functional, this part is done.
 
 **Caution:**
-Although the Cypress test framework can test against any server through HTTP protocol, please do NOT use your production server as your test environment.  You might think the best way to test your REDcap instance is to test against your actual server that people store data on.  That simply isn't the case.
+*Although the Cypress test framework can test against any server through HTTP protocol, **please do NOT use your production server as your test environment**.  You might think the best way to test your REDcap instance is to test against your actual server that people store data on.  That simply isn't the case.*
 
-The best way to test your REDCap instance is to configure an environment identical to production somewhere else.  An easy way to do this is through Docker.  That said, configuring your environment is outside the scope of this document.
+*The best way to test your REDCap instance is to configure an environment identical to production somewhere else.  An easy way to do this is through Docker.  That said, configuring your environment is outside the scope of this document.*
 
-The best test suites reset database state between each test spec.  This test suite resets database state between tests. 
+*The best test suites reset database state between each test spec.  This test suite resets database state between tests. That isn't something you should ever do against production!*
 
-That isn't something you should ever do against production!
-
-2. A Test Framework 
+### A Test Framework 
 
 This is the repository you're looking at.  You will write tests on your machine and then run them against your Test Environment.
 
