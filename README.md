@@ -98,8 +98,8 @@ https://www.cypress.io/
 ## What do I need to perform automated tests?
 
 Automating your REDCap testing basically requires two things:
-- A Test Environment
-- A Test Framework
+- Test Environment
+- Test Framework
 
 ### Test Environment
 
@@ -114,7 +114,7 @@ If your test environment is running and functional, this part is done.
 
 *The best test suites reset database state between each test spec.  This test suite resets database state between tests. That isn't something you should ever do against production!*
 
-### A Test Framework 
+### Test Framework 
 
 This is the repository you're looking at.  You will write tests on your machine and then run them against your Test Environment.
 
