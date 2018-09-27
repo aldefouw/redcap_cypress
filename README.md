@@ -45,24 +45,87 @@ My hope is that someday we can create a "master" repository that includes integr
 
 This documentation will get you started on your journey to testing REDCap, but it will not cover how to write Cypress tests.  
 
-If you are looking for examples of how to write tests, two sample test specs are included in the following folder:
+To give you a feel for how tests are written, however, below is a sample Login Spec.
 
+##### Login Spec
+
+
+            describe('Login Page', function () {
+
+                const users = Cypress.env("users");
+                const username = users['standard']['user'];
+                const password = users['standard']['pass'];
+
+                beforeEach(function () {
+                    cy.visit('/')
+                });
+
+                it('sets auth cookie when logging in via form submission', function () {
+                    cy.get('input#username').type(username);
+                    cy.get('input#password').type(`${password}{enter}`);
+                    cy.getCookie('PHPSESSID').should('exist');
+                });
+
+                it('requires a username', function () {
+                    cy.get('input#password').type(`${password}{enter}`);
+                    cy.contains('ERROR: You entered an invalid user name or password!');
+                });
+
+                it('requires a password', function () {
+                    cy.get('input#username').type(`${username}{enter}`);
+                    cy.contains('ERROR: You entered an invalid user name or password!');
+                });
+
+                it('requires a valid username and password', function () {
+                    cy.get('input#username').type(username);
+                    cy.get('input#password').type(password);
+                    cy.contains('button', 'Log In').click();
+                    cy.contains('Listed below are the REDCap projects to which you currently have access.')
+                });
+
+            });
+
+
+If you are looking for examples of how to write tests, the sample specs are included in the following folder:
 `/cypress/integration/`
 
 For specific information about how to write JavaScript tests in Cypress, please visit their website:
 https://www.cypress.io/
 
 
+## What do I need to perform automated tests?
 
-## Configuring Your Environment
+Automating your REDCap testing basically requires two things:
+
+1. A Test Environment
+
+This is your test server, but it can be located anywhere.  It could be remote or local.  It could be Windows or Linux.  My assumption is that many running local Docker containers.
+
+If your test environment is running and functional, this part is done.
+
+**Caution:**
+Although the Cypress test framework can test against any server through HTTP protocol, please do NOT use your production server as your test environment.  You might think the best way to test your REDcap instance is to test against your actual server that people store data on.  That simply isn't the case.
+
+The best way to test your REDCap instance is to configure an environment identical to production somewhere else.  An easy way to do this is through Docker.  That said, configuring your environment is outside the scope of this document.
+
+The best test suites reset database state between each test spec.  This test suite resets database state between tests. 
+
+That isn't something you should ever do against production!
+
+2. A Test Framework 
+
+This is the repository you're looking at.  You will write tests on your machine and then run them against your Test Environment.
+
+
+## Tell Cypress about your Test Environment
 
 Configuring your environment is simultaneously the most crucial and difficult step to complete.  
 
-Because this framework is flexible enough to test against any enviroment, several environment variables are necessary to tell the framework where servers are located, what ports they're located on, and what users you'd like to use.
+The configuration relies on configuring several environment variables.
 
 ### Environment Variables
 
-The template has been written to incorporate environment variables to allow any REDCap consortium member to test against their specific test environment.  This is accomplished by creating an environment variable definition file.
+Cypress will understand your environment only if you tell Cypress about it.  This is accomplished by an environment variable definition file.  You will need to set the variables in this file in order for your test suite to function.
 
 ### cypress.env.json
 
@@ -110,7 +173,13 @@ To add your own custom seeds, you simply need to do two things.
 
 1. Add a custom `your_custom_seed_name_here.sql` file into the `/test_db/` folder.  
 
-2. Reference that file in the beforeEach() block within the `/support/index.js` file.
+2. Ensure that your custom SQL file is wrapper in a TRANSACTION and that is specifies the correct database.
+
+To ensure it is using the correct database, please make sure to include the following line within your transaction code:
+
+        USE `REDCAP_DB_NAME`;
+
+3. Reference that file in the beforeEach() block within the `/support/index.js` file.
 
 For example:
 
