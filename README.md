@@ -240,7 +240,9 @@ Before the entire test suite runs (at the `before()` block), `/test_db/structure
 ### Population of REDCap Seed Data
 To create non-deterministic tests, we want to reset the database state before each individual test is run.
 
-Before each individual test spec is run, a file located at `/test_db/seeds.sql` is run via the `db.sh` shell script within the `beforeEach()` block.  The seeds populate some important data to establish an initial configuration for REDCap.  The seeds file I'm bundling in this template repository includes a both an admin user and a standard user.  
+Before each individual test spec is run, a file located at `/test_db/seeds.sql` is run via the `db.sh` shell script within the `beforeEach()` block.  The seeds populate some important data to establish an initial configuration for REDCap.  
+
+*The seeds file I'm bundling in this template repository includes a both an **admin user** and a **standard user.***  Which user you will user to login to REDCap is dependent upon what kind of feature you are intending to test.
 
 ### Adding A Custom Seed
 
