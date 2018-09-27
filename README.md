@@ -219,6 +219,14 @@ Let's dive into these configuration values that are shown in the example above.
 The base URL that Cypress will use to access your REDCap instance.
 
 ---
+### users ###
+The JSON array that contains the users who are seeded in the `seeds.sql` file.  
+
+Each user key contains a username (user) and password (pass).  
+
+You can login with an admin user versus a standard user depending on what functionality you are trying to test.
+
+---
 ### redcap_version ###
 The version of REDCap that you are testing against.  This is a critical value to set so that Cypress knows the correct URLs to use when testing.
 
