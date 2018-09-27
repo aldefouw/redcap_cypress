@@ -20,10 +20,12 @@ The tough part is that asking the question is not enough.  *Until we perform som
 
 **To answer these questions, in the past, we've had to do manual testing.**  And manual testing has served many of us very well.  But manual testing has some inherent challenges.
 
+---
 ### Manual Testing Challenges
 1. **Time** - it takes a lot of time to test all features
 2. **Tediousness** - it is extremely tedious to click through the application
 3. **Consistency** - it is hard to test everything in a consistent way each time
+---
 
 Even without this simple analysis, no one needs to tell you that manual testing is pretty hard.
 
@@ -39,10 +41,12 @@ If you'd like to escape the challenges inherent to manual testing, **automated t
 
 In fact, *each one of the challenges with manual testing is either alleviated or solved by automated testing*.
 
+---
 ### Automated Testing Benefits
 1. **Time** - automated tests are much faster than manual testing because a computer is performing the task and not a human
 2. **Tediousness** - automated tests are run by computers, which are built to do tedious work that humans dislike
 3. **Consistency** - automated tests run the same way, each and every time
+---
 
 **Automated tests leverage what computers are good at to eliminate the problems of time, tediousness, and consistency associated with manual testing.**
 
