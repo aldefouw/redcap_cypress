@@ -87,7 +87,7 @@ To give you a feel for how tests are written, however, below is a sample Login S
             });
 
 
-If you are looking for examples of how to write tests, the sample specs are included in the following folder:
+If you are looking for examples of how to write tests, the sample specs are included in the following folder (within this repository):
 `/cypress/integration/`
 
 For specific information about how to write JavaScript tests in Cypress, please visit their website:
