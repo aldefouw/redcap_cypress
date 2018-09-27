@@ -15,7 +15,7 @@ Because the framework is not environment-dependent, **the tests you write today 
 The non-platform-dependent nature of Cypress tests also opens the door for consortium members to share tests with other members of the REDCap consortium.  
 
 
-## Vision for Testing
+### Vision for Testing
 
 We all want to provide our end users with the latest and greatest version of REDCap, but we also want to mitigate the risks of upgrading.
 
@@ -24,7 +24,7 @@ I believe that by writing a robust and comprehensive test suite, we can exercise
 The vision, and the impetus to create this template repository, is that I want to see a future for REDCap where the software is thoroughly and comprehensively tested with a robust, automated test suite that each institution can run by pushing a button.
 
 
-## Consortium Power
+### Consortium Power
 
 >"None of Us is as good as All of Us." - Ray Kroc
 
@@ -33,7 +33,7 @@ Writing a comprehensive test suite for REDCap will not be accomplished by an ind
 It will take the power of the entire consortium.  But the good news is that it's easy to share what we do contribute individually.  
 
 
-## Sharing Your Tests
+### Sharing Your Tests
 
 The GitHub open source software community provides us a platform to easily share our tests via forking.
 
@@ -177,48 +177,57 @@ Here is an example environment variable setup:
 
 Let's dive into these configuration values that are shown in the example above.
 
+---
 ### baseURL ### 
 The base URL that Cypress will use to access your REDCap instance.
 
+---
 ### redcap_version ###
 The version of REDCap that you are testing against.  This is a critical value to set so that Cypress knows the correct URLs to use when testing.
 
+---
 ### mysql ### 
 The JSON array that contains several keys, which are critical for your database structure and seeds to be populated correctly before each and every test spec.  
 
 (See **Database Structure & Seeds** section for more information about how these work.)
 
+---
 ### mysq['host'] ### 
 The hostname or IP address of your MySQL database host.  
 
 For many of us, this will likely be either `localhost` or `127.0.0.1`.  Keep in mind that there are subtle nuances between `localhost` and `127.0.0.1` so depending on your setup, you need to choose the option best suited to your environment.
 
+---
 ### mysql['path'] ### 
 The path to your mysql binary.  
 
 For many of us, this will probably be `mysql`, but you could also use a full path like `/usr/local/opt/mysql@5.7/bin/mysql` if necessary.  If you are on a Unix-like environment, you can often determine your full path by entering `which mysql` at the terminal window.
 
+---
 ### mysql['port'] ### 
 The port to your MySQL instance.  
 
 This is usually 3306 on standard setups, but for many of us running Docker instances we may wish to use an alternative port so we can differentiate between the standard MySQL instance that is installed on a local operating system and the Docker instance itself.
 
+---
 ### mysql['db_name'] ### 
 The name of your MySQL REDCap database.  
 
 This is typically `redcap` but not always.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
 
- ### mysql['db_user'] ### 
+---
+### mysql['db_user'] ### 
 The username of your MySQL REDCap database user.  
 
 This is typically `root` on local instances of MySQL or local Docker containers.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
 
+---
 ### mysql['db_pass'] ### 
 The password of your MySQL REDCap database user.  
 
 This is typically `root` on local instances of MySQL or local Docker containers.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
 
-
+---
 ## Database Structure & Seeds
 
 To create non-deterministic tests, we want to reset the database state before each individual test is run.
@@ -269,5 +278,28 @@ For example:
 
       ....
 
+### Known Limitations and Areas for Improvement
 
+This Test Framework template is a good start, but there are some known areas that could be improved.
 
+---
+### Database shell script incompatible with native Windows environments
+
+*Configuring and resetting your database on a Windows environment is not possible at this time.*
+
+I am positive that this functionality is possible if someone is willing to write a script simliar to the `/test_db/db.sh` file I have already provided for Unix-environments.
+
+Since I do not work in a Windows environment, I have not found it worth my while to write such a script for an environment I am not an expert in.
+
+If you are interested in writing this functionality, please fork this repository, write code to fix the problem, and send a pull-request.  
+
+I will likely need to add another environment variable to the base setup file so the framework knows which shell script to run (based upon your specified environment).
+
+---
+### Unpredictable login behavior
+
+Sometimes REDCap doesn't login the first time you run a test.  This means the test spec will probably fail the first time you run it, which is technically a non-deterministic test (a bad thing that I am trying to avoid).
+
+So far, I do not have a good explanation for why this is happening, but perhaps someone with more expertise  can explain why this is happening and/or propose a solution to eliminate this unwanted test behavior.
+
+Since the login functionality is pretty well-proven, I don't identify this as a high priority item to fix.  It's mostly just an annoyance.
