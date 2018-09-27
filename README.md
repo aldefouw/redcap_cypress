@@ -174,7 +174,7 @@ You will need to define several environment variables.
 
 Cypress will understand your environment only if you describe it accurately.  
 
-Your descriptoin will live inside an environment variable definition file.  
+Your description will live inside an environment variable definition file.  
 
 **You will need to set the variables in this file in order for your test suite to function.**
 
