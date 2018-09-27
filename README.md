@@ -23,7 +23,7 @@ The tough part is that asking the question is not enough.  *Until we perform som
 ### Manual Testing Challenges
 1. **Time** - it takes a lot of time to test all features
 2. **Tediousness** - it is extremely tedious to click through the application
-3. **Consistency** - it is hard to test everything in a consitent way each time
+3. **Consistency** - it is hard to test everything in a consistent way each time
 
 Even without this simple analysis, no one needs to tell you that manual testing is pretty hard.
 
