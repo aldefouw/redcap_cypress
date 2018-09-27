@@ -43,7 +43,7 @@ My hope is that someday we can create a "master" repository that includes integr
 
 
 
-## Scope of Documentation
+## Writing Tests
 
 This documentation will get you started on your journey to testing REDCap, but it will not cover how to write Cypress tests.  
 
