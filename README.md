@@ -230,11 +230,17 @@ This is typically `root` on local instances of MySQL or local Docker containers.
 ---
 ## Database Structure & Seeds
 
+Database configuration happens in two phases:
+1. Configuration of REDCap Structure
+2. Population of REDCap Seed Data
+
+### Configuration of REDCap Structure
+Before the entire test suite runs (at the `before()` block), `/test_db/structure.sql` is run via the `db.sh` shell script to establish the initial database structure behind REDCap.
+
+### Population of REDCap Seed Data
 To create non-deterministic tests, we want to reset the database state before each individual test is run.
 
-To accomplish this, a file located at `/test_db/seeds.sql` is run via the `db.sh` shell script within the `beforeEach()` block.  The `beforeEach()` block is run exactly when you'd expect it to be: before each individual test spec.
-
-Additionally, before the entire test suite (at the `before()` block), `/test_db/structure.sql` is run to establish the initial database structure behind REDCap.
+Before each individual test spec is run, a file located at `/test_db/seeds.sql` is run via the `db.sh` shell script within the `beforeEach()` block.  The seeds populate some important data to establish an initial configuration for REDCap.  The seeds file I'm bundling in this template repository includes a both an admin user and a standard user.  
 
 ### Adding A Custom Seed
 
