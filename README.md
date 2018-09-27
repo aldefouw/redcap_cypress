@@ -134,6 +134,7 @@ Automating testing of REDCap requires two things:
 - Test Environment
 - Test Framework
 
+---
 ### Test Environment
 
 What is the test environment?  Well, it's basically your test server that you run REDCap on.  
@@ -148,19 +149,21 @@ There are really only **two requirements for your Test Environment**:
 
 If your test environment is running and functional, this part is done.
 
-**Caution:**
+### CAUTION:
 *Although the Cypress test framework can test against any server through HTTP protocol, **please do NOT use your production server as your test environment**.  You might think the best way to test your REDCap instance is to test against your actual server that people store data on.  That simply isn't the case.*
 
 *The best test suites reset database state between each test spec.  This test suite resets database state between tests. That isn't something you should ever do against production!*
 
 *The best way to test your REDCap instance is to configure an environment identical to production somewhere else.  An easy way to do this is through Docker.  That said, configuring your environment is outside the scope of this document.*
 
+---
 ### Test Framework 
 
 This is the repository you're looking at.  You will write tests on your machine and then run them against your Test Environment.
 
 If you have a **Test Environment** running and you've cloned this repository (your **Test Framework**), you are now ready to **Tell your Test Framework about your Test Environment**.
 
+---
 
 ## Tell your Test Framework about your Test Environment
 
@@ -322,7 +325,7 @@ For example:
 
       ....
 
-### Known Limitations and Areas for Improvement
+## Known Limitations and Areas for Improvement
 
 This Test Framework template is a good start, but there are some known areas that could be improved.
 
