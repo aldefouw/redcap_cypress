@@ -192,7 +192,7 @@ The JSON array that contains several keys, which are critical for your database 
 The hostname or IP address of your MySQL database host.  For most of us, this will likely be either `localhost` or `127.0.0.1`.  Keep in mind that there are subtle nuances between `localhost` and `127.0.0.1` so depending on your setup, you need to choose the option best suited to your environment.
 
 ### mysql['path'] ### 
-The path to your mysql binary.  For many of us, this will probably be `mysql`, but you could also use a full path like `/usr/local/opt/mysql@5.7/bin/mysql` if necessary.  
+The path to your mysql binary.  For many of us, this will probably be `mysql`, but you could also use a full path like `/usr/local/opt/mysql@5.7/bin/mysql` if necessary.  If you are on a Unix-like environment, you can often determine your full path by entering `which mysql` at the terminal window.
 
 ### mysql['port'] ### 
 The port to your MySQL instance.  This is usually 3306 on standard setups, but for many of us running Docker instances we may wish to use an alternative port so we can differentiate between the standard MySQL instance that is installed on a local operating system and the Docker instance itself.
