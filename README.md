@@ -189,7 +189,7 @@ The JSON array that contains several keys, which are critical for your database 
 (See **Database Structure & Seeds** section for more information about how these work.)
 
 ### mysq['host'] ### 
-The hostname or IP address of your MySQL database host.  For most of us, this will likely be either `localhost` or `127.0.0.1`.  Keep in mind that there are subtle nuances between localhost and 127.0.0.1 so depending on your setup, you need to choose the option best suited to your environment.
+The hostname or IP address of your MySQL database host.  For most of us, this will likely be either `localhost` or `127.0.0.1`.  Keep in mind that there are subtle nuances between `localhost` and `127.0.0.1` so depending on your setup, you need to choose the option best suited to your environment.
 
 ### mysql['path'] ### 
 The path to your mysql binary.  For many of us, this will probably be `mysql`, but you could also use a full path like `/usr/local/opt/mysql@5.7/bin/mysql` if necessary.  
