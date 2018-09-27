@@ -4,7 +4,7 @@ This repository is a template to assist you in writing **automated tests for RED
 
 It is intended to serve as a starting point for writing your own integration and regression tests, which can be used to validate the features and functionality of your REDCap environment.
 
-### Why Test REDCap?
+## Why Test REDCap?
 
 As REDCap administrators, we all have a common goal: 
 *To provide our end users with the best user experience by providing the best REDCap has to offer.*
@@ -17,26 +17,26 @@ This generally means we need to try to stay on pace with the latest and greatest
 
 The tough part is that asking the question is not enough.  *Until we perform some kind of test against an instance of REDCap, we do not know the answers to the above questions.*
 
-**To test these questions, in the past, we've had to do manual testing.**  And manual testing has served many of us very well.
-
-But manual testing has some inherent problems:
-
+**To test these questions, in the past, we've had to do manual testing.**  And manual testing has served many of us very well.  But manual testing has some inherent problems.
 
 ### Manual Testing Challenges
 1. **Time** - it takes a lot of time to test all of the features
 2. **Tediousness** - it is extremely tedious to click through the application
 3. **Consistency** - it is hard to test everything in a consitent way each time
 
+Even without this simple analysis, no one needs to tell you that manual testing is pretty hard.
 
-Thus, if you find yourself enjoying time-intensive, tedious tasks and you're hyper-consistent at performing those tasks manually - feel free to ignore this entire repository, and continue on with manual testing.  
+And maybe you enjoy that challenge.  
+
+Maybe you even find yourself enjoying time-intensive, tedious tasks in a hyper-consistent fashion.  If you find yourself in that category - please, feel free to ignore this entire repository, and continue on with manual testing.  
 
 But for the rest of us, *there is a better way*. 
 
-### Automated Testing
+## Automated Testing
 
 If you'd like to escape the problems inherent to manual testing, automated testing is your answer.
 
-Each one of the problems with manual testing is either alleviated or solved by automated testing.
+In fact, each one of the problems with manual testing is either alleviated or solved by automated testing.
 
 ### Automated Testing Benefits
 1. **Time** - automated tests are much faster than manual testing because a computer is performing the task and not a human
@@ -45,6 +45,7 @@ Each one of the problems with manual testing is either alleviated or solved by a
 
 **Automated tests leverage what computers are good at to eliminate the problems of time, tediousness, and consistency associated with manual testing.**
 
+Now automated testing is still going to take hard some work and ingenunity.  But once you're setup, things get much, much easier.
 
 ## Consortium Power
 
@@ -55,7 +56,7 @@ Writing a comprehensive test suite for REDCap will not be accomplished by an ind
 It will take the power of the entire consortium.  But the good news is that it's easy to share what we do contribute individually.  
 
 ---
-### Why Cypress?
+## Why Cypress?
 **This template uses the Cypress framework**, a library which allows non-environment-dependent testing.  
 
 **The choice to use Cypress for testing REDCap was strategic.**  
