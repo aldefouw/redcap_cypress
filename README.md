@@ -2,41 +2,51 @@
 
 This repository is a template to assist you in writing **automated tests for REDCap**.  
 
-It is intended to serve as a starting point for writing your own integration tests, which can be used to validate the features and functionality of your REDCap environment.
+It is intended to serve as a starting point for writing your own integration and regression tests, which can be used to validate the features and functionality of your REDCap environment.
 
----
-### Current State of Testing
+### Why Test REDCap?
 
-We all want to provide our end users with the best user experience and the latest and greatest version of REDCap.
+As REDCap administrators, we all have a common goal: 
+*To provide our end users with the best user experience by providing the best REDCap has to offer.*
 
-But how do we provide assurance that the latest and greatest version will function as expected and won't break any existing features?  How do we know that new features work as expected?
+This generally means we need to try to stay on pace with the latest and greatest REDCap versions.
 
-Well, for most of us, it probably involves some manual testing, hopefully in a non-production environment.  In other words, you or someone else clicks through projects and features and make sure they're working as expected.
+**But, to reach that goal, we must ask ourselves question like this:**
+- *Will the latest and greatest REDCap version function as expected?*
+- *Will the latest and greatest REDCap version break our existing hooks, plugins, and modules?*
 
-But **manual testing takes a lot of time, it's tedious, and it isn't always that fruitful**.  
+The tough part is that asking the question is not enough.  *Until we perform some kind of test against an instance of REDCap, we do not know the answers to the above questions.*
 
-Should we just skip it?
+**To test these questions, in the past, we've had to do manual testing.**  And manual testing has served many of us very well.
 
----
-### Proposed State of Testing
-
-Skipping testing is one option, and that's where many of us have landed.  
-
-But I have a different vision for testing that will provide the benefits of manual testing without the pains.
-
-I believe the answer to our testing woes is that we need to establish a **robust and comprehensive automated test suite**. 
-
-In such a test suite, we can **exercise, test, verify, and validate REDCap** to the point where the risks posed by upgrading are very low.  The same test suite can also be used to **protect ourselves against problems we may inadvertantely introduce by writing our own custom code via hooks, plugins, or modules**.
-
-In other words, **tests written in this framework can be integration tests, regression tests, or a combination thereof** - depending upon what risk you are trying to mitigate.
-
-My vision for testing is one where **REDCap is thoroughly and comprehensively tested with a robust, automated test suite** that **each institution can run by simply pushing a button on their computer**.
-
-By creating something that is trivially easy to run, we can empower each institutution to upgrade and roll out new features with confidence that you simply cannot find through manual testing.
+But manual testing has some inherent problems:
 
 
----
-### Consortium Power
+### Manual Testing Challenges
+1. **Time** - it takes a lot of time to test all of the features
+2. **Tediousness** - it is extremely tedious to click through the application
+3. **Consistency** - it is hard to test everything in a consitent way each time
+
+
+Thus, if you find yourself enjoying time-intensive, tedious tasks and you're hyper-consistent at performing those tasks manually - feel free to ignore this entire repository, and continue on with manual testing.  
+
+But for the rest of us, *there is a better way*. 
+
+### Automated Testing
+
+If you'd like to escape the problems inherent to manual testing, automated testing is your answer.
+
+Each one of the problems with manual testing is either alleviated or solved by automated testing.
+
+### Automated Testing Benefits
+1. **Time** - automated tests are much faster than manual testing because a computer is performing the task and not a human
+2. **Tediousness** - automated tests are run by computers, which are built to do tedious work that humans dislike
+3. **Consistency** - automated tests run the same way, each and every time
+
+**Automated tests leverage what computers are good at to eliminate the problems of time, tediousness, and consistency associated with manual testing.**
+
+
+## Consortium Power
 
 >"None of Us is as good as All of Us." - Ray Kroc
 
