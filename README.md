@@ -6,7 +6,9 @@ It is intended to serve as a starting point for writing your own integration tes
 
 **This template uses the Cypress framework**, a library which allows non-environment-dependent testing.  
 
-**The choice to use Cypress for testing REDCap was strategic.**  Because the framework is not environment-dependent, **the tests you write today will still be relevant down the road** - even if you change your server infrastructure down the road.  
+**The choice to use Cypress for testing REDCap was strategic.**  
+
+Because the framework is not environment-dependent, **the tests you write today will still be relevant down the road** - even if you change your server infrastructure down the road.  
 
 *You could change from Windows to Linux or vice versa and your tests won't need to change.*
 
