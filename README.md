@@ -104,20 +104,18 @@ Automating testing of REDCap requires two things:
 
 What is the test environment?  Well, it's basically your test server that you run REDCap on.  
 
-It can be located anywhere: local or remote.  
+- **It can be located anywhere:** *local or remote*.  
+- **It can run in any environment:** *virtualized or dedicated*.  
+- **It can run any OS you want:** *Linux or insert your favorite OS here*.
 
-It can run in any environment: virtualized or dedicated.  
-
-It can run any OS you want: Linux or *insert your favorite OS here*.
-
-There are really only two requirements for your test environment:
-1. It must be running prior to starting the test suite
-2. It must be accessible through HTTP protocol via the test suite
+There are really only **two requirements for your Test Environment**:
+1. *It must be running prior to starting the test suite*
+2. *It must be accessible through HTTP protocol via the test suite*
 
 If your test environment is running and functional, this part is done.
 
 **Caution:**
-*Although the Cypress test framework can test against any server through HTTP protocol, **please do NOT use your production server as your test environment**.  You might think the best way to test your REDcap instance is to test against your actual server that people store data on.  That simply isn't the case.*
+*Although the Cypress test framework can test against any server through HTTP protocol, **please do NOT use your production server as your test environment**.  You might think the best way to test your REDCap instance is to test against your actual server that people store data on.  That simply isn't the case.*
 
 *The best way to test your REDCap instance is to configure an environment identical to production somewhere else.  An easy way to do this is through Docker.  That said, configuring your environment is outside the scope of this document.*
 
@@ -127,10 +125,10 @@ If your test environment is running and functional, this part is done.
 
 This is the repository you're looking at.  You will write tests on your machine and then run them against your Test Environment.
 
-If you have a *Test Environment* running and you've cloned this repository (your *Test Framework*), you are now ready to *Tell your Cypress (your Test Framework) about your Test Environment*.
+If you have a **Test Environment** running and you've cloned this repository (your **Test Framework**), you are now ready to **Tell your Test Framework about your Test Environment**.
 
 
-## Tell Cypress about Your Test Environment
+## Tell your Test Framework about your Test Environment
 
 Configuring your environment is simultaneously the most crucial and difficult step to complete.  
 
@@ -150,7 +148,7 @@ Let's get started by creating a `cypress.env.json` file.
 
 In the root of this repository, create a file named `cypress.env.json`.  
 
-To get you started, an example file named `cypress.env.json.example` is included.  
+To get you started, an example file named `cypress.env.json.example` is included within this repository.  
 
 Here is an example environment variable setup:
 
@@ -179,36 +177,34 @@ Here is an example environment variable setup:
 
 Let's dive into these configuration values that are shown in the example above.
 
-***baseURL*** - 
+### baseURL ### 
 The base URL that Cypress will use to access your REDCap instance.
 
-***redcap_version*** - 
+### redcap_version ###
 The version of REDCap that you are testing against.  This is a critical value to set so that Cypress knows the correct URLs to use when testing.
 
-***mysql*** - 
-The JSON array that contains several keys that are critical for your structure and seeds to be populated correctly.  
+### mysql ### 
+The JSON array that contains several keys, which are critical for your database structure and seeds to be populated correctly before each and every test spec.  
 
 (See **Database Structure & Seeds** section for more information about how these work.)
 
-***mysq['host']*** - 
+### mysq['host'] ### 
 The hostname or IP address of your MySQL database host.  For most of us, this will likely be either `localhost` or `127.0.0.1`.  Keep in mind that there are subtle nuances between localhost and 127.0.0.1 so depending on your setup, you need to choose the option best suited to your environment.
 
-***mysql['path']*** - 
+### mysql['path'] ### 
 The path to your mysql binary.  For many of us, this will probably be `mysql`, but you could also use a full path like `/usr/local/opt/mysql@5.7/bin/mysql` if necessary.  
 
-***mysql['port']*** - 
+### mysql['port'] ### 
 The port to your MySQL instance.  This is usually 3306 on standard setups, but for many of us running Docker instances we may wish to use an alternative port so we can differentiate between the standard MySQL instance that is installed on a local operating system and the Docker instance itself.
 
-***mysql['db_name']*** - 
+### mysql['db_name'] ### 
 The name of your MySQL REDCap database.  This is typically `redcap` but not always.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
 
-***mysql['db_user']*** - 
+ ### mysql['db_user'] ### 
 The username of your MySQL REDCap database user.  This is typically `root` on local instances of MySQL or local Docker containers.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
 
-***mysql['db_pass']*** - 
+### mysql['db_pass'] ### 
 The password of your MySQL REDCap database user.  This is typically `root` on local instances of MySQL or local Docker containers.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
-                  
-
 
 
 ## Database Structure & Seeds
