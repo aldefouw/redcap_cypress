@@ -69,11 +69,11 @@ The non-platform-dependent nature of Cypress tests also opens the door for conso
 
 Writing a comprehensive test suite for REDCap will not be accomplished by an individual.  The software is too large and there are too many corners to test.  
 
+It will take the power of the entire consortium.  But the good news is that it's easy to share what we do contribute individually.
+
 ---
 >"None of Us is as good as All of Us." - Ray Kroc
 ---
-
-It will take the power of the entire consortium.  But the good news is that it's easy to share what we do contribute individually.
 
 The GitHub open source software community provides us a platform to easily share our tests via forking.
 
