@@ -8,7 +8,7 @@ It is intended to serve as a starting point for writing your own integration tes
 
 **The choice to use Cypress for testing REDCap was strategic.**  
 
-Because the framework is not environment-dependent, **the tests you write today will still be relevant in the future** - even if you change your server infrastructure down the road.  
+Because the framework is not environment-dependent, **the tests you write today will still be relevant in the future** - even if you change your server infrastructure.  
 
 *You could change from Windows to Linux or vice versa and your tests won't need to change.*
 
