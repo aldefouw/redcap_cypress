@@ -158,7 +158,7 @@ If your test environment is running and functional, this part is done.
 ### CAUTION:
 *Although the Cypress test framework can test against any server through HTTP protocol, **please do NOT use your production server as your test environment**.  You might think the best way to test your REDCap instance is to test against your actual server that people store data on.  That simply isn't the case.*
 
-*The best test suites reset database state between each test spec.  This test suite resets database state between tests. That isn't something you should ever do against production!*
+*The best test suites reset database state between each test spec.  This template repository's base configuration resets database state between tests. That isn't something you should ever do against production!*
 
 *The best way to test your REDCap instance is to configure an environment identical to production somewhere else.  An easy way to do this is through Docker.  That said, configuring your environment is outside the scope of this document.*
 
