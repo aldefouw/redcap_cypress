@@ -160,7 +160,11 @@ If your test environment is running and functional, this part is done.
 
 *The best test suites reset database state between each test spec.  This template repository's base configuration resets database state between tests. That isn't something you should ever do against production!*
 
-*The best way to test your REDCap instance is to configure an environment identical to production somewhere else.  An easy way to do this is through Docker.  That said, configuring your environment is outside the scope of this document.*
+*The best way to test your REDCap instance is to configure an environment identical to production somewhere else.  An easy way to do this is through Docker.*
+
+Although configuring your environment is outside the scope of this document, there are several consortium members who have successfully configured Docker containers.  
+
+**If you need help getting started with Docker, consider looking at or downloading Andy Martin's [REDCap Docker Compose](https://github.com/123andy/redcap-docker-compose) repository.**
 
 ---
 ### Test Framework 
