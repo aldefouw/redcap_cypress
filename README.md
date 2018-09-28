@@ -339,6 +339,23 @@ For example:
 
       ....
 
+## Running Your Tests
+
+### Opening Cypress
+
+To run the tests in the Cypress debug environment, issue the following command at the root of your test folder:  
+
+`npx cypress open`
+
+A Cypress window will open and you can select which specs you'd like to run.
+
+### Headless Mode
+
+After your test suite is mature, it will be faster to run your tests in headless mode.  To do so, issue the following comand:
+
+`npx cypress run`
+
+
 ## Known Limitations and Areas for Improvement
 
 This Test Framework template is a good start, but there are some known areas that could be improved.
