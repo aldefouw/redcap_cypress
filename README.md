@@ -177,7 +177,7 @@ Here is an example environment variable setup:
       }
     }
 
-Let's dive into these configuration values that are shown in the example above.
+Below are descriptions of the configuration variables shown above.
 
 ---
 ### baseURL ### 
