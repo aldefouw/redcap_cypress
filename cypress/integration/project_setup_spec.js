@@ -33,7 +33,7 @@ describe('Project Setup', () => {
             beforeEach(() => {
                 cy.get('select#field_type').select('text');
                 cy.get('textarea#field_label').type('My Date Field');
-                cy.contains('button', 'Save').click();
+                cy.save_field();
                 cy.contains('Alert');
                 cy.get('button[title=Close]:last').click();
                 cy.get('input#auto_variable_naming').click();
@@ -42,44 +42,44 @@ describe('Project Setup', () => {
 
             it('Should allow me to add an dmy format Date field', () => {
                 cy.get('select#val_type').select('date_dmy');
-                cy.contains('button', 'Save').click();
-                cy.contains('My Date Field', { timeout: 5000 });
+                cy.save_field();
+                cy.find_online_designer_field('My Date Field');
             });
 
             it('Should allow me to add an mdy format Date field', () => {
                 cy.get('select#val_type').select('date_mdy');
-                cy.contains('button', 'Save').click();
-                cy.contains('My Date Field', { timeout: 5000 });
+                cy.save_field();
+                cy.find_online_designer_field('My Date Field');
             });
 
             it('Should allow me to add an ymd format Date field', () => {
                 cy.get('select#val_type').select('date_ymd');
-                cy.contains('button', 'Save').click();
-                cy.contains('My Date Field', { timeout: 5000 });
+                cy.save_field();
+                cy.find_online_designer_field('My Date Field');
             });
 
             it('Should allow me to add an dmy format Datetime field', () => {
                 cy.get('select#val_type').select('datetime_dmy');
-                cy.contains('button', 'Save').click();
-                cy.contains('My Date Field', { timeout: 5000 });
+                cy.save_field();
+                cy.find_online_designer_field('My Date Field');
             });
 
             it('Should allow me to add an mdy format Datetime field', () => {
                 cy.get('select#val_type').select('datetime_mdy');
-                cy.contains('button', 'Save').click();
-                cy.contains('My Date Field', { timeout: 5000 });
+                cy.save_field();
+                cy.find_online_designer_field('My Date Field');
             });
 
             it('Should allow me to add an ymd format Datetime field', () => {
                 cy.get('select#val_type').select('datetime_ymd');
-                cy.contains('button', 'Save').click();
-                cy.contains('My Date Field', { timeout: 5000 });
+                cy.save_field();
+                cy.find_online_designer_field('My Date Field');
             });
 
             it ('Should allow me to add a Time field', function(){
                 cy.get('select#val_type').select('time');
-                cy.contains('button', 'Save').click();
-                cy.contains('My Date Field', { timeout: 5000 });
+                cy.save_field();
+                cy.find_online_designer_field('My Date Field');
             })
 
         });
@@ -89,7 +89,7 @@ describe('Project Setup', () => {
             beforeEach(() => {
                 cy.get('select#field_type').select('text');
                 cy.get('textarea#field_label').type('My Special Field');
-                cy.contains('button', 'Save').click();
+                cy.save_field();
                 cy.contains('Alert');
                 cy.get('button[title=Close]:last').click();
                 cy.get('input#auto_variable_naming').click();
@@ -98,32 +98,32 @@ describe('Project Setup', () => {
 
             it ('Should allow me to add an Email field', function(){
                 cy.get('select#val_type').select('email');
-                cy.contains('button', 'Save').click();
-                cy.contains('My Special Field', { timeout: 5000 });
+                cy.save_field();
+                cy.find_online_designer_field('My Special Field');
             });
 
             it ('Should allow me to add an Integer field', function(){
                 cy.get('select#val_type').select('integer');
-                cy.contains('button', 'Save').click();
-                cy.contains('My Special Field', { timeout: 5000 });
+                cy.save_field();
+                cy.find_online_designer_field('My Special Field');
             });
 
             it ('Should allow me to add a Number field', function(){
                 cy.get('select#val_type').select('number');
-                cy.contains('button', 'Save').click();
-                cy.contains('My Special Field', { timeout: 5000 });
+                cy.save_field();
+                cy.find_online_designer_field('My Special Field');
             });
 
             it ('Should allow me to add a Phone field', function(){
                 cy.get('select#val_type').select('phone');
-                cy.contains('button', 'Save').click();
-                cy.contains('My Special Field', { timeout: 5000 });
+                cy.save_field();
+                cy.find_online_designer_field('My Special Field');
             });
 
             it ('Should allow me to add a Zipcode field', function(){
                 cy.get('select#val_type').select('zipcode');
-                cy.contains('button', 'Save').click();
-                cy.contains('My Special Field', { timeout: 5000 });
+                cy.save_field();
+                cy.find_online_designer_field('My Special Field');
             })
 
         });

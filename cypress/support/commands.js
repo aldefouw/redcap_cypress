@@ -48,6 +48,17 @@ Cypress.Commands.add("mysql_db", (type, replace = '') => {
     cy.exec(cmd);
 });
 
+Cypress.Commands.add("find_online_designer_field", (name, timeout = 10000) => {
+    cy.contains('label', name, { timeout: timeout });
+});
+
+
+Cypress.Commands.add("save_field", () => {
+    cy.get('input#field_name').then(() => {
+        cy.contains('button', 'Save').click();
+    });
+});
+
 //
 //
 // -- This is a child command --
