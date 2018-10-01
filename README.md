@@ -23,6 +23,8 @@ As REDCap administrators, we all have a common goal:
 
 *To provide our end users with a secure and trusted environment to capture data.*
 
+### A Great Start
+
 The good news is that REDCap is a great start for all of us.  There's no doubt it's proven and stable platform.
 
 Even so - it's still software.  
@@ -37,13 +39,13 @@ But simply asking the question is not enough.
 
 *Until we perform some kind of test against an instance of REDCap, we do not know the answers to the above questions.*
 
-To test REDCap, most, if not all of us, have resorted to manual testing for reassurance.
+To test REDCap, most of us have resorted to manual testing for reassurance that REDCap is doing what we think it should.
 
 ## Manual Testing
 
-Manual testing has served many of us very well.  In fact, a major advantage to manual testing is that it's well-understood and has a low barrier to entry because almost anyone can manually test software.  
+Manual testing has served many of us very well.  In fact, a major advantage to manual testing is that it's easy to do and has a low barrier to entry.
 
-However, manual testing has some inherent challenges and drawbacks.
+However, manual testing still has some inherent challenges and drawbacks.
 
 Those challenges include, but are not limited to, the following:
 
@@ -56,9 +58,8 @@ Those challenges include, but are not limited to, the following:
 
 Even without this simple analysis, no one needs to tell you that manual testing takes a lot of effort.
 
-And maybe you enjoy that challenge.  Maybe you even find yourself enjoying time-intensive, tedious tasks performed in a hyper-consistent manner.  And, if you find yourself in that camp - perhaps this repository isn't for you.  
+Is there a better way?
 
-But for the rest of us, *there is a better way*. 
 
 ## Automated Testing
 
