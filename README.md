@@ -74,15 +74,7 @@ In fact, *each one of the challenges with manual testing is either significantly
 3. **Consistency** - automated tests run the same way, each and every time
 ---
 
-*Automated tests leverage what computers are good at to eliminate the problems of time, tediousness, and consistency associated with manual testing.*
-
-**Even so, it's not worth hiding this:**
-
-Automated testing is going to take some time up front to configure.  
-
-There's also some time sunk into the development of writing the tests themselves.  
-
-**But the upfront cost is worth the payoff.**
+*Automated tests leverage what computers are good at to reduce or eliminate the problems of time, tediousness, and consistency associated with manual testing.*
 
 ## Why Cypress?
 **This template uses the Cypress framework**, a library which allows non-environment-dependent testing.  
