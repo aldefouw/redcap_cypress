@@ -21,7 +21,7 @@ It is intended to serve as a starting point for writing your own integration and
 
 As REDCap administrators, we all have a common goal: 
 
-*To provide our end users with a secure and trusted data capture software.*
+**To provide our end users with a secure and trusted data capture software.**
 
 REDCap is a very proven and stable platform - but it's still software.  Changes and bugs can creep in without notice.
 
