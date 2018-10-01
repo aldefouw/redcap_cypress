@@ -29,15 +29,15 @@ REDCap is a very proven and stable platform - but it's still software.  Changes 
 - *Will the latest and greatest REDCap version function as expected?*
 - *Will the latest and greatest REDCap version break our existing hooks, plugins, and modules?*
 
-But simply asking the question is not enough.  
+But simply asking the question is not enough.  *Until we perform some kind of test against an instance of REDCap, we do not know the answers to the above questions.*
 
-*Until we perform some kind of test against an instance of REDCap, we do not know the answers to the above questions.*
-
-**To answer these questions, in the past, we've had to do manual testing.**  
+To test REDCap, most, if not all of us, have resorted to manual testing.
 
 ## Manual Testing
 
-Manual testing has served many of us very well.  However, manual testing has some inherent challenges.
+Manual testing has served many of us very well.  In fact, a major advantage to manual testing is that it's well-understood and has a low barrier to entry because almost anyone can manually test software.  
+
+However, manual testing has some inherent challenges and drawbacks.
 
 Those challenges include, but are not limited to, the following:
 
