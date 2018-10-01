@@ -78,76 +78,7 @@ Because the framework is not environment-dependent, **the tests you write today 
 
 *You could change from Windows to Linux or vice versa and your tests won't need to change.*
 
-The non-platform-dependent nature of Cypress tests also opens the door for consortium members to share tests with other members of the REDCap consortium.  
-
-## Sharing Your Tests
-
-Writing a comprehensive test suite for REDCap will not be accomplished by an individual.  The software is too large and there are too many corners to test.  
-
-It will take the power of the entire consortium.  But the good news is that it's easy to share what we do contribute individually.
-
----
->"None of Us is as good as All of Us." - Ray Kroc
----
-
-The GitHub open source software community provides us a platform to easily share our tests via forking.
-
-You can share the tests you have written with the rest of the consortium community by pushing your version of this repository to a fork.
-
-My hope is that someday we can create a "master" repository that includes integration tests from several authors, which will give everyone a huge head-start on testing their environment.
-
-
-## Writing Your Tests
-
-This documentation will help you configure your Cypress testing environment, but it will not cover how to write Cypress tests.  
-
-To give you a feel for how tests are written, however, below is a sample Login Spec.
-
-##### Login Spec
-
-
-            describe('Login Page', function () {
-
-                const users = Cypress.env("users");
-                const username = users['standard']['user'];
-                const password = users['standard']['pass'];
-
-                beforeEach(function () {
-                    cy.visit('/')
-                });
-
-                it('sets auth cookie when logging in via form submission', function () {
-                    cy.get('input#username').type(username);
-                    cy.get('input#password').type(`${password}{enter}`);
-                    cy.getCookie('PHPSESSID').should('exist');
-                });
-
-                it('requires a username', function () {
-                    cy.get('input#password').type(`${password}{enter}`);
-                    cy.contains('ERROR: You entered an invalid user name or password!');
-                });
-
-                it('requires a password', function () {
-                    cy.get('input#username').type(`${username}{enter}`);
-                    cy.contains('ERROR: You entered an invalid user name or password!');
-                });
-
-                it('requires a valid username and password', function () {
-                    cy.get('input#username').type(username);
-                    cy.get('input#password').type(password);
-                    cy.contains('button', 'Log In').click();
-                    cy.contains('Listed below are the REDCap projects to which you currently have access.')
-                });
-
-            });
-
-
-If you are looking for examples of how to write tests, the sample specs are included in the following folder (within this repository):
-`/cypress/integration/`
-
-For specific information about how to write JavaScript tests in Cypress, please visit their website:
-https://www.cypress.io/
-
+The non-platform-dependent nature of Cypress tests also opens the door for consortium members to share tests with other members of the REDCap consortium. 
 
 ## Getting Started
 
@@ -300,6 +231,7 @@ The password of your MySQL REDCap database user.
 This is typically `root` on local instances of MySQL or local Docker containers.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
 
 ---
+
 ## Test Database Structure & Seeds
 
 Database configuration happens in two phases:
@@ -361,6 +293,73 @@ For example:
       });
 
       ....
+
+## Writing Your Tests
+
+This documentation will help you configure your Cypress testing environment, but it will not cover how to write Cypress tests.  
+
+To give you a feel for how tests are written, however, below is a sample Login Spec.
+
+##### Login Spec
+
+
+            describe('Login Page', function () {
+
+                const users = Cypress.env("users");
+                const username = users['standard']['user'];
+                const password = users['standard']['pass'];
+
+                beforeEach(function () {
+                    cy.visit('/')
+                });
+
+                it('sets auth cookie when logging in via form submission', function () {
+                    cy.get('input#username').type(username);
+                    cy.get('input#password').type(`${password}{enter}`);
+                    cy.getCookie('PHPSESSID').should('exist');
+                });
+
+                it('requires a username', function () {
+                    cy.get('input#password').type(`${password}{enter}`);
+                    cy.contains('ERROR: You entered an invalid user name or password!');
+                });
+
+                it('requires a password', function () {
+                    cy.get('input#username').type(`${username}{enter}`);
+                    cy.contains('ERROR: You entered an invalid user name or password!');
+                });
+
+                it('requires a valid username and password', function () {
+                    cy.get('input#username').type(username);
+                    cy.get('input#password').type(password);
+                    cy.contains('button', 'Log In').click();
+                    cy.contains('Listed below are the REDCap projects to which you currently have access.')
+                });
+
+            });
+
+
+If you are looking for examples of how to write tests, the sample specs are included in the following folder (within this repository):
+`/cypress/integration/`
+
+For specific information about how to write JavaScript tests in Cypress, please visit their website:
+https://www.cypress.io/
+
+## Sharing Your Tests
+
+Writing a comprehensive test suite for REDCap will not be accomplished by an individual.  The software is too large and there are too many corners to test.  
+
+It will take the power of the entire consortium.  But the good news is that it's easy to share what we do contribute individually.
+
+---
+>"None of Us is as good as All of Us." - Ray Kroc
+---
+
+The GitHub open source software community provides us a platform to easily share our tests via forking.
+
+You can share the tests you have written with the rest of the consortium community by pushing your version of this repository to a fork.
+
+My hope is that someday we can create a "master" repository that includes integration tests from several authors, which will give everyone a huge head-start on testing their environment.
 
 ## Running Your Tests
 
