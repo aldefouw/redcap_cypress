@@ -4,6 +4,15 @@ This repository is a template to assist you in writing **automated tests for RED
 
 It is intended to serve as a starting point for writing your own integration and regression tests, which can be used to validate the features and functionality of your REDCap environment.
 
+# Overview
+- [Why Test REDCap?](#why-test-redcap)
+- [Why Cypress?](#why-cypress)
+- [Sharing Your Tests](#sharing-your-tests)
+- [Writing Your Tests](#writing-your-tests)
+- [Getting Started](#getting-started)
+- [Defining Your Test Environment](#defining-your-test-environment)
+
+
 ## Why Test REDCap?
 
 As REDCap administrators, we all have a common goal: 
@@ -171,11 +180,13 @@ Although configuring your environment is outside the scope of this document, the
 
 This is the repository you're looking at.  You will write tests on your machine and then run them against your Test Environment.
 
-If you have a **Test Environment** running and you've cloned this repository (your **Test Framework**), you are now ready to **Tell your Test Framework about your Test Environment**.
+If you have a **Test Environment** running and you've cloned this repository (your **Test Framework**), you are now ready to configure and define your test environment.
 
 ---
 
-## Tell your Test Framework about your Test Environment
+## Defining Your Test Environment
+
+### Tell your Test Framework about your Test Environment
 
 Configuring your environment is simultaneously the most crucial and difficult step to complete.  
 
@@ -283,7 +294,7 @@ The password of your MySQL REDCap database user.
 This is typically `root` on local instances of MySQL or local Docker containers.  You'll want to check your `database.php` file on your test instance of your REDCap installation to determine this value.
 
 ---
-## Database Structure & Seeds
+## Test Database Structure & Seeds
 
 Database configuration happens in two phases:
 1. Configuration of REDCap Structure
