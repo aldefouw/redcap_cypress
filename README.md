@@ -262,7 +262,7 @@ For many of us, this will probably be `mysql`, but you could also use a full pat
 ### mysql['port'] ### 
 The port to your MySQL instance.  
 
-This is usually 3306 on standard setups, but for many of us running Docker instances we may wish to use an alternative port so we can differentiate between the standard MySQL instance that is installed on a local operating system and the Docker instance itself.
+This is usually `3306` on standard setups, but for many of us running Docker instances we may wish to use an alternative port so we can differentiate between the standard MySQL instance that is installed on a local operating system and the Docker instance itself.
 
 ---
 ### mysql['db_name'] ### 
