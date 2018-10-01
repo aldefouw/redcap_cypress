@@ -63,9 +63,9 @@ Is there a better way?
 
 ## Automated Testing
 
-If you'd like to escape the challenges inherent to manual testing, **automated testing is your answer**.
+If you'd like to escape the tedious, time-intensive, consistency-deprived process of manual testing, **automated testing is your answer**.
 
-In fact, *each one of the challenges with manual testing is either alleviated or solved by automated testing*.
+In fact, *each one of the challenges with manual testing is either significantly alleviated or solved by automated testing*.
 
 ---
 ### Automated Testing Benefits
@@ -74,13 +74,15 @@ In fact, *each one of the challenges with manual testing is either alleviated or
 3. **Consistency** - automated tests run the same way, each and every time
 ---
 
-**Automated tests leverage what computers are good at to eliminate the problems of time, tediousness, and consistency associated with manual testing.**
+*Automated tests leverage what computers are good at to eliminate the problems of time, tediousness, and consistency associated with manual testing.*
 
-Still, there's on way around it:
+**Even so, it's not worth hiding this:**
 
-Automated testing is going to take some time up front to configure.  There's also some time sunk into the development of writing the tests themselves.
+Automated testing is going to take some time up front to configure.  
 
-But the upfront cost is worth the payoff!
+There's also some time sunk into the development of writing the tests themselves.  
+
+**But the upfront cost is worth the payoff.**
 
 ## Why Cypress?
 **This template uses the Cypress framework**, a library which allows non-environment-dependent testing.  
