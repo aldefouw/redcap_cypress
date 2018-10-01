@@ -21,18 +21,23 @@ It is intended to serve as a starting point for writing your own integration and
 
 As REDCap administrators, we all have a common goal: 
 
-**To provide our end users with a secure and trusted data capture software.**
+*To provide our end users with a secure and trusted environment to capture data.*
 
-REDCap is a very proven and stable platform - but it's still software.  Changes and bugs can creep in without notice.
+The good news is that REDCap is a great start for all of us.  There's no doubt it's proven and stable platform.
 
+Even so - it's still software.  
+
+Changes and bugs can creep in without notice.  This is especially true if your institution has custom functionality configured through hooks, plugins, or modules.
 
 **Thus, as REDCap administrators, there are some basic questions we must ask, such as:**
-- *Will the latest and greatest REDCap version function as expected?*
-- *Will the latest and greatest REDCap version break our existing hooks, plugins, and modules?*
+- *Will an upgraded REDCap version function as expected?*
+- *Will an upgraded REDCap version break our existing hooks, plugins, and modules?*
 
-But simply asking the question is not enough.  *Until we perform some kind of test against an instance of REDCap, we do not know the answers to the above questions.*
+But simply asking the question is not enough.  
 
-To test REDCap, most, if not all of us, have resorted to manual testing.
+*Until we perform some kind of test against an instance of REDCap, we do not know the answers to the above questions.*
+
+To test REDCap, most, if not all of us, have resorted to manual testing for reassurance.
 
 ## Manual Testing
 
