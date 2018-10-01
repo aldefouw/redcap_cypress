@@ -25,6 +25,7 @@ As REDCap administrators, we all have a common goal:
 
 REDCap is a very proven and stable platform - but it's still software.  Changes and bugs can creep in without notice.
 
+
 **Thus, as REDCap administrators, there are some basic questions we must ask, such as:**
 - *Will the latest and greatest REDCap version function as expected?*
 - *Will the latest and greatest REDCap version break our existing hooks, plugins, and modules?*
