@@ -12,6 +12,7 @@ It is intended to serve as a starting point for writing your own integration and
 - [Getting Started](#getting-started)
 - [Defining Your Test Environment](#defining-your-test-environment)
 - [Test Database Structure & Seeds](#test-database-structure--seeds)
+- [Running Your Tests](#running-your-tests]
 
 ## Why Test REDCap?
 
