@@ -250,7 +250,7 @@ The JSON array that contains several keys, which are critical for your database 
 ### mysq['host'] ### 
 The hostname or IP address of your MySQL database host.  
 
-For many of us, this will likely be either `localhost` or `127.0.0.1`.  Keep in mind that there are subtle nuances between `localhost` and `127.0.0.1` so depending on your setup, you need to choose the option best suited to your environment.
+For many of us, this will likely be either `localhost` or `127.0.0.1`.  Keep in mind that there are subtle nuances between `localhost` and `127.0.0.1`.  Thus, you need to choose the option best-suited to your environment.
 
 ---
 ### mysql['path'] ### 
