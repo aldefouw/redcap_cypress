@@ -21,15 +21,17 @@ It is intended to serve as a starting point for writing your own integration and
 
 As REDCap administrators, we all have a common goal: 
 
-*To provide our end users with the best user experience by providing the best REDCap has to offer.*
+*To provide our end users with a secure and trusted data capture software.*
 
-This generally means we need to try to stay on pace with the latest and greatest REDCap versions.
+REDCap is a very proven and stable platform - but it's still software.  Changes and bugs can creep in without notice.
 
-**But, to reach that goal, we must ask ourselves question like this:**
+**Thus, as REDCap administrators, there are some basic questions we must ask, such as:**
 - *Will the latest and greatest REDCap version function as expected?*
 - *Will the latest and greatest REDCap version break our existing hooks, plugins, and modules?*
 
-The tough part is that asking the question is not enough.  *Until we perform some kind of test against an instance of REDCap, we do not know the answers to the above questions.*
+But simply asking the question is not enough.  
+
+*Until we perform some kind of test against an instance of REDCap, we do not know the answers to the above questions.*
 
 **To answer these questions, in the past, we've had to do manual testing.**  
 
