@@ -15,7 +15,7 @@ It is intended to serve as a starting point for writing your own integration and
 - [Writing Your Tests](#writing-your-tests)
 - [Sharing Your Tests](#sharing-your-tests)
 - [Running Your Tests](#running-your-tests)
-- [Known Limitations and Areas for Improvement](#known-limitations-and-areas-for-improvement)
+- [Known Limitations and Areas for Improvement](#known-limitations--areas-for-improvement)
 
 ## Why Test REDCap?
 
@@ -378,7 +378,7 @@ After your test suite is mature, it will be faster to run your tests in headless
 `npx cypress run`
 
 
-## Known Limitations and Areas for Improvement
+## Known Limitations & Areas for Improvement
 
 This Test Framework template is a good start, but there are some known areas that could be improved.
 
