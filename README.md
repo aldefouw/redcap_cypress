@@ -67,7 +67,11 @@ In fact, *each one of the challenges with manual testing is either alleviated or
 
 **Automated tests leverage what computers are good at to eliminate the problems of time, tediousness, and consistency associated with manual testing.**
 
-Automated testing is certainly still going to take hard some work and ingenunity.  But once you're initially configured, things get much, much easier.
+Still, there's on way around it:
+
+Automated testing is going to take some time up front to configure.  There's also some time sunk into the development of writing the tests themselves.
+
+But the upfront cost is worth the payoff!
 
 ## Why Cypress?
 **This template uses the Cypress framework**, a library which allows non-environment-dependent testing.  
