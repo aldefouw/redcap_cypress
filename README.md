@@ -301,17 +301,19 @@ Before each individual test spec is run, a file located at `/test_db/seeds.sql` 
 
 ### Adding A Custom Seed
 
-You can create any database state you want to prior to running your tests.  The included seeds.sql file is just what we are using at our institution.  
+You can create any database state you want to prior to running your tests.  The included `seeds.sql` file is an example to get you started.
 
-To add your own custom seeds, you simply need to do two things.
+It is possible to add your own custom seed data.  To add custom seed data, do the following:
 
 1. Add a custom `your_custom_seed_name_here.sql` file into the `/test_db/` folder.  
 
-2. Ensure that your custom SQL file is wrapped in a TRANSACTION and that is specifies the correct database.
+2. Ensure that your custom SQL file is wrapped in a TRANSACTION and that specifies the correct database.
 
 To ensure it is using the correct database, please make sure to include the following line within your transaction code:
 
         USE `REDCAP_DB_NAME`;
+
+(**Note:** The above value is replaced via Regular Expression in the shell script.  You should enter it as the static value above - NOT as your custom database name.)
 
 3. Reference that file in the beforeEach() block within the `/support/index.js` file.
 
