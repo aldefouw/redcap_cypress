@@ -6,6 +6,8 @@ It is intended to serve as a starting point for writing your own integration and
 
 # Overview
 - [Why Test REDCap?](#why-test-redcap)
+- [Manual Testing](#manual-testing)
+- [Automated Testing](#automated-testing)
 - [Why Cypress?](#why-cypress)
 - [Sharing Your Tests](#sharing-your-tests)
 - [Writing Your Tests](#writing-your-tests)
@@ -31,7 +33,11 @@ The tough part is that asking the question is not enough.  *Until we perform som
 
 **To answer these questions, in the past, we've had to do manual testing.**  
 
-And manual testing has served many of us very well.  But manual testing has some inherent challenges.
+## Manual Testing
+
+Manual testing has served many of us very well.  However, manual testing has some inherent challenges.
+
+Those challenges include, but are not limited to, the following:
 
 ---
 ### Manual Testing Challenges
@@ -40,11 +46,9 @@ And manual testing has served many of us very well.  But manual testing has some
 3. **Consistency** - it is hard to test everything in a consistent manner
 ---
 
-Even without this simple analysis, no one needs to tell you that manual testing is pretty hard.
+Even without this simple analysis, no one needs to tell you that manual testing takes a lot of effort.
 
-And maybe you enjoy that challenge.  
-
-Maybe you even find yourself enjoying time-intensive, tedious tasks performed in a hyper-consistent fashion.  If you find yourself in that camp - perhaps this repository isn't for you.  
+And maybe you enjoy that challenge.  Maybe you even find yourself enjoying time-intensive, tedious tasks performed in a hyper-consistent manner.  And, if you find yourself in that camp - perhaps this repository isn't for you.  
 
 But for the rest of us, *there is a better way*. 
 
