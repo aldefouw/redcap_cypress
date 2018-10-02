@@ -25,7 +25,7 @@ As REDCap administrators, we all have a common goal:
 
 ### A Great Start
 
-The good news is that REDCap is a great start for all of us.  There's no doubt it's proven and stable platform.
+The good news is that REDCap is a great start for all of us.  There's no doubt it's a proven and stable platform.
 
 Even so - it's still software.  
 
