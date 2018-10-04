@@ -77,7 +77,7 @@ In fact, *each one of the challenges with manual testing is either significantly
 *Automated tests leverage what computers are good at to reduce or eliminate the problems of time, tediousness, and consistency associated with manual testing.*
 
 ## Why Cypress?
-**This template uses the Cypress framework**, a library which allows non-environment-dependent testing.  
+**This template uses the Cypress framework**, a JavaScript library which allows non-environment-dependent testing.  
 
 **The choice to use Cypress for testing REDCap was strategic.**  
 
