@@ -1,5 +1,7 @@
 *.idea
 
+/node_modules
+
 cypress.json
 cypress.env.json
 .DS_STORE
