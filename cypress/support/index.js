@@ -19,20 +19,31 @@ import './commands'
 //Set base URL from the environment variable that was set
 Cypress.config("baseUrl", Cypress.env("baseUrl"));
 
-before(() => {
-    //Create the initial database structure
-    cy.mysql_db('structure');
-});
+const users = Cypress.env("users");
+const admin_user = users['admin']['user'];
+const admin_pass = users['admin']['pass'];
 
-beforeEach(() => {
-    //Clear out the cookies
+before(() => {
+      //Clear out the cookies
     cy.clearCookie('PHPSESSID');
 
+    //Create the initial database structure
+    cy.mysql_db('structure');
+  
     //Set the Base URL in the REDCap Configuration Database
     const base_url = 'BASE_URL/' + Cypress.env('baseUrl').replace('http://', 'http\\:\\\\/\\\\/');
 
     //Seeds the database before each test
     cy.mysql_db('seeds', base_url);
+
+
+    //Logs in before each test
+    cy.login( { username: admin_user, password: admin_pass } );
+
+});
+
+beforeEach(() => {
+
 });
 
 Cypress.on('uncaught:exception', (err, runnable) => {
