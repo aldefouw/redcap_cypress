@@ -47,12 +47,18 @@ describe('Browse Projects', function () {
         });
     });
 
-    it('sorts the projects appropriately when you click each column', function () {
-        cy.get('table#table-proj_table tr:first a').contains('Classic Database');        
+    it('sorts the Project Title column appropriately', function () {
         cy.get('div').contains('Project Title').click();
         cy.get('table#table-proj_table tr:first a').contains('Basic Demography');
         cy.get('div').contains('Project Title').click();
         cy.get('table#table-proj_table tr:first a').contains('Test Project');
+    });
+
+    it('sorts the Field column appropriately', function () {
+        cy.get('div').contains('Field').click();
+        cy.get('table#table-proj_table tr:first span').contains('2');
+        cy.get('div').contains('Field').click();
+        cy.get('table#table-proj_table tr:first span').contains('198');
     });
     
 });
