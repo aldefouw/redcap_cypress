@@ -88,4 +88,17 @@ describe('Browse Projects', function () {
         cy.get('table#table-proj_table tr:first span').should('have.class', 'glyphicon-wrench');
     });
     
+    it('displays the projects for Test User', function () {
+        cy.get('input#user_search').type('test_user').then(() => {
+            cy.get('button#user_search_btn').click().then(() => {
+
+                console.log('test');
+
+                // cy.get('table#table-proj_table').find('tr:visible').should('have.length', 1);
+                // cy.get('table#table-proj_table tr:first a').contains('Test Project');
+            });
+        });
+    });
+
+    
 });
