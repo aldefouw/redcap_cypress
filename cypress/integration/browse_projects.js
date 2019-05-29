@@ -4,10 +4,20 @@ describe('Browse Projects', function () {
         cy.get('table#table-proj_table tr:first span').should('not.contain', "Loading").then(() => {
                 cy.get('th div').contains(col_name).click().then(()=> {
             
-                cy.get('table#table-proj_table tr:first span').should('have.class', klasses[0])
 
-                cy.get('th div').contains(col_name).click().then(()=>{
-                    cy.get('table#table-proj_table tr:first span').should('have.class', klasses[1])
+                cy.get('table#table-proj_table tr:first span').then(($a) => { 
+
+                    expect($a).to.have.class(klasses[0]);  
+
+                    cy.get('th div').contains(col_name).click().then(()=>{
+
+                        cy.get('table#table-proj_table tr:first span').then(($e) => {
+
+                            expect($e).to.have.class(klasses[1]);                           
+
+                        })
+
+                    })
                 })
 
             })
@@ -16,16 +26,15 @@ describe('Browse Projects', function () {
 
     function testColumnSortByValue(col_name, element, values = []){
         cy.get('table#table-proj_table tr:first span').should('not.contain', "Loading").then(() => {
-            cy.get('th div').contains(col_name).click().then(()=> {
-            
-                cy.get('table#table-proj_table tr:first ' + element).then(($a) => {
-                    
+            cy.get('th div').contains(col_name).click().then(()=> {            
+                cy.get('table#table-proj_table tr:first ' + element).then(($a) => { 
+
                     expect($a).to.contain(values[0]);  
 
-                    cy.get('th div').contains(col_name).click().then(($e)=>{
+                    cy.get('th div').contains(col_name).click().then(()=>{
                         cy.get('table#table-proj_table tr:first ' + element).then(($e) => {
 
-                            expect($e).to.contain(values[1]);                              
+                            expect($e).to.contain(values[1]);                           
 
                         })
                     })
