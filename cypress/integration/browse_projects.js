@@ -12,9 +12,7 @@ describe('Browse Projects', function () {
     })
 
     beforeEach(() => {
-
-
-
+        // Any steps that need to be performed before each individual spec
     })
 
     it('displays a list of all projects', function () {
@@ -48,17 +46,46 @@ describe('Browse Projects', function () {
     });
 
     it('sorts the Project Title column appropriately', function () {
-        cy.get('div').contains('Project Title').click();
+        cy.get('th div').contains('Project Title').click();
         cy.get('table#table-proj_table tr:first a').contains('Basic Demography');
-        cy.get('div').contains('Project Title').click();
+        cy.get('th div').contains('Project Title').click();
         cy.get('table#table-proj_table tr:first a').contains('Test Project');
     });
 
-    it('sorts the Field column appropriately', function () {
-        cy.get('div').contains('Field').click();
+    it('sorts the Records column appropriately', function () {
+        cy.get('th div').contains('Records').click();
+        cy.get('table#table-proj_table tr:first span').should('have.class', 'pid-cntr-13');
+        cy.get('th div').contains('Records').click();
+        cy.get('table#table-proj_table tr:first span').should('have.class', 'pid-cntr-5');
+    });
+
+    it('sorts the Fields column appropriately', function () {
+        cy.get('th div').contains('Fields').click();
         cy.get('table#table-proj_table tr:first span').contains('2');
-        cy.get('div').contains('Field').click();
+        cy.get('th div').contains('Fields').click();
         cy.get('table#table-proj_table tr:first span').contains('198');
+    });
+
+    it('sorts the Instrument column appropriately', function () {
+        cy.get('th div').contains('Instrument').click();
+        cy.get('table#table-proj_table tr:first span').contains('1 form');
+        cy.get('table#table-proj_table tr:first span').contains('3 surveys');
+        cy.get('th div').contains('Instrument').click();
+        cy.get('table#table-proj_table tr:first span').contains('15 forms');
+    });
+
+    it('sorts the Type column appropriately', function () {
+        cy.get('th div').contains('Type').click();
+        cy.get('table#table-proj_table tr:first span').contains('1');
+        cy.get('th div').contains('Type').click();
+        cy.get('table#table-proj_table tr:first span').contains('0');
+    });
+
+    it('sorts the Status column appropriately', function () {
+        cy.get('th div').contains('Status').click();
+        cy.get('table#table-proj_table tr:first span').should('have.class', 'glyphicon-check');
+        cy.get('th div').contains('Status').click();
+        cy.get('table#table-proj_table tr:first span').should('have.class', 'glyphicon-wrench');
     });
     
 });
