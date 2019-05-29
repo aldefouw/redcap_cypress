@@ -35,14 +35,11 @@ before(() => {
 
     //Clear out the cookies
     cy.clearCookie('PHPSESSID');
-
-    //Logs in before each test
-    cy.login( { username: admin_user, password: admin_pass } );
-
 });
 
 beforeEach(() => {
-
+	 //Logs in before each test
+    cy.login( { username: admin_user, password: admin_pass } );
 });
 
 Cypress.on('uncaught:exception', (err, runnable) => {
