@@ -158,4 +158,11 @@ START TRANSACTION;
 
 	UPDATE `REDCAP_DB_NAME`.`redcap_config` SET `value`='BASE_URL' WHERE `field_name`='redcap_base_url';
 
+	ALTER TABLE `redcap_crons` ADD UNIQUE KEY `cron_name` (`cron_name`);
+	ALTER TABLE `redcap_ehr_access_tokens` DROP INDEX `patient`;
+	ALTER TABLE `redcap_ehr_access_tokens` ADD UNIQUE KEY `patient` (`patient`);
+	ALTER TABLE `redcap_external_module_settings` CHANGE `value` `value` text COLLATE utf8_unicode_ci NOT NULL;
+	INSERT INTO redcap_user_information (username, user_email, user_firstname, user_lastname, super_user, user_firstvisit) VALUES ('site_admin', 'joe.user@projectredcap.org', 'Joe', 'User', 1, now());
+	INSERT INTO redcap_config (field_name, value) VALUES ('fhir_ehr_type', '');
+
 COMMIT;
