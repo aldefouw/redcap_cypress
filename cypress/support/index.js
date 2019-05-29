@@ -24,6 +24,9 @@ const admin_user = users['admin']['user'];
 const admin_pass = users['admin']['pass'];
 
 before(() => {
+    //This will establish the base url for Cypress
+    cy.visit('/');
+
     //Create the initial database structure
     cy.mysql_db('structure');
   
@@ -33,15 +36,12 @@ before(() => {
     //Seeds the database before each test
     cy.mysql_db('seeds', base_url);
 
-    //Clear out the cookies
-    cy.clearCookie('PHPSESSID');
 });
 
 beforeEach(() => {
-	 //Logs in before each test
     cy.login( { username: admin_user, password: admin_pass } );
-});
+})
 
 Cypress.on('uncaught:exception', (err, runnable) => {
     return false
-});
+})
