@@ -3,7 +3,9 @@ describe('Browse Projects', function () {
     beforeEach(() => {
         cy.visit('/').then(() => {
             cy.get('a').contains('Control Center').click().then(() => {
-                cy.get('a').contains('Browse Projects').click()
+                cy.get('a').contains('Browse Projects').click().then(() => {  
+                    cy.get('div h4').should('contain', 'Browse Projects')
+                })
             })            
         })
     })
@@ -11,14 +13,15 @@ describe('Browse Projects', function () {
     describe('Display Projects', function () { 
 
         it('displays a list of all projects', function () {
-            cy.get('button').contains('View all projects').click()
-            cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
+            cy.get('button').contains('View all projects').click().then(() => {
+                cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
+            })            
         })
 
         it('displays the projects for Test User when you click the view button', function () {
             cy.get('input#user_search').type('test_user').then(() => {            
                 cy.get('button#user_search_btn').click().then(() => {
-                     cy.get('table#table-proj_table tr:first span').should('not.contain', "Loading").then(() => {
+                     cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
                         cy.get('table#table-proj_table tr:first div.projtitle').then(($a) => {
                             expect($a).to.contain("Test Project")
                             cy.get('table#table-proj_table').find('tr:visible').should('have.length', 1)
@@ -32,7 +35,7 @@ describe('Browse Projects', function () {
         it('displays the projects for Test User when you click on the user after entering the username', function () {
            cy.get('input#user_search').type('test_user').then(() => {            
                 cy.get('ul#ui-id-1 li a').click().then(($a) => {
-                    cy.get('table#table-proj_table tr:first span').should('not.contain', "Loading").then(() => {
+                    cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
                          cy.get('table#table-proj_table tr:first div.projtitle').then(($a) => {
                             expect($a).to.contain("Test Project")
                             cy.get('table#table-proj_table').find('tr:visible').should('have.length', 1)
@@ -45,7 +48,7 @@ describe('Browse Projects', function () {
         it('displays the projects for Test User when you click on the user after entering the email address', function () {
             cy.get('input#user_search').type('test_user@example.com').then(() => {            
                 cy.get('ul#ui-id-1 li a').click().then(($a) => {
-                    cy.get('table#table-proj_table tr:first span').should('not.contain', "Loading").then(() => {
+                    cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
                          cy.get('table#table-proj_table tr:first div.projtitle').then(($a) => {
                             expect($a).to.contain("Test Project")
                             cy.get('table#table-proj_table').find('tr:visible').should('have.length', 1)
@@ -100,13 +103,17 @@ describe('Browse Projects', function () {
         }
 
         function abstractSort(col_name, element, values, klass = 0){
-            cy.get('table#table-proj_table tr:first span').should('not.contain', "Loading").then(() => {
+            cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
                     cy.get('th div').contains(col_name).click().then(()=> {
-                    cy.get(element).then(($a) => { 
-                        klass ? expect($a).to.have.class(values[0]) : expect($a).to.contain(values[0]);   
-                        cy.get('th div').contains(col_name).click().then(()=>{
-                            cy.get(element).then(($e) => {
-                                klass ? expect($e).to.have.class(values[1]) : expect($e).to.contain(values[1]);                                       
+                        cy.get(element).then(($a) => { 
+                            cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+                            klass ? expect($a).to.have.class(values[0]) : expect($a).to.contain(values[0])   
+                            cy.get('th div').contains(col_name).click().then(()=>{
+                                cy.get(element).then(($e) => {
+                                    cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+                                        klass ? expect($e).to.have.class(values[1]) : expect($e).to.contain(values[1])       
+                                    })                                
+                                })
                             })
                         })
                     })
@@ -125,8 +132,9 @@ describe('Browse Projects', function () {
         })
 
         it('sorts the Records column appropriately', function () {
-            checkCellClassName('Records', 
-                               ['pid-cnti-1', 'pid-cnti-13']);
+            checkCellValue('Records', 
+                           'table#table-proj_table tr:first div', 
+                           ['2', '198']);
         })
 
         it('sorts the Fields column appropriately', function () {
@@ -138,7 +146,7 @@ describe('Browse Projects', function () {
         it('sorts the Instrument column appropriately', function () {
             checkCellValue('Instrument', 
                            'table#table-proj_table tr:first div.fc span div', 
-                           ['1 survey', '15 forms']);
+                           ['1 form', '15 forms']);
         })
 
         it('sorts the Type column appropriately', function () {
