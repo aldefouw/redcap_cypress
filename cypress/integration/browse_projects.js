@@ -62,34 +62,31 @@ describe('Browse Projects', function () {
 
     describe('Filter Projects', function () {   
 
-        beforeEach(() => {
-            cy.get('button').contains('View all projects').click()
-        })
-
         it('filters project by title', function () {
 
-            // Type in "Classic" in the filter text box
-            cy.get('input#proj_search').type('Classic').then(() => {
+            cy.get('button').contains('View all projects').click().then(() => {
+                // Type in "Classic" in the filter text box
+                cy.get('input#proj_search').type('Classic').then(() => {
 
-                // See if our two test projects with the word "Classic" appear
-                cy.get('table#table-proj_table').contains('Classic Database').should('be.visible')
-                cy.get('table#table-proj_table').contains('Multiple Surveys (classic)').should('be.visible')
+                    // See if our two test projects with the word "Classic" appear
+                    cy.get('table#table-proj_table').contains('Classic Database').should('be.visible')
+                    cy.get('table#table-proj_table').contains('Multiple Surveys (classic)').should('be.visible')
 
-                // Make sure that a project without the word "Classic" doesn't appear
-                cy.get('table#table-proj_table').contains('Test Project').should('not.be.visible')
+                    // Make sure that a project without the word "Classic" doesn't appear
+                    cy.get('table#table-proj_table').contains('Test Project').should('not.be.visible')
 
-                // All projects should be shown again
-                cy.get('table#table-proj_table').find('tr:visible').should('have.length', 2)
+                    // All projects should be shown again
+                    cy.get('table#table-proj_table').find('tr:visible').should('have.length', 2)
 
-                // Clear out the filter
-                cy.get('input#proj_search').clear()
+                    // Clear out the filter
+                    cy.get('input#proj_search').clear()
 
-                // See how many text rows are visible.  Should be two to match our two projects w/ word "classic"
-                cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
+                    // See how many text rows are visible.  Should be two to match our two projects w/ word "classic"
+                    cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
 
-            })
+                })                
+            })            
         })
-
     })
     
     describe('Sort Columns', function () {   
@@ -103,27 +100,25 @@ describe('Browse Projects', function () {
         }
 
         function abstractSort(col_name, element, values, klass = 0){
-            cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+            cy.get('button').contains('View all projects').click().then(() => {
+                cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
                     cy.get('th div').contains(col_name).click().then(()=> {
                         cy.get(element).then(($a) => { 
                             cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                            klass ? expect($a).to.have.class(values[0]) : expect($a).to.contain(values[0])   
-                            cy.get('th div').contains(col_name).click().then(()=>{
-                                cy.get(element).then(($e) => {
-                                    cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                                        klass ? expect($e).to.have.class(values[1]) : expect($e).to.contain(values[1])       
-                                    })                                
+                                klass ? expect($a).to.have.class(values[0]) : expect($a).to.contain(values[0])   
+                                cy.get('th div').contains(col_name).click().then(()=>{
+                                    cy.get(element).then(($e) => {
+                                        cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+                                            klass ? expect($e).to.have.class(values[1]) : expect($e).to.contain(values[1])       
+                                        })                                
+                                    })
                                 })
                             })
                         })
                     })
                 })
-            })
+             })           
         }
-
-        beforeEach(() => {
-            cy.get('button').contains('View all projects').click()
-        })
 
         it('sorts the Project Title column appropriately', function () {
         checkCellValue('Project Title', 
@@ -132,9 +127,8 @@ describe('Browse Projects', function () {
         })
 
         it('sorts the Records column appropriately', function () {
-            checkCellValue('Records', 
-                           'table#table-proj_table tr:first div', 
-                           ['2', '198']);
+            checkCellClassName('Records', 
+                               ['pid-cnti-1', 'pid-cnti-13']);
         })
 
         it('sorts the Fields column appropriately', function () {
