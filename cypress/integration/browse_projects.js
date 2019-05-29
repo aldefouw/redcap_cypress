@@ -2,8 +2,9 @@ describe('Browse Projects', function () {
 
     beforeEach(() => {
         cy.visit('/').then(() => {
-            cy.get('a').contains('Control Center').click()
-            cy.get('a').contains('Browse Projects').click()
+            cy.get('a').contains('Control Center').click().then(() => {
+                cy.get('a').contains('Browse Projects').click()
+            })            
         })
     })
 
