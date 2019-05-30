@@ -22,7 +22,9 @@ Cypress.Commands.add("login", (options) => {
             'submitted': 1,
             'redcap_login_a38us_09i85':'redcap_login_a38us_09i85'
         }
-    })
+    }).then(($a) => {
+        expect($a.status).to.equal(200)
+    })    
 });
 
 Cypress.Commands.add("visit_v", (options) => {

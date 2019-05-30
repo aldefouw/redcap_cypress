@@ -1,9 +1,5 @@
 describe('Browse Projects', () => {
 
-    beforeEach(() => {
-
-    })
-
     describe('Display Projects', () => { 
 
         it('displays the "Browse Projects" page when you click on "Control Center"', () => {
@@ -17,13 +13,15 @@ describe('Browse Projects', () => {
         })
 
         it('displays a list of all projects', () => {
-            cy.visit_v({page: '/ControlCenter/view_projects.php'})
+            cy.visit_v({page: '/ControlCenter/view_projects.php'}).then(() => {
 
-            cy.ignore_redcap_stats()
+                cy.ignore_redcap_stats()
 
-            cy.get('button').contains('View all projects').click().then(() => {
-                cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
-            })            
+                cy.get('button').contains('View all projects').click().then(() => {
+                    cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
+                })
+
+            })
         })
 
         it('displays the projects for Test User when you click the view button', () => {

@@ -24,6 +24,9 @@ const admin_user = users['admin']['user'];
 const admin_pass = users['admin']['pass'];
 
 before(() => {
+    //Clear out all cookies
+    cy.clearCookies();
+
     //This will establish the base url for Cypress
     cy.visit('/');
 
@@ -34,11 +37,15 @@ before(() => {
     const base_url = 'BASE_URL/' + Cypress.env('baseUrl').replace('http://', 'http\\:\\\\/\\\\/');
 
     //Seeds the database before each test
-    cy.mysql_db('seeds', base_url);
+    cy.mysql_db('seeds', base_url)
+
+    //Login to the system
+    cy.login( { username: admin_user, password: admin_pass } )
 });
 
 beforeEach(() => {
-    cy.login( { username: admin_user, password: admin_pass } )
+    //Preserve the cookies before each test
+    Cypress.Cookies.preserveOnce('PHPSESSID', 'ckppd7m1u5qgoh7k3mpankr8i1')
 })
 
 Cypress.on("uncaught:exception", (err, runnable) => {
