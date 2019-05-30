@@ -8,6 +8,8 @@ describe('Browse Projects', function () {
                 })
             })            
         })
+
+        cy.ignore_redcap_stats()
     })
 
     describe('Display Projects', function () { 
@@ -60,9 +62,9 @@ describe('Browse Projects', function () {
 
     })
 
-    describe('Filter Projects', function () {   
+    describe('Filter Projects', () => {
 
-        it('filters project by title', function () {
+        it('filters project by title', () => {
 
             cy.get('button').contains('View all projects').click().then(() => {
                 // Type in "Classic" in the filter text box
@@ -89,73 +91,30 @@ describe('Browse Projects', function () {
         })
     })
     
-    describe('Sort Columns', function () {   
+    describe('Sort Columns', () => {
 
-        function checkCellClassName(col_name, values = []){
-            abstractSort(col_name, 'table#table-proj_table tr:first span', values, 1);
-        }
-
-        function checkCellValue(col_name, element, values = []){
-            abstractSort(col_name, element, values);
-        }
-
-        function abstractSort(col_name, element, values, klass = 0){
-            cy.get('button').contains('View all projects').click().then(() => {
-                cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                    cy.get('th div').contains(col_name).click().then(()=> {
-                        cy.get(element).then(($a) => { 
-                            cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                                klass ? expect($a).to.have.class(values[0]) : expect($a).to.contain(values[0])   
-                                cy.get('th div').contains(col_name).click().then(()=>{
-                                    cy.get(element).then(($e) => {
-                                        cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                                            klass ? expect($e).to.have.class(values[1]) : expect($e).to.contain(values[1])       
-                                        })                                
-                                    })
-                                })
-                            })
-                        })
-                    })
-                })
-             })           
-        }
-
-        it('sorts the Project Title column appropriately', function () {
-        checkCellValue('Project Title', 
-                       'table#table-proj_table tr:first div.projtitle', 
-                        ['Basic Demography', 'Test Project']);
+        it('sorts the Project Title column appropriately', () => {
+            cy.check_column_sort_values('Project Title', 'table#table-proj_table tr:first div.projtitle', ['Basic Demography', 'Test Project'])
         })
 
-        it('sorts the Records column appropriately', function () {
-            checkCellClassName('Records', 
-                               ['pid-cnti-1', 'pid-cnti-13']);
+        it('sorts the Records column appropriately', () => {
+            cy.check_column_sort_classes('Records', ['pid-cntr-7', 'pid-cntr-13'])
         })
 
-        it('sorts the Fields column appropriately', function () {
-            checkCellValue('Fields', 
-                           'table#table-proj_table tr:first div', 
-                           ['2', '198']);
+        it('sorts the Fields column appropriately', () => {
+            cy.check_column_sort_values('Fields', 'table#table-proj_table tr:first div', ['2', '198'])
         })
 
-        it('sorts the Instrument column appropriately', function () {
-            checkCellValue('Instrument', 
-                           'table#table-proj_table tr:first div.fc span div', 
-                           ['1 form', '15 forms']);
+        it('sorts the Instrument column appropriately', () => {
+            cy.check_column_sort_values('Instrument', 'table#table-proj_table tr:first div.fc span div', ['1 form', '15 forms'])
         })
 
-        it('sorts the Type column appropriately', function () {
-            checkCellValue('Type', 
-                           'table#table-proj_table tr:first span.hidden', 
-                           ['0', '1']);
+        it('sorts the Type column appropriately', () => {
+            cy.check_column_sort_values('Type', 'table#table-proj_table tr:first span.hidden', ['0', '1']);
         })
 
-        it('sorts the Status column appropriately', function () {
-            checkCellClassName('Status', 
-                               ['glyphicon-check', 'glyphicon-wrench']);
+        it('sorts the Status column appropriately', () => {
+            cy.check_column_sort_classes('Status', ['glyphicon-check', 'glyphicon-wrench']);
         })
-
-
-    })   
-
-          
+    })            
 })

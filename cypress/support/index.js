@@ -35,13 +35,13 @@ before(() => {
 
     //Seeds the database before each test
     cy.mysql_db('seeds', base_url);
-
 });
 
 beforeEach(() => {
-    cy.login( { username: admin_user, password: admin_pass } );
+    cy.login( { username: admin_user, password: admin_pass } )
 })
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-    return false
-})
+Cypress.on("uncaught:exception", (err, runnable) => {
+  console.debug(">> uncaught:exception disabled in cypress/support/index.js");
+  return false;  // prevents Cypress from failing the test
+});

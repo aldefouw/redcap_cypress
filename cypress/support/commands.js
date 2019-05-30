@@ -59,6 +59,43 @@ Cypress.Commands.add("save_field", () => {
     });
 });
 
+Cypress.Commands.add("ignore_redcap_stats", () => {
+    cy.server()
+    cy.route('POST', '**/ProjectGeneral/project_stats_ajax.php').as('stats')
+    cy.wait('@stats').then((xhr) => { expect(xhr.status).to.equal(200) })
+})
+
+function abstractSort(col_name, element, values, klass = 0){
+    cy.get('button').contains('View all projects').click().then(() => {
+        cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+            cy.get('th div').contains(col_name).click().then(()=> {
+                cy.get(element).then(($a) => { 
+                    cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+                        klass ? expect($a).to.have.class(values[0]) : expect($a).to.contain(values[0])   
+                        cy.get('th div').contains(col_name).click().then(()=>{
+                            cy.get(element).then(($e) => {
+                                cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+                                    klass ? expect($e).to.have.class(values[1]) : expect($e).to.contain(values[1])       
+                                })                                
+                            })
+                        })
+                    })
+                })
+            })
+        })
+     })           
+}
+
+Cypress.Commands.add("check_column_sort_values", (col_name, element, values) => {
+    abstractSort(col_name, element, values);
+})
+
+Cypress.Commands.add("check_column_sort_classes", (col_name, values) => {
+    abstractSort(col_name, 'table#table-proj_table tr:first span', values, 1);
+})
+
+
+
 //
 //
 // -- This is a child command --
