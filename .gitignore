@@ -7,6 +7,5 @@ cypress.env.json
 .DS_STORE
 
 *.tmp
-
-/screenshots
-/videos
+*.mp4
+*.png
