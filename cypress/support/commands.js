@@ -114,11 +114,11 @@ function abstractProjectView(input, project_name, total_projects, dropdown_click
     })
 }
 
-Cypress.Commands.add("visible_projects_user_input", (input, project_name, total_projects) => {
+Cypress.Commands.add("visible_projects_user_input_click_view", (input, project_name, total_projects) => {
     abstractProjectView(input, project_name, total_projects, true)
 })
 
-Cypress.Commands.add("visible_projects_user_input_view", (input, project_name, total_projects) => {
+Cypress.Commands.add("visible_projects_user_input", (input, project_name, total_projects) => {
     abstractProjectView(input, project_name, total_projects, false)
 })
 

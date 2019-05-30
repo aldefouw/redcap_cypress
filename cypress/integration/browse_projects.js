@@ -21,16 +21,16 @@ describe('Browse Projects', () => {
         })
 
         it('displays the projects for Test User when you click the view button', () => {
-            cy.visible_projects_user_input('test_user', 'Test Project', 1)
+            cy.visible_projects_user_input_click_view('test_user', 'Test Project', 1)
         })
 
 
         it('displays the projects for Test User when you click on the user after entering the username', () => {
-           cy.visible_projects_user_input_view('test_user', 'Test Project', 1)
+           cy.visible_projects_user_input('test_user', 'Test Project', 1)
         }) 
 
         it('displays the projects for Test User when you click on the user after entering the email address', () => {
-            cy.visible_projects_user_input_view('test_user@example.com', 'Test Project', 1)
+            cy.visible_projects_user_input('test_user@example.com', 'Test Project', 1)
         })  
 
     })
@@ -67,27 +67,37 @@ describe('Browse Projects', () => {
     describe('Sort Columns', () => {
 
         it('sorts the Project Title column appropriately', () => {
-            cy.check_column_sort_values('Project Title', 'table#table-proj_table tr:first div.projtitle', ['Basic Demography', 'Test Project'])
+            cy.check_column_sort_values('Project Title', 
+                                        'table#table-proj_table tr:first div.projtitle', 
+                                        ['Basic Demography', 'Test Project'])
         })
 
         it('sorts the Records column appropriately', () => {
-            cy.check_column_sort_classes('Records', ['pid-cntr-7', 'pid-cntr-13'])
+            cy.check_column_sort_classes('Records', 
+                                         ['pid-cntr-7', 'pid-cntr-13'])
         })
 
         it('sorts the Fields column appropriately', () => {
-            cy.check_column_sort_values('Fields', 'table#table-proj_table tr:first div', ['2', '198'])
+            cy.check_column_sort_values('Fields', 
+                                        'table#table-proj_table tr:first div', 
+                                        ['2', '198'])
         })
 
         it('sorts the Instrument column appropriately', () => {
-            cy.check_column_sort_values('Instrument', 'table#table-proj_table tr:first div.fc span div', ['1 form', '15 forms'])
+            cy.check_column_sort_values('Instrument', 
+                                        'table#table-proj_table tr:first div.fc span div', 
+                                        ['1 form', '15 forms'])
         })
 
         it('sorts the Type column appropriately', () => {
-            cy.check_column_sort_values('Type', 'table#table-proj_table tr:first span.hidden', ['0', '1']);
+            cy.check_column_sort_values('Type', 
+                                        'table#table-proj_table tr:first span.hidden', 
+                                        ['0', '1']);
         })
 
         it('sorts the Status column appropriately', () => {
-            cy.check_column_sort_classes('Status', ['glyphicon-check', 'glyphicon-wrench']);
+            cy.check_column_sort_classes('Status', 
+                                         ['glyphicon-check', 'glyphicon-wrench']);
         })
     })            
 })
