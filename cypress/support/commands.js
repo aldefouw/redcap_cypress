@@ -94,6 +94,36 @@ Cypress.Commands.add("check_column_sort_classes", (col_name, values) => {
     abstractSort(col_name, 'table#table-proj_table tr:first span', values, 1);
 })
 
+function buttonClick(dropdown_click = false){
+    dropdown_click ? cy.get('ul#ui-id-1 li a').click() : cy.get('button#user_search_btn').click()
+}
+
+function abstractProjectView(input, project_name, total_projects, dropdown_click){
+    cy.get('input#user_search').type(input).then(() => {   
+
+        let $t = dropdown_click ? cy.get('button#user_search_btn') : cy.get('ul#ui-id-1 li a')
+
+        $t.click().then(($a) => {
+            cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+                 cy.get('table#table-proj_table tr:first div.projtitle').then(($a) => {
+                    expect($a).to.contain(project_name)
+                    cy.get('table#table-proj_table').find('tr:visible').should('have.length', total_projects)
+                })
+            })
+        })
+    })
+}
+
+Cypress.Commands.add("visible_projects_user_input", (input, project_name, total_projects) => {
+    abstractProjectView(input, project_name, total_projects, true)
+})
+
+Cypress.Commands.add("visible_projects_user_input_view", (input, project_name, total_projects) => {
+    abstractProjectView(input, project_name, total_projects, false)
+})
+
+
+
 
 
 //

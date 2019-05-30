@@ -1,4 +1,4 @@
-describe('Browse Projects', function () {
+describe('Browse Projects', () => {
 
     beforeEach(() => {
         cy.visit('/').then(() => {
@@ -12,52 +12,25 @@ describe('Browse Projects', function () {
         cy.ignore_redcap_stats()
     })
 
-    describe('Display Projects', function () { 
+    describe('Display Projects', () => { 
 
-        it('displays a list of all projects', function () {
+        it('displays a list of all projects', () => {
             cy.get('button').contains('View all projects').click().then(() => {
                 cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
             })            
         })
 
-        it('displays the projects for Test User when you click the view button', function () {
-            cy.get('input#user_search').type('test_user').then(() => {            
-                cy.get('button#user_search_btn').click().then(() => {
-                     cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                        cy.get('table#table-proj_table tr:first div.projtitle').then(($a) => {
-                            expect($a).to.contain("Test Project")
-                            cy.get('table#table-proj_table').find('tr:visible').should('have.length', 1)
-                        })
-                     })
-                })
-            })
+        it('displays the projects for Test User when you click the view button', () => {
+            cy.visible_projects_user_input('test_user', 'Test Project', 1)
         })
 
 
-        it('displays the projects for Test User when you click on the user after entering the username', function () {
-           cy.get('input#user_search').type('test_user').then(() => {            
-                cy.get('ul#ui-id-1 li a').click().then(($a) => {
-                    cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                         cy.get('table#table-proj_table tr:first div.projtitle').then(($a) => {
-                            expect($a).to.contain("Test Project")
-                            cy.get('table#table-proj_table').find('tr:visible').should('have.length', 1)
-                        })
-                    })
-                })
-            })
+        it('displays the projects for Test User when you click on the user after entering the username', () => {
+           cy.visible_projects_user_input_view('test_user', 'Test Project', 1)
         }) 
 
-        it('displays the projects for Test User when you click on the user after entering the email address', function () {
-            cy.get('input#user_search').type('test_user@example.com').then(() => {            
-                cy.get('ul#ui-id-1 li a').click().then(($a) => {
-                    cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                         cy.get('table#table-proj_table tr:first div.projtitle').then(($a) => {
-                            expect($a).to.contain("Test Project")
-                            cy.get('table#table-proj_table').find('tr:visible').should('have.length', 1)
-                        })
-                    })
-                })
-            })
+        it('displays the projects for Test User when you click on the user after entering the email address', () => {
+            cy.visible_projects_user_input_view('test_user@example.com', 'Test Project', 1)
         })  
 
     })
