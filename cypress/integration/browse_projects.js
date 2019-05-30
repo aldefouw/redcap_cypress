@@ -15,7 +15,7 @@ describe('Browse Projects', () => {
         it('displays a list of all projects', () => {
             cy.visit_v({page: '/ControlCenter/view_projects.php'}).then(() => {
 
-                cy.ignore_redcap_stats()
+                cy.require_redcap_stats()
 
                 cy.get('button').contains('View all projects').click().then(() => {
                     cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
@@ -45,7 +45,7 @@ describe('Browse Projects', () => {
 
             cy.visit_v({page: '/ControlCenter/view_projects.php'}).then(() => {
 
-                cy.ignore_redcap_stats()
+                cy.require_redcap_stats()
 
                 cy.get('button').contains('View all projects').click().then(() => {
                     // Type in "Classic" in the filter text box

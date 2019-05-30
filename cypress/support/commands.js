@@ -24,7 +24,7 @@ Cypress.Commands.add("login", (options) => {
         }
     }).then(($a) => {
         expect($a.status).to.equal(200)
-    })    
+    })
 });
 
 Cypress.Commands.add("visit_v", (options) => {
@@ -61,7 +61,7 @@ Cypress.Commands.add("save_field", () => {
     });
 });
 
-Cypress.Commands.add("ignore_redcap_stats", () => {
+Cypress.Commands.add("require_redcap_stats", () => {
     cy.server()
     cy.route('POST', '**/ProjectGeneral/project_stats_ajax.php').as('stats')
     cy.wait('@stats').then((xhr) => { expect(xhr.status).to.equal(200) })
@@ -99,7 +99,7 @@ Cypress.Commands.add("check_column_sort_classes", (col_name, values) => {
 function abstractProjectView(input, project_name, total_projects, dropdown_click){
     cy.visit_v({page: '/ControlCenter/view_projects.php'}).then(() => {
 
-        cy.ignore_redcap_stats()
+        cy.require_redcap_stats()
 
         cy.get('input#user_search').type(input).then(() => {   
 
