@@ -1,26 +1,26 @@
 describe('Browse Projects', () => {
 
+    it('displays the "Browse Projects" page when you click on "Control Center"', () => {
+        cy.visit('/').then(() => {                
+            cy.get('a').contains('Control Center').click().then(() => {
+                cy.get('a').contains('Browse Projects').click().then(() => {  
+                    cy.get('div h4').should('contain', 'Browse Projects')
+                })
+            })            
+        })
+    })
+
     describe('Display Projects', () => { 
 
-        it('displays the "Browse Projects" page when you click on "Control Center"', () => {
-            cy.visit('/').then(() => {                
-                cy.get('a').contains('Control Center').click().then(() => {
-                    cy.get('a').contains('Browse Projects').click().then(() => {  
-                        cy.get('div h4').should('contain', 'Browse Projects')
-                    })
-                })            
+        before(() => {
+            cy.visit_v({page: '/ControlCenter/view_projects.php'}).then(() => {
+               cy.require_redcap_stats()
             })
         })
 
         it('displays a list of all projects', () => {
-            cy.visit_v({page: '/ControlCenter/view_projects.php'}).then(() => {
-
-                cy.require_redcap_stats()
-
-                cy.get('button').contains('View all projects').click().then(() => {
-                    cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
-                })
-
+            cy.get('button').contains('View all projects').click().then(() => {
+                cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
             })
         })
 
@@ -75,6 +75,13 @@ describe('Browse Projects', () => {
     
     describe('Sort Columns', () => {
 
+        before(() => {
+            cy.visit_v({page: '/ControlCenter/view_projects.php'}).then(() => {
+               cy.require_redcap_stats()
+               cy.get('button').contains('View all projects').click()
+            })
+        })
+
         it('sorts the Project Title column appropriately', () => {
             cy.check_column_sort_values('Project Title', 
                                         'table#table-proj_table tr:first div.projtitle', 
@@ -83,7 +90,7 @@ describe('Browse Projects', () => {
 
         it('sorts the Records column appropriately', () => {
             cy.check_column_sort_classes('Records', 
-                                         ['pid-cntr-7', 'pid-cntr-13'])
+                                         ['pid-cntr-10', 'pid-cntr-5'])
         })
 
         it('sorts the Fields column appropriately', () => {

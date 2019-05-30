@@ -68,24 +68,21 @@ Cypress.Commands.add("require_redcap_stats", () => {
 })
 
 function abstractSort(col_name, element, values, klass = 0){
-    cy.get('button').contains('View all projects').click().then(() => {
-        cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-            cy.get('th div').contains(col_name).click().then(()=> {
-                cy.get(element).then(($a) => { 
-                    cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                        klass ? expect($a).to.have.class(values[0]) : expect($a).to.contain(values[0])   
-                        cy.get('th div').contains(col_name).click().then(()=>{
-                            cy.get(element).then(($e) => {
-                                cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                                    klass ? expect($e).to.have.class(values[1]) : expect($e).to.contain(values[1])       
-                                })                                
-                            })
-                        })
-                    })
-                })
+    const sortCompare1 = sorterCompare(col_name, element, values[0], klass)
+    const sortCompare2 = sorterCompare(col_name, element, values[1], klass)
+    sortCompare1.then(() => { sortCompare2 })
+}
+
+function sorterCompare(col_name, element, values, klass){
+    return cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+        cy.get('th div').contains(col_name).click().then(()=>{
+            cy.get(element).then(($e) => {
+                cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+                    klass ? expect($e).to.have.class(values) : expect($e).to.contain(values)       
+                })                                
             })
         })
-     })           
+    })
 }
 
 Cypress.Commands.add("check_column_sort_values", (col_name, element, values) => {
@@ -97,20 +94,17 @@ Cypress.Commands.add("check_column_sort_classes", (col_name, values) => {
 })
 
 function abstractProjectView(input, project_name, total_projects, dropdown_click){
-    cy.visit_v({page: '/ControlCenter/view_projects.php'}).then(() => {
+    cy.get('input#user_search').clear()
 
-        cy.require_redcap_stats()
+    cy.get('input#user_search').type(input).then(() => {   
 
-        cy.get('input#user_search').type(input).then(() => {   
+        let $t = dropdown_click ? cy.get('button#user_search_btn') : cy.get('ul#ui-id-1 li a')
 
-            let $t = dropdown_click ? cy.get('button#user_search_btn') : cy.get('ul#ui-id-1 li a')
-
-            $t.click().then(($a) => {
-                cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                     cy.get('table#table-proj_table tr:first div.projtitle').then(($a) => {
-                        expect($a).to.contain(project_name)
-                        cy.get('table#table-proj_table').find('tr:visible').should('have.length', total_projects)
-                    })
+        $t.click().then(($a) => {
+            cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+                 cy.get('table#table-proj_table tr:first div.projtitle').then(($a) => {
+                    expect($a).to.contain(project_name)
+                    cy.get('table#table-proj_table').find('tr:visible').should('have.length', total_projects)
                 })
             })
         })
