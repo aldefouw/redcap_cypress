@@ -1,20 +1,26 @@
 describe('Browse Projects', () => {
 
     beforeEach(() => {
-        cy.visit('/').then(() => {
-            cy.get('a').contains('Control Center').click().then(() => {
-                cy.get('a').contains('Browse Projects').click().then(() => {  
-                    cy.get('div h4').should('contain', 'Browse Projects')
-                })
-            })            
-        })
 
-        cy.ignore_redcap_stats()
     })
 
     describe('Display Projects', () => { 
 
+        it('displays the "Browse Projects" page when you click on "Control Center"', () => {
+            cy.visit('/').then(() => {                
+                cy.get('a').contains('Control Center').click().then(() => {
+                    cy.get('a').contains('Browse Projects').click().then(() => {  
+                        cy.get('div h4').should('contain', 'Browse Projects')
+                    })
+                })            
+            })
+        })
+
         it('displays a list of all projects', () => {
+            cy.visit_v({page: '/ControlCenter/view_projects.php'})
+
+            cy.ignore_redcap_stats()
+
             cy.get('button').contains('View all projects').click().then(() => {
                 cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
             })            
@@ -39,28 +45,33 @@ describe('Browse Projects', () => {
 
         it('filters project by title', () => {
 
-            cy.get('button').contains('View all projects').click().then(() => {
-                // Type in "Classic" in the filter text box
-                cy.get('input#proj_search').type('Classic').then(() => {
+            cy.visit_v({page: '/ControlCenter/view_projects.php'}).then(() => {
 
-                    // See if our two test projects with the word "Classic" appear
-                    cy.get('table#table-proj_table').contains('Classic Database').should('be.visible')
-                    cy.get('table#table-proj_table').contains('Multiple Surveys (classic)').should('be.visible')
+                cy.ignore_redcap_stats()
 
-                    // Make sure that a project without the word "Classic" doesn't appear
-                    cy.get('table#table-proj_table').contains('Test Project').should('not.be.visible')
+                cy.get('button').contains('View all projects').click().then(() => {
+                    // Type in "Classic" in the filter text box
+                    cy.get('input#proj_search').type('Classic').then(() => {
 
-                    // All projects should be shown again
-                    cy.get('table#table-proj_table').find('tr:visible').should('have.length', 2)
+                        // See if our two test projects with the word "Classic" appear
+                        cy.get('table#table-proj_table').contains('Classic Database').should('be.visible')
+                        cy.get('table#table-proj_table').contains('Multiple Surveys (classic)').should('be.visible')
 
-                    // Clear out the filter
-                    cy.get('input#proj_search').clear()
+                        // Make sure that a project without the word "Classic" doesn't appear
+                        cy.get('table#table-proj_table').contains('Test Project').should('not.be.visible')
 
-                    // See how many text rows are visible.  Should be two to match our two projects w/ word "classic"
-                    cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
+                        // All projects should be shown again
+                        cy.get('table#table-proj_table').find('tr:visible').should('have.length', 2)
 
-                })                
-            })            
+                        // Clear out the filter
+                        cy.get('input#proj_search').clear()
+
+                        // See how many text rows are visible.  Should be two to match our two projects w/ word "classic"
+                        cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
+
+                    })                
+                })      
+            })      
         })
     })
     
