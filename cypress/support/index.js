@@ -24,30 +24,39 @@ const admin_user = users['admin']['user'];
 const admin_pass = users['admin']['pass'];
 
 before(() => {
-    //Clear out all cookies
-    cy.clearCookies()
-
     //This will establish the base url for Cypress
     cy.visit('/')
 
     //Create the initial database structure
-    cy.mysql_db('structure')
-  
-    //Set the Base URL in the REDCap Configuration Database
-    const base_url = 'BASE_URL/' + Cypress.env('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
-    const version = Cypress.env('redcap_version')
+    cy.mysql_db('structure').then(() => {
 
+            //Set the Base URL in the REDCap Configuration Database
+        const base_url = 'BASE_URL/' + Cypress.env('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
+        const version = Cypress.env('redcap_version')
 
-    //Seeds the database before each test
-    cy.mysql_db('/versions/' + version, base_url)
+        //Seeds the database before each test
+        cy.mysql_db('/versions/' + version, base_url).then(() => {
 
-    //Login to the system
-    cy.login( { username: admin_user, password: admin_pass } )
-});
+            //Clear out all cookies
+            cy.clearCookies()
+
+            cy.visit('/')
+            cy.get('input#username').type(admin_user)
+            cy.get('input#password').type(admin_pass)
+            cy.contains('button', 'Log In').click()
+        })
+
+    })
+   
+})
 
 beforeEach(() => {
     //Preserve the cookies before each test
     Cypress.Cookies.preserveOnce('PHPSESSID')
+})
+
+after(() => {
+    cy.clearCookies()
 })
 
 Cypress.on("uncaught:exception", (err, runnable) => {
