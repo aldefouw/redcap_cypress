@@ -50,8 +50,33 @@ Cypress.Commands.add("mysql_db", (type, replace = '') => {
     cy.exec(cmd)
 })
 
-Cypress.Commands.add("contains_cc_link", (text) => {
-    cy.get('div#control_center_menu a').contains(text)
+Cypress.Commands.add("contains_cc_link", (link, title = '') => {
+   cy.visit_v({page: "ControlCenter/index.php"}).then(() => {
+
+        if(title == '') title = link        
+
+        cy.get('div#control_center_menu a').contains(link).click().then(($control_center) => {
+
+            if($control_center.find('div#control_center_window').length){
+
+                cy.get('div#control_center_window').then(($a) => {
+                    if($a.find('div#control_center_window h4').length){ 
+                        cy.get('div#control_center_window h4').contains(title)
+                    } else if ($a.find('div#control_center_window div').length){
+                        cy.get('div#control_center_window div').contains(title)
+                    } else {
+                        cy.get('body').contains(title)
+                    }                
+                })
+
+            } else {
+
+                cy.get('body').contains(title)
+
+            }
+            
+        }) 
+    })
 })
 
 Cypress.Commands.add("find_online_designer_field", (name, timeout = 10000) => {
