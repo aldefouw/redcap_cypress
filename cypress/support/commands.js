@@ -50,6 +50,10 @@ Cypress.Commands.add("mysql_db", (type, replace = '') => {
     cy.exec(cmd)
 })
 
+Cypress.Commands.add("contains_cc_link", (text) => {
+    cy.get('div#control_center_menu a').contains(text)
+})
+
 Cypress.Commands.add("find_online_designer_field", (name, timeout = 10000) => {
      cy.contains('td', name, { timeout: timeout })
 })
