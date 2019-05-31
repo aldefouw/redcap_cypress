@@ -3,8 +3,6 @@ describe('Login Page', function () {
     const users = Cypress.env("users");
     const username = users['standard']['user'];
     const password = users['standard']['pass'];
-    const admin_user = users['admin']['user'];
-    const admin_pass = users['admin']['pass'];
 
     beforeEach(()=>{
         cy.clearCookie('PHPSESSID')
@@ -34,6 +32,8 @@ describe('Login Page', function () {
     })
 
     after(() => {
+        const admin_user = users['admin']['user'];
+        const admin_pass = users['admin']['pass'];
         cy.login( { username: admin_user, password: admin_pass } )
     })
     

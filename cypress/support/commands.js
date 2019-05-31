@@ -55,37 +55,23 @@ Cypress.Commands.add("find_online_designer_field", (name, timeout = 10000) => {
 })
 
 Cypress.Commands.add("initial_save_field", () => {
+    cy.get('input#field_name').then(($f) => {
+        cy.contains('button', 'Save').
+           should('be.visible').
+           click().
+           then(() => {
 
-
-         cy.get('input#field_name').then(($f) => {
-
-                    cy.contains('button', 'Save').
-                       should('be.visible').
-                       click().
-                       then(() => {
-
-
-                    cy.contains('Alert').then(($a) => {
-                        if($a.length){
-                            cy.get('button[title=Close]:last:visible').click()
-                            cy.get('input#auto_variable_naming').click()
-                            cy.contains('button', 'Enable auto naming').click().then(() => {
-                                cy.contains('button', 'Save').click().then(() => {
-                                    cy.get('button[title=Close]:last:visible').click().then(() => {
-                                        cy.contains('button', 'Save').click()
-                                    })
-                                })                    
-                            })       
-                        }                        
-                    })
-                    // cy.server()
-                    // cy.route('POST', '**/Design/edit_field_prefill.php').as('prefill')
-                    // cy.wait('@prefill').then((xhr) => { expect(xhr.status).to.equal(200) })
-                }) 
-               
-            })
-
-   
+                cy.contains('Alert').then(($a) => {
+                    if($a.length){
+                        cy.get('button[title=Close]:last:visible').click()
+                        cy.get('input#auto_variable_naming').click()
+                        cy.contains('button', 'Enable auto naming').click().then(() => {
+                            cy.contains('button', 'Save').click()
+                        })       
+                    }                        
+                })
+            })                
+    })   
 })
 
 Cypress.Commands.add("save_field", () => {
