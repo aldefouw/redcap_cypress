@@ -47,7 +47,7 @@ before(() => {
 
 beforeEach(() => {
     //Preserve the cookies before each test
-    Cypress.Cookies.preserveOnce('PHPSESSID', 'ckppd7m1u5qgoh7k3mpankr8i1')
+    Cypress.Cookies.preserveOnce('PHPSESSID')
 })
 
 Cypress.on("uncaught:exception", (err, runnable) => {
