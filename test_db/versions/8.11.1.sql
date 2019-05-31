@@ -371,4 +371,10 @@ START TRANSACTION;
 	INSERT INTO `redcap_validation_types` (`validation_name`, `validation_label`, `regex_js`, `regex_php`, `data_type`, `legacy_value`, `visible`) VALUES ('postalcode_germany', 'Postal Code (Germany)', '/^(0[1-9]|[1-9]\\d)\\d{3}$/',  '/^(0[1-9]|[1-9]\\d)\\d{3}$/', 'postal_code', NULL, 0);
 	INSERT INTO `redcap_validation_types` (`validation_name`, `validation_label`, `regex_js`, `regex_php`, `data_type`, `legacy_value`, `visible`) VALUES ('postalcode_french', 'Code Postal 5 caracteres (France)', '/^((0?[1-9])|([1-8][0-9])|(9[0-8]))[0-9]{3}$/', '/^((0?[1-9])|([1-8][0-9])|(9[0-8]))[0-9]{3}$/', 'postal_code', NULL, 0);
 
+	ALTER TABLE `redcap_library_map` ADD `promis_battery_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'PROMIS battery key' AFTER battery;
+	ALTER TABLE `redcap_projects` ADD `google_recaptcha_enabled` tinyint(1) NOT NULL DEFAULT '0' AFTER custom_project_footer_text_link;
+	INSERT INTO redcap_config (field_name, value) VALUES ('azure_quickstart', '0');
+	INSERT INTO redcap_config (field_name, value) VALUES ('google_recaptcha_site_key', '');
+	INSERT INTO redcap_config (field_name, value) VALUES ('google_recaptcha_secret_key', '');
+
 COMMIT;
