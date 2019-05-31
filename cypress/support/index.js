@@ -25,19 +25,21 @@ const admin_pass = users['admin']['pass'];
 
 before(() => {
     //Clear out all cookies
-    cy.clearCookies();
+    cy.clearCookies()
 
     //This will establish the base url for Cypress
-    cy.visit('/');
+    cy.visit('/')
 
     //Create the initial database structure
-    cy.mysql_db('structure');
+    cy.mysql_db('structure')
   
     //Set the Base URL in the REDCap Configuration Database
-    const base_url = 'BASE_URL/' + Cypress.env('baseUrl').replace('http://', 'http\\:\\\\/\\\\/');
+    const base_url = 'BASE_URL/' + Cypress.env('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
+    const version = Cypress.env('redcap_version')
+
 
     //Seeds the database before each test
-    cy.mysql_db('seeds', base_url)
+    cy.mysql_db('/versions/' + version, base_url)
 
     //Login to the system
     cy.login( { username: admin_user, password: admin_pass } )
