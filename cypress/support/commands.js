@@ -106,8 +106,7 @@ Cypress.Commands.add("add_field", (field_name, type) => {
 
 Cypress.Commands.add("require_redcap_stats", () => {
     cy.server()
-    const version = Cypress.env('redcap_version')
-    cy.route('POST', 'redcap_v' + version + '/ProjectGeneral/project_stats_ajax.php').as('stats')
+    cy.route('POST', '**/ProjectGeneral/project_stats_ajax.php').as('stats')
     cy.wait('@stats').then((xhr) => { expect(xhr.status).to.equal(200) })
 })
 
