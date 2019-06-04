@@ -1,7 +1,7 @@
 describe('Configuration Check', () => {
 
     it('should have tabs to My Projects, New Project, Help & FAQ, Control Center"', () => {
-        cy.visit('/').then(() => {                
+        cy.visit_v({ page:'/'}).then(() => {                
             cy.get('a').contains('My Projects')
             cy.get('a').contains('New Project')
             cy.get('a').contains('Help & FAQ')
@@ -10,10 +10,6 @@ describe('Configuration Check', () => {
     })
 
     describe('Control Center', () => {
-
-    	before(() => {
-
-    	})
 
     	describe('Control Center Home', () => {
     		it('should have Notifications & Reporting', () => { cy.contains_cc_link('Notifications & Reporting', 'Notifications') })

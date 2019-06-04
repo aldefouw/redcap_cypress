@@ -28,8 +28,39 @@ Cypress.Commands.add("login", (options) => {
 })
 
 Cypress.Commands.add("visit_v", (options) => {
+    const users = Cypress.env("users");
+    const admin_user = users['admin']['user'];
+    const admin_pass = users['admin']['pass'];
+
+    cy.maintain_login(admin_user, admin_pass)
+
     const redcap_version = Cypress.env("redcap_version")
-    cy.visit('/redcap_v' + redcap_version + '/' + options['page'] + '?' + options['params'])
+    
+    if('params' in options){
+        cy.visit('/redcap_v' + redcap_version + '/' + options['page'] + '?' + options['params'])
+    } else {
+        cy.visit('/redcap_v' + redcap_version + '/' + options['page'])
+    }
+   
+})
+
+Cypress.Commands.add("maintain_login", (user, pass) => {
+
+    cy.getCookies()
+      .should((cookies) => {
+
+        //In most cases, we'll have cookies to preserve to maintain a login
+        if (cookies.length > 0){
+
+            cookies.map(cookie =>  Cypress.Cookies.preserveOnce(cookie['name']) )
+
+        //But, if we don't, then let's simply re-login, right?    
+        } else {            
+            cy.login({ username: user, password:  pass })
+            cy.visit('/')
+        }        
+        
+    })    
 })
 
 Cypress.Commands.add("mysql_db", (type, replace = '') => {
@@ -45,9 +76,9 @@ Cypress.Commands.add("mysql_db", (type, replace = '') => {
         ' ' + type +
         ' ' + replace
 
-    console.log(cmd)
-
-    cy.exec(cmd)
+    cy.exec(cmd).then((response) => {
+        console.log(response)
+    })
 })
 
 function test_link (link, title, try_again = true) {

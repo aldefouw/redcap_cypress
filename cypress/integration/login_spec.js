@@ -5,14 +5,18 @@ describe('Login Page', function () {
     const password = users['standard']['pass'];
 
     beforeEach(()=>{
-        cy.clearCookie('PHPSESSID')
-        cy.visit('/')
+        cy.visit('/?logout=1')
+        cy.clearCookies()
     })
 
     it('sets auth cookie when logging in via form submission', ()=>{
         cy.get('input#username').type(username)
-        cy.get('input#password').type(`${password}{enter}`)
-        cy.getCookie('PHPSESSID').should('exist')
+        cy.get('input#password').type(`${password}{enter}`).then(() => {
+            cy.getCookies()
+              .then((cookies) => {
+                expect(cookies.length).to.equal(1)
+              })
+        })
     })
 
     it('requires a username', ()=>{
@@ -29,12 +33,6 @@ describe('Login Page', function () {
         cy.get('input#username').type(username)
         cy.get('input#password').type(password)
         cy.contains('button', 'Log In').click()
-    })
-
-    after(() => {
-        const admin_user = users['admin']['user'];
-        const admin_pass = users['admin']['pass'];
-        cy.login( { username: admin_user, password: admin_pass } )
     })
     
 })
