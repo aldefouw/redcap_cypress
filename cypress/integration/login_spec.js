@@ -6,7 +6,7 @@ describe('Login Page', function () {
 
     beforeEach(()=>{
         cy.visit('/?logout=1')
-        cy.clearCookies()
+        cy.visit('/')
     })
 
     it('sets auth cookie when logging in via form submission', ()=>{
