@@ -5,8 +5,10 @@ describe('Login Page', function () {
     const password = users['standard']['pass'];
 
     beforeEach(()=>{
-        cy.visit('/?logout=1')
-        cy.visit('/')
+        cy.visit('/?logout=1').then(() => {
+            cy.clearCookies()
+            cy.visit('/')
+        })        
     })
 
     it('sets auth cookie when logging in via form submission', ()=>{
