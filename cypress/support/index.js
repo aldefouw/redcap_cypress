@@ -20,17 +20,10 @@ const users = Cypress.env("users");
 const admin_user = users['admin']['user'];
 const admin_pass = users['admin']['pass'];
 
-//Set base URL from the environment variable that was set
-Cypress.config("baseUrl", Cypress.env("baseUrl"));
-
 before(() => {
 
-    //Make the setup as fast as possible.  
-    //Cypress restarts to set this window.  This appears to prevent the tests from failing first time through as well.
-    cy.visit('/')
-
-    //Set the Base URL in the REDCap Configuration Database
-    const base_url = 'BASE_URL/' + Cypress.env('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
+     //Set the Base URL in the REDCap Configuration Database
+    const base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
     const version = Cypress.env('redcap_version')
 
     //Create the initial database structure
@@ -41,7 +34,6 @@ before(() => {
 
             //Clear out all cookies
             cy.clearCookies()
-
 
             //Login initially
             cy.login({ username: admin_user, password: admin_pass})
