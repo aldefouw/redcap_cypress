@@ -8,20 +8,8 @@ describe('Login Page', function () {
         cy.clearCookies()
     })
 
-    it('sets auth cookie when logging in via form submission', ()=>{
-        cy.visit('?logout=1').then(() => {
-            cy.get('input#username').type(username)
-            cy.get('input#password').type(`${password}{enter}`).then(() => {
-                cy.getCookies()
-                  .then((cookies) => {
-                    expect(cookies.length).to.be(1)
-                  })
-            }) 
-        })       
-    })
-
-    it('requires a valid username and password', ()=>{
-        cy.visit('?logout=1').then(() => {
+    it('Should log you in with a valid username and password', ()=>{
+        cy.visit_v({page: '?logout=1'}).then(() => {
             cy.clearCookies()
             cy.get('input#username').type(username)
             cy.get('input#password').type(password)
@@ -31,14 +19,14 @@ describe('Login Page', function () {
         })
     })
 
-    it('requires a username', ()=>{
-        cy.visit('?logout=1').then(() => {
+    it('Should require a username', ()=>{
+        cy.visit_v({page: '?logout=1'}).then(() => {
             cy.get('input#password').type(`${password}{enter}`)
             cy.contains('ERROR: You entered an invalid user name or password!')
         })        
     })
 
-    it('requires a password', ()=>{
+    it('Should require a password', ()=>{
         cy.visit_v({page: '?logout=1'}).then(() => {
             cy.get('input#username').type(`${username}{enter}`)
             cy.contains('ERROR: You entered an invalid user name or password!')
