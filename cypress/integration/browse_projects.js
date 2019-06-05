@@ -1,7 +1,7 @@
 describe('Browse Projects', () => {
 
     it('displays the "Browse Projects" page when you click on "Control Center"', () => {
-        cy.visit('/').then(() => {                
+        cy.visit_v({ page: '' }).then(() => {                
             cy.get('a').contains('Control Center').click().then(() => {
                 cy.get('a').contains('Browse Projects').click().then(() => {  
                     cy.get('div h4').should('contain', 'Browse Projects')

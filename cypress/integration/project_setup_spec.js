@@ -3,17 +3,14 @@ describe('Project Setup', () => {
     describe('Online Designer', () => {
 
          before(() => {
-            cy.visit_v({page: 'Design/online_designer.php', params: 'page=my_first_instrument&pid=13'})
-
-            cy.get('input#btn-last').click().then(() => {
-
-                cy.get('select#field_type').select('text');
-                cy.get('textarea#field_label').type('My First Field');
-                cy.initial_save_field()
-
-            }) 
-
-         })
+            cy.visit_v({page: 'Design/online_designer.php', params: 'page=my_first_instrument&pid=13'}).then(() => {
+                cy.get('input#btn-last').click().then(() => {
+                    cy.get('select#field_type').select('text');
+                    cy.get('textarea#field_label').type('My First Field');
+                    cy.initial_save_field()
+                }) 
+            })            
+        })
 
         describe('Date & Time Fields', () => {
 

@@ -1,16 +1,3 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-
 Cypress.Commands.add("login", (options) => {
     cy.request({
         method: 'POST',
@@ -32,17 +19,13 @@ Cypress.Commands.add("visit_v", (options) => {
     const admin_user = users['admin']['user'];
     const admin_pass = users['admin']['pass'];
 
-    cy.maintain_login(admin_user, admin_pass).then(() => {
+    const redcap_version = Cypress.env("redcap_version")
 
-        const redcap_version = Cypress.env("redcap_version")
-    
-        if('params' in options){
-            cy.visit('/redcap_v' + redcap_version + '/' + options['page'] + '?' + options['params'])
-        } else {
-            cy.visit('/redcap_v' + redcap_version + '/' + options['page'])
-        }
-
-    })
+    if('params' in options){
+        cy.visit('/redcap_v' + redcap_version + '/' + options['page'] +  '?' + options['params'])
+    } else {
+        cy.visit('/redcap_v' + redcap_version + '/' + options['page'])
+    }
    
 })
 
@@ -60,10 +43,10 @@ Cypress.Commands.add("maintain_login", (user, pass) => {
         } else {     
 
             cy.login({ username: user, password:  pass })
-            cy.visit('/')
-        }        
+        }         
         
     })    
+
 })
 
 Cypress.Commands.add("mysql_db", (type, replace = '') => {
@@ -106,11 +89,9 @@ function test_link (link, title, try_again = true) {
 }
 
 Cypress.Commands.add("contains_cc_link", (link, title = '') => {
-   cy.visit_v({page: "ControlCenter/index.php"}).then(() => {
-        if(title == '') title = link
-        let t = Cypress.$("div#control_center_menu a:contains(" + JSON.stringify(link) + ")");
-        t.length ? test_link(link, title) : test_link(link.split(' ')[0], title.split(' ')[0])
-    })
+    if(title == '') title = link
+    let t = Cypress.$("div#control_center_menu a:contains(" + JSON.stringify(link) + ")");
+    t.length ? test_link(link, title) : test_link(link.split(' ')[0], title.split(' ')[0])
 })
 
 Cypress.Commands.add("find_online_designer_field", (name, timeout = 10000) => {
@@ -155,8 +136,8 @@ Cypress.Commands.add("add_field", (field_name, type) => {
 
 Cypress.Commands.add("require_redcap_stats", () => {
     cy.server()
-    cy.route('POST', '**/ProjectGeneral/project_stats_ajax.php').as('stats')
-    cy.wait('@stats').then((xhr) => { })
+    cy.route({method: 'POST', url: '**/ProjectGeneral/project_stats_ajax.php'}).as('project_stats_ajax')
+    cy.wait('@project_stats_ajax')
 })
 
 function abstractSort(col_name, element, values, klass = 0){

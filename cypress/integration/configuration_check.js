@@ -1,7 +1,7 @@
 describe('Configuration Check', () => {
 
     it('should have tabs to My Projects, New Project, Help & FAQ, Control Center"', () => {
-        cy.visit_v({ page:'/'}).then(() => {                
+        cy.visit_v({ page:''}).then(() => {                
             cy.get('a').contains('My Projects')
             cy.get('a').contains('New Project')
             cy.get('a').contains('Help & FAQ')
@@ -10,6 +10,10 @@ describe('Configuration Check', () => {
     })
 
     describe('Control Center', () => {
+
+		beforeEach(() => {
+		   cy.visit_v({page: "ControlCenter/index.php"})
+		})
 
     	describe('Control Center Home', () => {
     		it('should have Notifications & Reporting', () => { cy.contains_cc_link('Notifications & Reporting', 'Notifications') })
@@ -66,16 +70,16 @@ describe('Configuration Check', () => {
 
 			it ('should contain the expected Configuration Check', () => {
 				cy.visit_v({ page: "ControlCenter/check.php" }).then(() => {
-				cy.get("h4").contains("Configuration Check")
-				cy.get("body").contains("TEST 1")
-				cy.get("body").contains("TEST 2")
-				cy.get("body").contains("TEST 3")
-				cy.get("body").contains("TEST 4")
-				cy.get("body").contains("TEST 5")
-				cy.get("body").contains("TEST 6")
-			})
+					cy.get("h4").contains("Configuration Check")
+					cy.get("body").contains("TEST 1")
+					cy.get("body").contains("TEST 2")
+					cy.get("body").contains("TEST 3")
+					cy.get("body").contains("TEST 4")
+					cy.get("body").contains("TEST 5")
+					cy.get("body").contains("TEST 6")
+				})
 
-	    })
+		    })
 		})
 
 	})

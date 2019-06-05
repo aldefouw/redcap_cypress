@@ -20,11 +20,13 @@ const users = Cypress.env("users");
 const admin_user = users['admin']['user'];
 const admin_pass = users['admin']['pass'];
 
+const version = Cypress.env('redcap_version')
+
+ //Set the Base URL in the REDCap Configuration Database
+const base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
+
 before(() => {
 
-     //Set the Base URL in the REDCap Configuration Database
-    const base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
-    const version = Cypress.env('redcap_version')
 
     //Create the initial database structure
     cy.mysql_db('structure').then(() => {
@@ -37,17 +39,14 @@ before(() => {
 
             //Login initially
             cy.login({ username: admin_user, password: admin_pass})
-
         })
 
     })
    
 })
 
-beforeEach(() => {
-   //This should preserve our session because the cookie will be preserved
-   cy.maintain_login(admin_user, admin_pass)
-
+beforeEach(() => {    
+    cy.maintain_login(admin_user, admin_pass)
 })
 
 Cypress.on("uncaught:exception", (err, runnable) => {
