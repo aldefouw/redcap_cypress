@@ -32,15 +32,17 @@ Cypress.Commands.add("visit_v", (options) => {
     const admin_user = users['admin']['user'];
     const admin_pass = users['admin']['pass'];
 
-    cy.maintain_login(admin_user, admin_pass)
+    cy.maintain_login(admin_user, admin_pass).then(() => {
 
-    const redcap_version = Cypress.env("redcap_version")
+        const redcap_version = Cypress.env("redcap_version")
     
-    if('params' in options){
-        cy.visit('/redcap_v' + redcap_version + '/' + options['page'] + '?' + options['params'])
-    } else {
-        cy.visit('/redcap_v' + redcap_version + '/' + options['page'])
-    }
+        if('params' in options){
+            cy.visit('/redcap_v' + redcap_version + '/' + options['page'] + '?' + options['params'])
+        } else {
+            cy.visit('/redcap_v' + redcap_version + '/' + options['page'])
+        }
+
+    })
    
 })
 
@@ -55,7 +57,8 @@ Cypress.Commands.add("maintain_login", (user, pass) => {
             cookies.map(cookie =>  Cypress.Cookies.preserveOnce(cookie['name']) )
 
         //But, if we don't, then let's simply re-login, right?    
-        } else {            
+        } else {     
+
             cy.login({ username: user, password:  pass })
             cy.visit('/')
         }        
@@ -153,14 +156,7 @@ Cypress.Commands.add("add_field", (field_name, type) => {
 Cypress.Commands.add("require_redcap_stats", () => {
     cy.server()
     cy.route('POST', '**/ProjectGeneral/project_stats_ajax.php').as('stats')
-    cy.wait('@stats').then((xhr) => { 
-
-    
-        console.log(xhr);
-
-        expect(xhr.status).to.equal(200) 
-
-    })
+    cy.wait('@stats').then((xhr) => { })
 })
 
 function abstractSort(col_name, element, values, klass = 0){
