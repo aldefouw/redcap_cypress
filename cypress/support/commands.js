@@ -22,7 +22,7 @@ Cypress.Commands.add("login", (options) => {
             'submitted': 1,
             'redcap_login_a38us_09i85':'redcap_login_a38us_09i85'
         }
-    }).then(($a) => {
+    }).should(($a) => {
         expect($a.status).to.equal(200)
     })
 })
@@ -153,7 +153,14 @@ Cypress.Commands.add("add_field", (field_name, type) => {
 Cypress.Commands.add("require_redcap_stats", () => {
     cy.server()
     cy.route('POST', '**/ProjectGeneral/project_stats_ajax.php').as('stats')
-    cy.wait('@stats').then((xhr) => { expect(xhr.status).to.equal(200) })
+    cy.wait('@stats').then((xhr) => { 
+
+    
+        console.log(xhr);
+
+        expect(xhr.status).to.equal(200) 
+
+    })
 })
 
 function abstractSort(col_name, element, values, klass = 0){
