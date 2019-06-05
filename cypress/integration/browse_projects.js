@@ -13,9 +13,7 @@ describe('Browse Projects', () => {
     describe('Display Projects', () => { 
 
         before(() => {
-            cy.visit_v({page: 'ControlCenter/view_projects.php'}).then(() => {
-               cy.require_redcap_stats()
-            })
+            cy.visit_v({page: 'ControlCenter/view_projects.php'})
         })
 
         it('displays a list of all projects', () => {

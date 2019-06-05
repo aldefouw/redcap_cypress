@@ -134,10 +134,14 @@ Cypress.Commands.add("add_field", (field_name, type) => {
     })
 })
 
+function error(){
+    console.log('error');
+}
+
 Cypress.Commands.add("require_redcap_stats", () => {
     cy.server()
     cy.route({method: 'POST', url: '**/ProjectGeneral/project_stats_ajax.php'}).as('project_stats_ajax')
-    cy.wait('@project_stats_ajax')
+    cy.wait('@project_stats_ajax').then((xhr, error) => { })
 })
 
 function abstractSort(col_name, element, values, klass = 0){
