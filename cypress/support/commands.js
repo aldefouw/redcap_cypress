@@ -21,15 +21,19 @@ Cypress.Commands.add("visit_v", (options) => {
 
     const redcap_version = Cypress.env("redcap_version")
 
-    if('params' in options){
-        cy.visit('/redcap_v' + redcap_version + '/' + options['page'] +  '?' + options['params'])
-    } else {
-        cy.visit('/redcap_v' + redcap_version + '/' + options['page'])
-    }
-   
+    cy.maintain_login(admin_user, admin_pass).then(() => {
+        if('params' in options){
+            cy.visit('/redcap_v' + redcap_version + '/' + options['page'] +  '?' + options['params'])
+        } else {
+            cy.visit('/redcap_v' + redcap_version + '/' + options['page'])
+        }
+    })
 })
 
 Cypress.Commands.add("maintain_login", (user, pass) => {
+
+    console.log(user)
+    console.log(pass)
 
     cy.getCookies()
       .should((cookies) => {
