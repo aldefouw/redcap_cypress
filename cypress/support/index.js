@@ -26,8 +26,6 @@ const version = Cypress.env('redcap_version')
 const base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
 
 before(() => {
-
-
     //Create the initial database structure
     cy.mysql_db('structure').then(() => {
 
@@ -37,12 +35,8 @@ before(() => {
             //Clear out all cookies
             cy.clearCookies()
 
-            //Login initially
-            cy.login({ username: admin_user, password: admin_pass})
         })
-
-    })
-   
+    })   
 })
 
 beforeEach(() => {    

@@ -15,7 +15,7 @@ describe('Project Setup', () => {
         describe('Date & Time Fields', () => {
 
             it('Should allow me to add an dmy format Date field', () => {
-                cy.add_field('My MDY Field', 'datetime_dmy')            
+                cy.add_field('My DMY Field', 'datetime_dmy')            
             })
 
             it('Should allow me to add an mdy format Date field', () => {
@@ -24,10 +24,6 @@ describe('Project Setup', () => {
 
             it('Should allow me to add an ymd format Date field', () => {
                 cy.add_field('My YMD Field', 'datetime_ymd')    
-            })
-
-            it('Should allow me to add an dmy format Datetime field', () => {
-                cy.add_field('My DMY Field', 'datetime_dmy')    
             })
 
             it ('Should allow me to add a Time field', () => {
