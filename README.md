@@ -405,8 +405,10 @@ I will likely need to add another environment variable to the base setup file so
 ---
 ### Unpredictable login behavior
 
-Sometimes REDCap doesn't login the first time you run a test.  This means the test spec will probably fail the first time you run it, which is technically a non-deterministic test (a bad thing that I am trying to avoid).
+~~Sometimes REDCap doesn't login the first time you run a test.  This means the test spec will probably fail the first time you run it, which is technically a non-deterministic test (a bad thing that I am trying to avoid).
 
-So far, I do not have a good explanation for why this is happening, but perhaps someone with more expertise  can explain why this is happening and/or propose a solution to eliminate this unwanted test behavior.
+~~So far, I do not have a good explanation for why this is happening, but perhaps someone with more expertise  can explain why this is happening and/or propose a solution to eliminate this unwanted test behavior.
 
-That said, since the login functionality is pretty well-proven, I don't identify this as a high priority item to fix.  It's mostly just an annoyance.
+~~That said, since the login functionality is pretty well-proven, I don't identify this as a high priority item to fix.  It's mostly just an annoyance.
+
+This has been fixed in later versions of the framework.  Better code that preserves the cookies and better use of environment variables has alleviated this problem.
