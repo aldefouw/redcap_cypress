@@ -155,7 +155,6 @@ To get you started, an example file named `cypress.env.json.example` is included
 Here is an example environment variable setup:
 
     {
-      "baseUrl": "http://localhost:80",
       "users": {
         "admin": {
           "user": "admin_user",
@@ -178,10 +177,6 @@ Here is an example environment variable setup:
     }
 
 Below are descriptions of the configuration variables shown above.
-
----
-### baseURL ### 
-The base URL that Cypress will use to access your REDCap instance.
 
 ---
 ### users ###
@@ -277,18 +272,12 @@ For example:
 
       ....
 
-      //Set base URL from the environment variable that was set
-      Cypress.config("baseUrl", Cypress.env("baseUrl"));
-
       before(() => {
           //Create the initial database structure
           cy.mysql_db('structure');
       });
 
       beforeEach(() => {
-          //Clear out the cookies
-          cy.clearCookie('PHPSESSID');
-
           //Set the Base URL in the REDCap Configuration Database
           const base_url = 'BASE_URL/' + Cypress.env('baseUrl').replace('http://', 'http\\:\\\\/\\\\/');
 
@@ -305,45 +294,22 @@ For example:
 
 This documentation will help you configure your Cypress testing environment, but it will not cover how to write Cypress tests.  
 
-To give you a feel for how tests are written, however, below is a sample Login Spec.
+To give you a feel for how tests are written, however, below is a sample Browse Projects spec.
 
-##### Login Spec
+##### Browse Projects Spec
 
 
-            describe('Login Page', function () {
-
-                const users = Cypress.env("users");
-                const username = users['standard']['user'];
-                const password = users['standard']['pass'];
-
-                beforeEach(function () {
-                    cy.visit('/')
-                });
-
-                it('sets auth cookie when logging in via form submission', function () {
-                    cy.get('input#username').type(username);
-                    cy.get('input#password').type(`${password}{enter}`);
-                    cy.getCookie('PHPSESSID').should('exist');
-                });
-
-                it('requires a username', function () {
-                    cy.get('input#password').type(`${password}{enter}`);
-                    cy.contains('ERROR: You entered an invalid user name or password!');
-                });
-
-                it('requires a password', function () {
-                    cy.get('input#username').type(`${username}{enter}`);
-                    cy.contains('ERROR: You entered an invalid user name or password!');
-                });
-
-                it('requires a valid username and password', function () {
-                    cy.get('input#username').type(username);
-                    cy.get('input#password').type(password);
-                    cy.contains('button', 'Log In').click();
-                    cy.contains('Listed below are the REDCap projects to which you currently have access.')
-                });
-
-            });
+            describe('Browse Projects', () => {
+                it('Should display the "Browse Projects" page when you click on "Control Center"', () => {
+                    cy.visit_v({ page: '' }).then(() => {                
+                        cy.get('a').contains('Control Center').click().then(() => {
+                            cy.get('a').contains('Browse Projects').click().then(() => {  
+                                cy.get('div h4').should('contain', 'Browse Projects')
+                            })
+                        })            
+                    })
+                })
+            })
 
 
 If you are looking for examples of how to write tests, the sample specs are included in the following folder (within this repository):
