@@ -31,10 +31,6 @@ Cypress.Commands.add("visit_v", (options) => {
 })
 
 Cypress.Commands.add("maintain_login", (user, pass) => {
-
-    console.log(user)
-    console.log(pass)
-
     cy.getCookies()
       .should((cookies) => {
 
@@ -131,10 +127,12 @@ Cypress.Commands.add("save_field", () => {
 
 Cypress.Commands.add("add_field", (field_name, type) => {
      cy.get('input#btn-last').click().then(() => {
-        cy.get('textarea#field_label').clear().type(field_name)
-        cy.get('select#val_type').select(type)
-        cy.save_field()
-        cy.find_online_designer_field(field_name)
+        cy.get('textarea#field_label').clear().type(field_name).then(() => {
+            cy.get('select#val_type').select(type).should('have.value', type).then(() => {
+                cy.save_field()
+                cy.find_online_designer_field(field_name)  
+            })            
+        })
     })
 })
 
