@@ -1,4 +1,4 @@
-describe('Project Setup', () => {
+describe('Form Design', () => {
 
     describe('Online Designer', () => {
 
@@ -75,6 +75,10 @@ describe('Project Setup', () => {
             cy.contains('button', 'Enable').click()
             cy.contains('Manage Survey Participants')
         })
+
+    })
+
+    describe('Data Dictionary', () => {
 
     })
 
