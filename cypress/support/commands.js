@@ -62,6 +62,8 @@ Cypress.Commands.add("mysql_db", (type, replace = '') => {
         ' ' + type +
         ' ' + replace
 
+        console.log(cmd)
+
     cy.exec(cmd).then((response) => {
         console.log(response)
     })
