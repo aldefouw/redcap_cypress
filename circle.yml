@@ -19,3 +19,9 @@ workflows:
                     set -x
                     docker-compose up -d
       - cypress/run
+          pre-steps:
+            - checkout
+            - run:
+                name: Go back to root directory
+                command: |
+                    cd /
