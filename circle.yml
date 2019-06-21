@@ -7,10 +7,10 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Build the REDCap image
-        command: |
-            set -x
-            docker-compose up -d
+          name: Build the REDCap image
+          command: |
+              set -x
+              docker-compose up -d
       - run:
           name: Run the E2E tests
           command: npm run test-multiple
