@@ -1,3 +1,14 @@
+version: 2.1
+
+orbs:
+  cypress: cypress-io/cypress@1
+
+executors:
+  with-chrome:
+    docker:
+      - image: 'cypress/browsers:chrome69'
+
+workflows:
   build:
     jobs:
       - cypress/install:
@@ -5,8 +16,8 @@
         - run:
           name: "Pull REDCap Docker"
           command: |
-            git redcap-docker-compose init
-            git redcap-docker-compose update --remote
+              git redcap-docker-compose init
+              git redcap-docker-compose update --remote
         - run:
           name: Build the REDCap image
           command: |
@@ -15,10 +26,5 @@
               set -x
               docker-compose up -d
       - cypress/run:
-          # make sure app has been installed and built
-          # before running tests across multiple machines
-          # this avoids installing same dependencies 10 times
-          requires:
-            - cypress/install
-          group: 'all tests' # name this group "all tests" on the dashboard
-          start: 'npm start' # start server before running tests
+          executor: with-chrome
+          wait-on: 'http://localhost:80'
