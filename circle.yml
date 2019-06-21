@@ -1,13 +1,8 @@
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@1
-executors:
-  mac:
-    macos:
-      xcode: 10.2.0
 workflows:
   build:
-    macos:
     jobs:
       - cypress/install:
           pre-steps:
@@ -25,4 +20,4 @@ workflows:
                     docker-compose up -d
       - cypress/run:
           wait-on: 'http://localhost:80'
-          executor: mac
+          yarn: true
