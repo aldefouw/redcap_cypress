@@ -2,8 +2,7 @@ version: 2
 
 jobs:
   build:
-    docker:
-      - image: redcap-docker-compose
+    working_directory: redcap-docker-compose
     steps:
       - checkout
       - run: 
