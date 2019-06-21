@@ -1,79 +1,22 @@
-version: 2
-jobs:
-  cypress/install:
-    docker:
-    - image: cypress/base:10
-    steps:
-    - checkout
-    - run:
-        name: Pull Submodules
-        command: |
-          git submodule init
-          git submodule update --remote
-    - run:
-        name: Build the REDCap image
-        command: |
-          cd redcap-docker-compose/rdc
-          set -x
-          docker-compose up -d
-    - checkout
-    - restore_cache:
-        keys:
-        - cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-    - run:
-        name: Check if package-lock.json exists
-        command: |
-          if [ ! -e ./package-lock.json ]; then
-            echo "The Cypress orb uses 'npm ci' to install 'node_modules', which requires a 'package-lock.json'."
-            echo "A 'package-lock.json' file was not found. Please run 'npm install' in your project,"
-            echo "and commit 'package-lock.json' to your repo."
-            exit 1
-          fi
-    - run:
-        name: Npm CI
-        command: npm ci
-    - save_cache:
-        key: cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-        paths:
-        - ~/.npm
-        - ~/.cache
-    - persist_to_workspace:
-        root: ~/
-        paths:
-        - project
-        - .cache/Cypress
-  cypress/run:
-    docker:
-    - image: cypress/base:10
-    parallelism: 1
-    steps:
-    - checkout
-    - restore_cache:
-        keys:
-        - cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-    - run:
-        name: Yarn install
-        command: yarn install --frozen-lockfile
-    - run:
-        command: npx cypress verify
-    - save_cache:
-        key: cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-        paths:
-        - ~/.cache
-    - persist_to_workspace:
-        root: ~/
-        paths:
-        - project
-        - .cache/Cypress
-    - run:
-        name: Wait-on http://localhost:80
-        command: npx wait-on http://localhost:80
-    - run:
-        name: Run Cypress tests
-        command: "npx cypress run \\\n   \\\n   \\\n  "
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1.7.0
 workflows:
   build:
     jobs:
-    - cypress/install
-    - cypress/run
-  version: 2
+      - cypress/install:
+          pre-steps:
+            - checkout
+            - run:
+                name: "Pull Submodules"
+                command: |
+                  git submodule init
+                  git submodule update --remote
+            - run:
+                name: Build the REDCap image
+                command: |
+                    cd redcap-docker-compose/rdc
+                    set -x
+                    docker-compose up -d
+      - cypress/run:
+          wait-on: 'http://localhost:80'
