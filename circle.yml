@@ -3,7 +3,9 @@ version: 2
 jobs:
   build:
     machine: true
+    working_directory: /go/src/github.com/aldefouw/redcap-docker-compose
     steps:
+      - checkout
       - run:
           name: Install Docker Compose
           command: |
