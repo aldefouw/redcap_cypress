@@ -4,6 +4,7 @@ jobs:
   build:
     working_directory: redcap-docker-compose
     steps:
+      machine:
       - checkout
       - run: 
           name: Build the REDCap image
