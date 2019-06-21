@@ -18,10 +18,9 @@ workflows:
                     cd redcap-docker-compose/rdc
                     set -x
                     docker-compose up -d
-      - cypress/run
+      - cypress/run:
           pre-steps:
             - checkout
             - run:
                 name: Go back to root directory
-                command: |
-                    cd /
+                command: cd /
