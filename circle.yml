@@ -10,7 +10,7 @@ workflows:
             - run:
                 name: Build the REDCap image
                 command: |
-                    cd rdc
+                    cd redcap-docker-compose/rdc
                     set -x
                     docker-compose up -d
       - cypress/run
