@@ -1,30 +1,7 @@
 version: 2.1
-
 orbs:
   cypress: cypress-io/cypress@1
-
-executors:
-  with-chrome:
-    docker:
-      - image: 'cypress/browsers:chrome69'
-
 workflows:
   build:
     jobs:
-      - cypress/install:
-        - checkout
-        - run:
-          name: "Pull REDCap Docker"
-          command: |
-              git redcap-docker-compose init
-              git redcap-docker-compose update --remote
-        - run:
-          name: Build the REDCap image
-          command: |
-              cd redap-docker-compose
-              cd rdc
-              set -x
-              docker-compose up -d
-      - cypress/run:
-          executor: with-chrome
-          wait-on: 'http://localhost:80'
+      - cypress/run
