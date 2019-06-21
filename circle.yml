@@ -20,7 +20,7 @@ jobs:
       - checkout
       - run:
           name: Run the E2E tests
-          command: cypress run
+          command: npm run test-multiple
 
 workflows:
   version: 2
