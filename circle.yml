@@ -1,23 +1,16 @@
 version: 2
 
 jobs:
-  build:
-    working_directory: redcap-docker-compose
-    steps:
-      machine:
-      - checkout
-      - run: 
-          name: Build the REDCap image
-          command: |
-            set -x
-            docker-compose up -d
   test:
-    requires:
-            - build
     docker:
       - image: cypress/base:8
     steps:
       - checkout
+      - run:
+        name: Build the REDCap image
+        command: |
+            set -x
+            docker-compose up -d
       - run:
           name: Run the E2E tests
           command: npm run test-multiple
@@ -26,5 +19,4 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - build
       - test
