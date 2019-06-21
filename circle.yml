@@ -8,10 +8,10 @@ workflows:
           pre-steps:
             - checkout
             - run:
-            name: "Pull Submodules"
-            command: |
-              git redcap-docker-compose init
-              git redcap-docker-compose update --remote
+              name: "Pull Submodules"
+              command: |
+                git redcap-docker-compose init
+                git redcap-docker-compose update --remote
             - run:
                 name: Build the REDCap image
                 command: |
