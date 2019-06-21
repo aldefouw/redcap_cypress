@@ -1,25 +1,24 @@
-version: 2
-
-jobs:
   build:
-    docker:
-      - image: bayesimpact/circleci
-      - image: cypress/base:8
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
+    jobs:
+      - cypress/install:
+        - checkout
+        - run:
+          name: "Pull REDCap Docker"
+          command: |
+            git redcap-docker-compose init
+            git redcap-docker-compose update --remote
+        - run:
           name: Build the REDCap image
           command: |
-              cd redcap-docker-compose/rdc
+              cd redap-docker-compose
+              cd rdc
               set -x
               docker-compose up -d
-      - run:
-          name: Run the E2E tests
-          command: npm run test-multiple
-      
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build
+      - cypress/run:
+          # make sure app has been installed and built
+          # before running tests across multiple machines
+          # this avoids installing same dependencies 10 times
+          requires:
+            - cypress/install
+          group: 'all tests' # name this group "all tests" on the dashboard
+          start: 'npm start' # start server before running tests
