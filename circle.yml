@@ -2,10 +2,8 @@ version: 2
 
 jobs:
   build:
-    docker:
-      - image: piuma/centos7-apache-php
+    machine: true
     steps:
-      - checkout
       - setup_remote_docker
       - run:
           name: Install Docker Compose
