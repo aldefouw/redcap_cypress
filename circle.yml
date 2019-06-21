@@ -1,0 +1,34 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: redcap-docker-compose
+    steps:
+      - checkout
+      - run: 
+          name: Build the REDCap image
+          command: |
+            set -x
+            docker-compose up -d
+  test:
+    requires:
+            - build
+    docker:
+      - image: cypress/base:8
+    steps:
+      - checkout
+      - run:
+          name: Run the E2E tests
+          command: cypress run
+      - store_artifacts:
+        path: cypress/videos
+      - store_artifacts:
+        path: cypress/screenshots
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test
