@@ -3,8 +3,8 @@ version: 2
 jobs:
   build:
     machine: true
+    working_directory: /
     steps:
-      - setup_remote_docker
       - run:
           name: Install Docker Compose
           command: |
@@ -22,6 +22,7 @@ jobs:
             - build
     docker:
       - image: cypress/base:8
+    working_directory: /  
     steps:
       - checkout
       - run:
