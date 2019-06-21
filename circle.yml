@@ -1,9 +1,9 @@
 version: 2
 
 jobs:
-  test:
+  build:
     docker:
-      - image: cypress/base:8
+      - image: piuma/centos7-apache-php
     steps:
       - checkout
       - setup_remote_docker
@@ -18,6 +18,17 @@ jobs:
           command: |
               set -x
               docker-compose up -d
+
+  test:
+    requires:
+            - build
+    docker:
+      - image: cypress/base:8
+    steps:
+      - checkout
+      - run:
+        name: Spool Up docker
+        command: 
       - run:
           name: Run the E2E tests
           command: npm run test-multiple
@@ -26,4 +37,5 @@ workflows:
   version: 2
   build_and_test:
     jobs:
+      - build
       - test
