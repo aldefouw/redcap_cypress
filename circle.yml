@@ -4,4 +4,13 @@ orbs:
 workflows:
   build:
     jobs:
+      - cypress/install:
+          pre-steps:
+            - checkout
+            - run:
+                name: Build the REDCap image
+                command: |
+                    cd rdc
+                    set -x
+                    docker-compose up -d
       - cypress/run
