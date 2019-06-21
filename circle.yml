@@ -2,19 +2,15 @@ version: 2
 
 jobs:
   build:
-    machine: true
-    working_directory: /go/src/github.com/aldefouw/redcap-docker-compose
+    docker:
+      - image: bayesimpact/circleci
     steps:
       - checkout
-      - run:
-          name: Install Docker Compose
-          command: |
-            curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      - setup_remote_docker
       - run:
           name: Build the REDCap image
           command: |
+              cd redcap-docker-compose/rdc
               set -x
               docker-compose up -d
 
