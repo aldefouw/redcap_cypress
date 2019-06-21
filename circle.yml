@@ -27,9 +27,6 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Spool Up docker
-        command: 
-      - run:
           name: Run the E2E tests
           command: npm run test-multiple
 
