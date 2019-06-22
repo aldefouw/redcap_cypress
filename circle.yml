@@ -29,4 +29,5 @@ workflows:
                 command: |
                     cd /root/project
                     mv cypress.json.example cypress.json
+                    npm ci
                     npx cypress run
