@@ -22,4 +22,4 @@ jobs:
             mv cypress.json.example cypress.json
             mv cypress.env.json.example cypress.env.json
             npm install
-            npx cypress run
+            npx cypress run --record --key a83f6d74-8a55-416c-87ba-8a3ed6e81b3b
