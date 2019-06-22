@@ -1,7 +1,7 @@
 version: 2.0
 
 jobs:
-  redcap_cypress:
+  build:
     machine: true
     steps:
       - checkout
