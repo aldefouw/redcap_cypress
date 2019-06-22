@@ -48,6 +48,9 @@ jobs:
         paths:
         - project
         - .cache/Cypress
+    - run:
+        name: Run Cypress tests
+        command: ./node_modules/.bin/cypress run
   cypress/run:
     docker:
     - image: cypress/base:10
@@ -81,7 +84,7 @@ jobs:
         - .cache/Cypress
     - run:
         name: Run Cypress tests
-        command: "npx cypress run \\\n   \\\n   \\\n  "
+        command: npx cypress run
 workflows:
   build:
     jobs:
