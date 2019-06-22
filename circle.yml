@@ -19,7 +19,7 @@ jobs:
           name: Get REDCap Source
           command: |
             cd /home/circleci/project/redcap-docker-compose
-            rm -rf www
+            mv www www-archive
             git clone https://github.com/aldefouw/redcap_source www
       - run:
           name: Configure REDCap
