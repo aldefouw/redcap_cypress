@@ -1,4 +1,6 @@
 {
-  "baseurl": "http://localhost:80",
-  "video": false
+  "baseUrl": "http://localhost",
+  "trashAssetsBeforeRuns": true,
+  "video": true,
+  "projectId": "tb8ju4"
 }

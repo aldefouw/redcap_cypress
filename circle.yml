@@ -26,4 +26,7 @@ workflows:
                     docker-compose up -d
             - run:
                 name: Run Cypress tests
-                command: "npx cypress run \\\n   \\\n   \\\n  "
+                command: |
+                    cd /root/project/cypress
+                    mv cypress.json.example cypress.json
+                    npx cypress run
