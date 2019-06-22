@@ -1,53 +1,30 @@
-version: 2
-jobs:
-  cypress/install:
-    machine: true
-    steps:
-    - checkout
-    - run:
-        name: Pull Submodules
-        command: |
-          git submodule init
-          git submodule update --remote
-    - run:
-        name: Build the REDCap image
-        command: |
-          cd redcap-docker-compose/rdc
-          docker-compose up -d
-    - checkout
-    - restore_cache:
-        keys:
-        - cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-    - run:
-        name: Check if package-lock.json exists
-        command: |
-          if [ ! -e ./package-lock.json ]; then
-            echo "The Cypress orb uses 'npm ci' to install 'node_modules', which requires a 'package-lock.json'."
-            echo "A 'package-lock.json' file was not found. Please run 'npm install' in your project,"
-            echo "and commit 'package-lock.json' to your repo."
-            exit 1
-          fi
-    - run:
-        name: Npm CI
-        command: npm ci
-    - save_cache:
-        key: cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-        paths:
-        - ~/.npm
-        - ~/.cache
-    - persist_to_workspace:
-        root: ~/
-        paths:
-        - project
-        - .cache/Cypress
-    - run:
-        name: Wait-on http://localhost:80
-        command: npx wait-on http://localhost:80
-    - run:
-        name: Run Cypress tests
-        command: "npx cypress run \\\n   \\\n   \\\n  "
+version: 2.1
+orbs:
+  cypress: cypress-io/cypress@1
 workflows:
   build:
     jobs:
-    - cypress/install
-  version: 2
+      - cypress/install:
+          pre-steps:
+            - checkout
+            - setup_remote_docker
+            - run:
+                name: Install Docker Compose
+                command: |
+                  curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+                  chmod +x ~/docker-compose
+                  mv ~/docker-compose /usr/local/bin/docker-compose
+            - run:
+                name: "Pull Submodules"
+                command: |
+                  git submodule init
+                  git submodule update --remote
+            - run:
+                name: Build the REDCap image
+                command: |
+                    cd redcap-docker-compose/rdc
+                    docker-compose up -d
+      - cypress/run:
+          requires:
+            - cypress/install
+          wait-on: 'http://localhost:80'
