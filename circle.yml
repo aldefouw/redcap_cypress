@@ -6,7 +6,7 @@ jobs:
   build:
     machine: true
     steps:
-      -checkout
+      - checkout
       - run:
           name: "Pull Submodules"
           command: |
