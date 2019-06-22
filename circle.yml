@@ -1,17 +1,9 @@
 version: 2
 jobs:
   cypress/install:
-    docker:
-    - image: cypress/base:10
+    machine: true
     steps:
     - checkout
-    - setup_remote_docker
-    - run:
-        name: Install Docker Compose
-        command: |
-          curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-          chmod +x ~/docker-compose
-          mv ~/docker-compose /usr/local/bin/docker-compose
     - run:
         name: Pull Submodules
         command: |
@@ -49,47 +41,13 @@ jobs:
         - project
         - .cache/Cypress
     - run:
-        name: Run Cypress tests
-        command: $(npm bin)/cypress run
-  cypress/run:
-    docker:
-    - image: cypress/base:10
-    parallelism: 1
-    steps:
-    - checkout
-    - restore_cache:
-        keys:
-        - cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-    - run:
-        name: Check if package-lock.json exists
-        command: |
-          if [ ! -e ./package-lock.json ]; then
-            echo "The Cypress orb uses 'npm ci' to install 'node_modules', which requires a 'package-lock.json'."
-            echo "A 'package-lock.json' file was not found. Please run 'npm install' in your project,"
-            echo "and commit 'package-lock.json' to your repo."
-            exit 1
-          fi
-    - run:
-        name: Npm CI
-        command: npm ci
-    - save_cache:
-        key: cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-        paths:
-        - ~/.npm
-        - ~/.cache
-    - persist_to_workspace:
-        root: ~/
-        paths:
-        - project
-        - .cache/Cypress
+        name: Wait-on http://localhost:80
+        command: npx wait-on http://localhost:80
     - run:
         name: Run Cypress tests
-        command: npx cypress run
+        command: "npx cypress run \\\n   \\\n   \\\n  "
 workflows:
   build:
     jobs:
     - cypress/install
-    - cypress/run:
-        requires:
-        - cypress/install
   version: 2
