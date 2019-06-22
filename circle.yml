@@ -8,7 +8,6 @@ workflows:
           pre-steps:
             - checkout
             - setup_remote_docker
-            - run: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
             - run:
                 name: Install Docker Compose
                 command: |
@@ -26,6 +25,6 @@ workflows:
                     cd redcap-docker-compose/rdc
                     docker-compose up -d
       - cypress/run:
-          pre-steps:
-            - run: 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc'
+          requires:
+            - cypress/install
           wait-on: 'http://localhost:80'
