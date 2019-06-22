@@ -80,9 +80,6 @@ jobs:
         - project
         - .cache/Cypress
     - run:
-        name: Wait-on http://localhost:80
-        command: npx wait-on http://localhost:80
-    - run:
         name: Run Cypress tests
         command: "npx cypress run \\\n   \\\n   \\\n  "
 workflows:
