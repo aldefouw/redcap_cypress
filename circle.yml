@@ -13,7 +13,7 @@ jobs:
       - run:
           name: Build the REDCap image
           command: |
-            cd redcap-docker-compose/rdc
+            cd /home/circleci/project/redcap-docker-compose/rdc
             docker-compose up -d
       - run:
           name: Get REDCap Source
