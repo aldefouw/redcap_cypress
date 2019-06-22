@@ -69,8 +69,6 @@ jobs:
     - run:
         name: Npm CI
         command: npm ci
-    - run:
-        command: npx cypress verify
     - save_cache:
         key: cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
         paths:
