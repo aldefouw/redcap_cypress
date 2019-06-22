@@ -27,6 +27,6 @@ workflows:
             - run:
                 name: Run Cypress tests
                 command: |
-                    cd /root/project/cypress
+                    cd /root/project
                     mv cypress.json.example cypress.json
                     npx cypress run
