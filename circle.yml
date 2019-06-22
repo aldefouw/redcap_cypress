@@ -18,23 +18,8 @@ jobs:
               cd redcap-docker-compose/rdc
               docker-compose up -d
 
-  - cypress/run:
-      requires:
-        - cypress/install
-      steps:  
-        - run:
-            name: Run Cypress tests
-            command: |
-                cd /root/project
-                mv cypress.json.example cypress.json
-                npm ci
-                npx cypress run
-
 workflows:
   version: 2
   build_and_test:
     jobs:
       - build
-      - test:
-          requires:
-            - build                    
