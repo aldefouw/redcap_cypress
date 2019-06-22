@@ -16,10 +16,20 @@ jobs:
             cd redcap-docker-compose/rdc
             docker-compose up -d
       - run:
-          name: Install Cypress and Run Tests
+          name: Get REDCap Source
+          command: |
+            cd /home/circleci/project/redcap-docker-compose/www
+            rm -rf
+            cd ..
+            git clone https://github.com/aldefouw/redcap_source www
+      - run:
+          name: Configure REDCap
           command: |
             cd /home/circleci/project
             mv cypress.json.example cypress.json
-            mv cypress.env.json.example cypress.env.json
+            mv cypress.env.json.example cypress.env.json            
+      - run:      
+          name: Install Cypress and Run Tests
+          command: |
             npm install
             npx cypress run --record --key a83f6d74-8a55-416c-87ba-8a3ed6e81b3b
