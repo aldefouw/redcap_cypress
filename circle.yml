@@ -50,7 +50,7 @@ jobs:
         - .cache/Cypress
     - run:
         name: Run Cypress tests
-        command: ./node_modules/.bin/cypress run
+        command: $(npm bin)/cypress run
   cypress/run:
     docker:
     - image: cypress/base:10
