@@ -15,9 +15,16 @@ jobs:
       - run:
           name: Build the REDCap image
           command: |
-              cd redcap-docker-compose/rdc
-              docker-compose up -d
-
+            cd redcap-docker-compose/rdc
+            docker-compose up -d
+      - run:
+          name: Install cypress
+          command: |
+            cd /home/circleci/project
+            mv cypress.json.example cypress.json
+            npm install
+            npx cypress run
+            
 workflows:
   version: 2
   build_and_test:
