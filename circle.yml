@@ -6,7 +6,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Pull Submodules"
+          name: Pull Submodules
           command: |
             git submodule init
             git submodule update --remote
@@ -16,7 +16,7 @@ jobs:
             cd redcap-docker-compose/rdc
             docker-compose up -d
       - run:
-          name: Install cypress
+          name: Install Cypress and Run Tests
           command: |
             cd /home/circleci/project
             mv cypress.json.example cypress.json
