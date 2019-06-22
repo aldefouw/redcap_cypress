@@ -24,7 +24,6 @@ workflows:
                 command: |
                     cd redcap-docker-compose/rdc
                     docker-compose up -d
-      - cypress/run:
-          requires:
-            - cypress/install
-          wait-on: 'http://localhost:80'
+            - run:
+                name: Run Cypress tests
+                command: "npx cypress run \\\n   \\\n   \\\n  "
