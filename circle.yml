@@ -5,18 +5,18 @@ orbs:
 jobs:
   build:
     machine: true
-      steps:
-        -checkout
-        - run:
-            name: "Pull Submodules"
-            command: |
-              git submodule init
-              git submodule update --remote
-        - run:
-            name: Build the REDCap image
-            command: |
-                cd redcap-docker-compose/rdc
-                docker-compose up -d
+        steps:
+          -checkout
+          - run:
+              name: "Pull Submodules"
+              command: |
+                git submodule init
+                git submodule update --remote
+          - run:
+              name: Build the REDCap image
+              command: |
+                  cd redcap-docker-compose/rdc
+                  docker-compose up -d
 
   test:  
     - cypress/run:
