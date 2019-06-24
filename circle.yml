@@ -11,11 +11,12 @@ jobs:
       - run:
           name: Get REDCap Source
           command: |
-            cd redcap_docker
             git clone --branch redcap-cypress https://github.com/aldefouw/redcap_source www
       - run:
           name: Start Docker REDCap Container
-          command: docker-compose up -d
+          command: |
+          cd redcap_docker
+          docker-compose up -d
       - run:
           name: Configure Cypress environment
           command: |
