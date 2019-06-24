@@ -29,4 +29,4 @@ jobs:
           name: Install Cypress and Run Tests
           command: |
             npm install
-            npx cypress run
+            npx cypress run 
