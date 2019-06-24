@@ -8,7 +8,8 @@ jobs:
       - checkout
       - run:
           name: Install MySQL Client
-          command: sudo apt install mysql-client-core-5.7
+          command: |
+            sudo apt install mysql-client-core-5.7
       - run:
           name: Build the REDCap Image
           command: |
@@ -21,6 +22,10 @@ jobs:
           name: Start Docker REDCap Container
           command: |
             cd redcap_docker
+            mkdir temp
+            mkdir edocs
+            chmod 777 temp
+            chmod 777 edocs
             docker-compose up -d
       - run:
           name: Configure Cypress environment
