@@ -7,7 +7,8 @@ jobs:
       - checkout
       - run:
           name: Build the REDCap Image
-          command: git clone --branch redcap-cypress https://github.com/aldefouw/redcap_docker
+          command: |
+            git clone --branch redcap-cypress https://github.com/aldefouw/redcap_docker
       - run:
           name: Get REDCap Source
           command: |
@@ -20,7 +21,7 @@ jobs:
       - run:
           name: Configure Cypress environment
           command: |
-            cd ..
+            cd /home/circleci/project
             mv cypress.json.example cypress.json
             mv cypress.env.json.example cypress.env.json            
       - run:      
