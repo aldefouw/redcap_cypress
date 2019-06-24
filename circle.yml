@@ -33,7 +33,7 @@ jobs:
           name: Install Cypress and Run Tests
           command: |
             npm install
-            npx cypress run --record --key $RECORD_KEY
+            npx cypress run
 
 workflows:
   version: 2
