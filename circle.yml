@@ -28,4 +28,4 @@ jobs:
           name: Install Cypress and Run Tests
           command: |
             npm install
-            npx cypress run --record --key a83f6d74-8a55-416c-87ba-8a3ed6e81b3b
+            npx cypress run
