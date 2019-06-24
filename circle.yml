@@ -34,3 +34,10 @@ jobs:
           command: |
             npm install
             npx cypress run --record --key $RECORD_KEY
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build:
+        context: REDCap Tests
