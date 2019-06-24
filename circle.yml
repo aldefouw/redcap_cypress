@@ -7,6 +7,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install MySQL Client
+          command: apt install mysql-client-core-5.7
+      - run:
           name: Build the REDCap Image
           command: |
             git clone --branch redcap-cypress https://github.com/aldefouw/redcap_docker
@@ -29,4 +32,4 @@ jobs:
           name: Install Cypress and Run Tests
           command: |
             npm install
-            npx cypress run 
+            npx cypress run
