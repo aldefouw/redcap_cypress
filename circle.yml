@@ -6,25 +6,20 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Pull Submodules
-          command: |
-            git submodule init
-            git submodule update --remote
-      - run:
-          name: Build the REDCap image
-          command: |
-            cd /home/circleci/project/redcap-docker-compose/rdc
-            docker-compose up -d
+          name: Build the REDCap Image
+          command: git clone --branch redcap-cypress https://github.com/aldefouw/redcap_docker
       - run:
           name: Get REDCap Source
           command: |
-            cd /home/circleci/project/redcap-docker-compose
-            mv www www-archive
-            git clone https://github.com/aldefouw/redcap_source www
+            cd redcap_docker
+            git clone --branch redcap-cypress https://github.com/aldefouw/redcap_source www
       - run:
-          name: Configure REDCap
+          name: Start Docker REDCap Container
+          command: docker-compose up -d
+      - run:
+          name: Configure Cypress environment
           command: |
-            cd /home/circleci/project
+            cd ..
             mv cypress.json.example cypress.json
             mv cypress.env.json.example cypress.env.json            
       - run:      
