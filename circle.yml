@@ -22,10 +22,6 @@ jobs:
           name: Start Docker REDCap Container
           command: |
             cd redcap_docker
-            mkdir temp
-            mkdir edocs
-            chmod 777 temp
-            chmod 777 edocs
             docker-compose up -d
       - run:
           name: Configure Cypress environment
