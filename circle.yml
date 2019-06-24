@@ -15,8 +15,8 @@ jobs:
       - run:
           name: Start Docker REDCap Container
           command: |
-          cd redcap_docker
-          docker-compose up -d
+            cd redcap_docker
+            docker-compose up -d
       - run:
           name: Configure Cypress environment
           command: |
