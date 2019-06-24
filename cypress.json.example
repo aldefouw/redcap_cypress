@@ -2,6 +2,6 @@
   "baseUrl": "http://localhost:8080",
   "trashAssetsBeforeRuns": true,
   "video": true,
-  "projectId": "tb8ju4"
+  "projectId": "tb8ju4",
   "defaultCommandTimeout" : 100000
 }
