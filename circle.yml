@@ -2,9 +2,10 @@ version: 2.0
 
 jobs:
   build:
-    branches:
-      only:
-        - circle-ci
+    filters:
+      branches:
+        only:
+          - circle-ci
     machine:
       image: ubuntu-1604:201903-01
     steps:
