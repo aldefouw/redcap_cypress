@@ -65,7 +65,7 @@ Cypress.Commands.add("mysql_db", (type, replace = '') => {
         console.log(cmd)
 
     cy.exec(cmd).then((response) => {
-        cy.writeFile('~/log_of_mysql_command_' + type + '.txt', response)
+        cy.writeFile('log_of_mysql_command' + type + '.txt', response)
         console.log(response)
     })
 })
