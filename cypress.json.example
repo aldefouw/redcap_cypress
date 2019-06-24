@@ -3,5 +3,5 @@
   "trashAssetsBeforeRuns": true,
   "video": true,
   "projectId": "tb8ju4",
-  "defaultCommandTimeout" : 100000
+  "defaultCommandTimeout" : 10000
 }
