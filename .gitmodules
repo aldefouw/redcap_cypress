@@ -1,3 +1,0 @@
-[submodule "redcap-docker-compose"]
-	path = redcap-docker-compose
-	url = https://github.com/aldefouw/redcap-docker-compose.git
