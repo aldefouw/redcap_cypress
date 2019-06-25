@@ -1,0 +1,48 @@
+version: 2.0
+
+jobs:
+  build:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+      - checkout
+      - run:
+          name: Install MySQL Client
+          command: |
+            sudo apt install mysql-client-core-5.7
+      - run:
+          name: Build the REDCap Image
+          command: |
+            git clone --branch redcap-cypress https://github.com/aldefouw/redcap_docker
+      - run:
+          name: Get REDCap Source
+          command: |
+            git clone --branch redcap-cypress https://github.com/aldefouw/redcap_source www
+      - run:
+          name: Start Docker REDCap Container
+          command: |
+            cd redcap_docker
+            docker-compose up -d
+      - run:
+          name: Configure Cypress environment
+          command: |
+            cd /home/circleci/project
+
+            pid=$PROJECT_ID
+            tmp="cypress.json.example.tmp"
+            echo | cat cypress.json.example | sed s/PID/$pid/g > $tmp
+ 
+            mv cypress.json.example.tmp cypress.json
+            mv cypress.env.json.example cypress.env.json            
+      - run:      
+          name: Install Cypress and Run Tests
+          command: |
+            npm install
+            npx cypress run --record --key $RECORD_KEY
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build:
+        context: REDCap Tests
