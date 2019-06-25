@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/aldefouw/redcap_cypress/tree/master.svg?style=svg)](https://circleci.com/gh/aldefouw/redcap_cypress/tree/master)
+
 # REDCap Cypress Test Framework
 
 This repository is a template to assist you in writing **automated tests for REDCap**.  
