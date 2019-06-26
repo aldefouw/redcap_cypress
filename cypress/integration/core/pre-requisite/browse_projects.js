@@ -76,8 +76,8 @@ describe('Browse Projects', () => {
 
         before(() => {
             cy.visit_v({page: 'ControlCenter/view_projects.php'}).then(() => {
-               cy.get('button').contains('View all projects').click()
                cy.require_redcap_stats()
+               cy.get('button').contains('View all projects').click()
             })
         })
 
