@@ -4,7 +4,7 @@ tmp="$PWD/test_db/$7.sql.tmp"
 
 first="s/REDCAP_DB_NAME/$4/g"
 
-if [[ ! $8 ]]
+if [ ! $8 ]
 then
       echo | cat $sql | sed $first > $tmp
 else
