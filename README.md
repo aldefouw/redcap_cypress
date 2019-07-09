@@ -7,6 +7,7 @@ This repository is a template to assist you in writing **automated tests for RED
 It is intended to serve as a starting point for writing your own integration and regression tests, which can be used to validate the features and functionality of your REDCap environment.
 
 # Overview
+- [Configuration Tutorial Video](#configuration-tutorial)
 - [Why Test REDCap?](#why-test-redcap)
 - [Manual Testing](#manual-testing)
 - [Automated Testing](#automated-testing)
@@ -18,6 +19,16 @@ It is intended to serve as a starting point for writing your own integration and
 - [Sharing Your Tests](#sharing-your-tests)
 - [Running Your Tests](#running-your-tests)
 - [Known Limitations and Areas for Improvement](#known-limitations--areas-for-improvement)
+
+## Configuration Tutorial Video
+
+If you learn by watching, the video tutorial is probably the quickest way to get up and running.  
+
+The video also includes information regarding how to contribute to this project directly.  ***Thus, the video is highly recommended viewing.***
+
+**Click the image to begin playing:**
+
+[![REDCap Cypress Testing Framework Tutorial Video](thumbnail.png)](http://www.youtube.com/watch?v=AiOieeTmxXw "REDCap Cypress Testing Framework Tutorial Video")
 
 ## Why Test REDCap?
 
@@ -96,6 +107,7 @@ Automating testing of REDCap requires two things:
 - Test Framework
 
 ---
+
 ### Test Environment
 
 What is the test environment?  Well, it's basically your test server that you run REDCap on.  
