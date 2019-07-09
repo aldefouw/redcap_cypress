@@ -7,7 +7,7 @@ This repository is a template to assist you in writing **automated tests for RED
 It is intended to serve as a starting point for writing your own integration and regression tests, which can be used to validate the features and functionality of your REDCap environment.
 
 # Overview
-- [Configuration Tutorial Video](#configuration-tutorial)
+- [Configuration Tutorial Video](#configuration-tutorial-video)
 - [Why Test REDCap?](#why-test-redcap)
 - [Manual Testing](#manual-testing)
 - [Automated Testing](#automated-testing)
