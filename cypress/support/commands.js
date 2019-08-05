@@ -101,20 +101,19 @@ Cypress.Commands.add("find_online_designer_field", (name, timeout = 10000) => {
      cy.contains('td', name, { timeout: timeout })
 })
 
-Cypress.Commands.add("select_value_by_field_label", (name, timeout = 10000) => {
-    cy.contains('td', name, { timeout: timeout }).parentsUntil('label').last().parent().then(($label) => {
-        const name = $label[0]['id'].split('label-')
-
-        cy.get('[name="' + name[1] + '"]', { force: true }).then(($a) => {
-            return $a[0]['value']
+Cypress.Commands.add("compare_value_by_field_label", (name, value, timeout = 10000) => {
+    cy.contains('td', name, { timeout: timeout }).parent().parentsUntil('tr').last().parent().then(($tr) => {
+        const name = $tr[0]['attributes']['sq_id']['value']
+        cy.get('[name="' + name + '"]', { force: true }).should(($a) => {
+            expect($a[0]['value']).to.equal(value)
         })
     })
 })
 
 Cypress.Commands.add("select_field_by_label", (name, timeout = 10000) => {
-    cy.contains('td', name, { timeout: timeout }).parentsUntil('label').last().parent().then(($label) => {
-        const name = $label[0]['id'].split('label-')
-        cy.get('[name="' + name[1] + '"]', { force: true }).then(($a) => {
+    cy.contains('td', name, { timeout: timeout }).parent().parentsUntil('tr').last().parent().then(($tr) => {
+        const name = $tr[0]['attributes']['sq_id']['value']
+        cy.get('[name="' + name + '"]', { force: true }).then(($a) => {
             return $a[0]
         })
     })
