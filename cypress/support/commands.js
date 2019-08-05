@@ -101,6 +101,25 @@ Cypress.Commands.add("find_online_designer_field", (name, timeout = 10000) => {
      cy.contains('td', name, { timeout: timeout })
 })
 
+Cypress.Commands.add("select_value_by_field_label", (name, timeout = 10000) => {
+    cy.contains('td', name, { timeout: timeout }).parentsUntil('label').last().parent().then(($label) => {
+        const name = $label[0]['id'].split('label-')
+
+        cy.get('[name="' + name[1] + '"]', { force: true }).then(($a) => {
+            return $a[0]['value']
+        })
+    })
+})
+
+Cypress.Commands.add("select_field_by_label", (name, timeout = 10000) => {
+    cy.contains('td', name, { timeout: timeout }).parentsUntil('label').last().parent().then(($label) => {
+        const name = $label[0]['id'].split('label-')
+        cy.get('[name="' + name[1] + '"]', { force: true }).then(($a) => {
+            return $a[0]
+        })
+    })
+})
+
 Cypress.Commands.add("initial_save_field", () => {
     cy.get('input#field_name').then(($f) => {
         cy.contains('button', 'Save').

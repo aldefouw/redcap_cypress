@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "This repository is a template to assist you in writing **automated tests for REDCap**.",
   "main": "index.js",
-  "dependencies": {
-    "cypress": "^3.3.1"
+  "dependencies": {},
+  "devDependencies": {
+    "cypress": "^3.4.1"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

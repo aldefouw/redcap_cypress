@@ -32,6 +32,11 @@ before(() => {
         //Seeds the database
         cy.mysql_db('/versions/' + version, base_url).then(() => {
 
+            if(Cypress.env('redcap_hooks_path') != undefined){
+                const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\\\/");
+                cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
+            }
+
             //Clear out all cookies
             cy.clearCookies()
 
