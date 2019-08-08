@@ -1,7 +1,7 @@
 describe('Browse Projects', () => {
 
     it('Should display the "Browse Projects" page when you click on "Control Center"', () => {
-        cy.visit_v({ page: '' }).then(() => {                
+        cy.visit_v({ page: '', user_type: 'admin'}).then(() => {                
             cy.get('a').contains('Control Center').click().then(() => {
                 cy.get('a').contains('Browse Projects').click().then(() => {  
                     cy.get('div h4').should('contain', 'Browse Projects')
@@ -13,7 +13,7 @@ describe('Browse Projects', () => {
     describe('Display Projects', () => { 
 
         before(() => {
-            cy.visit_v({page: 'ControlCenter/view_projects.php'})
+            cy.visit_v({page: 'ControlCenter/view_projects.php', user_type: 'admin'})
             cy.require_redcap_stats()
         })
 
@@ -42,7 +42,7 @@ describe('Browse Projects', () => {
 
         it('Should filter project by title', () => {
 
-            cy.visit_v({page: 'ControlCenter/view_projects.php'}).then(() => {
+            cy.visit_v({page: 'ControlCenter/view_projects.php', user_type: 'admin'}).then(() => {
 
                 cy.require_redcap_stats()
 
@@ -75,7 +75,7 @@ describe('Browse Projects', () => {
     describe('Sort Columns', () => {
 
         before(() => {
-            cy.visit_v({page: 'ControlCenter/view_projects.php'}).then(() => {
+            cy.visit_v({page: 'ControlCenter/view_projects.php', user_type: 'admin'}).then(() => {
                cy.require_redcap_stats()
                cy.get('button').contains('View all projects').click()
             })
