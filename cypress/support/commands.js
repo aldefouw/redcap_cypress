@@ -14,14 +14,15 @@ Cypress.Commands.add("login", (options) => {
     })
 })
 
-Cypress.Commands.add("visit_v", (options) => {
-    const users = Cypress.env("users");
-    const admin_user = users['admin']['user'];
-    const admin_pass = users['admin']['pass'];
+Cypress.Commands.add('visit_v', (options) => {
+    const users = Cypress.env('users');
+    const env_user = options['user_type'] ? options['user_type'] : 'standard'
+    const current_user = users[env_user]['user']
+    const current_pass = users[env_user]['pass']
 
-    const redcap_version = Cypress.env("redcap_version")
+    const redcap_version = Cypress.env('redcap_version')
 
-    cy.maintain_login(admin_user, admin_pass).then(() => {
+    cy.maintain_login(current_user, current_pass).then(() => {
         if('params' in options){
             cy.visit('/redcap_v' + redcap_version + '/' + options['page'] +  '?' + options['params'])
         } else {
