@@ -1,7 +1,7 @@
 describe('Configuration Check', () => {
 
     it('should have tabs to My Projects, New Project, Help & FAQ, Control Center"', () => {
-        cy.visit_v({ page:''}).then(() => {                
+        cy.visit_v({ page:'', user_type: 'admin'}).then(() => {                
             cy.get('a').contains('My Projects')
             cy.get('a').contains('New Project')
             cy.get('a').contains('Help & FAQ')
@@ -12,7 +12,7 @@ describe('Configuration Check', () => {
     describe('Control Center', () => {
 
 		beforeEach(() => {
-		   cy.visit_v({page: "ControlCenter/index.php"})
+		   cy.visit_v({page: "ControlCenter/index.php", user_type: 'admin'})
 		})
 
     	describe('Control Center Home', () => {
