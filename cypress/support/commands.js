@@ -98,11 +98,11 @@ Cypress.Commands.add("contains_cc_link", (link, title = '') => {
     t.length ? test_link(link, title) : test_link(link.split(' ')[0], title.split(' ')[0])
 })
 
-Cypress.Commands.add("find_online_designer_field", (name, timeout = 10000) => {
+Cypress.Commands.add('find_online_designer_field', (name, timeout = 10000) => {
      cy.contains('td', name, { timeout: timeout })
 })
 
-Cypress.Commands.add("compare_value_by_field_label", (name, value, timeout = 10000) => {
+Cypress.Commands.add('compare_value_by_field_label', (name, value, timeout = 10000) => {
     cy.contains('td', name, { timeout: timeout }).parent().parentsUntil('tr').last().parent().then(($tr) => {
         const name = $tr[0]['attributes']['sq_id']['value']
         cy.get('[name="' + name + '"]', { force: true }).should(($a) => {
@@ -111,7 +111,7 @@ Cypress.Commands.add("compare_value_by_field_label", (name, value, timeout = 100
     })
 })
 
-Cypress.Commands.add("select_field_by_label", (name, timeout = 10000) => {
+Cypress.Commands.add('select_field_by_label', (name, timeout = 10000) => {
     cy.contains('td', name, { timeout: timeout }).parent().parentsUntil('tr').last().parent().then(($tr) => {
         const name = $tr[0]['attributes']['sq_id']['value']
         cy.get('[name="' + name + '"]', { force: true }).then(($a) => {
@@ -120,7 +120,7 @@ Cypress.Commands.add("select_field_by_label", (name, timeout = 10000) => {
     })
 })
 
-Cypress.Commands.add("initial_save_field", () => {
+Cypress.Commands.add('initial_save_field', () => {
     cy.get('input#field_name').then(($f) => {
         cy.contains('button', 'Save').
            should('be.visible').
@@ -140,14 +140,14 @@ Cypress.Commands.add("initial_save_field", () => {
     })   
 })
 
-Cypress.Commands.add("save_field", () => {
+Cypress.Commands.add('save_field', () => {
     cy.get('input#field_name').then(($f) => {
         cy.contains('button', 'Save').click()
     }) 
    
 })
 
-Cypress.Commands.add("add_field", (field_name, type) => {
+Cypress.Commands.add('add_field', (field_name, type) => {
      cy.get('input#btn-last').click().then(() => {
         cy.get('textarea#field_label').clear().type(field_name).then(() => {
             cy.get('select#val_type').select(type).should('have.value', type).then(() => {
@@ -162,7 +162,7 @@ function error(){
     console.log('error');
 }
 
-Cypress.Commands.add("require_redcap_stats", () => {
+Cypress.Commands.add('require_redcap_stats', () => {
     cy.server()
     cy.route({method: 'POST', url: '**/ProjectGeneral/project_stats_ajax.php'}).as('project_stats_ajax')
     cy.wait('@project_stats_ajax').then((xhr, error) => { })
@@ -186,11 +186,11 @@ function sorterCompare(col_name, element, values, klass){
     })
 }
 
-Cypress.Commands.add("check_column_sort_values", (col_name, element, values) => {
+Cypress.Commands.add('check_column_sort_values', (col_name, element, values) => {
     abstractSort(col_name, element, values)
 })
 
-Cypress.Commands.add("check_column_sort_classes", (col_name, values) => {
+Cypress.Commands.add('check_column_sort_classes', (col_name, values) => {
     abstractSort(col_name, 'table#table-proj_table tr:first span', values, 1)
 })
 
@@ -212,11 +212,11 @@ function abstractProjectView(input, project_name, total_projects, dropdown_click
     })
 }
 
-Cypress.Commands.add("visible_projects_user_input_click_view", (input, project_name, total_projects) => {
+Cypress.Commands.add('visible_projects_user_input_click_view', (input, project_name, total_projects) => {
     abstractProjectView(input, project_name, total_projects, true)
 })
 
-Cypress.Commands.add("visible_projects_user_input", (input, project_name, total_projects) => {
+Cypress.Commands.add('visible_projects_user_input', (input, project_name, total_projects) => {
     abstractProjectView(input, project_name, total_projects, false)
 })
 
