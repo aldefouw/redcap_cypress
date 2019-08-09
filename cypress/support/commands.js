@@ -1,4 +1,4 @@
-Cypress.Commands.add("login", (options) => {
+Cypress.Commands.add('login', (options) => {
     cy.request({
         method: 'POST',
         url: '/', // baseUrl is prepended to url
@@ -14,43 +14,73 @@ Cypress.Commands.add("login", (options) => {
     })
 })
 
-Cypress.Commands.add('visit_v', (options) => {
-    const users = Cypress.env('users');
-    const env_user = options['user_type'] ? options['user_type'] : 'standard'
-    const current_user = users[env_user]['user']
-    const current_pass = users[env_user]['pass']
+Cypress.Commands.add('visit_version', (options) => {
 
-    const redcap_version = Cypress.env('redcap_version')
+    let version = Cypress.env('redcap_version')
 
-    cy.maintain_login(current_user, current_pass).then(() => {
+    cy.maintain_login().then(() => {
         if('params' in options){
-            cy.visit('/redcap_v' + redcap_version + '/' + options['page'] +  '?' + options['params'])
+            cy.visit('/redcap_v' + version + '/' + options['page'] +  '?' + options['params'])
         } else {
-            cy.visit('/redcap_v' + redcap_version + '/' + options['page'])
+            cy.visit('/redcap_v' + version + '/' + options['page'])
         }
     })
 })
 
-Cypress.Commands.add("maintain_login", (user, pass) => {
-    cy.getCookies()
-      .should((cookies) => {
-
-        //In most cases, we'll have cookies to preserve to maintain a login
-        if (cookies.length > 0){
-
-            cookies.map(cookie =>  Cypress.Cookies.preserveOnce(cookie['name']) )
-
-        //But, if we don't, then let's simply re-login, right?    
-        } else {     
-
-            cy.login({ username: user, password:  pass })
-        }         
-        
-    })    
-
+Cypress.Commands.add('visit_base', (options) => {
+    cy.maintain_login().then(() => {
+        if ('url' in options) cy.visit(options['url']) 
+    })
 })
 
-Cypress.Commands.add("mysql_db", (type, replace = '') => {
+Cypress.Commands.add('maintain_login', () => {
+    let user = window.user_info.get_current_user()
+    let pass = window.user_info.get_current_pass()
+
+    let user_type = window.user_info.get_user_type()
+    let previous_user_type = window.user_info.get_previous_user_type()
+
+    if(user_type === previous_user_type){        
+        cy.getCookies()
+          .should((cookies) => {
+
+            //In most cases, we'll have cookies to preserve to maintain a login
+            if (cookies.length > 0){
+
+                console.log('Cookie Login')
+
+                cookies.map(cookie =>  Cypress.Cookies.preserveOnce(cookie['name']) )
+
+            //But, if we don't, then let's simply re-login, right?    
+            } else {     
+
+                console.log('Regular Login')
+
+                cy.login({ username: user, password: pass })
+            }         
+            
+        })  
+
+    //If user type has changed, let's clear cookies and login again
+    } else {
+        console.log('User Type Change')
+
+        cy.clearCookies()
+        cy.login({ username: user, password:  pass })
+    }
+
+    window.user_info.set_previous_user_type()
+})
+
+Cypress.Commands.add('set_user_type', (user_type) => {
+    window.user_info.set_user_type(user_type)
+})
+
+Cypress.Commands.add('set_user_info', (users) => {
+    window.user_info.set_users(users)
+})
+
+Cypress.Commands.add('mysql_db', (type, replace = '') => {
     const mysql = Cypress.env("mysql")
 
     const cmd = 'sh test_db/db.sh' +
@@ -92,17 +122,17 @@ function test_link (link, title, try_again = true) {
         }) 
 }
 
-Cypress.Commands.add("contains_cc_link", (link, title = '') => {
+Cypress.Commands.add('contains_cc_link', (link, title = '') => {
     if(title == '') title = link
     let t = Cypress.$("div#control_center_menu a:contains(" + JSON.stringify(link) + ")");
     t.length ? test_link(link, title) : test_link(link.split(' ')[0], title.split(' ')[0])
 })
 
-Cypress.Commands.add("find_online_designer_field", (name, timeout = 10000) => {
+Cypress.Commands.add('find_online_designer_field', (name, timeout = 10000) => {
      cy.contains('td', name, { timeout: timeout })
 })
 
-Cypress.Commands.add("compare_value_by_field_label", (name, value, timeout = 10000) => {
+Cypress.Commands.add('compare_value_by_field_label', (name, value, timeout = 10000) => {
     cy.contains('td', name, { timeout: timeout }).parent().parentsUntil('tr').last().parent().then(($tr) => {
         const name = $tr[0]['attributes']['sq_id']['value']
         cy.get('[name="' + name + '"]', { force: true }).should(($a) => {
@@ -111,7 +141,7 @@ Cypress.Commands.add("compare_value_by_field_label", (name, value, timeout = 100
     })
 })
 
-Cypress.Commands.add("select_field_by_label", (name, timeout = 10000) => {
+Cypress.Commands.add('select_field_by_label', (name, timeout = 10000) => {
     cy.contains('td', name, { timeout: timeout }).parent().parentsUntil('tr').last().parent().then(($tr) => {
         const name = $tr[0]['attributes']['sq_id']['value']
         cy.get('[name="' + name + '"]', { force: true }).then(($a) => {
@@ -120,7 +150,7 @@ Cypress.Commands.add("select_field_by_label", (name, timeout = 10000) => {
     })
 })
 
-Cypress.Commands.add("initial_save_field", () => {
+Cypress.Commands.add('initial_save_field', () => {
     cy.get('input#field_name').then(($f) => {
         cy.contains('button', 'Save').
            should('be.visible').
@@ -140,14 +170,14 @@ Cypress.Commands.add("initial_save_field", () => {
     })   
 })
 
-Cypress.Commands.add("save_field", () => {
+Cypress.Commands.add('save_field', () => {
     cy.get('input#field_name').then(($f) => {
         cy.contains('button', 'Save').click()
     }) 
    
 })
 
-Cypress.Commands.add("add_field", (field_name, type) => {
+Cypress.Commands.add('add_field', (field_name, type) => {
      cy.get('input#btn-last').click().then(() => {
         cy.get('textarea#field_label').clear().type(field_name).then(() => {
             cy.get('select#val_type').select(type).should('have.value', type).then(() => {
@@ -162,7 +192,7 @@ function error(){
     console.log('error');
 }
 
-Cypress.Commands.add("require_redcap_stats", () => {
+Cypress.Commands.add('require_redcap_stats', () => {
     cy.server()
     cy.route({method: 'POST', url: '**/ProjectGeneral/project_stats_ajax.php'}).as('project_stats_ajax')
     cy.wait('@project_stats_ajax').then((xhr, error) => { })
@@ -186,11 +216,11 @@ function sorterCompare(col_name, element, values, klass){
     })
 }
 
-Cypress.Commands.add("check_column_sort_values", (col_name, element, values) => {
+Cypress.Commands.add('check_column_sort_values', (col_name, element, values) => {
     abstractSort(col_name, element, values)
 })
 
-Cypress.Commands.add("check_column_sort_classes", (col_name, values) => {
+Cypress.Commands.add('check_column_sort_classes', (col_name, values) => {
     abstractSort(col_name, 'table#table-proj_table tr:first span', values, 1)
 })
 
@@ -212,11 +242,11 @@ function abstractProjectView(input, project_name, total_projects, dropdown_click
     })
 }
 
-Cypress.Commands.add("visible_projects_user_input_click_view", (input, project_name, total_projects) => {
+Cypress.Commands.add('visible_projects_user_input_click_view', (input, project_name, total_projects) => {
     abstractProjectView(input, project_name, total_projects, true)
 })
 
-Cypress.Commands.add("visible_projects_user_input", (input, project_name, total_projects) => {
+Cypress.Commands.add('visible_projects_user_input', (input, project_name, total_projects) => {
     abstractProjectView(input, project_name, total_projects, false)
 })
 
