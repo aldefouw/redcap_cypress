@@ -16,21 +16,78 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
-const users = Cypress.env("users");
-const admin_user = users['admin']['user'];
-const admin_pass = users['admin']['pass'];
+function UserInfo() {
 
-const version = Cypress.env('redcap_version')
+    let u = ''
+    let u_t = ''
+    let p_u_t = ''
 
- //Set the Base URL in the REDCap Configuration Database
+    let user = ''
+    let pass = ''
+
+    this.set_users = (users) => {
+        u = users;
+    }
+
+    this.get_users = () => {
+        return u
+    }
+
+    this.set_previous_user_type = () => {
+        p_u_t = u_t
+    }
+
+    this.get_previous_user_type= () => {
+        return p_u_t
+    }
+
+    this.set_user_type = (user_type) => {
+        u_t = user_type        
+        this.set_current_user()
+        this.set_current_pass()
+    }
+
+    this.get_user_type = () => {
+        return u_t
+    }
+
+    this.set_current_user = () => {
+        user = u[u_t]['user'];
+    }
+
+    this.get_current_user = () => {
+        return user
+    }
+
+    this.set_current_pass = () => {
+        pass = u[u_t]['pass'];
+    }
+
+    this.get_current_pass = () => {
+        return pass
+    }
+
+}
+
+window.user_info = new UserInfo();
+
+
+//Set the Base URL in the REDCap Configuration Database
 const base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
 
 before(() => {
+
+    //Cypress Users
+    cy.set_user_info(Cypress.env('users'))
+
+    //By default, we are going to login as a standard user
+    cy.set_user_type('standard')
+
     //Create the initial database structure
     cy.mysql_db('structure').then(() => {
 
         //Seeds the database
-        cy.mysql_db('/versions/' + version, base_url).then(() => {
+        cy.mysql_db('/versions/' + Cypress.env('redcap_version'), base_url).then(() => {
 
             if(Cypress.env('redcap_hooks_path') != undefined){
                 const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\\\/");
@@ -39,13 +96,12 @@ before(() => {
 
             //Clear out all cookies
             cy.clearCookies()
-
         })
-    })   
+    })  
 })
 
-beforeEach(() => {    
-    cy.maintain_login(admin_user, admin_pass)
+beforeEach(() => {  
+    cy.maintain_login()
 })
 
 Cypress.on("uncaught:exception", (err, runnable) => {
