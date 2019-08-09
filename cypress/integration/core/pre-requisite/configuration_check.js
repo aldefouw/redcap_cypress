@@ -1,7 +1,11 @@
 describe('Configuration Check', () => {
 
+	before(() => {
+		cy.set_user_type('admin')
+	})
+
     it('should have tabs to My Projects, New Project, Help & FAQ, Control Center"', () => {
-        cy.visit_v({ page:'', user_type: 'admin'}).then(() => {                
+        cy.visit_version({page:''}).then(() => {                
             cy.get('a').contains('My Projects')
             cy.get('a').contains('New Project')
             cy.get('a').contains('Help & FAQ')
@@ -12,7 +16,7 @@ describe('Configuration Check', () => {
     describe('Control Center', () => {
 
 		beforeEach(() => {
-		   cy.visit_v({page: "ControlCenter/index.php", user_type: 'admin'})
+		   cy.visit_version({page: "ControlCenter/index.php"})
 		})
 
     	describe('Control Center Home', () => {
@@ -69,7 +73,7 @@ describe('Configuration Check', () => {
 			it('should have Cron Jobs', () => { cy.contains_cc_link('Cron Jobs') })
 
 			it ('should contain the expected Configuration Check', () => {
-				cy.visit_v({ page: "ControlCenter/check.php" }).then(() => {
+				cy.visit_version({ page: "ControlCenter/check.php" }).then(() => {
 					cy.get("h4").contains("Configuration Check")
 					cy.get("body").contains("TEST 1")
 					cy.get("body").contains("TEST 2")

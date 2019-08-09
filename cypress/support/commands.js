@@ -1,4 +1,4 @@
-Cypress.Commands.add("login", (options) => {
+Cypress.Commands.add('login', (options) => {
     cy.request({
         method: 'POST',
         url: '/', // baseUrl is prepended to url
@@ -14,43 +14,73 @@ Cypress.Commands.add("login", (options) => {
     })
 })
 
-Cypress.Commands.add('visit_v', (options) => {
-    const users = Cypress.env('users');
-    const env_user = options['user_type'] ? options['user_type'] : 'standard'
-    const current_user = users[env_user]['user']
-    const current_pass = users[env_user]['pass']
+Cypress.Commands.add('visit_version', (options) => {
 
-    const redcap_version = Cypress.env('redcap_version')
+    let version = Cypress.env('redcap_version')
 
-    cy.maintain_login(current_user, current_pass).then(() => {
+    cy.maintain_login().then(() => {
         if('params' in options){
-            cy.visit('/redcap_v' + redcap_version + '/' + options['page'] +  '?' + options['params'])
+            cy.visit('/redcap_v' + version + '/' + options['page'] +  '?' + options['params'])
         } else {
-            cy.visit('/redcap_v' + redcap_version + '/' + options['page'])
+            cy.visit('/redcap_v' + version + '/' + options['page'])
         }
     })
 })
 
-Cypress.Commands.add("maintain_login", (user, pass) => {
-    cy.getCookies()
-      .should((cookies) => {
-
-        //In most cases, we'll have cookies to preserve to maintain a login
-        if (cookies.length > 0){
-
-            cookies.map(cookie =>  Cypress.Cookies.preserveOnce(cookie['name']) )
-
-        //But, if we don't, then let's simply re-login, right?    
-        } else {     
-
-            cy.login({ username: user, password:  pass })
-        }         
-        
-    })    
-
+Cypress.Commands.add('visit_base', (options) => {
+    cy.maintain_login().then(() => {
+        if ('url' in options) cy.visit(options['url']) 
+    })
 })
 
-Cypress.Commands.add("mysql_db", (type, replace = '') => {
+Cypress.Commands.add('maintain_login', () => {
+    let user = window.user_info.get_current_user()
+    let pass = window.user_info.get_current_pass()
+
+    let user_type = window.user_info.get_user_type()
+    let previous_user_type = window.user_info.get_previous_user_type()
+
+    if(user_type === previous_user_type){        
+        cy.getCookies()
+          .should((cookies) => {
+
+            //In most cases, we'll have cookies to preserve to maintain a login
+            if (cookies.length > 0){
+
+                console.log('Cookie Login')
+
+                cookies.map(cookie =>  Cypress.Cookies.preserveOnce(cookie['name']) )
+
+            //But, if we don't, then let's simply re-login, right?    
+            } else {     
+
+                console.log('Regular Login')
+
+                cy.login({ username: user, password: pass })
+            }         
+            
+        })  
+
+    //If user type has changed, let's clear cookies and login again
+    } else {
+        console.log('User Type Change')
+
+        cy.clearCookies()
+        cy.login({ username: user, password:  pass })
+    }
+
+    window.user_info.set_previous_user_type()
+})
+
+Cypress.Commands.add('set_user_type', (user_type) => {
+    window.user_info.set_user_type(user_type)
+})
+
+Cypress.Commands.add('set_user_info', (users) => {
+    window.user_info.set_users(users)
+})
+
+Cypress.Commands.add('mysql_db', (type, replace = '') => {
     const mysql = Cypress.env("mysql")
 
     const cmd = 'sh test_db/db.sh' +
@@ -92,7 +122,7 @@ function test_link (link, title, try_again = true) {
         }) 
 }
 
-Cypress.Commands.add("contains_cc_link", (link, title = '') => {
+Cypress.Commands.add('contains_cc_link', (link, title = '') => {
     if(title == '') title = link
     let t = Cypress.$("div#control_center_menu a:contains(" + JSON.stringify(link) + ")");
     t.length ? test_link(link, title) : test_link(link.split(' ')[0], title.split(' ')[0])
