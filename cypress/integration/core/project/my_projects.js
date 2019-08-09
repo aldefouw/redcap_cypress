@@ -57,6 +57,9 @@ describe('My Projects', () => {
 		})
 
 		it('Should allow me to turn off longitudinal data collection with defined events', () => {
+			cy.get('button').should('contain', 'Define My Events')
+			cy.get('button').should('contain', 'Designate Instruments for My Events')
+
 			cy.get('div').contains('Use longitudinal data collection with defined events?').children('button').then(($a) => {
 
 				expect($a).to.contain('Disable')
