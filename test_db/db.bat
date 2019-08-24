@@ -1,6 +1,4 @@
-rem echo off
-
-setlocal EnableDelayedExpansion
+echo off
 
 :: Replace all instances of / with \ so that we can keep our javascript code
 set sql_file=%7
