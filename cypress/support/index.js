@@ -72,11 +72,11 @@ function UserInfo() {
 window.user_info = new UserInfo();
 
 //Set the Base URL in the REDCap Configuration Database
-if(Cypress.config('baseUrl') !== null){
+// if(Cypress.config('baseUrl') !== null){
     const base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
-} else {
-    alert('baseUrl, which tells REDCap Cypress what URL your REDCap test server is at, is missing from cypress.json.  Please configure it before proceeding.')
-}
+// } else {
+//     alert('baseUrl, which tells REDCap Cypress what URL your REDCap test server is at, is missing from cypress.json.  Please configure it before proceeding.')
+// }
 
 before(() => {
 
@@ -88,6 +88,8 @@ before(() => {
 
     //Create the initial database structure
     cy.mysql_db('structure').then(() => {
+
+        console.log(base_url)
 
         //Seeds the database
         cy.mysql_db('/versions/' + Cypress.env('redcap_version'), base_url).then(() => {
