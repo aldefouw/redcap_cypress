@@ -19,7 +19,7 @@ IF [%8]==[] (
 IF [%9]==[] (
 	set containers=%cd%\test_db\containers.tmp
 	docker ps | findstr "3306" > containers
-	for /f "tokens=1 delims= " %%a in (containers) do set db_cmd=docker exec %%a %1 -u%5 -p%6 %4
+	for /f "tokens=1 delims= " %%a in (containers) do set db_cmd=docker exec -i %%a %1 -u%5 -p%6 %4
 ) ELSE (
  	set db_cmd=%1 -h%2 --port=%3 %4 -u%5 -p%6
 )
