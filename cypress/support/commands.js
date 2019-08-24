@@ -101,7 +101,7 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
 
         console.log('Windows platform detected')
 
-        cmd = ' .\\test_db\\db.bat ' +
+        cmd = 'cmd /c ".\\test_db\\db.bat ' +
         ' ' + mysql['path'] +
         ' ' + mysql['host'] +
         ' ' + mysql['port'] +
@@ -109,7 +109,8 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
         ' ' + mysql['db_user'] +
         ' ' + mysql['db_pass'] +
         ' ' + type +
-        ' ' + replace
+        ' ' + replace + 
+        ' ' + mysql['use_docker_cli'] + '"'
 
     //Anything else should run a Unix-style shell script    
     } else { 
