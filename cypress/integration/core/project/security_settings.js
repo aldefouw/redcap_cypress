@@ -1,4 +1,4 @@
-describe('Project Security Settings', () => {
+describe('Admin Security Settings', () => {
 
 	before(()=> {
 		cy.set_user_type('admin')
@@ -6,53 +6,50 @@ describe('Project Security Settings', () => {
     })
 
     it('Should display system status as "SYSTEM ONLINE"', () => {
-	    	cy.get('select').contains('SYSTEM ONLINE').should(($a) => { 
-	    		expect($a).to.contain('SYSTEM ONLINE')
+	    cy.get('select').contains('SYSTEM ONLINE').should(($a) => { 
+	    	expect($a).to.contain('SYSTEM ONLINE')
     	})   
     })
 
-    before(()=> {
-		cy.get('select').contains('SYSTEM OFFLINE').select('system_offline')
-		/*
-		In the ‘Custom message to display to users 
-		when system is offline’ box, change 6.0 to 7.4.4.
-		*/
-	})
-
-	it('Should update message to "This is a test of Vanderbilt REDCap 7.4.4 System is offline and will be back on-line shortly. Custom message to display to users when system is offline"', () => {
-		cy.get('textarea').contains('This is a test of Vanderbilt REDCap 7.4.4 System is offline and will be back on-line shortly. Custom message to display to users when system is offline').should(($t) => {
-			expect($t).to.contain('This is a test of Vanderbilt REDCap 7.4.4 System is offline and will be back on-line shortly. Custom message to display to users when system is offline')
-		})
-	})
-
-
-
-	before(()=> {
-		/*
-		click save changes
-		*/
-	})
-
-	it('Should save changes', () => {
-		cy.get('div').contains('Save Changes').should(($s) => {
-			expect($s).to.contain('Your system configuration values have now been changed')
-		})
-	})
-
-	before(() => {
-		cy.logout
-		//logout
-	})
-
-	it('Should log user out', () => {
-		
-	})
-
-	before(() => {
-		cy.set_user_type('user')
-	})
-
-	it('Should display custom offline message', () => {
-		//check if previously created offline message is displayed
+    it('Should change system status to "SYSTEM OFFLINE"', () => {
+    	cy.get('select').contains('SYSTEM OFFLINE').click({force: true})
+    	cy.get('input').contains('Save Changes').click({force: true})
+    	cy.get('div').should(($div) => {
+    		expect($div).to.contain('Your system configuration values have now been changed!')
+    	})
 	})
 })
+
+
+describe('User Security Settings' , () => {
+
+	before(()=> {
+		cy.get('ul').contains('Log out').click({force: true})
+		cy.set_user_type('standard')
+		cy.visit_version({page: 'index.php'})	
+	})
+
+	it('Should display system offline message when user logs in', () => {
+		cy.get('div').should(($div) => {
+			expect($div).to.contain('REDCap is currently offline. Please return at another time. We apologize for any inconvenience.')
+		})
+	})
+	
+})
+
+describe('Project Settings', () => {
+
+	before(() => {
+		cy.set_user_type('admin')
+		cy.visit_version({page: 'ControlCenter/edit_project.php?project=5'})
+	})
+
+	it('Should save changes after project status is changed from online to offline', () => {
+		cy.get('select').contains('OFFLINE').click({force: true})
+		cy.get('input').contains('Save Changes').click({force: true})
+		cy.get('div').should(($div) => {
+			expect($div).to.contain('Your changes have been saved!')
+		})
+	})
+	})
+
