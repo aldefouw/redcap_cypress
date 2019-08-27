@@ -72,11 +72,8 @@ function UserInfo() {
 window.user_info = new UserInfo();
 
 //Set the Base URL in the REDCap Configuration Database
-if(Cypress.config('baseUrl') !== null){
-    const base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
-} else {
-    alert('baseUrl, which tells REDCap Cypress what URL your REDCap test server is at, is missing from cypress.json.  Please configure it before proceeding.')
-}
+const base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
+
 
 before(() => {
 
