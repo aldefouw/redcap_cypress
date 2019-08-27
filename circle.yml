@@ -9,7 +9,7 @@ jobs:
       - run:
           name: Install MySQL Client
           command: |
-            sudo apt install mysql-client-core-5.7
+            sudo apt-get update | sudo apt install mysql-client-core-5.7=5.7.27-0ubuntu0.16.04.1
       - run:
           name: Build the REDCap Image
           command: |
