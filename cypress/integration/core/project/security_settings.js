@@ -95,7 +95,7 @@ describe('Project Security Settings', () => {
 			cy.set_user_type('standard')
 			cy.visit_version({page: 'ProjectSetup/index.php', params: "pid=13"})
 			cy.get('div').should(($div) => {
-				expect($div).to.contain('REDCap is currently offline. Please return at another time. We apologize for any inconvenience.')
+				expect($div).to.contain('This REDCap project is currently offline. Please return to this project at another time. We apologize for any inconvenience.')
 			})
 		})
 		it('Should display offline message when admin logs in', () => {
