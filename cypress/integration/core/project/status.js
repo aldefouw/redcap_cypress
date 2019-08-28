@@ -86,6 +86,25 @@ describe('Project Setup', () => {
 			cy.set_user_type('standard')
 		})
 
+		it('Should allow normal user to archive the project', () => {
+			cy.visit_version({page: 'ProjectSetup/other_functionality.php', params: "pid=13"})
+			cy.get('button').contains('Archive the project').click({force: true})
+			cy.get('div.ui-dialog-buttonset').contains('Archive the project').click({force: true})
+			cy.visit_base({url: 'index.php', params: "action=myprojects"})
+			cy.get('a').contains('My Projects').click({force: true})
+			cy.get('div#proj_table').should('not.contain', 'Test Project')
+		})
+
+		it('Should show the archived project in the archived projects list', () => {
+			cy.visit_base({url: 'index.php', params: "action=myprojects"})
+			cy.get('a').contains('My Projects').click({force: true}) 
+			cy.get('a').contains('Show archived projects').click({force: true})
+			//cy.visit_version({page: 'index.php', params: "action=myprojects&show_archived"})
+			cy.get('div#proj_table').should(($test) => {
+				expect($test).to.contain('Test Project')
+			})
+		})
+
 		
 
 		
