@@ -12,3 +12,5 @@ cypress.env.json
 *.tmp
 *.mp4
 *.png
+
+/tmp
