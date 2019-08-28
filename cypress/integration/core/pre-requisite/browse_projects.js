@@ -116,7 +116,7 @@ describe('Browse Projects', () => {
 
         it('Should sort the Status column appropriately', () => {
             cy.check_column_sort_classes('Status', 
-                                         ['glyphicon-check', 'glyphicon-wrench']);
+                                         ['fa-check-square', 'fa-wrench']);
         })
     })            
 })
