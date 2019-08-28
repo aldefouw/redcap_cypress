@@ -77,13 +77,47 @@ Cypress.Commands.add('set_user_type', (user_type) => {
 })
 
 Cypress.Commands.add('set_user_info', (users) => {
-    window.user_info.set_users(users)
+    if(users !== undefined){
+        window.user_info.set_users(users)
+    } else {
+        alert('users, which defines what users are in your seed database, is missing from cypress.env.json.  Please configure it before proceeding.')
+    }
 })
 
 Cypress.Commands.add('mysql_db', (type, replace = '') => {
+    
     const mysql = Cypress.env("mysql")
 
-    const cmd = 'sh test_db/db.sh' +
+    let version = Cypress.env('redcap_version')
+
+    if(version === undefined){
+        alert('redcap_version, which defines what version of REDCap you use in the seed database, is missing from cypress.env.json.  Please configure it before proceeding.')
+    }
+
+    let cmd = ''
+
+    //If we are on Windows, we have to run a bash script instead
+    if( window.navigator['platform'].match(/Win/g) ) {
+
+        console.log('Windows platform detected')
+
+        cmd = 'cmd /c ".\\test_db\\db.bat ' +
+        ' ' + mysql['path'] +
+        ' ' + mysql['host'] +
+        ' ' + mysql['port'] +
+        ' ' + mysql['db_name'] +
+        ' ' + mysql['db_user'] +
+        ' ' + mysql['db_pass'] +
+        ' ' + type +
+        ' ' + replace + 
+        ' ' + mysql['use_docker_cli'] + '"'
+
+    //Anything else should run a Unix-style shell script    
+    } else { 
+
+        console.log('Unix-style platform enabled')
+
+        cmd = 'sh test_db/db.sh' +
         ' ' + mysql['path'] +
         ' ' + mysql['host'] +
         ' ' + mysql['port'] +
@@ -92,13 +126,15 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
         ' ' + mysql['db_pass'] +
         ' ' + type +
         ' ' + replace
+    }
 
-        console.log(cmd)
+   console.log(cmd)
 
-    cy.exec(cmd).then((response) => {
+   cy.exec(cmd).then((response) => {
         //cy.writeFile('log_of_mysql_command' + type + '.txt', response)
         console.log(response)
     })
+
 })
 
 function test_link (link, title, try_again = true) {
