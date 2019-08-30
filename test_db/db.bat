@@ -12,9 +12,9 @@ set tmp=%cd%\test_db\%sql_file%.sql.tmp
 set first=s/REDCAP_DB_NAME/%4/g
 
 IF [%8]==[] (
-	echo | type %sql% | sed %first% > %tmp%
+	type %sql% | sed %first% > %tmp%
 ) ELSE (
-	echo | type %sql% | sed %first% | sed s/%8/g > %tmp%
+	type %sql% | sed %first% | sed s/%8/g > %tmp%
 )
 
 %db_cmd% < %tmp%
