@@ -109,7 +109,7 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
         ' ' + mysql['db_user'] +
         ' ' + mysql['db_pass'] +
         ' ' + type +
-        ' ' + replace + 
+        ' ' + replace.replace(/\\\\/g, "\\") + 
         ' ' + mysql['use_docker_cli'] + '"'
 
     //Anything else should run a Unix-style shell script    
