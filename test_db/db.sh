@@ -11,5 +11,5 @@ else
       echo | cat $sql | sed $first | sed s/$8/g > $tmp
 fi
 
-$db_cmd < $tmp
+pv $tmp | $db_cmd
 rm -f $tmp
