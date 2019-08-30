@@ -18,3 +18,5 @@ IF [%8]==[] (
 )
 
 %db_cmd% < %tmp%
+
+del %tmp%
