@@ -14,3 +14,10 @@ cypress.env.json
 *.png
 
 /tmp
+
+/containers
+/docker
+/find
+/mysql
+
+mysql-cli.zip
