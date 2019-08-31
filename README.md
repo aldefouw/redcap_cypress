@@ -370,7 +370,7 @@ After your test suite is mature, it will be faster to run your tests in headless
 This Test Framework template is a good start, but there are some known areas that could be improved.
 
 ---
-~~### Database shell script incompatible with native Windows environments~~
+~~Database shell script incompatible with native Windows environments~~
 
 ### Additional Dependencies for Windows Environments
 ~~*Configuring and resetting your database on a Windows environment is not possible at this time.*~~
@@ -379,7 +379,7 @@ This Test Framework template is a good start, but there are some known areas tha
 
 ~~Since I do not work in a Windows environment, I have not found it worth my while to write such a script for an environment I am not an expert in.~~
 
-~~If you are interested in writing this functionality, please fork this repository, write code to fix the problem, and send a pull-request.  ~~
+~~If you are interested in writing this functionality, please fork this repository, write code to fix the problem, and send a pull-request.~~
 
 ~~I will likely need to add another environment variable to the base setup file so the framework knows which shell script to run (based upon your specified environment).~~
 
