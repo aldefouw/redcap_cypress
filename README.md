@@ -383,7 +383,7 @@ This Test Framework template is a good start, but there are some known areas tha
 
 ~~I will likely need to add another environment variable to the base setup file so the framework knows which shell script to run (based upon your specified environment).~~
 
-It's taken a fair bit of effort and testing, but it's now possible to run the framework in Windows.  This is done through a batch script (db.bat) that essentially mirrors the same functionality as the db.sh script for Unix-style environments.  Please note that you will need to ensure that you have the MySQL Command Line Interface and Sed utlities installed and available to your local Windows system at command line interface.  
+It's taken a fair bit of effort and testing, but it's now possible to run the framework in Windows.  This is done through a batch script (db.bat) that essentially mirrors the same functionality as the db.sh script for Unix-style environments.  Please note that you will need to ensure that you have the MySQL Command Line Interface and Sed utilities installed and available to your local Windows system at command line interface.  
 
 These are easily configured on your system through the Chocolately package manager.  
 
