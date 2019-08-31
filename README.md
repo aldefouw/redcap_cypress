@@ -370,18 +370,18 @@ After your test suite is mature, it will be faster to run your tests in headless
 This Test Framework template is a good start, but there are some known areas that could be improved.
 
 ---
-~~### Database shell script incompatible with native Windows environments
+~~### Database shell script incompatible with native Windows environments~~
 
 ### Additional Dependencies for Windows Environments
-~~*Configuring and resetting your database on a Windows environment is not possible at this time.*
+~~*Configuring and resetting your database on a Windows environment is not possible at this time.*~~
 
-~~I am positive that this functionality is possible if someone is willing to write a script simliar to the `/test_db/db.sh` file I have already provided for Unix-environments.
+~~I am positive that this functionality is possible if someone is willing to write a script simliar to the `/test_db/db.sh` file I have already provided for Unix-environments.~~
 
-~~Since I do not work in a Windows environment, I have not found it worth my while to write such a script for an environment I am not an expert in.
+~~Since I do not work in a Windows environment, I have not found it worth my while to write such a script for an environment I am not an expert in.~~
 
-~~If you are interested in writing this functionality, please fork this repository, write code to fix the problem, and send a pull-request.  
+~~If you are interested in writing this functionality, please fork this repository, write code to fix the problem, and send a pull-request.  ~~
 
-~~I will likely need to add another environment variable to the base setup file so the framework knows which shell script to run (based upon your specified environment).
+~~I will likely need to add another environment variable to the base setup file so the framework knows which shell script to run (based upon your specified environment).~~
 
 It's taken a fair bit of effort and testing, but it's now possible to run the framework in Windows.  This is done through a batch script (db.bat) that essentially mirrors the same functionality as the db.sh script for Unix-style environments.  Please note that you will need to ensure that you have the MySQL Command Line Interface and Sed utlities installed and available to your local Windows system at command line interface.  
 
