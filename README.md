@@ -372,7 +372,7 @@ This Test Framework template is a good start, but there are some known areas tha
 ---
 ~~Database shell script incompatible with native Windows environments~~
 
-### Additional Dependencies for Windows Environments
+### Windows Environments
 ~~*Configuring and resetting your database on a Windows environment is not possible at this time.*~~
 
 ~~I am positive that this functionality is possible if someone is willing to write a script simliar to the `/test_db/db.sh` file I have already provided for Unix-environments.~~
