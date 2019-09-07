@@ -387,6 +387,15 @@ Thankfully, these are easily configured on your Windows system through the [Choc
 
 Please note that you will need to administrator rights to install both [Chocolatey](https://chocolatey.org/docs/installation) and the dependencies.
 
+### Installing Chocolatey
+
+`PowerShell.exe -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"`
+
+The above one-liner will typically work to install Chocolatey package manager.  If it does not, please view the installation documentation here:
+
+[https://chocolatey.org/docs/installation](https://chocolatey.org/docs/installation)
+
+
 #### Installing MySQL and Sed using Chocolatey
 
 `choco install mysql-cli`
