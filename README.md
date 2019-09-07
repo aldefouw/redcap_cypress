@@ -383,15 +383,21 @@ This Test Framework template is a good start, but there are some known areas tha
 
 ~~I will likely need to add another environment variable to the base setup file so the framework knows which shell script to run (based upon your specified environment).~~
 
-It's taken a fair bit of effort and testing, but it's now possible to run the framework in Windows.  This is done through a batch script (db.bat) that essentially mirrors the same functionality as the db.sh script for Unix-style environments.  Please note that you will need to ensure that you have the MySQL Command Line Interface and Sed utilities installed and available to your local Windows system at command line interface.  
+It's taken a fair bit of effort and testing, but it's now possible to run the framework in Windows.  This is done through a batch script (db.bat) that essentially mirrors the same functionality as the db.sh script for Unix-style environments.  
 
-These are easily configured on your system through the Chocolately package manager.  
+**Please note that you will need to ensure that you have the MySQL Command Line Interface and Sed utilities installed and available to your local Windows system at command line interface.**  If you do not have these utilities available, your database seeds will not work and the tests will not run appropriately.   
 
-To automatically install these tools on your Windows system, please execute the following batch file in the REDCap Cypress folder:
+Thankfully, these are easily configured on your Windows system through the [Chocolatey](https://chocolatey.org/docs/installation) package manager.
 
-`.\windows\dependencies-installer.bat`
+Please note that you will need to administrator rights to install both [Chocolatey](https://chocolatey.org/docs/installation) and the dependencies.
 
-Please note that you will need to administrator rights to install both Chocolately and the dependencies.
+#### Windows Dependencies
+
+`choco install mysql-cli`
+
+`choco install sed`
+
+Typically, Chocolatey will add these binaries into your $PATH automatically. However, in cases where you might need to build Chocolatey from source, you can point the $PATH there manually if necessary.  (They need to be a part of your part because these two binaries are used in the database seeding process.)
 
 ---
 ### Unpredictable login behavior
