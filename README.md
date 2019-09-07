@@ -200,7 +200,7 @@ Each user key contains a username (user) and password (pass).
 
 You can login with an admin user versus a standard user depending on what functionality you are trying to test.
 
-You can specify what user is currently logged in using the built-in method #set_user_type.
+You can specify what user is currently logged in (within your tests themselves - the configuration simply specifies the user credentials for these users) using the built-in method #set_user_type.
 
 For instance:
 
