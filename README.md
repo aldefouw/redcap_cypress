@@ -365,11 +365,7 @@ After your test suite is mature, it will be faster to run your tests in headless
 `npx cypress run`
 
 
-## Known Limitations & Areas for Improvement
 
-This Test Framework template is a good start, but there are some known areas that could be improved.
-
----
 ~~Database shell script incompatible with native Windows environments~~
 
 # Windows Environments
@@ -392,6 +388,11 @@ Please note that you will need to administrator rights to install both [Chocolat
 Typically, Chocolatey will add these binaries into your $PATH automatically. However, in case you need to build Chocolatey from source, you can add in these paths to the system $PATH manually.  (You do so by navigating to "Advanced System Settings" > "Environment Variables" in the Advanced tab of the System Properties window. These utilities need to be a part of your path because these two binaries are used in the database seeding process.)
 
 ---
+
+## Known Limitations & Areas for Improvement
+
+This Test Framework template is a good start, but there are some known areas that could be improved.
+
 ### Unpredictable login behavior
 
 ~~Sometimes REDCap doesn't login the first time you run a test.  This means the test spec will probably fail the first time you run it, which is technically a non-deterministic test (a bad thing that I am trying to avoid).~~
