@@ -372,18 +372,10 @@ This Test Framework template is a good start, but there are some known areas tha
 ---
 ~~Database shell script incompatible with native Windows environments~~
 
-### Windows Environments
+# Windows Environments
 ~~*Configuring and resetting your database on a Windows environment is not possible at this time.*~~
 
-~~I am positive that this functionality is possible if someone is willing to write a script simliar to the `/test_db/db.sh` file I have already provided for Unix-environments.~~
-
-~~Since I do not work in a Windows environment, I have not found it worth my while to write such a script for an environment I am not an expert in.~~
-
-~~If you are interested in writing this functionality, please fork this repository, write code to fix the problem, and send a pull-request.~~
-
-~~I will likely need to add another environment variable to the base setup file so the framework knows which shell script to run (based upon your specified environment).~~
-
-It's taken a fair bit of effort and testing, but it's now possible to run the framework in Windows.  This is done through a batch script (db.bat) that essentially mirrors the same functionality as the db.sh script for Unix-style environments.  
+It's taken a fair bit of effort and testing, but it's now possible to run the framework in Windows.  This is done through a database-seeding batch script (db.bat) that essentially mirrors the same functionality as the db.sh script for Unix-style environments.  
 
 **Please note that you will need to ensure that you have the MySQL Command Line Interface and Sed utilities installed and available to your local Windows system at command line interface.**  If you do not have these utilities available, your database seeds will not work and the tests will not run appropriately.   
 
@@ -391,13 +383,13 @@ Thankfully, these are easily configured on your Windows system through the [Choc
 
 Please note that you will need to administrator rights to install both [Chocolatey](https://chocolatey.org/docs/installation) and the dependencies.
 
-#### Windows Dependencies
+#### Installing MySQL and Sed using Chocolatey
 
 `choco install mysql-cli`
 
 `choco install sed`
 
-Typically, Chocolatey will add these binaries into your $PATH automatically. However, in cases where you might need to build Chocolatey from source, you can point the $PATH there manually if necessary.  (They need to be a part of your part because these two binaries are used in the database seeding process.)
+Typically, Chocolatey will add these binaries into your $PATH automatically. However, in case you need to build Chocolatey from source, you can add in these paths to the system $PATH manually.  (You do so by navigating to "Advanced System Settings" > "Environment Variables" in the Advanced tab of the System Properties window. These utilities need to be a part of your path because these two binaries are used in the database seeding process.)
 
 ---
 ### Unpredictable login behavior
