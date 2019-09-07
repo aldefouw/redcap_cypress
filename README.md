@@ -372,10 +372,7 @@ After your test suite is mature, it will be faster to run your tests in headless
 
 `npx cypress run`
 
-
-
-~~Database shell script incompatible with native Windows environments~~
-
+---
 # Windows Environments
 ~~*Configuring and resetting your database on a Windows environment is not possible at this time.*~~
 
@@ -402,7 +399,9 @@ The above one-liner will typically work to install Chocolatey package manager.  
 
 `choco install sed`
 
-Typically, Chocolatey will add these binaries into your $PATH automatically. However, in case you need to build Chocolatey from source, you can add in these paths to the system $PATH manually.  (You do so by navigating to "Advanced System Settings" > "Environment Variables" in the Advanced tab of the System Properties window. These utilities need to be a part of your path because these two binaries are used in the database seeding process.)
+Typically, Chocolatey will add these binaries into your $PATH automatically. 
+
+However, in case you need to build Chocolatey from source, you can add in these paths to the system $PATH manually.  (You do so by navigating to "Advanced System Settings" > "Environment Variables" in the Advanced tab of the System Properties window. These utilities need to be a part of your path because these two binaries are used in the database seeding process.)
 
 ---
 
