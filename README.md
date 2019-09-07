@@ -200,6 +200,14 @@ Each user key contains a username (user) and password (pass).
 
 You can login with an admin user versus a standard user depending on what functionality you are trying to test.
 
+You can specify what user is currently logged in using the built-in method #set_user_type.
+
+For instance:
+
+`cy.set_user_type('standard')`
+
+`cy.set_user_type('admin')`
+
 ---
 ### redcap_version ###
 The version of REDCap that you are testing against.  This is a critical value to set so that Cypress knows the correct URLs to use when testing.
