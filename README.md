@@ -395,9 +395,10 @@ The above one-liner will typically work to install Chocolatey package manager.  
 
 #### Installing MySQL and Sed using Chocolatey
 
-`choco install mysql-cli`
-
-`choco install sed`
+```shell
+choco install mysql-cli
+choco install sed
+```
 
 Typically, Chocolatey will add these binaries into your $PATH automatically. 
 
