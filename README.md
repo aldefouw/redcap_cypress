@@ -102,6 +102,10 @@ The non-platform-dependent nature of Cypress tests also opens the door for conso
 
 ## Getting Started
 
+Please read our [Quick-Start Guide](https://github.com/aldefouw/redcap_cypress/wiki#quick-start-guide) in the wiki if you are new to the framework.
+
+### Automated Testing Requirements
+
 Automating testing of REDCap requires two things:
 - REDCap Test Instance
 - REDCap Cypress Test Framework (this repository)
@@ -114,7 +118,7 @@ The combination of the REDCap Test Instance and the Test Framework is considered
 
 What is the test environment?  Well, it might be easier to show you than to tell you.  
 
-The graphic below is a visual representation of the test environment, which is a combination of both the REDCap Test Server you run and the test framework that you write your tests in:  
+The graphic below is a visual representation of the test environment, which is a combination of both the REDCap Test Instance you run and the Test Framework (which is the underpinning for this repository) that you write your tests in.
 
 ![Test Environment Graphic](REDCapCypressTestEnvironment.png)
 
