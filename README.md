@@ -103,14 +103,18 @@ The non-platform-dependent nature of Cypress tests also opens the door for conso
 ## Getting Started
 
 Automating testing of REDCap requires two things:
-- Test Environment
+- REDCap Test Instance
 - Test Framework
+
+The combination of the REDCap Test Instance and the Test Framework is considered your "Test Enivronment."
 
 ---
 
 ### Test Environment
 
-What is the test environment?  Well, it's basically your test server that you run REDCap on.  
+What is the test environment?  
+
+Well, it's basically a combination of your test server that you run REDCap on and the test framework that you write your tests in.  
 
 - **It can be located anywhere:** *local or remote*.  
 - **It can run in any environment:** *virtualized or dedicated*.  
