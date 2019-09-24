@@ -141,6 +141,8 @@ Although configuring your environment is outside the scope of this document, the
 
 **If you need help getting started with Docker, consider looking at or downloading Andy Martin's [REDCap Docker Compose](https://github.com/123andy/redcap-docker-compose) repository.**
 
+Alternatively, if you understand how REDCap works well, you can use Adam De Fouw's lightweight [REDCap Docker](https://github.com/123andy/redcap-docker) repository.  Please note that this repository requires the REDCap source files to be on your machine.
+
 ---
 ### Test Framework 
 
