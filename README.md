@@ -13,7 +13,7 @@ It is intended to serve as a starting point for writing your own integration and
 - [Automated Testing](#automated-testing)
 - [Why Cypress?](#why-cypress)
 - [Getting Started](#getting-started)
-- [Defining Your Test Environment](#defining-your-test-environment)
+- [Defining Your Test Environment](#defining-your-test-environment-variables)
 - [Test Database Structure & Seeds](#test-database-structure--seeds)
 - [Writing Your Tests](#writing-your-tests)
 - [Sharing Your Tests](#sharing-your-tests)
@@ -112,19 +112,23 @@ The combination of the REDCap Test Instance and the Test Framework is considered
 
 ### Test Environment
 
-What is the test environment?  
+What is the test environment?  Well, it might be easier to show you than to tell you.  
 
-Well, it's basically a combination of your test server that you run REDCap on and the test framework that you write your tests in.  
+The graphic below is a visual representation of the test environment, which is a combination of both the REDCap Test Server you run and the test framework that you write your tests in:  
+
+![Test Environment Graphic](test-environment.png)
+
+Wondering what you need configured for a REDCap Test server?
 
 - **It can be located anywhere:** *local or remote*.  
 - **It can run in any environment:** *virtualized or dedicated*.  
 - **It can run any OS you want:** *Linux or insert your favorite OS here*.
 
-There are really only **two requirements for your Test Environment**:
-1. *It must be running prior to starting the test suite*
+There are really only **two requirements for your REDCap Test Instance**:
+1. *It must be running prior to starting the test suite tests*
 2. *It must be accessible through HTTP protocol via the test suite*
 
-If your test environment is running and functional, this part is done.
+If your REDCap Test Instance is running and functional, this part is done.
 
 ### CAUTION:
 *Although the Cypress test framework can test against any server through HTTP protocol, **please do NOT use your production server as your test environment**.  You might think the best way to test your REDCap instance is to test against your actual server that people store data on.  That simply isn't the case.*
@@ -140,13 +144,13 @@ Although configuring your environment is outside the scope of this document, the
 ---
 ### Test Framework 
 
-This is the repository you're looking at.  You will write tests on your machine and then run them against your Test Environment.
+In short, this is the repository you're looking at.  You will write tests on your machine and then run them against your Test Environment.
 
-If you have a **Test Environment** running and you've cloned this repository (your **Test Framework**), you are now ready to configure and define your test environment.
+If you have a **REDCap Test Instance** running and you've cloned this repository (your **Test Framework**), you are now ready to configure and define your test environment.
 
 ---
 
-## Defining Your Test Environment
+## Defining Your Test Environment Variables
 
 ### Tell your Test Framework about your Test Environment
 
