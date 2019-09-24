@@ -104,7 +104,7 @@ The non-platform-dependent nature of Cypress tests also opens the door for conso
 
 Automating testing of REDCap requires two things:
 - REDCap Test Instance
-- Test Framework
+- REDCap Cypress Test Framework (this repository)
 
 The combination of the REDCap Test Instance and the Test Framework is considered your "Test Enivronment."
 
