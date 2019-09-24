@@ -116,7 +116,7 @@ What is the test environment?  Well, it might be easier to show you than to tell
 
 The graphic below is a visual representation of the test environment, which is a combination of both the REDCap Test Server you run and the test framework that you write your tests in:  
 
-![Test Environment Graphic](REDCapCypressTestEnvironment.pdf)
+![Test Environment Graphic](REDCapCypressTestEnvironment.png)
 
 Wondering what you need configured for a REDCap Test server?
 
