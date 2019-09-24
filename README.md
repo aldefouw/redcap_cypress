@@ -279,12 +279,14 @@ Database configuration happens in two phases:
 2. Population of REDCap Seed Data
 
 ### Configuration of REDCap Structure
-Before the entire test suite runs (at the `before()` block), `/test_db/structure.sql` is run via the `db.sh` shell script to establish the initial database structure behind REDCap.
+Before the entire test suite runs (at the `before()` block), `/test_db/structure.sql` is run via the `db.sh` (Unix) or `db.bat` (Windows) script to establish the initial database structure behind REDCap.
 
 ### Population of REDCap Seed Data
-To create non-deterministic tests, we want to reset the database state before each individual test is run.
+To create non-deterministic tests, we want to reset the database state to a known state before the test suite is run.
 
-Before each individual test spec is run, a file located at `/test_db/seeds.sql` is run via the `db.sh` shell script within the `beforeEach()` block.  The seeds populate some important data to establish an initial configuration for REDCap.  
+Before the test suite is run, a file located at `/test_db/structure.sql` is run via the `db.sh` shell script.  The file creates the REDCap structure.  
+
+Based upon the version specified in the cypress.env.json file, a version-specific REDCap seed (e.g. `/test_db/versions/7.4.4.sql` is used to establish the initial configuration run.  
 
 *The seeds file in this template repository includes a both an **admin user** and a **standard user.***  Which user you use to login to REDCap is dependent upon what kind of feature you are intending to test.
 
