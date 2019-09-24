@@ -116,9 +116,11 @@ The combination of the REDCap Test Instance and the Test Framework is considered
 
 ### Test Environment
 
-What is the test environment?  Well, it might be easier to show you than to tell you.  
+What is the test environment?  It might be easier to show you than to tell you.  
 
-The graphic below is a visual representation of the test environment, which is a combination of both the REDCap Test Instance you run and the Test Framework (which is the underpinning for this repository) that you write your tests in.
+The graphic below is a visual representation of the test environment.  
+
+In essence, the test environment is is a combination of both the REDCap Test Instance you run and the Test Framework (e.g. this repository) that you write your tests in.
 
 ![Test Environment Graphic](REDCapCypressTestEnvironment.png)
 
