@@ -422,6 +422,8 @@ Typically, Chocolatey will add these binaries into your $PATH automatically.
 
 However, in case you need to build Chocolatey from source, you can add in these paths to the system $PATH manually.  (You do so by navigating to "Advanced System Settings" > "Environment Variables" in the Advanced tab of the System Properties window. These utilities need to be a part of your path because these two binaries are used in the database seeding process.)
 
+Please see our wiki page for [Pre-Requisites to Using & Installing Framework](https://github.com/aldefouw/redcap_cypress/wiki/Pre-Requisites-to-Using-&-Installing-Framework#chocolatey) for additional details.
+
 ---
 
 ## Known Limitations & Areas for Improvement
