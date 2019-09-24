@@ -106,7 +106,7 @@ Please read our [Quick-Start Guide](https://github.com/aldefouw/redcap_cypress/w
 
 ### Automated Testing Requirements
 
-Automating testing of REDCap requires two things:
+Automated testing of REDCap requires two things:
 - REDCap Test Instance
 - REDCap Cypress Test Framework (this repository)
 
@@ -120,7 +120,7 @@ What is the test environment?  It might be easier to show you than to tell you.
 
 The graphic below is a visual representation of the test environment.  
 
-In essence, the test environment is is a combination of both the REDCap Test Instance you run and the Test Framework (e.g. this repository) that you write your tests in.
+In essence, the test environment is is a combination of both the REDCap Test Instance you run and the REDCap Cypress Test Framework (e.g. this repository) that you write your tests in.
 
 ![Test Environment Graphic](REDCapCypressTestEnvironment.png)
 
