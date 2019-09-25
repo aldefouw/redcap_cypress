@@ -135,7 +135,9 @@ There are really only **two requirements for your REDCap Test Instance**:
 1. *It must be running prior to starting the test suite tests*
 2. *It must be accessible through HTTP protocol via the test suite*
 
-If your REDCap Test Instance is running and functional, this part is done.
+If your REDCap Test Instance is running and functional, this part is done.  However, setting up your REDCap Test Instance is only half of what you need to create a Test Environment.  
+
+The other half necessary is to configure your Test Framework, which is covered below.
 
 ### CAUTION:
 *Although the Cypress test framework can test against any server through HTTP protocol, **please do NOT use your production server as your test environment**.  You might think the best way to test your REDCap instance is to test against your actual server that people store data on.  That simply isn't the case.*
