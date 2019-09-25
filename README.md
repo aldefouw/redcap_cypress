@@ -13,7 +13,7 @@ It is intended to serve as a starting point for writing your own integration and
 - [Automated Testing](#automated-testing)
 - [Why Cypress?](#why-cypress)
 - [Getting Started](#getting-started)
-- [Defining Your Test Environment](#defining-your-test-environment)
+- [Defining Your Test Environment](#defining-your-test-environment-variables)
 - [Test Database Structure & Seeds](#test-database-structure--seeds)
 - [Writing Your Tests](#writing-your-tests)
 - [Sharing Your Tests](#sharing-your-tests)
@@ -102,25 +102,39 @@ The non-platform-dependent nature of Cypress tests also opens the door for conso
 
 ## Getting Started
 
-Automating testing of REDCap requires two things:
-- Test Environment
-- Test Framework
+Please read our [Quick-Start Guide](https://github.com/aldefouw/redcap_cypress/wiki#quick-start-guide) in the wiki if you are new to the framework.
+
+### Automated Testing Requirements
+
+Automated testing of REDCap requires two things:
+- REDCap Test Instance
+- REDCap Cypress Test Framework (this repository)
+
+The combination of the REDCap Test Instance and the Test Framework is considered your "Test Enivronment."
 
 ---
 
 ### Test Environment
 
-What is the test environment?  Well, it's basically your test server that you run REDCap on.  
+What is the test environment?  It might be easier to show you than to tell you.  
+
+The graphic below is a visual representation of the test environment.  
+
+In essence, the test environment is is a combination of both the REDCap Test Instance you run and the REDCap Cypress Test Framework (e.g. this repository) that you write your tests in.
+
+![Test Environment Graphic](REDCapCypressTestEnvironment.png)
+
+Wondering what you need configured for a REDCap Test server?
 
 - **It can be located anywhere:** *local or remote*.  
 - **It can run in any environment:** *virtualized or dedicated*.  
 - **It can run any OS you want:** *Linux or insert your favorite OS here*.
 
-There are really only **two requirements for your Test Environment**:
-1. *It must be running prior to starting the test suite*
+There are really only **two requirements for your REDCap Test Instance**:
+1. *It must be running prior to starting the test suite tests*
 2. *It must be accessible through HTTP protocol via the test suite*
 
-If your test environment is running and functional, this part is done.
+If your REDCap Test Instance is running and functional, this part is done.
 
 ### CAUTION:
 *Although the Cypress test framework can test against any server through HTTP protocol, **please do NOT use your production server as your test environment**.  You might think the best way to test your REDCap instance is to test against your actual server that people store data on.  That simply isn't the case.*
@@ -133,16 +147,18 @@ Although configuring your environment is outside the scope of this document, the
 
 **If you need help getting started with Docker, consider looking at or downloading Andy Martin's [REDCap Docker Compose](https://github.com/123andy/redcap-docker-compose) repository.**
 
+Alternatively, if you understand how REDCap works well, you can use Adam De Fouw's lightweight [REDCap Docker](https://github.com/aldefouw/redcap_docker) repository.  Please note that this repository requires the REDCap source files to be on your machine.
+
 ---
 ### Test Framework 
 
-This is the repository you're looking at.  You will write tests on your machine and then run them against your Test Environment.
+In short, this is the repository you're looking at.  You will write tests on your machine and then run them against your Test Environment.
 
-If you have a **Test Environment** running and you've cloned this repository (your **Test Framework**), you are now ready to configure and define your test environment.
+If you have a **REDCap Test Instance** running and you've cloned this repository (your **Test Framework**), you are now ready to configure and define your test environment.
 
 ---
 
-## Defining Your Test Environment
+## Defining Your Test Environment Variables
 
 ### Tell your Test Framework about your Test Environment
 
@@ -263,12 +279,14 @@ Database configuration happens in two phases:
 2. Population of REDCap Seed Data
 
 ### Configuration of REDCap Structure
-Before the entire test suite runs (at the `before()` block), `/test_db/structure.sql` is run via the `db.sh` shell script to establish the initial database structure behind REDCap.
+Before the entire test suite runs (at the `before()` block), `/test_db/structure.sql` is run via the `db.sh` (Unix) or `db.bat` (Windows) script to establish the initial database structure behind REDCap.
 
 ### Population of REDCap Seed Data
-To create non-deterministic tests, we want to reset the database state before each individual test is run.
+To create non-deterministic tests, we want to reset the database state to a known state before the test suite is run.
 
-Before each individual test spec is run, a file located at `/test_db/seeds.sql` is run via the `db.sh` shell script within the `beforeEach()` block.  The seeds populate some important data to establish an initial configuration for REDCap.  
+Before the test suite is run, a file located at `/test_db/structure.sql` is run via the `db.sh` shell script.  The file creates the REDCap structure.  
+
+Based upon the version specified in the cypress.env.json file, a version-specific REDCap seed (e.g. `/test_db/versions/7.4.4.sql` is used to establish the initial configuration run.  
 
 *The seeds file in this template repository includes a both an **admin user** and a **standard user.***  Which user you use to login to REDCap is dependent upon what kind of feature you are intending to test.
 
@@ -395,13 +413,16 @@ The above one-liner will typically work to install Chocolatey package manager.  
 
 #### Installing MySQL and Sed using Chocolatey
 
-`choco install mysql-cli`
-
-`choco install sed`
+```shell
+choco install mysql-cli
+choco install sed
+```
 
 Typically, Chocolatey will add these binaries into your $PATH automatically. 
 
 However, in case you need to build Chocolatey from source, you can add in these paths to the system $PATH manually.  (You do so by navigating to "Advanced System Settings" > "Environment Variables" in the Advanced tab of the System Properties window. These utilities need to be a part of your path because these two binaries are used in the database seeding process.)
+
+Please see our wiki page for [Pre-Requisites to Using & Installing Framework](https://github.com/aldefouw/redcap_cypress/wiki/Pre-Requisites-to-Using-&-Installing-Framework#chocolatey) for additional details.
 
 ---
 
