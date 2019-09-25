@@ -372,8 +372,6 @@ The GitHub open source software community provides us a platform to easily share
 
 You can share the tests you have written with the rest of the consortium community by pushing your version of this repository to a fork.
 
-My hope is that someday we can create a "master" repository that includes integration tests from several authors, which will give everyone a huge head-start on testing their environment.
-
 ## Running Your Tests
 
 ### Opening Cypress
