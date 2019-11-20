@@ -6,6 +6,8 @@ This repository is a template to assist you in writing **automated tests for RED
 
 It is intended to serve as a starting point for writing your own integration and regression tests, which can be used to validate the features and functionality of your REDCap environment.
 
+Core REDCap features are being added to the core feature suite under an automated testing initiative that is guided by the Regulatory & Software Validation committee.
+
 # Overview
 - [Quick Start Guide](https://github.com/aldefouw/redcap_cypress/wiki)
 - [Configuration Tutorial Video](#configuration-tutorial-video)
