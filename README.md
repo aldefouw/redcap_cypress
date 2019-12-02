@@ -200,6 +200,8 @@ Here is an example environment variable setup:
           "pass": "Testing123"
         }
       },
+      "redcap_hooks_path": "/var/www/html/hook_functions.php",
+      "temp_folder": "/path/to/www/temp",
       "redcap_version": "8.1.1",
       "mysql": {
         "host": "127.0.0.1",
