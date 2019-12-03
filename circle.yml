@@ -33,11 +33,7 @@ jobs:
             echo | cat cypress.json.example | sed s/PID/$pid/g > $tmp
  
             mv cypress.json.example.tmp cypress.json
-            mv cypress.env.json.example cypress.env.json 
-      - run:
-          name: Get Pipe Viewer
-          command: |
-            sudo apt-get install --only-upgrade pv                 
+            mv cypress.env.json.example cypress.env.json              
       - run:      
           name: Install Cypress and Run Tests
           command: |
