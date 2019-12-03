@@ -9,8 +9,7 @@ jobs:
       - run:
           name: Install MySQL Client
           command: |
-            sudo apt-get update
-            sudo apt install mysql-client-core-5.7=5.7.27-0ubuntu0.16.04.1
+            sudo apt-get install --only-upgrade mysql-client-core-5.7
       - run:
           name: Build the REDCap Image
           command: |
@@ -38,7 +37,7 @@ jobs:
       - run:
           name: Get Pipe Viewer
           command: |
-            sudo apt install pv                 
+            sudo apt-get install --only-upgrade pv                 
       - run:      
           name: Install Cypress and Run Tests
           command: |
