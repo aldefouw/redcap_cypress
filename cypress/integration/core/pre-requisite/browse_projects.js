@@ -94,7 +94,7 @@ describe('Browse Projects', () => {
 
         it('Should sort the Records column appropriately', () => {
             cy.check_column_sort_classes('Records', 
-                                         ['pid-cntr-13', 'pid-cntr-5'])
+                                         ['pid-cntr-10', 'pid-cntr-5'])
         })
 
         it('Should sort the Fields column appropriately', () => {
