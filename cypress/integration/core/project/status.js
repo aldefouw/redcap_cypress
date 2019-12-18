@@ -136,12 +136,14 @@ describe('Project Status', () => {
 		})
 		it('Should allow user to archive an inactive project', () => {
 			cy.visit_version({page: 'ProjectSetup/other_functionality.php', params: "pid=13"}).then(() => {
-				cy.get('button').contains('Archive the project').click()
-				cy.get('div.ui-dialog-buttonset').contains('Archive the project').click()
-				cy.get('a').contains('My Projects').focused().click().then(() => {
-					cy.get('div#proj_table').should('not.contain', 'Test Project')
-				})		
-			})		
+				cy.get('button').contains('Archive the project').click().then(() => {
+					cy.get('div.ui-dialog-buttonset button').contains('Archive the project').click().then(() => {
+						cy.on('window:alert', (e) => {
+							expect(e).to.contain('The project has now been ARCHIVED.')
+					 	})				   	
+					})							
+				})						
+			})
 		})	
 	})
 })
