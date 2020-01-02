@@ -288,6 +288,9 @@ Cypress.Commands.add('visible_projects_user_input', (input, project_name, total_
 
 
 
+Cypress.Commands.add('get_project_table_row_col', (row = '1', col = '0') => {
+    cy.get('table#table-proj_table tr:nth-child(' + row + ') td:nth-child(' + col + ')')
+})
 
 //
 //
