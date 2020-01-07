@@ -34,7 +34,7 @@ describe('Add / Manage Users', () => {
 
 		})
 
-		describe('Security & Authentication' => { 
+		describe('Security & Authentication', () => { 
 
 			it('Should have the ability to lock out users after a certain number of failed login attempts' => {
 				
