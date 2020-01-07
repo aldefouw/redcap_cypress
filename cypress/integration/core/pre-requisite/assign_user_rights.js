@@ -1,5 +1,9 @@
 describe('Assign User Rights', () => {
 
+	before(() => {
+		cy.set_user_type('admin')
+	})
+
 	describe('Project Level Abilities', () => {
 
 		describe('Add, Edit, and Delete Core User Privileges', () => {
