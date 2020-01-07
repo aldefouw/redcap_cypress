@@ -1,5 +1,9 @@
 describe('Data Quality', () => {
 
+	before(() => {
+		cy.set_user_type('admin')
+	})
+
     it('Should have default rules available after installation', () => {
             
     })

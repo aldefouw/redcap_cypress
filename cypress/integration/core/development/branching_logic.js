@@ -1,5 +1,9 @@
 describe('Branching Logic', () => {
 
+	before(() => {
+		cy.set_user_type('admin')
+	})
+
 	describe('User Interface', () => {
 
 	    it('Should have the ability to show a field ONLY when specific conditions are met', () => {
