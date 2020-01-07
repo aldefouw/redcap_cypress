@@ -1,5 +1,9 @@
 describe('Field Validation', () => {
 
+	before(() => {
+		cy.set_user_type('admin')
+	})
+
 	describe('Control Center', () => {
 
 		describe('Enable Field Validation', () => {

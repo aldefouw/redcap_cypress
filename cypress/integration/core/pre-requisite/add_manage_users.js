@@ -1,5 +1,9 @@
 describe('Add / Manage Users', () => {
 
+	before(() => {
+		cy.set_user_type('admin')
+	})
+
 	describe('Control Center', () => {
 
 		describe('Users', () => {
