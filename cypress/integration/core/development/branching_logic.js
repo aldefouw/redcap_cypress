@@ -1,10 +1,19 @@
 describe('Branching Logic', () => {
 
-    it('Test spec here', () => {
-            
-    })
+	describe('User Interface', () => {
 
-    it('Test spec here', () => {
-            
-    })
+	    it('Should have the ability to show a field ONLY when specific conditions are met', () => {
+	            
+	    })
+
+	})
+
+	describe('Survey Interface', () => {
+
+	    it('Should have the ability to show a field ONLY when specific conditions are met', () => {
+	            
+	    })
+		
+	})
+
 })
