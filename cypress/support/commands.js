@@ -292,6 +292,97 @@ Cypress.Commands.add('get_project_table_row_col', (row = '1', col = '0') => {
     cy.get('table#table-proj_table tr:nth-child(' + row + ') td:nth-child(' + col + ')')
 })
 
+Cypress.Commands.add('upload_data_dictionary', (fixture_path, fixture_file, pid, date_format = "DMY") => {
+
+    let admin_user = Cypress.env('users')['admin']['user']
+    let current_token = null;
+
+    if( window.navigator['platform'].match(/Win/g) ) {
+        console.log('Windows platform detected for data dictionary')
+        console.log('WARNING: NOT IMPLEMENTED YET!')
+
+    } else {
+
+        let cmd = "sh dictionaries/read_file.sh " + '"' + "/dictionaries/" + fixture_path + "/" + fixture_file + '" '
+
+        console.log(cmd)
+
+        let file_contents = null;
+
+        cy.exec(cmd, { timeout: 100000}).then((response) => {
+            file_contents = response
+        })
+
+        cy.maintain_login().then(($r) => {
+
+        cy.add_api_user_to_project(admin_user, pid).then(() => {
+
+            cy.request({ url: '/redcap_v' + 
+                     Cypress.env('redcap_version') + 
+                    '/ControlCenter/user_api_ajax.php?action=createToken&api_username=' + 
+                    admin_user + 
+                    '&api_pid=' + 
+                    pid + 
+                    '&api_export=1&api_import=1&mobile_app=0&api_send_email=0'}).should(($token) => {
+
+                        expect($token.body).to.contain('token has been created')
+                        expect($token.body).to.contain(admin_user)
+
+                        cy.request({ url: '/redcap_v' + 
+                                     Cypress.env('redcap_version') + 
+                                    '/ControlCenter/user_api_ajax.php?action=viewToken&api_username=test_admin&api_pid=' + pid}).then(($super_token) => {
+                        
+                        current_token = Cypress.$($super_token.body).children('div')[0].innerText
+
+                        cy.request({
+                            method: 'POST',
+                            url: '/api/',
+                            headers: {
+                              "Accept":"application/json",
+                              "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            body: {
+                                token: current_token,
+                                content: 'metadata',
+                                format: 'csv',
+                                data: file_contents['stdout'],
+                                returnFormat: 'json'
+                            },
+                            timeout: 50000
+
+                        }).should(($a) => {
+                            
+                            expect($a.status).to.equal(200)
+
+                            cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
+                                expect($e.body).to.contain('List of Data Changes')
+                                expect($e.body).to.contain('Manage/Design')
+                                expect($e.body).to.contain('Upload data dictionary')
+                            })
+                        })
+                    })
+                })
+            })        
+        })
+    }
+})
+
+Cypress.Commands.add('add_api_user_to_project', (username, pid) => {
+    cy.visit_version({ page: 'UserRights/index.php', params: 'pid=' + pid}).then(() => {
+        cy.get('input#new_username').type(username).then(() => {
+            cy.get('button').contains('Add with custom rights').click().then(() => {
+                cy.get('input[name=api_export]').click()
+                cy.get('input[name=api_import]').click()
+                cy.get('span.ui-button-text').contains('Add user').click().then(() => {
+                    cy.get('table#table-user_rights_roles_table').should(($e) => {
+                        expect($e[0].innerText).to.contain(username)
+                    })                   
+                })           
+            })
+        })
+    })
+})
+
 //
 //
 // -- This is a child command --
