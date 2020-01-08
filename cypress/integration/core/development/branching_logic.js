@@ -1,10 +1,20 @@
 describe('Branching Logic', () => {
 
-    it('Test spec here', () => {
-            
-    })
+	before(() => {
+		cy.set_user_type('standard')
+	})
 
-    it('Test spec here', () => {
-            
-    })
+	describe('User Interface', () => {
+
+	    it('Should have the ability to show a field ONLY when specific conditions are met', () => {
+	            
+	    })
+	})
+
+	describe('Survey Interface', () => {
+
+	    it('Should have the ability to show a field ONLY when specific conditions are met', () => {
+	            
+	    })		
+	})
 })
