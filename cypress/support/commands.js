@@ -285,67 +285,6 @@ Cypress.Commands.add('visible_projects_user_input', (input, project_name, total_
     abstractProjectView(input, project_name, total_projects, false)
 })
 
-Cypress.Commands.add('upload_data_dictionary', (fixture_path, fixture_file, pid, date_format = "DMY") => {
-
-    let cmd = ''
-
-    if( window.navigator['platform'].match(/Win/g) ) {
-        console.log('Windows platform detected for data dictionary')
-        console.log('WARNING: NOT IMPLEMENTED YET!')
-
-    } else {
-        console.log('Unix-style platform enabled for data dictionary')
-
-        cmd = "sh dictionaries/move.sh " +
-        '"' + "/dictionaries/" + fixture_path + "/" + fixture_file + '" ' +
-        '"' + Cypress.env('temp_folder') + '"'
-
-        console.log(cmd)
-    }
-
-    cy.exec(cmd, { timeout: 100000}).then((response) => {
-        console.log(response)
-    })
-    
-    cy.maintain_login().then(() => {
-
-    const body = `-----data-dictionary---
-Content-Disposition: form-data; name="fname"
-
-` + fixture_file + `
------data-dictionary---
-Content-Disposition: form-data; name="date_format"
-
-` + date_format + `
------data-dictionary---
-Content-Disposition: form-data; name="commit"
-
-Commit Changes
------data-dictionary---`;
-
-        cy.request({
-            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/data_dictionary_upload.php?pid=' + pid,
-            method: 'POST', 
-            headers: {
-              "content-type":"multipart/form-data; boundary=---data-dictionary---"
-            },
-            body: body, 
-            timeout: 60000,
-            pageLoadTimeout: 60000,
-            responseTimeout: 60000
-        }).should(($a) => {
-            
-            expect($a.status).to.equal(200)
-
-            cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
-                expect($e.body).to.contain('List of Data Changes')
-                expect($e.body).to.contain('Manage/Design')
-                expect($e.body).to.contain('Upload data dictionary')
-            })
-        })
-    })
-})
-
 Cypress.Commands.add('get_project_table_row_col', (row = '1', col = '0') => {
     cy.get('table#table-proj_table tr:nth-child(' + row + ') td:nth-child(' + col + ')')
 })
