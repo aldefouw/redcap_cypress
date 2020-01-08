@@ -1,7 +1,7 @@
 describe('Assign User Rights', () => {
 
 	before(() => {
-		cy.set_user_type('admin')
+		cy.set_user_type('standard')
 	})
 
 	describe('Project Level Abilities', () => {

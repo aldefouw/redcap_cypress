@@ -1,7 +1,7 @@
 describe('Data Entry through the Survey Feature', () => {
 
 	before(() => {
-		cy.set_user_type('admin')
+		cy.set_user_type('standard')
 	})
 
 	it('Should have the ability to directly enter data through a survey', () => {
@@ -10,17 +10,6 @@ describe('Data Entry through the Survey Feature', () => {
 
 	it('Should have the ability to delete all survey-related information and functions without impacting saved data', () => {
 
-	})
-
-	describe('Control Center', () => {
-
-		it('Should have the ability for the survey feature to be enabled or disabled', () => {
-		    
-		})
-
-		it('Should have the ability for "Edit Survey Responses" feature to be enabled or disabled', () => {
-		    
-		})
 	})
 
 	describe('User Interface - Survey Distribution', () => {
@@ -65,6 +54,21 @@ describe('Data Entry through the Survey Feature', () => {
 		})
 
 		it('Should have the ability to support Completed Survey Response status', () => {
+		    
+		})
+	})
+
+	describe('Control Center', () => {
+
+		before(() => {
+			cy.set_user_type('admin')
+		})
+
+		it('Should have the ability for the survey feature to be enabled or disabled', () => {
+		    
+		})
+
+		it('Should have the ability for "Edit Survey Responses" feature to be enabled or disabled', () => {
 		    
 		})
 	})

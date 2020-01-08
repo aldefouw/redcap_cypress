@@ -1,5 +1,9 @@
 describe('Data Entry through the Data Collection Instrument', () => {
 
+    before(() => {
+        cy.set_user_type('standard')
+    })
+
 	describe('Record Status Dashboard', () => {
 
 		it('Should display a listing of all existing records', () => {

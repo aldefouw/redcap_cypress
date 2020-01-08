@@ -4,14 +4,6 @@ describe('Project Status', () => {
 		cy.set_user_type('standard')
 	})
 
-	describe('Control Center', () => {
-
-	    it('Should have the ability to limit "Move to Production" capabilities to administrators only', () => {
-            
-    	})
-
-	})
-
 	describe('User Interface', () => {
 
 		describe('Development as Initial Status', () => {
@@ -27,7 +19,6 @@ describe('Project Status', () => {
 			it('Should have the ability to change the project status from Development to Archive', () => {
 
 			})
-
 		})
 
 		describe('Production as Initial Status', () => {
@@ -60,7 +51,6 @@ describe('Project Status', () => {
 				cy.set_user_type('admin')
 				cy.set_user_type('standard')
 			})
-
 		})
 
 		describe('Archive as Initial Status', () => {
@@ -73,9 +63,18 @@ describe('Project Status', () => {
 				cy.set_user_type('admin')
 				cy.set_user_type('standard')
 			})
+		})
+	})
 
+	describe('Control Center', () => {
+
+		before(() => {
+			cy.set_user_type('admin')
 		})
 
+	    it('Should have the ability to limit "Move to Production" capabilities to administrators only', () => {
+            
+    	})
 	})
 
 })

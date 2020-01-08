@@ -17,7 +17,6 @@ describe('Export Data', () => {
 	    it('Should allow the ability to export specific forms', () => {
 
 	    })
-
 	})
 
 	describe('Data Export Formats', () => {
@@ -96,7 +95,5 @@ describe('Export Data', () => {
     	it('Should have the ability to restrict users from exporting data', () => {
 
     	})
-
     })
-
 })

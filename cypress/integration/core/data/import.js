@@ -1,7 +1,7 @@
 describe('Data Collection and Storage', () => {
 
 	before(() => {
-		cy.set_user_type('admin')
+		cy.set_user_type('standard')
 	})
 
 	it('Should have the ability to download two versions of a data import template formatted as a CSV file, one to accommodate records in rows and one to accommodate records in columns', () => {

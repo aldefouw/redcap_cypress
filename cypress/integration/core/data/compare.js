@@ -1,11 +1,8 @@
 describe('Data Comparison Tool / DDE Module', () => {
 
-	describe('Control Center', () => {
-
-	    it('Should have the ability to enable / disable the Double Data Entry module', () => {
-            
-    	})
-	})
+    before(() => {
+        cy.set_user_type('standard')
+    })
 
     describe('Data Entry Person Roles', () => {
 
@@ -39,5 +36,16 @@ describe('Data Comparison Tool / DDE Module', () => {
     	it('Should allow Reviewers to merge both entires into a third, single record', () => {
 
     	})
+    })
+
+    describe('Control Center', () => {
+
+        before(() => {
+            cy.set_user_type('admin')
+        })
+
+        it('Should have the ability to enable / disable the Double Data Entry module', () => {
+            
+        })
     })
 })

@@ -1,26 +1,7 @@
 describe('Manage Project Creation, Deletion, Settings', () => {
 
-	describe('Control Center', () => {
-
-		it('Should have the ability to limit creation of new projects to administrators', () => {
-
-		})
-
-		it('Should have the ability to limit the moving of projects to production to administrators', () => {
-
-		})
-
-		it('Should have the ability to enable users to edit survey responses', () => {
-
-		})
-
-		it('Should have the ability to enable Draft Mode changes to be automatically approved under certain conditions', () => {
-
-		})
-
-		it('Should have the ability to limit adding or modifying events and arms while in Production mode to administrators', () => {
-
-		})
+	before(() => {
+		cy.set_user_type('standard')
 	})
 
 	describe('User Interface - General', () => {
@@ -105,6 +86,33 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 
 		})
 		
+	})
+
+	describe('Control Center', () => {
+
+		before(() => {
+			cy.set_user_type('admin')
+		})
+
+		it('Should have the ability to limit creation of new projects to administrators', () => {
+
+		})
+
+		it('Should have the ability to limit the moving of projects to production to administrators', () => {
+
+		})
+
+		it('Should have the ability to enable users to edit survey responses', () => {
+
+		})
+
+		it('Should have the ability to enable Draft Mode changes to be automatically approved under certain conditions', () => {
+
+		})
+
+		it('Should have the ability to limit adding or modifying events and arms while in Production mode to administrators', () => {
+
+		})
 	})
 
 })

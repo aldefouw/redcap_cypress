@@ -1,10 +1,85 @@
 describe('Field Validation', () => {
 
 	before(() => {
-		cy.set_user_type('admin')
+		cy.set_user_type('standard')
+	})
+
+	describe('User Interface', () => {
+
+		describe('Text Field Validations', () => {
+
+		    it('Should have the ability to validate Date (D-M-Y) field', () => {
+		            
+		    })
+
+			it('Should have the ability to validate Datetime (M-D-Y H:M) field', () => {
+					            
+		    })
+
+			it('Should have the ability to validate Datetime w/seconds (Y-M-D H:M:S) field', () => {
+					            
+			})
+
+			it('Should have the ability to validate Email field', () => {
+					            
+			})
+
+			it('Should have the ability to validate Integer field', () => {
+					            
+			})
+
+			it('Should have the ability to validate Number field', () => {
+					            
+			})
+
+			it('Should have the ability to validate Number (1 decimal place – comma as decimal) field', () => {
+					            
+			})
+
+			it('Should have the ability to validate Time (HH:MM) field', () => {
+		            
+		    })
+
+		})
+
+		describe('Range Validations', () => {
+
+		    it('Should support ranges for a Date (D-M-Y) field', () => {
+		            
+		    })
+
+			it('Should support ranges for a Datetime (M-D-Y H:M) field', () => {
+					            
+		    })
+
+			it('Should support ranges for a Datetime w/seconds (Y-M-D H:M:S) field', () => {
+					            
+			})
+
+			it('Should support ranges for a Integer field', () => {
+					            
+			})
+
+			it('Should support ranges for a Number field', () => {
+					            
+			})
+
+			it('Should support ranges for a Number (1 decimal place – comma as decimal) field', () => {
+					            
+			})
+
+			it('Should support ranges for a Time (HH:MM) field', () => {
+		            
+		    })
+
+		})
 	})
 
 	describe('Control Center', () => {
+
+		before(() => {
+			cy.set_user_type('admin')
+		})
 
 		describe('Enable Field Validation', () => {
 
@@ -77,79 +152,5 @@ describe('Field Validation', () => {
 		    })
 			
 		})
-
 	})
-
-	describe('User Interface', () => {
-
-		describe('Text Field Validations', () => {
-
-		    it('Should have the ability to validate Date (D-M-Y) field', () => {
-		            
-		    })
-
-			it('Should have the ability to validate Datetime (M-D-Y H:M) field', () => {
-					            
-		    })
-
-			it('Should have the ability to validate Datetime w/seconds (Y-M-D H:M:S) field', () => {
-					            
-			})
-
-			it('Should have the ability to validate Email field', () => {
-					            
-			})
-
-			it('Should have the ability to validate Integer field', () => {
-					            
-			})
-
-			it('Should have the ability to validate Number field', () => {
-					            
-			})
-
-			it('Should have the ability to validate Number (1 decimal place – comma as decimal) field', () => {
-					            
-			})
-
-			it('Should have the ability to validate Time (HH:MM) field', () => {
-		            
-		    })
-
-		})
-
-		describe('Range Validations', () => {
-
-		    it('Should support ranges for a Date (D-M-Y) field', () => {
-		            
-		    })
-
-			it('Should support ranges for a Datetime (M-D-Y H:M) field', () => {
-					            
-		    })
-
-			it('Should support ranges for a Datetime w/seconds (Y-M-D H:M:S) field', () => {
-					            
-			})
-
-			it('Should support ranges for a Integer field', () => {
-					            
-			})
-
-			it('Should support ranges for a Number field', () => {
-					            
-			})
-
-			it('Should support ranges for a Number (1 decimal place – comma as decimal) field', () => {
-					            
-			})
-
-			it('Should support ranges for a Time (HH:MM) field', () => {
-		            
-		    })
-
-		})
-
-	})
-
 })

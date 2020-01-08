@@ -1,7 +1,7 @@
 describe('Draft Mode', () => {
 
 	before(() => {
-		cy.set_user_type('admin')
+		cy.set_user_type('standard')
 	})
 
 	describe('Basic Functionality', () => {
@@ -65,6 +65,10 @@ describe('Draft Mode', () => {
 	})
 
 	describe('Control Center', () => {
+
+		before(() => {
+			cy.set_user_type('admin')
+		})
 
 		it('Should require Administrators to review changes made in Draft Mode based upon the settings configured in Control Center', () => {
 

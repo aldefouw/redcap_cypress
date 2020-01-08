@@ -31,7 +31,6 @@ describe('Add / Manage Users', () => {
 			it('Should have the ability to search for an individual user', () => {
 				
 			})
-
 		})
 
 		describe('Security & Authentication', () => { 
@@ -43,8 +42,6 @@ describe('Add / Manage Users', () => {
 			it('Should have the ability to specify the amount of time a user will be locked out after failed login attempts', () => {
 				
 			})
-
 		})
 	})
-
 })
