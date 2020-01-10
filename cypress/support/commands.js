@@ -1,3 +1,13 @@
+//Here we are importing commands from the sub-folders that aren't quite as stable
+import './core/commands'
+import './hooks/commands'
+import './modules/commands'
+import './plugins/commands'
+import './projects/commands'
+
+// Commands in this file are CRUCIAL and are an embedded part of the REDCap Cypress Framework.
+// They are very stable and do not change often, if ever
+
 Cypress.Commands.add('login', (options) => {
     cy.request({
         method: 'POST',
@@ -292,6 +302,18 @@ Cypress.Commands.add('get_project_table_row_col', (row = '1', col = '0') => {
     cy.get('table#table-proj_table tr:nth-child(' + row + ') td:nth-child(' + col + ')')
 })
 
+Cypress.Commands.add('upload_file', { prevSubject: true }, (subject, fileName) => {
+      cy.fixture(fileName).then((content) => {
+          const el = subject[0]
+          const testFile = new File([content], fileName)
+          const dataTransfer = new DataTransfer()
+
+          dataTransfer.items.add(testFile)
+          el.files = dataTransfer.files
+          cy.wrap(subject).trigger('change', { force: true })
+      })
+})
+
 Cypress.Commands.add('upload_data_dictionary', (fixture_path, fixture_file, pid, date_format = "DMY") => {
 
     let admin_user = Cypress.env('users')['admin']['user']
@@ -376,8 +398,8 @@ Cypress.Commands.add('add_api_user_to_project', (username, pid) => {
                 cy.get('span.ui-button-text').contains('Add user').click().then(() => {
                     cy.get('table#table-user_rights_roles_table').should(($e) => {
                         expect($e[0].innerText).to.contain(username)
-                    })                   
-                })           
+                    })
+                })
             })
         })
     })
