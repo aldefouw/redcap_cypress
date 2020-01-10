@@ -16,6 +16,12 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
+import { core } from './core/index'
+import { hooks } from './hooks/index'
+import { modules } from './modules/index'
+import { plugins } from './plugins/index'
+import { projects } from './projects/index'
+
 function UserInfo() {
 
     let u = ''
@@ -71,7 +77,6 @@ function UserInfo() {
 
 window.user_info = new UserInfo();
 
-
 //Set the Base URL in the REDCap Configuration Database
 // if(Cypress.config('baseUrl') !== null){
     const base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
@@ -95,7 +100,7 @@ before(() => {
         //Seeds the database
         cy.mysql_db('/versions/' + Cypress.env('redcap_version'), base_url).then(() => {
 
-            if(Cypress.env('redcap_hooks_path') != undefined){
+            if(Cypress.env('redcap_hooks_path') !== undefined){
                 const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\\\/");
                 cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
             }
@@ -103,11 +108,18 @@ before(() => {
             //Clear out all cookies
             cy.clearCookies()
         })
-    })  
+    })
+
+    // Import the bootstrapping from these files:
+    core()          // /support/core/index.js
+    hooks()         // /support/hooks/index.js
+    modules()       // /support/modules/index.js
+    plugins()       // /support/plugins/index.js
+    projects()      // /support/projects/index.js
 })
 
 beforeEach(() => {  
-    cy.maintain_login()
+    cy.maintain_login()  
 })
 
 Cypress.on("uncaught:exception", (err, runnable) => {
