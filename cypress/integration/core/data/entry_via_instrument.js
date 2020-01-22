@@ -1,5 +1,4 @@
 describe('Data Entry through the Data Collection Instrument', () => {
-
     before(() => {
         cy.set_user_type('standard')
     })
@@ -8,6 +7,7 @@ describe('Data Entry through the Data Collection Instrument', () => {
         before(() => {
             cy.visit_version({page: 'DataEntry/record_status_dashboard.php', params: "pid=1"})
         })
+
 		it('Should display a listing of all existing records', () => {
             cy.get('table#record_status_table').should(($table) => {
                 expect($table).to.contain('No records exist')
@@ -68,7 +68,7 @@ describe('Data Entry through the Data Collection Instrument', () => {
 			})
 
 			it('Should display a Now button', () => {
-
+                //NA
 			})
 
 			it('Should display a Today button', () => {
@@ -80,12 +80,12 @@ describe('Data Entry through the Data Collection Instrument', () => {
 	})
 
 	describe('Saving Data', () => {
-           before (() => {
-                cy.visit_version({page: 'DataEntry/record_home.php', params: "pid=1"})
-                cy.get('button').contains('Add new record').click({force:true})
-                cy.get('img').eq(46).parent().click({force:true})
-                cy.get('[type="checkbox"]').check()
-    		})
+        before (() => {
+            cy.visit_version({page: 'DataEntry/record_home.php', params: "pid=1"})
+            cy.get('button').contains('Add new record').click({force:true})
+            cy.get('img').eq(46).parent().click({force:true})
+            cy.get('[type="checkbox"]').check()
+        })
 
 		describe('Attempted Leave without Save Prompt', () => {
 			it('Should prompt to save when an attempt to navigate away from a data entry page without saving', () => {
@@ -146,36 +146,46 @@ describe('Data Entry through the Data Collection Instrument', () => {
 
 		describe('Form Statuses', () => {
 
-			it('Should have the ability to mark the form as Incomplete (no saved data)', () => {
-                cy.get('select').contains('Incomplete').parent().select("Incomplete")
-			})
-
 			it('Should have the ability to mark the form as Incomplete (with data)', () => {
+                cy.get('select').contains('Incomplete').parent().select('Incomplete')
+            })
 
+            it('Should have the ability to mark the form as Incomplete (no saved data)', () => {
+                cy.get('[type="checkbox"]').uncheck()
+                cy.get('select').contains('Incomplete').parent().select('Incomplete')
 			})
 
 			it('Should have the ability to mark the form as Unverified', () => {
-
+                cy.get('select').contains('Unverified').parent().select('Unverified')
 			})
 
 			it('Should have the ability to mark the form as Complete', () => {
-
+                cy.get('select').contains('Complete').parent().select('Complete')
 			})
 		})
 	})
 
 	describe('Deleting Data', () => {
+	    before(() => {
+	        cy.get('[type="checkbox"]').check()
+	        cy.get('li').contains('Save & Stay').click({force:true})
+	    })
 
 		it('Should have the ability to delete all data on the current form of a given record', () => {
-
+            cy.get('button').should(($btn) => {
+                expect($btn).to.contain('Delete data for THIS FORM only')
+            })
 		})
 
 		it('Should have the ability to delete all data in an event for a given record', () => {
-
+            //NA
 		})
 
 		it('Should have the ability to delete an indivdual record', () => {
-
+            cy.get('button').contains('Save & Exit Form').click({force:true})
+            cy.get('li').should(($li) => {
+                expect($li).to.contain('Delete record (all forms)')
+            })
 		})
 	})
 })
