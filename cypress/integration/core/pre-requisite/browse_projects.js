@@ -5,26 +5,28 @@ describe('Browse Projects', () => {
     })
 
     it('Should display the "Browse Projects" page when you click on "Control Center"', () => {
-        cy.visit_version({page: ''}).then(() => {                
+        cy.visit_version({page: ''}).then(() => {
             cy.get('a').contains('Control Center').click().then(() => {
-                cy.get('a').contains('Browse Projects').click().then(() => {  
+                cy.get('a').contains('Browse Projects').click().then(() => {
                     cy.get('div h4').should('contain', 'Browse Projects')
                 })
-            })            
+            })
         })
     })
 
-    describe('Display Projects', () => { 
+    describe('Display Projects', () => {
 
         before(() => {
             cy.visit_version({page: 'ControlCenter/view_projects.php'}).then(() => {
                 cy.require_redcap_stats()
-            })            
+            })
         })
 
-        it('Should display a list of all projects', () => {
-            cy.get('button').contains('View all projects').click().then(() => {
-                cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
+        it('Should display a list of all non-archived projects', () => {
+            cy.num_projects_excluding_archived().then(() => {
+                cy.get('button').contains('View all projects').click().then(() => {
+                    cy.get('table#table-proj_table').find('tr:visible').should('have.length', window.num_projects)
+                })
             })
         })
 
@@ -35,11 +37,11 @@ describe('Browse Projects', () => {
 
         it('Should display the projects for Test User when you click on the user after entering the username', () => {
            cy.visible_projects_user_input('test_user', 'Test Project', 1)
-        }) 
+        })
 
         it('Should display the projects for Test User when you click on the user after entering the email address', () => {
             cy.visible_projects_user_input('test_user@example.com', 'Test Project', 1)
-        })  
+        })
 
     })
 
@@ -69,11 +71,11 @@ describe('Browse Projects', () => {
                         cy.get('input#proj_search').clear()
 
                         // See how many text rows are visible.  Should be two to match our two projects w/ word "classic"
-                        cy.get('table#table-proj_table').find('tr:visible').should('have.length', 13)
+                        cy.get('table#table-proj_table').find('tr:visible').should('have.length', window.num_projects)
 
-                    })                
-                })      
-            })      
+                    })
+                })
+            })
         })
     })
     
@@ -82,42 +84,34 @@ describe('Browse Projects', () => {
         before(() => {
             cy.visit_version({page: 'ControlCenter/view_projects.php'}).then(() => {
                cy.require_redcap_stats()
-               cy.get('button').contains('View all projects').click()
+               cy.get('button').contains('View all projects').click().then(() => {
+
+               })
             })
         })
 
         it('Should sort the Project Title column appropriately', () => {
-            cy.check_column_sort_values('Project Title', 
-                                        'table#table-proj_table tr:first div.projtitle', 
-                                        ['Basic Demography', 'Test Project'])
+            cy.check_column_sort_values('Project Title', 'td')
         })
 
         it('Should sort the Records column appropriately', () => {
-            cy.check_column_sort_classes('Records', 
-                                         ['pid-cntr-13', 'pid-cntr-5'])
+            cy.check_column_sort_classes('Records', 'td', 'span')
         })
 
         it('Should sort the Fields column appropriately', () => {
-            cy.check_column_sort_values('Fields', 
-                                        'table#table-proj_table tr:first div', 
-                                        ['2', '198'])
+            cy.check_column_sort_values('Fields', 'td')
         })
 
         it('Should sort the Instrument column appropriately', () => {
-            cy.check_column_sort_values('Instrument', 
-                                        'table#table-proj_table tr:first div.fc span div', 
-                                        ['1 form', '15 forms'])
+            cy.check_column_sort_values('Instrument', 'td')
         })
 
         it('Should sort the Type column appropriately', () => {
-            cy.check_column_sort_values('Type', 
-                                        'table#table-proj_table tr:first span.hidden', 
-                                        ['0', '1']);
+            cy.check_column_sort_values('Type', 'td')
         })
 
         it('Should sort the Status column appropriately', () => {
-            cy.check_column_sort_classes('Status', 
-                                         ['fa-check-square', 'fa-wrench']);
+            cy.check_column_sort_titles('Status', 'td', 'span')
         })
     })            
 })

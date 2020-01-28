@@ -243,57 +243,6 @@ Cypress.Commands.add('require_redcap_stats', () => {
     cy.wait('@project_stats_ajax').then((xhr, error) => { })
 })
 
-function abstractSort(col_name, element, values, klass = 0){
-    const sortCompare1 = sorterCompare(col_name, element, values[0], klass)
-    const sortCompare2 = sorterCompare(col_name, element, values[1], klass)
-    sortCompare1.then(() => { sortCompare2 })
-}
-
-function sorterCompare(col_name, element, values, klass){
-    return cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-        cy.get('th div').contains(col_name).click().then(()=>{
-            cy.get(element).then(($e) => {
-                cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                    klass ? expect($e).to.have.class(values) : expect($e).to.contain(values)       
-                })                                
-            })
-        })
-    })
-}
-
-Cypress.Commands.add('check_column_sort_values', (col_name, element, values) => {
-    abstractSort(col_name, element, values)
-})
-
-Cypress.Commands.add('check_column_sort_classes', (col_name, values) => {
-    abstractSort(col_name, 'table#table-proj_table tr:first span', values, 1)
-})
-
-function abstractProjectView(input, project_name, total_projects, dropdown_click){
-    cy.get('input#user_search').clear()
-
-    cy.get('input#user_search').type(input).then(() => {   
-
-        let $t = dropdown_click ? cy.get('button#user_search_btn') : cy.get('ul#ui-id-1 li a')
-
-        $t.click().then(($a) => {
-            cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                 cy.get('table#table-proj_table tr:first div.projtitle').then(($a) => {
-                    expect($a).to.contain(project_name)
-                    cy.get('table#table-proj_table').find('tr:visible').should('have.length', total_projects)
-                })
-            })
-        })
-    })
-}
-
-Cypress.Commands.add('visible_projects_user_input_click_view', (input, project_name, total_projects) => {
-    abstractProjectView(input, project_name, total_projects, true)
-})
-
-Cypress.Commands.add('visible_projects_user_input', (input, project_name, total_projects) => {
-    abstractProjectView(input, project_name, total_projects, false)
-})
 
 Cypress.Commands.add('get_project_table_row_col', (row = '1', col = '0') => {
     cy.get('table#table-proj_table tr:nth-child(' + row + ') td:nth-child(' + col + ')')
@@ -400,6 +349,63 @@ Cypress.Commands.add('add_api_user_to_project', (username, pid) => {
             })
         })
     })
+})
+
+Cypress.Commands.add('num_projects_excluding_archived', () => {
+
+    const mysql = Cypress.env("mysql")
+    const query = "SELECT count(*) FROM redcap_projects WHERE status != 3;";
+
+    let cmd = ''
+
+    window.num_projects = null;
+
+    //If we are on Windows, we have to run a bash script instead
+    if( window.navigator['platform'].match(/Win/g) ) {
+
+        console.log('Windows platform detected')
+
+        cmd = mysql['path'] +
+            " -h" + mysql['host'] +
+            " --port=" + mysql['port'] +
+            " " + mysql['db_name'] +
+            " -u" + mysql['db_user'] +
+            " -p" + mysql['db_pass'] +
+            " -e '" + query + "' -N -s"
+
+    } else {
+
+        console.log('Unix-style platform enabled')
+
+        cmd = mysql['path'] +
+            " -h" + mysql['host'] +
+            " --port=" + mysql['port'] +
+            " " + mysql['db_name'] +
+            " -u" + mysql['db_user'] +
+            " -p" + mysql['db_pass'] +
+            " -e '" + query + "' -N -s"
+    }
+
+    cy.exec(cmd, { timeout: 100000}).then((response) => {
+        window.num_projects = response['stdout']
+    })
+
+})
+
+Cypress.Commands.add('get_first_and_last_row', (table_selector = 'table#table-proj_table') => {
+    cy.get(table_selector + ' tr').then((tr) => {
+        const num_rows = Cypress.$(tr).length
+        window.first_project = Cypress.$(tr[0])
+        window.last_project = Cypress.$(tr[num_rows - 1])
+    })
+})
+
+Cypress.Commands.add('get_value_from_cell_num', (tr_array, cell_num) => {
+    Cypress.$(tr_array).children()[cell_num].innerText
+})
+
+Cypress.Commands.add('get_class_from_cell_num', (tr_array, cell_num) => {
+    return Cypress.$(tr_array).children()[cell_num].className
 })
 
 //
