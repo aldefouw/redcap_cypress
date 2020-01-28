@@ -453,22 +453,6 @@ Cypress.Commands.add('num_projects_excluding_archived', () => {
 
 })
 
-Cypress.Commands.add('get_first_and_last_row', (table_selector = 'table#table-proj_table') => {
-    cy.get(table_selector + ' tr').then((tr) => {
-        const num_rows = Cypress.$(tr).length
-        window.first_project = Cypress.$(tr[0])
-        window.last_project = Cypress.$(tr[num_rows - 1])
-    })
-})
-
-Cypress.Commands.add('get_value_from_cell_num', (tr_array, cell_num) => {
-    Cypress.$(tr_array).children()[cell_num].innerText
-})
-
-Cypress.Commands.add('get_class_from_cell_num', (tr_array, cell_num) => {
-    return Cypress.$(tr_array).children()[cell_num].className
-})
-
 //
 //
 // -- This is a child command --
