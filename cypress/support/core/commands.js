@@ -28,20 +28,87 @@ function test_link (link, title, try_again = true) {
   })
 }
 
-function abstractSort(col_name, element, values, klass = 0){
-  const sortCompare1 = sorterCompare(col_name, element, values[0], klass)
-  const sortCompare2 = sorterCompare(col_name, element, values[1], klass)
-  sortCompare1.then(() => { sortCompare2 })
-}
+function sorterCompare(col_name, element, selector = null, klass = false, title = false){
+  let first_row = null
+  let last_row = null
 
-function sorterCompare(col_name, element, values, klass){
-  return cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-    cy.get('th div').contains(col_name).click().then(()=>{
-      cy.get(element).then(($e) => {
-        cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-          klass ? expect($e).to.have.class(values) : expect($e).to.contain(values)
-        })
+  let main_selector = 'table#table-proj_table tr '
+
+  let expectation = null
+  let end_expect = ''
+  let last_expectation = null
+  let first_expectation = null
+  let selector_thing = ''
+  let last_row_val = ''
+  let first_row_val = ''
+
+  cy.get(main_selector + ' span').should('not.contain', "Loading").then(() => {
+
+    let current_index = 0
+
+    cy.get('th').then((th) => {
+
+      th.each((i, t) => {
+        if(t.textContent === col_name){
+          current_index = t.cellIndex
+        }
       })
+
+      cy.get('th').contains(col_name).click().then(($col)=>{
+
+        cy.get(main_selector).then((tr) => {
+            const num_rows = Cypress.$(tr).length
+
+            if(selector === null){
+              first_row = Cypress.$(tr[0]).find(element)[current_index]
+              last_row = Cypress.$(tr[num_rows - 1]).find(element)[current_index]
+            } else {
+              first_row = Cypress.$(Cypress.$(tr[0]).find(element)[current_index]).find(selector)[0]
+              last_row = Cypress.$(Cypress.$(tr[num_rows - 1]).find(element)[current_index]).find(selector)[0]
+            }
+
+            if(klass){
+              last_row_val = last_row.className
+              first_row_val = first_row.className
+              expectation = 'to.have.class'
+              last_expectation = expectation + '(last_row_val)'
+              first_expectation = expectation + '(first_row_val)'
+              selector_thing = 'Cypress.$($e[current_index]).find(selector)[0]'
+            } else if (title) {
+              last_row_val = last_row.title
+              first_row_val = first_row.title
+              expectation  = 'to.have.attr'
+              last_expectation = expectation + '("title", "' + last_row_val+ '")'
+              first_expectation = expectation + '("title", "' + first_row_val + '")'
+              selector_thing = 'Cypress.$($e[current_index]).find(selector)[0]'
+            } else {
+              last_row_val = last_row.textContent
+              first_row_val = first_row.textContent
+              expectation = 'to.contain'
+              last_expectation = expectation + '(last_row_val)'
+              first_expectation = expectation + '(first_row_val)'
+              selector_thing = '$e[current_index]'
+            }
+
+            //See if the first row is what the last row WAS
+            cy.get('th').contains(col_name).click().then(()=>{
+              cy.get(main_selector + element).then(($e) => {
+                cy.get(main_selector + ' span').should('not.contain', "Loading").then(() => {
+                  eval('expect(' + selector_thing + ').' + last_expectation)
+                })
+              })
+            })
+
+          //See if the first row is what the first row WAS initially
+            cy.get('th').contains(col_name).click().then(()=>{
+              cy.get(main_selector + element).then(($e) => {
+                cy.get(main_selector + ' span').should('not.contain', "Loading").then(() => {
+                  eval('expect(' + selector_thing + ').' + first_expectation)
+                })
+              })
+            })
+          })
+        })
     })
   })
 }
@@ -130,12 +197,16 @@ Cypress.Commands.add('add_field', (field_name, type) => {
   })
 })
 
-Cypress.Commands.add('check_column_sort_values', (col_name, element, values) => {
-  abstractSort(col_name, element, values)
+Cypress.Commands.add('check_column_sort_values', (col_name, element, selector = null) => {
+  sorterCompare(col_name, element, selector)
 })
 
-Cypress.Commands.add('check_column_sort_classes', (col_name, values) => {
-  abstractSort(col_name, 'table#table-proj_table tr:first span', values, 1)
+Cypress.Commands.add('check_column_sort_classes', (col_name, element, selector = null) => {
+  sorterCompare(col_name, element, selector, 1)
+})
+
+Cypress.Commands.add('check_column_sort_titles', (col_name, element, selector = null) => {
+  sorterCompare(col_name, element, selector, 0, 1)
 })
 
 Cypress.Commands.add('visible_projects_user_input_click_view', (input, project_name, total_projects) => {
