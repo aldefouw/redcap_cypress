@@ -1,47 +1,48 @@
 describe('System Security Settings', () => {
-	
+
 	before(()=> {
 		//Reset the projects back to what they should be
 		cy.mysql_db('projects/pristine')
 
 		cy.set_user_type('admin')
-	    cy.visit_version({page: 'ControlCenter/general_settings.php'})
-    })
+		cy.visit('/')
+		cy.visit_version({page: 'ControlCenter/general_settings.php'})
+	})
 
-    it('Should initially display system status as "SYSTEM ONLINE"', () => {
-	    cy.get('select').contains('SYSTEM ONLINE').should(($a) => { 
-	    	expect($a).to.contain('SYSTEM ONLINE')
-    	})   
-    })
+	it('Should initially display system status as "SYSTEM ONLINE"', () => {
+		cy.get('select').contains('SYSTEM ONLINE').should(($a) => {
+			expect($a).to.contain('SYSTEM ONLINE')
+		})
+	})
 
-    it('Should change system status to "SYSTEM OFFLINE"', () => {
-    	cy.get('select').contains('SYSTEM OFFLINE').parent().select('SYSTEM OFFLINE')
-    	cy.get('input').contains('Save Changes').click({force: true})
-    	cy.get('div').should(($div) => {
-    		expect($div).to.contain('Your system configuration values have now been changed!')
-    	})
-    	cy.get('select').contains('SYSTEM OFFLINE').should(($a) => { 
-	    	expect($a).to.contain('SYSTEM OFFLINE')
-    	})
+	it('Should change system status to "SYSTEM OFFLINE"', () => {
+		cy.get('select').contains('SYSTEM OFFLINE').parent().select('SYSTEM OFFLINE')
+		cy.get('input').contains('Save Changes').click({force: true})
+		cy.get('div').should(($div) => {
+			expect($div).to.contain('Your system configuration values have now been changed!')
+		})
+		cy.get('select').contains('SYSTEM OFFLINE').should(($a) => {
+			expect($a).to.contain('SYSTEM OFFLINE')
+		})
 	})
 
 	it('Should change system status back to "SYSTEM ONLINE"', () => {
 		cy.visit_version({page: 'ControlCenter/general_settings.php'})
 		cy.get('select').contains('SYSTEM ONLINE').parent().select('SYSTEM ONLINE')
-    	cy.get('input').contains('Save Changes').click({force: true})
-    	cy.get('div').should(($div) => {
-    		expect($div).to.contain('Your system configuration values have now been changed!')
-    	})
+		cy.get('input').contains('Save Changes').click({force: true})
+		cy.get('div').should(($div) => {
+			expect($div).to.contain('Your system configuration values have now been changed!')
+		})
 	})
 
     describe('SYSTEM OFFLINE', () => {
 
-    	before(() => {
+		before(() => {
 			cy.set_user_type('admin')
 			cy.visit_version({page: 'ControlCenter/general_settings.php'})
 			cy.get('select').contains('SYSTEM OFFLINE').parent().select('SYSTEM OFFLINE')
-	    	cy.get('input').contains('Save Changes').click({force: true})
-    	})
+			cy.get('input').contains('Save Changes').click({force: true})
+		})
 
 		it('Should display system offline message when user logs in', () => {
 			cy.set_user_type('standard')
@@ -50,7 +51,7 @@ describe('System Security Settings', () => {
 				expect($div).to.contain('REDCap is currently offline. Please return at another time. We apologize for any inconvenience.')
 			})
 		})
-		
+
 		it('Should display system offline message when admin logs in', () => {
 			cy.set_user_type('admin')
 			cy.visit_base({url: 'index.php'})
@@ -68,9 +69,9 @@ describe('System Security Settings', () => {
 			cy.visit_base({url: 'index.php'})
 			cy.get('div').should(($div) => {
 				expect($div).to.contain('System is offline')
-			})	
-		})	
-    })    
+			})
+		})
+	})
 })
 describe('Project Security Settings', () => {
 
@@ -112,7 +113,7 @@ describe('Project Security Settings', () => {
 			cy.set_user_type('standard')
 			cy.visit_version({page: 'ProjectSetup/index.php', params: "pid=13"})
 			cy.get('div').should(($div) => {
-				expect($div).to.contain('This REDCap project is currently offline. Please return to this project at another time. We apologize for any inconvenience.')
+				expect($div).to.contain('currently offline')
 			})
 		})
 
@@ -123,6 +124,16 @@ describe('Project Security Settings', () => {
 				expect($div).to.contain('This project is currently OFFLINE and is not accessible to normal users.')
 			})
 		})
-	})	
-})
 
+		//This will return the test project to its normal ONLINE state, too
+		it('Should allow me to return the project to ONLINE', () => {
+			cy.visit_version({page: 'ControlCenter/edit_project.php', params: "project=13"})
+			cy.get('select').contains('OFFLINE').parent().select('ONLINE')
+			cy.get('input').contains('Save Changes').click({force: true})
+
+			cy.get('div').should(($div) => {
+				expect($div).to.contain('Your changes have been saved!')
+			})
+		})
+	})
+})

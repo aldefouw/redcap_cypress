@@ -4,8 +4,8 @@ describe('My Projects', () => {
 		//Reset the projects back to what they should be
 		cy.mysql_db('projects/pristine')
 
-		cy.set_user_type('standard')
-		window.modified_project_title = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789Validation'		
+	    cy.set_user_type('standard')
+		window.modified_project_title = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789Validation'
 	})
 
 	it('Should open a project when the link is clicked', () => {
@@ -94,15 +94,15 @@ describe('My Projects', () => {
             				cy.get('input#field_name').type('second_field').then(() => {
 	            				cy.get('button').contains('Save').click().then(() => {
 
-									cy.get('span.designVarName').should('contain', "second_field").then(() => {		            					
+									cy.get('span.designVarName').should('contain', "second_field").then(() => {
 		            					cy.visit_base({url: 'index.php?action=myprojects'})
 
 							            cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
 						                 	cy.get_project_table_row_col(1, 3).then(($a) => {
 						                    	expect($a).to.contain('3') // Note that this calculated to include the default Record ID field
 						                	})
-		            					})		 
-	            					})    
+		            					})
+	            					})
 	            				})
             				})
 		            	})
@@ -132,13 +132,13 @@ describe('My Projects', () => {
 	            			cy.get('input[value="Create"]').click().then(() => {
 
 	            				cy.visit_base({url: 'index.php?action=myprojects'})
-	          
+
 					            cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
 				                 	cy.get_project_table_row_col(1, 4).then(($a) => {
 				                    	expect($a).to.contain('2 forms') // Note that this calculated to include the default Record ID field
-				                	})		            	
-					
-								})								
+				                	})
+
+								})
 	    					})
 		            	})
 		        	})
@@ -154,7 +154,7 @@ describe('My Projects', () => {
              cy.get_project_table_row_col(1, 5).then(($a) => {
                 expect($a[0].innerHTML).to.contain('Longitudinal / repeating forms')
             })
-        })        
+        })
 	})
 
 	it('Should display the correct icon for a given classic project', () => {
@@ -167,9 +167,9 @@ describe('My Projects', () => {
 			cy.wrap($a).click().then(() => {
 				cy.get('button#' + $a[0]['id']).should(($b) => {
 					expect($b).to.contain('Enable')
-				})	
-			})					
-		})		
+				})
+			})
+		})
 
 		cy.visit_base({url: 'index.php?action=myprojects'})
 
@@ -187,7 +187,7 @@ describe('My Projects', () => {
              cy.get_project_table_row_col(1, 6).then(($a) => {
                 expect($a[0].innerHTML).to.contain('Development')
             })
-        })        
+        })
 	})
 
 	it('Should display the correct project status for a project in Production', () => {
@@ -230,9 +230,9 @@ describe('My Projects', () => {
 					cy.get_project_table_row_col(1, 6).then(($a) => {
 		                expect($a[0].innerHTML).to.contain('Inactive')
 		            })
-		        })  
+		        })
 			})
-		})       
+		})
 	})
 
 	it('Should not display archived projects by default', () => {
@@ -245,9 +245,9 @@ describe('My Projects', () => {
 				cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
 					cy.get_project_table_row_col(1, 1).then(($a) => {
 		                expect($a[0].innerHTML).to.contain('You do not have access to any projects')
-	            	})				
+	            	})
 				})
-			})     
+			})
 		})
 	})
 
@@ -270,5 +270,4 @@ describe('My Projects', () => {
 	    	})
 		})
 	})
-
 })
