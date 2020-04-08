@@ -1,15 +1,18 @@
 describe('Project Status', () => {
 	before(() => {
 		//Reset the projects back to what they should be
-		cy.mysql_db('projects/pristine')
-		
-		cy.set_user_type('standard')
-		cy.visit_version({page: 'ProjectSetup/index.php', params: "pid=13"})
-		// cy.get('button').contains('Add new record').click()
-		// cy.get('select').contains('Complete').parent().select('Complete')
-		// cy.get('button').contains('Save & Exit Form').click().then(() => {
-		// 	cy.visit_version({page: 'ProjectSetup/index.php', params: "pid=13"})
-		// })		
+		cy.mysql_db('projects/pristine').then(() => {
+			cy.set_user_type('standard')
+
+			cy.visit_version({page: 'DataEntry/record_home.php', params: "pid=13"})
+			cy.get('button').contains('Add new record').click()
+			cy.get('select').contains('Complete').parent().select('Complete')
+			cy.get('button').contains('Save & Exit Form').click().then(() => {
+				cy.visit_version({page: 'ProjectSetup/index.php', params: "pid=13"})
+			})	
+
+			cy.visit_version({page: 'ProjectSetup/index.php', params: "pid=13"})	
+		})	
 	})
 	it('Should originally be in development', () => {
 		cy.get('span').contains('Project status:').parent().should(($span) => {
