@@ -28,7 +28,6 @@ jobs:
           name: Configure Cypress environment
           command: |
             cd /home/circleci/project
-
             pid=$PROJECT_ID
             tmp="cypress.json.example.tmp"
             echo | cat cypress.json.example | sed s/PID/$pid/g > $tmp
@@ -38,9 +37,11 @@ jobs:
       - run:      
           name: Install Cypress and Run Tests
           command: |
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use stable
             npm install
             npx cypress run --record --key $RECORD_KEY
-
 workflows:
   version: 2
   workflow:
