@@ -1,6 +1,9 @@
 describe('System Security Settings', () => {
 	
 	before(()=> {
+		//Reset the projects back to what they should be
+		cy.mysql_db('projects/pristine')
+
 		cy.set_user_type('admin')
 	    cy.visit_version({page: 'ControlCenter/general_settings.php'})
     })

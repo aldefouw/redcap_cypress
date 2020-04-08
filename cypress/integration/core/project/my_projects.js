@@ -1,6 +1,9 @@
 describe('My Projects', () => {
 
 	before(() => {
+		//Reset the projects back to what they should be
+		cy.mysql_db('projects/pristine')
+
 		cy.set_user_type('standard')
 		window.modified_project_title = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789Validation'		
 	})
