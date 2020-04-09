@@ -29,7 +29,6 @@ jobs:
           command: |
             cd /home/circleci/project
             sed s/PID/$PROJECT_ID/g cypress.json.example > cypress.json
- 
             mv cypress.env.json.example cypress.env.json              
       - run:      
           name: Install Cypress and Run Tests
