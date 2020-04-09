@@ -30,7 +30,7 @@ jobs:
             cd /home/circleci/project
             pid=$PROJECT_ID
             tmp="cypress.json.example.tmp"
-            echo | cat cypress.json.example | sed s/PID/$pid/g > $tmp
+            sed s/PID/$pid/g cypress.json.example > $tmp
  
             mv cypress.json.example.tmp cypress.json
             mv cypress.env.json.example cypress.env.json              
