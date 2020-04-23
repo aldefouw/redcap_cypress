@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/aldefouw/redcap_cypress/tree/v8.1.1.svg?style=svg)](https://circleci.com/gh/aldefouw/redcap_cypress/tree/v8.1.1)
+[![CircleCI](https://circleci.com/gh/aldefouw/redcap_cypress/tree/master.svg?style=svg)](https://circleci.com/gh/aldefouw/redcap_cypress/tree/master)
 
 # REDCap Cypress Test Framework
 
@@ -6,14 +6,17 @@ This repository is a template to assist you in writing **automated tests for RED
 
 It is intended to serve as a starting point for writing your own integration and regression tests, which can be used to validate the features and functionality of your REDCap environment.
 
+Core REDCap features are being added to the core feature suite under an automated testing initiative that is guided by the Regulatory & Software Validation committee.
+
 # Overview
+- [Quick Start Guide](https://github.com/aldefouw/redcap_cypress/wiki)
 - [Configuration Tutorial Video](#configuration-tutorial-video)
 - [Why Test REDCap?](#why-test-redcap)
 - [Manual Testing](#manual-testing)
 - [Automated Testing](#automated-testing)
 - [Why Cypress?](#why-cypress)
 - [Getting Started](#getting-started)
-- [Defining Your Test Environment](#defining-your-test-environment)
+- [Defining Your Test Environment](#defining-your-test-environment-variables)
 - [Test Database Structure & Seeds](#test-database-structure--seeds)
 - [Writing Your Tests](#writing-your-tests)
 - [Sharing Your Tests](#sharing-your-tests)
@@ -102,25 +105,41 @@ The non-platform-dependent nature of Cypress tests also opens the door for conso
 
 ## Getting Started
 
-Automating testing of REDCap requires two things:
-- Test Environment
-- Test Framework
+Please read our [Quick-Start Guide](https://github.com/aldefouw/redcap_cypress/wiki#quick-start-guide) in the wiki if you are new to the framework.
+
+### Automated Testing Requirements
+
+Automated testing of REDCap requires two things:
+- REDCap Test Instance
+- REDCap Cypress Test Framework (this repository)
+
+The combination of the REDCap Test Instance and the Test Framework is considered your "Test Enivronment."
 
 ---
 
 ### Test Environment
 
-What is the test environment?  Well, it's basically your test server that you run REDCap on.  
+What is the test environment?  It might be easier to show you than to tell you.  
+
+The graphic below is a visual representation of the test environment.  
+
+In essence, the test environment is is a combination of both the REDCap Test Instance you run and the REDCap Cypress Test Framework (e.g. this repository) that you write your tests in.
+
+![Test Environment Graphic](REDCapCypressTestEnvironment.png)
+
+Wondering what you need configured for a REDCap Test server?
 
 - **It can be located anywhere:** *local or remote*.  
 - **It can run in any environment:** *virtualized or dedicated*.  
 - **It can run any OS you want:** *Linux or insert your favorite OS here*.
 
-There are really only **two requirements for your Test Environment**:
-1. *It must be running prior to starting the test suite*
+There are really only **two requirements for your REDCap Test Instance**:
+1. *It must be running prior to starting the test suite tests*
 2. *It must be accessible through HTTP protocol via the test suite*
 
-If your test environment is running and functional, this part is done.
+If your REDCap Test Instance is running and functional, this part is done.  However, setting up your REDCap Test Instance is only half of what you need to create a Test Environment.  
+
+The other half necessary is to configure your Test Framework, which is covered below.
 
 ### CAUTION:
 *Although the Cypress test framework can test against any server through HTTP protocol, **please do NOT use your production server as your test environment**.  You might think the best way to test your REDCap instance is to test against your actual server that people store data on.  That simply isn't the case.*
@@ -133,16 +152,18 @@ Although configuring your environment is outside the scope of this document, the
 
 **If you need help getting started with Docker, consider looking at or downloading Andy Martin's [REDCap Docker Compose](https://github.com/123andy/redcap-docker-compose) repository.**
 
+Alternatively, if you understand how REDCap works well, you can use Adam De Fouw's lightweight [REDCap Docker](https://github.com/aldefouw/redcap_docker) repository.  Please note that this repository requires the REDCap source files to be on your machine.
+
 ---
 ### Test Framework 
 
-This is the repository you're looking at.  You will write tests on your machine and then run them against your Test Environment.
+In short, this is the repository you're looking at.  You will write tests on your machine and then run them against your Test Environment.
 
-If you have a **Test Environment** running and you've cloned this repository (your **Test Framework**), you are now ready to configure and define your test environment.
+If you have a **REDCap Test Instance** running and you've cloned this repository (your **Test Framework**), you are now ready to configure and define your test environment.
 
 ---
 
-## Defining Your Test Environment
+## Defining Your Test Environment Variables
 
 ### Tell your Test Framework about your Test Environment
 
@@ -200,6 +221,14 @@ Each user key contains a username (user) and password (pass).
 
 You can login with an admin user versus a standard user depending on what functionality you are trying to test.
 
+You can specify what user is currently logged in (within your tests themselves - the configuration simply specifies the user credentials for these users) using the built-in method #set_user_type.
+
+For instance:
+
+`cy.set_user_type('standard')`
+
+`cy.set_user_type('admin')`
+
 ---
 ### redcap_version ###
 The version of REDCap that you are testing against.  This is a critical value to set so that Cypress knows the correct URLs to use when testing.
@@ -255,12 +284,14 @@ Database configuration happens in two phases:
 2. Population of REDCap Seed Data
 
 ### Configuration of REDCap Structure
-Before the entire test suite runs (at the `before()` block), `/test_db/structure.sql` is run via the `db.sh` shell script to establish the initial database structure behind REDCap.
+Before the entire test suite runs (at the `before()` block), `/test_db/structure.sql` is run via the `db.sh` (Unix) or `db.bat` (Windows) script to establish the initial database structure behind REDCap.
 
 ### Population of REDCap Seed Data
-To create non-deterministic tests, we want to reset the database state before each individual test is run.
+To create non-deterministic tests, we want to reset the database state to a known state before the test suite is run.
 
-Before each individual test spec is run, a file located at `/test_db/seeds.sql` is run via the `db.sh` shell script within the `beforeEach()` block.  The seeds populate some important data to establish an initial configuration for REDCap.  
+Before the test suite is run, a file located at `/test_db/structure.sql` is run via the `db.sh` shell script.  The file creates the REDCap structure.  
+
+Based upon the version specified in the cypress.env.json file, a version-specific REDCap seed (e.g. `/test_db/versions/7.4.4.sql` is used to establish the initial configuration run.  
 
 *The seeds file in this template repository includes a both an **admin user** and a **standard user.***  Which user you use to login to REDCap is dependent upon what kind of feature you are intending to test.
 
@@ -346,8 +377,6 @@ The GitHub open source software community provides us a platform to easily share
 
 You can share the tests you have written with the rest of the consortium community by pushing your version of this repository to a fork.
 
-My hope is that someday we can create a "master" repository that includes integration tests from several authors, which will give everyone a huge head-start on testing their environment.
-
 ## Running Your Tests
 
 ### Opening Cypress
@@ -364,25 +393,46 @@ After your test suite is mature, it will be faster to run your tests in headless
 
 `npx cypress run`
 
+---
+# Windows Environments
+~~*Configuring and resetting your database on a Windows environment is not possible at this time.*~~
+
+It's taken a fair bit of effort and testing, but it's now possible to run the framework in Windows.  This is done through a database-seeding batch script (db.bat) that essentially mirrors the same functionality as the db.sh script for Unix-style environments.  
+
+**Please note that you will need to ensure that you have the MySQL Command Line Interface and Sed utilities installed and available to your local Windows system at command line interface.**  If you do not have these utilities available, your database seeds will not work and the tests will not run appropriately.   
+
+Thankfully, these are easily configured on your Windows system through the [Chocolatey](https://chocolatey.org/docs/installation) package manager.
+
+Please note that you will need to administrator rights to install both [Chocolatey](https://chocolatey.org/docs/installation) and the dependencies.
+
+### Installing Chocolatey
+
+`PowerShell.exe -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"`
+
+The above one-liner will typically work to install Chocolatey package manager.  If it does not, please view the installation documentation here:
+
+[https://chocolatey.org/docs/installation](https://chocolatey.org/docs/installation)
+
+
+#### Installing MySQL and Sed using Chocolatey
+
+```shell
+choco install mysql-cli
+choco install sed
+```
+
+Typically, Chocolatey will add these binaries into your $PATH automatically. 
+
+However, in case you need to build Chocolatey from source, you can add in these paths to the system $PATH manually.  (You do so by navigating to "Advanced System Settings" > "Environment Variables" in the Advanced tab of the System Properties window. These utilities need to be a part of your path because these two binaries are used in the database seeding process.)
+
+Please see our wiki page for [Pre-Requisites to Using & Installing Framework](https://github.com/aldefouw/redcap_cypress/wiki/Pre-Requisites-to-Using-&-Installing-Framework#chocolatey) for additional details.
+
+---
 
 ## Known Limitations & Areas for Improvement
 
 This Test Framework template is a good start, but there are some known areas that could be improved.
 
----
-### Database shell script incompatible with native Windows environments
-
-*Configuring and resetting your database on a Windows environment is not possible at this time.*
-
-I am positive that this functionality is possible if someone is willing to write a script simliar to the `/test_db/db.sh` file I have already provided for Unix-environments.
-
-Since I do not work in a Windows environment, I have not found it worth my while to write such a script for an environment I am not an expert in.
-
-If you are interested in writing this functionality, please fork this repository, write code to fix the problem, and send a pull-request.  
-
-I will likely need to add another environment variable to the base setup file so the framework knows which shell script to run (based upon your specified environment).
-
----
 ### Unpredictable login behavior
 
 ~~Sometimes REDCap doesn't login the first time you run a test.  This means the test spec will probably fail the first time you run it, which is technically a non-deterministic test (a bad thing that I am trying to avoid).~~

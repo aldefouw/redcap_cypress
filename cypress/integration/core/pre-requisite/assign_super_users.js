@@ -1,11 +1,19 @@
 describe('Assign Super Users / Account Managers', () => {
 
-    it('Test spec here', () => {
-            
+    before(() => {
+        cy.set_user_type('admin')
     })
 
-    it('Test spec here', () => {
+	describe('Control Center', () => {
+
+	    it('Should have the ability to view all current administrators and account managers', () => {
             
-    })
+	    })
+
+	    it('Should have the ability to grant and revoke administrators and account manager access to the system for individual users', () => {
+	            
+	    })
+
+	})
 
 })

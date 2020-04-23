@@ -1,4 +1,17 @@
+//Here we are importing commands from the sub-folders that aren't quite as stable
+import './core/commands'
+import './hooks/commands'
+import './modules/commands'
+import './plugins/commands'
+import './projects/commands'
+
+// Commands in this file are CRUCIAL and are an embedded part of the REDCap Cypress Framework.
+// They are very stable and do not change often, if ever
+
 Cypress.Commands.add('login', (options) => {
+
+    cy.clearCookies()
+
     cy.request({
         method: 'POST',
         url: '/', // baseUrl is prepended to url
@@ -33,6 +46,25 @@ Cypress.Commands.add('visit_base', (options) => {
     })
 })
 
+Cypress.Commands.add('base_db_seed', () => {
+    cy.mysql_db('structure').then(() => {
+
+        console.log(window.base_url)
+
+        //Seeds the database
+        cy.mysql_db('/versions/' + Cypress.env('redcap_version'), window.base_url).then(() => {
+
+            if(Cypress.env('redcap_hooks_path') !== undefined){
+                const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\\\/");
+                cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
+            }
+
+            //Clear out all cookies
+            cy.clearCookies()
+        })
+    })
+})
+
 Cypress.Commands.add('maintain_login', () => {
     let user = window.user_info.get_current_user()
     let pass = window.user_info.get_current_pass()
@@ -40,7 +72,11 @@ Cypress.Commands.add('maintain_login', () => {
     let user_type = window.user_info.get_user_type()
     let previous_user_type = window.user_info.get_previous_user_type()
 
-    if(user_type === previous_user_type){        
+    console.log('User Type Change to ' + user_type + '.')
+    console.log('previous: ' + previous_user_type)
+    console.log('current: ' + user_type)
+
+    if(user_type === previous_user_type){
         cy.getCookies()
           .should((cookies) => {
 
@@ -63,9 +99,6 @@ Cypress.Commands.add('maintain_login', () => {
 
     //If user type has changed, let's clear cookies and login again
     } else {
-        console.log('User Type Change')
-
-        cy.clearCookies()
         cy.login({ username: user, password:  pass })
     }
 
@@ -101,7 +134,7 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
 
         console.log('Windows platform detected')
 
-        cmd = 'cmd /c ".\\test_db\\db.bat ' +
+        cmd = ".\\test_db\\db.bat" +
         ' ' + mysql['path'] +
         ' ' + mysql['host'] +
         ' ' + mysql['port'] +
@@ -109,8 +142,7 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
         ' ' + mysql['db_user'] +
         ' ' + mysql['db_pass'] +
         ' ' + type +
-        ' ' + replace + 
-        ' ' + mysql['use_docker_cli'] + '"'
+        ' ' + replace.replace(/\\\\/g, "\\")
 
     //Anything else should run a Unix-style shell script    
     } else { 
@@ -130,7 +162,7 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
 
    console.log(cmd)
 
-   cy.exec(cmd).then((response) => {
+   cy.exec(cmd, { timeout: 100000}).then((response) => {
         //cy.writeFile('log_of_mysql_command' + type + '.txt', response)
         console.log(response)
     })
@@ -234,61 +266,153 @@ Cypress.Commands.add('require_redcap_stats', () => {
     cy.wait('@project_stats_ajax').then((xhr, error) => { })
 })
 
-function abstractSort(col_name, element, values, klass = 0){
-    const sortCompare1 = sorterCompare(col_name, element, values[0], klass)
-    const sortCompare2 = sorterCompare(col_name, element, values[1], klass)
-    sortCompare1.then(() => { sortCompare2 })
-}
+Cypress.Commands.add('get_project_table_row_col', (row = '1', col = '0') => {
+    cy.get('table#table-proj_table tr:nth-child(' + row + ') td:nth-child(' + col + ')')
+})
 
-function sorterCompare(col_name, element, values, klass){
-    return cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-        cy.get('th div').contains(col_name).click().then(()=>{
-            cy.get(element).then(($e) => {
-                cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                    klass ? expect($e).to.have.class(values) : expect($e).to.contain(values)       
-                })                                
-            })
+Cypress.Commands.add('upload_file', { prevSubject: true }, (subject, fileName) => {
+      cy.fixture(fileName).then((content) => {
+          const el = subject[0]
+          const testFile = new File([content], fileName)
+          const dataTransfer = new DataTransfer()
+
+          dataTransfer.items.add(testFile)
+          el.files = dataTransfer.files
+          cy.wrap(subject).trigger('change', { force: true })
+      })
+})
+
+Cypress.Commands.add('upload_data_dictionary', (fixture_path, fixture_file, pid, date_format = "DMY") => {
+
+    let admin_user = Cypress.env('users')['admin']['user']
+    let current_token = null;
+
+    if( window.navigator['platform'].match(/Win/g) ) {
+        console.log('Windows platform detected for data dictionary')
+        console.log('WARNING: NOT IMPLEMENTED YET!')
+
+    } else {
+
+        let cmd = "sh dictionaries/read_file.sh " + '"' + "/dictionaries/" + fixture_path + "/" + fixture_file + '" '
+
+        console.log(cmd)
+
+        let file_contents = null;
+
+        cy.exec(cmd, { timeout: 100000}).then((response) => {
+            file_contents = response
         })
-    })
-}
 
-Cypress.Commands.add('check_column_sort_values', (col_name, element, values) => {
-    abstractSort(col_name, element, values)
+        cy.maintain_login().then(($r) => {
+
+        cy.add_api_user_to_project(admin_user, pid).then(() => {
+
+            cy.request({ url: '/redcap_v' + 
+                     Cypress.env('redcap_version') + 
+                    '/ControlCenter/user_api_ajax.php?action=createToken&api_username=' + 
+                    admin_user + 
+                    '&api_pid=' + 
+                    pid + 
+                    '&api_export=1&api_import=1&mobile_app=0&api_send_email=0'}).should(($token) => {
+
+                        expect($token.body).to.contain('token has been created')
+                        expect($token.body).to.contain(admin_user)
+
+                        cy.request({ url: '/redcap_v' + 
+                                     Cypress.env('redcap_version') + 
+                                    '/ControlCenter/user_api_ajax.php?action=viewToken&api_username=test_admin&api_pid=' + pid}).then(($super_token) => {
+                        
+                        current_token = Cypress.$($super_token.body).children('div')[0].innerText
+
+                        cy.request({
+                            method: 'POST',
+                            url: '/api/',
+                            headers: {
+                              "Accept":"application/json",
+                              "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            body: {
+                                token: current_token,
+                                content: 'metadata',
+                                format: 'csv',
+                                data: file_contents['stdout'],
+                                returnFormat: 'json'
+                            },
+                            timeout: 50000
+
+                        }).should(($a) => {
+                            
+                            expect($a.status).to.equal(200)
+
+                            cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
+                                expect($e.body).to.contain('List of Data Changes')
+                                expect($e.body).to.contain('Manage/Design')
+                                expect($e.body).to.contain('Upload data dictionary')
+                            })
+                        })
+                    })
+                })
+            })        
+        })
+    }
 })
 
-Cypress.Commands.add('check_column_sort_classes', (col_name, values) => {
-    abstractSort(col_name, 'table#table-proj_table tr:first span', values, 1)
-})
-
-function abstractProjectView(input, project_name, total_projects, dropdown_click){
-    cy.get('input#user_search').clear()
-
-    cy.get('input#user_search').type(input).then(() => {   
-
-        let $t = dropdown_click ? cy.get('button#user_search_btn') : cy.get('ul#ui-id-1 li a')
-
-        $t.click().then(($a) => {
-            cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
-                 cy.get('table#table-proj_table tr:first div.projtitle').then(($a) => {
-                    expect($a).to.contain(project_name)
-                    cy.get('table#table-proj_table').find('tr:visible').should('have.length', total_projects)
+Cypress.Commands.add('add_api_user_to_project', (username, pid) => {
+    cy.visit_version({ page: 'UserRights/index.php', params: 'pid=' + pid}).then(() => {
+        cy.get('input#new_username').type(username).then(() => {
+            cy.get('button').contains('Add with custom rights').click().then(() => {
+                cy.get('input[name=api_export]').click()
+                cy.get('input[name=api_import]').click()
+                cy.get('span.ui-button-text').contains('Add user').click().then(() => {
+                    cy.get('table#table-user_rights_roles_table').should(($e) => {
+                        expect($e[0].innerText).to.contain(username)
+                    })
                 })
             })
         })
     })
-}
-
-Cypress.Commands.add('visible_projects_user_input_click_view', (input, project_name, total_projects) => {
-    abstractProjectView(input, project_name, total_projects, true)
 })
 
-Cypress.Commands.add('visible_projects_user_input', (input, project_name, total_projects) => {
-    abstractProjectView(input, project_name, total_projects, false)
+Cypress.Commands.add('num_projects_excluding_archived', () => {
+
+    const mysql = Cypress.env("mysql")
+    const query = "SELECT count(*) FROM redcap_projects WHERE status != 3;";
+
+    let cmd = ''
+
+    window.num_projects = null;
+
+    //If we are on Windows, we have to run a bash script instead
+    if( window.navigator['platform'].match(/Win/g) ) {
+
+        console.log('Windows platform detected')
+
+        cmd = mysql['path'] +
+            " -h" + mysql['host'] +
+            " --port=" + mysql['port'] +
+            " " + mysql['db_name'] +
+            " -u" + mysql['db_user'] +
+            " -p" + mysql['db_pass'] +
+            " -e '" + query + "' -N -s"
+
+    } else {
+
+        console.log('Unix-style platform enabled')
+
+        cmd = mysql['path'] +
+            " -h" + mysql['host'] +
+            " --port=" + mysql['port'] +
+            " " + mysql['db_name'] +
+            " -u" + mysql['db_user'] +
+            " -p" + mysql['db_pass'] +
+            " -e '" + query + "' -N -s"
+    }
+
+    cy.exec(cmd, { timeout: 100000}).then((response) => {
+        window.num_projects = response['stdout']
+    })
+
 })
-
-
-
-
 
 //
 //
