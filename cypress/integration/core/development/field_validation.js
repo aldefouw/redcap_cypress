@@ -25,31 +25,46 @@ describe('Field Validation', () => {
 		    })
 
 			it('Should have the ability to validate Datetime (M-D-Y H:M) field', () => {
-					            
+				cy.get('select#val_type').should(($val) => {
+                    expect($val).to.contain('Datetime (M-D-Y H:M)')
+                })	            
 		    })
 
 			it('Should have the ability to validate Datetime w/seconds (Y-M-D H:M:S) field', () => {
+				cy.get('select#val_type').should(($val) => {
+                    expect($val).to.contain('Datetime w/seconds (Y-M-D H:M:S)')
+                })
 					            
 			})
 
 			it('Should have the ability to validate Email field', () => {
-					            
+				cy.get('select#val_type').should(($val) => {
+                    expect($val).to.contain('Email')
+                })		            
 			})
 
 			it('Should have the ability to validate Integer field', () => {
-					            
+				cy.get('select#val_type').should(($val) => {
+                    expect($val).to.contain('Integer')
+                })		            
 			})
 
 			it('Should have the ability to validate Number field', () => {
-					            
+				cy.get('select#val_type').should(($val) => {
+                    expect($val).to.contain('Number')
+                })		            
 			})
 
 			it('Should have the ability to validate Number (1 decimal place – comma as decimal) field', () => {
-					            
+				cy.get('select#val_type').should(($val) => {
+                    expect($val).to.contain('Number (1 decimal place – comma as decimal)')
+                })		            
 			})
 
 			it('Should have the ability to validate Time (HH:MM) field', () => {
-		            
+				cy.get('select#val_type').should(($val) => {
+                    expect($val).to.contain('Time (HH:MM)')
+                })   
 		    })
 
 		})
