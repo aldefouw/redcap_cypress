@@ -9,6 +9,9 @@ import './projects/commands'
 // They are very stable and do not change often, if ever
 
 Cypress.Commands.add('login', (options) => {
+
+    cy.clearCookies()
+
     cy.request({
         method: 'POST',
         url: '/', // baseUrl is prepended to url
@@ -43,6 +46,25 @@ Cypress.Commands.add('visit_base', (options) => {
     })
 })
 
+Cypress.Commands.add('base_db_seed', () => {
+    cy.mysql_db('structure').then(() => {
+
+        console.log(window.base_url)
+
+        //Seeds the database
+        cy.mysql_db('/versions/' + Cypress.env('redcap_version'), window.base_url).then(() => {
+
+            if(Cypress.env('redcap_hooks_path') !== undefined){
+                const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\\\/");
+                cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
+            }
+
+            //Clear out all cookies
+            cy.clearCookies()
+        })
+    })
+})
+
 Cypress.Commands.add('maintain_login', () => {
     let user = window.user_info.get_current_user()
     let pass = window.user_info.get_current_pass()
@@ -50,7 +72,11 @@ Cypress.Commands.add('maintain_login', () => {
     let user_type = window.user_info.get_user_type()
     let previous_user_type = window.user_info.get_previous_user_type()
 
-    if(user_type === previous_user_type){        
+    console.log('User Type Change to ' + user_type + '.')
+    console.log('previous: ' + previous_user_type)
+    console.log('current: ' + user_type)
+
+    if(user_type === previous_user_type){
         cy.getCookies()
           .should((cookies) => {
 
@@ -73,9 +99,6 @@ Cypress.Commands.add('maintain_login', () => {
 
     //If user type has changed, let's clear cookies and login again
     } else {
-        console.log('User Type Change')
-
-        cy.clearCookies()
         cy.login({ username: user, password:  pass })
     }
 
@@ -241,68 +264,6 @@ Cypress.Commands.add('require_redcap_stats', () => {
     cy.server()
     cy.route({method: 'POST', url: '**/ProjectGeneral/project_stats_ajax.php'}).as('project_stats_ajax')
     cy.wait('@project_stats_ajax').then((xhr, error) => { })
-})
-
-
-Cypress.Commands.add('upload_data_dictionary', (fixture_path, fixture_file, pid, date_format = "DMY") => {
-
-    let cmd = ''
-
-    if( window.navigator['platform'].match(/Win/g) ) {
-        console.log('Windows platform detected for data dictionary')
-        console.log('WARNING: NOT IMPLEMENTED YET!')
-
-    } else {
-        console.log('Unix-style platform enabled for data dictionary')
-
-        cmd = "sh dictionaries/move.sh " +
-        '"' + "/dictionaries/" + fixture_path + "/" + fixture_file + '" ' +
-        '"' + Cypress.env('temp_folder') + '"'
-
-        console.log(cmd)
-    }
-
-    cy.exec(cmd, { timeout: 100000}).then((response) => {
-        console.log(response)
-    })
-    
-    cy.maintain_login().then(() => {
-
-    const body = `-----data-dictionary---
-Content-Disposition: form-data; name="fname"
-
-` + fixture_file + `
------data-dictionary---
-Content-Disposition: form-data; name="date_format"
-
-` + date_format + `
------data-dictionary---
-Content-Disposition: form-data; name="commit"
-
-Commit Changes
------data-dictionary---`;
-
-        cy.request({
-            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/data_dictionary_upload.php?pid=' + pid,
-            method: 'POST', 
-            headers: {
-              "content-type":"multipart/form-data; boundary=---data-dictionary---"
-            },
-            body: body, 
-            timeout: 60000,
-            pageLoadTimeout: 60000,
-            responseTimeout: 60000
-        }).should(($a) => {
-            
-            expect($a.status).to.equal(200)
-
-            cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
-                expect($e.body).to.contain('List of Data Changes')
-                expect($e.body).to.contain('Manage/Design')
-                expect($e.body).to.contain('Upload data dictionary')
-            })
-        })
-    })
 })
 
 Cypress.Commands.add('get_project_table_row_col', (row = '1', col = '0') => {
