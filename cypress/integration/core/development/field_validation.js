@@ -5,16 +5,13 @@ describe('Field Validation', () => {
 		describe('Text Field Validations', () => {
 			before(() => {
 				cy.set_user_type('admin')
-				// cy.visit_version({page: 'ProjectSetup/other_functionality.php', params: "pid=1"})
-				// cy.get('button').contains('development status').click({force:true})
-				// cy.wait(1000)
 				cy.visit_version({page: 'Design/online_designer.php', params: 'pid=1'})
 				cy.get('a').contains('Demographics').click({force:true})
 				cy.get('input.btn2').first().click({force:true})
-				cy.get('select').contains('Text Box').click({force:true})
-				//cy.set_user_type('standard')
+				cy.get('select').contains('Text Box (Short Text, Number, Date/Time, ...)').parent().select('Text Box (Short Text, Number, Date/Time, ...)')
 			})
-		    it('Should have the ability to validate Date (D-M-Y) field', () => {
+			
+			it('Should have the ability to validate Date (D-M-Y) field', () => {
                 cy.get('select#val_type').should(($val) => {
                     expect($val).to.contain('Date (D-M-Y)')
                 })
@@ -52,11 +49,11 @@ describe('Field Validation', () => {
 			})
 
 			//not an option for validation
-			it('Should have the ability to validate Number (1 decimal place – comma as decimal) field', () => {
-				cy.get('select#val_type').should(($val) => {
-                    expect($val).to.contain('Number (1 decimal place – comma as decimal)')
-                })		            
-			})
+			// it('Should have the ability to validate Number (1 decimal place – comma as decimal) field', () => {
+			// 	cy.get('select#val_type').should(($val) => {
+            //         expect($val).to.contain('Number (1 decimal place – comma as decimal)')
+            //     })		            
+			// })
 
 			it('Should have the ability to validate Time (HH:MM) field', () => {
 				cy.get('select#val_type').should(($val) => {
@@ -67,20 +64,18 @@ describe('Field Validation', () => {
 		})
 
 		describe('Range Validations', () => {
+			
 			before(() => {
 				cy.set_user_type('admin')
-				// cy.visit_version({page: 'ProjectSetup/other_functionality.php', params: "pid=1"})
-				// cy.get('button').contains('development status').click({force:true})
-				// cy.wait(1000)
 				cy.visit_version({page: 'Design/online_designer.php', params: 'pid=1'})
 				cy.get('a').contains('Demographics').click({force:true})
 				cy.get('input.btn2').first().click({force:true})
-				cy.get('select').contains('Text Box').click({force:true})
-				//cy.set_user_type('standard')
+				cy.get('select').contains('Text Box (Short Text, Number, Date/Time, ...)').parent().select('Text Box (Short Text, Number, Date/Time, ...)')
 			})
 
 		    it('Should support ranges for a Date (D-M-Y) field', () => {
-				cy.get('select#val_type').select('Date (D-M-Y)')
+				cy.get('select').contains('Date (D-M-Y)').parent().select('Date (D-M-Y)')
+				cy.wait(1000)
 				cy.get('div#div_val_minmax').should(($div) => {
 					expect($div).to.contain('Minimum')
 					expect($div).to.contain('Maximum')
