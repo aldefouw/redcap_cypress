@@ -218,6 +218,14 @@ Cypress.Commands.add('select_field_by_label', (name, timeout = 10000) => {
     })
 })
 
+Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000) => {
+    cy.find_online_designer_field(name).parent().parentsUntil('tr').find('img[title=Edit]').parent().click()
+})
+
+Cypress.Commands.add('select_field_choices', (timeout = 10000) => {
+    cy.get('form#addFieldForm').children().get('span').contains('Choices').parent().parent().find('textarea')
+})
+
 Cypress.Commands.add('initial_save_field', () => {
     cy.get('input#field_name').then(($f) => {
         cy.contains('button', 'Save').
