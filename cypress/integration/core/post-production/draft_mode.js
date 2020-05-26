@@ -261,21 +261,49 @@ describe('Draft Mode', () => {
 					expect($body).to.contain('changes were NOT committed to the project but were removed')
 				})
 			})	
+
+			describe('Notifications', () => {
+
+				it('Should allow an Administrator to send a confirmation email (templated, but editable) to the requestor', () => {
+					//Click Remove All Changes button and verify notice
+					cy.get('button').contains('Compose confirmation email').click()
+
+					//Check for the telltale signs of an email template
+					cy.get('div.ui-dialog').should(($div) => {
+						expect($div).to.contain('Compose confirmation email')
+						expect($div).to.contain('To:')
+						expect($div).to.contain('From:')
+						expect($div).to.contain('Subject:')
+						expect($div).to.contain('Send Email')						
+					})
+
+					//Send the email
+					cy.get('button.ui-button').contains('Send Email').click()
+
+					//Check to see that REDCap indicates the email was sent
+					cy.get('body').should(($body) => {
+						expect($body).to.contain('Your email was successfully sent')
+					})
+				})	
+			})
 		})
 
 		describe('Data Dictionary', () => {
 
 			it('Should record all versions of the Data Dictionary Post-Production Status with Date/Time, Requestor, and Approver', () => {
+				//Visit Project Revision history page
+				cy.visit_version({page: 'ProjectSetup/project_revision_history.php', params: "pid=2"})
 
+				//These are the changes that should be present from the last test in the series above
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('Production revision #1')
+					expect($body).to.contain('Requested by')
+					expect($body).to.contain('Approved by')
+					expect($body).to.contain('Moved to production')
+				})	
 			})
 		})
 
-		describe('Notifications', () => {
-
-			it('Should allow an Administrator to send a confirmation email (templated, but editable) to the requestor', () => {
-
-			})	
-		})
 	})
 
 	describe('Control Center', () => {
