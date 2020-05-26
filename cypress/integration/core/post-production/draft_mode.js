@@ -309,33 +309,43 @@ describe('Draft Mode', () => {
 	describe('Control Center', () => {
 
 		before(() => {
-			//cy.set_user_type('admin')
+			cy.set_user_type('admin')
+			cy.visit_version({page: 'ControlCenter/user_settings.php#tr-auto_prod_changes'})
+
+		    	cy.get('select[name="auto_prod_changes"] option').should(($options) => {
+		    		window.auto_prod_options = [...$options].map(o => o.text)
+		    	})  
+
+		    	cy.get('select[name="enable_edit_prod_repeating_setup"] option').should(($options) => {
+		    		window.edit_repeating_options = [...$options].map(o => o.text)
+		    	})  
 		})
 
 		it('Should require Administrators to review changes made in Draft Mode based upon the settings configured in Control Center', () => {
-
+			//This is actually implicit to the tests that are covered within Change Management
+			//If those tests pass, this test is true as well
 		})
 
 		describe('Options for Automatic Approval of Drafted Changes', () => {
 
 			it('Should have the ability to automatically approve changes "Never" (administrator approval required)', () => {
-		            
+				assert.include(window.auto_prod_options, 'Never (always require an admin to approve changes)')   
 		    })
 
 			it('Should have the ability to automatically approve changes when No Existing Fields were Modified', () => {
-		            
+				assert.include(window.auto_prod_options, 'Yes, if no existing fields were modified')   
 		    })
 
 		    it('Should have the ability to automatically approve changes when No Records present OR Records Present AND No Existing Fields were Modified', () => {
-		            
+  		    	assert.include(window.auto_prod_options, 'Yes, if project has no records OR if has records and no existing fields were modified')
 		    })
 
 		    it('Should have the ability to automatically approve changes when No Critical Issues Exist', () => {
-		            
+	    	   	assert.include(window.auto_prod_options, 'Yes, if no critical issues exist')  
 		    })
 
 		    it('Should have the ability to automatically approve changes when No Records present OR Records Present AND No Critical Issues Exist', () => {
-		            
+	    	 	assert.include(window.auto_prod_options, 'Yes, if project has no records OR if has records and no critical issues exist')  
 		    })
 
 		})
@@ -343,11 +353,11 @@ describe('Draft Mode', () => {
 		describe('Options for Add / Modify Events and Arms', () => {
 
 		    it('Should have the ability to authorize ONLY Administrators to Add / Modify Events in Production Status', () => {
-		            
+	            assert.include(window.edit_repeating_options, 'No, only Administrators can modify the repeatable instance setup in production')  
 		    })
 
 		    it('Should have the ability to only authorize Standard Users to Add / Modify Events in Production Status', () => {
-		            
+	            assert.include(window.edit_repeating_options, 'Yes, normal users can modify the repeatable instance setup in production')  
 		    })
 		})
 	})	
