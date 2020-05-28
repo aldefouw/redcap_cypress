@@ -30,27 +30,33 @@ describe('Data Entry through the Data Collection Instrument', () => {
         before(() => {
             cy.visit_version({page: 'DataEntry/record_home.php', params: "pid=1"})
             cy.get('button').contains('Add new record').click({force:true})
+           
         })
 
 		it('Should have the ability to create a record', () => {
-            cy.get('span').should(($span) => {
-            expect($span).to.contain('a new Study ID. To create the record')
+             cy.get('table#event_grid_table tbody td a').first().click()
+            cy.get('button').contains('Save & Exit Form').click()
+            cy.get('body').should(($body) => {
+                expect($body).to.contain('Study ID 1 successfully added')
             })
 		})
 
 		it('Should have the ability to enter data for core field types', () => {
-            cy.get('table#event_grid_table').should(($table) => {
-                expect($table).to.contain('Demographics')
-                expect($table).to.contain('Baseline Data')
-                expect($table).to.contain('Month 1 Data')
-                expect($table).to.contain('Month 2 Data')
-                expect($table).to.contain('Month 3 Data')
-                expect($table).to.contain('Completion Data')
-            })
+            cy.get('table#event_grid_table tbody td a').first().click()
+            
+            cy.set_text_value_by_label('Date subject signed consent', '01/01/2019')
+            cy.set_text_value_by_label('First Name', 'Rosie')
+            cy.set_text_value_by_label('Last Name', 'Riveter')
+            cy.set_textarea_value_by_label('Street, City, State, ZIP', "555 Fake Address\nBeverly Hills, CA 90210")
+            cy.set_radio_value_by_label('Sex', 0)
+
+            cy.pause()
+
+
 		})
 
 		it('Should have the ability to reset a multiple-choice radio button selection', () => {
-            cy.get('img').eq(46).parent().click({force:true})
+            
             cy.get('td').contains(' Hispanic or Latino').parent().should(($td) => {
                 expect($td).to.contain('reset')
             })
@@ -58,9 +64,7 @@ describe('Data Entry through the Data Collection Instrument', () => {
 
 		describe('Date / Time Fields', () => {
 		    before(() => {
-                cy.visit_version({page: 'DataEntry/record_home.php', params: "pid=1"})
-                cy.get('button').contains('Add new record').click({force:true})
-                cy.get('img').eq(46).parent().click({force:true})
+                cy.visit_version({page: 'DataEntry/index.php', params:'pid=1&id=1&event_id=1&page=demographics&auto=1'})
             })
 
 			it('Should display a date picker widget on a date field', () => {
