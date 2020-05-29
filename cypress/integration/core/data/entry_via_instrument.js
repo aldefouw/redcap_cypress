@@ -32,18 +32,16 @@ describe('Data Entry through the Data Collection Instrument', () => {
             cy.get('button').contains('Add new record').click({force:true})
         })
 
-        beforeEach(() => {
-            cy.get('table#event_grid_table tbody td a').first().click()
-        })
-
 		it('Should have the ability to create a record', () => {
+            cy.get('table#event_grid_table tbody td a').first().click()
             cy.get('button').contains('Save & Exit Form').click()
             cy.get('body').should(($body) => {
                 expect($body).to.contain('Study ID 1 successfully added')
             })
 		})
 
-		it('Should have the ability to enter data for core field types', () => {           
+		it('Should have the ability to enter data for core field types', () => {    
+            cy.get('table#event_grid_table tbody td a').first().click()       
             cy.select_text_by_label('Date subject signed consent').type('01/01/2019')
             cy.select_text_by_label('First Name').type('Rosie')
             cy.select_text_by_label('Last Name').type('Riveter')
@@ -64,6 +62,8 @@ describe('Data Entry through the Data Collection Instrument', () => {
 		})
 
 		it('Should have the ability to reset a multiple-choice radio button selection', () => {
+            cy.get('table#event_grid_table tbody td a').first().click()
+
             cy.select_radio_by_label('Ethnicity').parent().parent().should(($td) => {
                 let $a = $td.find('> div a')
                 let $reset_exists = expect($a).to.contain('reset')
@@ -72,7 +72,6 @@ describe('Data Entry through the Data Collection Instrument', () => {
 		})
 
 		describe('Date / Time Fields', () => {
-
 			it('Should display a date picker widget on a date field', () => {
                 cy.get('img.ui-datepicker-trigger').click({multiple:true})
 			})
@@ -81,6 +80,12 @@ describe('Data Entry through the Data Collection Instrument', () => {
 			    cy.get('button').should(($btn) => {
 			        expect($btn).to.contain('Today')
 			    })
+
+                cy.get('button').contains('Save & Exit Form').click()
+
+                cy.get('body').should(($body) => {
+                    expect($body).to.contain('Study ID 1 successfully edited')
+                })
 			})
 		})
 	})
@@ -89,8 +94,8 @@ describe('Data Entry through the Data Collection Instrument', () => {
         before (() => {
             cy.visit_version({page: 'DataEntry/record_home.php', params: "pid=1"})
             cy.get('button').contains('Add new record').click({force:true})
-            cy.get('img').eq(46).parent().click({force:true})
-            cy.get('[type="checkbox"]').check()
+            cy.get('table#event_grid_table tbody td a').first().click()  
+            cy.get('[type="checkbox"]').check()     
         })
 
 		describe('Attempted Leave without Save Prompt', () => {
