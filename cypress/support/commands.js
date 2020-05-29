@@ -209,7 +209,7 @@ Cypress.Commands.add('compare_value_by_field_label', (name, value, timeout = 100
     })
 })
 
-Cypress.Commands.add('set_field_value_by_label', ($name, $value, $type, $prefix = '', $suffix = '', $click = false, timeout = 10000) => {   
+Cypress.Commands.add('set_field_value_by_label', ($name, $value, $type, $prefix = '', $suffix = '', $last_suffix = '', timeout = 10000) => {   
    cy.contains('td', $name, { timeout: timeout }).
       parent().
       parentsUntil('tr').
@@ -218,22 +218,30 @@ Cypress.Commands.add('set_field_value_by_label', ($name, $value, $type, $prefix 
       then(($tr) => {
 
         let selector = $type + '[name="' + $prefix + $tr[0]['attributes']['sq_id']['value'] + $suffix + '"]'
-        let item = Cypress.$(selector)
-        $click ? item.click() : item.val($value)
-        
+        cy.get(selector, { force: true}).then(($a) => {
+            return $a[0]
+        })        
       })
 })
 
-Cypress.Commands.add('set_text_value_by_label', ($name, $value, timeout = 10000) => {   
+Cypress.Commands.add('select_text_by_label', ($name, $value) => {   
     cy.set_field_value_by_label($name, $value, 'input')
 })
 
-Cypress.Commands.add('set_textarea_value_by_label', ($name, $value, timeout = 10000) => {   
+Cypress.Commands.add('select_textarea_by_label', ($name, $value) => {   
     cy.set_field_value_by_label($name, $value, 'textarea')
 })
 
-Cypress.Commands.add('set_radio_value_by_label', ($name, $value, timeout = 10000) => {   
-    cy.set_field_value_by_label($name, $value, 'input', '', '___radio"][type="radio"][value="' + $value, true)
+Cypress.Commands.add('select_radio_by_label', ($name, $value) => {   
+    cy.set_field_value_by_label($name, $value, 'input', '', '___radio')
+})
+
+Cypress.Commands.add('select_value_by_label', ($name, $value) => {   
+    cy.set_field_value_by_label($name, $value, 'select', '', '')
+})
+
+Cypress.Commands.add('select_checkbox_by_label', ($name, $value) => {
+    cy.set_field_value_by_label($name, $value, 'input', '__chkn__', '')
 })
 
 Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000) => {

@@ -30,49 +30,51 @@ describe('Data Entry through the Data Collection Instrument', () => {
         before(() => {
             cy.visit_version({page: 'DataEntry/record_home.php', params: "pid=1"})
             cy.get('button').contains('Add new record').click({force:true})
-           
+        })
+
+        beforeEach(() => {
+            cy.get('table#event_grid_table tbody td a').first().click()
         })
 
 		it('Should have the ability to create a record', () => {
-             cy.get('table#event_grid_table tbody td a').first().click()
             cy.get('button').contains('Save & Exit Form').click()
             cy.get('body').should(($body) => {
                 expect($body).to.contain('Study ID 1 successfully added')
             })
 		})
 
-		it('Should have the ability to enter data for core field types', () => {
-            cy.get('table#event_grid_table tbody td a').first().click()
-            
-            cy.set_text_value_by_label('Date subject signed consent', '01/01/2019')
-            cy.set_text_value_by_label('First Name', 'Rosie')
-            cy.set_text_value_by_label('Last Name', 'Riveter')
-            cy.set_textarea_value_by_label('Street, City, State, ZIP', "555 Fake Address\nBeverly Hills, CA 90210")
-            cy.set_radio_value_by_label('Sex', 0)
+		it('Should have the ability to enter data for core field types', () => {           
+            cy.select_text_by_label('Date subject signed consent').type('01/01/2019')
+            cy.select_text_by_label('First Name').type('Rosie')
+            cy.select_text_by_label('Last Name').type('Riveter')
+            cy.select_textarea_by_label('Street, City, State, ZIP').type("555 Fake Address\nBeverly Hills, CA 90210")
 
-            cy.pause()
+            cy.select_radio_by_label('Ethnicity').first().click()
+            cy.select_radio_by_label('Sex').first().click()
 
+            cy.select_field_by_label('Race').select('Asian')
+            cy.select_checkbox_by_label('Is patient taking any of the following medications? (check all that apply)').first().check()
+            cy.select_field_by_label('Complete?').select('Complete')
 
+            cy.get('button').contains('Save & Exit Form').click()
+
+            cy.get('body').should(($body) => {
+                expect($body).to.contain('Study ID 1 successfully edited')
+            })
 		})
 
 		it('Should have the ability to reset a multiple-choice radio button selection', () => {
-            
-            cy.get('td').contains(' Hispanic or Latino').parent().should(($td) => {
-                expect($td).to.contain('reset')
+            cy.select_radio_by_label('Ethnicity').parent().parent().should(($td) => {
+                let $a = $td.find('> div a')
+                let $reset_exists = expect($a).to.contain('reset')
+                if ($reset_exists) $a.click() 
             })
 		})
 
 		describe('Date / Time Fields', () => {
-		    before(() => {
-                cy.visit_version({page: 'DataEntry/index.php', params:'pid=1&id=1&event_id=1&page=demographics&auto=1'})
-            })
 
 			it('Should display a date picker widget on a date field', () => {
                 cy.get('img.ui-datepicker-trigger').click({multiple:true})
-			})
-
-			it('Should display a Now button', () => {
-                //NA
 			})
 
 			it('Should display a Today button', () => {
