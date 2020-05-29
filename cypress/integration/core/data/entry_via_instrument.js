@@ -95,7 +95,7 @@ describe('Data Entry through the Data Collection Instrument', () => {
             cy.visit_version({page: 'DataEntry/record_home.php', params: "pid=1"})
             cy.get('button').contains('Add new record').click({force:true})
             cy.get('table#event_grid_table tbody td a').first().click()  
-            cy.get('[type="checkbox"]').check()     
+            cy.select_checkbox_by_label('Is patient taking any of the following medications? (check all that apply)').first().check()
         })
 
 		describe('Attempted Leave without Save Prompt', () => {
@@ -137,13 +137,13 @@ describe('Data Entry through the Data Collection Instrument', () => {
 			})
 
 			it('Should have the ability to save and continue on the same form for the same record', () => {
-                cy.get('li').should(($li) => {
+                cy.get('div').should(($li) => {
                     expect($li).to.contain('Save & Stay')
                 })
 			})
 
 			it('Should have the ability to save and go to the next form for the same record', () => {
-                cy.get('li').should(($li) => {
+                cy.get('div').should(($li) => {
                     expect($li).to.contain('Save & Go To Next Form')
                 })
 			})
@@ -179,7 +179,7 @@ describe('Data Entry through the Data Collection Instrument', () => {
 	describe('Deleting Data', () => {
 	    before(() => {
 	        cy.get('[type="checkbox"]').check()
-	        cy.get('li').contains('Save & Stay').click({force:true})
+	        cy.get('div').contains('Save & Stay').click({force:true})
 	    })
 
 		it('Should have the ability to delete all data on the current form of a given record', () => {
@@ -192,8 +192,8 @@ describe('Data Entry through the Data Collection Instrument', () => {
             //NA
 		})
 
-		it('Should have the ability to delete an indivdual record', () => {
-            cy.get('button').contains('Save & Exit Form').click({force:true})
+		it('Should have the ability to delete an individual record', () => {
+            cy.get('div').contains('Save & Exit Form').click({force:true})
             cy.get('li').should(($li) => {
                 expect($li).to.contain('Delete record (all forms)')
             })
