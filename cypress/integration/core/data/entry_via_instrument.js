@@ -188,15 +188,16 @@ describe('Data Entry through the Data Collection Instrument', () => {
             })
 		})
 
-		it('Should have the ability to delete all data in an event for a given record', () => {
-            //NA
-		})
-
 		it('Should have the ability to delete an individual record', () => {
             cy.get('div').contains('Save & Exit Form').click({force:true})
             cy.get('li').should(($li) => {
                 expect($li).to.contain('Delete record (all forms)')
             })
 		})
+
+        it('Should have the ability to delete all data in an event for a given record', () => {
+            cy.visit_version({page: 'DataEntry/record_home.php', params: "pid=1&arm=1&id=1"})
+            cy.get('ul li').contains('Delete record (all forms)')
+        })
 	})
 })
