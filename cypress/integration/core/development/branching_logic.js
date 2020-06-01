@@ -25,7 +25,7 @@ describe('Branching Logic', () => {
 				cy.find_online_designer_field("Last Name").parent().parentsUntil('tr').find('img[title="Branching Logic"]').parent().click()
 				cy.get('textarea#advBranchingBox').type('[first_name]!=""')
 				cy.get('button').contains('Save').click()
-				cy.get('button').contains('Close').click()
+				cy.get('button').contains('Close').click({force: true})
 			})
 
         })
