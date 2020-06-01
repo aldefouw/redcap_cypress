@@ -14,15 +14,20 @@ describe('Branching Logic', () => {
 			cy.visit_version({page: 'Design/online_designer.php', params: "pid=5"})
 			cy.get('button').contains('Enable').click()
 			cy.get('button').contains('Save Changes').click()
-			cy.get('a').contains('Basic Demography Form').click()
-			cy.find_online_designer_field("Last Name").parent().parentsUntil('tr').find('img[title="Branching Logic"]').parent().click()
-			cy.get('textarea#advBranchingBox').type('[first_name]!=""')
-			cy.get('button').contains('Save').click()
-			
-			cy.get('button').should(($button) => {
-				expect($button).to.contain('Close')
-				$button.first().click()
+
+			cy.get('div#saveSurveyMsg').should(($div) => {
+
+				expect($div).not.to.be.visible
+
+	        }).then(($div) => {
+
+				cy.get('a').contains('Basic Demography Form').click()
+				cy.find_online_designer_field("Last Name").parent().parentsUntil('tr').find('img[title="Branching Logic"]').parent().click()
+				cy.get('textarea#advBranchingBox').type('[first_name]!=""')
+				cy.get('button').contains('Save').click()
+				cy.get('button').contains('Close').click()
 			})
+
         })
 
 	})
