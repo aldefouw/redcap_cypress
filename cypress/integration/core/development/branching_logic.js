@@ -8,7 +8,7 @@ describe('Branching Logic', () => {
 		cy.visit_version({page: 'ProjectSetup/other_functionality.php', params: "pid=5"})
         cy.get('button').contains('development status').click()
 
-        cy.get('body', ).should(($body) => {
+        cy.get('body').should(($body) => {
         	expect($body).to.contain('The project is now back in development status.')
         }).then(() => {
 			cy.visit_version({page: 'Design/online_designer.php', params: "pid=5"})
@@ -18,7 +18,11 @@ describe('Branching Logic', () => {
 			cy.find_online_designer_field("Last Name").parent().parentsUntil('tr').find('img[title="Branching Logic"]').parent().click()
 			cy.get('textarea#advBranchingBox').type('[first_name]!=""')
 			cy.get('button').contains('Save').click()
-			cy.get('button').contains('Close').click()
+			
+			cy.get('button').should(($button) => {
+				expect($button).to.contain('Close')
+				$button.first().click()
+			})
         })
 
 	})
