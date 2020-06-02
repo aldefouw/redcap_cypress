@@ -21,7 +21,7 @@ describe('Branching Logic', () => {
 
 	        }).then(($div) => {
 
-				cy.get('a').contains('Basic Demography Form').click()
+				cy.get('a').contains('Basic Demography Form').click({force: true})
 				cy.find_online_designer_field("Last Name").parent().parentsUntil('tr').find('img[title="Branching Logic"]').parent().click()
 				cy.get('textarea#advBranchingBox').type('[first_name]!=""')
 				cy.get('button').contains('Save').click()
