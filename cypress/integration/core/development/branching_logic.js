@@ -19,10 +19,9 @@ describe('Branching Logic', () => {
 
 				expect($div).not.to.be.visible
 
-	        }).then(($div) => {
-
-				cy.get('a').contains('Basic Demography Form').click({force: true})
-				cy.find_online_designer_field("Last Name").parent().parentsUntil('tr').find('img[title="Branching Logic"]').parent().click()
+	        }).then(() => {
+	        	cy.visit_version({page: 'Design/online_designer.php', params: 'pid=5&page=demographics'})
+				cy.find_online_designer_field("Last Name").parent().parentsUntil('tr').find('img[title="Branching Logic"]').click()
 				cy.get('textarea#advBranchingBox').type('[first_name]!=""')
 				cy.get('button').contains('Save').click()
 			})
