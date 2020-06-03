@@ -1,5 +1,5 @@
 describe('Field Validation', () => {
-	/*
+	
 	describe('Control Center', () => {
 
 		before(() => {
@@ -144,17 +144,11 @@ describe('Field Validation', () => {
 			it('Should have the ability to disable Time (HH:MM) field validation', () => {
 				cy.get('tr#time').should(($tr) => {
 					expect($tr).to.contain('Disable')
-				})
-				
+				})	
 		    })
-			
-
-		})
-		
-
-		
+		})	
 	})
-	*/
+	
 	describe('User Interface', () => {
 		
 		describe('Text Field Validations', () => {
