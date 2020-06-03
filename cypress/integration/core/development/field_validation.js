@@ -1,9 +1,165 @@
 describe('Field Validation', () => {
-	
+	/*
+	describe('Control Center', () => {
+
+		before(() => {
+			cy.mysql_db("projects/pristine")
+			cy.set_user_type('admin')
+			cy.visit_version({page: 'ControlCenter/validation_type_setup.php'})
+		})
+		describe('Enable Field Validation', () => {
+
+		    before(() => {
+				//cy.mysql_db("projects/pristine")
+				//cy.visit_version({page: 'ControlCenter/validation_type_setup.php'})
+			})
+
+		    it('Should have the ability to enable Date (D-M-Y) field validation', () => {
+				cy.get('tr#date_dmy').should(($tr) => {
+					expect($tr).to.contain('Enable')
+				})
+				cy.get('tr#date_dmy').within(($tr) => {
+					cy.get('button').contains('Enable').click({force:true})
+				})
+				
+		    })
+
+			it('Should have the ability to enable Datetime (M-D-Y H:M) field validation', () => {
+				cy.get('tr#datetime_mdy').should(($tr) => {
+					expect($tr).to.contain('Enable')
+				})
+				cy.get('tr#datetime_mdy').within(($tr) => {
+					cy.get('button').contains('Enable').click({force:true})
+				}) 
+		    })
+
+			it('Should have the ability to enable Datetime w/seconds (Y-M-D H:M:S) field validation', () => {
+				cy.get('tr#datetime_seconds_ymd').should(($tr) => {
+					expect($tr).to.contain('Enable')
+				})
+				cy.get('tr#datetime_seconds_ymd').within(($tr) => {
+					cy.get('button').contains('Enable').click({force:true})
+				})  
+			})
+
+			it('Should have the ability to enable Email field validation', () => {
+				cy.get('tr#email').should(($tr) => {
+					expect($tr).to.contain('Enable')
+				})
+				cy.get('tr#email').within(($tr) => {
+					cy.get('button').contains('Enable').click({force:true})
+				})
+			})
+
+			it('Should have the ability to enable Integer field validation', () => {
+				cy.get('tr#integer').should(($tr) => {
+					expect($tr).to.contain('Enable')
+				})
+				cy.get('tr#integer').within(($tr) => {
+					cy.get('button').contains('Enable').click({force:true})
+				})
+			})
+
+			it('Should have the ability to enable Number field validation', () => {
+				cy.get('tr#number').should(($tr) => {
+					expect($tr).to.contain('Enable')
+				})
+				cy.get('tr#number').within(($tr) => {
+					cy.get('button').contains('Enable').click({force:true})
+				}) 
+				
+			})
+
+			it('Should have the ability to enable Number (1 decimal place – comma as decimal) field validation', () => {
+				cy.get('tr#number_1dp_comma_decimal').should(($tr) => {
+					expect($tr).to.contain('Enable')
+				})
+				cy.get('tr#number_1dp_comma_decimal').within(($tr) => {
+					cy.get('button').contains('Enable').click({force:true})
+				}) 
+			})
+
+			it('Should have the ability to enable Time (HH:MM) field validation', () => {
+				cy.get('tr#time').should(($tr) => {
+					expect($tr).to.contain('Enable')
+				})
+				cy.get('tr#time').within(($tr) => {
+					cy.get('button').contains('Enable').click({force:true})
+				})
+		    })
+
+		})
+		describe('Disable Field Validation', () => {
+
+		    it('Should have the ability to disable Date (D-M-Y) field validation', () => {
+				cy.get('tr#date_dmy').should(($tr) => {
+					expect($tr).to.contain('Disable')
+				})
+				
+		            
+		    })
+
+			it('Should have the ability to disable Datetime (M-D-Y H:M) field validation', () => {
+				cy.get('tr#datetime_mdy').should(($tr) => {
+					expect($tr).to.contain('Disable')
+				})      
+				   
+		    })
+
+			it('Should have the ability to disable Datetime w/seconds (Y-M-D H:M:S) field validation', () => {
+				cy.get('tr#datetime_seconds_ymd').should(($tr) => {
+					expect($tr).to.contain('Disable')
+				})   
+				   
+			})
+
+			it('Should have the ability to disable Email field validation', () => {
+				cy.get('tr#email').should(($tr) => {
+					expect($tr).to.contain('Disable')
+				})    
+				  
+			})
+
+			it('Should have the ability to disable Integer field validation', () => {
+				cy.get('tr#integer').should(($tr) => {
+					expect($tr).to.contain('Disable')
+				}) 
+				           
+			})
+
+			it('Should have the ability to disable Number field validation', () => {
+				cy.get('tr#number').should(($tr) => {
+					expect($tr).to.contain('Disable')
+				}) 
+				       
+			})
+
+			it('Should have the ability to disable Number (1 decimal place – comma as decimal) field validation', () => {
+				cy.get('tr#number_1dp_comma_decimal').should(($tr) => {
+					expect($tr).to.contain('Disable')
+				}) 
+				          
+			})
+
+			it('Should have the ability to disable Time (HH:MM) field validation', () => {
+				cy.get('tr#time').should(($tr) => {
+					expect($tr).to.contain('Disable')
+				})
+				
+		    })
+			
+
+		})
+		
+
+		
+	})
+	*/
 	describe('User Interface', () => {
 		
 		describe('Text Field Validations', () => {
 			before(() => {
+				cy.mysql_db("projects/pristine")
 				cy.set_user_type('admin')
 				cy.visit_version({page: 'Design/online_designer.php', params: 'pid=1'})
 				cy.get('a').contains('Demographics').click({force:true})
@@ -83,115 +239,58 @@ describe('Field Validation', () => {
 		    })
 
 			it('Should support ranges for a Datetime (M-D-Y H:M) field', () => {
-
+				cy.get('select').contains('Datetime (M-D-Y H:M)').parent().select('Datetime (M-D-Y H:M)')
+				cy.wait(1000)
+				cy.get('div#div_val_minmax').should(($div) => {
+					expect($div).to.contain('Minimum')
+					expect($div).to.contain('Maximum')
+				})
 		    })
 
-			it('Should support ranges for a Datetime w/seconds (Y-M-D H:M:S) field', () => {
-
+			it('Should support ranges for a Datetime w/ seconds (Y-M-D H:M:S) field', () => {
+				cy.get('select').contains('Datetime w/ seconds (Y-M-D H:M:S)').parent().select('Datetime w/ seconds (Y-M-D H:M:S)')
+				cy.wait(1000)
+				cy.get('div#div_val_minmax').should(($div) => {
+					expect($div).to.contain('Minimum')
+					expect($div).to.contain('Maximum')
+				})
 			})
 
 			it('Should support ranges for a Integer field', () => {
-
+				cy.get('select').contains('Integer').parent().select('Integer')
+				cy.wait(1000)
+				cy.get('div#div_val_minmax').should(($div) => {
+					expect($div).to.contain('Minimum')
+					expect($div).to.contain('Maximum')
+				})
 			})
 
 			it('Should support ranges for a Number field', () => {
-
+				cy.get('select').contains('Number').parent().select('Number')
+				cy.wait(1000)
+				cy.get('div#div_val_minmax').should(($div) => {
+					expect($div).to.contain('Minimum')
+					expect($div).to.contain('Maximum')
+				})
 			})
 
-			it('Should support ranges for a Number (1 decimal place – comma as decimal) field', () => {
+			//not an option for validation
+			// it('Should support ranges for a Number (1 decimal place – comma as decimal) field', () => {
 
-			})
+			// })
 
 			it('Should support ranges for a Time (HH:MM) field', () => {
-
+				cy.get('select').contains('Time (HH:MM)').parent().select('Time (HH:MM)')
+				cy.wait(1000)
+				cy.get('div#div_val_minmax').should(($div) => {
+					expect($div).to.contain('Minimum')
+					expect($div).to.contain('Maximum')
+				})
 		    })
 
 
 		})
 	})
 
-	describe('Control Center', () => {
-
-		before(() => {
-			cy.set_user_type('admin')
-		})
-
-		describe('Enable Field Validation', () => {
-
-		    before(() => {
-		        cy.visit_version({page: 'ControlCenter/validation_type_setup.php'})
-		    })
-
-		    it('Should have the ability to enable Date (D-M-Y) field validation', () => {
-
-		    })
-
-			it('Should have the ability to enable Datetime (M-D-Y H:M) field validation', () => {
-
-		    })
-
-			it('Should have the ability to enable Datetime w/seconds (Y-M-D H:M:S) field validation', () => {
-
-			})
-
-			it('Should have the ability to enable Email field validation', () => {
-
-			})
-
-			it('Should have the ability to enable Integer field validation', () => {
-
-			})
-
-			it('Should have the ability to enable Number field validation', () => {
-
-			})
-
-			it('Should have the ability to enable Number (1 decimal place – comma as decimal) field validation', () => {
-
-			})
-
-			it('Should have the ability to enable Time (HH:MM) field validation', () => {
-
-		    })
-
-		})
-
-		describe('Disable Field Validation', () => {
-
-		    it('Should have the ability to disable Date (D-M-Y) field validation', () => {
-
-		            
-		    })
-
-			it('Should have the ability to disable Datetime (M-D-Y H:M) field validation', () => {
-					            
-		    })
-
-			it('Should have the ability to disable Datetime w/seconds (Y-M-D H:M:S) field validation', () => {
-					            
-			})
-
-			it('Should have the ability to disable Email field validation', () => {
-					            
-			})
-
-			it('Should have the ability to disable Integer field validation', () => {
-					            
-			})
-
-			it('Should have the ability to disable Number field validation', () => {
-					            
-			})
-
-			it('Should have the ability to disable Number (1 decimal place – comma as decimal) field validation', () => {
-					            
-			})
-
-			it('Should have the ability to disable Time (HH:MM) field validation', () => {
-		            
-		    })
-			
-
-		})
-	})
+	
 })
