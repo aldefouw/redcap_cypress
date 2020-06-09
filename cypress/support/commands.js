@@ -164,6 +164,9 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
 
    cy.exec(cmd, { timeout: 100000}).then((response) => {
         //cy.writeFile('log_of_mysql_command' + type + '.txt', response)
+        
+        expect(response['code']).to.eq(0)
+        expect(response['stdout']).to.eq('success')
         console.log(response)
     })
 
