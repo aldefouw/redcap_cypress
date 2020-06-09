@@ -12,4 +12,13 @@ else
 fi
 
 $db_cmd < $tmp
-rm -f $tmp
+
+if [ $? -eq 0 ]
+then
+  echo "success"
+  rm -f $tmp
+else
+  echo "failure" >&2
+fi
+
+
