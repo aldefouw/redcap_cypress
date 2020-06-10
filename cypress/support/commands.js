@@ -430,7 +430,7 @@ Cypress.Commands.add('num_projects_excluding_archived', () => {
             " " + mysql['db_name'] +
             " -u" + mysql['db_user'] +
             " -p" + mysql['db_pass'] +
-            " -e '" + query + "' -N -s"
+            ' -e "' + query + '" -N -s'
 
     } else {
 
@@ -446,6 +446,7 @@ Cypress.Commands.add('num_projects_excluding_archived', () => {
     }
 
     cy.exec(cmd, { timeout: 100000}).then((response) => {
+        expect(response['code']).to.eq(0)
         window.num_projects = response['stdout']
     })
 
