@@ -212,13 +212,47 @@ Cypress.Commands.add('compare_value_by_field_label', (name, value, timeout = 100
     })
 })
 
-Cypress.Commands.add('select_field_by_label', (name, timeout = 10000) => {
-    cy.contains('td', name, { timeout: timeout }).parent().parentsUntil('tr').last().parent().then(($tr) => {
-        const name = $tr[0]['attributes']['sq_id']['value']
-        cy.get('[name="' + name + '"]', { force: true }).then(($a) => {
+Cypress.Commands.add('set_field_value_by_label', ($name, $value, $type, $prefix = '', $suffix = '', $last_suffix = '', timeout = 10000) => {   
+   cy.contains('td', $name, { timeout: timeout }).
+      parent().
+      parentsUntil('tr').
+      last().
+      parent().
+      then(($tr) => {
+
+        let selector = $type + '[name="' + $prefix + $tr[0]['attributes']['sq_id']['value'] + $suffix + '"]'
+        cy.get(selector, { force: true}).then(($a) => {
             return $a[0]
-        })
-    })
+        })        
+      })
+})
+
+Cypress.Commands.add('select_text_by_label', ($name, $value) => {   
+    cy.set_field_value_by_label($name, $value, 'input')
+})
+
+Cypress.Commands.add('select_textarea_by_label', ($name, $value) => {   
+    cy.set_field_value_by_label($name, $value, 'textarea')
+})
+
+Cypress.Commands.add('select_radio_by_label', ($name, $value) => {   
+    cy.set_field_value_by_label($name, $value, 'input', '', '___radio')
+})
+
+Cypress.Commands.add('select_value_by_label', ($name, $value) => {   
+    cy.set_field_value_by_label($name, $value, 'select', '', '')
+})
+
+Cypress.Commands.add('select_checkbox_by_label', ($name, $value) => {
+    cy.set_field_value_by_label($name, $value, 'input', '__chkn__', '')
+})
+
+Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000) => {
+    cy.find_online_designer_field(name).parent().parentsUntil('tr').find('img[title=Edit]').parent().click()
+})
+
+Cypress.Commands.add('select_field_choices', (timeout = 10000) => {
+    cy.get('form#addFieldForm').children().get('span').contains('Choices').parent().parent().find('textarea')
 })
 
 Cypress.Commands.add('initial_save_field', () => {
