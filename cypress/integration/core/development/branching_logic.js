@@ -8,7 +8,7 @@ describe('Branching Logic', () => {
         cy.visit_version({page: 'ProjectSetup/other_functionality.php', params: "pid=5"})
         cy.get('button').contains('development status').click()
 
-        cy.get('body').should(($body) => {
+        cy.get('body', { timeout: 10000 }).should(($body) => {
             expect($body).to.contain('The project is now back in development status.')
         }).then(() => {
             cy.visit_version({page: 'Design/online_designer.php', params: "pid=5"})
