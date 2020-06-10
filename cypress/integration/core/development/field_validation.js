@@ -7,10 +7,14 @@ describe('Field Validation', () => {
 				cy.mysql_db("projects/pristine")
 				cy.set_user_type('admin')
 				cy.visit_version({page: 'Design/online_designer.php', params: 'pid=1'})
-				cy.get('a').contains('Demographics').click({force:true})
-				cy.get('input.btn2').first().click({force:true})
-				cy.get('select').contains('Text Box (Short Text, Number, Date/Time, ...)').parent().select('Text Box (Short Text, Number, Date/Time, ...)')
-			})
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('Enter Draft Mode')
+				}).then(() => {
+					cy.get('input[value="Enter Draft Mode"]').click()
+					cy.get('a').contains('Demographics').click()
+					cy.get('input[value="Add Field"]').first().click({force: true})
+					cy.get('select').contains('Text Box (Short Text, Number, Date/Time, ...)').parent().select('Text Box (Short Text, Number, Date/Time, ...)')
+				})	})
 			
 			it('Should have the ability to validate Date (D-M-Y) field', () => {
                 cy.get('select#val_type').should(($val) => {
@@ -232,7 +236,7 @@ describe('Field Validation', () => {
 		it('Should display validation changes in project when Number (1 decimal place – comma as decimal) field validation is disabled', () => {
 			cy.visit_version({page: 'ControlCenter/validation_type_setup.php'})
 			cy.get('tr#number_1dp_comma_decimal').within(($tr) => {
-				cy.get('button').contains('Disable').click()
+				cy.get('button').contains('Enable').click()
 			})
 			cy.visit_version({page: 'Design/online_designer.php', params: 'pid=1'})
 			cy.get('a').contains('Demographics').click({force:true})
