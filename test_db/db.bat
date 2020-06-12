@@ -19,4 +19,9 @@ IF [%8]==[] (
 
 %db_cmd% < %tmp%
 
-del %tmp%
+IF %ERRORLEVEL% == 0 (
+	echo success
+	del %tmp%
+) ELSE (
+	echo failure
+)

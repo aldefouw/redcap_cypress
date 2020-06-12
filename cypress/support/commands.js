@@ -164,6 +164,9 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
 
    cy.exec(cmd, { timeout: 100000}).then((response) => {
         //cy.writeFile('log_of_mysql_command' + type + '.txt', response)
+        
+        expect(response['code']).to.eq(0)
+        expect(response['stdout']).to.eq('success')
         console.log(response)
     })
 
@@ -427,7 +430,7 @@ Cypress.Commands.add('num_projects_excluding_archived', () => {
             " " + mysql['db_name'] +
             " -u" + mysql['db_user'] +
             " -p" + mysql['db_pass'] +
-            " -e '" + query + "' -N -s"
+            ' -e "' + query + '" -N -s'
 
     } else {
 
@@ -443,6 +446,7 @@ Cypress.Commands.add('num_projects_excluding_archived', () => {
     }
 
     cy.exec(cmd, { timeout: 100000}).then((response) => {
+        expect(response['code']).to.eq(0)
         window.num_projects = response['stdout']
     })
 
