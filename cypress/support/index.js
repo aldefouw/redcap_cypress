@@ -76,7 +76,7 @@ function UserInfo() {
 }
 
 window.user_info = new UserInfo();
-window.base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
+window.base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace(/\//g, "\\\\/")
 
 //Set the Base URL in the REDCap Configuration Database
 // if(Cypress.config('baseUrl') !== null){
