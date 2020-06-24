@@ -120,7 +120,7 @@ function abstractProjectView(input, project_name, total_projects, dropdown_click
 
     let $t = dropdown_click ? cy.get('button#user_search_btn') : cy.get('ul#ui-id-1 li a')
 
-    $t.click().then(($a) => {
+    $t.first().click().then(($a) => {
       cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
         cy.get('table#table-proj_table tr:first div.projtitle').then(($a) => {
           expect($a).to.contain(project_name)
