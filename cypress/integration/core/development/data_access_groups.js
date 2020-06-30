@@ -42,10 +42,6 @@ describe('Data Access Groups (DAGs)', () => {
 				expect($form).to.contain('Export Data Access Group name for each record (if record is in a group)?')
 			})
 	    })
-
-	    it('Should have the ability to assign data instruments to a specific Data Access Group', () => {
-	    	
-		})
 	})
 
 	    describe('Data Restriction Abilities', () => {
