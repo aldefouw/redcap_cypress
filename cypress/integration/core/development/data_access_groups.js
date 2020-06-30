@@ -41,7 +41,7 @@ describe('Data Access Groups (DAGs)', () => {
 			cy.get('form#exportFormatForm').should(($form) => {
 				expect($form).to.contain('Export Data Access Group name for each record (if record is in a group)?')
 			})
-	    })
+		})
 	})
 
 	    describe('Data Restriction Abilities', () => {
