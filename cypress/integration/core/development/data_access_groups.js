@@ -13,6 +13,7 @@ describe('Data Access Groups (DAGs)', () => {
 		})
 
 		it('Should have the ability to create Data Access Groups', () => {
+<<<<<<< 1315a080f5e8d843c8aa4bb775c5dfa4cedbc614
 					cy.get('input#new_group').type('Test Group')
 					cy.get('button#new_group_button').click()
 					cy.get('div#dags_table').should(($div) => {
@@ -28,6 +29,23 @@ describe('Data Access Groups (DAGs)', () => {
 				cy.get('div#dags_table').should(($div) => {
 					expect($div).not.to.contain('Test Group')
 				})
+=======
+			cy.get('input#new_group').type('Test Group')
+			cy.get('button#new_group_button').click()
+			cy.get('div#dags_table').should(($div) => {
+				expect($div).to.contain('Test Group')
+			})
+	    })
+
+	    it('Should have the ability to delete Data Access Groups', () => {
+	        cy.get('tr').contains('Test Group').parent().parent().parent().within(($tr) => {
+				cy.get('img').click()
+			})
+			cy.get('button').contains('Delete').click()
+			cy.get('div#dags_table').should(($div) => {
+				expect($div).not.to.contain('Test Group')
+			})
+>>>>>>> Merge branch 'sm-updates' into v9.1.3
 	    })
 
 	    it('Should have the ability to provide a unique Data Access Group name in the data export CSV or label', () => {
@@ -46,6 +64,7 @@ describe('Data Access Groups (DAGs)', () => {
 
 	    describe('Data Restriction Abilities', () => {
 			before(() => {
+<<<<<<< 1315a080f5e8d843c8aa4bb775c5dfa4cedbc614
 				cy.visit_version({page: 'UserRights/index.php', params: 'pid=13'})
 				cy.get('input#new_username').type('test_admin')
 				cy.get('button#addUserBtn').click()
@@ -74,6 +93,10 @@ describe('Data Access Groups (DAGs)', () => {
 				cy.wait(1000)
 				cy.get('select#groups').select('Gr2')
 				cy.get('button#user_group_button').click()	
+=======
+				cy.add_users_to_project(['test_user', 'test_user2'], '13')
+				cy.add_users_to_data_access_groups(['Group 1', 'Group 2'], ['test_user', 'test_user2'], '13')
+>>>>>>> Merge branch 'sm-updates' into v9.1.3
 			})
 
 		    it('Should have the ability to restrict a user to the data they entered', () => {
