@@ -197,6 +197,63 @@ Cypress.Commands.add('add_field', (field_name, type) => {
   })
 })
 
+Cypress.Commands.add('add_users_to_project', (usernames = [], project_id) => {
+      cy.visit_version({page: 'UserRights/index.php', params: 'pid=' + project_id})
+
+      //Add each username specified
+      for(var username of usernames){
+        cy.get('input#new_username').type(username)
+        cy.get('button#addUserBtn').click()
+        cy.get('div#editUserPopup').should(($div) => {
+          expect($div).to.be.visible
+        })
+
+        let button_label = /(Save Changes|Add user)/
+
+        cy.get('button').contains(button_label).click()
+        cy.get('div#working').should(($div) => {
+          expect($div).to.not.be.visible
+        })
+      }
+})
+
+Cypress.Commands.add('add_users_to_data_access_groups', (groups = [], usernames = [], project_id) => {
+      cy.visit_version({page: 'DataAccessGroups/index.php', params: 'pid=' + project_id})
+      cy.server()
+
+      //Add each access for ecah user group specified      
+      for (var i = 0; i < groups.length; i++) {
+
+        let cur_group = groups[i]
+        let cur_user = usernames[i]
+
+        cy.get('input#new_group').type(cur_group)
+        cy.get('button#new_group_button').click()
+        cy.get('table#table-dags_table').should(($table) => {
+          expect($table).to.contain(cur_group)
+        })
+
+        cy.route({method: 'GET', 
+                  url: '**/DataAccessGroups/data_access_groups_ajax.php?pid=' + project_id + '&action=select_group&user=' + cur_user}).as('user_ajax')
+      
+        cy.get('select#group_users').select(cur_user)
+
+        //Wait for the query to finish first before we proceed
+        cy.wait('@user_ajax')
+
+        cy.route({method: 'GET', 
+          url: '**/DataAccessGroups/data_access_groups_ajax.php?pid=' + project_id + '&action=add_user&user=' + cur_user + '&group_id=*'}).as('group_ajax')
+
+
+        cy.get('select#groups').select(cur_group)
+        cy.get('button#user_group_button').click()
+
+        //Wait for the query to finish first before we proceed
+        cy.wait('@group_ajax')
+      }
+})
+
+
 Cypress.Commands.add('check_column_sort_values', (col_name, element, selector = null) => {
   sorterCompare(col_name, element, selector)
 })
