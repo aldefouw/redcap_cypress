@@ -31,7 +31,7 @@ describe('Add / Manage Users', () => {
 				cy.get('button#user_search_btn').click()
 				cy.get('input[value="Suspend user account"]').click()
 				//cy.get('button').contains('OK').click()
-				cy.wait(500)
+				cy.wait(1000)
 				cy.get('button').contains('Close').click()
 				cy.get('a').contains('View User List By Criteria').click()
 				cy.get('select#activity-level').select('Suspended users')
