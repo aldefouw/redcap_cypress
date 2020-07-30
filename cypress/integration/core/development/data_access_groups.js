@@ -61,7 +61,7 @@ describe('Data Access Groups (DAGs)', () => {
 				
 				cy.get('button').contains('Add new record').click().then(() => {
 
-					cy.get('button#submit-btn-saverecord').click()
+					cy.get('button#submit-btn-saverecord').first().click()
 
 					cy.set_user_type('standard2')
 					cy.visit_version({page: 'index.php', params: 'pid=13'})
