@@ -6,5 +6,5 @@
   "defaultCommandTimeout" : 10000,
   "responseTimeout": 10000,
   "requestTimeout": 10000,
-  "integrationFolder": "cypress/integration/core/development",
+  "integrationFolder": "cypress/integration/core/development"
 }
