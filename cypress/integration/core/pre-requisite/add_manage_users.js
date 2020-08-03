@@ -30,8 +30,12 @@ describe('Add / Manage Users', () => {
 				cy.get('input#user_search').type('testuser1')
 				cy.get('button#user_search_btn').click()
 				cy.get('input[value="Suspend user account"]').click()
-				//cy.get('button').contains('OK').click()
-				cy.wait(1000)
+
+				//Check for the telltale signs of the appropriate pop up window
+				cy.get('div.ui-dialog').should(($div) => {
+					expect($div).to.contain('Success! The user has now been suspended')					
+				})
+
 				cy.get('button').contains('Close').click()
 				cy.get('a').contains('View User List By Criteria').click()
 				cy.get('select#activity-level').select('Suspended users')
@@ -45,9 +49,19 @@ describe('Add / Manage Users', () => {
 				cy.visit_version({page: 'ControlCenter/view_users.php'})
 				cy.get('input#user_search').type('testuser1')
 				cy.get('button#user_search_btn').click()
-				cy.wait(500)
+
+				//Check to make sure the page has refreshed with user info
+				cy.get('table').should(($table) => {
+					expect($table).to.contain('User information for')
+				})
+
 				cy.get('a').contains('unsuspend user').click()
-				cy.wait(500)
+
+				//Check for the telltale signs of the appropriate pop up window
+				cy.get('div.ui-dialog').should(($div) => {
+					expect($div).to.contain('Success! The user has now been unsuspended')					
+				})
+
 				cy.get('button').contains('Close').click()
 				cy.get('a').contains('View User List By Criteria').click()
 				cy.get('select#activity-level').select('Non-suspended users')
@@ -81,9 +95,19 @@ describe('Add / Manage Users', () => {
 				cy.visit_version({page: 'ControlCenter/view_users.php'})
 				cy.get('input#user_search').type('testuser2')
 				cy.get('button#user_search_btn').click()
-				cy.wait(500)
+
+				//Check to make sure the page has refreshed with user info
+				cy.get('table').should(($table) => {
+					expect($table).to.contain('User information for')
+				})
+
 				cy.get('span').contains('Delete user from system').click()
-				cy.wait(500)
+
+				//Check for the telltale signs of the appropriate pop up window
+				cy.get('div.ui-dialog').should(($div) => {
+					expect($div).to.contain('has now been removed and deleted')					
+				})
+
 				cy.get('button').contains('Close').click()
 				cy.get('a').contains('View User List By Criteria').click()
 				cy.get('button').contains('Display User List').click()
