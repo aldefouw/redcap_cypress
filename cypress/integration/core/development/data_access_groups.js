@@ -58,31 +58,36 @@ describe('Data Access Groups (DAGs)', () => {
 				cy.set_user_type('standard')  
 				cy.visit_version({page: 'index.php', params: 'pid=13'})
 				cy.get('a').contains("Add / Edit Records").click()
-				cy.get('button').contains('Add new record').click()
-				cy.get('button#submit-btn-saverecord').click()
-				cy.set_user_type('standard2')
-				cy.visit_version({page: 'index.php', params: 'pid=13'})
-				cy.get('a').contains("Add / Edit Records").click()
-				cy.get('button').contains('Add new record').click()
-				cy.get('button#submit-btn-saverecord').click()
-				cy.get('a').contains('Record Status Dashboard').click()
-				cy.get('table#record_status_table').should(($table) => {
-					expect($table).not.to.contain('3-1')
-					expect($table).to.contain('4-1')
-				})
-				cy.set_user_type('standard') 
-				cy.visit_version({page: 'index.php', params: 'pid=13'})
-				cy.get('a').contains('Record Status Dashboard').click()
-				cy.get('table#record_status_table').should(($table) => {
-					expect($table).not.to.contain('4-1')
-					expect($table).to.contain('3-1')
-				})
-				cy.set_user_type('admin')
-				cy.visit_version({page: 'index.php', params: 'pid=13'})
-				cy.get('a').contains('Record Status Dashboard').click()
-				cy.get('table#record_status_table').should(($table) => {
-					expect($table).to.contain('4-1')
-					expect($table).to.contain('3-1')
+				
+				cy.get('button').contains('Add new record').click().then(() => {
+
+					cy.get('button#submit-btn-saverecord').first().click()
+
+					cy.set_user_type('standard2')
+					cy.visit_version({page: 'index.php', params: 'pid=13'})
+					cy.get('a').contains("Add / Edit Records").click()
+					cy.get('button').contains('Add new record').click()
+					cy.get('button#submit-btn-saverecord').click()
+					cy.get('a').contains('Record Status Dashboard').click()
+					cy.get('table#record_status_table').should(($table) => {
+						expect($table).not.to.contain('3-1')
+						expect($table).to.contain('4-1')
+					})
+					cy.set_user_type('standard') 
+					cy.visit_version({page: 'index.php', params: 'pid=13'})
+					cy.get('a').contains('Record Status Dashboard').click()
+					cy.get('table#record_status_table').should(($table) => {
+						expect($table).not.to.contain('4-1')
+						expect($table).to.contain('3-1')
+					})
+					cy.set_user_type('admin')
+					cy.visit_version({page: 'index.php', params: 'pid=13'})
+					cy.get('a').contains('Record Status Dashboard').click()
+					cy.get('table#record_status_table').should(($table) => {
+						expect($table).to.contain('4-1')
+						expect($table).to.contain('3-1')
+					})
+
 				})
 		    })
 
