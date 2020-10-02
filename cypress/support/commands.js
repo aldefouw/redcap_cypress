@@ -47,22 +47,28 @@ Cypress.Commands.add('visit_base', (options) => {
 })
 
 Cypress.Commands.add('base_db_seed', () => {
-    cy.mysql_db('structure').then(() => {
+    
+    cy.install_from_source().then(() => {
 
-        console.log(window.base_url)
+        cy.mysql_db('structure').then(() => {
 
-        //Seeds the database
-        cy.mysql_db('/versions/' + Cypress.env('redcap_version'), window.base_url).then(() => {
+            console.log(window.base_url)
 
-            if(Cypress.env('redcap_hooks_path') !== undefined){
-                const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\\\/");
-                cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
-            }
+            //Seeds the database
+            cy.mysql_db('/versions/' + Cypress.env('redcap_version'), window.base_url).then(() => {
 
-            //Clear out all cookies
-            cy.clearCookies()
+                if(Cypress.env('redcap_hooks_path') !== undefined){
+                    const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\\\/");
+                    cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
+                }
+
+                //Clear out all cookies
+                cy.clearCookies()
+            })
         })
+
     })
+    
 })
 
 Cypress.Commands.add('maintain_login', () => {
@@ -115,6 +121,12 @@ Cypress.Commands.add('set_user_info', (users) => {
     } else {
         alert('users, which defines what users are in your seed database, is missing from cypress.env.json.  Please configure it before proceeding.')
     }
+})
+
+Cypress.Commands.add('install_from_source', () => {
+    cy.exec('sh test_db/copy_scripts.sh ' + Cypress.env('redcap_version'), { timeout: 100000}).then((response) => {
+        expect(response['code']).to.eq(0)
+    })
 })
 
 Cypress.Commands.add('mysql_db', (type, replace = '') => {

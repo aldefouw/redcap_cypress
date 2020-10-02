@@ -21,3 +21,6 @@ cypress.env.json
 /mysql
 
 mysql-cli.zip
+
+/test_db/data.sql
+/test_db/structure.sql
