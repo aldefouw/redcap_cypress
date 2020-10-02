@@ -50,21 +50,16 @@ Cypress.Commands.add('base_db_seed', () => {
     
     cy.install_from_source().then(() => {
 
-        cy.mysql_db('structure').then(() => {
+        cy.mysql_db('structure_and_data', window.base_url).then(() => {
 
-            console.log(window.base_url)
+            if(Cypress.env('redcap_hooks_path') !== undefined){
+                const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\\\/");
+                cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
+            }
 
-            //Seeds the database
-            cy.mysql_db('/versions/' + Cypress.env('redcap_version'), window.base_url).then(() => {
+            //Clear out all cookies
+            cy.clearCookies()
 
-                if(Cypress.env('redcap_hooks_path') !== undefined){
-                    const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\\\/");
-                    cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
-                }
-
-                //Clear out all cookies
-                cy.clearCookies()
-            })
         })
 
     })
