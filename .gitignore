@@ -2,6 +2,8 @@
 
 /node_modules
 
+/test_db/structure_and_data.sql
+
 /www
 /redcap_docker
 
@@ -21,5 +23,3 @@ cypress.env.json
 /mysql
 
 mysql-cli.zip
-
-test_db/structure_and_data.sql
