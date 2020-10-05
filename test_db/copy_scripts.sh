@@ -11,12 +11,12 @@ data_sql="${sql_path}/install_data.sql"
 
 #CREATE STRUCTURE FILE
 structure_and_data_file="${cypress_location}/structure_and_data.sql"
-version_substitution="s/'4.0.0'),/'${redcap_version}'),/g"
+version_substitution="s/REDCAP_VERSION_MAGIC_STRING/${redcap_version}/g"
 
 rm $structure_and_data_file
-rm "${$structure_and_data_file}.tmp"
+rm "${structure_and_data_file}.tmp"
 
 cat $db_prefix_sql > $structure_and_data_file
 cat $install_sql >> $structure_and_data_file
-cat $data_sql | sed $version_substitution >> $structure_and_data_file
-cat $seed_sql >> $structure_and_data_file
+cat $data_sql >> $structure_and_data_file
+cat $seed_sql | sed $version_substitution >> $structure_and_data_file
