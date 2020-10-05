@@ -18,7 +18,6 @@ version_substitution="s/REDCAP_VERSION_MAGIC_STRING/${redcap_version}/g"
 
 #REMOVE EXISTING STRUCTURE AND DATA FILE
 rm $structure_and_data_file
-rm "${structure_and_data_file}.tmp"
 
 #CREATE NEW STRUCTURE AND DATA FILE
 cat $db_prefix_sql > $structure_and_data_file
