@@ -27,6 +27,7 @@ fi
 auth_sql="${seeds_location}/auth.sql"
 rights_sql="${seeds_location}/rights.sql"
 config_sql="${seeds_location}/config.sql"
+projects_sql="${seeds_location}/projects.sql"
 
 #CREATE STRUCTURE FILE
 structure_and_data_file="${test_seeds_location}/structure_and_data.sql"
@@ -43,5 +44,6 @@ cat $data_sql >> $structure_and_data_file
 cat $user_sql >> $structure_and_data_file
 cat $auth_sql >> $structure_and_data_file
 cat $rights_sql >> $structure_and_data_file
+cat $projects_sql >> $structure_and_data_file
 cat $config_sql | sed $version_substitution >> $structure_and_data_file
 echo "\nCOMMIT;" >> $structure_and_data_file
