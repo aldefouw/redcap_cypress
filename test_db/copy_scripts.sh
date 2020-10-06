@@ -42,3 +42,4 @@ cat $user_sql >> $structure_and_data_file
 cat $auth_sql >> $structure_and_data_file
 cat $rights_sql >> $structure_and_data_file
 cat $config_sql | sed $version_substitution >> $structure_and_data_file
+echo "\nCOMMIT;" >> $structure_and_data_file
