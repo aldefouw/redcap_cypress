@@ -50,7 +50,7 @@ Cypress.Commands.add('visit_base', (options) => {
 
 Cypress.Commands.add('base_db_seed', () => {    
 
-    const cmd = 'sh test_db/copy_scripts.sh ' + Cypress.env('redcap_version') + ' ' + compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>=')
+    const cmd = 'sh test_db/copy_scripts.sh ' + Cypress.env('redcap_version') + ' ' + compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>=') + ' ' + Cypress.env('redcap_source_path')
 
     console.log(cmd)
 
