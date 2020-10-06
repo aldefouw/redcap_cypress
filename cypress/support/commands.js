@@ -50,7 +50,13 @@ Cypress.Commands.add('visit_base', (options) => {
 
 Cypress.Commands.add('base_db_seed', () => {    
 
-    const cmd = 'sh test_db/copy_scripts.sh ' + Cypress.env('redcap_version') + ' ' + compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>=') + ' ' + Cypress.env('redcap_source_path')
+    let redcap_source_path = Cypress.env('redcap_source_path')
+
+    if(redcap_source_path === undefined){
+        alert('redcap_source_path, which defines where your REDCap source code exists, is missing in cypress.env.json.  Please configure it before proceeding.')
+    }
+
+    const cmd = 'sh test_db/create_db_scripts.sh ' + Cypress.env('redcap_version') + ' ' + compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>=') + ' ' + redcap_source_path
 
     console.log(cmd)
 
