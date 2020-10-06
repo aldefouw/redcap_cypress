@@ -9,7 +9,8 @@ source_location="/Users/aldefouw/Dev/redcap/redcap-source"
 cypress_location="$PWD/test_db"
 seeds_location="${cypress_location}/seeds"
 
-if [ $advanced_user_info = 1 ]
+# CHOOSE THE PROPER USER INFO SEED
+if [ $advanced_user_info = "true" ]
 then
       user_sql="${seeds_location}/user_info/advanced.sql"
 else

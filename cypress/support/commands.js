@@ -50,7 +50,11 @@ Cypress.Commands.add('visit_base', (options) => {
 
 Cypress.Commands.add('base_db_seed', () => {    
 
-    cy.exec('sh test_db/copy_scripts.sh ' + Cypress.env('redcap_version') + ' ' + compareVersions.compare('10.1.0', Cypress.env('redcap_version'), '>='), { timeout: 100000}).then((response) => {
+    const cmd = 'sh test_db/copy_scripts.sh ' + Cypress.env('redcap_version') + ' ' + compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>=')
+
+    console.log(cmd)
+
+    cy.exec(cmd, { timeout: 100000}).then((response) => {
 
         expect(response['code']).to.eq(0)
 
