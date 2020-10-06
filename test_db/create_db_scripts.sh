@@ -29,6 +29,8 @@ rights_sql="${seeds_location}/rights.sql"
 config_sql="${seeds_location}/config.sql"
 projects_sql="${seeds_location}/projects.sql"
 
+
+
 #CREATE STRUCTURE FILE
 structure_and_data_file="${test_seeds_location}/structure_and_data.sql"
 version_substitution="s/REDCAP_VERSION_MAGIC_STRING/${redcap_version}/g"
@@ -44,6 +46,15 @@ cat $data_sql >> $structure_and_data_file
 cat $user_sql >> $structure_and_data_file
 cat $auth_sql >> $structure_and_data_file
 cat $rights_sql >> $structure_and_data_file
+
+#DEMO PROJECT SEEDS
+# for i in 1 2 3 4 5 6 7 8 9 10 11 12
+# do
+#   demo_sql="${sql_path}/create_demo_db$i.sql"
+#   cat $demo_sql >> $structure_and_data_file
+# done
+
 cat $projects_sql >> $structure_and_data_file
+
 cat $config_sql | sed $version_substitution >> $structure_and_data_file
 echo "\nCOMMIT;" >> $structure_and_data_file
