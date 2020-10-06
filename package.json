@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "cypress": "^4.12.0"
+    "cypress": "^4.12.0",
+    "compare-versions": "3.6.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

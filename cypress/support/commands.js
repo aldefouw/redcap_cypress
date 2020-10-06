@@ -5,6 +5,8 @@ import './modules/commands'
 import './plugins/commands'
 import './projects/commands'
 
+import compareVersions from 'compare-versions';
+
 // Commands in this file are CRUCIAL and are an embedded part of the REDCap Cypress Framework.
 // They are very stable and do not change often, if ever
 
@@ -46,9 +48,11 @@ Cypress.Commands.add('visit_base', (options) => {
     })
 })
 
-Cypress.Commands.add('base_db_seed', () => {
-    
-    cy.install_from_source().then(() => {
+Cypress.Commands.add('base_db_seed', () => {    
+
+    cy.exec('sh test_db/copy_scripts.sh ' + Cypress.env('redcap_version') + ' ' + compareVersions.compare('10.1.0', Cypress.env('redcap_version'), '>='), { timeout: 100000}).then((response) => {
+
+        expect(response['code']).to.eq(0)
 
         cy.mysql_db('structure_and_data', window.base_url).then(() => {
 
@@ -62,8 +66,8 @@ Cypress.Commands.add('base_db_seed', () => {
 
         })
 
-    })
-    
+    })        
+
 })
 
 Cypress.Commands.add('maintain_login', () => {
@@ -118,11 +122,6 @@ Cypress.Commands.add('set_user_info', (users) => {
     }
 })
 
-Cypress.Commands.add('install_from_source', () => {
-    cy.exec('sh test_db/copy_scripts.sh ' + Cypress.env('redcap_version'), { timeout: 100000}).then((response) => {
-        expect(response['code']).to.eq(0)
-    })
-})
 
 Cypress.Commands.add('mysql_db', (type, replace = '') => {
     
