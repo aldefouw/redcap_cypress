@@ -28,7 +28,6 @@ auth_sql="${seeds_location}/auth.sql"
 rights_sql="${seeds_location}/rights.sql"
 config_sql="${seeds_location}/config.sql"
 
-
 #CREATE STRUCTURE FILE
 structure_and_data_file="${test_seeds_location}/structure_and_data.sql"
 version_substitution="s/REDCAP_VERSION_MAGIC_STRING/${redcap_version}/g"
