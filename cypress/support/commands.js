@@ -114,6 +114,8 @@ Cypress.Commands.add('maintain_login', () => {
 
     //If user type has changed, let's clear cookies and login again
     } else {
+        //Ensure we logout when a user changes
+        cy.visit('/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
         cy.login({ username: user, password:  pass })
     }
 
