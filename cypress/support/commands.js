@@ -6,6 +6,7 @@ import './plugins/commands'
 import './projects/commands'
 
 import compareVersions from 'compare-versions';
+import 'cypress-iframe';
 
 // Commands in this file are CRUCIAL and are an embedded part of the REDCap Cypress Framework.
 // They are very stable and do not change often, if ever
@@ -326,17 +327,20 @@ Cypress.Commands.add('get_project_table_row_col', (row = '1', col = '0') => {
     cy.get('table#table-proj_table tr:nth-child(' + row + ') td:nth-child(' + col + ')')
 })
 
-Cypress.Commands.add('upload_file', { prevSubject: true }, (subject, fileName) => {
-      cy.fixture(fileName).then((content) => {
+Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector) => {
+    cy.get(selector).then(subject => {
+      cy.fixture(fileName, 'base64')
+        .then(Cypress.Blob.base64StringToBlob)
+        .then(blob => {
           const el = subject[0]
-          const testFile = new File([content], fileName)
+          const testFile = new File([blob], fileName, { type: fileType })
           const dataTransfer = new DataTransfer()
-
           dataTransfer.items.add(testFile)
           el.files = dataTransfer.files
-          cy.wrap(subject).trigger('change', { force: true })
-      })
+        })
+    })
 })
+
 
 Cypress.Commands.add('upload_data_dictionary', (fixture_path, fixture_file, pid, date_format = "DMY") => {
 
@@ -349,7 +353,7 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_path, fixture_file, pid,
 
     } else {
 
-        let cmd = "sh dictionaries/read_file.sh " + '"' + "/dictionaries/" + fixture_path + "/" + fixture_file + '" '
+        let cmd = "sh file_helpers/read_file.sh " + '"' + "/dictionaries/" + fixture_path + "/" + fixture_file + '" '
 
         console.log(cmd)
 
@@ -357,6 +361,7 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_path, fixture_file, pid,
 
         cy.exec(cmd, { timeout: 100000}).then((response) => {
             file_contents = response
+             expect(response['code']).to.eq(0)
         })
 
         cy.maintain_login().then(($r) => {
@@ -403,7 +408,6 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_path, fixture_file, pid,
                             cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
                                 expect($e.body).to.contain('List of Data Changes')
                                 expect($e.body).to.contain('Manage/Design')
-                                expect($e.body).to.contain('Upload data dictionary')
                             })
                         })
                     })
@@ -413,13 +417,32 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_path, fixture_file, pid,
     }
 })
 
+Cypress.Commands.add('create_cdisc_project', (project_name, project_type, cdisc_file, project_id) => {
+    //Set the Desired Project ID
+    const desired_pid = 'MAGIC_AUTO_NUMBER/' + project_id;
+    cy.mysql_db('set_auto_increment_value', desired_pid)
+
+    //Run through the steps to import the project via CDISC ODM
+    cy.visit_base({url: 'index.php?action=create'})
+    cy.get('input#app_title').type(project_name)
+    cy.get('select#purpose').select(project_type)
+    cy.get('input#project_template_radio2').click()
+    cy.upload_file(cdisc_file, 'xml', 'input[name="odm"]')
+    cy.get('button').contains('Create Project').click().then(() => {
+        let pid = null;
+        cy.url().should((url) => { 
+            return url
+        })
+    })
+})
+
 Cypress.Commands.add('add_api_user_to_project', (username, pid) => {
     cy.visit_version({ page: 'UserRights/index.php', params: 'pid=' + pid}).then(() => {
-        cy.get('input#new_username').type(username).then(() => {
-            cy.get('button').contains('Add with custom rights').click().then(() => {
-                cy.get('input[name=api_export]').click()
-                cy.get('input[name=api_import]').click()
-                cy.get('span.ui-button-text').contains('Add user').click().then(() => {
+        cy.get('input#new_username', {force: true}).clear({force: true}).type(username, {force: true}).then((element) => {
+            cy.get('button', {force: true}).contains('Add with custom rights').click({force: true}).then(() => {
+                cy.get('input[name=api_export]', {force: true}).click()
+                cy.get('input[name=api_import]', {force: true}).click()
+                cy.get('.ui-button', {force: true}).contains(/add user|save changes/i).click().then(() => {
                     cy.get('table#table-user_rights_roles_table').should(($e) => {
                         expect($e[0].innerText).to.contain(username)
                     })
@@ -471,7 +494,6 @@ Cypress.Commands.add('num_projects_excluding_archived', () => {
 
 })
 
-//
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
