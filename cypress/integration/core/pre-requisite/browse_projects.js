@@ -2,6 +2,7 @@ describe('Browse Projects', () => {
 
     before(() => {
         cy.set_user_type('admin')
+        cy.visit_version({page: '/DataEntry/record_home.php', params: 'pid=17&id=1&auto=1&arm=1'})
     })
 
     it('Should display the "Browse Projects" page when you click on "Control Center"', () => {
