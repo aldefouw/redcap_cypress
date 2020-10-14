@@ -4,29 +4,31 @@ describe('Branching Logic', () => {
         cy.set_user_type('admin')
 
         cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=5'})
-        cy.get('button#setupEnableSurveysBtn').click()
-        cy.visit_version({page: 'ProjectSetup/other_functionality.php', params: "pid=5"})
-        cy.get('button').contains('development status').click()
+        
+        cy.get('button#setupEnableSurveysBtn').click().then(() => {
+        
+            cy.visit_version({page: 'ProjectSetup/other_functionality.php', params: "pid=5"})
+            cy.get('button').contains('development status').click()
 
-        cy.get('body', { timeout: 10000 }).should(($body) => {
-            expect($body).to.contain('The project is now back in development status.')
-        }).then(() => {
-            cy.visit_version({page: 'Design/online_designer.php', params: "pid=5"})
-            cy.get('button').contains('Enable').click()
-            cy.get('button').contains('Save Changes').click()
-
-            cy.get('div#saveSurveyMsg').should(($div) => {
-
-                expect($div).not.to.be.visible
-
+            cy.get('body', { timeout: 10000 }).should(($body) => {
+                expect($body).to.contain('The project is now back in development status.')
             }).then(() => {
-                cy.visit_version({page: 'Design/online_designer.php', params: 'pid=5&page=demographics'})
-                cy.find_online_designer_field("Last Name").parent().parentsUntil('tr').find('img[title="Branching Logic"]').click()
-                cy.get('textarea#advBranchingBox').type('[first_name]!=""')
-                cy.get('button').contains('Save').click()
-            })
+                cy.visit_version({page: 'Design/online_designer.php', params: "pid=5"})
+                cy.get('button').contains('Enable').click()
+                cy.get('button').contains('Save Changes').click()
 
-        })
+                cy.get('div#saveSurveyMsg').should(($div) => {
+
+                    expect($div).not.to.be.visible
+
+                }).then(() => {
+                    cy.visit_version({page: 'Design/online_designer.php', params: 'pid=5&page=demographics'})
+                    cy.find_online_designer_field("Last Name").parent().parentsUntil('tr').find('img[title="Branching Logic"]').click()
+                    cy.get('textarea#advBranchingBox').type('[first_name]!=""')
+                    cy.get('button').contains('Save').click()
+                })
+            })
+        })        
 
     })
 
