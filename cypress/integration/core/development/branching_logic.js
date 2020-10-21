@@ -6,6 +6,11 @@ describe('Branching Logic', () => {
             cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=5'})
             
             cy.get('button#setupEnableSurveysBtn').click().then(() => {
+
+                //Make sure the button says Disable first (which indicates survey is enabled)
+                cy.get('button#setupEnableSurveysBtn').should(($updated) => {
+                    expect($updated[0]).to.contain('Disable')
+                })
             
                 cy.visit_version({page: 'ProjectSetup/other_functionality.php', params: "pid=5"})
                 cy.get('button').contains('development status').click()
