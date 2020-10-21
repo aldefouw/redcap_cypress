@@ -1,33 +1,40 @@
 describe('Branching Logic', () => {
     before(() => {
-        cy.mysql_db('projects/pristine')
-        cy.set_user_type('admin')
+        cy.mysql_db('projects/pristine').then(() => {
+            cy.set_user_type('admin')
 
-        cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=5'})
-        cy.get('button#setupEnableSurveysBtn').click()
-        cy.visit_version({page: 'ProjectSetup/other_functionality.php', params: "pid=5"})
-        cy.get('button').contains('development status').click()
+            cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=5'})
+            
+            cy.get('button#setupEnableSurveysBtn').click().then(() => {
 
-        cy.get('body', { timeout: 10000 }).should(($body) => {
-            expect($body).to.contain('The project is now back in development status.')
-        }).then(() => {
-            cy.visit_version({page: 'Design/online_designer.php', params: "pid=5"})
-            cy.get('button').contains('Enable').click()
-            cy.get('button').contains('Save Changes').click()
+                //Make sure the button says Disable first (which indicates survey is enabled)
+                cy.get('button#setupEnableSurveysBtn').should(($updated) => {
+                    expect($updated[0]).to.contain('Disable')
+                })
+            
+                cy.visit_version({page: 'ProjectSetup/other_functionality.php', params: "pid=5"})
+                cy.get('button').contains('development status').click()
 
-            cy.get('div#saveSurveyMsg').should(($div) => {
+                cy.get('body', { timeout: 10000 }).should(($body) => {
+                    expect($body).to.contain('The project is now back in development status.')
+                }).then(() => {
+                    cy.visit_version({page: 'Design/online_designer.php', params: "pid=5"})
+                    cy.get('button').contains('Enable').click()
+                    cy.get('button').contains('Save Changes').click()
 
-                expect($div).not.to.be.visible
+                    cy.get('div#saveSurveyMsg').should(($div) => {
 
-            }).then(() => {
-                cy.visit_version({page: 'Design/online_designer.php', params: 'pid=5&page=demographics'})
-                cy.find_online_designer_field("Last Name").parent().parentsUntil('tr').find('img[title="Branching Logic"]').click()
-                cy.get('textarea#advBranchingBox').type('[first_name]!=""')
-                cy.get('button').contains('Save').click()
-            })
+                        expect($div).not.to.be.visible
 
+                    }).then(() => {
+                        cy.visit_version({page: 'Design/online_designer.php', params: 'pid=5&page=demographics'})
+                        cy.find_online_designer_field("Last Name").parent().parentsUntil('tr').find('img[title="Branching Logic"]').click()
+                        cy.get('textarea#advBranchingBox').type('[first_name]!=""')
+                        cy.get('button').contains('Save').click()
+                    })
+                })
+            })    
         })
-
     })
 
     describe('User Interface', () => {
