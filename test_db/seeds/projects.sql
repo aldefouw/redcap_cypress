@@ -1,0 +1,7 @@
+INSERT INTO redcap_projects (project_id, project_name, app_title, status, creation_time, production_time, inactive_time, created_by, draft_mode, surveys_enabled, repeatforms, scheduling, purpose, purpose_other, show_which_records, __SALT__, count_project, investigators, project_note, online_offline, auth_meth, double_data_entry, project_language, project_encoding, is_child_of, date_shift_max, institution, site_org_type, grant_cite, project_contact_name, project_contact_email, headerlogo, auto_inc_set, custom_data_entry_note, custom_index_page_note, order_id_by, custom_reports, report_builder, disable_data_entry, google_translate_default, require_change_reason, dts_enabled, project_pi_firstname, project_pi_mi, project_pi_lastname, project_pi_email, project_pi_alias)
+VALUES 
+('13','test_project','Test Project','0','2018-06-18 16:57:12',NULL,NULL,'2','0','1','1','0','2','0','0','74ac17fa39','1',NULL,NULL,'1','table','0','English',NULL,NULL,'364',NULL,NULL,NULL,NULL,NULL,NULL,'1',NULL,NULL,NULL,NULL,NULL,'0',NULL,'0','0','Thomas','L','Jones','aldefouw@medicine.wisc.edu','Jones J');
+
+INSERT INTO redcap_events_arms (arm_id,project_id,arm_num,arm_name) VALUES (14,13,1,'Arm 1');
+
+INSERT INTO redcap_events_metadata (event_id,arm_id,day_offset,offset_min,offset_max,descrip) VALUES ('40', '14', '0', '0', '0', 'Event 1');
