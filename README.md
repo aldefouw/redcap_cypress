@@ -284,18 +284,15 @@ Database configuration happens in two phases:
 1. Configuration of REDCap Structure
 2. Population of REDCap Seed Data
 
-### Configuration of REDCap Structure
-Before the entire test suite runs (at the `before()` block), `/test_db/structure.sql` is run via the `db.sh` (Unix) or `db.bat` (Windows) script to establish the initial database structure behind REDCap.
-
-### Population of REDCap Seed Data
+### Configuration of REDCap Structure & Population of REDCap Seed Data
 To create non-deterministic tests, we want to reset the database state to a known state before the test suite is run.
 
-Before the test suite is run, the appropriate REDCap version is installed.  To achieve this, the framework needs to know about where your REDCap source code is located.
+Before the test suite is run, the appropriate tables for your specified REDCap version are installed into your MySQL database.  To achieve this, the framework needs to know about where your REDCap source code is located.
 
 You will need the following environment variables configured in your cypress.env.json file:
 
 - `"redcap_source_path": "../path/to/redcap/source/here"`: 
-Contains the relative or absolute path to your REDCap source folder root (files from Vanderbilt).  Must contain the version specific files for the version you wish to tests against.
+Contains the relative or absolute path to your REDCap source folder root (files from Vanderbilt).  Must contain the version-specific files for the version you wish to tests against.
 
 - `"redcap_version": "9.1.3"`: Contains the string version of REDCap you want to test against.  
 
