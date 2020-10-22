@@ -200,7 +200,8 @@ Here is an example environment variable setup:
           "pass": "Testing123"
         }
       },
-      "redcap_version": "8.1.1",
+      "redcap_version": "9.1.3",
+      "redcap_source_path": "../redcap-source",
       "mysql": {
         "host": "127.0.0.1",
         "path": "mysql",
@@ -289,11 +290,18 @@ Before the entire test suite runs (at the `before()` block), `/test_db/structure
 ### Population of REDCap Seed Data
 To create non-deterministic tests, we want to reset the database state to a known state before the test suite is run.
 
-Before the test suite is run, a file located at `/test_db/structure.sql` is run via the `db.sh` shell script.  The file creates the REDCap structure.  
+Before the test suite is run, the appropriate REDCap version is installed.  To achieve this, the framework needs to know about where your REDCap source code is located.
 
-Based upon the version specified in the cypress.env.json file, a version-specific REDCap seed (e.g. `/test_db/versions/7.4.4.sql` is used to establish the initial configuration run.  
+You will need the following environment variables configured in your cypress.env.json file:
 
-*The seeds file in this template repository includes a both an **admin user** and a **standard user.***  Which user you use to login to REDCap is dependent upon what kind of feature you are intending to test.
+- `"redcap_source_path": "../path/to/redcap/source/here"`: 
+Contains the relative or absolute path to your REDCap source folder root (files from Vanderbilt).  Must contain the version specific files for the version you wish to tests against.
+
+- `"redcap_version": "9.1.3"`: Contains the string version of REDCap you want to test against.  
+
+*The seeds file in this template repository also include a both an **admin user** and a **standard user.***  
+
+Which user you use to login to REDCap is dependent upon what kind of feature you are intending to test.
 
 ### Adding A Custom Seed
 
