@@ -57,27 +57,21 @@ Cypress.Commands.add('base_db_seed', () => {
         alert('redcap_source_path, which defines where your REDCap source code exists, is missing in cypress.env.json.  Please configure it before proceeding.')
     }
 
-    const cmd = 'sh test_db/create_db_scripts.sh ' + Cypress.env('redcap_version') + ' ' + compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>=') + ' ' + redcap_source_path
+    cy.task('populateStructureAndData', {   redcap_version: Cypress.env('redcap_version'), 
+                                            advanced_user_info: compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>='), 
+                                            source_location: redcap_source_path})
 
-    console.log(cmd)
+    cy.mysql_db('structure_and_data', window.base_url).then(() => {
 
-    cy.exec(cmd, { timeout: 100000}).then((response) => {
+        if(Cypress.env('redcap_hooks_path') !== undefined){
+            const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\\\/");
+            cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
+        }
 
-        expect(response['code']).to.eq(0)
+        //Clear out all cookies
+        cy.clearCookies()
 
-        cy.mysql_db('structure_and_data', window.base_url).then(() => {
-
-            if(Cypress.env('redcap_hooks_path') !== undefined){
-                const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\\\/");
-                cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
-            }
-
-            //Clear out all cookies
-            cy.clearCookies()
-
-        })
-
-    })        
+    })
 
 })
 
