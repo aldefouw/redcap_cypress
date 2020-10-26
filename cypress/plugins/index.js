@@ -10,6 +10,7 @@
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
+var shell = require('shelljs');
 
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
@@ -19,9 +20,7 @@ module.exports = (on, config) => {
 
   	populateStructureAndData({redcap_version, advanced_user_info, source_location}) {
 
-  		var shell = require('shelljs');
-
-		// DEFINE OTHER LOCATIONS
+ 		// DEFINE OTHER LOCATIONS
 		var test_seeds_location = shell.pwd() + '/test_db';
 		var seeds_location = test_seeds_location + '/seeds';
 
@@ -67,6 +66,18 @@ module.exports = (on, config) => {
 		shell.cat(config_sql).sed('REDCAP_VERSION_MAGIC_STRING', redcap_version).toEnd(structure_and_data_file);
 
 		shell.echo('\nCOMMIT;').toEnd(structure_and_data_file);
+
+		return 0;
+  	},
+
+  	executeMySQL({mysql_name, host, port, db_name, db_user, db_pass, type, search, find, replace}) {
+  		var db_cmd=`${mysql_name} -h${host} --port=${port} ${db_name} -u${db_user} -p${db_pass}`
+		var sql=`${shell.pwd()}/test_db/${type}.sql`
+		var tmp=`${sql}.tmp`
+
+		shell.cat(sql).sed('REDCAP_DB_NAME', db_name).sed(find, replace).to(tmp)
+		shell.exec(`${db_cmd} < ${tmp}`)
+		shell.rm(tmp)
 
 		return 0;
   	}  	

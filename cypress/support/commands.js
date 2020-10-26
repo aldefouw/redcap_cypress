@@ -59,13 +59,13 @@ Cypress.Commands.add('base_db_seed', () => {
 
     cy.task('populateStructureAndData', {   redcap_version: Cypress.env('redcap_version'), 
                                             advanced_user_info: compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>='), 
-                                            source_location: redcap_source_path})
+                                            source_location: redcap_source_path
+                                        })
 
     cy.mysql_db('structure_and_data', window.base_url).then(() => {
 
         if(Cypress.env('redcap_hooks_path') !== undefined){
-            const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\\\/");
-            cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
+            cy.mysql_db('hooks_config', "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path')) //Fetch the hooks SQL seed data
         }
 
         //Clear out all cookies
@@ -130,7 +130,7 @@ Cypress.Commands.add('set_user_info', (users) => {
 })
 
 
-Cypress.Commands.add('mysql_db', (type, replace = '') => {
+Cypress.Commands.add('mysql_db', (type, replaced = '') => {
     
     const mysql = Cypress.env("mysql")
 
@@ -140,50 +140,22 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
         alert('redcap_version, which defines what version of REDCap you use in the seed database, is missing from cypress.env.json.  Please configure it before proceeding.')
     }
 
-    let cmd = ''
+  let replacements = replaced.split(/\/(.+)/);
 
-    //If we are on Windows, we have to run a bash script instead
-    if( window.navigator['platform'].match(/Win/g) ) {
+  const find = replacements[0]
+  const replace = replacements[1]
 
-        console.log('Windows platform detected')
-
-        cmd = ".\\test_db\\db.bat" +
-        ' ' + mysql['path'] +
-        ' ' + mysql['host'] +
-        ' ' + mysql['port'] +
-        ' ' + mysql['db_name'] +
-        ' ' + mysql['db_user'] +
-        ' ' + mysql['db_pass'] +
-        ' ' + type +
-        ' ' + replace.replace(/\\\\/g, "\\")
-
-    //Anything else should run a Unix-style shell script    
-    } else { 
-
-        console.log('Unix-style platform enabled')
-
-        cmd = 'sh test_db/db.sh' +
-        ' ' + mysql['path'] +
-        ' ' + mysql['host'] +
-        ' ' + mysql['port'] +
-        ' ' + mysql['db_name'] +
-        ' ' + mysql['db_user'] +
-        ' ' + mysql['db_pass'] +
-        ' ' + type +
-        ' ' + replace
-    }
-
-   console.log(cmd)
-
-   cy.exec(cmd, { timeout: 100000}).then((response) => {
-        //cy.writeFile('log_of_mysql_command' + type + '.txt', response)
-
-        
-        expect(response['code']).to.eq(0)
-        expect(response['stdout']).to.eq('success')
-        console.log(response)
-    })
-
+  cy.task('executeMySQL', {   
+                            mysql_name: mysql['path'],
+                            host: mysql['host'],
+                            port: mysql['port'],
+                            db_name: mysql['db_name'],
+                            db_user: mysql['db_user'],
+                            db_pass: mysql['db_pass'],
+                            type: type, 
+                            find: find,
+                            replace: replace
+                          })
 })
 
 function test_link (link, title, try_again = true) {
