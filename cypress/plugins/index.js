@@ -22,7 +22,7 @@ module.exports = (on, config) => {
   		var shell = require('shelljs');
 
 		// DEFINE OTHER LOCATIONS
-		var test_seeds_location = process.env.PWD + '/test_db';
+		var test_seeds_location = shell.pwd() + '/test_db';
 		var seeds_location = test_seeds_location + '/seeds';
 
 		var db_prefix_sql = test_seeds_location + '/structure_prefix.sql';
