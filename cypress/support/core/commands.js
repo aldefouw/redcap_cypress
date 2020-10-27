@@ -202,8 +202,8 @@ Cypress.Commands.add('add_users_to_project', (usernames = [], project_id) => {
 
       //Add each username specified
       for(var username of usernames){
-        cy.get('input#new_username').type(username)
-        cy.get('button#addUserBtn').click()
+        cy.get('input#new_username',).type(username, {force: true})
+        cy.get('button#addUserBtn').click({force: true})
         cy.get('div#editUserPopup').should(($div) => {
           expect($div).to.be.visible
         })
