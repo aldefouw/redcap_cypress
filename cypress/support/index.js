@@ -22,6 +22,8 @@ import { modules } from './modules/index'
 import { plugins } from './plugins/index'
 import { projects } from './projects/index'
 
+const sed_lite = require('sed-lite').sed;
+
 function UserInfo() {
 
     let u = ''
@@ -76,7 +78,24 @@ function UserInfo() {
 }
 
 window.user_info = new UserInfo();
-window.base_url = 'BASE_URL/' + Cypress.config('baseUrl')
+window.base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace(/\//g, "\\/")
+
+// console.log(`s/${window.base_url}/`)
+// console.log('s/BASE_URL/http:\\/\\/localhost:8401/')
+
+//var change_db_name = sed_lite(`s/${window.base_url}/`);
+
+// var change_db_name = sed_lite(`s/${window.base_url}/`)
+// console.log(change_db_name("BASE_URL"));
+
+
+
+//Set the Base URL in the REDCap Configuration Database
+// if(Cypress.config('baseUrl') !== null){
+//     const base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
+// } else {
+//     alert('baseUrl, which tells REDCap Cypress what URL your REDCap test server is at, is missing from cypress.json.  Please configure it before proceeding.')
+// }
 
 before(() => {
 

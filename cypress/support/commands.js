@@ -59,13 +59,13 @@ Cypress.Commands.add('base_db_seed', () => {
 
     cy.task('populateStructureAndData', {   redcap_version: Cypress.env('redcap_version'), 
                                             advanced_user_info: compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>='), 
-                                            source_location: redcap_source_path
-                                        })
+                                            source_location: redcap_source_path})
 
     cy.mysql_db('structure_and_data', window.base_url).then(() => {
 
         if(Cypress.env('redcap_hooks_path') !== undefined){
-            cy.mysql_db('hooks_config', "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path')) //Fetch the hooks SQL seed data
+            const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\/");
+            cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
         }
 
         //Clear out all cookies
@@ -130,7 +130,7 @@ Cypress.Commands.add('set_user_info', (users) => {
 })
 
 
-Cypress.Commands.add('mysql_db', (type, replaced = '') => {
+Cypress.Commands.add('mysql_db', (type, replace = '') => {
     
     const mysql = Cypress.env("mysql")
 
@@ -140,12 +140,7 @@ Cypress.Commands.add('mysql_db', (type, replaced = '') => {
         alert('redcap_version, which defines what version of REDCap you use in the seed database, is missing from cypress.env.json.  Please configure it before proceeding.')
     }
 
-  let replacements = replaced.split(/\/(.+)/);
-
-  const find = replacements[0]
-  const replace = replacements[1]
-
-  cy.task('executeMySQL', {   
+      cy.task('executeMySQL', {   
                             mysql_name: mysql['path'],
                             host: mysql['host'],
                             port: mysql['port'],
@@ -153,9 +148,9 @@ Cypress.Commands.add('mysql_db', (type, replaced = '') => {
                             db_user: mysql['db_user'],
                             db_pass: mysql['db_pass'],
                             type: type, 
-                            find: find,
                             replace: replace
                           })
+
 })
 
 function test_link (link, title, try_again = true) {

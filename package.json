@@ -8,7 +8,8 @@
     "compare-versions": "3.6.0",
     "cypress": "^5.4.0",
     "cypress-iframe": "1.0.1",
-    "shelljs": "0.8.4"
+    "shelljs": "0.8.4",
+    "sed-lite": "0.8.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

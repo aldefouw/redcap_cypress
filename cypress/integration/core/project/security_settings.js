@@ -41,7 +41,6 @@ describe('System Security Settings', () => {
 			cy.set_user_type('admin')
 			cy.visit_version({page: 'ControlCenter/general_settings.php'})
 			cy.get('select').contains('SYSTEM OFFLINE').parent().select('SYSTEM OFFLINE')
-			cy.get('textarea').first().clear()
 			cy.get('input').contains('Save Changes').click({force: true})
 		})
 
@@ -64,7 +63,7 @@ describe('System Security Settings', () => {
 		it('Should update system offline message when a new message is inputted', () => {
 			cy.set_user_type('admin')
 			cy.visit_version({page: 'ControlCenter/general_settings.php'})
-			cy.get('textarea').first().clear().type('System is offline')
+			cy.get('textarea').first().type('System is offline')
 			cy.get('input').contains('Save Changes').click({force: true})
 			cy.set_user_type('standard')
 			cy.visit_base({url: 'index.php'})

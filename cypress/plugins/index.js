@@ -11,6 +11,7 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 var shell = require('shelljs');
+var sed_lite = require('sed-lite').sed;
 
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
@@ -70,13 +71,29 @@ module.exports = (on, config) => {
 		return 0;
   	},
 
-  	executeMySQL({mysql_name, host, port, db_name, db_user, db_pass, type, search, find, replace}) {
-  		var db_cmd=`${mysql_name} -h${host} --port=${port} ${db_name} -u${db_user} -p${db_pass}`
-		var sql=`${shell.pwd()}/test_db/${type}.sql`
-		var tmp=`${sql}.tmp`
+  	executeMySQL({mysql_name, host, port, db_name, db_user, db_pass, type, replace}) {
+  		var db_cmd=`${mysql_name} -h${host} --port=${port} ${db_name} -u${db_user} -p${db_pass}`;
+		var sql=`${shell.pwd()}/test_db/${type}.sql`;
+		var tmp=`${sql}.tmp`;
 
-		shell.cat(sql).sed('REDCAP_DB_NAME', db_name).sed(find, replace).to(tmp)
-		shell.exec(`${db_cmd} < ${tmp}`)
+		//REPLACE ALL INSTANCES OF THE REDCAP_DB_NAME MAGIC CONSTANT
+		var replace_db_name = sed_lite(`s/REDCAP_DB_NAME/${db_name}/g`);
+		var new_file = replace_db_name(shell.cat(sql));
+		var echoed = shell.echo(new_file);
+
+		//REPLACE ALL INSTANCES OF THE REPLACEMENT CALLED FOR IN THE COMMAND
+		if(replace === ''){
+			var new_file = echoed;
+		} else {
+			var replace_string = sed_lite(`s/${replace}/g`);
+			var new_file = replace_string(echoed);
+		}
+
+		//OUTPUT TO TEMPORARY FILE
+		shell.echo(new_file).to(tmp);
+
+		//INJECT INTO MYSQL
+		var test = shell.exec(`${db_cmd} < ${tmp}`)
 		shell.rm(tmp)
 
 		return 0;
