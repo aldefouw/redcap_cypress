@@ -67,7 +67,7 @@ module.exports = (on, config) => {
 		shell.cat(projects_sql).toEnd(structure_and_data_file);
 		shell.cat(config_sql).sed('REDCAP_VERSION_MAGIC_STRING', redcap_version).toEnd(structure_and_data_file);
 
-		shell.echo('\nCOMMIT;').toEnd(structure_and_data_file);
+		shell.ShellString('\nCOMMIT;').toEnd(structure_and_data_file);
 
 		if (fs.existsSync(structure_and_data_file)) {
         	return true
