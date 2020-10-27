@@ -68,7 +68,7 @@ module.exports = (on, config) => {
 
 		shell.echo('\nCOMMIT;').toEnd(structure_and_data_file);
 
-		return 0;
+		return structure_and_data_file;
   	},
 
   	executeMySQL({mysql_name, host, port, db_name, db_user, db_pass, type, replace}) {
@@ -92,11 +92,14 @@ module.exports = (on, config) => {
 		//OUTPUT TO TEMPORARY FILE
 		shell.echo(new_file).to(tmp);
 
+		//FORMULATE DB CMD
+		var cmd = `${db_cmd} < ${tmp}`;
+
 		//INJECT INTO MYSQL
-		var test = shell.exec(`${db_cmd} < ${tmp}`)
+		var test = shell.exec(cmd);
 		shell.rm(tmp)
 
-		return 0;
+		return cmd;
   	}  	
 
   })  	
