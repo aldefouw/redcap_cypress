@@ -84,18 +84,19 @@ module.exports = (on, config) => {
 		//REPLACE ALL INSTANCES OF THE REDCAP_DB_NAME MAGIC CONSTANT
 		var replace_db_name = sed_lite(`s/REDCAP_DB_NAME/${db_name}/g`);
 		var new_file = replace_db_name(shell.cat(sql));
-		var echoed = shell.echo(new_file);
 
 		//REPLACE ALL INSTANCES OF THE REPLACEMENT CALLED FOR IN THE COMMAND
 		if(replace === ''){
-			var new_file = echoed;
+
 		} else {
 			var replace_string = sed_lite(`s/${replace}/g`);
-			var new_file = replace_string(echoed);
+			new_file = replace_string(new_file);
 		}
 
+		var final_file = new shell.ShellString(new_file);
+
 		//OUTPUT TO TEMPORARY FILE
-		shell.echo(new_file).to(tmp);
+		final_file.to(tmp)
 
 		//FORMULATE DB CMD
 		if (fs.existsSync(tmp)) {
