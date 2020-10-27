@@ -57,22 +57,31 @@ Cypress.Commands.add('base_db_seed', () => {
         alert('redcap_source_path, which defines where your REDCap source code exists, is missing in cypress.env.json.  Please configure it before proceeding.')
     }
 
-    cy.task('populateStructureAndData', {   redcap_version: Cypress.env('redcap_version'), 
+    cy.task('populateStructureAndData', {   
+                                            redcap_version: Cypress.env('redcap_version'), 
                                             advanced_user_info: compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>='), 
-                                            source_location: redcap_source_path})
+                                            source_location: redcap_source_path
+                                        }).then((structure_and_data_file_exists) => {
 
-    cy.mysql_db('structure_and_data', window.base_url).then(() => {
+        //Only run this block if the Structure and Data File exists and has gone through proper processes
+        if(structure_and_data_file_exists){
+            
+            cy.mysql_db('structure_and_data', window.base_url).then(() => {
 
-        if(Cypress.env('redcap_hooks_path') !== undefined){
-            const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\/");
-            cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
+                if(Cypress.env('redcap_hooks_path') !== undefined){
+                    const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\/");
+                    cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
+                }
+
+                //Clear out all cookies
+                cy.clearCookies()
+            })
+
+        } else {
+            alert('Warning: Error generating structure and data file.  This usually happpens because your REDCap source code is missing files.')
         }
-
-        //Clear out all cookies
-        cy.clearCookies()
-
+     
     })
-
 })
 
 Cypress.Commands.add('maintain_login', () => {
@@ -92,16 +101,12 @@ Cypress.Commands.add('maintain_login', () => {
 
             //In most cases, we'll have cookies to preserve to maintain a login
             if (cookies.length > 0){
-
                 console.log('Cookie Login')
-
                 cookies.map(cookie =>  Cypress.Cookies.preserveOnce(cookie['name']) )
 
             //But, if we don't, then let's simply re-login, right?    
             } else {     
-
                 console.log('Regular Login')
-
                 cy.login({ username: user, password: pass })
             }         
             
@@ -140,17 +145,21 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
         alert('redcap_version, which defines what version of REDCap you use in the seed database, is missing from cypress.env.json.  Please configure it before proceeding.')
     }
 
-      cy.task('executeMySQL', {   
-                            mysql_name: mysql['path'],
-                            host: mysql['host'],
-                            port: mysql['port'],
-                            db_name: mysql['db_name'],
-                            db_user: mysql['db_user'],
-                            db_pass: mysql['db_pass'],
-                            type: type, 
-                            replace: replace
-                          })
-
+    cy.task('executeMySQL', {   
+                                mysql_name: mysql['path'],
+                                host: mysql['host'],
+                                port: mysql['port'],
+                                db_name: mysql['db_name'],
+                                db_user: mysql['db_user'],
+                                db_pass: mysql['db_pass'],
+                                type: type, 
+                                replace: replace
+                              }).then((response) => {
+                                    cy.exec(response, { timeout: 100000}).then((response) => {
+                                        expect(response['code']).to.eq(0)
+                                        console.log(response)
+                                    })
+                              })
 })
 
 function test_link (link, title, try_again = true) {

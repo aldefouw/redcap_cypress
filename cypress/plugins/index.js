@@ -10,8 +10,9 @@
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
-var shell = require('shelljs');
-var sed_lite = require('sed-lite').sed;
+var shell = require('shelljs')
+var sed_lite = require('sed-lite').sed
+var fs = require('fs')
 
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
@@ -68,7 +69,11 @@ module.exports = (on, config) => {
 
 		shell.echo('\nCOMMIT;').toEnd(structure_and_data_file);
 
-		return structure_and_data_file;
+		if (fs.existsSync(structure_and_data_file)) {
+        	return true
+      	}
+
+		return false
   	},
 
   	executeMySQL({mysql_name, host, port, db_name, db_user, db_pass, type, replace}) {
@@ -93,13 +98,7 @@ module.exports = (on, config) => {
 		shell.echo(new_file).to(tmp);
 
 		//FORMULATE DB CMD
-		var cmd = `${db_cmd} < ${tmp}`;
-
-		//INJECT INTO MYSQL
-		var test = shell.exec(cmd);
-		shell.rm(tmp)
-
-		return cmd;
+		return `${db_cmd} < ${tmp}`;
   	}  	
 
   })  	
