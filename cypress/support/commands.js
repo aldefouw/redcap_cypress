@@ -7,6 +7,7 @@ import './projects/commands'
 
 import compareVersions from 'compare-versions';
 import 'cypress-iframe';
+const shell = require('shelljs')
 
 // Commands in this file are CRUCIAL and are an embedded part of the REDCap Cypress Framework.
 // They are very stable and do not change often, if ever
@@ -145,7 +146,8 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
         alert('redcap_version, which defines what version of REDCap you use in the seed database, is missing from cypress.env.json.  Please configure it before proceeding.')
     }
 
-    cy.task('executeMySQL', {   
+    //Create the MySQL Installation
+    cy.task('generateMySQLCommand', {   
                                 mysql_name: mysql['path'],
                                 host: mysql['host'],
                                 port: mysql['port'],
@@ -154,10 +156,16 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
                                 db_pass: mysql['db_pass'],
                                 type: type, 
                                 replace: replace
-                              }).then((response) => {
-                                    cy.exec(response, { timeout: 100000}).then((response) => {
-                                        expect(response['code']).to.eq(0)
-                                        console.log(response)
+                              }).then((mysql_cli) => {
+                                    
+                                    //Execute the MySQL Command
+                                    cy.exec(mysql_cli['cmd'], { timeout: 100000}).then((data_import) => {
+                                        expect(data_import['code']).to.eq(0)
+
+                                        //Clean up after ourselves    
+                                        cy.task('deleteFile', { path: mysql_cli['tmp'] }).then((deleted_tmp_file) => {
+                                            expect(deleted_tmp_file).to.eq(true)                                         
+                                        })
                                     })
                               })
 })
