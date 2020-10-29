@@ -24,9 +24,12 @@ describe('Browse Projects', () => {
         })
 
         it('Should display a list of all non-archived projects', () => {
-            cy.num_projects_excluding_archived().then(() => {
+            cy.num_projects_excluding_archived().then((response) => {
+
+                const num_projects = response;
+
                 cy.get('button').contains('View all projects').click().then(() => {
-                    cy.get('table#table-proj_table').find('tr:visible').should('have.length', window.num_projects)
+                    cy.get('table#table-proj_table').find('tr:visible').should('have.length', num_projects)
                 })
             })
         })
@@ -71,8 +74,11 @@ describe('Browse Projects', () => {
                         // Clear out the filter
                         cy.get('input#proj_search').clear()
 
-                        // See how many text rows are visible.  Should be two to match our two projects w/ word "classic"
-                        cy.get('table#table-proj_table').find('tr:visible').should('have.length', window.num_projects)
+
+                        cy.num_projects_excluding_archived().then((response) => {
+                            // See how many text rows are visible.  Should be two to match our two projects w/ word "classic"
+                            cy.get('table#table-proj_table').find('tr:visible').should('have.length', response)
+                        })
 
                     })
                 })
