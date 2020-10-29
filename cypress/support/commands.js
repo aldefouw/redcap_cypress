@@ -430,46 +430,19 @@ Cypress.Commands.add('add_api_user_to_project', (username, pid) => {
     })
 })
 
-Cypress.Commands.add('num_projects_excluding_archived', () => {
-
+Cypress.Commands.add('mysql_query', (query) => {
     const mysql = Cypress.env("mysql")
-    const query = "SELECT count(*) FROM redcap_projects WHERE status != 3;";
 
-    let cmd = ''
-
-    window.num_projects = null;
-
-    //If we are on Windows, we have to run a bash script instead
-    if( window.navigator['platform'].match(/Win/g) ) {
-
-        console.log('Windows platform detected')
-
-        cmd = mysql['path'] +
-            " -h" + mysql['host'] +
-            " --port=" + mysql['port'] +
-            " " + mysql['db_name'] +
-            " -u" + mysql['db_user'] +
-            " -p" + mysql['db_pass'] +
-            ' -e "' + query + '" -N -s'
-
-    } else {
-
-        console.log('Unix-style platform enabled')
-
-        cmd = mysql['path'] +
-            " -h" + mysql['host'] +
-            " --port=" + mysql['port'] +
-            " " + mysql['db_name'] +
-            " -u" + mysql['db_user'] +
-            " -p" + mysql['db_pass'] +
-            " -e '" + query + "' -N -s"
-    }
+    const cmd = `${mysql['path']} -h${mysql['host']} --port=${mysql['port']} ${mysql['db_name']} -u${mysql['db_user']} -p${mysql['db_pass']} -e "${query}" -N -s`
 
     cy.exec(cmd, { timeout: 100000}).then((response) => {
         expect(response['code']).to.eq(0)
-        window.num_projects = response['stdout']
+        return response['stdout']
     })
+})
 
+Cypress.Commands.add('num_projects_excluding_archived', () => {
+    return cy.mysql_query("SELECT count(*) FROM redcap_projects WHERE status != 3;")
 })
 
 //
