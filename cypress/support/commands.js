@@ -320,29 +320,12 @@ Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector) => {
 })
 
 
-Cypress.Commands.add('upload_data_dictionary', (fixture_path, fixture_file, pid, date_format = "DMY") => {
+Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format = "DMY") => {
 
     let admin_user = Cypress.env('users')['admin']['user']
     let current_token = null;
 
-    if( window.navigator['platform'].match(/Win/g) ) {
-        console.log('Windows platform detected for data dictionary')
-        console.log('WARNING: NOT IMPLEMENTED YET!')
-
-    } else {
-
-        let cmd = "sh file_helpers/read_file.sh " + '"' + "/dictionaries/" + fixture_path + "/" + fixture_file + '" '
-
-        console.log(cmd)
-
-        let file_contents = null;
-
-        cy.exec(cmd, { timeout: 100000}).then((response) => {
-            file_contents = response
-             expect(response['code']).to.eq(0)
-        })
-
-        cy.maintain_login().then(($r) => {
+    cy.maintain_login().then(($r) => {
 
         cy.add_api_user_to_project(admin_user, pid).then(() => {
 
@@ -363,36 +346,38 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_path, fixture_file, pid,
                         
                         current_token = Cypress.$($super_token.body).children('div')[0].innerText
 
-                        cy.request({
-                            method: 'POST',
-                            url: '/api/',
-                            headers: {
-                              "Accept":"application/json",
-                              "Content-Type": "application/x-www-form-urlencoded"
-                            },
-                            body: {
-                                token: current_token,
-                                content: 'metadata',
-                                format: 'csv',
-                                data: file_contents['stdout'],
-                                returnFormat: 'json'
-                            },
-                            timeout: 50000
+                        cy.fixture(`dictionaries/${fixture_file}`).then(data_dictionary => {
 
-                        }).should(($a) => {
-                            
-                            expect($a.status).to.equal(200)
+                                cy.request({
+                                    method: 'POST',
+                                    url: '/api/',
+                                    headers: {
+                                      "Accept":"application/json",
+                                      "Content-Type": "application/x-www-form-urlencoded"
+                                    },
+                                    body: {
+                                        token: current_token,
+                                        content: 'metadata',
+                                        format: 'csv',
+                                        data: data_dictionary,
+                                        returnFormat: 'json'
+                                    },
+                                    timeout: 50000
 
-                            cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
-                                expect($e.body).to.contain('List of Data Changes')
-                                expect($e.body).to.contain('Manage/Design')
-                            })
+                                }).should(($a) => {                                    
+                                    expect($a.status).to.equal(200)
+
+                                    cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
+                                        expect($e.body).to.contain('List of Data Changes')
+                                        expect($e.body).to.contain('Manage/Design')
+                                    })
+                                })
                         })
-                    })
                 })
-            })        
-        })
-    }
+            })
+        })        
+    })
+
 })
 
 Cypress.Commands.add('create_cdisc_project', (project_name, project_type, cdisc_file, project_id) => {
