@@ -66,17 +66,23 @@ Cypress.Commands.add('base_db_seed', () => {
 
         //Only run this block if the Structure and Data File exists and has gone through proper processes
         if(structure_and_data_file_exists){
-            
-            cy.mysql_db('structure_and_data', window.base_url).then(() => {
 
-                if(Cypress.env('redcap_hooks_path') !== undefined){
-                    const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\/");
-                    cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
-                }
+            //Create the database if it doesn't exist
+            cy.mysql_db('create_database', '', false).then(() => {
 
-                //Clear out all cookies
-                cy.clearCookies()
-            })
+                //Pull in the structure and data from REDCap Source
+                cy.mysql_db('structure_and_data', window.base_url).then(() => {
+
+                    if(Cypress.env('redcap_hooks_path') !== undefined){
+                        const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\/");
+                        cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
+                    }
+
+                    //Clear out all cookies
+                    cy.clearCookies()
+                })
+
+            })          
 
         } else {
             alert('Warning: Error generating structure and data file.  This usually happpens because your REDCap source code is missing files.')
@@ -136,7 +142,7 @@ Cypress.Commands.add('set_user_info', (users) => {
 })
 
 
-Cypress.Commands.add('mysql_db', (type, replace = '') => {
+Cypress.Commands.add('mysql_db', (type, replace = '', include_db_name = true) => {
     
     const mysql = Cypress.env("mysql")
 
@@ -155,7 +161,8 @@ Cypress.Commands.add('mysql_db', (type, replace = '') => {
                                 db_user: mysql['db_user'],
                                 db_pass: mysql['db_pass'],
                                 type: type, 
-                                replace: replace
+                                replace: replace,
+                                include_db_name: include_db_name
                               }).then((mysql_cli) => {
                                     
                                     //Execute the MySQL Command
