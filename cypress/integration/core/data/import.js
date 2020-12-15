@@ -1,14 +1,77 @@
 describe('Data Collection and Storage', () => {
 
 	before(() => {
-		cy.set_user_type('standard')
+		cy.set_user_type('standard')	
+		cy.visit_version({page: 'DataEntry/record_status_dashboard.php', params: "pid=1"})			
 	})
 
-	it('Should have the ability to download two versions of a data import template formatted as a CSV file, one to accommodate records in rows and one to accommodate records in columns', () => {
-            
+	beforeEach(() => {
+		cy.get('a').contains('Data Import Tool').click()
+	})
+
+	it('Should have the ability to download two versions of a data import template formatted as a CSV file (records by row or column)', () => {
+		
+		cy.get('body').should(($body) => {
+			expect($body).to.contain('Download your Data Import Template (with records in rows)')
+			expect($body).to.contain('Download your Data Import Template (with records in columns)')
+		})	    
     })
+
+	it('Should have the ability to import data by Rows', () => {
+		cy.get('select[name="format"]').select('Rows')
+
+		cy.upload_file('import_files/classic_db_import_rows.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+
+			cy.wait(1000)
+
+			cy.get('input').contains('Upload File').click().then(() => {
+				cy.get('body').should($body => {
+					expect($body).to.contain('Your document was uploaded successfully and is ready for review.')
+					expect($body).to.contain('Jane')
+					expect($body).to.contain('John')
+					expect($body).to.contain('Doe')
+				})
+
+				cy.wait(1000)
+
+				cy.get('input').contains('Import Data').click().then(() => {
+
+					cy.get('body').should($body => {
+						expect($body).to.contain('Import Successful!')
+					})
+				})
+			})
+		})
+	})
+
+	it('Should have the ability to import data by Columns', () => {
+		cy.get('select[name="format"]').select('Columns')
+
+		cy.upload_file('import_files/classic_db_import_columns.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+
+			cy.wait(1000)
+
+			cy.get('input').contains('Upload File').click().then(() => {
+				cy.get('body').should($body => {
+					expect($body).to.contain('Your document was uploaded successfully and is ready for review.')
+					expect($body).to.contain('Jane')
+					expect($body).to.contain('John')
+					expect($body).to.contain('Doe')
+				})
+
+				cy.wait(1000)
+
+				cy.get('input').contains('Import Data').click().then(() => {
+
+					cy.get('body').should($body => {
+						expect($body).to.contain('Import Successful!')
+					})
+				})
+			})
+		})
+	})
 	
-	it('Should have the ability to be uploaded with the csv template to create and modify records', () => {
+	it('Should have the ability to import a CSV template to create and modify records', () => {
             
     })
 
