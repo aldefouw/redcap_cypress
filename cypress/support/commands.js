@@ -24,7 +24,7 @@ Cypress.Commands.add('login', (options) => {
             'username': options['username'],
             'password': options['password'],
             'submitted': 1,
-            'redcap_login_a38us_09i85':'redcap_login_a38us_09i85'
+            'redcap_login_a38us_09i85':'SG1nx2MZGGeW6vnUwnkRz5j/vHgHwPUCcw8TFRBWLSZ9/XxMdP2uQMfwph/TbCpOkG2FtO9R25SL4YMyPAI4Bg=='
         }
     }).should(($a) => {
         expect($a.status).to.equal(200)
