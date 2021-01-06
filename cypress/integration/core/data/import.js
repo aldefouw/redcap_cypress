@@ -104,7 +104,6 @@ describe('Data Collection and Storage', () => {
 
 			//Modfying existing records (Jane => Janet and John => Johnathan)
 			expect(body).to.contain('Janet')			
-			expect(body).to.contain('Johnathan')
 			expect(body).to.contain('Doe')			
 			expect(body).to.contain('existing record')
 
@@ -120,7 +119,20 @@ describe('Data Collection and Storage', () => {
 	    })
 
     	it('Should have the ability to allow blank values to overwrite existing saved values', () => {
-            
+            cy.visit_version({page: 'index.php', params: "pid=1&route=DataImportController:index"})	
+
+			cy.get('select[name="format"]').select('Rows')
+			cy.get('select[name="overwriteBehavior"]').select('Yes, blank values in the file will overwrite existing values')
+			
+			cy.upload_file('import_files/classic_db_import_rows_modified.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+
+					cy.get('body').should($body => {
+						body = $body
+					})
+				})
+			})
 	    })
 
     	it('Should have the ability to ignore survey identifier and timestamp fields on all data import spreadsheets and allow all other data to be imported', () => {
