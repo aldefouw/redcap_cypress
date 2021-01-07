@@ -2,17 +2,11 @@ describe('Data Collection and Storage', () => {
 
 	beforeEach(() => {
 		cy.set_user_type('standard')	
+		cy.visit_version({page: 'DataEntry/record_status_dashboard.php', params: "pid=1"})	
+		cy.get('a').contains('Data Import Tool').click()
 	})
 
 	describe('Basic Functionality', () => {
-
-		before(() => {
-			cy.visit_version({page: 'DataEntry/record_status_dashboard.php', params: "pid=1"})			
-		})
-
-		beforeEach(() => {
-			cy.get('a').contains('Data Import Tool').click()
-		})
 
 		it('Should have the ability to download two versions of a data import template formatted as a CSV file (records by row or column)', () => {
 			cy.get('body').should(($body) => {
@@ -85,9 +79,7 @@ describe('Data Collection and Storage', () => {
 
 		let body = null;
 
-		before(() => {
-			cy.get('a').contains('Data Import Tool').click()
-
+		beforeEach(() => {
 			cy.get('select[name="format"]').select('Rows')
 			cy.upload_file('import_files/classic_db_import_rows_modified.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
 				cy.wait(1000)
@@ -101,10 +93,13 @@ describe('Data Collection and Storage', () => {
 		})
 
 		it('Should have the ability to import a CSV template to create and modify records', () => {
-
 			//Modfying existing records (Jane => Janet and John => Johnathan)
 			expect(body).to.contain('Janet')			
-			expect(body).to.contain('Doe')			
+			expect(body).to.contain('Doe')		
+
+			expect(body).to.contain('Johnathan')			
+			expect(body).to.contain('Doer')		
+
 			expect(body).to.contain('existing record')
 
 			//New Record as well
@@ -119,12 +114,11 @@ describe('Data Collection and Storage', () => {
 	    })
 
     	it('Should have the ability to allow blank values to overwrite existing saved values', () => {
-            cy.visit_version({page: 'index.php', params: "pid=1&route=DataImportController:index"})	
-
 			cy.get('select[name="format"]').select('Rows')
 			cy.get('select[name="overwriteBehavior"]').select('Yes, blank values in the file will overwrite existing values')
-			
-			cy.upload_file('import_files/classic_db_import_rows_modified.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+			cy.get('button').contains('Yes').click()
+
+			cy.upload_file('import_files/classic_db_import_rows_blank_first_name.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
 				cy.wait(1000)
 				cy.get('input').contains('Upload File').click().then(() => {
 
