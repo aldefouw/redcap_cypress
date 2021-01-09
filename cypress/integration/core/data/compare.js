@@ -3,13 +3,13 @@ const user1 = 'test_user';
 const user2 = 'test_user2';
 const record1 = 'Record1';
 const record2 = 'Record2';
-const pid = 14;
+const pid = 3;
 
 describe('Data Comparison Tool / DDE Module', () => {
 
     before(() => {
         cy.mysql_db('projects/pristine')
-        cy.mysql_db('projects/compare')
+        cy.mysql_db('projects/project_3')
     })
 
     describe('Data Entry Person Roles', () => {
