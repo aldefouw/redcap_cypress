@@ -12,6 +12,10 @@ describe('Data Comparison Tool / DDE Module', () => {
         cy.mysql_db('projects/project_3')
     })
 
+    after(() => {
+        cy.mysql_db('projects/pristine')
+    })
+
     describe('Data Entry Person Roles', () => {
 
         before(() => {
