@@ -287,3 +287,9 @@ Cypress.Commands.add('require_redcap_stats', () => {
   cy.route({method: 'POST', url: '**/ProjectGeneral/project_stats_ajax.php'}).as('project_stats_ajax')
   cy.wait('@project_stats_ajax').then((xhr, error) => { })
 })
+
+Cypress.Commands.add('set_double_data_entry_module', (project_id, enabled = true) => {
+  cy.visit_version({page: 'ControlCenter/edit_project.php', params: `project=${project_id}`})
+  cy.get('tr#double_data_entry-tr select').select(enabled ? '1' : '0')
+  cy.get('input[type="submit"]').click()
+})
