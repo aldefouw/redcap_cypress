@@ -14,8 +14,7 @@ describe('Data Comparison Tool / DDE Module', () => {
 
     after(() => {
         cy.mysql_db('projects/pristine')
-        cy.set_user_type('admin')
-        cy.remove_users_from_project([user1, user2, admin], pid)
+        cy.mysql_db('projects/project_3_clean')
     })
 
     describe('Data Entry Person Roles', () => {
