@@ -217,6 +217,22 @@ Cypress.Commands.add('add_users_to_project', (usernames = [], project_id) => {
       }
 })
 
+Cypress.Commands.add('remove_users_from_project', (usernames = [], project_id) => {
+  cy.visit_version({page: 'UserRights/index.php', params: 'pid=' + project_id})
+
+  //Remove each username specified
+  for(var username of usernames){
+    cy.get('a.userLinkInTable').contains(username).click()
+    cy.get('button').contains('Edit user privileges').click()
+    cy.get('button:contains("Remove user")').click()
+    cy.get('span').contains('Remove user?').parent().parent().find('button:contains("Remove user")').click()
+    
+    cy.get('div#working').should(($div) => {
+      expect($div).to.not.be.visible
+    })
+  }
+})
+
 Cypress.Commands.add('add_users_to_data_access_groups', (groups = [], usernames = [], project_id) => {
       cy.visit_version({page: 'DataAccessGroups/index.php', params: 'pid=' + project_id})
       cy.server()
