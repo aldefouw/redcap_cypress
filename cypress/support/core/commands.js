@@ -217,6 +217,22 @@ Cypress.Commands.add('add_users_to_project', (usernames = [], project_id) => {
       }
 })
 
+Cypress.Commands.add('remove_users_from_project', (usernames = [], project_id) => {
+  cy.visit_version({page: 'UserRights/index.php', params: 'pid=' + project_id})
+
+  //Remove each username specified
+  for(var username of usernames){
+    cy.get('a.userLinkInTable').contains(username).click()
+    cy.get('button').contains('Edit user privileges').click()
+    cy.get('button:contains("Remove user")').click()
+    cy.get('span').contains('Remove user?').parent().parent().find('button:contains("Remove user")').click()
+    
+    cy.get('div#working').should(($div) => {
+      expect($div).to.not.be.visible
+    })
+  }
+})
+
 Cypress.Commands.add('add_users_to_data_access_groups', (groups = [], usernames = [], project_id) => {
       cy.visit_version({page: 'DataAccessGroups/index.php', params: 'pid=' + project_id})
       cy.server()
@@ -286,4 +302,10 @@ Cypress.Commands.add('require_redcap_stats', () => {
   cy.server()
   cy.route({method: 'POST', url: '**/ProjectGeneral/project_stats_ajax.php'}).as('project_stats_ajax')
   cy.wait('@project_stats_ajax').then((xhr, error) => { })
+})
+
+Cypress.Commands.add('set_double_data_entry_module', (project_id, enabled = true) => {
+  cy.visit_version({page: 'ControlCenter/edit_project.php', params: `project=${project_id}`})
+  cy.get('tr#double_data_entry-tr select').select(enabled ? '1' : '0')
+  cy.get('input[type="submit"]').click()
 })
