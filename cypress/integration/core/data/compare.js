@@ -3,18 +3,24 @@ const user1 = 'test_user';
 const user2 = 'test_user2';
 const record1 = 'Record1';
 const record2 = 'Record2';
-const pid = 3;
+const pid = 14;
 
 describe('Data Comparison Tool / DDE Module', () => {
 
     before(() => {
+        cy.set_user_type('admin')
         cy.mysql_db('projects/pristine')
-        cy.mysql_db('projects/project_3')
+        cy.delete_project(pid)
+        cy.create_cdisc_project('DCT-DDE Test', "0", 'cdisc_files/core/compare.xml', pid)
+        cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`}).then(() => {
+            cy.add_users_to_project([user1, user2], pid)
+            cy.set_double_data_entry_module(pid, true)    
+        })
     })
 
     after(() => {
         cy.mysql_db('projects/pristine')
-        cy.mysql_db('projects/project_3_clean')
+        cy.delete_project(pid)
     })
 
     describe('Data Entry Person Roles', () => {
