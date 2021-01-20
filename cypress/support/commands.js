@@ -438,6 +438,16 @@ Cypress.Commands.add('num_projects_excluding_archived', () => {
 })
 
 Cypress.Commands.add('delete_project', (pid) => {
+    cy.visit_version({ page: 'ProjectSetup/other_functionality.php', params: `pid=${pid}`})
+    cy.get('button').contains('Delete the project').click()
+    cy.get('input#delete_project_confirm').type('DELETE').then((input) => {
+        cy.get(input).closest('div[role="dialog"]').find('button').contains('Delete the project').click()
+        cy.get('button').contains('Yes, delete the project').click()
+        cy.get('span#ui-id-3').closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
+    })
+})
+
+Cypress.Commands.add('delete_project_complete', (pid) => {
     cy.mysql_query(`START TRANSACTION;
 
         USE \`REDCAP_DB_NAME\`;
@@ -453,6 +463,13 @@ Cypress.Commands.add('delete_project', (pid) => {
 
         COMMIT;`
     )
+})
+
+Cypress.Commands.add('delete_records', (pid) => {
+    cy.visit_version({ page: 'ProjectSetup/other_functionality.php', params: `pid=${pid}`})
+    cy.get('button').contains('Erase all data').click()
+    cy.get('div[role="dialog"]').find('button').contains('Erase all data').click({force: true})
+    cy.get('span#ui-id-2').closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
 })
 
 //

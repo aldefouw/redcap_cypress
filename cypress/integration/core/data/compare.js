@@ -10,7 +10,6 @@ describe('Data Comparison Tool / DDE Module', () => {
     before(() => {
         cy.set_user_type('admin')
         cy.mysql_db('projects/pristine')
-        cy.delete_project(pid)
         cy.create_cdisc_project('DCT-DDE Test', "0", 'cdisc_files/core/compare.xml', pid)
         cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`}).then(() => {
             cy.add_users_to_project([user1, user2], pid)
@@ -20,6 +19,8 @@ describe('Data Comparison Tool / DDE Module', () => {
 
     after(() => {
         cy.mysql_db('projects/pristine')
+        cy.delete_records(pid)
+        cy.remove_users_from_project([user1, user2, admin], pid)
         cy.delete_project(pid)
     })
 
