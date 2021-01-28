@@ -24,7 +24,7 @@ Cypress.Commands.add('login', (options) => {
             'username': options['username'],
             'password': options['password'],
             'submitted': 1,
-            'redcap_login_a38us_09i85':'SG1nx2MZGGeW6vnUwnkRz5j/vHgHwPUCcw8TFRBWLSZ9/XxMdP2uQMfwph/TbCpOkG2FtO9R25SL4YMyPAI4Bg=='
+            'redcap_login_a38us_09i85':'redcap_login_a38us_09i85'
         }
     }).should(($a) => {
         expect($a.status).to.equal(200)
@@ -289,11 +289,11 @@ Cypress.Commands.add('save_field', () => {
 
 Cypress.Commands.add('add_field', (field_name, type) => {
      cy.get('input#btn-last').click().then(() => {
-        cy.get('textarea#field_label').clear().type(field_name).then(() => {
-            cy.get('select#val_type').select(type).should('have.value', type).then(() => {
+        cy.get('select#field_type').select(type).should('have.value', type).then(() => {
+            cy.get('input#field_name').type(field_name).then(() => {
                 cy.save_field()
-                cy.find_online_designer_field(field_name)  
-            })            
+                cy.find_online_designer_field(field_name)
+            })
         })
     })
 })
@@ -435,6 +435,41 @@ Cypress.Commands.add('mysql_query', (query) => {
 
 Cypress.Commands.add('num_projects_excluding_archived', () => {
     return cy.mysql_query("SELECT count(*) FROM redcap_projects WHERE status != 3;")
+})
+
+Cypress.Commands.add('delete_project', (pid) => {
+    cy.visit_version({ page: 'ProjectSetup/other_functionality.php', params: `pid=${pid}`})
+    cy.get('button').contains('Delete the project').click()
+    cy.get('input#delete_project_confirm').type('DELETE').then((input) => {
+        cy.get(input).closest('div[role="dialog"]').find('button').contains('Delete the project').click()
+        cy.get('button').contains('Yes, delete the project').click()
+        cy.get('span#ui-id-3').closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
+    })
+})
+
+Cypress.Commands.add('delete_project_complete', (pid) => {
+    cy.mysql_query(`START TRANSACTION;
+
+        USE \`REDCAP_DB_NAME\`;
+        SET AUTOCOMMIT=0;
+        SET UNIQUE_CHECKS=0;
+        SET FOREIGN_KEY_CHECKS=0;
+
+        DELETE FROM redcap_data WHERE project_id = ${pid};
+        DELETE FROM redcap_record_list WHERE project_id = ${pid};
+        DELETE FROM redcap_record_counts WHERE project_id = ${pid};
+        DELETE FROM redcap_user_rights WHERE project_id = ${pid};
+        DELETE FROM redcap_projects WHERE project_id = ${pid};
+
+        COMMIT;`
+    )
+})
+
+Cypress.Commands.add('delete_records', (pid) => {
+    cy.visit_version({ page: 'ProjectSetup/other_functionality.php', params: `pid=${pid}`})
+    cy.get('button').contains('Erase all data').click()
+    cy.get('div[role="dialog"]').find('button').contains('Erase all data').click({force: true})
+    cy.get('span#ui-id-2').closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
 })
 
 //
