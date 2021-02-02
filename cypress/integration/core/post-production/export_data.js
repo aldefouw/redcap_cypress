@@ -1,7 +1,40 @@
+const pid = 13;
+
 describe('Export Data', () => {
 
 	before(() => {
-		cy.set_user_type('standard')
+		// Prepare project
+		cy.set_user_type('admin')
+		cy.mysql_db('projects/pristine')
+		// Upload data dictionary
+		cy.upload_data_dictionary('core/21_ExportDataExtraction_v913DD.csv', pid)
+		// Enable survey instrument as survey
+		cy.visit_version({page:'Design/online_designer.php', params:`pid=${pid}`})
+		cy.get('div#form_menu_description_input_span-survey')
+			.closest('tr')
+			.find('button')
+			.contains('Enable')
+			.click()
+		cy.get('button#surveySettingsSubmit').click()
+		// Add Event 2 and designate instruments
+		cy.visit_version({page:'Design/define_events.php', params:`pid=${pid}`})
+		cy.get('input#descrip').type('Event 2')
+		cy.get('input#addbutton').click()
+		cy.visit_version({page:'Design/designate_forms.php', params:`pid=${pid}`})
+		cy.get('button').contains('Begin Editing').click()
+		cy.get('td').contains('Survey').closest('tr').find('input').last().check()
+		cy.get('button#save_btn').click()
+		// Enable repeatable instruments
+		cy.visit_version({page:'ProjectSetup/index.php', params:`pid=${pid}`})
+		cy.get('button#enableRepeatingFormsEventsBtn').click()
+		cy.get('div.repeat_event_label').contains('Event 2').closest('tr')
+			.find('select.repeat_select').select('PARTIAL')
+			.closest('tr').find('input.repeat_form_chkbox').check()
+		cy.get('button').contains('Save').click()
+		// Import data file
+		cy.log(cy.access_api_token(pid, Cypress.env('users')['admin']['user']))
+		
+		cy.pause()
 	})
 
 	describe('Basic Functionality', () => {
