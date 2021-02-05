@@ -477,63 +477,38 @@ Cypress.Commands.add('access_api_token', (pid, user) => {
     cy.maintain_login().then(($r) => {
         cy.request({ url: `/redcap_v${Cypress.env('redcap_version')}/ControlCenter/user_api_ajax.php?action=viewToken&api_pid=${pid}&api_username=${user}`})
             .then(($token) => {
-                return Cypress.$($token.body).children('div')[0].innerText
+                return cy.wrap(Cypress.$($token.body).children('div')[0].innerText);
             })
     })
 })
 
-/*Cypress.Commands.add('import_data_file', (fixture_file, api_token) => {
-    
-    let token = null;
+Cypress.Commands.add('import_data_file', (fixture_file, api_token) => {
 
-    cy.maintain_login().then(($r) => {
-        // /redcap_v9.1.3/ControlCenter/user_api_ajax.php?action=viewToken&api_pid=13&api_username=test_admin
-        cy.request({ url: `/redcap_v${Cypress.env('redcap_version')}/ControlCenter/user_api_ajax.php?action=viewToken&api_pid=${pid}&api_username=${api_username}`})
-            .should(($token) => {
-                        cy.debug()
-                        cy.pause()
-                        expect($token.body).to.contain('token has been created')
-                        expect($token.body).to.contain(admin_user)
+    cy.fixture(`import_files/${fixture_file}`).then(import_data => {
 
-                        cy.request({ url: '/redcap_v' + 
-                                     Cypress.env('redcap_version') + 
-                                    '/ControlCenter/user_api_ajax.php?action=viewToken&api_username=test_admin&api_pid=' + pid}).then(($super_token) => {
-                        
-                        current_token = Cypress.$($super_token.body).children('div')[0].innerText
-
-                        cy.fixture(`dictionaries/${fixture_file}`).then(data_dictionary => {
-
-                                cy.request({
-                                    method: 'POST',
-                                    url: '/api/',
-                                    headers: {
-                                      "Accept":"application/json",
-                                      "Content-Type": "application/x-www-form-urlencoded"
-                                    },
-                                    body: {
-                                        token: current_token,
-                                        content: 'metadata',
-                                        format: 'csv',
-                                        data: data_dictionary,
-                                        returnFormat: 'json'
-                                    },
-                                    timeout: 50000
-
-                                }).should(($a) => {                                    
-                                    expect($a.status).to.equal(200)
-
-                                    cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
-                                        expect($e.body).to.contain('List of Data Changes')
-                                        expect($e.body).to.contain('Manage/Design')
-                                    })
-                                })
-                        })
-                })
-            })
-        })        
+        cy.request({
+            method: 'POST',
+            url: '/api/',
+            headers: {
+              "Accept":"application/json",
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: {
+                token: api_token,
+                content: 'record',
+                format: 'csv',
+                type: 'flat',
+                data: import_data,
+                returnFormat: 'json'
+            },
+            timeout: 50000
+        }).should(($a) => {                                    
+            expect($a.status).to.equal(200)
+        })
+        
     })
-
-})*/
+    
+})
 
 //
 // -- This is a child command --

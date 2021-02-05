@@ -32,9 +32,10 @@ describe('Export Data', () => {
 			.closest('tr').find('input.repeat_form_chkbox').check()
 		cy.get('button').contains('Save').click()
 		// Import data file
-		cy.log(cy.access_api_token(pid, Cypress.env('users')['admin']['user']))
-		
-		cy.pause()
+		cy.access_api_token(pid, Cypress.env('users')['admin']['user']).then(($token) => {
+			cy.import_data_file("21_ExportDataExtraction_v913IMP.csv", $token)
+			cy.pause()
+		})
 	})
 
 	describe('Basic Functionality', () => {
