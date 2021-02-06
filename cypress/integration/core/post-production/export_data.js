@@ -46,7 +46,13 @@ describe('Export Data', () => {
 
 	describe('Basic Functionality', () => {
 
+		before(() => {
+			// Steps 1 (Step 2 not necessary)
+			cy.set_user_type('standard')
+		})
+
 	    it('Should have the ability to mark fields as identifiers', () => {
+			// Step 3
 	        cy.visit_version({page: 'Design/online_designer.php', params: `pid=${pid}&page=export`})
 			cy.get('table#design-lname').find('a').first().click()
 			cy.get('input#field_phi1').click()
@@ -54,7 +60,8 @@ describe('Export Data', () => {
 			cy.get('table#design-fname').find('a').first().click()
 			cy.get('input#field_phi1').click()
 			cy.get('button').contains('Save').click()
-			// move project to production
+			
+			// Step 4
 			cy.visit_version({page: 'ProjectSetup/index.php', params: `pid=${pid}`})
 			cy.get('button').contains('Move project to production').click()
 			cy.get('input#keep_data').click()
@@ -64,15 +71,19 @@ describe('Export Data', () => {
 	    })
 
 	    it('Should have the ability to export all fields within a project', () => {
+			// Steps 6 and 7
 
 	    })
 
 	    it('Should allow the ability to export specific forms', () => {
+			// Step 8
 
 	    })
 	})
 
 	describe('Data Export Formats', () => {
+
+		// Step 5
 
     	it('Should have the ability to export to CSV format', () => {
 
@@ -102,6 +113,7 @@ describe('Export Data', () => {
     describe('De-Identification Options', () => {
 
     	describe('Known Identifiers', () => {
+			// Step 9
 
     		it('Should have the ability to remove all known identifier fields', () => {
 
@@ -114,6 +126,7 @@ describe('Export Data', () => {
     	})
 
     	describe('Free Form Text', () => {
+			// Step 9
 
     		it('Should have the ability to remove unvalidated text fields', () => {
     			
@@ -128,14 +141,17 @@ describe('Export Data', () => {
     	describe('Date and Datetime Fields', () => {
 
     		it('Should have the ability to remove all date and datetime fields', () => {
+				// Step 9
     			
     		})
 
     		it('Should have the ability to shift all dates by value between 0 and 364 days', () => {
+				// Step 10
     			
     		})
 
     		it('Should have the ability to shift all survey completion timestamps by value between 0 and 364 days', () => {
+				// Step 10
     			
     		})
 
@@ -144,6 +160,8 @@ describe('Export Data', () => {
     })
 
     describe('Export Permissions', () => {
+
+		// Steps 11 - 14
 
     	it('Should have the ability to restrict users from exporting data', () => {
 

@@ -309,3 +309,7 @@ Cypress.Commands.add('set_double_data_entry_module', (project_id, enabled = true
   cy.get('tr#double_data_entry-tr select').select(enabled ? '1' : '0')
   cy.get('input[type="submit"]').click()
 })
+
+Cypress.Commands.add('verify_deidentification_options', () => {
+  // This assumes user already has export dialog open
+})
