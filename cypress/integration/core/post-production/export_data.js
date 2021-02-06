@@ -1,4 +1,4 @@
-const pid = 13;
+const pid = 13
 
 describe('Export Data', () => {
 
@@ -62,17 +62,32 @@ describe('Export Data', () => {
 			cy.get('button').contains('Save').click()
 			
 			// Step 4
+			cy.set_user_type('admin')
 			cy.visit_version({page: 'ProjectSetup/index.php', params: `pid=${pid}`})
 			cy.get('button').contains('Move project to production').click()
 			cy.get('input#keep_data').click()
 			cy.get('button').contains('YES, Move to Production Status').click()
 			cy.get('div#actionMsg').should('be.visible')
-
+			cy.set_user_type('standard')
 	    })
 
 	    it('Should have the ability to export all fields within a project', () => {
 			// Steps 6 and 7
-
+			cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
+			cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+			
+			cy.get('input[value="csvlabels"]').click()
+			cy.export_csv_report().then((csv) => {
+				expect(csv[0].length).to.equal(13)
+				expect(Object.keys(csv[0])[0]).to.equal('Record ID')
+				// Use this to test how many records we have: [...new Set(ok.map((e)=>e.type))].length
+			})
+			
+			cy.get('input[value="csvraw"]').click()
+			cy.export_csv_report().then((csv) => {
+				expect()
+			})
+			cy.pause()
 	    })
 
 	    it('Should allow the ability to export specific forms', () => {

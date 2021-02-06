@@ -313,3 +313,17 @@ Cypress.Commands.add('set_double_data_entry_module', (project_id, enabled = true
 Cypress.Commands.add('verify_deidentification_options', () => {
   // This assumes user already has export dialog open
 })
+
+Cypress.Commands.add('export_csv_report', () => {
+  // This assumes user already has export dialog open
+  cy.get('div[role="dialog"]').find('button').contains('Export Data').click()
+  cy.wait(2000)
+  cy.get('div[role="dialog"]').find('td').contains('Click icon(s) to download:').closest('tbody').find('a').first().then(($a) => {
+    cy.request($a[0].href).then(({ body, headers }) => {
+      expect(headers).to.have.property('content-type', 'application/csv')
+      return body
+    })
+  }).then((csvString) => {
+    return cy.task('parseCsv', {csv_string: csvString})
+  })
+})

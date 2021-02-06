@@ -14,6 +14,7 @@ const shell = require('shelljs')
 const sed_lite = require('sed-lite').sed
 const fs = require('fs')
 const path = require('path')
+const neatCSV = require('neat-csv')
 
 const downloadDirectory = path.join(__dirname, '..', 'downloads')
 
@@ -122,32 +123,11 @@ module.exports = (on, config) => {
 
         	return false
       	}			
-	}
+	},
 
-  })
-  
-  on ('before:browser:launch', (browser = {}, launchOptions) => {
-	
-	// CHECK THIS OUT: https://github.com/cypress-io/cypress-example-recipes/tree/master/examples/testing-dom__download
-	
-	if (browser.family === 'chromium' && browser.name !== 'electron') {
-		launchOptions.preferences.default['download'] = {
-            default_directory: downloadDirectory,
-		}
+	parseCsv({csv_string}) {
+		return neatCSV(csv_string)
 	}
-	
-	if (browser.family === 'firefox') {
-		/* Need to research this more - use chromium/electron for now */
-		//launchOptions.preferences['browser.download.dir'] = downloadDirectory
-		//launchOptions.preferences['browser.download.folderList'] = 2
-		//launchOptions.preferences['browser.helperApps.neverAsk.saveToDisk'] = 'text/csv'
-	}
-
-	if (browser.name === 'electron') {
-
-	}
-
-	return launchOptions
 
   })
 
