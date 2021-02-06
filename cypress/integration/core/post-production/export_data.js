@@ -34,14 +34,33 @@ describe('Export Data', () => {
 		// Import data file
 		cy.access_api_token(pid, Cypress.env('users')['admin']['user']).then(($token) => {
 			cy.import_data_file("21_ExportDataExtraction_v913IMP.csv", $token)
-			cy.pause()
 		})
+		// Mark records' forms as survey complete
+		cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${pid}&arm=1&id=1`})
+		cy.get('div#repeating_forms_table_parent').find('td.data').first().find('a').click()
+		cy.get('#submit-btn-savecompresp').click({force: true})
+		cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${pid}&arm=1&id=2`})
+		cy.get('div#repeating_forms_table_parent').find('td.data').first().find('a').click()
+		cy.get('#submit-btn-savecompresp').click({force: true})
 	})
 
 	describe('Basic Functionality', () => {
 
 	    it('Should have the ability to mark fields as identifiers', () => {
-	            
+	        cy.visit_version({page: 'Design/online_designer.php', params: `pid=${pid}&page=export`})
+			cy.get('table#design-lname').find('a').first().click()
+			cy.get('input#field_phi1').click()
+			cy.get('button').contains('Save').click()
+			cy.get('table#design-fname').find('a').first().click()
+			cy.get('input#field_phi1').click()
+			cy.get('button').contains('Save').click()
+			// move project to production
+			cy.visit_version({page: 'ProjectSetup/index.php', params: `pid=${pid}`})
+			cy.get('button').contains('Move project to production').click()
+			cy.get('input#keep_data').click()
+			cy.get('button').contains('YES, Move to Production Status').click()
+			cy.get('div#actionMsg').should('be.visible')
+
 	    })
 
 	    it('Should have the ability to export all fields within a project', () => {
