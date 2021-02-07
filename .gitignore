@@ -21,6 +21,5 @@ cypress.env.json
 /docker
 /find
 /mysql
-/cypress/downloads
 
 mysql-cli.zip
