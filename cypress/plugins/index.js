@@ -14,7 +14,7 @@ const shell = require('shelljs')
 const sed_lite = require('sed-lite').sed
 const fs = require('fs')
 const path = require('path')
-const neatCSV = require('neat-csv')
+const csv = require('async-csv')
 
 const downloadDirectory = path.join(__dirname, '..', 'downloads')
 
@@ -126,7 +126,7 @@ module.exports = (on, config) => {
 	},
 
 	parseCsv({csv_string}) {
-		return neatCSV(csv_string)
+		return csv.parse(csv_string)
 	}
 
   })
