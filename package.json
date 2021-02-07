@@ -9,7 +9,6 @@
     "compare-versions": "3.6.0",
     "cypress": "^6.2.1",
     "cypress-iframe": "1.0.1",
-    "neat-csv": "^6.0.1",
     "sed-lite": "0.8.2",
     "shelljs": "0.8.4"
   },
