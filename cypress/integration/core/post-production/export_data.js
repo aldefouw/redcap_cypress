@@ -72,7 +72,7 @@ describe('Export Data', () => {
 	    })
 
 	    it('Should have the ability to export all fields within a project', () => {
-			// Steps 6 and 7
+			// Step 6 - Label Data Export
 			cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
 			cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
 			cy.get('input[value="csvlabels"]').click()
@@ -82,36 +82,59 @@ describe('Export Data', () => {
 				expect(csv[1][csv[0].indexOf('Event Name')]).to.equal('Event 1')								// Data are labels
 				expect([...new Set(csv.map((row) => row[0]).slice(1))].length).to.equal(8)						// 8 records
 				expect(csv.length - 1).to.equal(19)																// 19 rows of data (subtract header)
-				expect(csv.slice(1).reduce((acc, val) => acc + (val[2] === "Survey" ? 1 : 0), 0)).to.equal(11)	// 11 rows show Survey instrument
-				expect(csv.slice(1).reduce((acc, val) => acc + (val[10] !== "" ? 1 : 0), 0)).to.equal(2)		// 2 rows show timestamps
+				expect(csv.slice(1).reduce((acc, val) => {
+					return acc + (val[csv[0].indexOf('Repeat Instrument')] === "Survey" ? 1 : 0)
+				}, 0)).to.equal(11)																				// 11 rows show Survey instrument
+				expect(csv.slice(1).reduce((acc, val) => {
+					return acc + (val[csv[0].indexOf('Survey Timestamp')] !== "" ? 1 : 0)
+				}, 0)).to.equal(2)																				// 2 rows show timestamps
 			})
 
+			// Step 7 - Raw Data Export
 			cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
 			cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
 			cy.get('input[value="csvraw"]').click()
 			cy.export_csv_report().should((csv) => {
-				console.log(csv)
 				expect(csv[0].length).to.equal(13)																// 13 columns
 				expect(csv[0][0]).to.equal('record_id')															// Headers are raw field names
 				expect(csv[1][csv[0].indexOf('redcap_event_name')]).to.equal('event_1_arm_1')					// Data are raw values
 				expect([...new Set(csv.map((row) => row[0]).slice(1))].length).to.equal(8)						// 8 records
 				expect(csv.length - 1).to.equal(19)																// 19 rows of data (subtract header)
-				expect(csv.slice(1).reduce((acc, val) => acc + (val[2] === "survey" ? 1 : 0), 0)).to.equal(11)	// 11 rows show Survey instrument
-				expect(csv.slice(1).reduce((acc, val) => acc + (val[10] !== "" ? 1 : 0), 0)).to.equal(2)		// 2 rows show timestamps
+				expect(csv.slice(1).reduce((acc, val) => {
+					return acc + (val[csv[0].indexOf('redcap_repeat_instrument')] === "survey" ? 1 : 0)
+				}, 0)).to.equal(11)																				// 11 rows show Survey instrument
+				expect(csv.slice(1).reduce((acc, val) => {
+					return acc + (val[csv[0].indexOf('survey_timestamp')] !== "" ? 1 : 0)
+				}, 0)).to.equal(2)																				// 2 rows show timestamps
 				
 				expect(csv.filter((row) => (row[0] == "1" && row[csv[0].indexOf('dob')] !== ""))[0][csv[0].indexOf('dob')])
 					.to.equal('2019-06-17')																		// Record 1 dob has value '6/17/19'
 				
 				expect(new Date(csv.filter((row) => {
 						return (row[0] == "1" && row[csv[0].indexOf('survey_timestamp')] !== "")
-					})[0][csv[0].indexOf('survey_timestamp')]).toLocaleDateString())
-					.to.equal(new Date().toLocaleDateString())  												// Record 1 survey_timestamp is today
+					})[0][csv[0].indexOf('survey_timestamp')]).toLocaleDateString('en-US', { timeZone: 'America/New_York' }))
+					.to.equal(new Date().toLocaleDateString('en-US', { timeZone: 'America/New_York' }))  		// Record 1 survey_timestamp is today
 			})
 	    })
 
 	    it('Should allow the ability to export specific forms', () => {
 			// Step 8
-
+			cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
+			cy.get('tr#reprow_SELECTED').find('button').contains('Make custom selections').click()
+			cy.get('#export_selected_instruments').select('survey')
+			cy.get('#export_selected_events').select('Event 2')
+			cy.get('tr#reprow_SELECTED').find('button.data_export_btn').contains('Export Data').click()
+			cy.get('input[value="csvraw"]').click()
+			cy.export_csv_report().should((csv) => {
+				expect(csv[0].length).to.equal(8)																// 8 columns
+				expect(csv[0][0]).to.equal('record_id')															// Headers are raw field names
+				expect(csv[1][csv[0].indexOf('redcap_event_name')]).to.equal('event_2_arm_1')					// Data are raw values
+				expect([...new Set(csv.map((row) => row[0]).slice(1))].length).to.equal(8)						// 8 records
+				expect(csv.length - 1).to.equal(11)																// 11 rows of data (subtract header)
+				expect(csv.slice(1).reduce((acc, val) => {
+					return acc + (val[csv[0].indexOf('survey_timestamp')] !== "" ? 1 : 0)
+				}, 0)).to.equal(2)																				// 2 rows show timestamps
+			})
 	    })
 	})
 

@@ -13,10 +13,7 @@
 const shell = require('shelljs')
 const sed_lite = require('sed-lite').sed
 const fs = require('fs')
-const path = require('path')
 const csv = require('async-csv')
-
-const downloadDirectory = path.join(__dirname, '..', 'downloads')
 
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
