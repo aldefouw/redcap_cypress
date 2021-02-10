@@ -336,6 +336,6 @@ Cypress.Commands.add('verify_export_deidentification_options', (selector) => {
   cy.get('#deid-remove-text').should('be.enabled')
   cy.get('#deid-remove-notes').should('be.enabled')
   cy.get('#deid-dates-remove').should('be.enabled')
-  cy.get('#deid-dates-shift').should('be.enabled')
+  cy.get('#deid-dates-shift').should('be.enabled').check()
   cy.get('#deid-surveytimestamps-shift').should('be.enabled')
 })
