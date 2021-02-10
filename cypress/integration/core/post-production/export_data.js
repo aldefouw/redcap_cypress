@@ -174,15 +174,37 @@ describe('Export Data', () => {
 
     describe('De-Identification Options', () => {
 
+        beforeEach(() => {
+            cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
+            cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+        })
+
         describe('Known Identifiers', () => {
             // Step 9
 
             it('Should have the ability to remove all known identifier fields', () => {
-
+                cy.get('input[value="csvraw"]').click()
+                cy.get('#deid-remove-identifiers').check()
+                cy.export_csv_report().should((csv) => {
+                    expect(csv[0]).to.have.lengthOf(10)                                                             // 10 columns
+                    expect(csv[0]).to.not.include.members(['lname','fname','redcap_survey_identifier'])
+                    expect([...new Set(csv.map((row) => row[0]).slice(1))]).to.have.lengthOf(8)                     // 8 records
+                    expect(csv.length - 1).to.equal(19)                                                             // 19 rows of data (subtract header)
+                    expect(csv.slice(1).reduce((acc, val) => {
+                        return acc + (val[csv[0].indexOf('survey_timestamp')] !== "" ? 1 : 0)
+                    }, 0)).to.equal(2)                                                                              // 2 rows show timestamps
+                })
             })
 
             it('Should have the ability to hash the Record ID', () => {
-            
+                cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
+                cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+                cy.get('input[value="csvraw"]').click()
+                cy.get('#deid-hashid').check()
+                cy.export_csv_report().should((csv) => {
+                    expect([...new Set(csv.map((row) => row[0]).slice(1))]).to.have.lengthOf(8)                     // 8 records
+                    expect(csv[1][csv[0].indexOf('record_id')].length).to.equal(32)                                 // record_id is 32 character hash
+                })
             })
 
         })
@@ -191,11 +213,23 @@ describe('Export Data', () => {
             // Step 9
 
             it('Should have the ability to remove unvalidated text fields', () => {
-            
+                cy.get('input[value="csvraw"]').click()
+                cy.get('#deid-remove-text').check()
+                cy.export_csv_report().should((csv) => {
+                    expect(csv[0]).to.not.include.members(['lname', 'fname', 'reminder'])                           // remove unvalidated text fields
+                    expect(csv[0]).to.include.members(['redcap_survey_identifier', 'dob', 'description'])           // include validated text fields, notes fields, and survey identifier fields
+                })
             })
 
             it('Should have the ability to remove notes box fields', () => {
-            
+                cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
+                cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+                cy.get('input[value="csvraw"]').click()
+                cy.get('#deid-remove-notes').check()
+                cy.export_csv_report().should((csv) => {
+                    expect(csv[0]).to.not.include.members(['description'])                                                  // remove notes fields
+                    expect(csv[0]).to.include.members(['lname', 'fname', 'reminder', 'redcap_survey_identifier', 'dob'])    // include everything else
+                })
             })
 
         })
@@ -204,12 +238,31 @@ describe('Export Data', () => {
 
             it('Should have the ability to remove all date and datetime fields', () => {
                 // Step 9
-            
+                cy.get('input[value="csvraw"]').click()
+                cy.get('#deid-dates-remove').check()
+                cy.export_csv_report().should((csv) => {
+                    expect(csv[0]).to.not.include.members(['dob'])                                                                  // remove date fields
+                    expect(csv[0]).to.include.members(['redcap_survey_identifier', 'lname', 'fname', 'reminder', 'description'])    // include everything else
+                })
             })
 
             it('Should have the ability to shift all dates by value between 0 and 364 days', () => {
                 // Step 10
-            
+                cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
+                cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+                cy.get('input[value="csvraw"]').click()
+                cy.export_csv_report().then((csv_orig) => {
+                    cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
+                    cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+                    cy.get('input[value="csvraw"]').click()
+                    cy.get('#deid-dates-shift').check()
+                    cy.get('#deid-surveytimestamps-shift').check()
+                    cy.export_csv_report().should((csv_new) => {
+                        
+                        // The Excel CSV icon is stamped with 'Date Shifted'.
+
+                    })    
+                })
             })
 
             it('Should have the ability to shift all survey completion timestamps by value between 0 and 364 days', () => {
