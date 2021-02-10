@@ -327,3 +327,15 @@ Cypress.Commands.add('export_csv_report', () => {
     return cy.task('parseCsv', {csv_string: csvString})
   })
 })
+
+Cypress.Commands.add('verify_export_deidentification_options', (selector) => {
+  // This assumes user already has export dialog open
+  cy.get(selector).click()
+  cy.get('#deid-remove-identifiers').should('be.enabled')
+  cy.get('#deid-hashid').should('be.enabled')
+  cy.get('#deid-remove-text').should('be.enabled')
+  cy.get('#deid-remove-notes').should('be.enabled')
+  cy.get('#deid-dates-remove').should('be.enabled')
+  cy.get('#deid-dates-shift').should('be.enabled')
+  cy.get('#deid-surveytimestamps-shift').should('be.enabled')
+})

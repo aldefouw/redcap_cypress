@@ -141,29 +141,34 @@ describe('Export Data', () => {
     describe('Data Export Formats', () => {
 
         // Step 5
+        before(() => {
+            cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
+            cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+        })
 
         it('Should have the ability to export to CSV format', () => {
-
+            cy.verify_export_deidentification_options('input[name="export_format"][value="csvraw"]')
+            cy.verify_export_deidentification_options('input[name="export_format"][value="csvlabels"]')
         })
 
         it('Should have the ability to export to SPSS format', () => {
-
+            cy.verify_export_deidentification_options('input[name="export_format"][value="spss"]')
         })
 
         it('Should have the ability to export to SAS format', () => {
-
+            cy.verify_export_deidentification_options('input[name="export_format"][value="sas"]')
         })
 
         it('Should have the ability to export to R format', () => {
-
+            cy.verify_export_deidentification_options('input[name="export_format"][value="r"]')
         })
 
         it('Should have the ability to export to STATA format', () => {
-
+            cy.verify_export_deidentification_options('input[name="export_format"][value="stata"]')
         })
 
         it('Should have the ability to export to CDISC ODM (XML) format', () => {
-
+            cy.verify_export_deidentification_options('input[name="export_format"][value="odm"]')
         })
     })
 
