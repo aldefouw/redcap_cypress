@@ -1,5 +1,7 @@
 const pid = 13
 
+// Step numbers taken from validation test script 21_ExportDataExtraction_v913.docx
+
 describe('Export Data', () => {
 
     before(() => {
@@ -289,9 +291,8 @@ describe('Export Data', () => {
 
     describe('Export Permissions', () => {
 
-        // Steps 11 - 14
-
         before(() => {
+            // Step 11
             cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`})
             cy.get('a.userLinkInTable').contains(Cypress.env('users')['standard']['user']).click()
             cy.get('div#tooltipBtnSetCustom').find('button').click()
@@ -300,13 +301,53 @@ describe('Export Data', () => {
         })
 
         it('Should have the ability to restrict users from exporting data', () => {
+            // Step 12
+
+            // To get real data values
+            cy.set_user_type('admin')
             cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
             cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
-            cy.get('#deid-remove-identifiers').should($inpt => expect($inpt).to.be.checked)
-                .click().should($inpt => expect($inpt).to.be.checked)
-            
             cy.get('input[value="csvraw"]').click()
-                
+            cy.export_csv_report().then((csv_orig) => {
+                cy.set_user_type('standard')
+                cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
+                cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+                cy.get('#deid-remove-identifiers').should($inpt => expect($inpt).to.be.checked)
+                    .click().should($inpt => expect($inpt).to.be.checked)
+            
+                cy.get('input[value="csvraw"]').click()
+                cy.export_csv_report().then((csv) => {
+                    expect(csv[0]).to.have.lengthOf(8)                                                              // 8 columns
+                    expect(csv[0][0]).to.equal('record_id')                                                         // Headers are raw field names
+                    expect(csv[1][csv[0].indexOf('redcap_event_name')]).to.equal('event_1_arm_1')                   // Data are raw values
+                    expect(csv.length - 1).to.equal(19)                                                             // 19 rows of data (subtract header)
+                    expect(csv.slice(1).reduce((acc, val) => {
+                        return acc + (val[csv[0].indexOf('survey_timestamp')] !== "" ? 1 : 0)
+                    }, 0)).to.equal(2)                                                                              // 2 rows show timestamps
+                    
+                    let dob_orig = csv_orig[1][csv_orig[0].indexOf('dob')]                                          // dob does not match actual data                        
+                    let dob = csv[1][csv[0].indexOf('dob')]
+                    expect(dob).to.not.equal(dob_orig)
+
+                    let st_orig = csv_orig[2][csv_orig[0].indexOf('survey_timestamp')]                              // survey timestamp does not match 
+                    let st = csv[2][csv[0].indexOf('survey_timestamp')]                                             // actual data
+                    expect(st).to.not.equal(st_orig)
+                    
+                    let excluded_fields = ['lname', 'fname', 'redcap_survey_identifier', 'reminder', 'description'] // Does not include identifiers,
+                    expect(csv[0]).to.not.include.members(excluded_fields)                                          // unvalidated text, or notes fields
+                })
+            })
+
+            // Step 13
+            cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`})
+            cy.get('a.userLinkInTable').contains(Cypress.env('users')['standard']['user']).click()
+            cy.get('div#tooltipBtnSetCustom').find('button').click()
+            cy.get('input[name="data_export_tool"][value="0"]').click()
+            cy.get('button').contains('Save Changes').click()
+
+            // Step 14
+            cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
+            cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').should('not.exist')
         })
     })
 })
