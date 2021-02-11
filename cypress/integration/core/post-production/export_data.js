@@ -256,18 +256,31 @@ describe('Export Data', () => {
                     cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
                     cy.get('input[value="csvraw"]').click()
                     cy.get('#deid-dates-shift').check()
-                    cy.get('#deid-surveytimestamps-shift').check()
                     cy.export_csv_report().should((csv_new) => {
-                        
-                        // The Excel CSV icon is stamped with 'Date Shifted'.
-
+                        let dob_orig = csv_orig[1][csv_orig[0].indexOf('dob')]
+                        let dob_new = csv_new[1][csv_new[0].indexOf('dob')]
+                        expect(dob_new).to.not.equal(dob_orig)
                     })    
                 })
             })
 
             it('Should have the ability to shift all survey completion timestamps by value between 0 and 364 days', () => {
                 // Step 10
-            
+                cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
+                cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+                cy.get('input[value="csvraw"]').click()
+                cy.export_csv_report().then((csv_orig) => {
+                    cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
+                    cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+                    cy.get('input[value="csvraw"]').click()
+                    cy.get('#deid-dates-shift').check()
+                    cy.get('#deid-surveytimestamps-shift').check()
+                    cy.export_csv_report().should((csv_new) => {
+                        let st_orig = csv_orig[2][csv_orig[0].indexOf('survey_timestamp')]
+                        let st_new = csv_new[2][csv_new[0].indexOf('survey_timestamp')]
+                        expect(st_new).to.not.equal(st_orig)
+                    })    
+                })
             })
 
         })
@@ -278,8 +291,22 @@ describe('Export Data', () => {
 
         // Steps 11 - 14
 
-        it('Should have the ability to restrict users from exporting data', () => {
+        before(() => {
+            cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`})
+            cy.get('a.userLinkInTable').contains(Cypress.env('users')['standard']['user']).click()
+            cy.get('div#tooltipBtnSetCustom').find('button').click()
+            cy.get('input[name="data_export_tool"][value="2"]').click()
+            cy.get('button').contains('Save Changes').click()
+        })
 
+        it('Should have the ability to restrict users from exporting data', () => {
+            cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
+            cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+            cy.get('#deid-remove-identifiers').should($inpt => expect($inpt).to.be.checked)
+                .click().should($inpt => expect($inpt).to.be.checked)
+            
+            cy.get('input[value="csvraw"]').click()
+                
         })
     })
 })
