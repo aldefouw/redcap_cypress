@@ -17,6 +17,7 @@ describe('Export Data', () => {
             .find('button')
             .contains('Enable')
             .click()
+        cy.wait(2000)
         cy.get('button#surveySettingsSubmit').click()
         // Add Event 2 and designate instruments
         cy.visit_version({page:'Design/define_events.php', params:`pid=${pid}`})
@@ -294,8 +295,9 @@ describe('Export Data', () => {
         before(() => {
             // Step 11
             cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`})
-            cy.get('a.userLinkInTable').contains(Cypress.env('users')['standard']['user']).click()
-            cy.get('div#tooltipBtnSetCustom').find('button').click()
+            cy.wait(2000)
+            cy.get(`a.userLinkInTable[userid="${Cypress.env('users')['standard']['user']}"]`).click({force: true})
+            cy.get('div#tooltipBtnSetCustom').find('button').click({force: true})
             cy.get('input[name="data_export_tool"][value="2"]').click()
             cy.get('button').contains('Save Changes').click()
         })
@@ -340,8 +342,9 @@ describe('Export Data', () => {
 
             // Step 13
             cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`})
-            cy.get('a.userLinkInTable').contains(Cypress.env('users')['standard']['user']).click()
-            cy.get('div#tooltipBtnSetCustom').find('button').click()
+            cy.wait(2000)
+            cy.get(`a.userLinkInTable[userid="${Cypress.env('users')['standard']['user']}"]`).click()
+            cy.get('div#tooltipBtnSetCustom').find('button').click({force: true})
             cy.get('input[name="data_export_tool"][value="0"]').click()
             cy.get('button').contains('Save Changes').click()
 
