@@ -467,9 +467,9 @@ Cypress.Commands.add('delete_project_complete', (pid) => {
 
 Cypress.Commands.add('delete_records', (pid) => {
     cy.visit_version({ page: 'ProjectSetup/other_functionality.php', params: `pid=${pid}`})
-    cy.get('button').contains('Erase all data').click()
-    cy.get('div[role="dialog"]').find('button').contains('Erase all data').click({force: true})
-    cy.get('span#ui-id-2').closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
+    cy.get('button', {force: true}).contains('Erase all data').click({force: true})
+    cy.get('div[role="dialog"]', {force: true}).find('button').contains('Erase all data').click({force: true})
+    cy.get('span#ui-id-2', {force: true}).closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
 })
 
 Cypress.Commands.add('access_api_token', (pid, user) => {

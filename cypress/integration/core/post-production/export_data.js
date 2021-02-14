@@ -1,4 +1,6 @@
-const pid = 13
+const pid = 21
+const admin = 'test_admin'
+const standard = 'test_user'
 
 // Step numbers taken from validation test script 21_ExportDataExtraction_v913.docx
 
@@ -8,36 +10,18 @@ describe('Export Data', () => {
         // Prepare project
         cy.set_user_type('admin')
         cy.mysql_db('projects/pristine')
-        // Upload data dictionary
-        cy.upload_data_dictionary('core/21_ExportDataExtraction_v913DD.csv', pid)
-        // Enable survey instrument as survey
-        cy.visit_version({page:'Design/online_designer.php', params:`pid=${pid}`})
-        cy.get('div#form_menu_description_input_span-survey')
-            .closest('tr')
-            .find('button')
-            .contains('Enable')
-            .click()
-        cy.wait(2000)
-        cy.get('button#surveySettingsSubmit').click()
-        // Add Event 2 and designate instruments
-        cy.visit_version({page:'Design/define_events.php', params:`pid=${pid}`})
-        cy.get('input#descrip').type('Event 2')
-        cy.get('input#addbutton').click()
-        cy.visit_version({page:'Design/designate_forms.php', params:`pid=${pid}`})
-        cy.get('button').contains('Begin Editing').click()
-        cy.get('td').contains('Survey').closest('tr').find('input').last().check()
-        cy.get('button#save_btn').click()
-        // Enable repeatable instruments
-        cy.visit_version({page:'ProjectSetup/index.php', params:`pid=${pid}`})
-        cy.get('button#enableRepeatingFormsEventsBtn').click()
-        cy.get('div.repeat_event_label').contains('Event 2').closest('tr')
-            .find('select.repeat_select').select('PARTIAL')
-            .closest('tr').find('input.repeat_form_chkbox').check()
-        cy.get('button').contains('Save').click()
-        // Import data file
-        cy.access_api_token(pid, Cypress.env('users')['admin']['user']).then(($token) => {
-            cy.import_data_file("21_ExportDataExtraction_v913IMP.csv", $token)
+        cy.create_cdisc_project('Export Test', '0', 'cdisc_files/core/export_data.xml', pid)
+        cy.add_users_to_project([standard], pid)
+        cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`}).then(() => {
+            cy.wait(1000)
+            cy.get(`a.userLinkInTable[userid="${standard}"]`).click({force: true})
+            cy.get('div#tooltipBtnSetCustom').find('button').click({force: true})
+            cy.get('input[name="design"]').check()
+            cy.get('input[name="user_rights"]').check()
+            cy.get('input[name="data_export_tool"][value="1"]').check()
+            cy.get('.ui-button').contains(/add user|save changes/i).click()
         })
+        
         // Mark records' forms as survey complete
         cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${pid}&arm=1&id=1`})
         cy.get('div#repeating_forms_table_parent').find('td.data').first().find('a').click()
@@ -45,6 +29,14 @@ describe('Export Data', () => {
         cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${pid}&arm=1&id=2`})
         cy.get('div#repeating_forms_table_parent').find('td.data').first().find('a').click()
         cy.get('#submit-btn-savecompresp').click({force: true})
+    })
+
+    after(() => {
+        cy.set_user_type('admin')
+        cy.delete_records(pid)
+        cy.remove_users_from_project([standard, admin], pid)
+        cy.delete_project(pid)
+        cy.mysql_db('projects/pristine')
     })
 
     describe('Basic Functionality', () => {
@@ -75,6 +67,8 @@ describe('Export Data', () => {
         })
 
         it('Should have the ability to export all fields within a project', () => {
+
+
             // Step 6 - Label Data Export
             cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
             cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
@@ -294,12 +288,13 @@ describe('Export Data', () => {
 
         before(() => {
             // Step 11
-            cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`})
-            cy.wait(2000)
-            cy.get(`a.userLinkInTable[userid="${Cypress.env('users')['standard']['user']}"]`).click({force: true})
-            cy.get('div#tooltipBtnSetCustom').find('button').click({force: true})
-            cy.get('input[name="data_export_tool"][value="2"]').click()
-            cy.get('button').contains('Save Changes').click()
+            cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`}).then(() => {
+                cy.wait(1000)
+                cy.get(`a.userLinkInTable[userid="${standard}"]`).click({force: true})
+                cy.get('div#tooltipBtnSetCustom').find('button').click({force: true})
+                cy.get('input[name="data_export_tool"][value="2"]').click()
+                cy.get('button').contains('Save Changes').click()
+            })
         })
 
         it('Should have the ability to restrict users from exporting data', () => {
@@ -341,12 +336,13 @@ describe('Export Data', () => {
             })
 
             // Step 13
-            cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`})
-            cy.wait(2000)
-            cy.get(`a.userLinkInTable[userid="${Cypress.env('users')['standard']['user']}"]`).click()
-            cy.get('div#tooltipBtnSetCustom').find('button').click({force: true})
-            cy.get('input[name="data_export_tool"][value="0"]').click()
-            cy.get('button').contains('Save Changes').click()
+            cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`}).then(() => {
+                cy.wait(1000)
+                cy.get(`a.userLinkInTable[userid="${standard}"]`).click({force: true})
+                cy.get('div#tooltipBtnSetCustom').find('button').click({force: true})
+                cy.get('input[name="data_export_tool"][value="0"]').click()
+                cy.get('button').contains('Save Changes').click()
+            })
 
             // Step 14
             cy.visit_version({page: 'DataExport/index.php', params: `pid=${pid}`})
