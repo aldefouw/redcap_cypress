@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redcap="https://projectredcap.org" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.3 schema/odm/ODM1-3-1.xsd" ODMVersion="1.3.1" FileOID="000-00-0000" FileType="Snapshot" Description="Test Project" AsOfDateTime="2021-02-01T18:58:11" CreationDateTime="2021-02-01T18:58:11" SourceSystem="REDCap" SourceSystemVersion="9.1.3">
-<Study OID="Project.TestProject">
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redcap="https://projectredcap.org" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.3 schema/odm/ODM1-3-1.xsd" ODMVersion="1.3.1" FileOID="000-00-0000" FileType="Snapshot" Description="Export Test" AsOfDateTime="2021-02-16T17:22:46" CreationDateTime="2021-02-16T17:22:46" SourceSystem="REDCap" SourceSystemVersion="9.1.3">
+<Study OID="Project.ExportTest">
 <GlobalVariables>
-	<StudyName>Test Project</StudyName>
-	<StudyDescription>This file contains the metadata, events, and data for REDCap project "Test Project".</StudyDescription>
-	<ProtocolName>Test Project</ProtocolName>
+	<StudyName>Export Test</StudyName>
+	<StudyDescription>This file contains the metadata, events, and data for REDCap project "Export Test".</StudyDescription>
+	<ProtocolName>Export Test</ProtocolName>
 	<redcap:RecordAutonumberingEnabled>1</redcap:RecordAutonumberingEnabled>
 	<redcap:CustomRecordLabel></redcap:CustomRecordLabel>
 	<redcap:SecondaryUniqueField></redcap:SecondaryUniqueField>
 	<redcap:SchedulingEnabled>0</redcap:SchedulingEnabled>
 	<redcap:SurveysEnabled>1</redcap:SurveysEnabled>
 	<redcap:SurveyInvitationEmailField></redcap:SurveyInvitationEmailField>
-	<redcap:Purpose>2</redcap:Purpose>
-	<redcap:PurposeOther>0</redcap:PurposeOther>
+	<redcap:Purpose>0</redcap:Purpose>
+	<redcap:PurposeOther></redcap:PurposeOther>
 	<redcap:ProjectNotes></redcap:ProjectNotes>
 	<redcap:RepeatingInstrumentsAndEvents>
 		<redcap:RepeatingInstruments>
@@ -23,7 +23,7 @@
 		<redcap:Surveys form_name="survey" title="Survey" instructions="&lt;p&gt;&lt;strong&gt;Please complete the survey below.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Thank you!&lt;/p&gt;" acknowledgement="&lt;p&gt;&lt;strong&gt;Thank you for taking the survey.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Have a nice day!&lt;/p&gt;" question_by_section="0" display_page_number="0" question_auto_numbering="1" survey_enabled="1" save_and_return="0" save_and_return_code_bypass="0" logo="" hide_title="0" view_results="0" min_responses_view_results="10" check_diversity_view_results="0" end_survey_redirect_url="" survey_expiration="" promis_skip_question="0" survey_auth_enabled_single="0" edit_completed_response="0" hide_back_button="0" show_required_field_text="1" confirmation_email_subject="" confirmation_email_content="" confirmation_email_from="" confirmation_email_attach_pdf="0" confirmation_email_attachment="" text_to_speech="0" text_to_speech_language="en" end_survey_redirect_next_survey="0" theme="" text_size="1" font_family="16" theme_text_buttons="" theme_bg_page="" theme_text_title="" theme_bg_title="" theme_text_sectionheader="" theme_bg_sectionheader="" theme_text_question="" theme_bg_question="" enhanced_choices="0" repeat_survey_enabled="0" repeat_survey_btn_text="" repeat_survey_btn_location="AFTER_SUBMIT" response_limit="" response_limit_include_partials="1" response_limit_custom_text="Thank you for your interest; however, the survey is closed because the maximum number of responses has been reached." survey_time_limit_days="" survey_time_limit_hours="" survey_time_limit_minutes="" email_participant_field="" end_of_survey_pdf_download="0" pdf_auto_archive="0" pdf_econsent_version="" pdf_econsent_type="" pdf_econsent_firstname_field="" pdf_econsent_firstname_event_id="" pdf_econsent_lastname_field="" pdf_econsent_lastname_event_id="" pdf_econsent_dob_field="" pdf_econsent_dob_event_id="" pdf_econsent_allow_edit="0" pdf_econsent_signature_field1="" pdf_econsent_signature_field2="" pdf_econsent_signature_field3="" pdf_econsent_signature_field4="" pdf_econsent_signature_field5=""/>
 	</redcap:SurveysGroup>
 </GlobalVariables>
-<MetaDataVersion OID="Metadata.TestProject_2021-02-01_1858" Name="Test Project" redcap:RecordIdField="record_id">
+<MetaDataVersion OID="Metadata.ExportTest_2021-02-16_1722" Name="Export Test" redcap:RecordIdField="record_id">
 	<Protocol>
 		<StudyEventRef StudyEventOID="Event.event_1_arm_1" OrderNumber="1" Mandatory="No"/>
 		<StudyEventRef StudyEventOID="Event.event_2_arm_1" OrderNumber="2" Mandatory="No"/>
@@ -105,7 +105,7 @@
 	</CodeList>
 </MetaDataVersion>
 </Study>
-<ClinicalData StudyOID="Project.TestProject" MetaDataVersionOID="Metadata.TestProject_2021-02-01_1858">
+<ClinicalData StudyOID="Project.ExportTest" MetaDataVersionOID="Metadata.ExportTest_2021-02-16_1722">
 	<SubjectData SubjectKey="1" redcap:RecordIdField="record_id">
 		<StudyEventData StudyEventOID="Event.event_1_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_1_arm_1">
 			<FormData FormOID="Form.export" FormRepeatKey="1">
@@ -131,7 +131,8 @@
 		</StudyEventData>
 		<StudyEventData StudyEventOID="Event.event_2_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_2_arm_1">
 			<FormData FormOID="Form.survey" FormRepeatKey="1">
-				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+				<ItemGroupData ItemGroupOID="survey.survey_timestamp" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="survey_timestamp" Value="2021-02-16 17:21:25"/>
 					<ItemData ItemOID="description" Value="record 1 event 2 a"/>
 				</ItemGroupData>
 				<ItemGroupData ItemGroupOID="survey.survey_complete" ItemGroupRepeatKey="1">
@@ -173,7 +174,8 @@
 		</StudyEventData>
 		<StudyEventData StudyEventOID="Event.event_2_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_2_arm_1">
 			<FormData FormOID="Form.survey" FormRepeatKey="1">
-				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+				<ItemGroupData ItemGroupOID="survey.survey_timestamp" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="survey_timestamp" Value="2021-02-16 17:21:28"/>
 					<ItemData ItemOID="description" Value="record 2 event 2 a"/>
 				</ItemGroupData>
 				<ItemGroupData ItemGroupOID="survey.survey_complete" ItemGroupRepeatKey="1">

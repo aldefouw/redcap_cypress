@@ -13,15 +13,15 @@ describe('Export Data', () => {
         cy.create_cdisc_project('Export Test', '0', 'cdisc_files/core/export_data.xml', pid)
         cy.add_users_to_project([standard], pid)
         cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`}).then(() => {
-            cy.wait(1000)
-            cy.get(`a.userLinkInTable[userid="${standard}"]`).click({force: true})
-            cy.get('div#tooltipBtnSetCustom').find('button').click({force: true})
-            cy.get('input[name="design"]').check()
-            cy.get('input[name="user_rights"]').check()
-            cy.get('input[name="data_export_tool"][value="1"]').check()
-            cy.get('.ui-button').contains(/add user|save changes/i).click()
+            cy.get(`a.userLinkInTable[userid="${standard}"]`).should('be.visible').click().then(() =>{
+                cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
+                cy.get('input[name="design"]').check()
+                cy.get('input[name="user_rights"]').check()
+                cy.get('input[name="data_export_tool"][value="1"]').check()
+                cy.get('.ui-button').contains(/add user|save changes/i).click()
+            })
         })
-        
+            
         // Mark records' forms as survey complete
         cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${pid}&arm=1&id=1`})
         cy.get('div#repeating_forms_table_parent').find('td.data').first().find('a').click()
@@ -289,11 +289,11 @@ describe('Export Data', () => {
         before(() => {
             // Step 11
             cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`}).then(() => {
-                cy.wait(1000)
-                cy.get(`a.userLinkInTable[userid="${standard}"]`).click({force: true})
-                cy.get('div#tooltipBtnSetCustom').find('button').click({force: true})
-                cy.get('input[name="data_export_tool"][value="2"]').click()
-                cy.get('button').contains('Save Changes').click()
+                cy.get(`a.userLinkInTable[userid="${standard}"]`).should('be.visible').click().then(() =>{
+                    cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
+                    cy.get('input[name="data_export_tool"][value="2"]').click()
+                    cy.get('button').contains('Save Changes').click()
+                })
             })
         })
 
@@ -337,11 +337,11 @@ describe('Export Data', () => {
 
             // Step 13
             cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`}).then(() => {
-                cy.wait(1000)
-                cy.get(`a.userLinkInTable[userid="${standard}"]`).click({force: true})
-                cy.get('div#tooltipBtnSetCustom').find('button').click({force: true})
-                cy.get('input[name="data_export_tool"][value="0"]').click()
-                cy.get('button').contains('Save Changes').click()
+                cy.get(`a.userLinkInTable[userid="${standard}"]`).should('be.visible').click().then(() =>{
+                    cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
+                    cy.get('input[name="data_export_tool"][value="0"]').click()
+                    cy.get('button').contains('Save Changes').click()
+                })
             })
 
             // Step 14
