@@ -19,6 +19,7 @@ jobs:
           name: Get REDCap Source
           command: |
             git clone --branch redcap-cypress https://github.com/aldefouw/redcap_source www
+            mkdir edocs
       - run:
           name: Start Docker REDCap Container
           command: |
