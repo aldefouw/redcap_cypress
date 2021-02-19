@@ -467,9 +467,47 @@ Cypress.Commands.add('delete_project_complete', (pid) => {
 
 Cypress.Commands.add('delete_records', (pid) => {
     cy.visit_version({ page: 'ProjectSetup/other_functionality.php', params: `pid=${pid}`})
-    cy.get('button').contains('Erase all data').click()
-    cy.get('div[role="dialog"]').find('button').contains('Erase all data').click({force: true})
-    cy.get('span#ui-id-2').closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
+    cy.get('button', {force: true}).contains('Erase all data').click({force: true})
+    cy.get('div[role="dialog"]', {force: true}).find('button').contains('Erase all data').click({force: true})
+    cy.get('span#ui-id-2', {force: true}).closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
+})
+
+Cypress.Commands.add('access_api_token', (pid, user) => {
+    // This assumes user already has API token created
+    cy.maintain_login().then(($r) => {
+        cy.request({ url: `/redcap_v${Cypress.env('redcap_version')}/ControlCenter/user_api_ajax.php?action=viewToken&api_pid=${pid}&api_username=${user}`})
+            .then(($token) => {
+                return cy.wrap(Cypress.$($token.body).children('div')[0].innerText);
+            })
+    })
+})
+
+Cypress.Commands.add('import_data_file', (fixture_file, api_token) => {
+
+    cy.fixture(`import_files/${fixture_file}`).then(import_data => {
+
+        cy.request({
+            method: 'POST',
+            url: '/api/',
+            headers: {
+              "Accept":"application/json",
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: {
+                token: api_token,
+                content: 'record',
+                format: 'csv',
+                type: 'flat',
+                data: import_data,
+                returnFormat: 'json'
+            },
+            timeout: 50000
+        }).should(($a) => {                                    
+            expect($a.status).to.equal(200)
+        })
+        
+    })
+    
 })
 
 //
