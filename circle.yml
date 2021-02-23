@@ -27,7 +27,7 @@ jobs:
       - run:
           name: Change eDocs folder permissions
           command: |
-            chmod 777 /var/edocs
+            sudo chmod 777 /var/edocs
       - run:
           name: Configure Cypress environment
           command: |
