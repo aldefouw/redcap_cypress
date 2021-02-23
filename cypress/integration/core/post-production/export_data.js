@@ -11,12 +11,6 @@ describe('Export Data', () => {
         cy.set_user_type('admin')
         cy.mysql_db('projects/pristine')
 
-        cy.visit_version({ page: "ControlCenter/check.php" }).then(() => {
-            cy.get("h4").contains("Configuration Check")
-            cy.get('div.darkgreen').contains('File upload directory').scrollIntoView({ offset: { top: -150, left: 0 } })
-        })
-
-
         // cy.create_cdisc_project('Export Test', '0', 'cdisc_files/core/export_data.xml', pid)
         // cy.add_users_to_project([standard], pid)
         // cy.visit_version({page: 'UserRights/index.php', params: `pid=${pid}`}).then(() => {
@@ -29,7 +23,7 @@ describe('Export Data', () => {
         //     })
         // })
             
-        // // Mark records' forms as survey complete
+        // Mark records' forms as survey complete
         // cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${pid}&arm=1&id=1`})
         // cy.get('div#repeating_forms_table_parent').find('td.data').first().find('a').click()
         // cy.get('#submit-btn-savecompresp').click({force: true})
@@ -38,39 +32,49 @@ describe('Export Data', () => {
         // cy.get('#submit-btn-savecompresp').click({force: true})
     })
 
-    // after(() => {
-    //     cy.set_user_type('admin')
-    //     cy.delete_records(pid)
-    //     cy.remove_users_from_project([standard, admin], pid)
-    //     cy.delete_project(pid)
-    //     cy.mysql_db('projects/pristine')
-    // })
+    after(() => {
+        // cy.set_user_type('admin')
+        // cy.delete_records(pid)
+        // cy.remove_users_from_project([standard, admin], pid)
+        // cy.delete_project(pid)
+        // cy.mysql_db('projects/pristine')
+    })
 
     describe('Basic Functionality', () => {
 
         before(() => {
             // Steps 1 (Step 2 not necessary)
-            cy.set_user_type('standard')
+            
         })
 
         it('Should have the ability to mark fields as identifiers', () => {
-            // Step 3
-            cy.visit_version({page: 'Design/online_designer.php', params: `pid=${pid}&page=export`})
-            cy.get('table#design-lname').find('a').first().click()
-            cy.get('input#field_phi1').click()
-            cy.get('button').contains('Save').click()
-            cy.get('table#design-fname').find('a').first().click()
-            cy.get('input#field_phi1').click()
-            cy.get('button').contains('Save').click()
+             cy.set_user_type('admin')
+
+            cy.visit_version({ page: "ControlCenter/check.php" }).then(() => {
+                cy.get("h4").contains("Configuration Check")
+                cy.get('div.darkgreen').contains('File upload directory').scrollIntoView({ offset: { top: -150, left: 0 } })
+            })
+
+
+            // cy.set_user_type('standard')
+
+            // // Step 3
+            // cy.visit_version({page: 'Design/online_designer.php', params: `pid=${pid}&page=export`})
+            // cy.get('table#design-lname').find('a').first().click()
+            // cy.get('input#field_phi1').click()
+            // cy.get('button').contains('Save').click()
+            // cy.get('table#design-fname').find('a').first().click()
+            // cy.get('input#field_phi1').click()
+            // cy.get('button').contains('Save').click()
         
-            // Step 4
-            cy.set_user_type('admin')
-            cy.visit_version({page: 'ProjectSetup/index.php', params: `pid=${pid}`})
-            cy.get('button').contains('Move project to production').click()
-            cy.get('input#keep_data').click()
-            cy.get('button').contains('YES, Move to Production Status').click()
-            cy.get('div#actionMsg').should('be.visible')
-            cy.set_user_type('standard')
+            // // Step 4
+            // cy.set_user_type('admin')
+            // cy.visit_version({page: 'ProjectSetup/index.php', params: `pid=${pid}`})
+            // cy.get('button').contains('Move project to production').click()
+            // cy.get('input#keep_data').click()
+            // cy.get('button').contains('YES, Move to Production Status').click()
+            // cy.get('div#actionMsg').should('be.visible')
+            // cy.set_user_type('standard')
         })
     })
 
