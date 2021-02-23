@@ -41,7 +41,7 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use stable
             npm install
-            npx cypress run --spec cypress/integration/core/post-production/export_data.js --record --key $RECORD_KEY
+            npx cypress run --record --key $RECORD_KEY
 workflows:
   version: 2
   workflow:
