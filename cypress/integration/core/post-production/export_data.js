@@ -53,28 +53,29 @@ describe('Export Data', () => {
             cy.visit_version({ page: "ControlCenter/check.php" }).then(() => {
                 cy.get("h4").contains("Configuration Check")
                 cy.get('div').contains('File upload directory').scrollIntoView({ offset: { top: -150, left: 0 } })
+                cy.wait(20)
             })
 
 
-            // cy.set_user_type('standard')
+            cy.set_user_type('standard')
 
-            // // Step 3
-            // cy.visit_version({page: 'Design/online_designer.php', params: `pid=${pid}&page=export`})
-            // cy.get('table#design-lname').find('a').first().click()
-            // cy.get('input#field_phi1').click()
-            // cy.get('button').contains('Save').click()
-            // cy.get('table#design-fname').find('a').first().click()
-            // cy.get('input#field_phi1').click()
-            // cy.get('button').contains('Save').click()
+            // Step 3
+            cy.visit_version({page: 'Design/online_designer.php', params: `pid=${pid}&page=export`})
+            cy.get('table#design-lname').find('a').first().click()
+            cy.get('input#field_phi1').click()
+            cy.get('button').contains('Save').click()
+            cy.get('table#design-fname').find('a').first().click()
+            cy.get('input#field_phi1').click()
+            cy.get('button').contains('Save').click()
         
-            // // Step 4
-            // cy.set_user_type('admin')
-            // cy.visit_version({page: 'ProjectSetup/index.php', params: `pid=${pid}`})
-            // cy.get('button').contains('Move project to production').click()
-            // cy.get('input#keep_data').click()
-            // cy.get('button').contains('YES, Move to Production Status').click()
-            // cy.get('div#actionMsg').should('be.visible')
-            // cy.set_user_type('standard')
+            // Step 4
+            cy.set_user_type('admin')
+            cy.visit_version({page: 'ProjectSetup/index.php', params: `pid=${pid}`})
+            cy.get('button').contains('Move project to production').click()
+            cy.get('input#keep_data').click()
+            cy.get('button').contains('YES, Move to Production Status').click()
+            cy.get('div#actionMsg').should('be.visible')
+            cy.set_user_type('standard')
         })
     })
 
