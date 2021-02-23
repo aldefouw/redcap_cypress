@@ -51,7 +51,7 @@ describe('My Projects', () => {
 	it('Should display the correct number of records for a given project', () => {
 		cy.visit_base({url: 'index.php?action=myprojects'})
 
-        cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+        cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
              cy.get_project_table_row_col(1, 2).then(($a) => {
                 expect($a).to.contain('0')
             })
@@ -64,7 +64,7 @@ describe('My Projects', () => {
         		cy.get('button').contains('Save & Exit Form').click().then(() => {
         			cy.visit_base({url: 'index.php?action=myprojects'})
 
-		            cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+		            cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
 		                 cy.get_project_table_row_col(1, 2).then(($a) => {
 		                    expect($a).to.contain('1')
 		                })
@@ -78,7 +78,7 @@ describe('My Projects', () => {
 
 		cy.visit_base({url: 'index.php?action=myprojects'})
 
-        cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+        cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
              cy.get_project_table_row_col(1, 3).then(($a) => {
                 expect($a).to.contain('2') // Note that this calculated to include the default Record ID field
             })
@@ -97,7 +97,7 @@ describe('My Projects', () => {
 									cy.get('span.designVarName').should('contain', "second_field").then(() => {
 		            					cy.visit_base({url: 'index.php?action=myprojects'})
 
-							            cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+							            cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
 						                 	cy.get_project_table_row_col(1, 3).then(($a) => {
 						                    	expect($a).to.contain('3') // Note that this calculated to include the default Record ID field
 						                	})
@@ -116,7 +116,7 @@ describe('My Projects', () => {
 	it('Should display the correct number of instruments for a given project', () => {
 		cy.visit_base({url: 'index.php?action=myprojects'})
 
-        cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+        cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
              cy.get_project_table_row_col(1, 4).then(($a) => {
                 expect($a).to.contain('1 form')
             })
@@ -133,7 +133,7 @@ describe('My Projects', () => {
 
 	            				cy.visit_base({url: 'index.php?action=myprojects'})
 
-					            cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+					            cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
 				                 	cy.get_project_table_row_col(1, 4).then(($a) => {
 				                    	expect($a).to.contain('2 forms') // Note that this calculated to include the default Record ID field
 				                	})
@@ -150,7 +150,7 @@ describe('My Projects', () => {
 	it('Should display the correct icon for a given longitudinal project', () => {
 		cy.visit_base({url: 'index.php?action=myprojects'})
 
-        cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+        cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
              cy.get_project_table_row_col(1, 5).then(($a) => {
                 expect($a[0].innerHTML).to.contain('Longitudinal / repeating forms')
             })
@@ -173,7 +173,7 @@ describe('My Projects', () => {
 
 		cy.visit_base({url: 'index.php?action=myprojects'})
 
-		cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+		cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
              cy.get_project_table_row_col(1, 5).then(($a) => {
                 expect($a[0].innerHTML).to.contain('Classic')
             })
@@ -183,7 +183,7 @@ describe('My Projects', () => {
 	it('Should display the correct project status for a project in Development', () => {
 		cy.visit_base({url: 'index.php?action=myprojects'})
 
-        cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+        cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
              cy.get_project_table_row_col(1, 6).then(($a) => {
                 expect($a[0].innerHTML).to.contain('Development')
             })
@@ -206,7 +206,7 @@ describe('My Projects', () => {
 
 		            		cy.visit_base({url: 'index.php?action=myprojects'})
 
-						    cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+						    cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
 								cy.get_project_table_row_col(1, 6).then(($a) => {
 						            expect($a[0].innerHTML).to.contain('Production')
 						        })
@@ -226,7 +226,7 @@ describe('My Projects', () => {
 			cy.get('button').contains('YES').click().then(() => {
 				cy.visit_base({url: 'index.php?action=myprojects'})
 
-				cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+				cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
 					cy.get_project_table_row_col(1, 6).then(($a) => {
 		                expect($a[0].innerHTML).to.contain('Inactive')
 		            })
@@ -242,7 +242,7 @@ describe('My Projects', () => {
 			cy.get('div.ui-dialog button').contains('Archive the project').click().then(() => {
 				cy.visit_base({url: 'index.php?action=myprojects'})
 
-				cy.get('table#table-proj_table tr span').should('not.contain', "Loading").then(() => {
+				cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
 					cy.get_project_table_row_col(1, 1).then(($a) => {
 		                expect($a[0].innerHTML).to.contain('You do not have access to any projects')
 	            	})

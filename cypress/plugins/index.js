@@ -13,6 +13,7 @@
 const shell = require('shelljs')
 const sed_lite = require('sed-lite').sed
 const fs = require('fs')
+const csv = require('async-csv')
 
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
@@ -20,7 +21,7 @@ module.exports = (on, config) => {
 
   on('task', {
 
-  	populateStructureAndData({redcap_version, advanced_user_info, source_location}) {
+	populateStructureAndData({redcap_version, advanced_user_info, source_location}) {
 
  		// DEFINE OTHER LOCATIONS
 		var test_seeds_location = shell.pwd() + '/test_db';
@@ -74,9 +75,9 @@ module.exports = (on, config) => {
       	}
 
 		return false
-  	},
+	},
 
-  	generateMySQLCommand({mysql_name, host, port, db_name, db_user, db_pass, type, replace, include_db_name}) {
+	generateMySQLCommand({mysql_name, host, port, db_name, db_user, db_pass, type, replace, include_db_name}) {
   		if(include_db_name){
   			var db_cmd=`${mysql_name} -h${host} --port=${port} ${db_name} -u${db_user} -p${db_pass}`;
   		} else {
@@ -107,9 +108,9 @@ module.exports = (on, config) => {
 		if (fs.existsSync(tmp)) {
         	return { cmd: `${db_cmd} < ${tmp}`, tmp: tmp };
       	}		
-  	},
+	},
 
-  	deleteFile({path}){
+	deleteFile({path}){
 		if (fs.existsSync(path)) {
         	shell.rm(path)
 
@@ -119,8 +120,12 @@ module.exports = (on, config) => {
 
         	return false
       	}			
-  	} 	
+	},
 
-  })  	
+	parseCsv({csv_string}) {
+		return csv.parse(csv_string)
+	}
+
+  })
 
 }

@@ -217,6 +217,29 @@ Cypress.Commands.add('add_users_to_project', (usernames = [], project_id) => {
       }
 })
 
+Cypress.Commands.add('remove_users_from_project', (usernames = [], project_id) => {
+  cy.visit_version({page: 'UserRights/index.php', params: `pid=${project_id}`}).then(() => {
+    for (let username of usernames) {
+      cy.get(`a.userLinkInTable[userid="${username}"]`).should('be.visible').click().then(() => {
+
+        cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click().then(() => {
+          
+          cy.get('button:contains("Remove user")').should('be.visible').click().then(() => {
+
+            cy.get('span').contains('Remove user?').parent().parent().find('button:contains("Remove user")').should('be.visible').click({force: true})
+            
+            cy.get('div#working').should(($div) => {
+              expect($div).to.not.be.visible
+            })
+
+          })
+        })
+      })
+    }
+  })
+})
+
+
 Cypress.Commands.add('add_users_to_data_access_groups', (groups = [], usernames = [], project_id) => {
       cy.visit_version({page: 'DataAccessGroups/index.php', params: 'pid=' + project_id})
       cy.server()
@@ -286,4 +309,36 @@ Cypress.Commands.add('require_redcap_stats', () => {
   cy.server()
   cy.route({method: 'POST', url: '**/ProjectGeneral/project_stats_ajax.php'}).as('project_stats_ajax')
   cy.wait('@project_stats_ajax').then((xhr, error) => { })
+})
+
+Cypress.Commands.add('set_double_data_entry_module', (project_id, enabled = true) => {
+  cy.visit_version({page: 'ControlCenter/edit_project.php', params: `project=${project_id}`})
+  cy.get('tr#double_data_entry-tr select').select(enabled ? '1' : '0')
+  cy.get('input[type="submit"]').click()
+})
+
+Cypress.Commands.add('export_csv_report', () => {
+  // This assumes user already has export dialog open
+  cy.get('div[role="dialog"]').should('be.visible').find('button').contains('Export Data').click().then(() => {
+    cy.get('div[role="dialog"]').should('be.visible').find('td').contains('Click icon(s) to download:').closest('tbody').find('a').first().then(($a) => {
+      cy.request($a[0].href).then(({ body, headers }) => {
+        expect(headers).to.have.property('content-type', 'application/csv')
+        return body
+      })
+    }).then((csvString) => {
+      return cy.task('parseCsv', {csv_string: csvString})
+    })
+  })
+})
+
+Cypress.Commands.add('verify_export_deidentification_options', (selector) => {
+  // This assumes user already has export dialog open
+  cy.get(selector).click()
+  cy.get('#deid-remove-identifiers').should('be.enabled')
+  cy.get('#deid-hashid').should('be.enabled')
+  cy.get('#deid-remove-text').should('be.enabled')
+  cy.get('#deid-remove-notes').should('be.enabled')
+  cy.get('#deid-dates-remove').should('be.enabled')
+  cy.get('#deid-dates-shift').should('be.enabled').check()
+  cy.get('#deid-surveytimestamps-shift').should('be.enabled')
 })

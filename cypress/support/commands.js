@@ -289,11 +289,11 @@ Cypress.Commands.add('save_field', () => {
 
 Cypress.Commands.add('add_field', (field_name, type) => {
      cy.get('input#btn-last').click().then(() => {
-        cy.get('textarea#field_label').clear().type(field_name).then(() => {
-            cy.get('select#val_type').select(type).should('have.value', type).then(() => {
+        cy.get('select#field_type').select(type).should('have.value', type).then(() => {
+            cy.get('input#field_name').type(field_name).then(() => {
                 cy.save_field()
-                cy.find_online_designer_field(field_name)  
-            })            
+                cy.find_online_designer_field(field_name)
+            })
         })
     })
 })
@@ -435,6 +435,79 @@ Cypress.Commands.add('mysql_query', (query) => {
 
 Cypress.Commands.add('num_projects_excluding_archived', () => {
     return cy.mysql_query("SELECT count(*) FROM redcap_projects WHERE status != 3;")
+})
+
+Cypress.Commands.add('delete_project', (pid) => {
+    cy.visit_version({ page: 'ProjectSetup/other_functionality.php', params: `pid=${pid}`})
+    cy.get('button').contains('Delete the project').click()
+    cy.get('input#delete_project_confirm').type('DELETE').then((input) => {
+        cy.get(input).closest('div[role="dialog"]').find('button').contains('Delete the project').click()
+        cy.get('button').contains('Yes, delete the project').click()
+        cy.get('span#ui-id-3').closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
+    })
+})
+
+Cypress.Commands.add('delete_project_complete', (pid) => {
+    cy.mysql_query(`START TRANSACTION;
+
+        USE \`REDCAP_DB_NAME\`;
+        SET AUTOCOMMIT=0;
+        SET UNIQUE_CHECKS=0;
+        SET FOREIGN_KEY_CHECKS=0;
+
+        DELETE FROM redcap_data WHERE project_id = ${pid};
+        DELETE FROM redcap_record_list WHERE project_id = ${pid};
+        DELETE FROM redcap_record_counts WHERE project_id = ${pid};
+        DELETE FROM redcap_user_rights WHERE project_id = ${pid};
+        DELETE FROM redcap_projects WHERE project_id = ${pid};
+
+        COMMIT;`
+    )
+})
+
+Cypress.Commands.add('delete_records', (pid) => {
+    cy.visit_version({ page: 'ProjectSetup/other_functionality.php', params: `pid=${pid}`})
+    cy.get('button', {force: true}).contains('Erase all data').click({force: true})
+    cy.get('div[role="dialog"]', {force: true}).find('button').contains('Erase all data').click({force: true})
+    cy.get('span#ui-id-2', {force: true}).closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
+})
+
+Cypress.Commands.add('access_api_token', (pid, user) => {
+    // This assumes user already has API token created
+    cy.maintain_login().then(($r) => {
+        cy.request({ url: `/redcap_v${Cypress.env('redcap_version')}/ControlCenter/user_api_ajax.php?action=viewToken&api_pid=${pid}&api_username=${user}`})
+            .then(($token) => {
+                return cy.wrap(Cypress.$($token.body).children('div')[0].innerText);
+            })
+    })
+})
+
+Cypress.Commands.add('import_data_file', (fixture_file, api_token) => {
+
+    cy.fixture(`import_files/${fixture_file}`).then(import_data => {
+
+        cy.request({
+            method: 'POST',
+            url: '/api/',
+            headers: {
+              "Accept":"application/json",
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: {
+                token: api_token,
+                content: 'record',
+                format: 'csv',
+                type: 'flat',
+                data: import_data,
+                returnFormat: 'json'
+            },
+            timeout: 50000
+        }).should(($a) => {                                    
+            expect($a.status).to.equal(200)
+        })
+        
+    })
+    
 })
 
 //
