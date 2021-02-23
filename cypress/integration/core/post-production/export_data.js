@@ -52,7 +52,7 @@ describe('Export Data', () => {
 
             cy.visit_version({ page: "ControlCenter/check.php" }).then(() => {
                 cy.get("h4").contains("Configuration Check")
-                cy.get('div.darkgreen').contains('File upload directory').scrollIntoView({ offset: { top: -150, left: 0 } })
+                cy.get('div').contains('File upload directory').scrollIntoView({ offset: { top: -150, left: 0 } })
             })
 
 
