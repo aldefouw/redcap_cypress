@@ -19,14 +19,15 @@ jobs:
           name: Get REDCap Source
           command: |
             git clone --branch redcap-cypress https://github.com/aldefouw/redcap_source www
-            cd www
-            rm -rf edocs
-            mkdir edocs
       - run:
           name: Start Docker REDCap Container
           command: |
             cd /home/circleci/project/redcap_docker
             docker-compose up -d --build
+      - run:
+          name: Change eDocs folder permissions
+          command: |
+            chmod 777 /var/edocs
       - run:
           name: Configure Cypress environment
           command: |
