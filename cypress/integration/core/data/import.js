@@ -138,11 +138,53 @@ describe('Data Collection and Storage', () => {
 	describe('Data Validation Abilities', () => {
 
 		it('Should have the ability to import only valid formats for text fields with validation', () => {
-	            
+			cy.get('select[name="format"]').select('Rows')
+			cy.get('select[name="overwriteBehavior"]').select('Yes, blank values in the file will overwrite existing values')
+			cy.get('button').contains('Yes').click()
+
+			cy.upload_file('import_files/classic_db_import_invalid_email_phone_dob.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+
+					cy.get('body').should($body => {
+						expect($body).to.contain('Error')	
+
+						expect($body).to.contain('email')		
+						expect($body).to.contain('test@invalid')
+
+						expect($body).to.contain('telephone_1')	
+						expect($body).to.contain('INVALID PHONE NUMBER')
+
+						expect($body).to.contain('dob')	
+						expect($body).to.contain('INVALID DATE')
+					})
+				})
+			})
 	    })
 
 		it('Should have the ability to import only valid choice codes for radio buttons, dropdowns and checkboxes', () => {
-	            
+			cy.get('select[name="format"]').select('Rows')
+			cy.get('select[name="overwriteBehavior"]').select('Yes, blank values in the file will overwrite existing values')
+			cy.get('button').contains('Yes').click()
+
+			cy.upload_file('import_files/classic_db_import_invalid_checkbox_dropdown_radio.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+
+					cy.get('body').should($body => {
+						expect($body).to.contain('Error')	
+
+						expect($body).to.contain('compliance_2')		
+						expect($body).to.contain('INVALID DROPDOWN VALUE')
+
+						expect($body).to.contain('ethnicity')		
+						expect($body).to.contain('INVALID RADIO VALUE')
+
+						expect($body).to.contain('gym___0')		
+						expect($body).to.contain('INVALID CHECKBOX VALUE')
+					})
+				})
+			})
 	    })
 
 	})
