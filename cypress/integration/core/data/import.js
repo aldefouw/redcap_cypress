@@ -192,7 +192,27 @@ describe('Data Collection and Storage', () => {
 	describe('Data Access Controls', () => {
 
 		it('Should have the ability to not allow data to be changed on locked data entry forms', () => {
-	            
+			cy.visit_version({page: 'DataEntry/index.php', params: 'pid=1&id=1&page=demographics&event_id=1&instance=1'})
+
+			cy.get('b').contains('Lock').parent().children().first('input').click()
+
+            cy.get('button').contains('Save & Exit Form').click()
+
+            cy.get('body').should(($body) => {
+                expect($body).to.contain('Study ID 1 successfully edited')
+            })
+
+			cy.get('a').contains('Data Import Tool').click()
+
+			cy.upload_file('import_files/classic_db_import_rows_modified.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+					cy.get('body').should(($body) => {
+						expect($body).to.contain('This field is located on a form that is locked.')
+					})
+				})
+			})
+
 	    })
 
     	it('Should have the ability to assign data instruments to a data access group with the Data Import Tool', () => {
