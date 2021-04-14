@@ -192,6 +192,20 @@ describe('Data Collection and Storage', () => {
 	describe('Data Access Controls', () => {
 
 		it('Should have the ability to not allow data to be changed on locked data entry forms', () => {
+			cy.get('select[name="format"]').select('Rows')
+
+			cy.upload_file('import_files/classic_db_import_rows_modified.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+					cy.wait(1000)
+					cy.get('input').contains('Import Data').click().then(() => {
+						cy.get('body').should($body => {
+							expect($body).to.contain('Import Successful!')
+						})
+					})
+				})
+			})
+
 			cy.visit_version({page: 'DataEntry/index.php', params: 'pid=1&id=1&page=demographics&event_id=1&instance=1'})
 
 			cy.get('b').contains('Lock').parent().children().first('input').click()
@@ -204,7 +218,7 @@ describe('Data Collection and Storage', () => {
 
 			cy.get('a').contains('Data Import Tool').click()
 
-			cy.upload_file('import_files/classic_db_import_rows_modified.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+			cy.upload_file('import_files/classic_db_import_rows.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
 				cy.wait(1000)
 				cy.get('input').contains('Upload File').click().then(() => {
 					cy.get('body').should(($body) => {
@@ -213,13 +227,48 @@ describe('Data Collection and Storage', () => {
 				})
 			})
 
+			cy.visit_version({page: 'DataEntry/index.php', params: 'pid=1&id=1&page=demographics&event_id=1&instance=1'})
+
+			cy.get('input[value="Unlock form"]').click().then(() => {
+				cy.get('button').contains('Unlock').click().then(() => {
+					cy.wait(1000)
+					cy.get('button').contains('Close').click()
+				})
+				
+			})
+
+            cy.get('button').contains('Save & Exit Form').click()
+
+            cy.get('body').should(($body) => {
+                expect($body).to.contain('Study ID 1 successfully edited')
+            })
 	    })
 
-    	it('Should have the ability to assign data instruments to a data access group with the Data Import Tool', () => {
-            
-	    })
 
     	it('Should have the ability to not allow a new record to be imported if user does not have Create Records access', () => {
+			cy.visit_version({page: 'UserRights/index.php', params: 'pid=1'})
+			cy.get('a').contains('Test User').click()
+			cy.get('button').contains('Edit user privileges').click()
+			cy.get('input[name="record_create"]').click()
+			cy.get('button').contains('Save Changes').click()
+
+			cy.get('a').contains('Data Import Tool').click()
+
+			cy.upload_file('import_files/classic_db_import_rows_blank_first_name.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+					
+					cy.wait(1000)
+
+					cy.get('body').should(($body) => {
+						expect($body).to.contain('Your user privileges do NOT allow you to create new records.')
+					})
+
+				})
+			})
+	    })
+
+	    it('Should have the ability to assign data instruments to a data access group with the Data Import Tool', () => {
             
 	    })
 	
