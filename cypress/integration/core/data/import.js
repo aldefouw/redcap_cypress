@@ -269,7 +269,67 @@ describe('Data Collection and Storage', () => {
 	    })
 
 	    it('Should have the ability to assign data instruments to a data access group with the Data Import Tool', () => {
-            
+            cy.visit_version({page: 'UserRights/index.php', params: 'pid=1'})
+			cy.get('a').contains('Test User').click()
+			cy.get('button').contains('Edit user privileges').click()
+			cy.get('input[name="data_access_groups"]').click()
+			cy.get('button').contains('Save Changes').click().then(() => {
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('User "test_user" was successfully edited')
+				})
+			})
+
+			cy.visit_version({page: 'DataAccessGroups/index.php', params: 'pid=1'})
+			cy.get('#new_group').type('Test First')
+			cy.get('button').contains('Add Group').click().then(() => {
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('Data Access Group "Test First" has been created!')
+				})
+			})
+
+			cy.get('#new_group').type('Test Second')
+			cy.get('button').contains('Add Group').click().then(() => {
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('Data Access Group "Test Second" has been created!')
+				})
+			})
+
+			cy.get('a').contains('Data Import Tool').click()
+
+			cy.upload_file('import_files/classic_db_import_rows_dag.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+					
+					cy.wait(1000)
+
+					cy.get('body').should(($body) => {
+						expect($body).to.contain('Your document was uploaded successfully and is ready for review.')
+						expect($body).to.contain('redcap_data_access_group')
+						expect($body).to.contain('test_first')
+						expect($body).to.contain('test_second')
+					})
+
+					cy.get('input').contains('Import Data').click().then(() => {
+						cy.get('body').should($body => {
+							expect($body).to.contain('Import Successful!')
+						})
+					})
+
+				})
+			})
+
+			cy.visit_version({page: 'DataEntry/index.php', params: 'pid=1&id=1&page=demographics&event_id=1&instance=1'})
+
+			cy.get('body').should($body => {
+				expect($body).to.contain('Test First')
+			})
+
+			cy.visit_version({page: 'DataEntry/index.php', params: 'pid=1&id=2&page=demographics&event_id=1&instance=1'})
+
+			cy.get('body').should($body => {
+				expect($body).to.contain('Test Second')
+			})
+
 	    })
 	
 	})
