@@ -56,14 +56,14 @@ module.exports = (on, config) => {
 
 		shell.cat(user_sql).toEnd(structure_and_data_file);
 		shell.cat(auth_sql).toEnd(structure_and_data_file);
-		shell.cat(rights_sql).toEnd(structure_and_data_file);
-
 
 		//DEMO PROJECT SEEDS
 		for(i = 1; i<=12; i++){
 			let demo_sql=`${sql_path}/create_demo_db${i}.sql`
 			shell.cat(demo_sql).toEnd(structure_and_data_file)
 		}
+
+		shell.cat(rights_sql).toEnd(structure_and_data_file);
 
 		shell.cat(projects_sql).toEnd(structure_and_data_file);
 		shell.cat(config_sql).sed('REDCAP_VERSION_MAGIC_STRING', redcap_version).toEnd(structure_and_data_file);
