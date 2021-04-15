@@ -250,7 +250,11 @@ describe('Data Collection and Storage', () => {
 			cy.get('a').contains('Test User').click()
 			cy.get('button').contains('Edit user privileges').click()
 			cy.get('input[name="record_create"]').click()
-			cy.get('button').contains('Save Changes').click()
+			cy.get('button').contains('Save Changes').click().then(() => {
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('User "test_user" was successfully edited')
+				})
+			})
 
 			cy.get('a').contains('Data Import Tool').click()
 
