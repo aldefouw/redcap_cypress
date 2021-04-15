@@ -191,7 +191,9 @@ describe('My Projects', () => {
 	})
 
 	it('Should display the correct project status for a project in Production', () => {
-		cy.set_user_type('admin')
+		cy.set_user_type('admin').then(() => {
+			cy.maintain_login()
+		})		
 
         cy.visit_version({page: 'ProjectSetup/index.php', params: "pid=13"})
 
@@ -202,7 +204,9 @@ describe('My Projects', () => {
 
 						cy.get('button').should('not.contain', "Please wait").then(() => {
 
-	        				cy.set_user_type('standard')
+    						cy.set_user_type('standard').then(() => {
+								cy.maintain_login()
+							})		
 
 		            		cy.visit_base({url: 'index.php?action=myprojects'})
 
@@ -219,18 +223,24 @@ describe('My Projects', () => {
 	})
 
 	it('Should display the correct project status for an Inactive project (from Production status)', () => {
+		cy.set_user_type('standard').then(() => {
+			cy.maintain_login()
+		})		
 
 		cy.visit_version({page: 'ProjectSetup/other_functionality.php', params: "pid=13"})
 
-		cy.get('button').contains('Move to inactive').click().then(() => {
-			cy.get('button').contains('YES').click().then(() => {
-				cy.visit_base({url: 'index.php?action=myprojects'})
+		cy.get('body').should('contain', "Production").then(() => {
 
-				cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
-					cy.get_project_table_row_col(13, 6).then(($a) => {
-		                expect($a[0].innerHTML).to.contain('Inactive')
-		            })
-		        })
+			cy.get('button').contains('Move to inactive').click().then(() => {
+				cy.get('button').contains('YES').click().then(() => {
+					cy.visit_base({url: 'index.php?action=myprojects'})
+
+					cy.get('table#table-proj_table tr').should('not.contain', "Loading").then(() => {
+						cy.get_project_table_row_col(13, 6).then(($a) => {
+			                expect($a[0].innerHTML).to.contain('Inactive')
+			            })
+			        })
+				})
 			})
 		})
 	})
