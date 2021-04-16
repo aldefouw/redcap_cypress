@@ -35,16 +35,16 @@ describe('Browse Projects', () => {
         })
 
         it('Should display the projects for Test User when you click the view button', () => {
-            cy.visible_projects_user_input_click_view('test_user', 'Test Project', 1)
+            cy.visible_projects_user_input_click_view('test_user', 'Classic Database', 13)
         })
 
 
         it('Should display the projects for Test User when you click on the user after entering the username', () => {
-           cy.visible_projects_user_input('test_user', 'Test Project', 1)
+           cy.visible_projects_user_input('test_user', 'Classic Database', 13)
         })
 
         it('Should display the projects for Test User when you click on the user after entering the email address', () => {
-            cy.visible_projects_user_input('test_user@example.com', 'Test Project', 1)
+            cy.visible_projects_user_input('test_user@example.com', 'Classic Database', 13)
         })
 
     })

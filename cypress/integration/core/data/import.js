@@ -138,11 +138,53 @@ describe('Data Collection and Storage', () => {
 	describe('Data Validation Abilities', () => {
 
 		it('Should have the ability to import only valid formats for text fields with validation', () => {
-	            
+			cy.get('select[name="format"]').select('Rows')
+			cy.get('select[name="overwriteBehavior"]').select('Yes, blank values in the file will overwrite existing values')
+			cy.get('button').contains('Yes').click()
+
+			cy.upload_file('import_files/classic_db_import_invalid_email_phone_dob.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+
+					cy.get('body').should($body => {
+						expect($body).to.contain('Error')	
+
+						expect($body).to.contain('email')		
+						expect($body).to.contain('test@invalid')
+
+						expect($body).to.contain('telephone_1')	
+						expect($body).to.contain('INVALID PHONE NUMBER')
+
+						expect($body).to.contain('dob')	
+						expect($body).to.contain('INVALID DATE')
+					})
+				})
+			})
 	    })
 
 		it('Should have the ability to import only valid choice codes for radio buttons, dropdowns and checkboxes', () => {
-	            
+			cy.get('select[name="format"]').select('Rows')
+			cy.get('select[name="overwriteBehavior"]').select('Yes, blank values in the file will overwrite existing values')
+			cy.get('button').contains('Yes').click()
+
+			cy.upload_file('import_files/classic_db_import_invalid_checkbox_dropdown_radio.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+
+					cy.get('body').should($body => {
+						expect($body).to.contain('Error')	
+
+						expect($body).to.contain('compliance_2')		
+						expect($body).to.contain('INVALID DROPDOWN VALUE')
+
+						expect($body).to.contain('ethnicity')		
+						expect($body).to.contain('INVALID RADIO VALUE')
+
+						expect($body).to.contain('gym___0')		
+						expect($body).to.contain('INVALID CHECKBOX VALUE')
+					})
+				})
+			})
 	    })
 
 	})
@@ -150,15 +192,148 @@ describe('Data Collection and Storage', () => {
 	describe('Data Access Controls', () => {
 
 		it('Should have the ability to not allow data to be changed on locked data entry forms', () => {
-	            
+			cy.get('select[name="format"]').select('Rows')
+
+			cy.upload_file('import_files/classic_db_import_rows_modified.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+					cy.wait(1000)
+					cy.get('input').contains('Import Data').click().then(() => {
+						cy.get('body').should($body => {
+							expect($body).to.contain('Import Successful!')
+						})
+					})
+				})
+			})
+
+			cy.visit_version({page: 'DataEntry/index.php', params: 'pid=1&id=1&page=demographics&event_id=1&instance=1'})
+
+			cy.get('b').contains('Lock').parent().children().first('input').click()
+
+            cy.get('button').contains('Save & Exit Form').click()
+
+            cy.get('body').should(($body) => {
+                expect($body).to.contain('Study ID 1 successfully edited')
+            })
+
+			cy.get('a').contains('Data Import Tool').click()
+
+			cy.upload_file('import_files/classic_db_import_rows.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+					cy.get('body').should(($body) => {
+						expect($body).to.contain('This field is located on a form that is locked.')
+					})
+				})
+			})
+
+			cy.visit_version({page: 'DataEntry/index.php', params: 'pid=1&id=1&page=demographics&event_id=1&instance=1'})
+
+			cy.get('input[value="Unlock form"]').click().then(() => {
+				cy.get('button').contains('Unlock').click().then(() => {
+					cy.wait(1000)
+					cy.get('button').contains('Close').click()
+				})
+				
+			})
+
+            cy.get('button').contains('Save & Exit Form').click()
+
+            cy.get('body').should(($body) => {
+                expect($body).to.contain('Study ID 1 successfully edited')
+            })
 	    })
 
-    	it('Should have the ability to assign data instruments to a data access group with the Data Import Tool', () => {
-            
-	    })
 
     	it('Should have the ability to not allow a new record to be imported if user does not have Create Records access', () => {
-            
+			cy.visit_version({page: 'UserRights/index.php', params: 'pid=1'})
+			cy.get('a').contains('Test User').click()
+			cy.get('button').contains('Edit user privileges').click()
+			cy.get('input[name="record_create"]').click()
+			cy.get('button').contains('Save Changes').click().then(() => {
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('User "test_user" was successfully edited')
+				})
+			})
+
+			cy.get('a').contains('Data Import Tool').click()
+
+			cy.upload_file('import_files/classic_db_import_rows_blank_first_name.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+					
+					cy.wait(1000)
+
+					cy.get('body').should(($body) => {
+						expect($body).to.contain('Your user privileges do NOT allow you to create new records.')
+					})
+
+				})
+			})
+	    })
+
+	    it('Should have the ability to assign data instruments to a data access group with the Data Import Tool', () => {
+            cy.visit_version({page: 'UserRights/index.php', params: 'pid=1'})
+			cy.get('a').contains('Test User').click()
+			cy.get('button').contains('Edit user privileges').click()
+			cy.get('input[name="data_access_groups"]').click()
+			cy.get('button').contains('Save Changes').click().then(() => {
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('User "test_user" was successfully edited')
+				})
+			})
+
+			cy.visit_version({page: 'DataAccessGroups/index.php', params: 'pid=1'})
+			cy.get('#new_group').type('Test First')
+			cy.get('button').contains('Add Group').click().then(() => {
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('Data Access Group "Test First" has been created!')
+				})
+			})
+
+			cy.get('#new_group').type('Test Second')
+			cy.get('button').contains('Add Group').click().then(() => {
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('Data Access Group "Test Second" has been created!')
+				})
+			})
+
+			cy.get('a').contains('Data Import Tool').click()
+
+			cy.upload_file('import_files/classic_db_import_rows_dag.csv', 'csv', 'input[name="uploadedfile"]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+					
+					cy.wait(1000)
+
+					cy.get('body').should(($body) => {
+						expect($body).to.contain('Your document was uploaded successfully and is ready for review.')
+						expect($body).to.contain('redcap_data_access_group')
+						expect($body).to.contain('test_first')
+						expect($body).to.contain('test_second')
+					})
+
+					cy.get('input').contains('Import Data').click().then(() => {
+						cy.get('body').should($body => {
+							expect($body).to.contain('Import Successful!')
+						})
+					})
+
+				})
+			})
+
+			cy.visit_version({page: 'DataEntry/index.php', params: 'pid=1&id=1&page=demographics&event_id=1&instance=1'})
+
+			cy.get('body').should($body => {
+				expect($body).to.contain('Test First')
+			})
+
+			cy.visit_version({page: 'DataEntry/index.php', params: 'pid=1&id=2&page=demographics&event_id=1&instance=1'})
+
+			cy.get('body').should($body => {
+				expect($body).to.contain('Test Second')
+			})
+
 	    })
 	
 	})
