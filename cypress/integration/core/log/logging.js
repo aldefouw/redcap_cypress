@@ -8,52 +8,53 @@ describe('Logging', () => {
 	before(() => {
 		// Prepare project
         cy.set_user_type('admin')
-        cy.mysql_db('projects/pristine')
+		cy.mysql_db('projects/pristine')
         cy.create_cdisc_project('Logging Test', '0', 'cdisc_files/core/logging.xml', PID)
         cy.add_users_to_project([STANDARD, STANDARD2], PID)
-		cy.visit_version({page: 'UserRights/index.php', params: `pid=${PID}`}).then(() => {
-            cy.get(`a.userLinkInTable[userid="${STANDARD}"]`).should('be.visible').click().then(() =>{
-                cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
-                cy.get('input[name="design"]').should('be.visible').check()				// Enable Design Rights
-                cy.get('input[name="user_rights"]').check()								// Enable User Rights
-                cy.get('input[name="data_export_tool"][value="1"]').check()				// Enable Full Data Export
-				cy.get('input[name="data_logging"]').check()							// Enable Logging
-				cy.get('input[name="record_delete"]').check()							// Enable Delete Records
-				cy.get('input[name="lock_record_customize"]').should('not.be.checked')	// Record Locking Customization *Disabled*
-				cy.get('input[name="lock_record"][value="2"]').should('not.be.checked') // Lock/Unlock Records with E-signature authority *Disabled*
-				cy.get('input[name="record_create"]').should('be.checked')				// Create Records *Enabled*
-				cy.get('.ui-button').contains(/add user|save changes/i).click()
-            })
-			cy.get('div.userSaveMsg').should('not.be.visible').then(() => {
-				cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click().then(() =>{
-					cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
-					cy.get('input[name="design"]').should('be.visible').check()			// Enable Design Rights
-					cy.get('input[name="user_rights"]').check()							// Enable User Rights
-					cy.get('input[name="data_export_tool"][value="1"]').check()			// Enable Full Data Export
-					cy.get('input[name="data_logging"]').check()						// Enable Logging
-					cy.get('input[name="record_delete"]').check()						// Enable Delete Records
-					cy.get('input[name="lock_record_customize"]').check()				// Enable Record Locking Customization
-					cy.get('input[name="record_create"]').should('be.checked')			// Create Records *Enabled*
-					cy.get('input[name="lock_record"][value="2"]').click()				// Enable Lock/Unlock Records with E-signature authority
-					
-					// This should be avoided if possible
-					cy.focused().should('have.text', 'Close').click()
-					
-					cy.get('.ui-button').contains(/add user|save changes/i).click()
-				})
-            })
+		cy.visit_version({page: 'UserRights/index.php', params: `pid=${PID}`})
 
-			// Enable E-Signature
-			cy.visit_version({page: '/Locking/locking_customization.php', params: `pid=${PID}`})
-			cy.get('#savedEsign-text_validation').closest('td').find('input').check()
+		// Add User 1
+		cy.get(`a.userLinkInTable[userid="${STANDARD}"]`).should('be.visible').click()
+		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
+		cy.get('input[name="design"]').should('be.visible').check({force: true})	// Enable Design Rights
+		cy.get('input[name="user_rights"]').check({force: true})					// Enable User Rights
+		cy.get('input[name="data_export_tool"][value="1"]').check({force: true})	// Enable Full Data Export
+		cy.get('input[name="data_logging"]').check({force: true})					// Enable Logging
+		cy.get('input[name="record_delete"]').check({force: true})					// Enable Delete Records
+		cy.get('input[name="lock_record_customize"]').should('not.be.checked')		// Record Locking Customization *Disabled*
+		cy.get('input[name="lock_record"][value="2"]').should('not.be.checked') 	// Lock/Unlock Records with E-signature authority *Disabled*
+		cy.get('input[name="record_create"]').should('be.checked')					// Create Records *Enabled*
+		cy.get('.ui-button').contains(/add user|save changes/i).click()
+		
+		// Add User 2
+		cy.get('div.userSaveMsg').should('not.be.visible')
+		cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click()
+		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
+		cy.get('input[name="design"]').should('be.visible').check({force: true})	// Enable Design Rights
+		cy.get('input[name="user_rights"]').check({force: true})					// Enable User Rights
+		cy.get('input[name="data_export_tool"][value="1"]').check({force: true})	// Enable Full Data Export
+		cy.get('input[name="data_logging"]').check({force: true})					// Enable Logging
+		cy.get('input[name="record_delete"]').check({force: true})					// Enable Delete Records
+		cy.get('input[name="lock_record_customize"]').check({force: true})			// Enable Record Locking Customization
+		cy.get('input[name="record_create"]').should('be.checked')					// Create Records *Enabled*
+		cy.get('input[name="lock_record"][value="2"]').click()						// Enable Lock/Unlock Records with E-signature authority
+		
+		// This should be avoided if possible
+		cy.focused().should('have.text', 'Close').click()
+		
+		cy.get('.ui-button').contains(/add user|save changes/i).click()
 
-			cy.move_project_to_production(PID, false)
+		// Enable E-Signature
+		cy.visit_version({page: '/Locking/locking_customization.php', params: `pid=${PID}`})
+		cy.get('#savedEsign-text_validation').closest('td').find('input').check()
 
-        })
+		cy.move_project_to_production(PID, false)
 
 		///////////////////////////////////////////////////////////////
 		// Take all project actions that will be checked in the logs //
 		///////////////////////////////////////////////////////////////
+		
+		// Steps come from manual testing protocol script #23 (Logging)
 		cy.set_user_type('standard')
 
 		// Step 3 - Add record
@@ -81,12 +82,45 @@ describe('Logging', () => {
 		cy.get('input[name="email"').type('delete@test.com')
 		cy.get('button#submit-btn-saverecord').first().click()
 
-		// Step 6 -  Delete 3rd record
+		// Step 6 - Delete 3rd record
 		cy.get('button#recordActionDropdownTrigger').click()
 		cy.get('a').contains('Delete record (all forms)').should('be.visible').click()
 		cy.get('button').contains('DELETE RECORD').should('be.visible').click()
 		// This should be avoided if possible
 		cy.focused().should('have.text', 'Close').click()
+
+		// Step 7 - Create user role
+		cy.visit_version({page: "UserRights/index.php", params: `pid=${PID}`})
+		cy.get('input#new_rolename').should('be.visible').type('Data')
+		cy.get('button#createRoleBtn').click()
+		cy.get('div#editUserPopup').should('be.visible').parent().find('button').contains("Create role").should('be.visible').click()
+		cy.get('div.userSaveMsg').should('not.be.visible')
+
+		// Step 8 - Edit new role
+		cy.get('a[title="Edit role privileges"]').contains('Data').should('be.visible').click()
+		cy.get('input[name="design"]').should('be.visible').check()
+		cy.get('div#editUserPopup').parent().find('button').contains("Save Changes").should('be.visible').click()
+		cy.get('div.userSaveMsg').should('not.be.visible')
+		cy.get('div#working').should('not.be.visible')
+
+		// Step 9 - Delete new role
+		cy.get('a[title="Edit role privileges"]').contains('Data').should('be.visible').click()
+		cy.get('button').contains("Delete role").should('be.visible').click()
+		cy.get('div[role="dialog"][aria-describedby!="editUserPopup"]').find('button').contains('Delete role').should('be.visible').click()
+		cy.get('div.userSaveMsg').should('not.be.visible')
+		cy.get('div#working').should('not.be.visible')
+
+		// Steps 10, 11 - Add and edit new user (completed in project setup)
+
+		// Step 12 - Remove user
+		cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click()
+		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
+		cy.get('div#editUserPopup').should('be.visible').parent().find('button').contains("Remove user").should('be.visible').click()
+		cy.get('span').contains("Remove user?").should('be.visible').closest('div[role="dialog"]').find('button').contains("Remove user").click()
+		cy.get('div.userSaveMsg').should('not.be.visible')
+
+		// Step 14 - Export Data
+		cy.set_user_type('standard2')
 
 	})
 
@@ -216,7 +250,7 @@ describe('Logging', () => {
 
 			})
 
-			it('Should allow filteirng by User or Role (created-updated-deleted)', () => {
+			it('Should allow filtering by User or Role (created-updated-deleted)', () => {
 
 			})
 
