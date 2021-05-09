@@ -342,3 +342,10 @@ Cypress.Commands.add('verify_export_deidentification_options', (selector) => {
   cy.get('#deid-dates-shift').should('be.enabled').check()
   cy.get('#deid-surveytimestamps-shift').should('be.enabled')
 })
+
+Cypress.Commands.add('move_project_to_production', (project_id, keep_data = true) => {
+  cy.visit_version({page: 'ProjectSetup/index.php', params: `pid=${project_id}`})
+  cy.get('button').contains('Move project to production').should('be.visible').click()
+  cy.get(`input#${keep_data ? "keep_data" : "delete_data"}`).check()
+  cy.get('button').contains('YES, Move to Production Status').should('be.visible').click()
+})

@@ -1,7 +1,93 @@
+const ADMIN 	= 'test_admin'
+const STANDARD 	= 'test_user'
+const STANDARD2 = 'test_user2'
+const PID = 23
+
 describe('Logging', () => {
 
 	before(() => {
+		// Prepare project
+        cy.set_user_type('admin')
+        cy.mysql_db('projects/pristine')
+        cy.create_cdisc_project('Logging Test', '0', 'cdisc_files/core/logging.xml', PID)
+        cy.add_users_to_project([STANDARD, STANDARD2], PID)
+		cy.visit_version({page: 'UserRights/index.php', params: `pid=${PID}`}).then(() => {
+            cy.get(`a.userLinkInTable[userid="${STANDARD}"]`).should('be.visible').click().then(() =>{
+                cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
+                cy.get('input[name="design"]').should('be.visible').check()				// Enable Design Rights
+                cy.get('input[name="user_rights"]').check()								// Enable User Rights
+                cy.get('input[name="data_export_tool"][value="1"]').check()				// Enable Full Data Export
+				cy.get('input[name="data_logging"]').check()							// Enable Logging
+				cy.get('input[name="record_delete"]').check()							// Enable Delete Records
+				cy.get('input[name="lock_record_customize"]').should('not.be.checked')	// Record Locking Customization *Disabled*
+				cy.get('input[name="lock_record"][value="2"]').should('not.be.checked') // Lock/Unlock Records with E-signature authority *Disabled*
+				cy.get('input[name="record_create"]').should('be.checked')				// Create Records *Enabled*
+				cy.get('.ui-button').contains(/add user|save changes/i).click()
+            })
+			cy.get('div.userSaveMsg').should('not.be.visible').then(() => {
+				cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click().then(() =>{
+					cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
+					cy.get('input[name="design"]').should('be.visible').check()			// Enable Design Rights
+					cy.get('input[name="user_rights"]').check()							// Enable User Rights
+					cy.get('input[name="data_export_tool"][value="1"]').check()			// Enable Full Data Export
+					cy.get('input[name="data_logging"]').check()						// Enable Logging
+					cy.get('input[name="record_delete"]').check()						// Enable Delete Records
+					cy.get('input[name="lock_record_customize"]').check()				// Enable Record Locking Customization
+					cy.get('input[name="record_create"]').should('be.checked')			// Create Records *Enabled*
+					cy.get('input[name="lock_record"][value="2"]').click()				// Enable Lock/Unlock Records with E-signature authority
+					
+					// This should be avoided if possible
+					cy.focused().should('have.text', 'Close').click()
+					
+					cy.get('.ui-button').contains(/add user|save changes/i).click()
+				})
+            })
+
+			// Enable E-Signature
+			cy.visit_version({page: '/Locking/locking_customization.php', params: `pid=${PID}`})
+			cy.get('#savedEsign-text_validation').closest('td').find('input').check()
+
+			cy.move_project_to_production(PID, false)
+
+        })
+
+		///////////////////////////////////////////////////////////////
+		// Take all project actions that will be checked in the logs //
+		///////////////////////////////////////////////////////////////
 		cy.set_user_type('standard')
+
+		// Step 3 - Add record
+		cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${PID}`})
+		cy.get('button').contains('Add new record').should('be.visible').click()
+		cy.get('input[name="ptname"]').type('Test')
+		cy.get('input[name="email"').type('test@test.com')
+		cy.get('button#submit-btn-dropdown').first().click()
+		.closest('div').find('a#submit-btn-savecontinue').should('be.visible').click()
+		
+		cy.get('input[name="ptname"]').clear().type('Testing')
+		cy.get('button#submit-btn-saverecord').first().click()
+
+		// Step 4 - Add new record
+		cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${PID}`})
+		cy.get('button').contains('Add new record').should('be.visible').click()
+		cy.get('input[name="ptname"]').type('Test2')
+		cy.get('input[name="email"').type('test2@test.com')
+		cy.get('button#submit-btn-saverecord').first().click()
+
+		// Step 5 - Add new record
+		cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${PID}`})
+		cy.get('button').contains('Add new record').should('be.visible').click()
+		cy.get('input[name="ptname"]').type('Delete')
+		cy.get('input[name="email"').type('delete@test.com')
+		cy.get('button#submit-btn-saverecord').first().click()
+
+		// Step 6 -  Delete 3rd record
+		cy.get('button#recordActionDropdownTrigger').click()
+		cy.get('a').contains('Delete record (all forms)').should('be.visible').click()
+		cy.get('button').contains('DELETE RECORD').should('be.visible').click()
+		// This should be avoided if possible
+		cy.focused().should('have.text', 'Close').click()
+
 	})
 
 	it('Should have the ability to export the logs to a CSV file', () => {
