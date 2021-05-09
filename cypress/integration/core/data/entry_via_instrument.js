@@ -178,7 +178,6 @@ describe('Data Entry through the Data Collection Instrument', () => {
 
 	describe('Deleting Data', () => {
 	    before(() => {
-	        cy.get('[type="checkbox"]').check()
 	        cy.get('div').contains('Save & Stay').click({force:true})
 	    })
 
