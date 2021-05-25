@@ -21,7 +21,7 @@ describe('Export Data', () => {
                 cy.get('.ui-button').contains(/add user|save changes/i).click()
             })
         })
-            
+
         // Mark records' forms as survey complete
         cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${pid}&arm=1&id=1`})
         cy.get('div#repeating_forms_table_parent').find('td.data').first().find('a').click()
@@ -55,7 +55,7 @@ describe('Export Data', () => {
             cy.get('table#design-fname').find('a').first().click()
             cy.get('input#field_phi1').click()
             cy.get('button').contains('Save').click()
-        
+
             // Step 4
             cy.set_user_type('admin')
             cy.visit_version({page: 'ProjectSetup/index.php', params: `pid=${pid}`})
@@ -103,10 +103,10 @@ describe('Export Data', () => {
                 expect(csv.slice(1).reduce((acc, val) => {
                     return acc + (val[csv[0].indexOf('survey_timestamp')] !== "" ? 1 : 0)
                 }, 0)).to.equal(2)                                                                              // 2 rows show timestamps
-            
+
                 expect(csv.filter((row) => (row[0] == "1" && row[csv[0].indexOf('dob')] !== ""))[0][csv[0].indexOf('dob')])
                     .to.equal('2019-06-17')                                                                     // Record 1 dob has value '6/17/19'
-            
+
                 expect(new Date(csv.filter((row) => {
                         return (row[0] == "1" && row[csv[0].indexOf('survey_timestamp')] !== "")
                     })[0][csv[0].indexOf('survey_timestamp')]).toLocaleDateString('en-US', { timeZone: 'America/New_York' }))
@@ -257,7 +257,7 @@ describe('Export Data', () => {
                         let dob_orig = csv_orig[1][csv_orig[0].indexOf('dob')]
                         let dob_new = csv_new[1][csv_new[0].indexOf('dob')]
                         expect(dob_new).to.not.equal(dob_orig)
-                    })    
+                    })
                 })
             })
 
@@ -276,7 +276,7 @@ describe('Export Data', () => {
                         let st_orig = csv_orig[2][csv_orig[0].indexOf('survey_timestamp')]
                         let st_new = csv_new[2][csv_new[0].indexOf('survey_timestamp')]
                         expect(st_new).to.not.equal(st_orig)
-                    })    
+                    })
                 })
             })
 
@@ -311,7 +311,7 @@ describe('Export Data', () => {
                 cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
                 cy.get('#deid-remove-identifiers').should($inpt => expect($inpt).to.be.checked)
                     .click().should($inpt => expect($inpt).to.be.checked)
-            
+
                 cy.get('input[value="csvraw"]').click()
                 cy.export_csv_report().then((csv) => {
                     expect(csv[0]).to.have.lengthOf(8)                                                              // 8 columns
@@ -321,15 +321,15 @@ describe('Export Data', () => {
                     expect(csv.slice(1).reduce((acc, val) => {
                         return acc + (val[csv[0].indexOf('survey_timestamp')] !== "" ? 1 : 0)
                     }, 0)).to.equal(2)                                                                              // 2 rows show timestamps
-                    
-                    let dob_orig = csv_orig[1][csv_orig[0].indexOf('dob')]                                          // dob does not match actual data                        
+
+                    let dob_orig = csv_orig[1][csv_orig[0].indexOf('dob')]                                          // dob does not match actual data
                     let dob = csv[1][csv[0].indexOf('dob')]
                     expect(dob).to.not.equal(dob_orig)
 
-                    let st_orig = csv_orig[2][csv_orig[0].indexOf('survey_timestamp')]                              // survey timestamp does not match 
+                    let st_orig = csv_orig[2][csv_orig[0].indexOf('survey_timestamp')]                              // survey timestamp does not match
                     let st = csv[2][csv[0].indexOf('survey_timestamp')]                                             // actual data
                     expect(st).to.not.equal(st_orig)
-                    
+
                     let excluded_fields = ['lname', 'fname', 'redcap_survey_identifier', 'reminder', 'description'] // Does not include identifiers,
                     expect(csv[0]).to.not.include.members(excluded_fields)                                          // unvalidated text, or notes fields
                 })
