@@ -873,7 +873,7 @@ describe('Reporting', () => {
 			cy.get('div[role="dialog"]:visible').contains('Data export was successful!')
 				.parents('div[role="dialog"]').within(() => {
 
-				cy.get('button').contains('Close').click()
+				cy.get('button').contains('Close').click({force: true})
 
 			})
 		})
