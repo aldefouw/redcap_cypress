@@ -1,5 +1,9 @@
 describe('Reporting', () => {
 
+	beforeEach(() => {
+		cy.maintain_login()
+	})
+
 	before(() => {
 		cy.mysql_db('projects/pristine')
 
