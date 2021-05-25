@@ -977,7 +977,7 @@ describe('Reporting', () => {
 
 		it('Should have the ability to export a custom report to SAS format', () => {
 
-			cy.get('button').contains('Export Data').click().then(() => {
+			cy.get('button').contains('Export Data').click({force: true}).then(() => {
 
 				cy.get('input[value="sas"]').check()
 
@@ -1040,7 +1040,7 @@ describe('Reporting', () => {
 
 		it('Should have the ability to export a custom report to R format', () => {
 
-			cy.get('button').contains('Export Data').click().then(() => {
+			cy.get('button').contains('Export Data').click({force: true}).then(() => {
 
 				cy.get('input[value="r"]').check()
 
@@ -1088,7 +1088,7 @@ describe('Reporting', () => {
 
 		it('Should have the ability to export a custom report to STATA format', () => {
 
-			cy.get('button').contains('Export Data').click().then(() => {
+			cy.get('button').contains('Export Data').click({force: true}).then(() => {
 
 				cy.get('input[value="stata"]').check()
 
@@ -1136,7 +1136,7 @@ describe('Reporting', () => {
 
 		it('Should have the ability to export a custom report to CDISC ODM (XML) format', () => {
 
-			cy.get('button').contains('Export Data').click().then(() => {
+			cy.get('button').contains('Export Data').click({force: true}).then(() => {
 
 				cy.get('input[value="odm"]').check()
 
