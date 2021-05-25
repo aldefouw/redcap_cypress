@@ -1,5 +1,9 @@
 describe('Reporting', () => {
 
+	beforeEach(() => {
+		cy.maintain_login()
+	})
+
 	before(() => {
 		cy.mysql_db('projects/pristine')
 
@@ -869,7 +873,7 @@ describe('Reporting', () => {
 			cy.get('div[role="dialog"]:visible').contains('Data export was successful!')
 				.parents('div[role="dialog"]').within(() => {
 
-				cy.get('button').contains('Close').click()
+				cy.get('button').contains('Close').click({force: true})
 
 			})
 		})
@@ -973,7 +977,7 @@ describe('Reporting', () => {
 
 		it('Should have the ability to export a custom report to SAS format', () => {
 
-			cy.get('button').contains('Export Data').click().then(() => {
+			cy.get('button').contains('Export Data').click({force: true}).then(() => {
 
 				cy.get('input[value="sas"]').check()
 
@@ -1036,7 +1040,7 @@ describe('Reporting', () => {
 
 		it('Should have the ability to export a custom report to R format', () => {
 
-			cy.get('button').contains('Export Data').click().then(() => {
+			cy.get('button').contains('Export Data').click({force: true}).then(() => {
 
 				cy.get('input[value="r"]').check()
 
@@ -1084,7 +1088,7 @@ describe('Reporting', () => {
 
 		it('Should have the ability to export a custom report to STATA format', () => {
 
-			cy.get('button').contains('Export Data').click().then(() => {
+			cy.get('button').contains('Export Data').click({force: true}).then(() => {
 
 				cy.get('input[value="stata"]').check()
 
@@ -1132,7 +1136,7 @@ describe('Reporting', () => {
 
 		it('Should have the ability to export a custom report to CDISC ODM (XML) format', () => {
 
-			cy.get('button').contains('Export Data').click().then(() => {
+			cy.get('button').contains('Export Data').click({force: true}).then(() => {
 
 				cy.get('input[value="odm"]').check()
 

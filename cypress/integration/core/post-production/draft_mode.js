@@ -14,7 +14,7 @@ describe('Draft Mode', () => {
 
 
 		it('Should NOT apply changes made in Draft Mode in real time to the project', () => {
-			//Visit Longitudinal Database 
+			//Visit Longitudinal Database
 			cy.visit_version({page: 'Design/online_designer.php', params: "pid=2"})
 
 			//Enter Draft Mode in the project
@@ -32,12 +32,12 @@ describe('Draft Mode', () => {
 
 			//Need to be admin to enter CONTROL CENTER
 			cy.visit_version({page: 'ControlCenter/user_settings.php'})
-			
+
 			//Check if we have this ability available in this version of REDCap
 			cy.get('table').should(($table) => {
 				expect($table).to.contain('General User Settings')
 				expect($table).to.contain('Allow production Draft Mode changes to be approved automatically under certain conditions?')
-			})		
+			})
 
 			//Check to see that we have some ability to configure Production Status options
 			cy.get('select[name=auto_prod_changes]').should(($select) => {
@@ -56,7 +56,7 @@ describe('Draft Mode', () => {
 
 				cy.get('div').contains("Add New Field").then(($div) => {
 					cy.get('div').contains('Field Type:').next().select('text')
-					cy.get('input#field_name').type('test_field')					
+					cy.get('input#field_name').type('test_field')
 					cy.get('input#field_label_rich_text_checkbox').click()
 					cy.get('textarea#field_label').type('Test Field')
 					cy.get('button').contains('Save').click()
@@ -72,7 +72,7 @@ describe('Draft Mode', () => {
 
 					expect($table).to.contain('Field Label')
 					expect($table).to.contain('Test Field')
-					
+
 					expect($table).to.contain('Field Type')
 					expect($table).to.contain('text')
 				})
@@ -87,7 +87,7 @@ describe('Draft Mode', () => {
 				//Seed the db for the project before each test
 				cy.mysql_db('projects/project_2')
 
-				//Visit Longitudinal Database 
+				//Visit Longitudinal Database
 				cy.visit_version({page: 'Design/online_designer.php', params: "pid=2&page=demographics"})
 			})
 
@@ -186,14 +186,14 @@ describe('Draft Mode', () => {
 				//Seed the db for the project before each test
 				cy.mysql_db('projects/project_2')
 
-				//Visit Longitudinal Database 
+				//Visit Longitudinal Database
 				cy.visit_version({page: 'Design/online_designer.php', params: "pid=2"})
 
 				//Search for the Enter Draft Mode button
 				let draft = cy.get('input[value="Enter Draft Mode"]').should(($draft_mode) => {
 					if($draft_mode.length > 0){
 						$draft_mode.first().click()
-					} 
+					}
 
 					return $draft_mode;
 				})
@@ -201,7 +201,7 @@ describe('Draft Mode', () => {
 				if(draft.length > 0 ){
 					cy.get('div#actionMsg').should(($alert) => {
 						expect($alert).to.contain('The project is now in Draft Mode.')
-					})					
+					})
 				}
 
 				//Visit the demographics instrument
@@ -231,7 +231,7 @@ describe('Draft Mode', () => {
 				cy.visit_version({page: 'Design/project_modifications.php', params: "pid=2"})
 
 				i++
-				
+
 			})
 
 			it('Should have the ability for Administrators to Commit changes that are deemed acceptable', () => {
@@ -260,7 +260,7 @@ describe('Draft Mode', () => {
 				cy.get('body').should(($body) => {
 					expect($body).to.contain('changes were NOT committed to the project but were removed')
 				})
-			})	
+			})
 
 			describe('Notifications', () => {
 
@@ -274,7 +274,7 @@ describe('Draft Mode', () => {
 						expect($div).to.contain('To:')
 						expect($div).to.contain('From:')
 						expect($div).to.contain('Subject:')
-						expect($div).to.contain('Send Email')						
+						expect($div).to.contain('Send Email')
 					})
 
 					//Send the email
@@ -284,7 +284,7 @@ describe('Draft Mode', () => {
 					cy.get('body').should(($body) => {
 						expect($body).to.contain('Your email was successfully sent')
 					})
-				})	
+				})
 			})
 		})
 
@@ -300,7 +300,7 @@ describe('Draft Mode', () => {
 					expect($body).to.contain('Requested by')
 					expect($body).to.contain('Approved by')
 					expect($body).to.contain('Moved to production')
-				})	
+				})
 			})
 		})
 
@@ -314,11 +314,11 @@ describe('Draft Mode', () => {
 
 		    	cy.get('select[name="auto_prod_changes"] option').should(($options) => {
 		    		window.auto_prod_options = [...$options].map(o => o.text)
-		    	})  
+		    	})
 
 		    	cy.get('select[name="enable_edit_prod_repeating_setup"] option').should(($options) => {
 		    		window.edit_repeating_options = [...$options].map(o => o.text)
-		    	})  
+		    	})
 		})
 
 		it('Should require Administrators to review changes made in Draft Mode based upon the settings configured in Control Center', () => {
@@ -329,11 +329,11 @@ describe('Draft Mode', () => {
 		describe('Options for Automatic Approval of Drafted Changes', () => {
 
 			it('Should have the ability to automatically approve changes "Never" (administrator approval required)', () => {
-				assert.include(window.auto_prod_options, 'Never (always require an admin to approve changes)')   
+				assert.include(window.auto_prod_options, 'Never (always require an admin to approve changes)')
 		    })
 
 			it('Should have the ability to automatically approve changes when No Existing Fields were Modified', () => {
-				assert.include(window.auto_prod_options, 'Yes, if no existing fields were modified')   
+				assert.include(window.auto_prod_options, 'Yes, if no existing fields were modified')
 		    })
 
 		    it('Should have the ability to automatically approve changes when No Records present OR Records Present AND No Existing Fields were Modified', () => {
@@ -341,11 +341,11 @@ describe('Draft Mode', () => {
 		    })
 
 		    it('Should have the ability to automatically approve changes when No Critical Issues Exist', () => {
-	    	   	assert.include(window.auto_prod_options, 'Yes, if no critical issues exist')  
+	    	   	assert.include(window.auto_prod_options, 'Yes, if no critical issues exist')
 		    })
 
 		    it('Should have the ability to automatically approve changes when No Records present OR Records Present AND No Critical Issues Exist', () => {
-	    	 	assert.include(window.auto_prod_options, 'Yes, if project has no records OR if has records and no critical issues exist')  
+	    	 	assert.include(window.auto_prod_options, 'Yes, if project has no records OR if has records and no critical issues exist')
 		    })
 
 		})
@@ -353,12 +353,12 @@ describe('Draft Mode', () => {
 		describe('Options for Add / Modify Events and Arms', () => {
 
 		    it('Should have the ability to authorize ONLY Administrators to Add / Modify Events in Production Status', () => {
-	            assert.include(window.edit_repeating_options, 'No, only Administrators can modify the repeatable instance setup in production')  
+	            assert.include(window.edit_repeating_options, 'No, only Administrators can modify the repeatable instance setup in production')
 		    })
 
 		    it('Should have the ability to only authorize Standard Users to Add / Modify Events in Production Status', () => {
-	            assert.include(window.edit_repeating_options, 'Yes, normal users can modify the repeatable instance setup in production')  
+	            assert.include(window.edit_repeating_options, 'Yes, normal users can modify the repeatable instance setup in production')
 		    })
 		})
-	})	
+	})
 })
