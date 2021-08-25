@@ -137,6 +137,26 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 
 			it('Should allow instruments to be reordered', () => {
 
+				cy.get('span').contains('My Renamed Instrument').then(($span) => {
+
+					//Click on the first element in the row
+					let elem = cy.wrap($span).parentsUntil('tr').last().prev()
+
+					console.log(elem)
+
+					elem.move({x: 0, y: 500, force: true })
+
+				}).then(() => {
+
+					cy.get('tr#row_1').should(($tr) => {
+						expect($tr).to.contain('My Renamed Instrument')
+					})
+
+				})
+
+
+
+
 			})
 
 			it('Should allow an instrument to be deleted', () => {

@@ -4,6 +4,7 @@
   "description": "This repository is a template to assist you in writing **automated tests for REDCap**.",
   "main": "index.js",
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^1.8.0",
     "async-csv": "^2.1.3",
     "compare-versions": "3.6.0",
     "cypress": "^7.5.0",

@@ -7,6 +7,7 @@ import './projects/commands'
 
 import compareVersions from 'compare-versions';
 import 'cypress-iframe';
+import '@4tw/cypress-drag-drop'
 const shell = require('shelljs')
 
 // Commands in this file are CRUCIAL and are an embedded part of the REDCap Cypress Framework.
