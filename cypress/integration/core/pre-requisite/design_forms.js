@@ -147,34 +147,10 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 				}).then(() => {
 
 					//Make sure we know that this has happened before moving on
-					cy.get('div').contains('INSTRUMENT WAS MOVED').then(($div) => {
-
-						//Make sure this DIV disappears before going onto the next step
-						cy.wrap($div).should('not.be', 'visible')
-
+					cy.get('div').contains('INSTRUMENT WAS MOVED').should('be.visible').then(($div) => {
+						//This will prevent the next step from happening too soon - we're waiting for element to go away
+						cy.get($div).should('not.exist')
 					})
-
-					// cy.pause()
-					//
-					// cy.get('div').should('contain', 'INSTRUMENT WAS MOVED').then(($html) => {
-					// 	//cy.wrap($html).should('not.contain', 'INSTRUMENT WAS MOVED')
-					// })
-					//
-					// cy.pause()
-
-					// cy.get('html').should(($html) => {
-					//
-					// 	cy.wrap($html).should('contain', "INSTRUMENT WAS MOVED").then(() => {
-					//
-					// 		cy.wrap($html).should('not.contain', 'INSTRUMENT WAS MOVED')
-					//
-					// 	})
-					//
-					// })
-
-					// cy.get('tr#row_1').should(($tr) => {
-					// 	expect($tr).to.contain('My Renamed Instrument')
-					// })
 
 				})
 
@@ -182,22 +158,38 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 
 			it('Should allow an instrument to be deleted', () => {
 
-				cy.get('span').contains('My Second Instrument').parents('tr').children('td').last().within(($td) => {
+				cy.get('span').contains('My Renamed Instrument').parents('tr').children('td').last().within(($td) => {
 					cy.get('button').contains('Choose action').click()
+				}).then(() => {
+
+					cy.get('a').should('contain', 'Delete')
+					cy.get('a').contains('Delete').click()
+
+					cy.get('button').should('contain', 'delete')
+					cy.get('button').contains('delete').click().then(() => {
+
+						//Make sure we know that this has happened before moving on
+						cy.get('[id^=popup_]').contains('The data collection instrument and all its fields have been successfully deleted!').should('be.visible').then(($div) => {
+							cy.get($div).should('not.be.visible')
+						})
+
+
+					})
+
+					cy.get('span').contains('My Renamed Instrument').should('not.exist')
 				})
-
-				cy.get('a').should('contain', 'Delete')
-				cy.get('a').contains('Delete').click()
-
 			})
 
 			describe('Field Types', () => {
 
+				beforeEach(() => {
+					cy.get('div').contains('Working').should('not.be.visible')
+				})
 
 				it('Should contain all of expected field types', () => {
 
-					cy.get('a').contains('Demographics').click().then(() => { 
-						cy.get('input#btn-patient_document-f').click().then(() => {
+					cy.get('span').contains('My First Instrument').click().then(() => {
+						cy.get('input#btn-last').click().then(() => {
 						cy.get('select').contains('Select a Type').parent().should(($s) => {
 							expect($s).to.contain('Text Box')
 							expect($s).to.contain('Notes Box')
@@ -230,32 +222,36 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 				})
 
 				it('Should allow renaming of a field', () => {
-					cy.get('table#design-last_name').within(() => {
+					cy.get('table#design-h_i').within(() => {
 						cy.get('img[title="Edit"]').click()
 					})
-					cy.get('textarea#field_label').type('s')
+
+					cy.get('label').contains('Use the Rich Text Editor').click().then(() => {
+						cy.get('textarea#field_label').type('Renamed Field')
+					})
+
 					cy.get('button').contains('Save').click().then(() => {
-						cy.get('table#design-last_name').should(($t) => {
-							expect($t).to.contain('Last Names')
+						cy.get('table#design-h_i').should(($t) => {
+							expect($t).to.contain('Renamed Field')
 						})
 					})
-					})
+				})
 				
 
 				it('Should allow copying of a field', () => {
-					cy.get('table#design-last_name').within(() => {
+					cy.get('table#design-h_i').within(() => {
 						cy.get('img[title="Copy"]').click()
 							
 						
 					})
 					cy.get('button').contains('Copy field').click()
 					cy.get('table#draggable').should(($t) => {
-						expect($t).to.contain('Variable: last_name_2')
+						expect($t).to.contain('Variable: h_i_2')
 					})
 				})
 
 				it('Should allow a field to be marked as an identifier', () => {
-					cy.get('table#design-last_name').within(() => {
+					cy.get('table#design-h_i').within(() => {
 						cy.get('img[title="Edit"]').click()
 					})
 					cy.get('input#field_phi1').click()
@@ -265,7 +261,7 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 				describe('Text Box', () => {
 
 					it('Should allow the creation of this field type', () => {
-						cy.get('input#btn-patient_document-f').click().then(() => {
+						cy.get('input#btn-last').click().then(() => {
 							cy.get('select#field_type').select('text')
 							cy.get('input#field_name').type('new_text_box')
 							cy.get('input#field_label_rich_text_checkbox').uncheck()
@@ -284,7 +280,7 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 				describe('Notes', () => {
 
 					it('Should allow the creation of this field type', () => {
-						cy.get('input#btn-patient_document-f').click().then(() => {
+						cy.get('input#btn-last').click().then(() => {
 							cy.get('select#field_type').select('textarea')
 							cy.get('input#field_name').type('new_note_box')
 							cy.get('input#field_label_rich_text_checkbox').uncheck()
@@ -302,7 +298,7 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 				describe('Calculated Field', () => {
 
 					it('Should allow the creation of this field type', () => {
-						cy.get('input#btn-patient_document-f').click().then(() => {
+						cy.get('input#btn-last').click().then(() => {
 							cy.get('select#field_type').select('calc')
 							cy.get('input#field_name').type('new_calc_field')
 							cy.get('input#field_label_rich_text_checkbox').uncheck()
@@ -322,15 +318,12 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 
 					describe('Dropdown', () => {
 						it('Should allow the creation of this field type', () => {
-							cy.get('input#btn-patient_document-f').click().then(() => {
+							cy.get('input#btn-last').click().then(() => {
 								cy.get('select#field_type').select('select')
 								cy.get('input#field_name').type('new_drop_down')
 								cy.get('input#field_label_rich_text_checkbox').uncheck()
 								cy.get('textarea#field_label').type('New Drop Down')
-								//cy.get('input#dropdown_autocomplete').check()
-								//cy.get('textarea#element_enum').type('Option 1{enter}Option 2')
-								//cy.get('button').contains('Save').click().then(() => { 
-								//cy.get('button.ui-button ui-corner-all ui-widget').contains('Close').click().then(() => {
+
 								cy.get('button').contains('Save').click().then(() => {
 									cy.get('table#draggable').should(($t) => {
 										expect($t).to.contain('Variable: new_drop_down')
@@ -338,8 +331,6 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 								})
 							})
 						})
-						//})
-						//})		
 
 						it('Should automatically populate raw values for choices', () => {
 
@@ -348,21 +339,20 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 
 					describe('Radio', () => {
 						it('Should allow the creation of this field type', () => {
-							cy.get('input#btn-patient_document-f').click().then(() => {
+							cy.get('input#btn-last').click().then(() => {
 								cy.get('select#field_type').select('radio')
 								cy.get('input#field_name').type('new_radio')
 								cy.get('input#field_label_rich_text_checkbox').uncheck()
 								cy.get('textarea#field_label').type('New Radio')
-								//cy.get('input#dropdown_autocomplete').check()
-								//cy.get('textarea#element_enum').type('Option 1{enter}Option 2')
+
 								cy.get('button').contains('Save').click()
-								//cy.get('button').contains('Close').click().then(() => {
-									cy.get('table#draggable').should(($t) => {
-										expect($t).to.contain('Variable: new_radio')
-									})
+
+								cy.get('table#draggable').should(($t) => {
+									expect($t).to.contain('Variable: new_radio')
 								})
 							})
-						//})	
+						})
+
 
 						it('Should automatically populate raw values for choices', () => {
 
@@ -374,7 +364,7 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 				describe('Checkboxes', () => {
 
 					it('Should allow the creation of this field type', () => {
-						cy.get('input#btn-patient_document-f').click().then(() => {
+						cy.get('input#btn-last').click().then(() => {
 							cy.get('select#field_type').select('checkbox')
 							cy.get('input#field_name').type('new_check_box')
 							cy.get('input#field_label_rich_text_checkbox').uncheck()
@@ -396,7 +386,7 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 				describe('Signature', () => {
 
 					it('Should allow the creation of this field type', () => {
-						cy.get('input#btn-patient_document-f').click().then(() => {
+						cy.get('input#btn-last').click().then(() => {
 							cy.get('select#field_type').select('Signature (draw signature with mouse or finger)')
 							cy.get('input#field_name').type('new_sign')
 							cy.get('input#field_label_rich_text_checkbox').uncheck()
@@ -415,7 +405,7 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 				describe('File Upload', () => {
 
 					it('Should allow the creation of this field type', () => {
-						cy.get('input#btn-patient_document-f').click().then(() => {
+						cy.get('input#btn-last').click().then(() => {
 							cy.get('select#field_type').select('File Upload (for users to upload files)')
 							cy.get('input#field_name').type('new_file_upload')
 							cy.get('input#field_label_rich_text_checkbox').uncheck()
@@ -433,49 +423,44 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 				describe('Descriptive Text', () => {
 					
 					it('Should allow an attached image', () => {
-						cy.get('input#btn-patient_document-f').click().then(() => {
+						cy.get('input#btn-last').click().then(() => {
 							cy.get('select#field_type').select('descriptive')
 							cy.get('input#field_name').type('new_desc_text')
 							cy.get('input#field_label_rich_text_checkbox').uncheck()
 							cy.get('textarea#field_label').type('New Desc Text')
 							cy.get('div#righthand_fields').should(($d) => {
 							expect($d).to.contain('Attach an image')
+							})
 						})
-					})	
-				})
+					})
+
 					it('Should allow an attached audio clip', () => {
 						cy.get('div#righthand_fields').should(($d) => {
 							expect($d).to.contain('Embed an external video')
 						})
-						//cy.get('button').contains('Save').click()
-						//cy.get('button').contains('Cancel').click()
+
 					})
+
 					it('Should allow the creation of this field type', () => {
-						//cy.get('input#btn-patient_document-f').click().then(() => {
-							//cy.get('select#field_type').select('descriptive')
-							//cy.get('input#field_name').type('new_desc_text')
-							//cy.get('input#field_label_rich_text_checkbox').uncheck()
-							//cy.get('textarea#field_label').type('New Desc Text')
-							cy.get('button').contains('Save').click().then(() => {
-								cy.get('table#draggable').should(($t) => {
-									expect($t).to.contain('Variable: new_desc_text')
-								})
+						cy.get('button').contains('Save').click().then(() => {
+							cy.get('table#draggable').should(($t) => {
+								expect($t).to.contain('Variable: new_desc_text')
 							})
 						})
-					//})	
-
+					})
 
 				})
 
 				describe('Begin New Section', () => {
 
 					it('Should allow the creation of this field type', () => {
-						//cy.get('button').contains('Cancel').click()
-						cy.get('input#btn-patient_document-f').click().then(() => {
+
+						cy.get('input#btn-new_desc_text-f').click().then(() => {
 							cy.get('select#field_type').select('section_header')
-							//cy.get('input#field_name').type('new_section')
+
 							cy.get('input#field_label_rich_text_checkbox').uncheck()
 							cy.get('textarea#field_label').type('New Section')
+
 							cy.get('button').contains('Save').click().then(() => {
 								cy.get('table#draggable').should(($t) => {
 									expect($t).to.contain('New Section')
@@ -484,14 +469,48 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 						})
 					})	
 
-					it('Should not allow this to be the first field of the form', () => {
-						cy.get('input#btn-date_enrolled-sh-f').click().then(() => {
-							cy.get('select#field_type').should(($s) => {
-								expect($s).not.to.contain('Begin New Section ')
+					it('Should NOT allow two consecutive new sections', () => {
+
+						cy.get('input#btn-h_i-f').click().then(() => {
+							cy.get('select#field_type').select('section_header')
+
+							cy.get('input#field_label_rich_text_checkbox').uncheck()
+							cy.get('textarea#field_label').type('New Section')
+
+							cy.get('button').contains('Save').click().then(() => {
+								cy.get('table#draggable').should(($t) => {
+									expect($t).to.contain('New Section')
+								})
 							})
 						})
-					})	
 
+						//The new section should not appear on this instance
+						cy.get('input#btn-h_i-f').click().then(() => {
+							cy.get('select#field_type > option').each(($el, index, $list) => {
+
+								//Iterate through the entire list of options to ensure we do not have 'section_header' option
+								$list.each(($k, $v) => { expect($v['value']).to.not.eq('section_header') })
+							})
+						})
+
+						//Close out the window
+						cy.get('button[title=Close]').click()
+					})
+
+					it('Should NOT allow a new sections at bottom of form', () => {
+
+						cy.get('input#btn-last').click().then(() => {
+							cy.get('select#field_type').select('section_header')
+
+							cy.get('button').contains('Save').click().then(() => {
+
+
+								cy.on('window:alert', ($alert) => {
+									expect($alert).to.equal('Sorry, but Section Headers cannot be the last field on a data entry form.')
+								})
+							})
+						})
+					})
 				})
 			})
 		})
