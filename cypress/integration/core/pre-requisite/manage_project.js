@@ -46,12 +46,12 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 		*/
 
 		it('Should have the ability to enable and disable Longitudinal Data Collection', () => {
-			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
-			cy.get('button#setupLongiBtn').click().then(() => {
-				cy.get('span.SavedMsg').should(($s) => {
-					expect($s).to.contain('Saved')
-				})
-			})
+			// cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=13'})
+			// cy.get('button#setupLongiBtn').click().then(() => {
+			// 	cy.get('span.SavedMsg').should(($s) => {
+			// 		expect($s).to.contain('Saved')
+			// 	})
+			// })
 		})
 
 		it('Should have the ability to designate data collection instruments for defined events for each arm', () => { 
@@ -59,22 +59,22 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 		})
 
 		it('Should have the ability to define unique event schedules for each arm', () => { 
-			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
-			cy.get('div').contains('Scheduling module (longitudinal only)').within(() => {
-				cy.get('button').click()
-			})
-			cy.get('button').contains('Define My Events').click().then(() => {
-				cy.get('table#event_table').should(($t) => {
-					expect($t).to.contain('Days Offset')
-					expect($t).to.contain('Offset Range')
-				})
-			})
+			// cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=13'})
+			// cy.get('div').contains('Scheduling module (longitudinal only)').within(() => {
+			// 	cy.get('button').click()
+			// })
+			// cy.get('button').contains('Define My Events').click().then(() => {
+			// 	cy.get('table#event_table').should(($t) => {
+			// 		expect($t).to.contain('Days Offset')
+			// 		expect($t).to.contain('Offset Range')
+			// 	})
+			// })
 			
 		})
 
 		it('Should have the ability to create repeating events and instruments', () => { 
-			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
-			cy.get('button#enableRepeatingFormsEventsBtn').click()
+			// cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=13'})
+			// cy.get('button#enableRepeatingFormsEventsBtn').click()
 		})
 
 		it('Should require administrator approval to delete events for longitudinal projects while in Production mode', () => { 
