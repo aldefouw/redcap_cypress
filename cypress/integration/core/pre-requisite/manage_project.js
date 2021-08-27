@@ -116,11 +116,21 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 
 		it('Should have the ability to designate data collection instruments for defined events for each arm', () => {
 			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
+
 			cy.get('button').contains('Define My Events').click()
+
 			cy.get('input#descrip').type('Event1')
 			cy.get('input#addbutton').click().then(() => {
-				cy.get('input#descrip').type('Event2')
-				cy.get('input#addbutton').click()
+				cy.get('div').contains('Working').should('be.visible').then(($div) => {
+					cy.get($div).should('not.exist')
+				})
+			})
+
+			cy.get('input#descrip').type('Event2')
+			cy.get('input#addbutton').click().then(() => {
+				cy.get('span').contains('Processing').should('be.visible').then(($span) => {
+					cy.get($span).should('not.exist')
+				})
 			})
 
 			cy.visit_version({page: 'Design/designate_forms.php', params: 'pid=14'})
@@ -129,8 +139,13 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 					cy.get('input#my_first_instrument--41').check()
 				})
 				cy.get('button#save_btn').click().then(() => {
-					cy.get('td').contains('My First Instrument').parent().within(($p) => {
-						expect($p).to.contain('img#img--my_first_instrument--41')
+
+					cy.get('span').contains('Saving').should('be.visible').then(($span) => {
+						cy.get($span).should('not.exist')
+					})
+
+					cy.get('tr td').contains('My First Instrument').parent().within(($p) => {
+						cy.wrap($p).find('img#img--my_first_instrument--41')
 					})
 				})
 			})
@@ -141,7 +156,7 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 		it('Should have the ability to define unique event schedules for each arm', () => {
 			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
 			cy.get('div').contains('Scheduling module (longitudinal only)').within(() => {
-				cy.get('button').click({force: true})
+				cy.get('button').contains('Enable').click()
 			})
 			cy.get('button').contains('Define My Events').click().then(() => {
 				cy.get('table#event_table').should(($t) => {
@@ -168,11 +183,13 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
 			cy.get('div').contains('Use surveys in this project').within(($p) => {
 				expect($p).to.contain('Enable')
-				cy.get('button').contains('Enable').click({force: true})
+				cy.get('button').contains('Enable').click()
 			})
 		})
 
 		it('Should have the ability to enable and disable each data collection instrument in a project as a survey', () => {
+			cy.get('div').contains('Working').should('not.be.visible')
+
 			cy.visit_version({page: 'Design/online_designer.php', params: 'pid=14'}).then(() => {
 				cy.get('tr#row_1').should(($t) => {
 					expect($t).to.contain('Enable')
