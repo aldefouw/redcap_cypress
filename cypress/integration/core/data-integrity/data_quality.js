@@ -74,25 +74,31 @@ describe('Data Quality', () => {
         })
         cy.wait(100)
         cy.get('div').contains('new rule').parent().parent().parent().within(($d) => {
-            cy.get('a').contains('view').click()
+            cy.get('a').contains('view').should('be.visible').click()
         })
 
 
 
         cy.get('a').contains('exclude').click().then(() => {
-            cy.get('table#table-results_table_2').should(($t) => {
+            cy.get('table#table-results_table_1').should(($t) => {
                 expect($t).to.contain('remove exclusion')
+            })
+
+            cy.get('table#table-results_table_1').then(($t) => {
+                cy.wrap($t).find('a').contains('remove exclusion').click().then(() => {
+                    cy.wrap($t).find('tr').should('have.css', 'background', 'rgb(239, 246, 232) none repeat scroll 0% 0% / auto padding-box border-box')
+                })
             })
         })
 
+        cy.get('tr td div a').contains('exclude').click()
 
-
-
-
+        cy.get('button').contains('Close').click()
     })
 
     it('Should have the ability to clear discrepancies from executed rules', () => {
-        cy.get('button#clearBtn').click()
+        cy.get('div').contains('Working').should('not.be.visible')
+
         cy.get('div').contains('new rule').parent().parent().parent().within(($d) => {
             expect($d).to.contain('Execute')
         })
