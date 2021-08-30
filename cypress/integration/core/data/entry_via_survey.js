@@ -130,96 +130,102 @@ describe('Data Entry through the Survey Feature', () => {
 	})
 
 	describe('User Interface', () => {
+
 		before(() => {
-			/*
-			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=9'})
-			cy.get('a').contains('Add / Edit Records').click()
-			cy.get('button').contains('Add new record').click()
-			cy.get('table#event_grid_table').within(($t) => {
-				cy.get('a').first().click()
+
+			//Add a REQUIRED field
+
+			//Visit Longitudinal Database
+			cy.visit_version({page: 'Design/online_designer.php', params: "pid=9"})
+
+			//Search for the Enter Draft Mode button
+			let draft = cy.get('input[value="Enter Draft Mode"]').should(($draft_mode) => {
+				if($draft_mode.length > 0){
+					$draft_mode.first().click()
+				}
+
+				return $draft_mode;
 			})
-			*/
+
+			if(draft.length > 0 ){
+				cy.get('div#actionMsg').should(($alert) => {
+					expect($alert).to.contain('The project is now in Draft Mode.')
+				})
+			}
+
+			//Visit the demographics instrument
+			cy.visit_version({page: 'Design/online_designer.php', params: "pid=9&page=prescreening_survey"}).then(() =>{
+
+				//Select field to edit some choices for
+				cy.edit_field_by_label('Date of birth')
+
+				//Check required
+				cy.get('input#field_req1').click()
+
+				//Save this particular field we are editing
+				cy.save_field()
+
+				//Submit the changes for review
+				cy.get('input[value="Submit Changes for Review"]').should(($i) => {
+					$i.first().click()
+				})
+
+				//Submit for Appproval
+				cy.get('button').contains('Submit').click()
+			})
 		})
+
 
 		it('Should have the ability for a participant to enter data in a data collection instrument enabled and distributed as a survey', () => {
-			//WITHIN
-			let survey_url = null;
-			cy.visit_version({page: 'Surveys/invite_participants.php', params: 'pid=9'}).then(() => {
-				//Get the URL of the survey
-				cy.get('input#longurl').then((field) => {
-					survey_url = field.val()
-				})
-				cy.visit(survey_url).then(()=> {
-					cy.get('table#questiontable').should('not.be.empty')
+			cy.visit_version({page: 'Surveys/invite_participants.php', params: 'pid=9'})
+
+			cy.get('div').contains('Public Survey URL').parent().find('input').then(($input) => {
+				cy.visit_base({ url: $input[0].value }).then(() => {
+					cy.get('html').should('contain', 'Date of birth')
+					cy.get('html').should('contain', 'E-mail address')
+					cy.get('html').should('contain', 'Type 2 Diabetes')
 				})
 			})
 		})
 
-
 		it('Should have the ability to support Incomplete surveys status', () => {
-			//WITHIN
-			let survey_url = null;
-			cy.visit_version({page: 'Surveys/invite_participants.php', params: 'pid=9'}).then(() => {
-				//Get the URL of the survey
-				cy.get('input#longurl').then((field) => {
-					survey_url = field.val()
-				})
-				cy.visit(survey_url).then(()=> {
-					cy.get('select').should(($s) => {
-						expect($s).to.contain('Incomplete')
+			cy.visit_version({page: 'Surveys/invite_participants.php', params: 'pid=9'})
+
+			cy.get('div').contains('Public Survey URL').parent().find('input').then(($input) => {
+				cy.visit_base({ url: $input[0].value }).then(() => {
+
+					cy.get('button').contains('Submit').click()
+
+					cy.get('div[role=dialog]').contains('required').parent().parent().within(() => {
+						cy.get('button').contains('Okay').click()
+					}).then(() => {
+						cy.visit_version({page: '/DataEntry/index.php', params: 'pid=9&id=3&page=prescreening_survey&event_id=31&instance=1'})
+						cy.get('td').contains('Complete?').parent().parent().find('select').contains('Incomplete')
 					})
 				})
 			})
-
 		})
 
 		it('Should have the ability to support Partial Survey Response status', () => {
-			//WITHIN
-			let survey_url = null;
-			cy.visit_version({page: 'Surveys/invite_participants.php', params: 'pid=9'}).then(() => {
-				//Get the URL of the survey
-				cy.get('input#longurl').then((field) => {
-					survey_url = field.val()
-				})
-				cy.visit(survey_url).then(()=> {
-					cy.get('select').should(($s) => {
-						expect($s).to.contain('Unverified')
-					})
-				})
-			})
+			cy.get('div').contains('Response is only partial and is not complete')
 		})
 
 		it('Should have the ability to support Completed Survey Response status', () => {
-			//WITHIN
-			let survey_url = null;
-			cy.visit_version({page: 'Surveys/invite_participants.php', params: 'pid=9'}).then(() => {
-				//Get the URL of the survey
-				cy.get('input#longurl').then((field) => {
-					survey_url = field.val()
-				})
-				cy.visit(survey_url).then(()=> {
-					cy.get('select').should(($s) => {
-						expect($s).to.contain('Complete')
-					})
-				})
-			})
-
+			cy.visit_version({page: '/DataEntry/index.php', params: 'pid=9&id=1&page=prescreening_survey&event_id=31&instance=1'})
+			cy.get('td').contains('Complete?').parent().parent().find('select').contains('Complete')
 		})
 
 		it('Should have the ability to submitted survey responses to be changed by a user who has edit survey responses rights', () => {
-			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=9'})
-			cy.visit_version({page: 'DataEntry/record_home.php', params: 'pid=9'})
-			cy.get('select#record').select('1')
-			cy.get('table#event_grid_table').within(($t) => {
-				cy.get('a').first().click()
-			})
-			cy.get('tr#email-tr').within(($t) => {
-				cy.get('input').clear()
-				cy.get('input').type('user2@yahoo.com')
-			})
-			cy.get('button#submit-btn-saverecord').first().click()
-		})
+			//Set to the standard user who has rights to this project
+			cy.set_user_type('standard')
 
+			//Attempt to edit the response
+			cy.get('button').contains('Edit response').click().then(() => {
+				cy.get('html').then(($html) => {
+					expect($html).to.contain('now editing')
+				})
+			})
+		})
 	})
 
 	describe('Control Center', () => {
