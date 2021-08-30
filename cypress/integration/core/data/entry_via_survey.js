@@ -2,38 +2,25 @@ describe('Data Entry through the Survey Feature', () => {
 
 	before(() => {
 		cy.set_user_type('admin')
-		cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=9'})
 	})
 
 	it('Should have the ability to directly enter data through a survey', () => {
-		//EXTERNAL
-		let survey_url = null;
-		cy.visit_version({page: 'Surveys/invite_participants.php', params: 'pid=9'}).then(() => {
-			//Get the URL of the survey
-			cy.get('input#longurl').then((field) => {
-				survey_url = field.val()
+		cy.visit_version({page: 'index.php', params: 'pid=9'})
+		cy.get('a').contains('Survey Distribution Tools').click()
+		cy.get('div').contains('Public Survey URL').parent().find('input').then(($input) => {
+			cy.visit_base({ url: $input[0].value }).then(() => {
+
+				cy.get('tr#email-tr').within(($t) => {
+					cy.get('input').type('user1@yahoo.com')
+				})
+
+				cy.get('button').contains('Submit').click().then(() => {
+					cy.get('html').then(($html) => {
+						expect($html).to.contain('Thank you for taking the survey.')
+					})
+				})
 			})
-			console.log(survey_url)
-			cy.visit(survey_url)
-			cy.get('tr#email-tr').within(($t) => {
-				cy.get('input').type('user1@yahoo.com')
-			})
-			cy.get('button#submit-btn-saverecord').first().click()
 		})
-		/*
-		cy.get('a').contains('Add / Edit Records').click()
-		cy.get('button').contains('Add new record').click()
-		cy.get('table#event_grid_table').should(($t) => {
-			expect($t).to.contain('Survey')
-		})
-		cy.get('table#event_grid_table').within(($t) => {
-			cy.get('a').first().click()
-		})
-		cy.get('tr#email-tr').within(($t) => {
-			cy.get('input').type('user1@yahoo.com')
-		})
-		cy.get('button#submit-btn-saverecord').first().click()
-		*/
 	})
 
 	it('Should have the ability to delete all survey-related information and functions without impacting saved data', () => {
@@ -55,20 +42,39 @@ describe('Data Entry through the Survey Feature', () => {
 			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=9'})
 			cy.get('a').contains('Add / Edit Records').click()
 			cy.get('button').contains('Add new record').click()
-			cy.get('table#event_grid_table').within(($t) => {
-				cy.get('a').first().click()
-			})
-			cy.get('button#submit-btn-saverecord').click()
-			cy.visit_version({page: 'DataEntry/record_home.php', params: 'pid=9'})
-			cy.get('select#record').select('1')
-			cy.get('table#event_grid_table').within(($t) => {
-				cy.get('a').first().click()
-			})
-			cy.get('button#SurveyActionDropDown').click()
-			cy.get('ul#SurveyActionDropDownUl').should(($u) => {
-				expect($u).to.contain('Log out')
+
+			cy.get('td').contains('Pre-Screening Survey').parent().find('a').click()
+
+			cy.get('button').contains('Save & Exit Form').click()
+
+			cy.get('td').contains('Pre-Screening Survey').parent().find('a').click()
+
+			//Click the dropdown menu
+			cy.get('button').contains('Survey options').click()
+
+			//Prevent new window from opening
+			cy.window().then(win => {
+				cy.stub(win, 'surveyOpen').callsFake((url, target) => {
+					// call the original `win.surveyOpen` method
+					// but pass the `_self` argument
+					return win.open.wrappedMethod.call(win, url, '_self')
+				}).as('open')
 			})
 
+			//This will be the best match we can find within the drop down
+			cy.get('ul#SurveyActionDropDownUl li').contains('Log out').then(($li) => {
+
+				//Click the link
+				cy.wrap($li[0]).click()
+
+				//Get the survey link
+				let onclick = Cypress.$($li[0]).prop('onclick').toString();
+				let survey = onclick.split("surveyOpen('");
+				let survey_link = survey[1].split("'")[0];
+
+				//Check to see if the window would have opened
+				cy.get('@open').should('have.been.calledOnceWithExactly', survey_link, 0)
+			})
 		})
 
 		it('Should have the ability for a survey to be generated from within a participant record using Open Survey link', () => {
