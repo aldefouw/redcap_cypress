@@ -221,17 +221,12 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 
 		it('Should have the ability to create a public survey link when the survey is in the first instrument position', () => {
 			cy.get('a').contains('Survey Distribution Tools').click()
-			cy.get('div').contains('Public Survey URL').parent().within(($t) => {
-				cy.get('input').then(($input) => {
-
-					//Get the URL from the input field
-					let url = $input[0].value
-
-					//Visit the URL
-					cy.visit_base({ url: url }).then(() => {
-
-						cy.pause()
-
+			cy.get('div').contains('Public Survey URL').parent().find('input').then(($input) => {
+				cy.visit_base({ url: $input[0].value }).then(() => {
+					cy.get('html').then(($html) => {
+						expect($html).to.contain('My First Instrument')
+						expect($html).to.contain('Please complete the survey below')
+						expect($html).to.contain('Submit')
 					})
 				})
 			})
