@@ -2,7 +2,7 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 
 	before(() => {
 		cy.mysql_db('projects/pristine')
-		cy.set_user_type('admin')
+		cy.set_user_type('standard')
 	})
 
 	describe('User Interface - General', () => {
@@ -23,7 +23,6 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 			cy.visit_base({url: 'index.php'})
 			cy.get('a').contains('My Projects').click()
 			cy.get('a').contains('Test').click()
-			//cy.get('a').contains('Project Setup').click()
 			cy.get('button').contains('Modify').click()
 			cy.get('input#app_title').clear()
 			cy.get('input#app_title').type('TestEdit')
@@ -102,15 +101,6 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 					  	 }).as('projectSettings')
 		})
 
-		/*
-		before(() => {
-			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
-			cy.get('div').contains('Scheduling module (longitudinal only)').within(() => {
-				cy.get('button').click()
-			})
-		})
-		*/
-
 		it('Should have the ability to enable and disable Longitudinal Data Collection', () => {
 			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
 
@@ -118,7 +108,6 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 				cy.get('button').contains('Enable').click()
 				cy.wait('@projectSettings')
 			})
-
 		})
 
 		it('Should have the ability to designate data collection instruments for defined events for each arm', () => {
@@ -156,8 +145,6 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 					})
 				})
 			})
-
-
 		})
 
 		it('Should have the ability to define unique event schedules for each arm', () => {
@@ -228,8 +215,26 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 
 	describe('User Interface - Survey distribution', () => {
 
-		it('Should have the ability to create a public survey link when the survey is in the first instrument position', () => {
+		beforeEach(() => {
+			cy.visit_version({page: 'index.php', params: 'pid=14'})
+		})
 
+		it('Should have the ability to create a public survey link when the survey is in the first instrument position', () => {
+			cy.get('a').contains('Survey Distribution Tools').click()
+			cy.get('div').contains('Public Survey URL').parent().within(($t) => {
+				cy.get('input').then(($input) => {
+
+					//Get the URL from the input field
+					let url = $input[0].value
+
+					//Visit the URL
+					cy.visit_base({ url: url }).then(() => {
+
+						cy.pause()
+
+					})
+				})
+			})
 		})
 
 		it('Should have the ability to create a designated email field', () => {
@@ -240,11 +245,12 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 
 	describe('Control Center', () => {
 
-		before(() => {
+		beforeEach(() => {
 			cy.set_user_type('admin')
 		})
 
 		it('Should have the ability to limit creation of new projects to administrators', () => {
+			cy.visit_base({url: 'index.php'})
 			cy.get('a').contains('Control Center').click()
 			cy.get('a').contains('User Settings').click()
 			cy.get('tr').contains('create new projects').parent().within(($t) => {
