@@ -28,8 +28,8 @@ describe('Data Entry through the Survey Feature', () => {
 	})
 
 	describe('User Interface - Survey Distribution', () => {
+
 		it('Should have the ability to automatically create a participant list using a designated email field when a survey is not in the first instrument position', () => {
-			//WITHIN
 			cy.visit_version({page: 'Surveys/invite_participants.php', params: 'pid=9'})
 			cy.get('a').contains('Participant List').click()
 			cy.get('table').should(($t) => {
@@ -38,7 +38,6 @@ describe('Data Entry through the Survey Feature', () => {
 		})
 
 		it('Should have the ability for a survey to be generated from within a participant record using Log Out + Open Survey', () => {
-			//WITHIN
 			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=9'})
 			cy.get('a').contains('Add / Edit Records').click()
 			cy.get('button').contains('Add new record').click()
@@ -52,7 +51,7 @@ describe('Data Entry through the Survey Feature', () => {
 			//Click the dropdown menu
 			cy.get('button').contains('Survey options').click()
 
-			//Prevent new window from opening
+			//Stub the surveyOpen method to prevent the blank window from opening
 			cy.window().then(win => {
 				cy.stub(win, 'surveyOpen').callsFake((url, target) => {
 					// call the original `win.surveyOpen` method
@@ -62,7 +61,7 @@ describe('Data Entry through the Survey Feature', () => {
 			})
 
 			//This will be the best match we can find within the drop down
-			cy.get('ul#SurveyActionDropDownUl li').contains('Log out').then(($li) => {
+			cy.get('ul li').contains('Log out').then(($li) => {
 
 				//Click the link
 				cy.wrap($li[0]).click()
@@ -78,21 +77,48 @@ describe('Data Entry through the Survey Feature', () => {
 		})
 
 		it('Should have the ability for a survey to be generated from within a participant record using Open Survey link', () => {
-			//WITHIN
-			cy.get('ul#SurveyActionDropDownUl').should(($u) => {
-				expect($u).to.contain('Open survey')
+			cy.get('button').contains('Survey options').click()
+
+			//Stub the surveyOpen method to prevent the blank window from opening
+			cy.window().then(win => {
+				cy.stub(win, 'surveyOpen').callsFake((url, target) => {
+					// call the original `win.surveyOpen` method
+					// but pass the `_self` argument
+					return win.open.wrappedMethod.call(win, url, '_self')
+				}).as('open')
+			})
+
+			//This will be the best match we can find within the drop down
+			cy.get('ul li').contains('Open survey').then(($li) => {
+
+				//Click the link
+				cy.wrap($li[0]).click()
+
+				//Get the survey link
+				let onclick = Cypress.$($li[0]).prop('onclick').toString();
+				let survey = onclick.split("surveyOpen('");
+				let survey_link = survey[1].split("'")[0];
+
+				//Check to see if the window would have opened
+				cy.get('@open').should('have.been.calledOnceWithExactly', survey_link, 0)
 			})
 		})
 
 		it('Should have the ability to prompt the user to leave the survey to avoid overwriting survey responses when opening surveys from a data entry form when using Open Survey link', () => {
-			//WITHIN
-			cy.get('a#surveyoption-openSurvey').first().click().then(() => {
-				cy.get('div#popup6113115080932355').should(($d) => {
-					expect($d).to.contain('overwrite any existing survey responses')
-				})
+			cy.get('button').contains('Survey options').click()
+
+			//This will be the best match we can find within the drop down
+			cy.get('ul li').contains('Open survey').then(($li) => {
+
+				//Click the link
+				cy.wrap($li[0]).click()
 			})
 
-
+			//This is the pop and it should allow us to either Leave or Stay
+			cy.get('[id^=popup]').parent().within(() => {
+				cy.get('button').should('contain', 'Leave')
+				cy.get('button').should('contain', 'Stay')
+			})
 		})
 
 		it('Should have the ability to creation of a participant list manually where each survey is assigned a unique survey link when the survey is in the first instrument position', () => {
@@ -200,7 +226,6 @@ describe('Data Entry through the Survey Feature', () => {
 
 		before(() => {
 			cy.set_user_type('admin')
-			//cy.visit_base({url: 'ControlCenter/index.php'})
 		})
 
 		it('Should have the ability for the survey feature to be enabled or disabled', () => {
