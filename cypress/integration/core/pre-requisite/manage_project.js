@@ -95,6 +95,13 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 
 	describe('User Interface - Longitudinal Project Settings', () => {
 
+		beforeEach(() =>{
+			cy.intercept({
+							method: 'POST',
+							url: '/redcap_v' + Cypress.env('redcap_version') + '/ProjectSetup/modify_project_setting_ajax.php?pid=14'
+					  	 }).as('projectSettings')
+		})
+
 		/*
 		before(() => {
 			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
@@ -106,10 +113,10 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 
 		it('Should have the ability to enable and disable Longitudinal Data Collection', () => {
 			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
-			cy.get('button#setupLongiBtn').click().then(() => {
-				cy.get('button#setupLongiBtn').should(($b) => {
-					expect($b).to.contain('Disable')
-				})
+
+			cy.get('div').contains('Use longitudinal data collection with defined events?').within(() => {
+				cy.get('button').contains('Enable').click()
+				cy.wait('@projectSettings')
 			})
 
 		})
@@ -158,13 +165,16 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 			cy.get('div').contains('Scheduling module (longitudinal only)').within(() => {
 				cy.get('button').contains('Enable').click()
 			})
-			cy.get('button').contains('Define My Events').click().then(() => {
+
+			cy.wait('@projectSettings')
+
+			cy.visit_version({page: 'Design/define_events.php', params: 'pid=14'}).then(() => {
 				cy.get('table#event_table').should(($t) => {
 					expect($t).to.contain('Days Offset')
 					expect($t).to.contain('Offset Range')
 				})
 			})
-
+			
 		})
 
 		it('Should have the ability to create repeating events and instruments', () => {
@@ -199,7 +209,7 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 			})
 		})
 
-		it('Should have the ability to set the survye status to active or offline', () => {
+		it('Should have the ability to set the survey status to active or offline', () => {
 			cy.get('button').contains('Survey settings').click().then(() => {
 				cy.get('select').contains('Survey Active').parent().should(($s) => {
 					expect($s).to.contain('Survey Offline')
