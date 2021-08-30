@@ -215,11 +215,8 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 
 	describe('User Interface - Survey distribution', () => {
 
-		beforeEach(() => {
-			cy.visit_version({page: 'index.php', params: 'pid=14'})
-		})
-
 		it('Should have the ability to create a public survey link when the survey is in the first instrument position', () => {
+			cy.visit_version({page: 'index.php', params: 'pid=14'})
 			cy.get('a').contains('Survey Distribution Tools').click()
 			cy.get('div').contains('Public Survey URL').parent().find('input').then(($input) => {
 				cy.visit_base({ url: $input[0].value }).then(() => {
@@ -233,7 +230,32 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 		})
 
 		it('Should have the ability to create a designated email field', () => {
+			cy.visit_version({page: 'Design/online_designer.php', params: 'pid=14'})
+			cy.get('a').contains('My First Instrument').click()
+			cy.get('input#btn-last').first().click()
+			cy.get('select').
+				contains('Text Box (Short Text, Number, Date/Time, ...)').
+				parent().
+				select('Text Box (Short Text, Number, Date/Time, ...)')
 
+			cy.get('input#field_label_rich_text_checkbox').uncheck()
+			cy.get('#auto_variable_naming').click()
+			cy.get('button').contains('Enable auto naming').click()
+			cy.get('textarea#field_label').type('Email Address')
+			cy.get('select#val_type').select('email')
+			cy.get('button').contains('Save').click()
+
+			cy.get('div').contains('Email Address')
+
+			cy.get('button').contains('Survey settings').click()
+
+			cy.get('div').
+				contains('Survey-specific email invitation field').
+				parent().
+				find('select').
+				select('email_address')
+
+			cy.get('button').contains('Save Changes')
 		})
 
 	})
