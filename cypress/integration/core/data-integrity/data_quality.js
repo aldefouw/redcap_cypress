@@ -182,20 +182,71 @@ describe('Data Quality', () => {
         })
     })
 
+    it('Should have the ability to delete a user defined rule', () => {
+
+        cy.get('table#table-rules').
+            find('div').
+            contains('new rule').
+            parentsUntil('tr').
+            last().
+            parent().
+            find('img').last().click().then(() => {
+                cy.get('table#table-rules').should(($t) => {
+                    expect($t).not.to.contain('![my_first_instrument_complete]')
+                })
+        })
+
+    })
+
     it('Should have the ability to limit the viewing of a rule to a specific Data Access Group', () => {
 
+        // === START: Setup of DAG
+        cy.intercept({  method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/DataQuality/execute_ajax.php?pid=13'
+        }).as('execute_rule')
+
+        cy.visit_version({page: 'DataAccessGroups/index.php', params: 'pid=13'})
+        cy.get('input#new_group').type('Test DAG Group')
+        cy.get('button#new_group_button').click()
+        cy.get('div#dags_table').should(($div) => {
+            expect($div).to.contain('Test DAG Group')
+        })
+
+        cy.visit_version({page: 'DataEntry/record_home.php', params: "pid=13&page=my_first_instrument&id=1&event_id=41&auto=1"}).then(() => {
+            cy.get('div').contains('Assign record to a Data Access Group?').find('select').select('1')
+            cy.get('button').contains('Save & Exit Form').click()
+        })
+        // === END: Setup of DAG
+
+        //Go back to the Data Quality page
+        cy.visit_version({page: 'DataQuality/index.php', params: 'pid=13'})
+
+        //See that we have a column that contains Test DAG Group
+        cy.get('tr').contains('Test DAG Group')
+
+        //Re-execute the tests
+        cy.get('button').contains('All').click()
+
+        //Check to see that zeroes are showing up within that column
+        cy.get('table#table-rules').find('tr').each(($tr, index, $list) => {
+
+            cy.wrap($tr).within((tr) => {
+
+                if(index < ($list.length - 1)) {
+                    //Check that the AJAX request is done on every single instance of execution
+                    cy.wait('@execute_rule')
+
+                    //Make sure the execute button goes away and is replaced by the number of detected quality issues
+                    cy.get('[id^=ruleexe]').should(($d) => {
+                        expect($d).to.contain('0')
+                    })
+                }
+
+            })
+        })
     })
 
     it('Should have the ability to limit a rule viewing that references a Field for which users do not have User Rights', () => {
-
-    })
-
-    it('Should have the ability to delete a user defined rule', () => {
-        cy.get('div#ruledel_1').click().then(() => {
-            cy.get('table#table-rules').should(($t) => {
-                expect($t).not.to.contain('![my_first_instrument_complete]')
-            })
-        })
 
     })
 
