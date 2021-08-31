@@ -9,75 +9,120 @@ describe('Data Quality', () => {
     it('Should have default rules available after installation', () => {
         cy.get('table#table-rules').should(($t) => {
             expect($t).to.contain('Missing values*')
+            expect($t).to.contain('Missing values* (required fields only)')
+            expect($t).to.contain('Field validation errors (incorrect data type)')
             expect($t).to.contain('Field validation errors (out of range)')
+            expect($t).to.contain('Outliers for numerical fields')
+            expect($t).to.contain('Hidden fields that contain values***')
+            expect($t).to.contain('Multiple choice fields with invalid values')
             expect($t).to.contain('Incorrect values for calculated fields')
         })
 
     })
 
     it('Should have the ability to create a data quality rule', () => {
-        cy.get('textarea#input_rulename_id_0').type("new rule")
-        cy.get('textarea#input_rulelogic_id_0').type('![my_first_instrument_complete]')
+        cy.intercept({  method: 'POST',
+                        url: '/redcap_v' + Cypress.env('redcap_version') + '/DataQuality/edit_rule_ajax.php?pid=13'
+                     }).as('add_rule')
+
+        cy.get('div').contains('name for new rule').parentsUntil('td').find('textarea').type('new rule')
+        cy.get('div').contains('logic for new rule').parentsUntil('td').find('textarea').type('![my_first_instrument_complete]')
         cy.get('button').contains("Add").click()
-        /*
-        cy.get('div#rulename_1').should(($div) => {
-                expect($div).to.contain('new rule')
-            })
-        */
+
+        cy.wait('@add_rule')
 
         cy.get('table#table-rules').should(($t) => {
             expect($t).to.contain('new rule')
         })
-
     })
 
     it('Should have the ability to execute a data quality rule', () => {
-        cy.get('div#rulename_1').parent().parent().parent().within(($tr) => {
-            cy.get('button').contains('Execute').click()
-            cy.get('div#ruleexe_1').should(($div) => {
-                expect($div).not.to.contain('Execute')
-            })
+        cy.intercept({  method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/DataQuality/execute_ajax.php?pid=13'
+        }).as('execute_rule')
+
+        cy.get('table#table-rules').within(($t) => {
+            cy.get('div').contains('new rule').parentsUntil('tr').last().parent().find('button').contains('Execute').click()
+            cy.wait('@execute_rule')
+            expect($t).to.contain(0)
         })
     })
 
     it('Should have the ability to execute all data quality rules at the same time', () => {
+        cy.intercept({  method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/DataQuality/execute_ajax.php?pid=13'
+        }).as('execute_rule')
+
+        //Execute all of the rules
         cy.get('button').contains('All').click()
-        cy.get('table#table-rules').within(($t) => {
-            cy.get('div.exebtn').should(($d) => {
-                expect($d).not.to.contain('Execute')
+
+        //Cycle through number of rows
+        cy.get('table#table-rules').find('tr').each(($tr, index, $list) => {
+
+            cy.wrap($tr).within((tr) => {
+
+                if(index < ($list.length - 1)) {
+                    //Check that the AJAX request is done on every single instance of execution
+                    cy.wait('@execute_rule')
+
+                    //Make sure the execute button goes away and is replaced by the number of detected quality issues
+                    cy.get('div.exebtn').should(($d) => {
+                        expect($d).not.to.contain('Execute')
+                        expect($d).to.contain('0')
+                    })
+                }
+
             })
         })
 
     })
 
     it('Should have the ability to view the discrepancies found during rule execution', () => {
-        //cy.get('div#rulename_pd-10').parent().parent().parent().within(($tr) => {
-        //  cy.get('button').contains('Execute').click()
-        //})
-        cy.get('div#rulename_pd-10').parent().parent().parent().within(($d) => {
-            cy.get('a').click()
-        })
-        cy.get('div.ui-dialog').should(($s) => {
-            expect($s).to.contain('Discrepancies')
-        })
-
-    })
-
-    it('Should have the ability to support the removal of exclusion of discrepancies', () => {
         cy.visit_version({page: 'DataEntry/record_home.php', params: 'pid=13'})
         cy.get('button').contains('Add new record').click()
-        //cy.get('select').contains('Incomplete').parent().parent().select()
+
         cy.get('button#submit-btn-saverecord').first().click()
+
         cy.visit_version({page: 'DataQuality/index.php', params: 'pid=13'})
+
+        //Execute the rules
+        cy.get('button').contains('All').click()
+
+        //Make sure that the 1 discrepancy is found and that we can view a window with discrepancies
         cy.get('div').contains('new rule').parent().parent().parent().within(($d) => {
-            cy.get('button').contains('Execute').click()
-        })
-        cy.wait(100)
-        cy.get('div').contains('new rule').parent().parent().parent().within(($d) => {
+
+            cy.get('div.exebtn').should(($d) => {
+                expect($d).to.contain('1')
+            })
+
             cy.get('a').contains('view').should('be.visible').click()
         })
 
+        //Let's see the discrepancies
+        cy.get('div.ui-dialog').should(($s) => {
+            expect($s).to.contain('Discrepancies')
+        })
+    })
 
+    it('Should have the ability to support the removal of exclusion of discrepancies', () => {
+        cy.intercept({  method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/DataQuality/execute_ajax.php?pid=13'
+        }).as('execute_rule')
+
+        cy.intercept({  method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/DataQuality/exclude_result_ajax.php?pid=13&instance=0&repeat_instrument='
+        }).as('exclude_result')
+
+        cy.get('div').contains('new rule').parent().parent().parent().within(($d) => {
+
+            cy.get('div.exebtn').should(($d) => {
+                expect($d).not.to.contain('Execute')
+                expect($d).to.contain('1')
+                expect($d).to.contain('view')
+            }).then(() => {
+                cy.get('a').contains('view').click({force: true})
+            })
+        })
 
         cy.get('a').contains('exclude').click().then(() => {
             cy.get('table#table-results_table_1').should(($t) => {
@@ -88,19 +133,52 @@ describe('Data Quality', () => {
                 cy.wrap($t).find('a').contains('remove exclusion').click().then(() => {
                     cy.wrap($t).find('tr').should('have.css', 'background', 'rgb(239, 246, 232) none repeat scroll 0% 0% / auto padding-box border-box')
                 })
+
+                cy.wrap($t).find('a').contains('exclude').click()
             })
         })
 
-        cy.get('tr td div a').contains('exclude').click()
-
         cy.get('button').contains('Close').click()
+
+        //Make sure the last test is completed
+        cy.wait('@exclude_result')
     })
 
     it('Should have the ability to clear discrepancies from executed rules', () => {
-        cy.get('div').contains('Working').should('not.be.visible')
+        cy.intercept({  method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/DataQuality/execute_ajax.php?pid=13'
+        }).as('execute_rule')
 
+        //Check the rules table and find there is still 1 discrepancy
         cy.get('div').contains('new rule').parent().parent().parent().within(($d) => {
-            expect($d).to.contain('Execute')
+            cy.get('div.exebtn').should(($d) => {
+                expect($d).to.contain('1')
+            })
+        })
+
+        //Clear the rules
+        cy.get('button').contains('Clear').click()
+
+        //Execute all of the rules
+        cy.get('button').contains('All').click()
+
+        //Cycle through number of rows and find there are no discrepancies now
+        cy.get('table#table-rules').find('tr').each(($tr, index, $list) => {
+
+            cy.wrap($tr).within((tr) => {
+
+                if(index < ($list.length - 1)) {
+                    //Check that the AJAX request is done on every single instance of execution
+                    cy.wait('@execute_rule')
+
+                    //Make sure the execute button goes away and is replaced by the number of detected quality issues
+                    cy.get('div.exebtn').should(($d) => {
+                        expect($d).not.to.contain('Execute')
+                        expect($d).to.contain('0')
+                    })
+                }
+
+            })
         })
     })
 
