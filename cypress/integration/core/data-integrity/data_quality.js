@@ -200,24 +200,55 @@ describe('Data Quality', () => {
     })
 
     it('Should have the ability to validate a unique event name used in custom rules for longitudinal projects', () => {
+        cy.intercept({  method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/DataQuality/edit_rule_ajax.php?pid=13'
+        }).as('add_rule')
+
+        cy.intercept({  method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/DataQuality/execute_ajax.php?pid=13'
+        }).as('execute_rule')
+
         cy.visit_version({page: 'Design/define_events.php', params: 'pid=13'})
-        cy.get('input#descrip').type("new event")
-        cy.get('input#addbutton').click()
-        cy.wait(100)
-        cy.get('input#descrip').type("new event2")
-        cy.get('input#addbutton').click()
+
+        cy.get('input#descrip').type('Event 2')
+        cy.get('input#addbutton').click().then(() => {
+            cy.get('span').contains('Processing').should('be.visible').then(($span) => {
+                cy.get($span).should('not.exist')
+            })
+        })
 
         cy.visit_version({page: 'Design/designate_forms.php', params: 'pid=13'})
-        cy.get('button').contains('Begin editing').click()
-        cy.get('input#my_first_instrument--41').check()
-        cy.get('button#save_btn').click()
+        cy.get('button').contains('Begin Editing').click().then(() => {
+            cy.get('td').contains('My First Instrument').parent().within(() => {
+                cy.get('input#my_first_instrument--41').check()
+            })
+            cy.get('button#save_btn').click().then(() => {
+
+                cy.get('span').contains('Saving').should('be.visible').then(($span) => {
+                    cy.get($span).should('not.exist')
+                })
+
+                cy.get('tr td').contains('My First Instrument').parent().within(($p) => {
+                    cy.wrap($p).find('img#img--my_first_instrument--41')
+                })
+            })
+        })
+
         cy.visit_version({page: 'DataQuality/index.php', params: 'pid=13'})
         cy.get('textarea#input_rulename_id_0').type("event rule")
-        cy.get('textarea#input_rulelogic_id_0').type('[new_event_arm_1]')
+
+        cy.get('textarea#input_rulelogic_id_0').type('[event_2_arm_1][record_id] != 0')
         cy.get('button').contains("Add").click()
+
+        cy.wait('@add_rule')
+
         cy.get('table#table-rules').should(($t) => {
             expect($t).to.contain('event rule')
         })
+
+        cy.get('div').contains('event rule').parentsUntil('tr').last().parent().find('button').contains('Execute').click()
+
+        cy.wait('@execute_rule')
     })
 
     it('Should have the ability to execute a custom data quality rule in real time', () => {
