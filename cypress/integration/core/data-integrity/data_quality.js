@@ -182,7 +182,62 @@ describe('Data Quality', () => {
         })
     })
 
+    it('Should have the ability to limit a rule viewing that references a Field for which users do not have User Rights', () => {
+
+        // === START: Setup of User Rights
+        cy.intercept({  method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/UserRights/edit_user.php?pid=13'
+        }).as('user_rights')
+
+        cy.intercept({  method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/DataQuality/execute_ajax.php?pid=13'
+        }).as('execute_rule')
+
+        cy.visit_version({page: 'UserRights/index.php', params: 'pid=13'})
+        cy.get('a').contains('Test User').click()
+        cy.get('button').contains('Edit user privileges').click()
+
+        cy.wait('@user_rights')
+
+        cy.get('td').contains('My First Instrument').parent().find('input[type=radio]').first().click().then(() =>{
+            cy.get('button').contains('Save Changes').click().then(() => {
+                cy.get('body').should(($body) => {
+                    expect($body).to.contain('User "test_user" was successfully edited')
+                })
+            })
+        })
+        // === END: Setup of User Rights
+
+        //Set the user to be a standard user
+        cy.set_user_type('standard')
+
+        //Visit the Data Quality page as standard user
+        cy.visit_version({page: 'DataQuality/index.php', params: 'pid=13'})
+
+        //If we execute this rule we should get an ERROR because we do not have rights to this as the standard user
+        cy.get('table#table-rules').within(($t) => {
+            cy.get('div').contains('new rule').parentsUntil('tr').last().parent().find('button').contains('Execute').click()
+            cy.wait('@execute_rule')
+        })
+
+        //Check to see that ERROR is present in the table
+        cy.get('div').contains('new rule').parent().parent().parent().within(($d) => {
+            cy.get('div.exebtn').should(($d) => {
+                expect($d).to.contain('ERROR')
+            })
+
+            //Click view to trigger the table
+            cy.get('a').contains('view').should('be.visible').click()
+
+        }).then(() => {
+            cy.get('div#results_table_1').contains('You do not have access rights to some of the fields used in the logic')
+            cy.set_user_type('admin')
+        })
+
+    })
+
     it('Should have the ability to delete a user defined rule', () => {
+        cy.visit_version({page: 'DataQuality/index.php', params: 'pid=13'})
 
         cy.get('table#table-rules').
             find('div').
@@ -244,10 +299,6 @@ describe('Data Quality', () => {
 
             })
         })
-    })
-
-    it('Should have the ability to limit a rule viewing that references a Field for which users do not have User Rights', () => {
-
     })
 
     it('Should have the ability to validate a unique event name used in custom rules for longitudinal projects', () => {
