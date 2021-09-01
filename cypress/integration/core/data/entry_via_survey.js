@@ -24,7 +24,42 @@ describe('Data Entry through the Survey Feature', () => {
 	})
 
 	it('Should have the ability to delete all survey-related information and functions without impacting saved data', () => {
-		//WITHIN
+		cy.intercept({
+			method: 'POST',
+			url: '/redcap_v' + Cypress.env('redcap_version') + '/ProjectSetup/modify_project_setting_ajax.php?pid=9'
+		}).as('projectSettings')
+
+		//Verify that there is data already collected in this project
+		cy.visit_version({page: 'DataEntry/index.php', params: 'pid=9&id=1&page=prescreening_survey&event_id=31&instance=1'})
+		cy.get('td').contains('E-mail address').parentsUntil('tr').last().parent().find('input').should('have.value', 'user1@yahoo.com')
+
+		//Visit the Project Setup page and Disable Survey usage
+		cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=9'})
+
+		cy.get('div').contains('Use surveys in this project?').parent().within(($div) => {
+			cy.get('button').contains('Disable').click()
+		}).then(() => {
+			cy.get('div').contains('Disable the usage of surveys in this project?').should('be.visible').parent().parent().within(() => {
+				cy.get('button').contains('Disable').click()
+			})
+		})
+
+		//Wait to make sure that the AJAX request has completed before we move onto checking data
+		cy.wait('@projectSettings')
+
+		//Verify that the data already collected is still in project after we disabled the survey
+		cy.visit_version({page: 'DataEntry/index.php', params: 'pid=9&id=1&page=prescreening_survey&event_id=31&instance=1'})
+		cy.get('td').contains('E-mail address').parentsUntil('tr').last().parent().find('input').should('have.value', 'user1@yahoo.com')
+
+		//Re-enable surveys before proceeding
+		cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=9'})
+
+		cy.get('div').contains('Use surveys in this project?').parent().within(($div) => {
+			cy.get('button').contains('Enable').click()
+		})
+
+		//Wait to make sure that the AJAX request has completed before we move onto next test
+		cy.wait('@projectSettings')
 	})
 
 	describe('User Interface - Survey Distribution', () => {
