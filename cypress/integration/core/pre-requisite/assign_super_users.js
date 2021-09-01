@@ -27,15 +27,16 @@ describe('Assign Super Users / Account Managers', () => {
 		})
 
 		it('Should have the ability to grant and revoke administrators and account manager access to the system for individual users', () => {
-			cy.visit_version({page: 'ControlCenter/superusers.php'})
-			cy.get('#new_super_user').select('test_user').then(() => {
-				cy.get('#add_super_user_btn').click().then(() => {
-					cy.get('table').should(($table) => {
-						expect($table).to.contain('Test User')
+			cy.visit_version({page: 'ControlCenter/superusers.php'}).then(() => {
+				cy.get('#new_super_user').select('test_user').then(() => {
+					cy.get('#add_super_user_btn').click().then(() => {
+						cy.get('table').should(($table) => {
+							expect($table).to.contain('Test User')
+						})
 					})
 				})
-			});
-	
+			})
+
 			cy.set_user_type('standard').then(() => {
 				// LogOut and login again to check if standard user got admin rights
 				cy.visit_version({page:''}).then(() => {
