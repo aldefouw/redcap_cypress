@@ -104,11 +104,15 @@ describe('Logging', () => {
 		cy.get('div#working').should('not.be.visible')
 
 		// Step 9 - Delete new role
-		cy.get('a[title="Edit role privileges"]').contains('Data').should('be.visible').click()
-		cy.get('button').contains("Delete role").should('be.visible').click()
-		cy.get('div[role="dialog"][aria-describedby!="editUserPopup"]').find('button').contains('Delete role').should('be.visible').click()
-		cy.get('div.userSaveMsg').should('not.be.visible')
-		cy.get('div#working').should('not.be.visible')
+		cy.get('a[title="Edit role privileges"]').contains('Data').should('be.visible').click().then(() => {
+			cy.get('button').should(($button) => {
+				expect($button).to.contain('Delete role')
+			})
+			cy.get('button').contains("Delete role").click({ force: true })
+			cy.get('div[role="dialog"][aria-describedby!="editUserPopup"]').find('button').contains('Delete role').should('be.visible').click()
+			cy.get('div.userSaveMsg').should('not.be.visible')
+			cy.get('div#working').should('not.be.visible')
+		})
 
 		// Steps 10, 11 - Add and edit new user (completed in project setup)
 
