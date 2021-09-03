@@ -334,6 +334,26 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 
 						it('Should automatically populate raw values for choices', () => {
 
+							//Select field to edit some choices for
+							cy.edit_field_by_label('New Drop Down')
+
+							//Get the field choices and set the new values / labels
+							let field_choices = cy.select_field_choices()
+							field_choices.type('NEW LABEL 1\nNEW LABEL 2\nNEW LABEL 3')
+
+							//Check that raw values were automatically added
+							cy.get('div').contains('Field Type:').click().then(() => {
+								cy.get('html').should(($html) => {
+									expect($html).to.contain('Raw values for choices were added automatically')
+								})
+
+								cy.get('div').contains('Raw values for choices were added automatically').parent().within(() => {
+									cy.get('button').contains('Close').click()
+								})
+							})
+
+							//Save this particular field we are editing
+							cy.save_field()
 						})
 					})
 
@@ -355,10 +375,28 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 
 
 						it('Should automatically populate raw values for choices', () => {
+							//Select field to edit some choices for
+							cy.edit_field_by_label('New Radio')
 
+							//Get the field choices and set the new values / labels
+							let field_choices = cy.select_field_choices()
+							field_choices.type('NEW LABEL 1\nNEW LABEL 2\nNEW LABEL 3')
+
+							//Check that raw values were automatically added
+							cy.get('div').contains('Field Type:').click().then(() => {
+								cy.get('html').should(($html) => {
+									expect($html).to.contain('Raw values for choices were added automatically')
+								})
+
+								cy.get('div').contains('Raw values for choices were added automatically').parent().within(() => {
+									cy.get('button').contains('Close').click()
+								})
+							})
+
+							//Save this particular field we are editing
+							cy.save_field()
 						})	
 					})
-					
 				})
 
 				describe('Checkboxes', () => {
@@ -378,7 +416,26 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 					})	
 
 					it('Should automatically populate raw values for choices', () => {
+						//Select field to edit some choices for
+						cy.edit_field_by_label('New Check Box')
 
+						//Get the field choices and set the new values / labels
+						let field_choices = cy.select_field_choices()
+						field_choices.type('NEW LABEL 1\nNEW LABEL 2\nNEW LABEL 3')
+
+						//Check that raw values were automatically added
+						cy.get('div').contains('Field Type:').click().then(() => {
+							cy.get('html').should(($html) => {
+								expect($html).to.contain('Raw values for choices were added automatically')
+							})
+
+							cy.get('div').contains('Raw values for choices were added automatically').parent().within(() => {
+								cy.get('button').contains('Close').click()
+							})
+						})
+
+						//Save this particular field we are editing
+						cy.save_field()
 					})
 
 				})
@@ -491,10 +548,11 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 								//Iterate through the entire list of options to ensure we do not have 'section_header' option
 								$list.each(($k, $v) => { expect($v['value']).to.not.eq('section_header') })
 							})
+						}).then(() => {
+							//Close out the window
+							cy.get('button[title=Close]').last().click()
 						})
 
-						//Close out the window
-						cy.get('button[title=Close]').click()
 					})
 
 					it('Should NOT allow a new sections at bottom of form', () => {
