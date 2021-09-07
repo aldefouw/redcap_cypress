@@ -9,71 +9,71 @@ describe('Data Entry through the Data Collection Instrument', () => {
         })
 
 		it('Should display a listing of all existing records', () => {
-            cy.get('table#record_status_table').should(($table) => {
-                expect($table).to.contain('No records exist')
-            })
+		    cy.get('table#record_status_table').should(($table) => {
+			expect($table).to.contain('No records exist')
+		    })
 		})
 
 		it('Should display a listing with the appropriate form statuses', () => {
-           cy.get('table#record_status_table').should(($table) => {
-                expect($table).to.contain('Demographics')
-                expect($table).to.contain('Baseline Data')
-                expect($table).to.contain('Month 1 Data')
-                expect($table).to.contain('Month 2 Data')
-                expect($table).to.contain('Month 3 Data')
-                expect($table).to.contain('Completion Data')
-            })
+		   cy.get('table#record_status_table').should(($table) => {
+			expect($table).to.contain('Demographics')
+			expect($table).to.contain('Baseline Data')
+			expect($table).to.contain('Month 1 Data')
+			expect($table).to.contain('Month 2 Data')
+			expect($table).to.contain('Month 3 Data')
+			expect($table).to.contain('Completion Data')
+		    })
 		})
 	})
 
 	describe('Entering Data', () => {
-        before(() => {
-            cy.visit_version({page: 'DataEntry/record_home.php', params: "pid=1"})
-            cy.get('button').contains('Add new record').click({force:true})
-        })
+		before(() => {
+		    cy.visit_version({page: 'DataEntry/record_home.php', params: "pid=1"})
+		    cy.get('button').contains('Add new record').click({force:true})
+		})
 
 		it('Should have the ability to create a record', () => {
-            cy.get('table#event_grid_table tbody td a').first().click()
-            cy.get('button').contains('Save & Exit Form').click()
-            cy.get('body').should(($body) => {
-                expect($body).to.contain('Study ID 1 successfully added')
-            })
+			cy.get('table#event_grid_table tbody td a').first().click()
+			cy.get('button').contains('Save & Exit Form').click()
+			cy.get('body').should(($body) => {
+			expect($body).to.contain('Study ID 1 successfully added')
+		    })
 		})
 
 		it('Should have the ability to enter data for core field types', () => {    
-            cy.get('table#event_grid_table tbody td a').first().click()       
-            cy.select_text_by_label('Date subject signed consent').type('01/01/2019')
-            cy.select_text_by_label('First Name').type('Rosie')
-            cy.select_text_by_label('Last Name').type('Riveter')
-            cy.select_textarea_by_label('Street, City, State, ZIP').type("555 Fake Address\nBeverly Hills, CA 90210")
+		    cy.get('table#event_grid_table tbody td a').first().click()       
+		    cy.select_text_by_label('Date subject signed consent').type('01/01/2019')
+		    cy.select_text_by_label('First Name').type('Rosie')
+		    cy.select_text_by_label('Last Name').type('Riveter')
+		    cy.select_textarea_by_label('Street, City, State, ZIP').type("555 Fake Address\nBeverly Hills, CA 90210")
 
-            cy.select_radio_by_label('Ethnicity').first().click()
-            cy.select_radio_by_label('Sex').first().click()
+		    cy.select_radio_by_label('Ethnicity').first().click()
+		    cy.select_radio_by_label('Sex').first().click()
 
-            cy.select_field_by_label('Race').select('Asian')
-            cy.select_checkbox_by_label('Is patient taking any of the following medications? (check all that apply)').first().check()
-            cy.select_field_by_label('Complete?').select('Complete')
+		    cy.select_field_by_label('Race').select('Asian')
+		    cy.select_checkbox_by_label('Is patient taking any of the following medications? (check all that apply)').first().check()
+		    cy.select_field_by_label('Complete?').select('Complete')
 
-            cy.get('button').contains('Save & Exit Form').click()
+		    cy.get('button').contains('Save & Exit Form').click()
 
-            cy.get('body').should(($body) => {
-                expect($body).to.contain('Study ID 1 successfully edited')
-            })
+		    cy.get('body').should(($body) => {
+			expect($body).to.contain('Study ID 1 successfully edited')
+		    })
 		})
 
 		it('Should have the ability to reset a multiple-choice radio button selection', () => {
-            cy.get('table#event_grid_table tbody td a').first().click()
+		    cy.get('table#event_grid_table tbody td a').first().click()
 
-            cy.select_radio_by_label('Ethnicity').parent().parent().should(($td) => {
-                let $a = $td.find('> div a')
-                let $reset_exists = expect($a).to.contain('reset')
-                if ($reset_exists) $a.click() 
-            })
+		    cy.select_radio_by_label('Ethnicity').parent().parent().should(($td) => {
+			let $a = $td.find('> div a')
+			let $reset_exists = expect($a).to.contain('reset')
+			if ($reset_exists) $a.click() 
+		    })
 		})
 
 		describe('Date / Time Fields', () => {
 			it('Should display a date picker widget on a date field', () => {
-                cy.get('img.ui-datepicker-trigger').click({multiple:true})
+				cy.get('img.ui-datepicker-trigger').click({multiple:true})
 			})
 
 			it('Should display a Today button', () => {
@@ -81,13 +81,13 @@ describe('Data Entry through the Data Collection Instrument', () => {
 			        expect($btn).to.contain('Today')
 			    })
 
-                cy.get('button').contains('Save & Exit Form').click()
+			cy.get('button').contains('Save & Exit Form').click()
 
-                cy.get('body').should(($body) => {
-                    expect($body).to.contain('Study ID 1 successfully edited')
-                })
+			cy.get('body').should(($body) => {
+			    expect($body).to.contain('Study ID 1 successfully edited')
 			})
 		})
+	})
 	})
 
 	describe('Saving Data', () => {
