@@ -113,7 +113,7 @@ describe('Logging', () => {
 			cy.get('div.userSaveMsg').should('not.be.visible')
 			cy.get('div#working').should('not.be.visible')
 		})
-
+    
 		// Steps 10, 11 - Add and edit new user (completed in project setup)
 
 		// Step 12 - Remove user
