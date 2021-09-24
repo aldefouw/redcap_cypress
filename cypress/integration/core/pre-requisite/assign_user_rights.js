@@ -42,6 +42,27 @@ describe('Assign User Rights', () => {
 				cy.get('html').should(($html) => {
 					expect($html).contain('Your access to this particular REDCap project has expired.')
 				})
+
+				//Clean up after ourselves by resetting the expiration date
+				cy.set_user_type('admin')
+
+				cy.visit_version({page:'index.php', params: 'pid=1'})
+
+				cy.get('a').contains('User Rights').click()
+				cy.get('a').contains('test_user (Test User)').click()
+				cy.get('button').contains('Edit user privileges').click()
+
+				cy.get('input.hasDatepicker').click().clear()
+
+				cy.get('input#expiration').should(($expiration) => {
+					expect($expiration).to.have.value("")
+				})
+
+				cy.get('button').contains('Save Changes').click()
+
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('User "test_user" was successfully edited')
+				})
 			})
 
 			describe('Permissions / Abilities', () => {
