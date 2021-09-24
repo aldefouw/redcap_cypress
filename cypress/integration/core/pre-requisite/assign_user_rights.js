@@ -1,7 +1,8 @@
 describe('Assign User Rights', () => {
 
 	before(() => {
-		cy.set_user_type('standard')
+		cy.set_user_type('admin')
+		cy.visit_version({page:'index.php', params: 'pid=1'})
 	})
 
 	describe('Project Level Abilities', () => {
@@ -9,7 +10,38 @@ describe('Assign User Rights', () => {
 		describe('Add, Edit, and Delete Core User Privileges', () => {
 
 			it('Should have the ability to assign an Expiration Date to User Privileges', () => {
-				
+				//Set the test user's access to expire within the admin role
+				cy.get('a').contains('User Rights').click()
+				cy.get('a').contains('test_user (Test User)').click()
+				cy.get('button').contains('Edit user privileges').click()
+
+				cy.get('input.hasDatepicker').click()
+				cy.get('a.ui-state-highlight').click()
+
+				cy.get('input#expiration').should(($expiration) => {
+					let date = new Date()
+					let day = date.getDate();
+					let month = String(date.getMonth()+1).padStart(2, "0");
+					let year = date.getFullYear();
+					let fullDate = `${month}/${day}/${year}`;
+
+					expect($expiration).to.have.value(fullDate)
+				})
+
+				cy.get('button').contains('Save Changes').click()
+
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('User "test_user" was successfully edited')
+				})
+
+				//Now let's login as a standard user and ensure that the expiration did expire
+				cy.set_user_type('standard')
+
+				cy.visit_version({page:'index.php', params: 'pid=1'})
+
+				cy.get('html').should(($html) => {
+					expect($html).contain('Your access to this particular REDCap project has expired.')
+				})
 			})
 
 			describe('Permissions / Abilities', () => {
