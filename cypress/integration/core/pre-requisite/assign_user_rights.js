@@ -68,7 +68,55 @@ describe('Assign User Rights', () => {
 			describe('Permissions / Abilities', () => {
 
 				it('Should have the ability to grant Project Design / Setup permission to a user', () => {
-				
+					//Set the test user's access to expire within the admin role
+					cy.get('a').contains('User Rights').click()
+					cy.get('a').contains('test_user (Test User)').click()
+					cy.get('button').contains('Edit user privileges').click()
+
+					//This will tell us the pop up is there
+					cy.get('div').should(($div) => {
+						expect($div).to.contain('Editing existing user')
+					})
+
+					//Click the Project Design and Setup to uncheck it
+					cy.get('td').contains('Project Design and Setup').next().find('input').click()
+
+					cy.get('button').contains('Save Changes').click()
+
+					cy.get('body').should(($body) => {
+						expect($body).to.contain('User "test_user" was successfully edited')
+					})
+
+					//Now let's login as a standard user and see that we cannot access Project Setup
+					cy.set_user_type('standard')
+
+					//Go to the Project Setup page URL
+					cy.visit_version({page:'/ProjectSetup/index.php', params: 'pid=1'})
+
+					//But ensure that we're actually redirect to index.php
+					cy.url().should('include', `/redcap_v${Cypress.env('redcap_version')}/index.php?pid=1`) // => true
+					
+
+					//Clean up after ourselves by resetting the expiration date
+					cy.set_user_type('admin')
+
+					cy.visit_version({page:'index.php', params: 'pid=1'})
+
+					cy.get('a').contains('User Rights').click()
+					cy.get('a').contains('test_user (Test User)').click()
+					cy.get('button').contains('Edit user privileges').click()
+
+					cy.get('input.hasDatepicker').click().clear()
+
+					cy.get('input#expiration').should(($expiration) => {
+						expect($expiration).to.have.value("")
+					})
+
+					cy.get('button').contains('Save Changes').click()
+
+					cy.get('body').should(($body) => {
+						expect($body).to.contain('User "test_user" was successfully edited')
+					})
 				})
 
 				it('Should have the ability to grant User Rights permission to a user', () => {
