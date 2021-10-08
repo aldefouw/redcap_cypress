@@ -10,6 +10,7 @@
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
+const cucumber = require('cypress-cucumber-preprocessor').default
 const shell = require('shelljs')
 const sed_lite = require('sed-lite').sed
 const fs = require('fs')
@@ -18,6 +19,8 @@ const csv = require('async-csv')
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+
+  on('file:preprocessor', cucumber())
 
   on('task', {
 
@@ -83,7 +86,7 @@ module.exports = (on, config) => {
   		} else {
 	  		var db_cmd=`${mysql_name} -h${host} --port=${port} -u${db_user} -p${db_pass}`;
   		}
-  		
+
 		var sql=`${shell.pwd()}/test_db/${type}.sql`;
 		var tmp=`${sql}.tmp`;
 
@@ -107,7 +110,7 @@ module.exports = (on, config) => {
 		//FORMULATE DB CMD
 		if (fs.existsSync(tmp)) {
         	return { cmd: `${db_cmd} < ${tmp}`, tmp: tmp };
-      	}		
+      	}
 	},
 
 	deleteFile({path}){
@@ -119,7 +122,7 @@ module.exports = (on, config) => {
         	}
 
         	return false
-      	}			
+      	}
 	},
 
 	parseCsv({csv_string}) {

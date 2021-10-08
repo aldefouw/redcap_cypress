@@ -8,7 +8,6 @@ import './projects/commands'
 import compareVersions from 'compare-versions';
 import 'cypress-iframe';
 import '@4tw/cypress-drag-drop'
-const shell = require('shelljs')
 
 // Commands in this file are CRUCIAL and are an embedded part of the REDCap Cypress Framework.
 // They are very stable and do not change often, if ever
@@ -47,11 +46,11 @@ Cypress.Commands.add('visit_version', (options) => {
 
 Cypress.Commands.add('visit_base', (options) => {
     cy.maintain_login().then(() => {
-        if ('url' in options) cy.visit(options['url']) 
+        if ('url' in options) cy.visit(options['url'])
     })
 })
 
-Cypress.Commands.add('base_db_seed', () => {    
+Cypress.Commands.add('base_db_seed', () => {
 
     let redcap_source_path = Cypress.env('redcap_source_path')
 
@@ -59,9 +58,9 @@ Cypress.Commands.add('base_db_seed', () => {
         alert('redcap_source_path, which defines where your REDCap source code exists, is missing in cypress.env.json.  Please configure it before proceeding.')
     }
 
-    cy.task('populateStructureAndData', {   
-                                            redcap_version: Cypress.env('redcap_version'), 
-                                            advanced_user_info: compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>='), 
+    cy.task('populateStructureAndData', {
+                                            redcap_version: Cypress.env('redcap_version'),
+                                            advanced_user_info: compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>='),
                                             source_location: redcap_source_path
                                         }).then((structure_and_data_file_exists) => {
 
@@ -83,12 +82,12 @@ Cypress.Commands.add('base_db_seed', () => {
                     cy.clearCookies()
                 })
 
-            })          
+            })
 
         } else {
             alert('Warning: Error generating structure and data file.  This usually happpens because your REDCap source code is missing files.')
         }
-     
+
     })
 })
 
@@ -112,13 +111,13 @@ Cypress.Commands.add('maintain_login', () => {
                 console.log('Cookie Login')
                 cookies.map(cookie =>  Cypress.Cookies.preserveOnce(cookie['name']) )
 
-            //But, if we don't, then let's simply re-login, right?    
-            } else {     
+            //But, if we don't, then let's simply re-login, right?
+            } else {
                 console.log('Regular Login')
                 cy.login({ username: user, password: pass })
-            }         
-            
-        })  
+            }
+
+        })
 
     //If user type has changed, let's clear cookies and login again
     } else {
@@ -144,7 +143,7 @@ Cypress.Commands.add('set_user_info', (users) => {
 
 
 Cypress.Commands.add('mysql_db', (type, replace = '', include_db_name = true) => {
-    
+
     const mysql = Cypress.env("mysql")
 
     let version = Cypress.env('redcap_version')
@@ -154,25 +153,25 @@ Cypress.Commands.add('mysql_db', (type, replace = '', include_db_name = true) =>
     }
 
     //Create the MySQL Installation
-    cy.task('generateMySQLCommand', {   
+    cy.task('generateMySQLCommand', {
                                 mysql_name: mysql['path'],
                                 host: mysql['host'],
                                 port: mysql['port'],
                                 db_name: mysql['db_name'],
                                 db_user: mysql['db_user'],
                                 db_pass: mysql['db_pass'],
-                                type: type, 
+                                type: type,
                                 replace: replace,
                                 include_db_name: include_db_name
                               }).then((mysql_cli) => {
-                                    
+
                                     //Execute the MySQL Command
                                     cy.exec(mysql_cli['cmd'], { timeout: 100000}).then((data_import) => {
                                         expect(data_import['code']).to.eq(0)
 
-                                        //Clean up after ourselves    
+                                        //Clean up after ourselves
                                         cy.task('deleteFile', { path: mysql_cli['tmp'] }).then((deleted_tmp_file) => {
-                                            expect(deleted_tmp_file).to.eq(true)                                         
+                                            expect(deleted_tmp_file).to.eq(true)
                                         })
                                     })
                               })
@@ -185,18 +184,18 @@ function test_link (link, title, try_again = true) {
         then(($control_center) => {
             if($control_center.find('div#control_center_window').length){
                 cy.get('div#control_center_window').then(($a) => {
-                    if($a.find('div#control_center_window h4').length){ 
+                    if($a.find('div#control_center_window h4').length){
                         cy.get('div#control_center_window h4').contains(title)
                     } else if ($a.find('div#control_center_window div').length){
                         cy.get('div#control_center_window div').contains(title)
                     } else {
                         cy.get('body').contains(title)
-                    }                
+                    }
                 })
             } else {
                 cy.get('body').contains(title)
             }
-        }) 
+        })
 }
 
 Cypress.Commands.add('contains_cc_link', (link, title = '') => {
@@ -218,7 +217,7 @@ Cypress.Commands.add('compare_value_by_field_label', (name, value, timeout = 100
     })
 })
 
-Cypress.Commands.add('set_field_value_by_label', ($name, $value, $type, $prefix = '', $suffix = '', $last_suffix = '', timeout = 10000) => {   
+Cypress.Commands.add('set_field_value_by_label', ($name, $value, $type, $prefix = '', $suffix = '', $last_suffix = '', timeout = 10000) => {
    cy.contains('td', $name, { timeout: timeout }).
       parent().
       parentsUntil('tr').
@@ -229,23 +228,23 @@ Cypress.Commands.add('set_field_value_by_label', ($name, $value, $type, $prefix 
         let selector = $type + '[name="' + $prefix + $tr[0]['attributes']['sq_id']['value'] + $suffix + '"]'
         cy.get(selector, { force: true}).then(($a) => {
             return $a[0]
-        })        
+        })
       })
 })
 
-Cypress.Commands.add('select_text_by_label', ($name, $value) => {   
+Cypress.Commands.add('select_text_by_label', ($name, $value) => {
     cy.set_field_value_by_label($name, $value, 'input')
 })
 
-Cypress.Commands.add('select_textarea_by_label', ($name, $value) => {   
+Cypress.Commands.add('select_textarea_by_label', ($name, $value) => {
     cy.set_field_value_by_label($name, $value, 'textarea')
 })
 
-Cypress.Commands.add('select_radio_by_label', ($name, $value) => {   
+Cypress.Commands.add('select_radio_by_label', ($name, $value) => {
     cy.set_field_value_by_label($name, $value, 'input', '', '___radio')
 })
 
-Cypress.Commands.add('select_value_by_label', ($name, $value) => {   
+Cypress.Commands.add('select_value_by_label', ($name, $value) => {
     cy.set_field_value_by_label($name, $value, 'select', '', '')
 })
 
@@ -274,18 +273,18 @@ Cypress.Commands.add('initial_save_field', () => {
                         cy.get('input#auto_variable_naming').click()
                         cy.contains('button', 'Enable auto naming').click().then(() => {
                             cy.contains('button', 'Save').click()
-                        })       
-                    }                        
+                        })
+                    }
                 })
-            })                
-    })   
+            })
+    })
 })
 
 Cypress.Commands.add('save_field', () => {
     cy.get('input#field_name').then(($f) => {
         cy.contains('button', 'Save').click()
-    }) 
-   
+    })
+
 })
 
 Cypress.Commands.add('add_field', (field_name, type) => {
@@ -337,21 +336,21 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
 
         cy.add_api_user_to_project(admin_user, pid).then(() => {
 
-            cy.request({ url: '/redcap_v' + 
-                     Cypress.env('redcap_version') + 
-                    '/ControlCenter/user_api_ajax.php?action=createToken&api_username=' + 
-                    admin_user + 
-                    '&api_pid=' + 
-                    pid + 
+            cy.request({ url: '/redcap_v' +
+                     Cypress.env('redcap_version') +
+                    '/ControlCenter/user_api_ajax.php?action=createToken&api_username=' +
+                    admin_user +
+                    '&api_pid=' +
+                    pid +
                     '&api_export=1&api_import=1&mobile_app=0&api_send_email=0'}).should(($token) => {
 
                         expect($token.body).to.contain('token has been created')
                         expect($token.body).to.contain(admin_user)
 
-                        cy.request({ url: '/redcap_v' + 
-                                     Cypress.env('redcap_version') + 
+                        cy.request({ url: '/redcap_v' +
+                                     Cypress.env('redcap_version') +
                                     '/ControlCenter/user_api_ajax.php?action=viewToken&api_username=test_admin&api_pid=' + pid}).then(($super_token) => {
-                        
+
                         current_token = Cypress.$($super_token.body).children('div')[0].innerText
 
                         cy.fixture(`dictionaries/${fixture_file}`).then(data_dictionary => {
@@ -372,7 +371,7 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
                                     },
                                     timeout: 50000
 
-                                }).should(($a) => {                                    
+                                }).should(($a) => {
                                     expect($a.status).to.equal(200)
 
                                     cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
@@ -383,7 +382,7 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
                         })
                 })
             })
-        })        
+        })
     })
 
 })
@@ -401,7 +400,7 @@ Cypress.Commands.add('create_cdisc_project', (project_name, project_type, cdisc_
     cy.upload_file(cdisc_file, 'xml', 'input[name="odm"]')
     cy.get('button').contains('Create Project').click().then(() => {
         let pid = null;
-        cy.url().should((url) => { 
+        cy.url().should((url) => {
             return url
         })
     })
@@ -503,12 +502,12 @@ Cypress.Commands.add('import_data_file', (fixture_file, api_token) => {
                 returnFormat: 'json'
             },
             timeout: 50000
-        }).should(($a) => {                                    
+        }).should(($a) => {
             expect($a.status).to.equal(200)
         })
-        
+
     })
-    
+
 })
 
 //
