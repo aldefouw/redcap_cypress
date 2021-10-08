@@ -20,7 +20,7 @@ describe('Assign User Rights', () => {
 
 				cy.get('input#expiration').should(($expiration) => {
 					let date = new Date()
-					let day = date.getDate();
+					let day = String(date.getDate()).padStart(2, "0");
 					let month = String(date.getMonth()+1).padStart(2, "0");
 					let year = date.getFullYear();
 					let fullDate = `${month}/${day}/${year}`;
