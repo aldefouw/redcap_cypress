@@ -1,33 +1,28 @@
-import { Then } from "cypress-cucumber-preprocessor/steps";
+import { Given } from "cypress-cucumber-preprocessor/steps";
 
-Then(`I see {string} in the title`, (title) => {
-    cy.title().should('include', title)
-})
-
-Given("a admin user logs into REDCap", () => {
+Given("I visit the public survey URL for Project ID {int}", (project_id) => {
+    //Get the public survey URL as an admin so we know survey tools are available
     cy.set_user_type('admin')
-})
 
-And("they visit the public survey URL for Project ID {int}", (project_id) => {
-    cy.visit_version({page: 'index.php', params: "pid=" + project_id})
+    //Visit the project ID specified
+    cy.visit_version({page: 'index.php', params: 'pid=' + project_id})
+
+    //Look for the name of the Distribution Tools for a Survey
     cy.get('a').contains('Survey Distribution Tools').click()
+
+    //Get the Public Survey URL block
     cy.get('div').contains('Public Survey URL').parent().find('input').then(($input) => {
+        //Make sure we aren't logged in
+        cy.logout()
+
+        //Now we can visit the URL as an external user
         cy.visit_base({ url: $input[0].value })
     })
 })
 
-And("they enter {string} into the {string} survey field", (text, field) => {
-    cy.get('tr#email-tr').within(($t) => {
-        cy.get('input').type(text)
-    })
-})
-
-And("they click the {string} button", (text) => {
-    cy.get('button').contains(text).click()
-})
-
-Then("they should see {string}", (text) => {
-    cy.get('html').then(($html) => {
-        expect($html).to.contain(text)
+Given("I enter {string} into the {string} survey text input field", (text, field) => {
+    cy.get('label').contains(field).then(($label) => {
+        let table_row = $label.parentsUntil('tr').parent().first()
+        cy.get(table_row).within(($s) => { cy.get('input').type(text) })
     })
 })

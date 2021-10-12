@@ -31,6 +31,10 @@ Cypress.Commands.add('login', (options) => {
     })
 })
 
+Cypress.Commands.add('logout', () => {
+    cy.visit('/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
+})
+
 Cypress.Commands.add('visit_version', (options) => {
 
     let version = Cypress.env('redcap_version')
@@ -122,7 +126,7 @@ Cypress.Commands.add('maintain_login', () => {
     //If user type has changed, let's clear cookies and login again
     } else {
         //Ensure we logout when a user changes
-        cy.visit('/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
+        cy.logout()
         cy.login({ username: user, password:  pass })
     }
 
