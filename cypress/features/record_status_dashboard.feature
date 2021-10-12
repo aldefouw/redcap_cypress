@@ -14,7 +14,6 @@ Feature: Record Status Dashboard
     Then I should see "No records exist yet"
 
   Scenario: A standard user visits a project with a record
-
     Given I am a "standard" user who logs into REDCap
     And I visit Project ID 1
 
