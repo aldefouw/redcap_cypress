@@ -19,8 +19,3 @@ Given("I visit Project ID {int}", (id) => {
     cy.visit_version({page: 'index.php', params: 'pid=' + id})
 })
 
-Given("I visit the first form for Project ID {int}", (id) => {
-    cy.visit_version({page: 'index.php', params: 'pid=' + id})
-})
-
-
