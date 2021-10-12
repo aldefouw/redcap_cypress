@@ -3,10 +3,11 @@ Feature: Record Status Dashboard
   As a user
   I want to see that the Record Status Dashboard functions correctly
 
-  Scenario: A standard user visits a project with no records
+  Background:
     Given I am a "standard" user who logs into REDCap
     And I visit Project ID 1
 
+  Scenario: A standard user visits a project with no records
     When I click on the link labeled "Add / Edit Records"
     Then I should see "Total records: 0"
 
@@ -14,9 +15,6 @@ Feature: Record Status Dashboard
     Then I should see "No records exist yet"
 
   Scenario: A standard user visits a project with a record
-    Given I am a "standard" user who logs into REDCap
-    And I visit Project ID 1
-
     When I click on the link labeled "Record Status Dashboard"
     And I click on the button labeled "Add new record"
     And I click on the bubble for the "Demographics" data collection instrument
