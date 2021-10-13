@@ -11,3 +11,4 @@ Given("I should NOT see {string}", (text) => {
 Given("I should see {string} in the title", (title) => {
     cy.title().should('include', title)
 })
+
