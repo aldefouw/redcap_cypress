@@ -48,7 +48,7 @@ describe('Logging', () => {
 		cy.visit_version({page: '/Locking/locking_customization.php', params: `pid=${PID}`})
 		cy.get('#savedEsign-text_validation').closest('td').find('input').check()
 
-		cy.move_project_to_production(PID, false)
+		//cy.move_project_to_production(PID, false)
 
 		///////////////////////////////////////////////////////////////
 		// Take all project actions that will be checked in the logs //
@@ -113,7 +113,7 @@ describe('Logging', () => {
 			cy.get('div.userSaveMsg').should('not.be.visible')
 			cy.get('div#working').should('not.be.visible')
 		})
-
+    
 		// Steps 10, 11 - Add and edit new user (completed in project setup)
 
 		// Step 12 - Remove user
@@ -123,14 +123,18 @@ describe('Logging', () => {
 		cy.get('span').contains("Remove user?").should('be.visible').closest('div[role="dialog"]').find('button').contains("Remove user").click()
 		cy.get('div.userSaveMsg').should('not.be.visible')
 
-		// Step 14 - Export Data
 		cy.set_user_type('standard2')
 
 	})
 
+	// Step 14 - Export Data
 	it('Should have the ability to export the logs to a CSV file', () => {
-
+			cy.visit_version({page: 'DataExport/index.php', params: `pid=${PID}`})
+			cy.verify_export_deidentification_options('input[name="export_format"][value="csvraw"]')
+            cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
 	})
+	
+
 
 	describe('Log of User Actions', () => {
 
