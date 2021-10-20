@@ -123,7 +123,7 @@ describe('Logging', () => {
 		cy.get('span').contains("Remove user?").should('be.visible').closest('div[role="dialog"]').find('button').contains("Remove user").click()
 		cy.get('div.userSaveMsg').should('not.be.visible')
 
-		cy.set_user_type('standard2')
+		//cy.set_user_type('standard2')
 
 	})
 
