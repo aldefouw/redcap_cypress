@@ -129,10 +129,12 @@ describe('Logging', () => {
 
 	// Step 14 - Export Data
 	it('Should have the ability to export the logs to a CSV file', () => {
-			cy.visit_version({page: 'DataExport/index.php', params: `pid=${PID}`})
-			//cy.verify_export_deidentification_options('input[name="export_format"][value="csvraw"]')
-            cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
-	})
+		cy.visit_version({page: 'DataExport/index.php', params: `pid=${PID}`})
+		cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+		cy.get('input[value="csvraw"]').click()
+		cy.get('.ui-dialog-buttonset').contains('Export Data').click()
+})
+
 	
 
 
