@@ -1,7 +1,6 @@
 const ADMIN 	= 'test_admin'
 const STANDARD 	= 'test_user'
 const STANDARD2 = 'test_user2'
-//const STANDARD3 = 'test_user3'
 const PID = 23
 
 describe('Logging', () => {
@@ -12,7 +11,6 @@ describe('Logging', () => {
 		cy.mysql_db('projects/pristine')
         cy.create_cdisc_project('Logging Test', '0', 'cdisc_files/core/logging.xml', PID)
         cy.add_users_to_project([STANDARD, STANDARD2], PID)
-		//cy.add_users_to_project([STANDARD, STANDARD2, STANDARD3], PID)
 		cy.visit_version({page: 'UserRights/index.php', params: `pid=${PID}`})
 
 		// Add User 1
@@ -34,32 +32,13 @@ describe('Logging', () => {
 		cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click()
 		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
 		cy.get('input[name="design"]').should('be.visible').check()	                // Enable Design Rights
-		cy.get('input[name="user_rights"]').check()					                // Enable User Rights
-		cy.get('input[name="data_export_tool"]').check('1')                     	// Enable Full Data Export
-		cy.get('input[name="data_logging"]').check()				  				// Enable Logging
-		cy.get('input[name="record_delete"]').check()								// Enable Delete Records
-		cy.get('input[name="lock_record_customize"]').check()						// Enable Record Locking Customization
-		cy.get('input[name="record_create"]').should('be.checked')					// Create Records *Enabled*
-		cy.get('input[name="lock_record"][value="2"]').click()						// Enable Lock/Unlock Records with E-signature authority
-
-		// Add User 3
-		/*cy.get('div.userSaveMsg').should('not.be.visible')
-		cy.get(`a.userLinkInTable[userid="${STANDARD3}"]`).should('be.visible').click()
-		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
-		cy.get('input[name="design"]').should('be.visible').check()	                // Enable Design Rights
-		cy.get('input[name="user_rights"]').check()					                // Enable User Rights
-		cy.get('input[name="data_export_tool"]').check('1')                     	// Enable Full Data Export
-		cy.get('input[name="data_logging"]').check()				  				// Enable Logging
-		cy.get('input[name="record_delete"]').check()								// Enable Delete Records
-		cy.get('input[name="lock_record_customize"]').check()						// Enable Record Locking Customization
-		cy.get('input[name="record_create"]').should('be.checked')					// Create Records *Enabled*
-		cy.get('input[name="lock_record"][value="2"]').click()						// Enable Lock/Unlock Records with E-signature authority*/
-		
-		// This should be avoided if possible
-		cy.focused().should('have.text', 'Close').click()
-		
 		cy.get('.ui-button').contains(/add user|save changes/i).click()
 
+
+		
+		// This should be avoided if possible
+		//cy.focused().should('have.text', 'Close').click()
+		
 		// Enable E-Signature
 		cy.visit_version({page: '/Locking/locking_customization.php', params: `pid=${PID}`})
 		cy.get('#savedEsign-text_validation').closest('td').find('input').check()
@@ -139,7 +118,22 @@ describe('Logging', () => {
 		cy.get('span').contains("Remove user?").should('be.visible').closest('div[role="dialog"]').find('button').contains("Remove user").click()
 		cy.get('div.userSaveMsg').should('not.be.visible')
 
-		//cy.set_user_type('standard')
+		// Add User 2 (user913_4)
+		cy.add_users_to_project([STANDARD2], PID)
+		cy.visit_version({page: 'UserRights/index.php', params: `pid=${PID}`})
+		cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click()
+		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
+		cy.get('input[name="design"]').should('be.visible').check()	                // Enable Design Rights
+		cy.get('input[name="user_rights"]').check()					                // Enable User Rights
+		cy.get('input[name="data_export_tool"]').check('1')                     	// Enable Full Data Export
+		cy.get('input[name="data_logging"]').check()				  				// Enable Logging
+		cy.get('input[name="record_delete"]').check()								// Enable Delete Records
+		cy.get('input[name="lock_record_customize"]').check()						// Enable Record Locking Customization
+		cy.get('input[name="record_create"]').should('be.checked')					// Create Records *Enabled*
+		cy.get('input[name="lock_record"][value="2"]').click()						// Enable Lock/Unlock Records with E-signature authority
+		cy.get('.ui-button').contains(/add user|save changes/i).click({force: true})
+		
+		cy.set_user_type('standard2')
 
 	})
 
