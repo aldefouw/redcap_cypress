@@ -204,7 +204,7 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 						})
 					})
 				})
-							
+
 				})
 
 				it('Should not allow invalid names', () => {
@@ -218,7 +218,7 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 				})
 
 				it('Should allow reordering of fields', () => {
-					
+
 				})
 
 				it('Should allow renaming of a field', () => {
@@ -236,13 +236,13 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 						})
 					})
 				})
-				
+
 
 				it('Should allow copying of a field', () => {
 					cy.get('table#design-h_i').within(() => {
 						cy.get('img[title="Copy"]').click()
-							
-						
+
+
 					})
 					cy.get('button').contains('Copy field').click()
 					cy.get('table#draggable').should(($t) => {
@@ -395,7 +395,7 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 
 							//Save this particular field we are editing
 							cy.save_field()
-						})	
+						})
 					})
 				})
 
@@ -413,7 +413,7 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 								})
 							})
 						})
-					})	
+					})
 
 					it('Should automatically populate raw values for choices', () => {
 						//Select field to edit some choices for
@@ -454,7 +454,7 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 								})
 							})
 						})
-					})	
+					})
 
 				})
 
@@ -473,12 +473,12 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 								})
 							})
 						})
-					})	
+					})
 
 				})
 
 				describe('Descriptive Text', () => {
-					
+
 					it('Should allow an attached image', () => {
 						cy.get('input#btn-last').click().then(() => {
 							cy.get('select#field_type').select('descriptive')
@@ -524,7 +524,7 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 								})
 							})
 						})
-					})	
+					})
 
 					it('Should NOT allow two consecutive new sections', () => {
 
@@ -561,8 +561,6 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 							cy.get('select#field_type').select('section_header')
 
 							cy.get('button').contains('Save').click().then(() => {
-
-
 								cy.on('window:alert', ($alert) => {
 									expect($alert).to.equal('Sorry, but Section Headers cannot be the last field on a data entry form.')
 								})
@@ -576,12 +574,67 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 
 	describe ('Data Dictionary', () => {
 
+		before(() => {
+			cy.visit_version({page: '/ProjectSetup/index.php', params: "pid=13"})
+			cy.get('button').contains('Data Dictionary').click()
+		})
+
 		it ('Should contain a Data Dictionary that matches the initial expectation', () => {
 
+			//This code prior to the click is necessary so Cypress doesn't stall out
+			cy.window().document().then(function (doc) {
+				doc.addEventListener('click', () => {
+					setTimeout(function () {
+						doc.location.reload()
+					}, 2000)
+				})
+				cy.intercept('**/Design/data_dictionary_download.php?pid=**').as('data_dictionary')
+				cy.get('a').contains('Download the current Data Dictionary').click()
+			})
+
+			cy.wait('@data_dictionary').then(() =>{
+
+				cy.readFile('cypress/downloads/TestProject_DataDictionary_2021-10-21.csv').should('contain',
+					'"Variable / Field Name","Form Name","Section Header","Field Type","Field Label","Choices, Calculations, OR Slider Labels","Field Note","Text Validation Type OR Show Slider Number","Text Validation Min","Text Validation Max",Identifier?,"Branching Logic (Show field only if...)","Required Field?","Custom Alignment","Question Number (surveys only)","Matrix Group Name","Matrix Ranking?","Field Annotation"\n' +
+					'record_id,my_first_instrument,,text,"Record ID",,,,,,,,,,,,,\n' +
+					'h_i,my_first_instrument,"New Section",text,"Renamed Field",,,,,,y,,,,,,,\n' +
+					'h_i_2,my_first_instrument,,text,"Renamed Field",,,,,,,,,,,,,\n' +
+					'new_text_box,my_first_instrument,,text,"New Text Box",,,,,,,,,,,,,\n' +
+					'new_note_box,my_first_instrument,,notes,"New Note Box",,,,,,,,,,,,,\n' +
+					'new_calc_field,my_first_instrument,,calc,"New Calc Field",,,,,,,,,,,,,\n' +
+					'new_drop_down,my_first_instrument,,dropdown,"New Drop Down","1, NEW LABEL 1 | 2, NEW LABEL 2 | 3, NEW LABEL 3",,,,,,,,,,,,\n' +
+					'new_radio,my_first_instrument,,radio,"New Radio","1, NEW LABEL 1 | 2, NEW LABEL 2 | 3, NEW LABEL 3",,,,,,,,,,,,\n' +
+					'new_check_box,my_first_instrument,,checkbox,"New Check Box","1, NEW LABEL 1 | 2, NEW LABEL 2 | 3, NEW LABEL 3",,,,,,,,,,,,\n' +
+					'new_sign,my_first_instrument,,file,"New Sign",,,signature,,,,,,,,,,\n' +
+					'new_file_upload,my_first_instrument,,file,"New File Upload",,,,,,,,,,,,,\n' +
+					'new_desc_text,my_first_instrument,"New Section",descriptive,"New Desc Text",,,,,,,,,,,,,')
+
+			})
 		})
 
 		it ('Should add a new field to the project if you contribute a new row to the Data Dictionary file', () => {
-			
+
+			cy.upload_file('dictionaries/core/data_dictionary_for_import.csv', 'csv', 'input[type=file]').then(() => {
+				cy.wait(1000)
+				cy.get('input').contains('Upload File').click().then(() => {
+					cy.get('html').then($html => {
+						expect($html).to.contain('Your document was uploaded successfully and awaits your confirmation below.')
+						cy.wait(1000)
+						cy.get('input').contains('Commit Changes').click()
+						cy.wait(1000)
+					})
+				})
+			})
+
+			//Need to check for a new row existing in the Online Designer
+			cy.visit_version({page: 'Design/online_designer.php', params: 'pid=13'})
+
+			cy.get('a').contains('My First Instrument').click()
+
+			cy.get('html').then(($html) => {
+				expect($html).to.contain('Newest Field')
+			})
+
 		})
 
 	})
