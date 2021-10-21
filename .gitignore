@@ -17,6 +17,8 @@ cypress.env.json
 
 /tmp
 
+cypress/downloads
+
 /containers
 /docker
 /find
