@@ -111,7 +111,7 @@ describe('Logging', () => {
     
 		// Steps 10, 11 - Add and edit new user (completed in project setup)
 
-		// Step 12 - Remove user
+		// Step 12 - Remove user (user913_3)
 		cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click()
 		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
 		cy.get('div#editUserPopup').should('be.visible').parent().find('button').contains("Remove user").should('be.visible').click()
