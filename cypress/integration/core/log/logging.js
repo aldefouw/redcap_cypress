@@ -1,7 +1,7 @@
 const ADMIN 	= 'test_admin'
 const STANDARD 	= 'test_user'
 const STANDARD2 = 'test_user2'
-const STANDARD3 = 'test_user3'
+//const STANDARD3 = 'test_user3'
 const PID = 23
 
 describe('Logging', () => {
@@ -11,7 +11,8 @@ describe('Logging', () => {
         cy.set_user_type('admin')
 		cy.mysql_db('projects/pristine')
         cy.create_cdisc_project('Logging Test', '0', 'cdisc_files/core/logging.xml', PID)
-        cy.add_users_to_project([STANDARD, STANDARD2, STANDARD3], PID)
+        cy.add_users_to_project([STANDARD, STANDARD2], PID)
+		//cy.add_users_to_project([STANDARD, STANDARD2, STANDARD3], PID)
 		cy.visit_version({page: 'UserRights/index.php', params: `pid=${PID}`})
 
 		// Add User 1
@@ -42,7 +43,7 @@ describe('Logging', () => {
 		cy.get('input[name="lock_record"][value="2"]').click()						// Enable Lock/Unlock Records with E-signature authority
 
 		// Add User 3
-		cy.get('div.userSaveMsg').should('not.be.visible')
+		/*cy.get('div.userSaveMsg').should('not.be.visible')
 		cy.get(`a.userLinkInTable[userid="${STANDARD3}"]`).should('be.visible').click()
 		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
 		cy.get('input[name="design"]').should('be.visible').check()	                // Enable Design Rights
@@ -52,7 +53,7 @@ describe('Logging', () => {
 		cy.get('input[name="record_delete"]').check()								// Enable Delete Records
 		cy.get('input[name="lock_record_customize"]').check()						// Enable Record Locking Customization
 		cy.get('input[name="record_create"]').should('be.checked')					// Create Records *Enabled*
-		cy.get('input[name="lock_record"][value="2"]').click()						// Enable Lock/Unlock Records with E-signature authority
+		cy.get('input[name="lock_record"][value="2"]').click()						// Enable Lock/Unlock Records with E-signature authority*/
 		
 		// This should be avoided if possible
 		cy.focused().should('have.text', 'Close').click()
@@ -138,18 +139,17 @@ describe('Logging', () => {
 		cy.get('span').contains("Remove user?").should('be.visible').closest('div[role="dialog"]').find('button').contains("Remove user").click()
 		cy.get('div.userSaveMsg').should('not.be.visible')
 
-		//cy.set_user_type('standard3')
+		//cy.set_user_type('standard')
 
 	})
 
-	// Step 14 - Export Data
+	// Step 14 - Raw Export Data
 	it('Should have the ability to export the logs to a CSV file', () => {
-		cy.visit_version({page: 'DataExport/index.php', params: `pid=${PID}`})
-		cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
-		cy.get('input[value="csvraw"]').click()
-		cy.get('.ui-dialog-buttonset').contains('Export Data').click()
-})
-
+			cy.visit_version({page: 'DataExport/index.php', params: `pid=${PID}`})
+            cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+			cy.get('input[value="csvraw"]').click()
+			cy.get('.ui-dialog-buttonset').contains('Export Data').click()
+	})
 	
 
 
