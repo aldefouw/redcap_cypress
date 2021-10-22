@@ -511,6 +511,115 @@ Cypress.Commands.add('import_data_file', (fixture_file, api_token) => {
     
 })
 
+Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_to_assign, project_id, assign_right = true, user_type = 'admin') => {
+    //Now login as admin and add Project Design and Setup Rights to Test User
+    cy.set_user_type(user_type)
+
+    cy.visit_version({page:'index.php', params: 'pid=1'}).then(() => {
+        cy.get('html').should('contain', 'User Rights')
+    })
+
+    cy.get('a').contains('User Rights').click()
+    cy.get('a').contains(username + ' (' + proper_name + ')').click()
+    cy.get('button').contains('Edit user privileges').click()
+
+    cy.get('div').should(($div) => { expect($div).to.contain('Editing existing user') })
+
+    if(rights_to_assign === "Expiration Date"){
+
+        if(assign_right){
+            cy.get('input.hasDatepicker').click()
+            cy.get('a.ui-state-highlight').click()
+
+            cy.get('input#expiration').should(($expiration) => {
+                let date = new Date()
+                let day = String(date.getDate()).padStart(2, "0");
+                let month = String(date.getMonth()+1).padStart(2, "0");
+                let year = date.getFullYear();
+                let fullDate = `${month}/${day}/${year}`;
+
+                expect($expiration).to.have.value(fullDate)
+            })
+        } else {
+            cy.get('input.hasDatepicker').click().clear()
+
+            cy.get('input#expiration').should(($expiration) => {
+                expect($expiration).to.have.value("")
+            })
+        }
+
+    } else {
+
+        cy.get('td').contains(rights_to_assign).next().find('input').then(($obj) => {
+
+            let check_info = ' RIGHT: ' + rights_to_assign + " | " + 'CHECKED? ' + Cypress.$($obj).is(":checked") + ' | ASSIGN RIGHT: ' + assign_right
+
+            //If value is NOT checked and we want to assign the right
+            if(!Cypress.$($obj).is(":checked") && assign_right){
+                console.log('VALUE NOT CHECKED |' + check_info)
+                $obj.click()
+            //If value is checked and we want to REMOVE the right
+            }else if(Cypress.$($obj).is(":checked") && !assign_right){
+                console.log('VALUE CHECKED |' + check_info)
+                $obj.click()
+            } else {
+                console.log('OTHER CONDITION |' + check_info)
+            }
+        })
+
+    }
+
+    cy.get('button').contains('Save Changes').click()
+
+    cy.get('body').should(($body) => {
+        expect($body).to.contain('User "' + username + '" was successfully edited')
+    })
+})
+
+Cypress.Commands.add('remove_basic_user_right', (username, proper_name, rights_to_assign, project_id, user_type = 'admin') => {
+    cy.assign_basic_user_right(username, proper_name, rights_to_assign, project_id, false, user_type)
+})
+
+Cypress.Commands.add('assign_expiration_date_to_user', (username, proper_name, project_id) => {
+    cy.assign_basic_user_right(username, proper_name, "Expiration Date", project_id, true)
+})
+
+Cypress.Commands.add('remove_expiration_date_from_user', (username, proper_name, project_id) => {
+    cy.assign_basic_user_right(username, proper_name, "Expiration Date", project_id, false)
+})
+
+
+Cypress.Commands.add('verify_user_rights_available', (user_type, path, pid) => {
+    //Set user type we're checking permissions for
+    cy.set_user_type(user_type)
+
+    //Attempt to go to the path
+    cy.visit_version({page: path + '/index.php', params: 'pid=' + pid})
+
+    //We should be able to visit it
+    cy.url().should('include', `/redcap_v${Cypress.env('redcap_version')}/${path}/index.php?pid=${pid}`)
+})
+
+Cypress.Commands.add('verify_user_rights_unavailable', (user_type, path, pid, redirect = true) => {
+    //Set user type we're checking permissions for
+    cy.set_user_type(user_type)
+
+    //Attempt to go to the path
+    cy.visit_version({page: path + '/index.php', params: 'pid=' + pid})
+
+    //But ensure that we're actually redirect to index.php
+    if(redirect){
+        cy.url().should('include', `/redcap_v${Cypress.env('redcap_version')}/index.php?pid=`+ pid)
+
+    //Otherwise do we get access denied?
+    } else {
+        cy.get('body').should(($body) => {
+            expect($body).to.contain('ACCESS DENIED')
+        })
+    }
+
+})
+
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
