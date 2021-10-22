@@ -93,15 +93,27 @@ describe('Assign User Rights', () => {
 				})
 
 				it('Should have the ability to grant/restrict Create Records permission to a user', () => {
-					
+					//Remove "Create Record" Rights and Verify They're Unavailable
+					cy.remove_basic_user_right('test_user', 'Test User', 'Create Records', project_id)
+
+					//Assign "Create Record" Rights and Verify They're Available
+					cy.assign_basic_user_right('test_user', 'Test User', 'Create Records', project_id)
 				})
 
 				it('Should have the ability to grant/restrict Rename Records permission to a user', () => {
-					
+					//Remove "Rename Record" Rights and Verify They're Unavailable
+					cy.remove_basic_user_right('test_user', 'Test User', 'Rename Records', project_id)
+
+					//Assign "Rename Record" Rights and Verify They're Available
+					cy.assign_basic_user_right('test_user', 'Test User', 'Rename Records', project_id)
 				})
 
 				it('Should have the ability to grant/restrict Delete Records permission to a user', () => {
-					
+					//Remove "Delete Record" Rights and Verify They're Unavailable
+					cy.remove_basic_user_right('test_user', 'Test User', 'Delete Records', project_id)
+
+					//Assign "Delete Record" Rights and Verify They're Available
+					cy.assign_basic_user_right('test_user', 'Test User', 'Delete Records', project_id)
 				})
 
 				it('Should have the ability to grant/restrict File Repository permission to a user', () => {
