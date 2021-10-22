@@ -15,14 +15,14 @@ describe('Assign User Rights', () => {
 
 				//Now let's login as a standard user and ensure that the expiration did expire
 				cy.set_user_type('standard')
-				cy.visit_version({page:'index.php', params: 'pid=1'})
+				cy.visit_version({page:'index.php', params: 'pid=' + project_id})
 				cy.get('html').should(($html) => {
 					expect($html).contain('Your access to this particular REDCap project has expired.')
 				})
 
 				//Clean up after ourselves by resetting the expiration date
 				cy.set_user_type('admin')
-				cy.visit_version({page:'index.php', params: 'pid=1'})
+				cy.visit_version({page:'index.php', params: 'pid=' + project_id})
 				cy.remove_expiration_date_from_user('test_user', 'Test User', project_id)
 			})
 
@@ -59,7 +59,25 @@ describe('Assign User Rights', () => {
 				})
 
 				it('Should have the ability to grant/restrict Data Export Tool permission to a user', () => {
-					
+					//"No Access" radio checked
+					cy.assign_basic_user_right('test_user', 'Test User', 'Data Exports', project_id, true, 'admin', 'input', '0')
+					cy.set_user_type('standard')
+					cy.visit_version({page: 'DataExport/index.php', params: 'pid=' + project_id})
+
+					//Don't have a Data Export Button
+					cy.get('button').should(($button) => {
+						expect($button).to.not.contain('Export Data')
+					})
+
+					//"Full Access" radio checked
+					cy.assign_basic_user_right('test_user', 'Test User', 'Data Exports', project_id, true, 'admin', 'input', '1')
+					cy.set_user_type('standard')
+					cy.visit_version({page: 'DataExport/index.php', params: 'pid=' + project_id})
+
+					//Have a Data Export Button
+					cy.get('button').should(($button) => {
+						expect($button).to.contain('Export Data')
+					})
 				})
 
 				it('Should have the ability to grant/restrict Add/Edit/Organize Reports permission to a user', () => {
@@ -67,15 +85,15 @@ describe('Assign User Rights', () => {
 				})
 
 				it('Should have the ability to grant/restrict Manage Survey Participants permission to a user', () => {
-					
+
 				})
 
 				it('Should have the ability to grant/restrict Data Import Tool permissio to a user', () => {
-					
+
 				})
 
 				it('Should have the ability to grant/restrict Data Comparison Tool permission to a user', () => {
-					
+
 				})
 
 				it('Should have the ability to grant/restrict Logging permission to a user', () => {
@@ -88,7 +106,47 @@ describe('Assign User Rights', () => {
 					cy.verify_user_rights_available('standard', 'Logging', project_id)
 				})
 
-				it('Should have the ability to grant/restrict Data Quality Tool permission to a user', () => {
+				it('Should have the ability to grant/restrict Data Quality Creation & Execution from permission to a user', () => {
+					//Remove Data Quality Tool and Verify They're Unavailable
+					cy.remove_basic_user_right('test_user', 'Test User', 'Data Quality ', project_id, 'admin', 'input[name=data_quality_execute]')
+					cy.remove_basic_user_right('test_user', 'Test User', 'Data Quality ', project_id, 'admin', 'input[name=data_quality_design]')
+					cy.verify_user_rights_unavailable('standard', 'DataQuality', project_id)
+
+					//Assign Data Quality Tool and Verify They're Available
+					cy.assign_basic_user_right('test_user', 'Test User', 'Data Quality ', project_id, true, 'admin', 'input[name=data_quality_execute]')
+					cy.verify_user_rights_available('standard', 'DataQuality', project_id)
+
+					//Should have a button named "Execute"
+					cy.get('button').should(($button) => {
+						expect($button).to.contain('Execute')
+					})
+
+					//Click on the first Execute Button
+					cy.get('button').contains('Execute').first().click()
+
+					cy.get('html').should(($html) => {
+						expect($html).to.contain('0')
+					})
+
+					cy.set_user_type('admin')
+
+					//Assign Data Quality Tool and Verify They're Available
+					cy.assign_basic_user_right('test_user', 'Test User', 'Data Quality ', project_id, true, 'admin', 'input[name=data_quality_design]')
+					cy.verify_user_rights_available('standard', 'DataQuality', project_id)
+
+					cy.get('button').should(($button) => {
+						expect($button).to.contain('Add')
+					})
+
+					cy.get('textarea#input_rulename_id_0').type('A rule name').then(() => {
+						cy.get('textarea#input_rulelogic_id_0').type('[first_name] = ""').then(() => {
+							cy.get('button').contains('Add').first().click()
+
+							cy.get('html').should(($html) => {
+								expect($html).to.contain('A rule name')
+							})
+						})
+					})
 
 				})
 
@@ -127,15 +185,15 @@ describe('Assign User Rights', () => {
 				})
 
 				it('Should have the ability to grant/restrict Record Locking Customization permission to a user', () => {
-					
+
 				})
 
 				it('Should have the ability to grant/restrict Lock/Unlock Records permission to a user', () => {
-					
+
 				})
 
 				it('Should have the ability to grant/restrict "Allow Locking of All Forms at once" for a given record to a user', () => {
-					
+
 				})
 			})
 		})

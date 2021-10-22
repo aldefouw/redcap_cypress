@@ -511,7 +511,7 @@ Cypress.Commands.add('import_data_file', (fixture_file, api_token) => {
     
 })
 
-Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_to_assign, project_id, assign_right = true, user_type = 'admin', selector = 'input') => {
+Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_to_assign, project_id, assign_right = true, user_type = 'admin', selector = 'input', value = null) => {
     //Now login as admin and add Project Design and Setup Rights to Test User
     cy.set_user_type(user_type)
 
@@ -550,6 +550,8 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
 
     } else {
 
+        if(value !== null) selector = `${selector}[value='${value}']`
+
         cy.get('td').contains(rights_to_assign).next().find(selector).then(($obj) => {
 
             let check_info = ' RIGHT: ' + rights_to_assign + " | " + 'CHECKED? ' + Cypress.$($obj).is(":checked") + ' | ASSIGN RIGHT: ' + assign_right
@@ -576,8 +578,8 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
     })
 })
 
-Cypress.Commands.add('remove_basic_user_right', (username, proper_name, rights_to_assign, project_id, user_type = 'admin') => {
-    cy.assign_basic_user_right(username, proper_name, rights_to_assign, project_id, false, user_type)
+Cypress.Commands.add('remove_basic_user_right', (username, proper_name, rights_to_assign, project_id, user_type = 'admin', selector = 'input', value = null) => {
+    cy.assign_basic_user_right(username, proper_name, rights_to_assign, project_id, false, user_type, selector, value)
 })
 
 Cypress.Commands.add('assign_expiration_date_to_user', (username, proper_name, project_id) => {
