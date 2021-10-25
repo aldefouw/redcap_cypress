@@ -88,7 +88,7 @@ describe('Assign User Rights', () => {
 
 				})
 
-				it('Should have the ability to grant/restrict Data Import Tool permissio to a user', () => {
+				it('Should have the ability to grant/restrict Data Import Tool permission to a user', () => {
 
 				})
 
