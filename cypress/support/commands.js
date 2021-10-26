@@ -515,9 +515,8 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
     //Now login as admin and add Project Design and Setup Rights to Test User
     cy.set_user_type(user_type)
 
-    cy.visit_version({page:'index.php', params: 'pid=1'}).then(() => {
-        cy.get('html').should('contain', 'User Rights')
-    })
+    cy.visit_version({page:'index.php', params: 'pid='+project_id})
+    cy.get('html').should('contain', 'User Rights')
 
     cy.get('a').contains('User Rights').click()
     cy.get('a').contains(username + ' (' + proper_name + ')').click()
@@ -576,6 +575,9 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
     cy.get('body').should(($body) => {
         expect($body).to.contain('User "' + username + '" was successfully edited')
     })
+
+    //Should not be visible before we start our next test
+    cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
 })
 
 Cypress.Commands.add('remove_basic_user_right', (username, proper_name, rights_to_assign, project_id, user_type = 'admin', selector = 'input', value = null) => {
