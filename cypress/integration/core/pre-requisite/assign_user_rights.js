@@ -235,17 +235,55 @@ describe('Assign User Rights', () => {
 						cy.get('button').contains('Create role').click()
 					})
 
-					cy.get('html').should(($html) => {
-						expect($html).to.contain('New Role')
-					})
+					//Should not display "Working"
+					cy.get('div').contains('Working').should('not.be.visible')
 
+					//Should initially be visible
+					cy.get('div').contains('Role "New Role" was successfully added').should('be.visible')
+
+					//Should not be visible before we start our next test
+					cy.get('div').contains('Role "New Role" was successfully added').should('not.be.visible')
 				})
 
+				cy.get('html').should(($html) => {
+					expect($html).to.contain('New Role')
+				})
 
 			})
 
 			it('Should have the ability to Copy a User Role', () => {
-				
+
+				cy.get('table#table-user_rights_roles_table').within(() => {
+					cy.get('div a').contains('New Role').click()
+				})
+
+				cy.get('div[role=dialog]').within(() => {
+					cy.get('button').contains('Copy role').click()
+				})
+
+				cy.get('span').contains('Copy role?').should('be.visible').parent().parent().within(() => {
+
+					cy.get('input').clear().type('New Role - COPY')
+					cy.get('button').contains('Copy role').click()
+
+
+				}).then(() => {
+
+					//Should not display "Working"
+					cy.get('div').contains('Working').should('not.be.visible')
+
+					//Should initially be visible
+					cy.get('div').contains('Role "New Role - COPY" was successfully added').should('be.visible')
+
+					//Should not be visible before we start our next test
+					cy.get('div').contains('Role "New Role - COPY" was successfully added').should('not.be.visible')
+
+					cy.get('html').should(($html) => {
+						expect($html).to.contain('New Role - COPY')
+					})
+
+				})
+
 			})
 
 			it('Should have the ability to Remove a User Role', () => {
