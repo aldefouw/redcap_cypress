@@ -279,8 +279,20 @@ describe('Assign User Rights', () => {
 					cy.get('div').contains('Role "New Role - COPY" was successfully added').should('not.be.visible')
 
 					cy.get('html').should(($html) => {
-						expect($html).to.contain('New Role - COPY')
+						expect($html).to.contain('Editing existing user role "New Role - COPY"')
+						expect($html).to.contain('Save Changes')
 					})
+
+					cy.get('button').contains('Save Changes').click()
+
+					//Should not display "Working"
+					cy.get('div').contains('Working').should('not.be.visible')
+
+					//Should initially be visible
+					cy.get('div').contains('Role "New Role - COPY" was successfully edited').should('be.visible')
+
+					//Should not be visible before we start our next test
+					cy.get('div').contains('Role "New Role - COPY" was successfully edited').should('not.be.visible')
 
 				})
 
