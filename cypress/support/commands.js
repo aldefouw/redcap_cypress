@@ -624,6 +624,89 @@ Cypress.Commands.add('verify_user_rights_unavailable', (user_type, path, pid, re
 
 })
 
+Cypress.Commands.add('assign_form_rights', (pid, username, form, rights_level) => {
+    //Visit the version specified
+    cy.visit_version({page:'index.php', params: 'pid=' + pid})
+    cy.get('a').contains('User Rights').click()
+
+    //Click on the user's name
+    cy.get('table#table-user_rights_roles_table').within(() => {
+        cy.get('a').contains(username).click()
+    })
+
+    //Edit the user's privileges
+    cy.get('div').contains('User actions:').parent().within(() => {
+        cy.get('button').contains('Edit user privileges').click()
+    })
+
+    //Should not display "Working"
+    cy.get('div').contains('Working').should('not.be.visible')
+
+    //Assign User Rights
+    cy.get('table#form_rights').within(() => {
+        let input_value = null;
+
+        if(rights_level === "No Access"){
+            input_value = 0;
+        } else if (rights_level === "Read Only") {
+            input_value = 2;
+        } else if (rights_level === "View & Edit") {
+            input_value = 1;
+        } else {
+            alert(`You set the rights level to ${rights_level} for #assign_form_rights.  This is invalid.  Please use 'No Access', 'Read Only', or 'View & Edit'`)
+        }
+
+        cy.get('td').contains(form).parent().find(`input[value=${input_value}]`).click()
+    })
+
+    //Click Save
+    cy.get('button').contains('Save Changes').click()
+
+    //User was successfully edited
+    cy.get('body').should(($body) => {
+        expect($body).to.contain('User "' + username + '" was successfully edited')
+    })
+
+    //Should not be visible before we start our next step or test
+    cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
+})
+
+Cypress.Commands.add('change_survey_edit_rights', (pid, username, form) => {
+    //Visit the version specified
+    cy.visit_version({page:'index.php', params: 'pid=' + pid})
+    cy.get('a').contains('User Rights').click()
+
+    //Click on the user's name
+    cy.get('table#table-user_rights_roles_table').within(() => {
+        cy.get('a').contains(username).click()
+    })
+
+    //Edit the user's privileges
+    cy.get('div').contains('User actions:').parent().within(() => {
+        cy.get('button').contains('Edit user privileges').click()
+    })
+
+    //Should not display "Working"
+    cy.get('div').contains('Working').should('not.be.visible')
+
+    //Assign User Rights
+    cy.get('table#form_rights').within(() => {
+        cy.get('td').contains(form).parent().find(`input[type=checkbox]`).click()
+    })
+
+    //Click Save
+    cy.get('button').contains('Save Changes').click()
+
+    //User was successfully edited
+    cy.get('body').should(($body) => {
+        expect($body).to.contain('User "' + username + '" was successfully edited')
+    })
+
+    //Should not be visible before we start our next step or test
+    cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
+})
+
+
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })

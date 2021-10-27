@@ -204,20 +204,103 @@ describe('Assign User Rights', () => {
 
 		describe('Data Entry Form Access Permissions', () => {
 
-			it('Should have the ability to grant/restrict No Access on a per user basis for a given form', () => {
+			before(() => {
+				//Set ourselves as admin initially so we can configure project as necessaryt
+				cy.set_user_type('admin')
 
+				//Enable Surveys on the Project
+				cy.visit_version({page: 'ProjectSetup/index.php', params:'pid=' + project_id})
+				cy.intercept('modify_project_setting_ajax.php?pid=' + project_id).as('enable_survey')
+				cy.get('button').contains('Enable').first().click()
+				cy.wait('@enable_survey')
+
+				//Visit the Online Designer
+				cy.visit_version({page: 'Design/online_designer.php', params:'pid=' + project_id})
+				cy.get('html').should(($html) => {
+					expect($html).to.contain('Data Collection Instruments')
+				})
+
+				//Enable the First Data Collection Instrument as a Survey
+				cy.get('button').contains('Enable').click()
+				cy.get('button').contains('Save Changes').click()
+
+				//After survey settings are saved, we can move onto the next step
+				cy.get('div').contains('Your survey settings were successfully saved').should('be.visible')
+				cy.get('div').contains('Your survey settings were successfully saved').should('not.be.visible')
+
+				//Remove the survey editing rights
+				cy.change_survey_edit_rights(project_id, 'test_user', 'Demographics')
+
+				//Complete the survey
+				cy.visit_version({page: 'index.php', params: 'pid=' + project_id})
+				cy.get('a').contains('Survey Distribution Tools').click()
+				cy.get('div').contains('Public Survey URL').parent().find('input').then(($input) => {
+					cy.visit_base({ url: $input[0].value }).then(() => {
+						cy.get('button').contains('Submit').click().then(() => {
+							cy.get('html').then(($html) => {
+								expect($html).to.contain('Thank you for taking the survey.')
+							})
+						})
+					})
+				})
+			})
+
+			it('Should have the ability to grant/restrict No Access on a per user basis for a given form', () => {
+				cy.set_user_type('admin')
+				cy.assign_form_rights(project_id, 'test_user', 'Demographics', 'No Access')
+
+				//Verify standard user does not have edit rights
+				cy.set_user_type('standard')
+
+				//Visit the data entry page and see appropriate messages
+				cy.visit_version({page: 'DataEntry/index.php', params:'pid=' + project_id + '&id=1&event_id=1&page=demographics'})
+				cy.get('html').should(($html) => {
+					expect($html).to.contain('ACCESS DENIED')
+				})
 			})
 
 			it('Should have the ability to grant/restrict Read Only Access on a per user basis for a given Form', () => {
+				cy.set_user_type('admin')
+				cy.assign_form_rights(project_id, 'test_user', 'Baseline Data', 'Read Only')
 
+				//Verify standard user does not have edit rights
+				cy.set_user_type('standard')
+
+				//Visit the data entry page and see appropriate messages
+				cy.visit_version({page: 'DataEntry/index.php', params:'pid=' + project_id + '&id=1&event_id=1&page=baseline_data'})
+
+				//Should be no "Save" button at the bottom since we're read only on the form
+				cy.get('button').should(($button) => {
+					expect($button).not.to.contain('Save')
+				})
 			})
 
 			it('Should have the ability to grant/restrict View & Edit Access on a per user basis for a given Form', () => {
+				cy.set_user_type('admin')
+				cy.assign_form_rights(project_id, 'test_user', 'Baseline Data', 'View & Edit')
 
+				//Visit the data entry page and see appropriate messages
+				cy.visit_version({page: 'DataEntry/index.php', params:'pid=' + project_id + '&id=1&event_id=1&page=baseline_data'})
+
+				//Should be no "Save" button at the bottom since we're read only on the form
+				cy.get('button').should(($button) => {
+					expect($button).to.contain('Save')
+				})
 			})
 
 			it('Should have the ability to grant/restrict permission to Edit Survey Response on a per user basis for a given form', () => {
+				cy.set_user_type('admin')
+				cy.assign_form_rights(project_id, 'test_user', 'Demographics', 'View & Edit')
 
+				//Verify standard user does not have edit rights
+				cy.set_user_type('standard')
+
+				//Visit the data entry page and see appropriate messages
+				cy.visit_version({page: 'DataEntry/index.php', params:'pid=' + project_id + '&id=1&event_id=1&page=demographics'})
+				cy.get('html').should(($html) => {
+					expect($html).to.contain('Survey response is read-only')
+					expect($html).to.contain('You have not been given permission to edit survey responses.')
+				})
 			})
 		})
 
