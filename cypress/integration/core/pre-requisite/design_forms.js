@@ -594,7 +594,12 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 
 			cy.wait('@data_dictionary').then(() =>{
 
-				cy.readFile('cypress/downloads/TestProject_DataDictionary_2021-10-21.csv').should('contain',
+				var today = new Date();
+				var day = today.getDate();
+				var month = today.getMonth()+1;
+				var year = today.getFullYear();
+
+				cy.readFile(`cypress/downloads/TestProject_DataDictionary_${year}-${month}-${day}.csv`).should('contain',
 					'"Variable / Field Name","Form Name","Section Header","Field Type","Field Label","Choices, Calculations, OR Slider Labels","Field Note","Text Validation Type OR Show Slider Number","Text Validation Min","Text Validation Max",Identifier?,"Branching Logic (Show field only if...)","Required Field?","Custom Alignment","Question Number (surveys only)","Matrix Group Name","Matrix Ranking?","Field Annotation"\n' +
 					'record_id,my_first_instrument,,text,"Record ID",,,,,,,,,,,,,\n' +
 					'h_i,my_first_instrument,"New Section",text,"Renamed Field",,,,,,y,,,,,,,\n' +
