@@ -43,7 +43,11 @@ describe('Logging', () => {
 		cy.visit_version({page: '/Locking/locking_customization.php', params: `pid=${PID}`})
 		cy.get('#savedEsign-text_validation').closest('td').find('input').check()
 
-		//cy.move_project_to_production(PID, false)
+		cy.visit_version({page: 'ProjectSetup/index.php', params: `pid=${PID}`})
+		cy.get('button').contains('Move project to production').click()
+		cy.get('input#keep_data').click()
+		cy.get('button').contains('YES, Move to Production Status').click()
+		cy.get('div#actionMsg').should('be.visible')
 
 		///////////////////////////////////////////////////////////////
 		// Take all project actions that will be checked in the logs //
@@ -128,23 +132,88 @@ describe('Logging', () => {
 		cy.get('input[name="data_export_tool"]').check('1')                     	// Enable Full Data Export
 		cy.get('input[name="data_logging"]').check()				  				// Enable Logging
 		cy.get('input[name="record_delete"]').check()								// Enable Delete Records
-		cy.get('input[name="lock_record_customize"]').check()						// Enable Record Locking Customization
 		cy.get('input[name="record_create"]').should('be.checked')					// Create Records *Enabled*
-		cy.get('input[name="lock_record"][value="2"]').click()						// Enable Lock/Unlock Records with E-signature authority
-		cy.get('.ui-button').contains(/add user|save changes/i).click({force: true})
-		
-		cy.set_user_type('standard2')
-
+		cy.get('.ui-button').contains(/add user|save changes/i).click()
 	})
 
-	// Step 14 - Raw Export Data
+	//Step 14 - Raw Export Data
 	it('Should have the ability to export the logs to a CSV file', () => {
-			cy.visit_version({page: 'DataExport/index.php', params: `pid=${PID}`})
-            cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
-			cy.get('input[value="csvraw"]').click()
-			cy.get('.ui-dialog-buttonset').contains('Export Data').click()
+		cy.set_user_type('standard2')
+		cy.visit_version({page: 'DataExport/index.php', params: `pid=${PID}`})
+		cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+		cy.get('input[value="csvraw"]').click()
+		cy.export_csv_report().should((csv) => {
+			expect([...new Set(csv.map((row) => row[0]).slice(1))]).to.have.lengthOf(2)                     // 2 records
+		})
 	})
+
+	// Step 15 - Enable record locking/unlocking with e-signature authority
+	it('Should have the ability enable record locking/unlocking with e-signature authority', () => {
+		cy.visit_version({page: "UserRights/index.php", params: `pid=${PID}`})
+		cy.get(`a.userLinkInTable[userid="${STANDARD}"]`).click()
+		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
+		cy.get('input[name="lock_record_customize"]').check()
+		cy.get('input[name="lock_record"][value="2"]').click()
+		cy.get('.ui-dialog-buttonset').contains('Close').click()
+		cy.get('.ui-button').contains(/add user|save changes/i).click()
+
+	})
+
+	// Step 16,17,18 - Add/Edit record
+	it('Should have the ability to Add/Edit record', () => {
+		cy.visit_version({page: "DataEntry/record_home.php?", params: `pid=23&arm=1&id=1`})
+		//Step 16
+		//cy.get('tr#__LOCKRECORD__-tr').find('[id="__LOCKRECORD__"]').check()
+		cy.get('select[id="record"]').select('1').should('have.value', '1').click()
+		cy.get('a[href*="/redcap_v9.1.3/DataEntry/index.php?pid=23&id=1&event_id=41&page=text_validation"]').click()
+		cy.get('input[id="__LOCKRECORD__"]').check()
+		cy.get('button#submit-btn-dropdown').first().click()
+		.closest('div').find('a#submit-btn-savecontinue').should('be.visible').click()
+
+		//Step 17
+		cy.get('input[id="__ESIGNATURE__"]').check()
+		cy.get('button#submit-btn-savecontinue').click()
+	})
+
+	// Step 19 and 20 - enter draft mode and create new instrument
+	/*it('Should have the ability to enter draft mode and create new instrument', () => {
+		cy.visit_version({page: "Design/online_designer.php", params: `pid=${PID}`})
+
+		//Enter Draft Mode in the project
+		cy.get('input[value="Enter Draft Mode"]').click()
+
+		//Check to see that REDCap indicates we're in DRAFT mode
+		cy.get('div#actionMsg').should(($alert) => {
+			expect($alert).to.contain('The project is now in Draft Mode.')
+		})
+
+		cy.get('div').
+		contains('a new instrument from scratch').
+		parent().
+		within(($div) => {
+
+			cy.get('button').contains('Create').click()
+
+		})
+
+		cy.get('button').contains('Add instrument here').click()
+
+		cy.get('td').contains('New instrument name').parent().within(($td) => {
+			cy.get('input[type=text]', {force: true}).type('Form 2')
+			cy.get('input[value=Create]', {force: true}).click()
+		})
+
+		cy.get('span').should(($span) => {
+			expect($span).to.contain('Form 2')
+		})
+		
+	})*/
 	
+	// Step 21 - Logging page
+	it('Should have the ability to visit Logging page', () => {
+		cy.visit_version({page: "UserRights/index.php", params: `pid=${PID}`})
+		
+	})
 
 
 	describe('Log of User Actions', () => {
