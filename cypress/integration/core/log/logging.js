@@ -43,6 +43,7 @@ describe('Logging', () => {
 		cy.visit_version({page: '/Locking/locking_customization.php', params: `pid=${PID}`})
 		cy.get('#savedEsign-text_validation').closest('td').find('input').check()
 
+		// Move to production
 		cy.visit_version({page: 'ProjectSetup/index.php', params: `pid=${PID}`})
 		cy.get('button').contains('Move project to production').click()
 		cy.get('input#keep_data').click()
@@ -54,7 +55,7 @@ describe('Logging', () => {
 		///////////////////////////////////////////////////////////////
 		
 		// Steps come from manual testing protocol script #23 (Logging)
-		cy.set_user_type('standard')
+		//cy.set_user_type('standard')
 
 		// Step 3 - Add record
 		cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${PID}`})
@@ -134,6 +135,7 @@ describe('Logging', () => {
 		cy.get('input[name="record_delete"]').check()								// Enable Delete Records
 		cy.get('input[name="record_create"]').should('be.checked')					// Create Records *Enabled*
 		cy.get('.ui-button').contains(/add user|save changes/i).click()
+
 	})
 
 	//Step 14 - Raw Export Data
@@ -173,10 +175,15 @@ describe('Logging', () => {
 		//Step 17
 		cy.get('input[id="__ESIGNATURE__"]').check()
 		cy.get('button#submit-btn-savecontinue').click()
+
+		//Step 18
+		cy.get('input[id="esign_username"]').type('test_user2')
+		cy.get('input[id="esign_password"').type('Testing123')
+		cy.get('.ui-dialog-buttonset').contains('Save').click()
 	})
 
 	// Step 19 and 20 - enter draft mode and create new instrument
-	/*it('Should have the ability to enter draft mode and create new instrument', () => {
+	it('Should have the ability to enter draft mode and create new instrument', () => {
 		cy.visit_version({page: "Design/online_designer.php", params: `pid=${PID}`})
 
 		//Enter Draft Mode in the project
@@ -196,6 +203,7 @@ describe('Logging', () => {
 
 		})
 
+		//Create new instrument
 		cy.get('button').contains('Add instrument here').click()
 
 		cy.get('td').contains('New instrument name').parent().within(($td) => {
@@ -207,16 +215,20 @@ describe('Logging', () => {
 			expect($span).to.contain('Form 2')
 		})
 		
-	})*/
+	})
 	
 	// Step 21 - Logging page
 	it('Should have the ability to visit Logging page', () => {
-		cy.visit_version({page: "UserRights/index.php", params: `pid=${PID}`})
+		//cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
 		
 	})
 
 
 	describe('Log of User Actions', () => {
+
+		before(() => {
+            cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
+        })
 
 		it('Should keep a record of the time / date of user actions', () => {
 			
