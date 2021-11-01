@@ -35,9 +35,8 @@ describe('Logging', () => {
 		cy.get('.ui-button').contains(/add user|save changes/i).click()
 
 
-		
 		// This should be avoided if possible
-		//cy.focused().should('have.text', 'Close').click()
+		// cy.focused().should('have.text', 'Close').click()
 		
 		// Enable E-Signature
 		cy.visit_version({page: '/Locking/locking_customization.php', params: `pid=${PID}`})
@@ -135,7 +134,6 @@ describe('Logging', () => {
 		cy.get('input[name="record_delete"]').check()								// Enable Delete Records
 		cy.get('input[name="record_create"]').should('be.checked')					// Create Records *Enabled*
 		cy.get('.ui-button').contains(/add user|save changes/i).click()
-
 	})
 
 	//Step 14 - Raw Export Data
@@ -163,10 +161,10 @@ describe('Logging', () => {
 
 	// Step 16,17,18 - Add/Edit record
 	it('Should have the ability to Add/Edit record', () => {
-		cy.visit_version({page: "DataEntry/record_home.php?", params: `pid=23&arm=1&id=1`})
+		cy.visit_version({page: "DataEntry/record_home.php", params: `pid=${PID}`})
+		
 		//Step 16
-		//cy.get('tr#__LOCKRECORD__-tr').find('[id="__LOCKRECORD__"]').check()
-		cy.get('select[id="record"]').select('1').should('have.value', '1').click()
+		cy.get('select[id="record"]').select('1').should('have.value', '1')
 		cy.get('a[href*="/redcap_v9.1.3/DataEntry/index.php?pid=23&id=1&event_id=41&page=text_validation"]').click()
 		cy.get('input[id="__LOCKRECORD__"]').check()
 		cy.get('button#submit-btn-dropdown').first().click()
@@ -231,19 +229,21 @@ describe('Logging', () => {
         })
 
 		it('Should keep a record of the time / date of user actions', () => {
+
 			
 		})
 
 		it('Should keep a record of when a Data Export is performed', () => {
-
+			cy.get('select[id="logtype"]').select('Data export').should('have.value', 'export')
 		})
 
 		it('Should keep a record of E-signature events', () => {
+			cy.get('select[id="logtype"]').select('Record locking & e-signatures').should('have.value', 'lock_record')
 
 		})
 
 		it('Should keep a record of changes to project instruments (Manage / Design)', () => {
-
+			cy.get('select[id="logtype"]').select('Manage/Design').should('have.value', 'manage')
 		})
 
 	 	describe('Data Recorded', () => {
@@ -259,21 +259,21 @@ describe('Logging', () => {
 	    	describe('Updated Data', () => {
 
 	    		it('Should keep a record of the new value for an updated record', () => {
-
+					//cy.get('select[id="logtype"]').select('Record updated (only)').should('have.value', 'record_edit')
 	    		})
 
 	    		it('Should keep a record of the new value for an updated E-signature', () => {
-
+					//cy.get('select[id="logtype"]').select('Record locking & e-signatures').should('have.value', 'lock_record')
 	    		})
 
 	    		it('Should keep a record of the new value for lock/unlock actions', () => {
-
+					//cy.get('select[id="logtype"]').select('Record locking & e-signatures').should('have.value', 'lock_record')
 	    		})
 
 	    	})
 
     		it('Should keep a record of the fields exported', () => {
-
+				//cy.get('select[id="logtype"]').select('Data export').should('have.value', 'export')
     		})
 
 	    })
@@ -305,15 +305,17 @@ describe('Logging', () => {
 		describe('Changes to User Roles', () => {
 
 		    it('Should keep a record of all created user roles', () => {
-		            
+		       //cy.get('select[id="logtype"]').select('User or role created-updated-deleted').should('have.value', 'user')
 		    })
 
 		    it('Should keep a record of all updated user roles', () => {
-		            
+				//cy.get('select[id="logtype"]').select('User or role created-updated-deleted').should('have.value', 'user')
+
 		    })
 
 		    it('Should keep a record of all deleted user roles', () => {
-		            
+				//cy.get('select[id="logtype"]').select('User or role created-updated-deleted').should('have.value', 'user')
+
 		    })
 		})
 
