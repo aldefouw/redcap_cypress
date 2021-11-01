@@ -166,18 +166,18 @@ describe('Logging', () => {
 		//Step 16
 		cy.get('select[id="record"]').select('1').should('have.value', '1')
 		cy.get('a[href*="/redcap_v9.1.3/DataEntry/index.php?pid=23&id=1&event_id=41&page=text_validation"]').click()
-		cy.get('input[id="__LOCKRECORD__"]').check()
-		cy.get('button#submit-btn-dropdown').first().click()
-		.closest('div').find('a#submit-btn-savecontinue').should('be.visible').click()
+		// cy.get('input[id="__LOCKRECORD__"]').check()
+		// cy.get('button#submit-btn-dropdown').first().click()
+		// .closest('div').find('a#submit-btn-savecontinue').should('be.visible').click()
 
 		//Step 17
-		cy.get('input[id="__ESIGNATURE__"]').check()
-		cy.get('button#submit-btn-savecontinue').click()
+		// cy.get('input[id="__ESIGNATURE__"]').check()
+		// cy.get('button#submit-btn-savecontinue').click()
 
 		//Step 18
-		cy.get('input[id="esign_username"]').type('test_user2')
-		cy.get('input[id="esign_password"').type('Testing123')
-		cy.get('.ui-dialog-buttonset').contains('Save').click()
+		// cy.get('input[id="esign_username"]').type('test_user2')
+		// cy.get('input[id="esign_password"').type('Testing123')
+		// cy.get('.ui-dialog-buttonset').contains('Save').click()
 	})
 
 	// Step 19 and 20 - enter draft mode and create new instrument
