@@ -130,8 +130,12 @@ describe('Logging', () => {
 		cy.get('input[name="design"]').should('be.visible').check()	                // Enable Design Rights
 		cy.get('input[name="user_rights"]').check()					                // Enable User Rights
 		cy.get('input[name="data_export_tool"]').check('1')                     	// Enable Full Data Export
+		cy.get('input[name="data_export_tool"][value="1"]').should('be.checked')
 		cy.get('input[name="data_logging"]').check()				  				// Enable Logging
 		cy.get('input[name="record_delete"]').check()								// Enable Delete Records
+		cy.get('input[name="lock_record_customize"]').check()
+		cy.get('input[name="lock_record"][value="2"]').click()
+		cy.get('.ui-dialog-buttonset').contains('Close').click()
 		cy.get('input[name="record_create"]').should('be.checked')					// Create Records *Enabled*
 		cy.get('.ui-button').contains(/add user|save changes/i).click()
 	})
@@ -166,18 +170,18 @@ describe('Logging', () => {
 		//Step 16
 		cy.get('select[id="record"]').select('1').should('have.value', '1')
 		cy.get('a[href*="/redcap_v9.1.3/DataEntry/index.php?pid=23&id=1&event_id=41&page=text_validation"]').click()
-		// cy.get('input[id="__LOCKRECORD__"]').check()
-		// cy.get('button#submit-btn-dropdown').first().click()
-		// .closest('div').find('a#submit-btn-savecontinue').should('be.visible').click()
+		cy.get('input[id="__LOCKRECORD__"]').check()
+		cy.get('button#submit-btn-dropdown').first().click()
+		.closest('div').find('a#submit-btn-savecontinue').should('be.visible').click()
 
 		//Step 17
-		// cy.get('input[id="__ESIGNATURE__"]').check()
-		// cy.get('button#submit-btn-savecontinue').click()
+		cy.get('input[id="__ESIGNATURE__"]').check()
+		cy.get('button#submit-btn-savecontinue').click()
 
 		//Step 18
-		// cy.get('input[id="esign_username"]').type('test_user2')
-		// cy.get('input[id="esign_password"').type('Testing123')
-		// cy.get('.ui-dialog-buttonset').contains('Save').click()
+		//cy.get('input[id="esign_username"]').type('test_user2')
+		//cy.get('input[id="esign_password"').type('Testing123')
+		//cy.get('.ui-dialog-buttonset').contains('Save').click()
 	})
 
 	// Step 19 and 20 - enter draft mode and create new instrument
@@ -213,6 +217,13 @@ describe('Logging', () => {
 			expect($span).to.contain('Form 2')
 		})
 		
+		cy.get('input[value="Submit Changes for Review"]').should(($i) => {
+			$i.first().click()
+		})
+
+		//Submit for Appproval
+		cy.get('button').contains('Submit').click()
+		cy.get('.ui-dialog-buttonset').contains('Close').click()
 	})
 	
 	// Step 21 - Logging page
@@ -397,5 +408,81 @@ describe('Logging', () => {
 
 		})
 
+		describe('Export All Logging', () => {
+
+			it('Should allow all logging export)', () => {
+
+			})				
+
+		})
+
+		describe('Delete a record’s logging activity when deleting the records', () => {
+
+			//step 32
+			it('Should allow deleting a record’s logging activity when deleting the records)', () => {
+				cy.set_user_type('admin')
+				cy.visit_version({page: 'ControlCenter/edit_project.php', params: `pid=${PID}`})
+				cy.get('select').select('Logging Test').should('have.value', '23')
+				cy.get('select[name="allow_delete_record_from_log"]').select('Yes, delete the record\'s logged events when deleting the record').should('have.value', '1')
+				cy.get('input[type=submit]').click()
+			})		
+			
+			//step 34
+			it('Should allow deleting a record)', () => {
+				cy.set_user_type('standard')
+				cy.visit_version({page: "DataEntry/record_home.php", params: `pid=${PID}`})
+				cy.get('select[id="record"]').select('2').should('have.value', '2')
+				cy.get('button#recordActionDropdownTrigger').click()
+				cy.get('a').contains('Delete record (all forms)').should('be.visible').click()
+				cy.get('input[id="allow_delete_record_from_log"]').check()
+				cy.get('input[type=text]', {force: true}).type('DELETE')
+				cy.get('.ui-dialog-buttonset').contains('Confirm').click()
+				cy.get('button').contains('DELETE RECORD').should('be.visible').click()
+				cy.focused().should('have.text', 'Close').click()
+			})
+
+			//step 35
+			it('Should show recently deleted record in logging)', () => {
+				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
+				cy.get('select[id="logtype"]').select('Record created-updated-deleted').should('have.value', 'record')
+			})	
+
+		})
+	
+		
+		describe('Enter draft mode, enable longitudinal data collection, designate instrument', () => {
+			before(() => {
+				cy.set_user_type('admin')
+			})
+			//Step 37
+			it('Should have the ability to enter draft mode)', () => {
+				cy.visit_version({page: "Design/online_designer.php", params: `pid=${PID}`})
+
+				//Enter Draft Mode in the project
+				cy.get('input[value="Enter Draft Mode"]').click()
+		
+				//Check to see that REDCap indicates we're in DRAFT mode
+				cy.get('div#actionMsg').should(($alert) => {
+					expect($alert).to.contain('The project is now in Draft Mode.')
+				})
+			})	
+
+			it('Should have the ability to enable Longitudinal data collection and designate instrument)', () => {
+				cy.visit_version({page: "ProjectSetup/index.php", params: `pid=${PID}`})
+
+				//enable longitudinal data collection
+				cy.get('button[id=setupLongiBtn]').click()
+
+				//Submit changes for review
+				cy.visit_version({page: "Design/online_designer.php", params: `pid=${PID}`})
+				cy.get('input[value="Submit Changes for Review"]').should(($i) => {
+					$i.first().click()
+				})
+		
+				cy.get('button').contains('Submit').click()
+				cy.get('.ui-dialog-buttonset').contains('Close').click()
+			})	
+						
+		})
 	})
 })
