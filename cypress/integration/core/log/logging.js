@@ -173,15 +173,21 @@ describe('Logging', () => {
 		cy.get('input[id="__LOCKRECORD__"]').check()
 		cy.get('button#submit-btn-dropdown').first().click()
 		.closest('div').find('a#submit-btn-savecontinue').should('be.visible').click()
+		cy.get('input[id="__LOCKRECORD__"]').should('be.checked')
 
 		//Step 17
 		cy.get('input[id="__ESIGNATURE__"]').check()
-		cy.get('button#submit-btn-savecontinue').click()
+		cy.get('button#submit-btn-savecontinue').first().click()
 
-		//Step 18
 		//cy.get('input[id="esign_username"]').type('test_user2')
 		//cy.get('input[id="esign_password"').type('Testing123')
 		//cy.get('.ui-dialog-buttonset').contains('Save').click()
+		//cy.get('input[id="__ESIGNATURE__"]').should('be.checked')
+
+		//Step 18
+		//cy.get('input[value="Unlock form"]').click() 
+		//cy.get('.ui-dialog-buttonset').contains('Unlock').click()
+		//cy.get('.ui-dialog-buttonset').contains('Close').click()
 	})
 
 	// Step 19 and 20 - enter draft mode and create new instrument
@@ -237,6 +243,14 @@ describe('Logging', () => {
 
 		before(() => {
             cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
+			cy.contains('Time / Date')
+			.parent('tr')
+			.within(() => {
+				// all searches are automatically rooted to the found tr element
+				cy.get('td').eq(1).contains('Username')
+				cy.get('td').eq(2).contains('Action')
+				cy.get('td').eq(3).contains('List of Data Change')
+			})
         })
 
 		it('Should keep a record of the time / date of user actions', () => {
@@ -245,16 +259,16 @@ describe('Logging', () => {
 		})
 
 		it('Should keep a record of when a Data Export is performed', () => {
-			cy.get('select[id="logtype"]').select('Data export').should('have.value', 'export')
+			//cy.get('select[id="logtype"]').select('Data export').should('have.value', 'export')
 		})
 
 		it('Should keep a record of E-signature events', () => {
-			cy.get('select[id="logtype"]').select('Record locking & e-signatures').should('have.value', 'lock_record')
+			//cy.get('select[id="logtype"]').select('Record locking & e-signatures').should('have.value', 'lock_record')
 
 		})
 
 		it('Should keep a record of changes to project instruments (Manage / Design)', () => {
-			cy.get('select[id="logtype"]').select('Manage/Design').should('have.value', 'manage')
+			//cy.get('select[id="logtype"]').select('Manage/Design').should('have.value', 'manage')
 		})
 
 	 	describe('Data Recorded', () => {
@@ -449,12 +463,12 @@ describe('Logging', () => {
 
 		})
 	
-		
+		//Step 37
 		describe('Enter draft mode, enable longitudinal data collection, designate instrument', () => {
 			before(() => {
 				cy.set_user_type('admin')
 			})
-			//Step 37
+			
 			it('Should have the ability to enter draft mode)', () => {
 				cy.visit_version({page: "Design/online_designer.php", params: `pid=${PID}`})
 
@@ -471,7 +485,7 @@ describe('Logging', () => {
 				cy.visit_version({page: "ProjectSetup/index.php", params: `pid=${PID}`})
 
 				//enable longitudinal data collection
-				cy.get('button[id=setupLongiBtn]').click()
+				cy.get('button[id="setupLongiBtn"]').click()
 
 				//Submit changes for review
 				cy.visit_version({page: "Design/online_designer.php", params: `pid=${PID}`})
@@ -481,8 +495,84 @@ describe('Logging', () => {
 		
 				cy.get('button').contains('Submit').click()
 				cy.get('.ui-dialog-buttonset').contains('Close').click()
+
+				//Create new arm
+				cy.visit_version({page: "Design/define_events.php", params: `pid=${PID}`})
+
+				cy.get('a[href*="/redcap_v9.1.3/Design/define_events.php?pid=23&arm=2"]').click()
+				cy.get('input[id=arm_name]').type('Arm 2')
+				cy.get('input[value=Save]').click()
+
+				//Create event in arm 2
+				cy.get('input[id=descrip]').type('Event 1')
+				cy.get('input[value="Add new event"]').click()
+
+				//Designate instrument to event
+				cy.visit_version({page: 'Design/designate_forms.php', params: `pid=${PID}`})
+				cy.get('a[href*="/redcap_v9.1.3/Design/designate_forms.php?pid=23&arm=2"]').click()
+				cy.get('button').contains('Begin Editing').click().then(() => {
+					cy.get('td').contains('Text Validation').parent().within(() => {
+						cy.get('input#text_validation--42').check()
+					})
+					cy.get('button#save_btn').click().then(() => {
+	
+						cy.get('span').contains('Saving').should('be.visible').then(($span) => {
+							cy.get($span).should('not.exist')
+						})
+	
+						cy.get('tr td').contains('Text Validation').parent().within(($p) => {
+							cy.wrap($p).find('img#img--text_validation--42')
+						})
+					})
+				})
 			})	
-						
+		})
+		
+		describe('Add new record to Arm 2', () => {
+
+			before(() => {
+				cy.set_user_type('standard')
+			})
+
+			//Step 39  
+			/*it('Should have the ability to add a new record to a Arm)', () => {
+				cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${PID}`})
+				cy.get('select[id="arm_name"]').select('Arm 2: Arm 2').should('have.value', '2')
+				cy.get('button').contains('Add new record').should('be.visible').click()
+				cy.get('input[name="ptname"]').type('Arm2')
+				cy.get('button#submit-btn-saverecord').first().click()
+			})	
+			
+			it('Should show new record created in arm 2 in record status dashboard)', () => {
+				cy.visit_version({page: 'DataEntry/record_status_dashboard.php', params: `pid=${PID}`})
+
+			})		
+
+			//Step 40
+			it('Should show arm 2 name in Action column of logging page)', () => {
+				cy.visit_version({page: 'Logging/index.php', params: `pid=${PID}`})
+
+			})		
+
+			//Step 41
+			it('Should have the ability to delete record from arm 2 )', () => {
+				cy.visit_version({page: "DataEntry/record_home.php", params: `pid=${PID}`})
+				cy.get('select[id="arm_name"]').select('Arm 2: Arm 2').should('have.value', '2')
+				cy.get('select[id="record"]').select('2').should('have.value', '2')
+				cy.get('button#recordActionDropdownTrigger').click()
+				cy.get('a').contains('Delete record (all forms)').should('be.visible').click()
+				cy.get('input[id="allow_delete_record_from_log"]').check()
+				cy.get('input[type=text]', {force: true}).type('DELETE')
+				cy.get('.ui-dialog-buttonset').contains('Confirm').click()
+				cy.get('button').contains('DELETE RECORD').should('be.visible').click()
+				cy.focused().should('have.text', 'Close').click()
+
+			})	
+			
+			it('Should show recently deleted record in logging)', () => {
+				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
+				cy.get('select[id="logtype"]').select('Record created-updated-deleted').should('have.value', 'record')
+			})*/	
 		})
 	})
 })
