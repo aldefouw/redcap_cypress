@@ -110,7 +110,7 @@ Please read our [Quick-Start Guide](https://github.com/aldefouw/redcap_cypress/w
 ### Automated Testing Requirements
 
 Automated testing of REDCap requires two things:
-- REDCap Test Instance
+- REDCap Test Instance (in most cases, [Docker REDCap Instance](https://github.com/aldefouw/redcap_docker) )
 - REDCap Cypress Test Framework (this repository)
 
 The combination of the REDCap Test Instance and the Test Framework is considered your "Test Enivronment."
@@ -150,7 +150,7 @@ The other half necessary is to configure your Test Framework, which is covered b
 
 Although configuring your environment is outside the scope of this document, there are several consortium members who have successfully configured Docker containers.  
 
-**If you need help getting started with Docker, you can use the following repository as a starting point: [REDCap Docker](https://github.com/aldefouw/redcap_docker) repository.  Please note that this repository requires the REDCap source files to be on your machine.
+**If you need help getting started with Docker, you can use the following repository as a starting point: [REDCap Docker](https://github.com/aldefouw/redcap_docker) repository.  Please note that this repository requires the REDCap source files to be on your machine.**
 
 ---
 ### Test Framework 
