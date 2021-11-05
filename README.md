@@ -150,9 +150,7 @@ The other half necessary is to configure your Test Framework, which is covered b
 
 Although configuring your environment is outside the scope of this document, there are several consortium members who have successfully configured Docker containers.  
 
-**If you need help getting started with Docker, consider looking at or downloading Andy Martin's [REDCap Docker Compose](https://github.com/123andy/redcap-docker-compose) repository.**
-
-Alternatively, if you understand how REDCap works well, you can use Adam De Fouw's lightweight [REDCap Docker](https://github.com/aldefouw/redcap_docker) repository.  Please note that this repository requires the REDCap source files to be on your machine.
+**If you need help getting started with Docker, you can use the following repository as a starting point: [REDCap Docker](https://github.com/aldefouw/redcap_docker) repository.  Please note that this repository requires the REDCap source files to be on your machine.
 
 ---
 ### Test Framework 
