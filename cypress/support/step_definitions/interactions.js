@@ -27,6 +27,14 @@ Given(/^I should be able to locate and visit the Control Center link labeled "(.
     }
 })
 
+Given('I enter {string} into the field labeled {string}', (text, label) => {
+    //We locate the label element first.  This isn't always a label which is unfortunate, but this approach seems to work so far.
+    cy.contains(label).then(($label) => {
+        //We are finding the parent of the label element and then looking for nearest input
+        cy.wrap($label).parent().find('input').type(text)
+    })
+})
+
 // Given(/^I should be able to locate and visit the Control Center link labeled and titled "(.*)"?$/, (link_label, title) => {
 //     cy.contains_cc_link(link_label, title)
 // })
