@@ -144,7 +144,7 @@ describe('Logging', () => {
 	it('Should have the ability to export the logs to a CSV file', () => {
 		cy.set_user_type('standard2')
 		cy.visit_version({page: 'DataExport/index.php', params: `pid=${PID}`})
-		cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+		cy.get('tr#reprow_ALL').find('button.data_export_btn').should('be.visible').contains('Export Data').click()
 		cy.get('input[value="csvraw"]').click()
 		cy.export_csv_report().should((csv) => {
 			expect([...new Set(csv.map((row) => row[0]).slice(1))]).to.have.lengthOf(2)                     // 2 records
@@ -173,6 +173,7 @@ describe('Logging', () => {
 		cy.get('input[id="__LOCKRECORD__"]').check()
 		cy.get('button#submit-btn-dropdown').first().click()
 		.closest('div').find('a#submit-btn-savecontinue').should('be.visible').click()
+
 		cy.get('input[id="__LOCKRECORD__"]').should('be.checked')
 
 		//Step 17
@@ -232,51 +233,49 @@ describe('Logging', () => {
 		cy.get('.ui-dialog-buttonset').contains('Close').click()
 	})
 	
-	// Step 21 - Logging page
-	it('Should have the ability to visit Logging page', () => {
-		//cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
-		
-	})
-
-
 	describe('Log of User Actions', () => {
 
 		before(() => {
             cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
-			cy.contains('Time / Date')
-			.parent('tr')
-			.within(() => {
-				// all searches are automatically rooted to the found tr element
-				cy.get('td').eq(1).contains('Username')
-				cy.get('td').eq(2).contains('Action')
-				cy.get('td').eq(3).contains('List of Data Change')
-			})
         })
 
+		//How do we find date because everytime we run the code, the date changes
 		it('Should keep a record of the time / date of user actions', () => {
-
-			
+			// cy.contains('Time / Date')
+			// .parent('tr')
+			// .within(() => {
+			// 	// all searches are automatically rooted to the found tr element
+			// 	cy.get('td').eq(1).contains('Username')
+			// 	cy.get('td').eq(2).contains('Action')
+			// 	cy.get('td').eq(3).contains('List of Data Changes')
+			// })
 		})
 
+		//Same as line 390 - 397
 		it('Should keep a record of when a Data Export is performed', () => {
-			//cy.get('select[id="logtype"]').select('Data export').should('have.value', 'export')
+			cy.get('select[id="logtype"]').select('Data export').should('have.value', 'export')
 		})
 
 		it('Should keep a record of E-signature events', () => {
-			//cy.get('select[id="logtype"]').select('Record locking & e-signatures').should('have.value', 'lock_record')
+			cy.get('select[id="logtype"]').select('Record locking & e-signatures').should('have.value', 'lock_record')
+			//cy.get('table').contains('td', 'E-signature');
+			//cy.get('table').contains('td', 'Action: Save e-signature');
+			//cy.get('table').contains('td', 'Action: Negate e-signature');
 
 		})
 
 		it('Should keep a record of changes to project instruments (Manage / Design)', () => {
-			//cy.get('select[id="logtype"]').select('Manage/Design').should('have.value', 'manage')
+			cy.get('select[id="logtype"]').select('Manage/Design').should('have.value', 'manage')
 		})
 
 	 	describe('Data Recorded', () => {
 
+			//Same as Line 454
 	    	it('Should keep a record of the username who performed the action', () => {
 
 	    	})
 
+			//Same as updated record line 407 and 427
 			it('Should keep a record of the specific data change made', () => { 
 
 			})
@@ -297,12 +296,15 @@ describe('Logging', () => {
 
 	    	})
 
+
     		it('Should keep a record of the fields exported', () => {
-				//cy.get('select[id="logtype"]').select('Data export').should('have.value', 'export')
+				cy.get('select[id="logtype"]').select('Data export').should('have.value', 'export')
+				cy.get('table').contains('td', 'report_id: ALL, export_format: CSV, rawOrLabel: raw, fields: "record_id, ptname, email, text_validation_complete"');
     		})
 
 	    })
 
+		//repetition in filtering options code block lines 408-447
 		describe('Changes to Records', () => {
 
 		    it('Should keep a record of all create actions', () => {
@@ -365,51 +367,103 @@ describe('Logging', () => {
 
 		describe('By Event Type', () => {
 
+			before(() => {
+				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
+			})
+
 			it('Should allow filtering on ALL Event Types (excluding Page Views)', () => {
 
+				cy.contains('Time / Date')
+				.parent('tr')
+				.within(() => {
+					// all searches are automatically rooted to the found tr element
+					cy.get('td').eq(1).contains('Username')
+					cy.get('td').eq(2).contains('Action')
+					cy.get('td').eq(3).contains('List of Data Changes')
+				})
 			})
 
 			it('Should allow filtering by Data Export type', () => {
-
+				cy.get('select[id="logtype"]').select('Data export').should('have.value', 'export')
+				cy.get('table').contains('td', 'Download exported data file (CSV raw)');
+				cy.get('table').contains('td', 'report_id: ALL, export_format: CSV, rawOrLabel: raw, fields: "record_id, ptname, email, text_validation_complete"');
 			})
 
 			it('Should allow filtering by Manage/Design type', () => {
-
+				cy.get('select[id="logtype"]').select('Manage/Design').should('have.value', 'manage')
+				cy.get('table').contains('td', 'Approve production project modifications (automatic)');
+				cy.get('table').contains('td', 'Create data collection instrument');
+				//cy.get('table').contains('td', 'Create project field');
+				cy.get('table').contains('td', 'Enter draft mode');
 			})
 
 			it('Should allow filtering by User or Role (created-updated-deleted)', () => {
-
+				cy.get('select[id="logtype"]').select('User or role created-updated-deleted').should('have.value', 'user')
+				cy.get('table').contains('td', 'Updated User');
+				cy.get('table').contains('td', 'Created User');
+				cy.get('table').contains('td', 'Deleted User');
+				cy.get('table').contains('td', 'user = \'test_user\'');
+				cy.get('table').contains('td', 'user = \'test_user2\'');
+				cy.get('table').contains('td', 'role = \'Data\'');
 			})
 
 			it('Should allow filtering by Record (created-updated-deleted)', () => {
-
+				cy.get('select[id="logtype"]').select('Record created-updated-deleted').should('have.value', 'record')
+				cy.get('table').contains('td', 'Updated Record');
+				cy.get('table').contains('td', 'Created Record');
+				cy.get('table').contains('td', 'Deleted Record');
+				cy.get('table').contains('td', 'record_id = \'3\'');
+				cy.get('table').contains('td', 'ptname = \'Delete\', email = \'delete@test.com\', text_validation_complete = \'0\', record_id = \'3\'');
+				cy.get('table').contains('td', 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'');
+				cy.get('table').contains('td', 'ptname = \'Testing\'');
+				cy.get('table').contains('td', 'ptname = \'Test\', email = \'test@test.com\', text_validation_complete = \'0\', record_id = \'1\'');
 			})
 
 			it('Should allow filtering by Record (created only)', () => {
-
+				cy.get('select[id="logtype"]').select('Record created (only)').should('have.value', 'record_add')
+				cy.get('table').contains('td', 'Created Record');
+				cy.get('table').contains('td', 'ptname = \'Test\', email = \'test@test.com\', text_validation_complete = \'0\', record_id = \'1\'');
+				cy.get('table').contains('td', 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'');
+				cy.get('table').contains('td', 'ptname = \'Delete\', email = \'delete@test.com\', text_validation_complete = \'0\', record_id = \'3\'');
 			})
 
 			it('Should allow filtering by Record (updated only)', () => {
-
+				cy.get('select[id="logtype"]').select('Record updated (only)').should('have.value', 'record_edit')
+				cy.get('table').contains('td', 'Updated Record');
+				cy.get('table').contains('td', 'ptname = \'Testing\'');
 			})
 
 			it('Should allow filtering by Record (deleted only)', () => {
-
+				cy.get('select[id="logtype"]').select('Record deleted (only)').should('have.value', 'record_delete')
+				cy.get('table').contains('td', 'Deleted Record');
+				cy.get('table').contains('td', 'record_id = \'3\'');
 			})
 
 			it('Should allow filtering by Record locking and e-signatures', () => {
-
+				cy.get('select[id="logtype"]').select('Record locking & e-signatures').should('have.value', 'lock_record')
+				//cy.get('table').contains('td', 'Lock/Unlock Record');
+				//cy.get('table').contains('td', 'E-signature');
+				//cy.get('table').contains('td', 'Action: Lock record');
+				//cy.get('table').contains('td', 'Action: Unlock instrument');
+				//cy.get('table').contains('td', 'Action: Save e-signature');
+				//cy.get('table').contains('td', 'Action: Negate e-signature');
 			})
 
 			it('Should allow filtering by Page Views', () => {
-
+				cy.get('select[id="logtype"]').select('Page Views').should('have.value', 'page_view')
+				cy.get('table').contains('td', 'Page View');
+				cy.get('table').contains('td', '/redcap_v9.1.3/Logging/index.php?pid=23');
 			})	
 		})
 
 		describe('By Specific Username', () => {
 
 			it('Should allow filtering by Username (all users for a given study selectable)', () => {
-
+				cy.get('select[id="usr"]').select('test_user').should('have.value', 'test_user')
+				//cy.get('table').contains('td', 'test_admin');
+				//cy.get('table').contains('td', 'test_user');
+				//cy.get('table').contains('td', 'test_user2');
+				//remove set_user_type('standard') comment in line 57
 			})	
 
 		})
@@ -417,7 +471,9 @@ describe('Logging', () => {
 		describe('By Specific Record', () => {
 
 			it('Should allow filtering by Record (all records for a given study selectable)', () => {
-
+				//cy.get('select[id="record"]').select('2').should('have.value', '2')
+				//cy.get('table').contains('td', 'Created Record');
+				//cy.get('table').contains('td', 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'');
 			})				
 
 		})
@@ -430,7 +486,7 @@ describe('Logging', () => {
 
 		})
 
-		describe('Delete a record’s logging activity when deleting the records', () => {
+		/*describe('Delete a record’s logging activity when deleting the records', () => {
 
 			//step 32
 			it('Should allow deleting a record’s logging activity when deleting the records)', () => {
@@ -526,16 +582,16 @@ describe('Logging', () => {
 					})
 				})
 			})	
-		})
+		})*/
 		
-		describe('Add new record to Arm 2', () => {
+		/*describe('Add new record to Arm 2', () => {
 
 			before(() => {
 				cy.set_user_type('standard')
 			})
 
 			//Step 39  
-			/*it('Should have the ability to add a new record to a Arm)', () => {
+			it('Should have the ability to add a new record to a Arm)', () => {
 				cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${PID}`})
 				cy.get('select[id="arm_name"]').select('Arm 2: Arm 2').should('have.value', '2')
 				cy.get('button').contains('Add new record').should('be.visible').click()
@@ -572,7 +628,7 @@ describe('Logging', () => {
 			it('Should show recently deleted record in logging)', () => {
 				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
 				cy.get('select[id="logtype"]').select('Record created-updated-deleted').should('have.value', 'record')
-			})*/	
-		})
+			})	
+		})*/
 	})
 })
