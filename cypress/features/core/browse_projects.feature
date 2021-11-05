@@ -30,6 +30,10 @@ Feature: Browse Projects
     When I click on the button labeled "View all projects"
     Then I should see projects sorted correctly when I click on "Fields" to sort in either direction
 
+  Scenario: Sort the projects by "Instrument" column
+    When I click on the button labeled "View all projects"
+    Then I should see projects sorted correctly when I click on "Instrument" to sort in either direction
+
   Scenario: Sort the projects by "Type" column
     When I click on the button labeled "View all projects"
     Then I should see projects sorted correctly when I click on "Type" to sort in either direction
@@ -46,4 +50,4 @@ Feature: Browse Projects
   Scenario: View no projects when a user has no user rights assigned to any projects
     When I enter "test_user2" into the field labeled "Viewing projects accessible by user:"
     And I click on the button labeled "View"
-    And I should see "There are no projects to display"
+    Then I should see "There are no projects to display"
