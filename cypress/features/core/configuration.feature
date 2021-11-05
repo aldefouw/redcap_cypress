@@ -6,7 +6,6 @@ Feature: Configuration
   Background:
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center"
-    And I
 
   Scenario: Control Center contains the appropriate links under "Control Center Home" heading
     Then I should be able to locate and visit the Control Center link labeled "Notifications & Reporting" and see the title "Notifications"
