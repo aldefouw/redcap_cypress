@@ -235,143 +235,6 @@ describe('Logging', () => {
 		cy.get('.ui-dialog-buttonset').contains('Close').click()
 	})
 	
-	describe('Log of User Actions', () => {
-
-		before(() => {
-            cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
-        })
-
-		//How do we look for date field because everytime we run the code, the date changes
-		it('Should keep a record of the time / date of user actions', () => {
-			// cy.contains('Time / Date')
-			// .parent('tr')
-			// .within(() => {
-			// 	// all searches are automatically rooted to the found tr element
-			// 	cy.get('td').eq(1).contains('Username')
-			// 	cy.get('td').eq(2).contains('Action')
-			// 	cy.get('td').eq(3).contains('List of Data Changes')
-			// })
-		})
-
-		//Same as line 390 - 397
-		it('Should keep a record of when a Data Export is performed', () => {
-			cy.get('select[id="logtype"]').select('Data export').should('have.value', 'export')
-		})
-
-		//same as line 448-455
-		it('Should keep a record of E-signature events', () => {
-			cy.get('select[id="logtype"]').select('Record locking & e-signatures').should('have.value', 'lock_record')
-			//cy.get('table').contains('td', 'E-signature');
-			//cy.get('table').contains('td', 'Action: Save e-signature');
-			//cy.get('table').contains('td', 'Action: Negate e-signature');
-
-		})
-
-		//same as lines 399-404
-		it('Should keep a record of changes to project instruments (Manage / Design)', () => {
-			cy.get('select[id="logtype"]').select('Manage/Design').should('have.value', 'manage')
-		})
-
-	 	describe('Data Recorded', () => {
-
-			//Same as Line 454
-	    	it('Should keep a record of the username who performed the action', () => {
-
-	    	})
-
-			//Same as line 407 and 427
-			it('Should keep a record of the specific data change made', () => { 
-
-			})
-
-	    	describe('Updated Data', () => {
-
-				//same as line 434
-	    		it('Should keep a record of the new value for an updated record', () => {
-					//cy.get('select[id="logtype"]').select('Record updated (only)').should('have.value', 'record_edit')
-	    		})
-
-				//same as line 448-455
-	    		it('Should keep a record of the new value for an updated E-signature', () => {
-					//cy.get('select[id="logtype"]').select('Record locking & e-signatures').should('have.value', 'lock_record')
-	    		})
-
-				//same as line 448-455
-	    		it('Should keep a record of the new value for lock/unlock actions', () => {
-					//cy.get('select[id="logtype"]').select('Record locking & e-signatures').should('have.value', 'lock_record')
-	    		})
-
-	    	})
-
-			//Same as line 389
-    		it('Should keep a record of the fields exported', () => {
-				cy.get('select[id="logtype"]').select('Data export').should('have.value', 'export')
-				cy.get('table').contains('td', 'report_id: ALL, export_format: CSV, rawOrLabel: raw, fields: "record_id, ptname, email, text_validation_complete"');
-    		})
-
-	    })
-
-		//repetition in filtering options code block lines 408-447
-		describe('Changes to Records', () => {
-
-		    it('Should keep a record of all create actions', () => {
-	            
-		    })
-
-		    it('Should keep a record of all update actions', () => {
-		            
-		    })
-
-		    it('Should keep a record of all delete actions', () => {
-		            
-		    })
-
-		    it('Should keep a record of all record locks', () => {
-		            
-		    })
-
-		    it('Should keep a record of all record unlocks', () => {
-		            
-		    })
-		   
-		})
-
-		//Same as lines 401-408
-		describe('Changes to User Roles', () => {
-
-		    it('Should keep a record of all created user roles', () => {
-		       //cy.get('select[id="logtype"]').select('User or role created-updated-deleted').should('have.value', 'user')
-		    })
-
-		    it('Should keep a record of all updated user roles', () => {
-				//cy.get('select[id="logtype"]').select('User or role created-updated-deleted').should('have.value', 'user')
-
-		    })
-
-		    it('Should keep a record of all deleted user roles', () => {
-				//cy.get('select[id="logtype"]').select('User or role created-updated-deleted').should('have.value', 'user')
-
-		    })
-		})
-
-		//What goes here?
-		describe('Changes to Individual User Permissions', () => {
-
-		    it('Should keep a record of all created user permissions', () => {
-		            
-		    })
-
-		    it('Should keep a record of all updated user permissions', () => {
-		            
-		    })
-
-		    it('Should keep a record of all deleted user permissions', () => {
-		            
-		    })
-		})
-
-	})
-
 	describe('Filtering Options', () => {
 
 		describe('By Event Type', () => {
@@ -463,16 +326,16 @@ describe('Logging', () => {
 				cy.get('table').contains('td', 'Page View');
 				cy.get('table').contains('td', '/redcap_v9.1.3/Logging/index.php?pid=23');
 			})	
+			
 		})
 
 		describe('By Specific Username', () => {
 
 			it('Should allow filtering by Username (all users for a given study selectable)', () => {
+				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
+				cy.get('select[id="usr"]').select('test_admin').should('have.value', 'test_admin')
 				cy.get('select[id="usr"]').select('test_user').should('have.value', 'test_user')
-				cy.get('table').contains('td', 'test_admin');
-				//cy.get('table').contains('td', 'test_user');
-				//cy.get('table').contains('td', 'test_user2');
-				//remove set_user_type('standard') comment in line 57
+				cy.get('select[id="usr"]').select('test_user2').should('have.value', 'test_user2')
 			})	
 
 		})
@@ -480,9 +343,10 @@ describe('Logging', () => {
 		describe('By Specific Record', () => {
 
 			it('Should allow filtering by Record (all records for a given study selectable)', () => {
-				//cy.get('select[id="record"]').select('2').should('have.value', '2')
-				//cy.get('table').contains('td', 'Created Record');
-				//cy.get('table').contains('td', 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'');
+				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
+				cy.get('select[id="record"]').select('2').should('have.value', '2')
+				cy.get('table').contains('td', 'Created Record');
+				cy.get('table').contains('td', 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'');
 			})				
 
 		})
@@ -490,6 +354,7 @@ describe('Logging', () => {
 		describe('Export All Logging', () => {
 
 			it('Should allow all logging export)', () => {
+				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
 				cy.get('button').contains('Export all logging (CSV)').click()
 				
 			})				
@@ -527,6 +392,8 @@ describe('Logging', () => {
 			it('Should show recently deleted record in logging)', () => {
 				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
 				cy.get('select[id="logtype"]').select('Record created-updated-deleted').should('have.value', 'record')
+				cy.get('table').contains('td', '[*DATA REMOVED*]');
+				cy.get('table').contains('td', '[All data values were removed from this record\'s logging activity.]');
 			})	
 
 		})
@@ -604,32 +471,37 @@ describe('Logging', () => {
 			})
 
 			//Step 39  
-			/*it('Should have the ability to add a new record to a Arm)', () => {
+			it('Should have the ability to add a new record to a Arm)', () => {
 				cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${PID}`})
 				cy.get('select[id="arm_name"]').select('Arm 2: Arm 2').should('have.value', '2')
-				cy.get('button').contains('Add new record').should('be.visible').click()
+				cy.wait(2000)
+				cy.get('button').contains('Add new record for the arm selected above').should('be.visible').click()
+				cy.wait(2000)
 				cy.get('input[name="ptname"]').type('Arm2')
 				cy.get('button#submit-btn-saverecord').first().click()
 			})	
 			
 			it('Should show new record created in arm 2 in record status dashboard)', () => {
 				cy.visit_version({page: 'DataEntry/record_status_dashboard.php', params: `pid=${PID}`})
-
+				cy.get('table').contains('a', '1');
+				//check if arm 2 record 2 is visible
 			})		
 
 			//Step 40
 			it('Should show arm 2 name in Action column of logging page)', () => {
 				cy.visit_version({page: 'Logging/index.php', params: `pid=${PID}`})
-
+				cy.get('table').contains('td', '(Event 1 - Arm 2: Arm 2)');
+				cy.get('table').contains('td', 'ptname = \'Arm2\', text_validation_complete = \'0\', record_id = \'2\'');
 			})		
 
 			//Step 41
 			it('Should have the ability to delete record from arm 2 )', () => {
 				cy.visit_version({page: "DataEntry/record_home.php", params: `pid=${PID}`})
 				cy.get('select[id="arm_name"]').select('Arm 2: Arm 2').should('have.value', '2')
+				cy.wait(3000)
 				cy.get('select[id="record"]').select('2').should('have.value', '2')
 				cy.get('button#recordActionDropdownTrigger').click()
-				cy.get('a').contains('Delete record (all forms)').should('be.visible').click()
+				cy.get('a').contains('Delete record (all forms/events)').should('be.visible').click()
 				cy.get('input[id="allow_delete_record_from_log"]').check()
 				cy.get('input[type=text]', {force: true}).type('DELETE')
 				cy.get('.ui-dialog-buttonset').contains('Confirm').click()
@@ -641,7 +513,9 @@ describe('Logging', () => {
 			it('Should show recently deleted record in logging)', () => {
 				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
 				cy.get('select[id="logtype"]').select('Record created-updated-deleted').should('have.value', 'record')
-			})*/	
+				cy.get('table').contains('td', '[*DATA REMOVED*]');
+				cy.get('table').contains('td', '[All data values were removed from this record\'s logging activity.]');
+			})
 		})
 	})
 })
