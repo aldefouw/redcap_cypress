@@ -129,9 +129,8 @@ describe('Assign User Rights', () => {
 					cy.set_user_type('standard')
 					cy.visit_version({page: 'index.php', params: 'pid=' + project_id})
 
-					//Should not see "Survey Distribution Tools
+					//Should not see "Survey Distribution Tools"
 					cy.get('html').should(($html) => {
-						//There should be no "Create New Report"
 						expect($html).not.to.contain('Survey Distribution Tools')
 					})
 
@@ -142,19 +141,62 @@ describe('Assign User Rights', () => {
 					cy.set_user_type('standard')
 					cy.visit_version({page: 'index.php', params: 'pid=' + project_id})
 
-					//Should not see "Survey Distribution Tools
+					//Should not see "Survey Distribution Tools"
 					cy.get('html').should(($html) => {
-						//There should be no "Create New Report"
 						expect($html).to.contain('Survey Distribution Tools')
 					})
 				})
 
 				it('Should have the ability to grant/restrict Data Import Tool permission to a user', () => {
+					//Remove the right from standard user
+					cy.remove_basic_user_right('test_user', 'Test User', 'Data Import Tool', project_id)
 
+					//Login in as standard user
+					cy.set_user_type('standard')
+					cy.visit_version({page: 'index.php', params: 'pid=' + project_id})
+
+					//Should not see "Data Import Tool"
+					cy.get('html').should(($html) => {
+						expect($html).not.to.contain('Data Import Tool')
+					})
+
+					//Remove the right from standard user
+					cy.assign_basic_user_right('test_user', 'Test User', 'Data Import Tool', project_id)
+
+					//Login in as standard user
+					cy.set_user_type('standard')
+					cy.visit_version({page: 'index.php', params: 'pid=' + project_id})
+
+					//Should not see "Data Import Tool"
+					cy.get('html').should(($html) => {
+						expect($html).to.contain('Data Import Tool')
+					})
 				})
 
 				it('Should have the ability to grant/restrict Data Comparison Tool permission to a user', () => {
+					//Remove the right from standard user
+					cy.remove_basic_user_right('test_user', 'Test User', 'Data Comparison Tool', project_id)
 
+					//Login in as standard user
+					cy.set_user_type('standard')
+					cy.visit_version({page: 'index.php', params: 'pid=' + project_id})
+
+					//Should not see "Data Comparison Tool"
+					cy.get('html').should(($html) => {
+						expect($html).not.to.contain('Data Comparison Tool')
+					})
+
+					//Remove the right from standard user
+					cy.assign_basic_user_right('test_user', 'Test User', 'Data Comparison Tool', project_id)
+
+					//Login in as standard user
+					cy.set_user_type('standard')
+					cy.visit_version({page: 'index.php', params: 'pid=' + project_id})
+
+					//Should not see "Data Comparison Tool"
+					cy.get('html').should(($html) => {
+						expect($html).to.contain('Data Comparison Tool')
+					})
 				})
 
 				it('Should have the ability to grant/restrict Logging permission to a user', () => {
@@ -249,15 +291,187 @@ describe('Assign User Rights', () => {
 					cy.verify_user_rights_available('standard', 'FileRepository', project_id)
 				})
 
-				it('Should have the ability to grant/restrict Record Locking Customization permission to a user', () => {
+				it.skip('Should have the ability to grant/restrict Record Locking Customization permission to a user', () => {
+					//Remove the right from standard user
+					cy.remove_basic_user_right('test_user', 'Test User', 'Record Locking Customization', project_id)
 
+					//Login in as standard user
+					cy.set_user_type('standard')
+
+					//Attempt to visit the page where Record Locking Customizations happen
+					cy.visit_version({page: 'Locking/locking_customization.php', params: 'pid=' + project_id})
+
+					//Should see ACCESS DENIED
+					cy.get('html').should(($html) => {
+						expect($html).to.contain('ACCESS DENIED')
+					})
+
+					//Remove the right from standard user
+					cy.assign_basic_user_right('test_user', 'Test User', 'Record Locking Customization', project_id)
+
+					//Login in as standard user
+					cy.set_user_type('standard')
+
+					//Attempt to visit the page where Record Locking Customizations happen
+					cy.visit_version({page: 'Locking/locking_customization.php', params: 'pid=' + project_id})
+
+					//Should not see "ACCESS DENIED" but should see "Record Locking"
+					cy.get('html').should(($html) => {
+						expect($html).not.to.contain('ACCESS DENIED')
+						expect($html).to.contain('Record Locking Customization')
+					})
 				})
 
-				it('Should have the ability to grant/restrict Lock/Unlock Records permission to a user', () => {
+				it.skip('Should have the ability to grant/restrict Lock/Unlock Records permission to a user', () => {
+
+					//Remove the right from standard user
+					cy.remove_basic_user_right('test_user', 'Test User', 'Record Locking Customization', project_id)
+
+					//This uses the "assigning" method, but it's actually setting it to "Disabled"
+					cy.assign_basic_user_right('test_user', 'Test User', 'Lock/Unlock Records', project_id, true, 'admin', 'input', '0')
+
+					//Login in as standard user
+					cy.set_user_type('standard')
+
+					//Attempt to visit the page where Record Locking Customizations happen
+					cy.visit_version({page: 'Locking/esign_locking_management.php', params: 'pid=' + project_id})
+
+					//Should see ACCESS DENIED
+					cy.get('html').should(($html) => {
+						expect($html).to.contain('ACCESS DENIED')
+					})
+
+					//Assigns right to standard user for Record Lock/Unlock
+					cy.assign_basic_user_right('test_user', 'Test User', 'Lock/Unlock Records', project_id, true, 'admin', 'input', '1')
+
+					//Login in as standard user
+					cy.set_user_type('standard')
+
+					//Attempt to visit the page where Record Locking Customizations happen
+					cy.visit_version({page: 'Locking/esign_locking_management.php', params: 'pid=' + project_id})
+
+					//Should not see "ACCESS DENIED" but should see "Record Locking"
+					cy.get('html').should(($html) => {
+						expect($html).not.to.contain('ACCESS DENIED')
+						expect($html).to.contain('Record Locking and E-signature Functionality')
+					})
 
 				})
 
 				it('Should have the ability to grant/restrict "Allow Locking of All Forms at once" for a given record to a user', () => {
+					cy.set_user_type('admin')
+
+					//create record
+					cy.visit_version({page: 'DataEntry/index.php', params: 'pid=' + project_id + '&id=1&event_id=1&page=demographics&auto=1'})
+					cy.get('button').contains('Save & Exit Form').click()
+
+					//enable locking
+					cy.assign_basic_user_right('test_user', 'Test User', 'Lock/Unlock Records', project_id, true, 'admin', 'input', '1')
+
+					//add ability to lock all forms at once
+					cy.assign_basic_user_right('test_user', 'Test User', 'Allow locking of all forms at once for a given record?', project_id)
+
+					//login as standard user
+					cy.set_user_type('standard')
+
+					//test lock all forms
+					cy.visit_version({page: 'DataEntry/record_home.php', params: 'pid=' + project_id + '&arm=1&id=1'})
+
+					//test unlock all forms
+					cy.get('button').contains('Choose action for record').click()
+					cy.get('a').should('contain', 'Lock all instruments')
+					cy.get('a').contains('Lock all instruments').click()
+
+					//verify that each form is locked
+					cy.visit_version({page: 'DataEntry/index.php', params: 'pid=' + project_id + '&id=1&event_id=1&page=demographics&instance=1'})
+					cy.get('html').should(($html) => {
+						expect($html).to.contain('Locked by test_user')
+					})
+
+					cy.visit_version({page: 'DataEntry/index.php', params: 'pid=' + project_id + '&id=1&event_id=1&page=baseline_data&instance=1'})
+					cy.get('html').should(($html) => {
+						expect($html).to.contain('Locked by test_user')
+					})
+
+					cy.visit_version({page: 'DataEntry/index.php', params: 'pid=' + project_id + '&id=1&event_id=1&page=month_1_data&instance=1'})
+					cy.get('html').should(($html) => {
+						expect($html).to.contain('Locked by test_user')
+					})
+
+					cy.visit_version({page: 'DataEntry/index.php', params: 'pid=' + project_id + '&id=1&event_id=1&page=month_2_data&instance=1'})
+					cy.get('html').should(($html) => {
+						expect($html).to.contain('Locked by test_user')
+					})
+
+					cy.visit_version({page: 'DataEntry/index.php', params: 'pid=' + project_id + '&id=1&event_id=1&page=month_3_data&instance=1'})
+					cy.get('html').should(($html) => {
+						expect($html).to.contain('Locked by test_user')
+					})
+
+					cy.visit_version({page: 'DataEntry/index.php', params: 'pid=' + project_id + '&id=1&event_id=1&page=completion_data&instance=1'})
+					cy.get('html').should(($html) => {
+						expect($html).to.contain('Locked by test_user')
+					})
+
+					//now unlock all pages
+					cy.visit_version({page: 'DataEntry/record_home.php', params: 'pid=' + project_id + '&arm=1&id=1'})
+
+					//test unlock all forms
+					cy.get('button').contains('Choose action for record').click()
+					cy.get('a').should('contain', 'Unlock all instruments')
+					cy.get('a').contains('Unlock all instruments').click()
+
+					//verify that each form is locked
+					cy.visit_version({page: 'DataEntry/index.php', params: 'pid=' + project_id + '&id=1&event_id=1&page=demographics&instance=1'})
+					cy.get('html').should(($html) => {
+						expect($html).not.to.contain('Locked by test_user')
+					})
+
+					cy.visit_version({page: 'DataEntry/index.php', params: 'pid=' + project_id + '&id=1&event_id=1&page=baseline_data&instance=1'})
+					cy.get('html').should(($html) => {
+						expect($html).not.to.contain('Locked by test_user')
+					})
+
+					cy.visit_version({page: 'DataEntry/index.php', params: 'pid=' + project_id + '&id=1&event_id=1&page=month_1_data&instance=1'})
+					cy.get('html').should(($html) => {
+						expect($html).not.to.contain('Locked by test_user')
+					})
+
+					cy.visit_version({page: 'DataEntry/index.php', params: 'pid=' + project_id + '&id=1&event_id=1&page=month_2_data&instance=1'})
+					cy.get('html').should(($html) => {
+						expect($html).not.to.contain('Locked by test_user')
+					})
+
+					cy.visit_version({page: 'DataEntry/index.php', params: 'pid=' + project_id + '&id=1&event_id=1&page=month_3_data&instance=1'})
+					cy.get('html').should(($html) => {
+						expect($html).not.to.contain('Locked by test_user')
+					})
+
+					cy.visit_version({page: 'DataEntry/index.php', params: 'pid=' + project_id + '&id=1&event_id=1&page=completion_data&instance=1'})
+					cy.get('html').should(($html) => {
+						expect($html).not.to.contain('Locked by test_user')
+					})
+
+					//remove ability to lock all forms at once
+					cy.set_user_type('admin')
+
+					//add ability to lock all forms at once
+					cy.remove_basic_user_right('test_user', 'Test User', 'Allow locking of all forms at once for a given record?', project_id)
+
+					//change back to standard user
+					cy.set_user_type('standard')
+
+					//verify that the abilty to lock/unlock the forms no longer exists
+					cy.visit_version({page: 'DataEntry/record_home.php', params: 'pid=' + project_id + '&arm=1&id=1'})
+
+					//test unlock all forms
+					cy.get('button').contains('Choose action for record').click()
+
+					//Make sure we don't get the option to lock/unlock
+					cy.get('a').should(($a) => {
+						expect($a).not.to.contain('Lock all instruments')
+						expect($a).not.to.contain('Unlock all instruments')
+					})
 
 				})
 			})
