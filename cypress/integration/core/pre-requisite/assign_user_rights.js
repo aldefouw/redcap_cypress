@@ -118,8 +118,13 @@ describe('Assign User Rights', () => {
 				it('Should have the ability to grant/restrict Manage Survey Participants permission to a user', () => {
 					//Enable Surveys on the Project
 					cy.visit_version({page: 'ProjectSetup/index.php', params:'pid=' + project_id})
+
+					cy.get('html').should(($html) => {
+						expect($html).to.contain('Enable')
+					})
+
 					cy.intercept('modify_project_setting_ajax.php?pid=' + project_id).as('enable_survey')
-					cy.get('button').contains('Enable').first().click()
+					cy.get('button').contains('Enable').click()
 					cy.wait('@enable_survey')
 
 					//Remove the right from standard user
@@ -291,7 +296,7 @@ describe('Assign User Rights', () => {
 					cy.verify_user_rights_available('standard', 'FileRepository', project_id)
 				})
 
-				it.skip('Should have the ability to grant/restrict Record Locking Customization permission to a user', () => {
+				it('Should have the ability to grant/restrict Record Locking Customization permission to a user', () => {
 					//Remove the right from standard user
 					cy.remove_basic_user_right('test_user', 'Test User', 'Record Locking Customization', project_id)
 
@@ -322,7 +327,7 @@ describe('Assign User Rights', () => {
 					})
 				})
 
-				it.skip('Should have the ability to grant/restrict Lock/Unlock Records permission to a user', () => {
+				it('Should have the ability to grant/restrict Lock/Unlock Records permission to a user', () => {
 
 					//Remove the right from standard user
 					cy.remove_basic_user_right('test_user', 'Test User', 'Record Locking Customization', project_id)
