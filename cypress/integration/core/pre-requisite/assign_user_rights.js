@@ -116,16 +116,17 @@ describe('Assign User Rights', () => {
 				})
 
 				it('Should have the ability to grant/restrict Manage Survey Participants permission to a user', () => {
+					//Set admin to change the survey status
+					cy.set_user_type('admin')
+
 					//Enable Surveys on the Project
 					cy.visit_version({page: 'ProjectSetup/index.php', params:'pid=' + project_id})
 
-					cy.get('html').should(($html) => {
-						expect($html).to.contain('Enable')
-					})
-
 					cy.intercept('modify_project_setting_ajax.php?pid=' + project_id).as('enable_survey')
-					cy.get('button').contains('Enable').click()
+					cy.get('button').contains('Enable').first().click()
 					cy.wait('@enable_survey')
+
+					cy.set_user_type('standard')
 
 					//Remove the right from standard user
 					cy.remove_basic_user_right('test_user', 'Test User', 'Survey Distribution Tools', project_id)
