@@ -82,6 +82,37 @@ describe('Assign User Rights', () => {
 
 				it('Should have the ability to grant/restrict Add/Edit/Organize Reports permission to a user', () => {
 
+					//If someone is NOT allowed to Add/Edit/Organize, then they can still VIEW reports
+					//Should NOT be able to see "Create New Report"
+					cy.remove_basic_user_right('test_user', 'Test User', 'Add/Edit/Organize Reports', project_id)
+
+					//Login in as standard user
+					cy.set_user_type('standard')
+					cy.visit_version({page: 'DataExport/index.php', params: 'pid=' + project_id})
+
+					cy.get('html').should(($html) => {
+						//There should be no "Create New Report"
+						expect($html).not.to.contain('Create New Report')
+
+						//There should be a "View Report"
+						expect($html).to.contain('View Report')
+					})
+
+					//If someone is allowed to Add/Edit/Organize, then they can "Create New Report"
+					cy.assign_basic_user_right('test_user', 'Test User', 'Add/Edit/Organize Reports', project_id)
+
+					//Login in as standard user
+					cy.set_user_type('standard')
+					cy.visit_version({page: 'DataExport/index.php', params: 'pid=' + project_id})
+
+					cy.get('html').should(($html) => {
+						//There should be no "Create New Report"
+						expect($html).to.contain('Create New Report')
+
+						//There should be a "View Report"
+						expect($html).to.contain('View Report')
+					})
+
 				})
 
 				it('Should have the ability to grant/restrict Manage Survey Participants permission to a user', () => {
