@@ -16,10 +16,11 @@ describe('Logging', () => {
 		// Add User 1
 		cy.get(`a.userLinkInTable[userid="${STANDARD}"]`).should('be.visible').click()
 		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
-		cy.get('input[name="design"]').should('be.visible').check({force: true})	// Enable Design Rights
-		cy.get('input[name="user_rights"]').check({force: true})					// Enable User Rights
-		cy.get('input[name="data_export_tool"][value="1"]').check({force: true})	// Enable Full Data Export
-		cy.get('input[name="data_logging"]').check({force: true})					// Enable Logging
+		cy.get('input[name="design"]').should('be.visible').check()	                // Enable Design Rights
+		cy.get('input[name="user_rights"]').check()					                 // Enable User Rights
+		//cy.get('input[name="data_export_tool"][value="1"]').check({force: true})	// Enable Full Data Export
+		cy.get('input[name="data_export_tool"]').check('1')
+		cy.get('input[name="data_logging"]').check()					            // Enable Logging
 		cy.get('input[name="record_delete"]').check({force: true})					// Enable Delete Records
 		cy.get('input[name="lock_record_customize"]').should('not.be.checked')		// Record Locking Customization *Disabled*
 		cy.get('input[name="lock_record"][value="2"]').should('not.be.checked') 	// Lock/Unlock Records with E-signature authority *Disabled*
@@ -30,25 +31,23 @@ describe('Logging', () => {
 		cy.get('div.userSaveMsg').should('not.be.visible')
 		cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click()
 		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
-		cy.get('input[name="design"]').should('be.visible').check({force: true})	// Enable Design Rights
-		cy.get('input[name="user_rights"]').check({force: true})					// Enable User Rights
-		cy.get('input[name="data_export_tool"][value="1"]').check({force: true})	// Enable Full Data Export
-		cy.get('input[name="data_logging"]').check({force: true})					// Enable Logging
-		cy.get('input[name="record_delete"]').check({force: true})					// Enable Delete Records
-		cy.get('input[name="lock_record_customize"]').check({force: true})			// Enable Record Locking Customization
-		cy.get('input[name="record_create"]').should('be.checked')					// Create Records *Enabled*
-		cy.get('input[name="lock_record"][value="2"]').click()						// Enable Lock/Unlock Records with E-signature authority
-		
-		// This should be avoided if possible
-		cy.focused().should('have.text', 'Close').click()
-		
+		cy.get('input[name="design"]').should('be.visible').check()	                // Enable Design Rights
 		cy.get('.ui-button').contains(/add user|save changes/i).click()
 
+
+		// This should be avoided if possible
+		// cy.focused().should('have.text', 'Close').click()
+		
 		// Enable E-Signature
 		cy.visit_version({page: '/Locking/locking_customization.php', params: `pid=${PID}`})
 		cy.get('#savedEsign-text_validation').closest('td').find('input').check()
 
-		//cy.move_project_to_production(PID, false)
+		// Move to production
+		cy.visit_version({page: 'ProjectSetup/index.php', params: `pid=${PID}`})
+		cy.get('button').contains('Move project to production').click()
+		cy.get('input#keep_data').click()
+		cy.get('button').contains('YES, Move to Production Status').click()
+		cy.get('div#actionMsg').should('be.visible')
 
 		///////////////////////////////////////////////////////////////
 		// Take all project actions that will be checked in the logs //
@@ -56,7 +55,7 @@ describe('Logging', () => {
 		
 		// Steps come from manual testing protocol script #23 (Logging)
 		cy.set_user_type('standard')
-
+		cy.wait(3000)
 		// Step 3 - Add record
 		cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${PID}`})
 		cy.get('button').contains('Add new record').should('be.visible').click()
@@ -116,183 +115,227 @@ describe('Logging', () => {
     
 		// Steps 10, 11 - Add and edit new user (completed in project setup)
 
-		// Step 12 - Remove user
+		// Step 12 - Remove user (user913_3)
 		cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click()
 		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
 		cy.get('div#editUserPopup').should('be.visible').parent().find('button').contains("Remove user").should('be.visible').click()
 		cy.get('span').contains("Remove user?").should('be.visible').closest('div[role="dialog"]').find('button').contains("Remove user").click()
 		cy.get('div.userSaveMsg').should('not.be.visible')
 
-		//cy.set_user_type('standard2')
-
+		// Add User 2 (user913_4)
+		cy.add_users_to_project([STANDARD2], PID)
+		cy.visit_version({page: 'UserRights/index.php', params: `pid=${PID}`})
+		cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click()
+		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
+		cy.get('input[name="design"]').should('be.visible').check()	                // Enable Design Rights
+		cy.get('input[name="user_rights"]').check()					                // Enable User Rights
+		cy.get('input[name="data_export_tool"]').check('1')                     	// Enable Full Data Export
+		cy.get('input[name="data_export_tool"][value="1"]').should('be.checked')
+		cy.get('input[name="data_logging"]').check()				  				// Enable Logging
+		cy.get('input[name="record_delete"]').check()								// Enable Delete Records
+		cy.get('input[name="lock_record_customize"]').check()
+		cy.get('input[name="lock_record"][value="2"]').click()
+		cy.get('.ui-dialog-buttonset').contains('Close').click()
+		cy.get('input[name="record_create"]').should('be.checked')					// Create Records *Enabled*
+		cy.get('.ui-button').contains(/add user|save changes/i).click()
 	})
 
-	// Step 14 - Export Data
+	//Step 14 - Raw Export Data
 	it('Should have the ability to export the logs to a CSV file', () => {
+		cy.set_user_type('standard2')
+		cy.wait(2000)
 		cy.visit_version({page: 'DataExport/index.php', params: `pid=${PID}`})
-		cy.get('tr#reprow_ALL').find('button.data_export_btn').contains('Export Data').click()
+		cy.get('tr#reprow_ALL').find('button.data_export_btn').should('be.visible').contains('Export Data').click()
 		cy.get('input[value="csvraw"]').click()
-		cy.get('.ui-dialog-buttonset').contains('Export Data').click()
-})
-
-	
-
-
-	describe('Log of User Actions', () => {
-
-		it('Should keep a record of the time / date of user actions', () => {
-			
+		cy.export_csv_report().should((csv) => {
+			expect([...new Set(csv.map((row) => row[0]).slice(1))]).to.have.lengthOf(2)                     // 2 records
 		})
+	})
 
-		it('Should keep a record of when a Data Export is performed', () => {
-
-		})
-
-		it('Should keep a record of E-signature events', () => {
-
-		})
-
-		it('Should keep a record of changes to project instruments (Manage / Design)', () => {
-
-		})
-
-	 	describe('Data Recorded', () => {
-
-	    	it('Should keep a record of the username who performed the action', () => {
-
-	    	})
-
-			it('Should keep a record of the specific data change made', () => { 
-
-			})
-
-	    	describe('Updated Data', () => {
-
-	    		it('Should keep a record of the new value for an updated record', () => {
-
-	    		})
-
-	    		it('Should keep a record of the new value for an updated E-signature', () => {
-
-	    		})
-
-	    		it('Should keep a record of the new value for lock/unlock actions', () => {
-
-	    		})
-
-	    	})
-
-    		it('Should keep a record of the fields exported', () => {
-
-    		})
-
-	    })
-
-		describe('Changes to Records', () => {
-
-		    it('Should keep a record of all create actions', () => {
-	            
-		    })
-
-		    it('Should keep a record of all update actions', () => {
-		            
-		    })
-
-		    it('Should keep a record of all delete actions', () => {
-		            
-		    })
-
-		    it('Should keep a record of all record locks', () => {
-		            
-		    })
-
-		    it('Should keep a record of all record unlocks', () => {
-		            
-		    })
-		   
-		})
-
-		describe('Changes to User Roles', () => {
-
-		    it('Should keep a record of all created user roles', () => {
-		            
-		    })
-
-		    it('Should keep a record of all updated user roles', () => {
-		            
-		    })
-
-		    it('Should keep a record of all deleted user roles', () => {
-		            
-		    })
-		})
-
-		describe('Changes to Individual User Permissions', () => {
-
-		    it('Should keep a record of all created user permissions', () => {
-		            
-		    })
-
-		    it('Should keep a record of all updated user permissions', () => {
-		            
-		    })
-
-		    it('Should keep a record of all deleted user permissions', () => {
-		            
-		    })
-		})	
+	// Step 15 - Enable record locking/unlocking with e-signature authority
+	it('Should have the ability enable record locking/unlocking with e-signature authority', () => {
+		cy.visit_version({page: "UserRights/index.php", params: `pid=${PID}`})
+		cy.get(`a.userLinkInTable[userid="${STANDARD}"]`).click()
+		cy.get('div#tooltipBtnSetCustom').should('be.visible').find('button').click()
+		cy.get('input[name="lock_record_customize"]').check()
+		cy.get('input[name="lock_record"][value="2"]').click()
+		cy.get('.ui-dialog-buttonset').contains('Close').click()
+		cy.get('.ui-button').contains(/add user|save changes/i).click()
 
 	})
 
+	// Step 16,17,18 - Add/Edit record
+	it('Should have the ability to Add/Edit record', () => {
+		cy.visit_version({page: "DataEntry/record_home.php", params: `pid=${PID}`})
+		
+		//Step 16
+		cy.get('select[id="record"]').select('1').should('have.value', '1')
+		cy.get('a[href*="/redcap_v9.1.3/DataEntry/index.php?pid=23&id=1&event_id=41&page=text_validation"]').click()
+		cy.get('input[id="__LOCKRECORD__"]').check()
+		cy.get('button#submit-btn-dropdown').first().click()
+		.closest('div').find('a#submit-btn-savecontinue').should('be.visible').click()
+		cy.wait(3000)
+		cy.get('input[id="__LOCKRECORD__"]').should('be.checked')
+
+		//Step 17
+		cy.get('input[id="__ESIGNATURE__"]').check()
+		cy.get('button#submit-btn-savecontinue').first().click()
+
+		cy.get('input[id="esign_username"]').type('test_user2')
+		cy.get('input[id="esign_password"').type('Testing123')
+		cy.get('.ui-dialog-buttonset').contains('Save').click()
+		cy.wait(4000)
+		cy.get('input[id="__ESIGNATURE__"]').should('be.checked')
+
+		//Step 18
+		cy.get('input[value="Unlock form"]').click() 
+		cy.get('.ui-dialog-buttonset').contains('Unlock').click()
+		cy.get('.ui-dialog-buttonset').contains('Close').click()
+	})
+
+	// Step 19 and 20 - enter draft mode and create new instrument
+	it('Should have the ability to enter draft mode and create new instrument', () => {
+		cy.visit_version({page: "Design/online_designer.php", params: `pid=${PID}`})
+
+		//Enter Draft Mode in the project
+		cy.get('input[value="Enter Draft Mode"]').click()
+
+		//Check to see that REDCap indicates we're in DRAFT mode
+		cy.get('div#actionMsg').should(($alert) => {
+			expect($alert).to.contain('The project is now in Draft Mode.')
+		})
+
+		cy.get('div').
+		contains('a new instrument from scratch').
+		parent().
+		within(($div) => {
+
+			cy.get('button').contains('Create').click()
+
+		})
+
+		//Create new instrument
+		cy.get('button').contains('Add instrument here').click()
+
+		cy.get('td').contains('New instrument name').parent().within(($td) => {
+			cy.get('input[type=text]', {force: true}).type('Form 2')
+			cy.get('input[value=Create]', {force: true}).click()
+		})
+
+		cy.get('span').should(($span) => {
+			expect($span).to.contain('Form 2')
+		})
+		
+		cy.get('input[value="Submit Changes for Review"]').should(($i) => {
+			$i.first().click()
+		})
+
+		//Submit for Appproval
+		cy.get('button').contains('Submit').click()
+		cy.get('.ui-dialog-buttonset').contains('Close').click()
+	})
+	
 	describe('Filtering Options', () => {
 
 		describe('By Event Type', () => {
 
+			before(() => {
+				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
+			})
+
 			it('Should allow filtering on ALL Event Types (excluding Page Views)', () => {
 
+				cy.contains('Time / Date')
+				.parent('tr')
+				.within(() => {
+					// all searches are automatically rooted to the found tr element
+					cy.get('td').eq(1).contains('Username')
+					cy.get('td').eq(2).contains('Action')
+					cy.get('td').eq(3).contains('List of Data Changes')
+				})
 			})
 
 			it('Should allow filtering by Data Export type', () => {
-
+				cy.get('select[id="logtype"]').select('Data export').should('have.value', 'export')
+				cy.get('table').contains('td', 'Download exported data file (CSV raw)');
+				cy.get('table').contains('td', 'report_id: ALL, export_format: CSV, rawOrLabel: raw, fields: "record_id, ptname, email, text_validation_complete"');
 			})
 
 			it('Should allow filtering by Manage/Design type', () => {
-
+				cy.get('select[id="logtype"]').select('Manage/Design').should('have.value', 'manage')
+				cy.get('table').contains('td', 'Approve production project modifications (automatic)');
+				cy.get('table').contains('td', 'Create data collection instrument');
+				//cy.get('table').contains('td', 'Create project field');
+				cy.get('table').contains('td', 'Enter draft mode');
 			})
 
 			it('Should allow filtering by User or Role (created-updated-deleted)', () => {
-
+				cy.get('select[id="logtype"]').select('User or role created-updated-deleted').should('have.value', 'user')
+				cy.get('table').contains('td', 'Updated User');
+				cy.get('table').contains('td', 'Created User');
+				cy.get('table').contains('td', 'Deleted User');
+				cy.get('table').contains('td', 'user = \'test_user\'');
+				cy.get('table').contains('td', 'user = \'test_user2\'');
+				cy.get('table').contains('td', 'role = \'Data\'');
 			})
 
 			it('Should allow filtering by Record (created-updated-deleted)', () => {
-
+				cy.get('select[id="logtype"]').select('Record created-updated-deleted').should('have.value', 'record')
+				cy.get('table').contains('td', 'Updated Record');
+				cy.get('table').contains('td', 'Created Record');
+				cy.get('table').contains('td', 'Deleted Record');
+				cy.get('table').contains('td', 'record_id = \'3\'');
+				cy.get('table').contains('td', 'ptname = \'Delete\', email = \'delete@test.com\', text_validation_complete = \'0\', record_id = \'3\'');
+				cy.get('table').contains('td', 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'');
+				cy.get('table').contains('td', 'ptname = \'Testing\'');
+				cy.get('table').contains('td', 'ptname = \'Test\', email = \'test@test.com\', text_validation_complete = \'0\', record_id = \'1\'');
 			})
 
 			it('Should allow filtering by Record (created only)', () => {
-
+				cy.get('select[id="logtype"]').select('Record created (only)').should('have.value', 'record_add')
+				cy.get('table').contains('td', 'Created Record');
+				cy.get('table').contains('td', 'ptname = \'Test\', email = \'test@test.com\', text_validation_complete = \'0\', record_id = \'1\'');
+				cy.get('table').contains('td', 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'');
+				cy.get('table').contains('td', 'ptname = \'Delete\', email = \'delete@test.com\', text_validation_complete = \'0\', record_id = \'3\'');
 			})
 
 			it('Should allow filtering by Record (updated only)', () => {
-
+				cy.get('select[id="logtype"]').select('Record updated (only)').should('have.value', 'record_edit')
+				cy.get('table').contains('td', 'Updated Record');
+				cy.get('table').contains('td', 'ptname = \'Testing\'');
 			})
 
 			it('Should allow filtering by Record (deleted only)', () => {
-
+				cy.get('select[id="logtype"]').select('Record deleted (only)').should('have.value', 'record_delete')
+				cy.get('table').contains('td', 'Deleted Record');
+				cy.get('table').contains('td', 'record_id = \'3\'');
 			})
 
 			it('Should allow filtering by Record locking and e-signatures', () => {
-
+				cy.get('select[id="logtype"]').select('Record locking & e-signatures').should('have.value', 'lock_record')
+				cy.get('table').contains('td', 'Lock/Unlock Record');
+				cy.get('table').contains('td', 'E-signature');
+				cy.get('table').contains('td', 'Action: Lock record');
+				cy.get('table').contains('td', 'Action: Unlock record');
+				cy.get('table').contains('td', 'Action: Save e-signature');
+				cy.get('table').contains('td', 'Action: Negate e-signature');
 			})
 
 			it('Should allow filtering by Page Views', () => {
-
+				cy.get('select[id="logtype"]').select('Page Views').should('have.value', 'page_view')
+				cy.get('table').contains('td', 'Page View');
+				cy.get('table').contains('td', '/redcap_v9.1.3/Logging/index.php?pid=23');
 			})	
+			
 		})
 
 		describe('By Specific Username', () => {
 
 			it('Should allow filtering by Username (all users for a given study selectable)', () => {
-
+				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
+				cy.get('select[id="usr"]').select('test_admin').should('have.value', 'test_admin')
+				cy.get('select[id="usr"]').select('test_user').should('have.value', 'test_user')
+				cy.get('select[id="usr"]').select('test_user2').should('have.value', 'test_user2')
 			})	
 
 		})
@@ -300,10 +343,179 @@ describe('Logging', () => {
 		describe('By Specific Record', () => {
 
 			it('Should allow filtering by Record (all records for a given study selectable)', () => {
-
+				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
+				cy.get('select[id="record"]').select('2').should('have.value', '2')
+				cy.get('table').contains('td', 'Created Record');
+				cy.get('table').contains('td', 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'');
 			})				
 
 		})
 
+		describe('Export All Logging', () => {
+
+			it('Should allow all logging export)', () => {
+				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
+				cy.get('button').contains('Export all logging (CSV)').click()
+				
+			})				
+
+		})
+
+		describe('Delete a record’s logging activity when deleting the records', () => {
+
+			//step 32
+			it('Should allow deleting a record’s logging activity when deleting the records)', () => {
+				cy.set_user_type('admin')
+				cy.wait(2000)
+				cy.visit_version({page: 'ControlCenter/edit_project.php', params: `pid=${PID}`})
+				cy.get('select').select('Logging Test').should('have.value', '23')
+				cy.get('select[name="allow_delete_record_from_log"]').select('Yes, delete the record\'s logged events when deleting the record').should('have.value', '1')
+				cy.get('input[type=submit]').click()
+			})		
+			
+			//step 34
+			it('Should allow deleting a record)', () => {
+				cy.set_user_type('standard')
+				cy.wait(3000)
+				cy.visit_version({page: "DataEntry/record_home.php", params: `pid=${PID}`})
+				cy.get('select[id="record"]').select('2').should('have.value', '2')
+				cy.get('button#recordActionDropdownTrigger').click()
+				cy.get('a').contains('Delete record (all forms)').should('be.visible').click()
+				cy.get('input[id="allow_delete_record_from_log"]').check()
+				cy.get('input[type=text]', {force: true}).type('DELETE')
+				cy.get('.ui-dialog-buttonset').contains('Confirm').click()
+				cy.get('button').contains('DELETE RECORD').should('be.visible').click()
+				cy.focused().should('have.text', 'Close').click()
+			})
+
+			//step 35
+			it('Should show recently deleted record in logging)', () => {
+				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
+				cy.get('select[id="logtype"]').select('Record created-updated-deleted').should('have.value', 'record')
+				cy.get('table').contains('td', '[*DATA REMOVED*]');
+				cy.get('table').contains('td', '[All data values were removed from this record\'s logging activity.]');
+			})	
+
+		})
+	
+		//Step 37
+		describe('Enter draft mode, enable longitudinal data collection, designate instrument', () => {
+			before(() => {
+				cy.set_user_type('admin')
+			})
+			
+			it('Should have the ability to enter draft mode)', () => {
+				cy.visit_version({page: "Design/online_designer.php", params: `pid=${PID}`})
+
+				//Enter Draft Mode in the project
+				cy.get('input[value="Enter Draft Mode"]').click()
+		
+				//Check to see that REDCap indicates we're in DRAFT mode
+				cy.get('div#actionMsg').should(($alert) => {
+					expect($alert).to.contain('The project is now in Draft Mode.')
+				})
+			})	
+
+			it('Should have the ability to enable Longitudinal data collection and designate instrument)', () => {
+				cy.visit_version({page: "ProjectSetup/index.php", params: `pid=${PID}`})
+
+				//enable longitudinal data collection
+				cy.get('button[id="setupLongiBtn"]').click()
+
+				//Submit changes for review
+				cy.visit_version({page: "Design/online_designer.php", params: `pid=${PID}`})
+				cy.get('input[value="Submit Changes for Review"]').should(($i) => {
+					$i.first().click()
+				})
+		
+				cy.get('button').contains('Submit').click()
+				cy.get('.ui-dialog-buttonset').contains('Close').click()
+
+				//Create new arm
+				cy.visit_version({page: "Design/define_events.php", params: `pid=${PID}`})
+
+				cy.get('a[href*="/redcap_v9.1.3/Design/define_events.php?pid=23&arm=2"]').click()
+				cy.get('input[id=arm_name]').type('Arm 2')
+				cy.get('input[value=Save]').click()
+
+				//Create event in arm 2
+				cy.get('input[id=descrip]').type('Event 1')
+				cy.get('input[value="Add new event"]').click()
+				cy.wait(2000)
+
+				//Designate instrument to event
+				cy.visit_version({page: 'Design/designate_forms.php', params: `pid=${PID}`})
+				cy.get('a[href*="/redcap_v9.1.3/Design/designate_forms.php?pid=23&arm=2"]').click()
+				cy.get('button').contains('Begin Editing').click().then(() => {
+					cy.get('td').contains('Text Validation').parent().within(() => {
+						cy.get('input#text_validation--42').check()
+					})
+					cy.get('button#save_btn').click().then(() => {
+	
+						cy.get('span').contains('Saving').should('be.visible').then(($span) => {
+							cy.get($span).should('not.exist')
+						})
+	
+						cy.get('tr td').contains('Text Validation').parent().within(($p) => {
+							cy.wrap($p).find('img#img--text_validation--42')
+						})
+					})
+				})
+			})	
+		})
+		
+		describe('Add new record to Arm 2', () => {
+
+			before(() => {
+				cy.set_user_type('standard')
+			})
+
+			//Step 39  
+			it('Should have the ability to add a new record to a Arm)', () => {
+				cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${PID}`})
+				cy.get('select[id="arm_name"]').select('Arm 2: Arm 2').should('have.value', '2')
+				cy.wait(2000)
+				cy.get('button').contains('Add new record for the arm selected above').should('be.visible').click()
+				cy.wait(2000)
+				cy.get('input[name="ptname"]').type('Arm2')
+				cy.get('button#submit-btn-saverecord').first().click()
+			})	
+			
+			it('Should show new record created in arm 2 in record status dashboard)', () => {
+				cy.visit_version({page: 'DataEntry/record_status_dashboard.php', params: `pid=${PID}`})
+				cy.get('table').contains('a', '1');
+				//check if arm 2 record 2 is visible
+			})		
+
+			//Step 40
+			it('Should show arm 2 name in Action column of logging page)', () => {
+				cy.visit_version({page: 'Logging/index.php', params: `pid=${PID}`})
+				cy.get('table').contains('td', '(Event 1 - Arm 2: Arm 2)');
+				cy.get('table').contains('td', 'ptname = \'Arm2\', text_validation_complete = \'0\', record_id = \'2\'');
+			})		
+
+			//Step 41
+			it('Should have the ability to delete record from arm 2 )', () => {
+				cy.visit_version({page: "DataEntry/record_home.php", params: `pid=${PID}`})
+				cy.get('select[id="arm_name"]').select('Arm 2: Arm 2').should('have.value', '2')
+				cy.wait(3000)
+				cy.get('select[id="record"]').select('2').should('have.value', '2')
+				cy.get('button#recordActionDropdownTrigger').click()
+				cy.get('a').contains('Delete record (all forms/events)').should('be.visible').click()
+				cy.get('input[id="allow_delete_record_from_log"]').check()
+				cy.get('input[type=text]', {force: true}).type('DELETE')
+				cy.get('.ui-dialog-buttonset').contains('Confirm').click()
+				cy.get('button').contains('DELETE RECORD').should('be.visible').click()
+				cy.focused().should('have.text', 'Close').click()
+
+			})	
+			
+			it('Should show recently deleted record in logging)', () => {
+				cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
+				cy.get('select[id="logtype"]').select('Record created-updated-deleted').should('have.value', 'record')
+				cy.get('table').contains('td', '[*DATA REMOVED*]');
+				cy.get('table').contains('td', '[All data values were removed from this record\'s logging activity.]');
+			})
+		})
 	})
 })
