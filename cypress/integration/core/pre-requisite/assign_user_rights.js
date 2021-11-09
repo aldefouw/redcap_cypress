@@ -116,7 +116,37 @@ describe('Assign User Rights', () => {
 				})
 
 				it('Should have the ability to grant/restrict Manage Survey Participants permission to a user', () => {
+					//Enable Surveys on the Project
+					cy.visit_version({page: 'ProjectSetup/index.php', params:'pid=' + project_id})
+					cy.intercept('modify_project_setting_ajax.php?pid=' + project_id).as('enable_survey')
+					cy.get('button').contains('Enable').first().click()
+					cy.wait('@enable_survey')
 
+					//Remove the right from standard user
+					cy.remove_basic_user_right('test_user', 'Test User', 'Survey Distribution Tools', project_id)
+
+					//Login in as standard user
+					cy.set_user_type('standard')
+					cy.visit_version({page: 'index.php', params: 'pid=' + project_id})
+
+					//Should not see "Survey Distribution Tools
+					cy.get('html').should(($html) => {
+						//There should be no "Create New Report"
+						expect($html).not.to.contain('Survey Distribution Tools')
+					})
+
+					//Remove the right from standard user
+					cy.assign_basic_user_right('test_user', 'Test User', 'Survey Distribution Tools', project_id)
+
+					//Login in as standard user
+					cy.set_user_type('standard')
+					cy.visit_version({page: 'index.php', params: 'pid=' + project_id})
+
+					//Should not see "Survey Distribution Tools
+					cy.get('html').should(($html) => {
+						//There should be no "Create New Report"
+						expect($html).to.contain('Survey Distribution Tools')
+					})
 				})
 
 				it('Should have the ability to grant/restrict Data Import Tool permission to a user', () => {

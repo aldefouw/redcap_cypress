@@ -511,6 +511,8 @@ Cypress.Commands.add('import_data_file', (fixture_file, api_token) => {
     
 })
 
+
+
 Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_to_assign, project_id, assign_right = true, user_type = 'admin', selector = 'input', value = null) => {
     //Now login as admin and add Project Design and Setup Rights to Test User
     cy.set_user_type(user_type)
@@ -549,25 +551,40 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
 
     } else {
 
-        if(value !== null) selector = `${selector}[value='${value}']`
-
-        cy.get('td').contains(rights_to_assign).next().find(selector).then(($obj) => {
-
+        function check_or_uncheck_right($obj, rights_to_assign, assign_right){
             let check_info = ' RIGHT: ' + rights_to_assign + " | " + 'CHECKED? ' + Cypress.$($obj).is(":checked") + ' | ASSIGN RIGHT: ' + assign_right
 
             //If value is NOT checked and we want to assign the right
             if(!Cypress.$($obj).is(":checked") && assign_right){
                 console.log('VALUE NOT CHECKED |' + check_info)
                 $obj.click()
-            //If value is checked and we want to REMOVE the right
+                //If value is checked and we want to REMOVE the right
             }else if(Cypress.$($obj).is(":checked") && !assign_right){
                 console.log('VALUE CHECKED |' + check_info)
                 $obj.click()
             } else {
                 console.log('OTHER CONDITION |' + check_info)
             }
-        })
 
+        }
+
+        if(value !== null) selector = `${selector}[value='${value}']`
+
+        cy.get('td').contains(rights_to_assign).then(($element) => {
+
+            if($element.length > 0){
+
+                //If we're in the TD cell, we can shortcut to the selector we're looking for
+                if($element[0].tagName === 'TD'){
+
+                    check_or_uncheck_right($element.next('td').find(selector), rights_to_assign, assign_right)
+
+                //If we're NOT in the TD cell, let's move out until TR and then find the selector in the next TD
+                } else {
+                    check_or_uncheck_right($element.parentsUntil('tr').next('td').find(selector), rights_to_assign, assign_right)
+                }
+            }
+        })
     }
 
     cy.get('button').contains('Save Changes').click()
