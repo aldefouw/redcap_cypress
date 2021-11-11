@@ -204,9 +204,7 @@ describe('Logging', () => {
         contains('a new instrument from scratch').
         parent().
         within(($div) => {
-
             cy.get('button').contains('Create').click()
-
         })
 
         //Create new instrument
@@ -239,7 +237,6 @@ describe('Logging', () => {
             })
 
             it('Should allow filtering on ALL Event Types (excluding Page Views)', () => {
-
                 cy.contains('Time / Date')
                 .parent('tr')
                 .within(() => {
@@ -398,7 +395,6 @@ describe('Logging', () => {
                     expect(csv[18][3]).to.contain('role = \'Data\'')
                     expect(csv[19][3]).to.contain('record_id = \'3\'')
                     expect(csv[20][3]).to.contain('ptname = \'Delete\', email = \'delete@test.com\', text_validation_complete = \'0\', record_id = \'3\'')
-
                 })	
             })				
         })
