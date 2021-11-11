@@ -383,6 +383,7 @@ describe('Logging', () => {
                     expect(csv[19][2]).to.contain('Deleted Record')
                     expect(csv[20][2]).to.contain('Created Record')
 
+                    //List of Data Changes OR Fields Exported
                     expect(csv[1][3]).to.contain('Approve production project modifications (automatic)')
                     expect(csv[4][3]).to.contain('e-signature Record: 1 Form: Text Validation')
                     expect(csv[9][3]).to.contain('Lock record Record: 1 Form: Text Validation')
