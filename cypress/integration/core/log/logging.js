@@ -384,8 +384,8 @@ describe('Logging', () => {
                     expect(csv[20][2]).to.contain('Created Record')
 
                     expect(csv[1][3]).to.contain('Approve production project modifications (automatic)')
-                    expect(csv[4][3]).to.contain('Action: Negate e-signature Record: 1 Form: Text Validation')
-                    expect(csv[9][3]).to.contain('Action: Lock record Record: 1 Form: Text Validation')
+                    expect(csv[4][3]).to.contain('e-signature Record: 1 Form: Text Validation')
+                    expect(csv[9][3]).to.contain('Lock record Record: 1 Form: Text Validation')
                     expect(csv[11][3]).to.contain('Download exported data file (CSV raw)')
                     expect(csv[13][3]).to.contain('user = \'test_user2\'')
                     expect(csv[14][3]).to.contain('user = \'test_user2\'')
