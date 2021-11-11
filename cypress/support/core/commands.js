@@ -331,6 +331,21 @@ Cypress.Commands.add('export_csv_report', () => {
   })
 })
 
+Cypress.Commands.add('export_logging_csv_report', () => {
+  cy.get('button').should('be.visible').and('be.enabled').contains('Export all logging (CSV)').then((b) => {
+    cy.window().then((win) => {
+      let url = win.eval(b[0].getAttribute('onclick').split('window.location.href=')[1]);
+      cy.log(url);
+      cy.request(url).then(({ body, headers }) => {
+        expect(headers).to.have.property('content-type', 'application/csv')
+        return body;
+      }).then((body) => {
+        return cy.task('parseCsv', {csv_string: body});
+      });
+    });
+  });
+})
+
 Cypress.Commands.add('verify_export_deidentification_options', (selector) => {
   // This assumes user already has export dialog open
   cy.get(selector).click()
