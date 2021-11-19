@@ -520,10 +520,10 @@ describe('Logging', () => {
                 cy.get('button#submit-btn-saverecord').first().click()
             })	
             
+            //check if arm 2 record 2 is visible
             it('Should show new record created in arm 2 in record status dashboard)', () => {
                 cy.visit_version({page: 'DataEntry/record_status_dashboard.php', params: `pid=${PID}`})
                 cy.get('table').contains('a', '1');
-                //check if arm 2 record 2 is visible
             })		
 
             //Step 40
