@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/aldefouw/redcap_cypress/tree/v9.1.3.svg?style=svg)](https://circleci.com/gh/aldefouw/redcap_cypress/tree/v9.1.3)
+[![CircleCI](https://circleci.com/gh/aldefouw/redcap_cypress/tree/master.svg?style=svg)](https://circleci.com/gh/aldefouw/redcap_cypress/tree/master)
 
 # REDCap Cypress Test Framework
 
@@ -110,7 +110,7 @@ Please read our [Quick-Start Guide](https://github.com/aldefouw/redcap_cypress/w
 ### Automated Testing Requirements
 
 Automated testing of REDCap requires two things:
-- REDCap Test Instance
+- REDCap Test Instance (in most cases, [Docker REDCap Instance](https://github.com/aldefouw/redcap_docker) )
 - REDCap Cypress Test Framework (this repository)
 
 The combination of the REDCap Test Instance and the Test Framework is considered your "Test Enivronment."
@@ -150,9 +150,7 @@ The other half necessary is to configure your Test Framework, which is covered b
 
 Although configuring your environment is outside the scope of this document, there are several consortium members who have successfully configured Docker containers.  
 
-**If you need help getting started with Docker, consider looking at or downloading Andy Martin's [REDCap Docker Compose](https://github.com/123andy/redcap-docker-compose) repository.**
-
-Alternatively, if you understand how REDCap works well, you can use Adam De Fouw's lightweight [REDCap Docker](https://github.com/aldefouw/redcap_docker) repository.  Please note that this repository requires the REDCap source files to be on your machine.
+**If you need help getting started with Docker, you can use the following repository as a starting point: [REDCap Docker](https://github.com/aldefouw/redcap_docker) repository.  Please note that this repository requires the REDCap source files to be on your machine.**
 
 ---
 ### Test Framework 
