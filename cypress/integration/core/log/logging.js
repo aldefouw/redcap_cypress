@@ -47,15 +47,12 @@ describe('Logging', () => {
         ///////////////////////////////////////////////////////////////
         // Take all project actions that will be checked in the logs //
         ///////////////////////////////////////////////////////////////
-        cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${PID}`})
 
         // Steps come from manual testing protocol script #23 (Logging)
         cy.set_user_type('standard')
-
+        cy.wait(3000)
         // Step 3 - Add record
         cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${PID}`})
-
-
         cy.get('button').contains('Add new record').should('be.visible').click()
         cy.get('input[name="ptname"]').type('Test')
         cy.get('input[name="email"').type('test@test.com')
@@ -140,10 +137,8 @@ describe('Logging', () => {
 
     //Step 14 - Raw Export Data
     it('Should have the ability to export the logs to a CSV file', () => {
-        cy.visit_version({page: 'DataExport/index.php', params: `pid=${PID}`})
-
         cy.set_user_type('standard2')
-
+        cy.wait(2000)
         cy.visit_version({page: 'DataExport/index.php', params: `pid=${PID}`})
         cy.get('tr#reprow_ALL').find('button.data_export_btn').should('be.visible').contains('Export Data').click()
         cy.get('input[value="csvraw"]').click()
@@ -525,10 +520,10 @@ describe('Logging', () => {
                 cy.get('button#submit-btn-saverecord').first().click()
             })	
             
+            //check if arm 2 record 2 is visible
             it('Should show new record created in arm 2 in record status dashboard)', () => {
                 cy.visit_version({page: 'DataEntry/record_status_dashboard.php', params: `pid=${PID}`})
                 cy.get('table').contains('a', '1');
-                //check if arm 2 record 2 is visible
             })		
 
             //Step 40
