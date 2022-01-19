@@ -45,7 +45,7 @@ Feature: Browse Projects
   Scenario: View all projects with user rights assigned to a user with a specific username
     When I enter "test_user" into the field labeled "Viewing projects accessible by user:"
     And I click on the button labeled "View"
-    Then I should see 13 rows displayed in the projects table
+    Then I should see 1 rows displayed in the projects table
 
   Scenario: View no projects when a user has no user rights assigned to any projects
     When I enter "test_user2" into the field labeled "Viewing projects accessible by user:"
