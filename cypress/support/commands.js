@@ -13,22 +13,16 @@ import '@4tw/cypress-drag-drop'
 // They are very stable and do not change often, if ever
 
 Cypress.Commands.add('login', (options) => {
-
     cy.clearCookies()
 
-    cy.request({
-        method: 'POST',
-        url: '/', // baseUrl is prepended to url
-        form: true, // indicates the body should be form urlencoded and sets Content-Type: application/x-www-form-urlencoded headers
-        body: {
-            'username': options['username'],
-            'password': options['password'],
-            'submitted': 1,
-            'redcap_login_a38us_09i85':'SG1nx2MZGGeW6vnUwnkRz5j/vHgHwPUCcw8TFRBWLSZ9/XxMdP2uQMfwph/TbCpOkG2FtO9R25SL4YMyPAI4Bg=='
-        }
-    }).should(($a) => {
-        expect($a.status).to.equal(200)
-    })
+    cy.visit('/')
+    cy.intercept('POST', '/').as('loginStatus')
+
+    cy.get('input[name=username]').type(options['username'])
+    cy.get('input[name=password]').type(options['password'])
+    cy.get('button').contains('Log In').click()
+
+    cy.wait('@loginStatus').its('response.statusCode').should('eq', 302)
 })
 
 Cypress.Commands.add('logout', () => {
