@@ -13,20 +13,22 @@ import '@4tw/cypress-drag-drop'
 // They are very stable and do not change often, if ever
 
 Cypress.Commands.add('login', (options) => {
+
     cy.clearCookies()
 
-    cy.visit('/')
-    cy.intercept('POST', '/').as('loginStatus')
-
-    cy.get('input[name=username]').type(options['username'])
-    cy.get('input[name=password]').type(options['password'])
-    cy.get('button').contains('Log In').click()
-
-    cy.wait('@loginStatus').its('response.statusCode').should('eq', 302)
-})
-
-Cypress.Commands.add('logout', () => {
-    cy.visit('/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
+    cy.request({
+        method: 'POST',
+        url: '/', // baseUrl is prepended to url
+        form: true, // indicates the body should be form urlencoded and sets Content-Type: application/x-www-form-urlencoded headers
+        body: {
+            'username': options['username'],
+            'password': options['password'],
+            'submitted': 1,
+            'redcap_login_a38us_09i85':'SG1nx2MZGGeW6vnUwnkRz5j/vHgHwPUCcw8TFRBWLSZ9/XxMdP2uQMfwph/TbCpOkG2FtO9R25SL4YMyPAI4Bg=='
+        }
+    }).should(($a) => {
+        expect($a.status).to.equal(200)
+    })
 })
 
 Cypress.Commands.add('visit_version', (options) => {
@@ -57,10 +59,10 @@ Cypress.Commands.add('base_db_seed', () => {
     }
 
     cy.task('populateStructureAndData', {
-                                            redcap_version: Cypress.env('redcap_version'),
-                                            advanced_user_info: compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>='),
-                                            source_location: redcap_source_path
-                                        }).then((structure_and_data_file_exists) => {
+        redcap_version: Cypress.env('redcap_version'),
+        advanced_user_info: compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>='),
+        source_location: redcap_source_path
+    }).then((structure_and_data_file_exists) => {
 
         //Only run this block if the Structure and Data File exists and has gone through proper processes
         if(structure_and_data_file_exists){
@@ -102,39 +104,25 @@ Cypress.Commands.add('maintain_login', () => {
 
     if(user_type === previous_user_type){
         cy.getCookies()
-          .should((cookies) => {
+            .should((cookies) => {
 
-            //In most cases, we'll have cookies to preserve to maintain a login
-            if (cookies.length > 0){
+                //In most cases, we'll have cookies to preserve to maintain a login
+                if (cookies.length > 0){
+                    console.log('Cookie Login')
+                    cookies.map(cookie =>  Cypress.Cookies.preserveOnce(cookie['name']) )
 
-                console.log('Cookie Login')
+                    //But, if we don't, then let's simply re-login, right?
+                } else {
+                    console.log('Regular Login')
+                    cy.login({ username: user, password: pass })
+                }
 
-                //console.log(cookies)
+            })
 
-                let valid_cookies = []
-
-                cookies
-                    .filter(cookie => cookie['name'] !== "PHPSESSID")
-                    .forEach(cookie => {
-                        valid_cookies << cookie['name']
-                    })
-
-                valid_cookies.forEach((cookie) => {
-                    Cypress.Cookies.preserveOnce(cookie)
-                })
-
-            //But, if we don't, then let's simply re-login, right?
-            } else {
-                console.log('Regular Login')
-                cy.login({ username: user, password: pass })
-            }
-
-        })
-
-    //If user type has changed, let's clear cookies and login again
+        //If user type has changed, let's clear cookies and login again
     } else {
         //Ensure we logout when a user changes
-        cy.logout()
+        cy.visit('/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
         cy.login({ username: user, password:  pass })
     }
 
@@ -166,48 +154,48 @@ Cypress.Commands.add('mysql_db', (type, replace = '', include_db_name = true) =>
 
     //Create the MySQL Installation
     cy.task('generateMySQLCommand', {
-                                mysql_name: mysql['path'],
-                                host: mysql['host'],
-                                port: mysql['port'],
-                                db_name: mysql['db_name'],
-                                db_user: mysql['db_user'],
-                                db_pass: mysql['db_pass'],
-                                type: type,
-                                replace: replace,
-                                include_db_name: include_db_name
-                              }).then((mysql_cli) => {
+        mysql_name: mysql['path'],
+        host: mysql['host'],
+        port: mysql['port'],
+        db_name: mysql['db_name'],
+        db_user: mysql['db_user'],
+        db_pass: mysql['db_pass'],
+        type: type,
+        replace: replace,
+        include_db_name: include_db_name
+    }).then((mysql_cli) => {
 
-                                    //Execute the MySQL Command
-                                    cy.exec(mysql_cli['cmd'], { timeout: 100000}).then((data_import) => {
-                                        expect(data_import['code']).to.eq(0)
+        //Execute the MySQL Command
+        cy.exec(mysql_cli['cmd'], { timeout: 100000}).then((data_import) => {
+            expect(data_import['code']).to.eq(0)
 
-                                        //Clean up after ourselves
-                                        cy.task('deleteFile', { path: mysql_cli['tmp'] }).then((deleted_tmp_file) => {
-                                            expect(deleted_tmp_file).to.eq(true)
-                                        })
-                                    })
-                              })
+            //Clean up after ourselves
+            cy.task('deleteFile', { path: mysql_cli['tmp'] }).then((deleted_tmp_file) => {
+                expect(deleted_tmp_file).to.eq(true)
+            })
+        })
+    })
 })
 
 function test_link (link, title, try_again = true) {
     cy.get('div#control_center_menu a').
-        contains(link).
-        click().
-        then(($control_center) => {
-            if($control_center.find('div#control_center_window').length){
-                cy.get('div#control_center_window').then(($a) => {
-                    if($a.find('div#control_center_window h4').length){
-                        cy.get('div#control_center_window h4').contains(title)
-                    } else if ($a.find('div#control_center_window div').length){
-                        cy.get('div#control_center_window div').contains(title)
-                    } else {
-                        cy.get('body').contains(title)
-                    }
-                })
-            } else {
-                cy.get('body').contains(title)
-            }
-        })
+    contains(link).
+    click().
+    then(($control_center) => {
+        if($control_center.find('div#control_center_window').length){
+            cy.get('div#control_center_window').then(($a) => {
+                if($a.find('div#control_center_window h4').length){
+                    cy.get('div#control_center_window h4').contains(title)
+                } else if ($a.find('div#control_center_window div').length){
+                    cy.get('div#control_center_window div').contains(title)
+                } else {
+                    cy.get('body').contains(title)
+                }
+            })
+        } else {
+            cy.get('body').contains(title)
+        }
+    })
 }
 
 Cypress.Commands.add('contains_cc_link', (link, title = '') => {
@@ -217,7 +205,7 @@ Cypress.Commands.add('contains_cc_link', (link, title = '') => {
 })
 
 Cypress.Commands.add('find_online_designer_field', (name, timeout = 10000) => {
-     cy.contains('td', name, { timeout: timeout })
+    cy.contains('td', name, { timeout: timeout })
 })
 
 Cypress.Commands.add('compare_value_by_field_label', (name, value, timeout = 10000) => {
@@ -230,18 +218,18 @@ Cypress.Commands.add('compare_value_by_field_label', (name, value, timeout = 100
 })
 
 Cypress.Commands.add('set_field_value_by_label', ($name, $value, $type, $prefix = '', $suffix = '', $last_suffix = '', timeout = 10000) => {
-   cy.contains('td', $name, { timeout: timeout }).
-      parent().
-      parentsUntil('tr').
-      last().
-      parent().
-      then(($tr) => {
+    cy.contains('td', $name, { timeout: timeout }).
+    parent().
+    parentsUntil('tr').
+    last().
+    parent().
+    then(($tr) => {
 
         let selector = $type + '[name="' + $prefix + $tr[0]['attributes']['sq_id']['value'] + $suffix + '"]'
         cy.get(selector, { force: true}).then(($a) => {
             return $a[0]
         })
-      })
+    })
 })
 
 Cypress.Commands.add('select_text_by_label', ($name, $value) => {
@@ -275,20 +263,20 @@ Cypress.Commands.add('select_field_choices', (timeout = 10000) => {
 Cypress.Commands.add('initial_save_field', () => {
     cy.get('input#field_name').then(($f) => {
         cy.contains('button', 'Save').
-           should('be.visible').
-           click().
-           then(() => {
+        should('be.visible').
+        click().
+        then(() => {
 
-                cy.contains('Alert').then(($a) => {
-                    if($a.length){
-                        cy.get('button[title=Close]:last:visible').click()
-                        cy.get('input#auto_variable_naming').click()
-                        cy.contains('button', 'Enable auto naming').click().then(() => {
-                            cy.contains('button', 'Save').click()
-                        })
-                    }
-                })
+            cy.contains('Alert').then(($a) => {
+                if($a.length){
+                    cy.get('button[title=Close]:last:visible').click()
+                    cy.get('input#auto_variable_naming').click()
+                    cy.contains('button', 'Enable auto naming').click().then(() => {
+                        cy.contains('button', 'Save').click()
+                    })
+                }
             })
+        })
     })
 })
 
@@ -300,7 +288,7 @@ Cypress.Commands.add('save_field', () => {
 })
 
 Cypress.Commands.add('add_field', (field_name, type) => {
-     cy.get('input#btn-last').click().then(() => {
+    cy.get('input#btn-last').click().then(() => {
         cy.get('select#field_type').select(type).should('have.value', type).then(() => {
             cy.get('input#field_name').type(field_name).then(() => {
                 cy.save_field()
@@ -326,15 +314,15 @@ Cypress.Commands.add('get_project_table_row_col', (row = '1', col = '0') => {
 
 Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector) => {
     cy.get(selector).then(subject => {
-      cy.fixture(fileName, 'base64')
-        .then(Cypress.Blob.base64StringToBlob)
-        .then(blob => {
-          const el = subject[0]
-          const testFile = new File([blob], fileName, { type: fileType })
-          const dataTransfer = new DataTransfer()
-          dataTransfer.items.add(testFile)
-          el.files = dataTransfer.files
-        })
+        cy.fixture(fileName, 'base64')
+            .then(Cypress.Blob.base64StringToBlob)
+            .then(blob => {
+                const el = subject[0]
+                const testFile = new File([blob], fileName, { type: fileType })
+                const dataTransfer = new DataTransfer()
+                dataTransfer.items.add(testFile)
+                el.files = dataTransfer.files
+            })
     })
 })
 
@@ -349,49 +337,49 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
         cy.add_api_user_to_project(admin_user, pid).then(() => {
 
             cy.request({ url: '/redcap_v' +
-                     Cypress.env('redcap_version') +
+                    Cypress.env('redcap_version') +
                     '/ControlCenter/user_api_ajax.php?action=createToken&api_username=' +
                     admin_user +
                     '&api_pid=' +
                     pid +
                     '&api_export=1&api_import=1&mobile_app=0&api_send_email=0'}).should(($token) => {
 
-                        expect($token.body).to.contain('token has been created')
-                        expect($token.body).to.contain(admin_user)
+                expect($token.body).to.contain('token has been created')
+                expect($token.body).to.contain(admin_user)
 
-                        cy.request({ url: '/redcap_v' +
-                                     Cypress.env('redcap_version') +
-                                    '/ControlCenter/user_api_ajax.php?action=viewToken&api_username=test_admin&api_pid=' + pid}).then(($super_token) => {
+                cy.request({ url: '/redcap_v' +
+                        Cypress.env('redcap_version') +
+                        '/ControlCenter/user_api_ajax.php?action=viewToken&api_username=test_admin&api_pid=' + pid}).then(($super_token) => {
 
-                        current_token = Cypress.$($super_token.body).children('div')[0].innerText
+                    current_token = Cypress.$($super_token.body).children('div')[0].innerText
 
-                        cy.fixture(`dictionaries/${fixture_file}`).then(data_dictionary => {
+                    cy.fixture(`dictionaries/${fixture_file}`).then(data_dictionary => {
 
-                                cy.request({
-                                    method: 'POST',
-                                    url: '/api/',
-                                    headers: {
-                                      "Accept":"application/json",
-                                      "Content-Type": "application/x-www-form-urlencoded"
-                                    },
-                                    body: {
-                                        token: current_token,
-                                        content: 'metadata',
-                                        format: 'csv',
-                                        data: data_dictionary,
-                                        returnFormat: 'json'
-                                    },
-                                    timeout: 50000
+                        cy.request({
+                            method: 'POST',
+                            url: '/api/',
+                            headers: {
+                                "Accept":"application/json",
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            body: {
+                                token: current_token,
+                                content: 'metadata',
+                                format: 'csv',
+                                data: data_dictionary,
+                                returnFormat: 'json'
+                            },
+                            timeout: 50000
 
-                                }).should(($a) => {
-                                    expect($a.status).to.equal(200)
+                        }).should(($a) => {
+                            expect($a.status).to.equal(200)
 
-                                    cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
-                                        expect($e.body).to.contain('List of Data Changes')
-                                        expect($e.body).to.contain('Manage/Design')
-                                    })
-                                })
+                            cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
+                                expect($e.body).to.contain('List of Data Changes')
+                                expect($e.body).to.contain('Manage/Design')
+                            })
                         })
+                    })
                 })
             })
         })
@@ -502,8 +490,8 @@ Cypress.Commands.add('import_data_file', (fixture_file, api_token) => {
             method: 'POST',
             url: '/api/',
             headers: {
-              "Accept":"application/json",
-              "Content-Type": "application/x-www-form-urlencoded"
+                "Accept":"application/json",
+                "Content-Type": "application/x-www-form-urlencoded"
             },
             body: {
                 token: api_token,
@@ -521,6 +509,219 @@ Cypress.Commands.add('import_data_file', (fixture_file, api_token) => {
     })
 
 })
+
+
+
+Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_to_assign, project_id, assign_right = true, user_type = 'admin', selector = 'input', value = null) => {
+    //Now login as admin and add Project Design and Setup Rights to Test User
+    cy.set_user_type(user_type)
+
+    cy.visit_version({page:'index.php', params: 'pid='+project_id})
+    cy.get('html').should('contain', 'User Rights')
+
+    cy.get('a').contains('User Rights').click()
+    cy.get('a').contains(username + ' (' + proper_name + ')').click()
+    cy.get('button').contains('Edit user privileges').click()
+
+    cy.get('div').should(($div) => { expect($div).to.contain('Editing existing user') })
+
+    if(rights_to_assign === "Expiration Date"){
+
+        if(assign_right){
+            cy.get('input.hasDatepicker').click()
+            cy.get('a.ui-state-highlight').click()
+
+            cy.get('input#expiration').should(($expiration) => {
+                let date = new Date()
+                let day = String(date.getDate()).padStart(2, "0");
+                let month = String(date.getMonth()+1).padStart(2, "0");
+                let year = date.getFullYear();
+                let fullDate = `${month}/${day}/${year}`;
+
+                expect($expiration).to.have.value(fullDate)
+            })
+        } else {
+            cy.get('input.hasDatepicker').click().clear()
+
+            cy.get('input#expiration').should(($expiration) => {
+                expect($expiration).to.have.value("")
+            })
+        }
+
+    } else {
+
+        function check_or_uncheck_right($obj, rights_to_assign, assign_right){
+            let check_info = ' RIGHT: ' + rights_to_assign + " | " + 'CHECKED? ' + Cypress.$($obj).is(":checked") + ' | ASSIGN RIGHT: ' + assign_right
+
+            //If value is NOT checked and we want to assign the right
+            if(!Cypress.$($obj).is(":checked") && assign_right){
+                console.log('VALUE NOT CHECKED |' + check_info)
+                $obj.click()
+                //If value is checked and we want to REMOVE the right
+            }else if(Cypress.$($obj).is(":checked") && !assign_right){
+                console.log('VALUE CHECKED |' + check_info)
+                $obj.click()
+            } else {
+                console.log('OTHER CONDITION |' + check_info)
+            }
+
+        }
+
+        if(value !== null) selector = `${selector}[value='${value}']`
+
+        cy.get('td').contains(rights_to_assign).then(($element) => {
+
+            if($element.length > 0){
+
+                //If we're in the TD cell, we can shortcut to the selector we're looking for
+                if($element[0].tagName === 'TD'){
+
+                    check_or_uncheck_right($element.next('td').find(selector), rights_to_assign, assign_right)
+
+                    //If we're NOT in the TD cell, let's move out until TR and then find the selector in the next TD
+                } else {
+                    check_or_uncheck_right($element.parentsUntil('tr').next('td').find(selector), rights_to_assign, assign_right)
+                }
+            }
+        })
+    }
+
+    cy.get('button').contains('Save Changes').click()
+
+    cy.get('body').should(($body) => {
+        expect($body).to.contain('User "' + username + '" was successfully edited')
+    })
+
+    //Should not be visible before we start our next test
+    cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
+})
+
+Cypress.Commands.add('remove_basic_user_right', (username, proper_name, rights_to_assign, project_id, user_type = 'admin', selector = 'input', value = null) => {
+    cy.assign_basic_user_right(username, proper_name, rights_to_assign, project_id, false, user_type, selector, value)
+})
+
+Cypress.Commands.add('assign_expiration_date_to_user', (username, proper_name, project_id) => {
+    cy.assign_basic_user_right(username, proper_name, "Expiration Date", project_id, true)
+})
+
+Cypress.Commands.add('remove_expiration_date_from_user', (username, proper_name, project_id) => {
+    cy.assign_basic_user_right(username, proper_name, "Expiration Date", project_id, false)
+})
+
+
+Cypress.Commands.add('verify_user_rights_available', (user_type, path, pid) => {
+    //Set user type we're checking permissions for
+    cy.set_user_type(user_type)
+
+    //Attempt to go to the path
+    cy.visit_version({page: path + '/index.php', params: 'pid=' + pid})
+
+    //We should be able to visit it
+    cy.url().should('include', `/redcap_v${Cypress.env('redcap_version')}/${path}/index.php?pid=${pid}`)
+})
+
+Cypress.Commands.add('verify_user_rights_unavailable', (user_type, path, pid, redirect = true) => {
+    //Set user type we're checking permissions for
+    cy.set_user_type(user_type)
+
+    //Attempt to go to the path
+    cy.visit_version({page: path + '/index.php', params: 'pid=' + pid})
+
+    //But ensure that we're actually redirect to index.php
+    if(redirect){
+        cy.url().should('include', `/redcap_v${Cypress.env('redcap_version')}/index.php?pid=`+ pid)
+
+        //Otherwise do we get access denied?
+    } else {
+        cy.get('body').should(($body) => {
+            expect($body).to.contain('ACCESS DENIED')
+        })
+    }
+
+})
+
+Cypress.Commands.add('assign_form_rights', (pid, username, form, rights_level) => {
+    //Visit the version specified
+    cy.visit_version({page:'index.php', params: 'pid=' + pid})
+    cy.get('a').contains('User Rights').click()
+
+    //Click on the user's name
+    cy.get('table#table-user_rights_roles_table').within(() => {
+        cy.get('a').contains(username).click()
+    })
+
+    //Edit the user's privileges
+    cy.get('div').contains('User actions:').parent().within(() => {
+        cy.get('button').contains('Edit user privileges').click()
+    })
+
+    //Should not display "Working"
+    cy.get('div').contains('Working').should('not.be.visible')
+
+    //Assign User Rights
+    cy.get('table#form_rights').within(() => {
+        let input_value = null;
+
+        if(rights_level === "No Access"){
+            input_value = 0;
+        } else if (rights_level === "Read Only") {
+            input_value = 2;
+        } else if (rights_level === "View & Edit") {
+            input_value = 1;
+        } else {
+            alert(`You set the rights level to ${rights_level} for #assign_form_rights.  This is invalid.  Please use 'No Access', 'Read Only', or 'View & Edit'`)
+        }
+
+        cy.get('td').contains(form).parent().find(`input[value=${input_value}]`).click()
+    })
+
+    //Click Save
+    cy.get('button').contains('Save Changes').click()
+
+    //User was successfully edited
+    cy.get('body').should(($body) => {
+        expect($body).to.contain('User "' + username + '" was successfully edited')
+    })
+
+    //Should not be visible before we start our next step or test
+    cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
+})
+
+Cypress.Commands.add('change_survey_edit_rights', (pid, username, form) => {
+    //Visit the version specified
+    cy.visit_version({page:'index.php', params: 'pid=' + pid})
+    cy.get('a').contains('User Rights').click()
+
+    //Click on the user's name
+    cy.get('table#table-user_rights_roles_table').within(() => {
+        cy.get('a').contains(username).click()
+    })
+
+    //Edit the user's privileges
+    cy.get('div').contains('User actions:').parent().within(() => {
+        cy.get('button').contains('Edit user privileges').click()
+    })
+
+    //Should not display "Working"
+    cy.get('div').contains('Working').should('not.be.visible')
+
+    //Assign User Rights
+    cy.get('table#form_rights').within(() => {
+        cy.get('td').contains(form).parent().find(`input[type=checkbox]`).click()
+    })
+
+    //Click Save
+    cy.get('button').contains('Save Changes').click()
+
+    //User was successfully edited
+    cy.get('body').should(($body) => {
+        expect($body).to.contain('User "' + username + '" was successfully edited')
+    })
+
+    //Should not be visible before we start our next step or test
+    cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
+})
+
 
 //
 // -- This is a child command --
