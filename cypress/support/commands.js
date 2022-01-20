@@ -106,8 +106,22 @@ Cypress.Commands.add('maintain_login', () => {
 
             //In most cases, we'll have cookies to preserve to maintain a login
             if (cookies.length > 0){
+
                 console.log('Cookie Login')
-                cookies.map(cookie =>  Cypress.Cookies.preserveOnce(cookie['name']) )
+
+                //console.log(cookies)
+
+                let valid_cookies = []
+
+                cookies
+                    .filter(cookie => cookie['name'] !== "PHPSESSID")
+                    .forEach(cookie => {
+                        valid_cookies << cookie['name']
+                    })
+
+                valid_cookies.forEach((cookie) => {
+                    Cypress.Cookies.preserveOnce(cookie)
+                })
 
             //But, if we don't, then let's simply re-login, right?
             } else {

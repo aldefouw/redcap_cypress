@@ -12,12 +12,17 @@ Given("I visit the public survey URL for Project ID {int}", (project_id) => {
 
     //Get the Public Survey URL block
     cy.get('div').contains('Public Survey URL').parent().find('input').then(($input) => {
+        return $input[0].value
+    }).then(($url) => {
+
         //Make sure we aren't logged in
         cy.logout()
 
         //Now we can visit the URL as an external user
-        cy.visit_base({ url: $input[0].value })
+        cy.visit_base({ url: $url })
     })
+
+
 })
 
 Given("I enter {string} into the {string} survey text input field", (text, field) => {

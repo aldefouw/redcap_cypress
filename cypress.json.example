@@ -1,16 +1,17 @@
 {
   "baseUrl": "http://localhost:8080",
   "trashAssetsBeforeRuns": true,
-  "video": true,
+  "video": false,
   "projectId": "PID",
   "defaultCommandTimeout" : 10000,
   "responseTimeout": 10000,
   "requestTimeout": 10000,
   "integrationFolder": "cypress/features",
-  "testFiles": "**/*.feature",
+  "chromeWebSecurity": true,
+  "retries": 0,
+  "testFiles": "**/*.{feature,features,js}",
+  "nonGlobalStepDefinitions": false,
   "step_definitions": "cypress/support/step_definitions/",
-  "retries": {
-    "runMode": 2,
-    "openMode": 0
-  }
+  "viewportWidth": 1400,
+  "viewportHeight": 1000
 }
