@@ -67,21 +67,25 @@ function sorterCompare(col_name, element, selector = null, klass = false, title 
               last_row = Cypress.$(Cypress.$(tr[num_rows - 1]).find(element)[current_index]).find(selector)[0]
             }
 
-            if(klass){
+            if(klass && first_row !== undefined && last_row !== undefined){
+
+              console.log(last_row)
+              console.log(first_row)
+
               last_row_val = last_row.className
               first_row_val = first_row.className
               expectation = 'to.have.class'
               last_expectation = expectation + '(last_row_val)'
               first_expectation = expectation + '(first_row_val)'
               selector_thing = 'Cypress.$($e[current_index]).find(selector)[0]'
-            } else if (title) {
+            } else if (title && first_row !== undefined && last_row !== undefined) {
               last_row_val = last_row.title
               first_row_val = first_row.title
               expectation  = 'to.have.attr'
               last_expectation = expectation + '("title", "' + last_row_val+ '")'
               first_expectation = expectation + '("title", "' + first_row_val + '")'
               selector_thing = 'Cypress.$($e[current_index]).find(selector)[0]'
-            } else {
+            } else if (first_row !== undefined && last_row !== undefined) {
               last_row_val = last_row.textContent
               first_row_val = first_row.textContent
               expectation = 'to.contain'
@@ -90,23 +94,27 @@ function sorterCompare(col_name, element, selector = null, klass = false, title 
               selector_thing = '$e[current_index]'
             }
 
-            //See if the first row is what the last row WAS
-            cy.get('th').contains(col_name).click().then(()=>{
-              cy.get(main_selector + element).then(($e) => {
-                cy.get(main_selector + ' span').should('not.contain', "Loading").then(() => {
-                  eval('expect(' + selector_thing + ').' + last_expectation)
+            if(first_row !== undefined && last_row !== undefined){
+              //See if the first row is what the last row WAS
+              cy.get('th').contains(col_name).click().then(()=>{
+                cy.get(main_selector + element).then(($e) => {
+                  cy.get(main_selector + ' span').should('not.contain', "Loading").then(() => {
+                    eval('expect(' + selector_thing + ').' + last_expectation)
+                  })
                 })
               })
-            })
 
-          //See if the first row is what the first row WAS initially
-            cy.get('th').contains(col_name).click().then(()=>{
-              cy.get(main_selector + element).then(($e) => {
-                cy.get(main_selector + ' span').should('not.contain', "Loading").then(() => {
-                  eval('expect(' + selector_thing + ').' + first_expectation)
+              //See if the first row is what the first row WAS initially
+              cy.get('th').contains(col_name).click().then(()=>{
+                cy.get(main_selector + element).then(($e) => {
+                  cy.get(main_selector + ' span').should('not.contain', "Loading").then(() => {
+                    eval('expect(' + selector_thing + ').' + first_expectation)
+                  })
                 })
               })
-            })
+            }
+
+
           })
         })
     })
