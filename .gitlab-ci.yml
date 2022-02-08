@@ -21,6 +21,6 @@ image: aldefouw/redcap_docker
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
-    - linux
+    - aws
   script:
     - echo "Hello World"
