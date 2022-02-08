@@ -24,4 +24,5 @@ build-job:       # This job runs in the build stage, which runs first.
   tags:
     - aws
   script:
+    - redcap_docker:redcap-cypress
     - echo "Hello World"
