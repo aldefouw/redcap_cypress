@@ -16,7 +16,7 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
 
-image: ubuntu-1604:201903-01
+image: aldefouw/docker-centos-apache-php
 
 services:
   - mysql:latest
