@@ -21,5 +21,5 @@ build-job:       # This job runs in the build stage, which runs first.
   tags:
     - aws
   script:
-    - echo "Compiling the code..."
-    - echo "Compile complete."
+    - sudo apt-get update
+    - sudo apt-get install mysql-client-core-5.7
