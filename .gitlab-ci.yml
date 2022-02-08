@@ -16,11 +16,13 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
 
-image: registry.doit.wisc.edu/aldefouw/docker-centos-apache-php
+image:
+  name: docker/compose:latest
 
 services:
   - mysql:latest
   - docker:dind
+  - git:latest
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
