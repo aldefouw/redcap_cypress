@@ -22,7 +22,7 @@ image:
 services:
   - mysql:latest
   - docker:dind
-  - git:latest
+  - bitnami/git:latest
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
