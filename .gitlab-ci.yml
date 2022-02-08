@@ -26,7 +26,7 @@ build-job:       # This job runs in the build stage, which runs first.
   tags:
     - aws
   script:
-    - git clone --branch redcap-cypress https://gitlab-ci-token:${CI_DOCKER_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_docker.git redcap_docker
+    - git clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_docker.git redcap_docker
     - git clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_source.git www
     - cd redcap_docker
     - echo "Hello World"
