@@ -20,6 +20,7 @@ image: registry.doit.wisc.edu/aldefouw/docker-centos-apache-php
 
 services:
   - mysql:latest
+  - registry.doit.wisc.edu/aldefouw/redcap_docker
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
