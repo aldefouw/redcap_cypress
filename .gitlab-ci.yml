@@ -26,4 +26,5 @@ build-job:       # This job runs in the build stage, which runs first.
   tags:
     - aws
   script:
+    - git status
     - echo "Hello World"
