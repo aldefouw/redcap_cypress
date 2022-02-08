@@ -16,10 +16,11 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
 
+image: aldefouw/redcap_docker
+
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
-    - aws
+    - linux
   script:
-    - sudo apt-get update
-    - sudo apt-get install mysql-client-core-5.7
+    - echo "Hello World"
