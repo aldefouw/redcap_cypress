@@ -16,13 +16,9 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
 
-services:
-  - registry.doit.wisc.edu/aldefouw/redcap_docker
-
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
     - aws
   script:
-    - echo "Hello World"
-    - git clone --branch redcap-cypress registry.doit.wisc.edu/aldefouw/redcap_source
+    - git clone --branch redcap-cypress registry.doit.wisc.edu/aldefouw/redcap_source www
