@@ -16,7 +16,7 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
 
-image: aldefouw/docker-centos-apache-php
+image: registry.doit.wisc.edu/aldefouw/docker-centos-apache-php
 
 services:
   - mysql:latest
