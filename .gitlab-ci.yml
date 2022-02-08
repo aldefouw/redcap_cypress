@@ -24,5 +24,5 @@ build-job:       # This job runs in the build stage, which runs first.
   tags:
     - aws
   script:
-    - registry.doit.wisc.edu/aldefouw/redcap_docker
     - echo "Hello World"
+    - git clone --branch redcap-cypress registry.doit.wisc.edu/aldefouw/redcap_source
