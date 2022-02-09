@@ -33,6 +33,9 @@ build-job:       # This job runs in the build stage, which runs first.
     - pwd
     - docker run bitnami/git:latest git clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_docker.git /builds/ALDEFOUW/redcap_docker
     - pwd
+    - cd /builds
+    - ls
+    - cd /builds/ALDEFOUW
     - ls
     - cd /builds/ALDEFOUW/redcap_docker
     - docker-compose up -d --build
