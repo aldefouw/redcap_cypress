@@ -28,16 +28,22 @@ before_script:
 services:
   - mysql:latest
   - docker:dind
-  - bitnami/git:latest
+  - bitnami/git:latest  
 
 
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
+  cache:
+    - paths:
+        - www
+        - redcap_docker
+
   tags:
     - aws
   script:
     - ls
     - cd /builds/ALDEFOUW
+    - mkdir 'test'
     - ls
     - cd /builds/ALDEFOUW/redcap_docker
     - docker-compose up -d --build
