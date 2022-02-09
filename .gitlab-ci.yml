@@ -41,5 +41,4 @@ build-job:       # This job runs in the build stage, which runs first.
     - git clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_source.git /builds/ALDEFOUW/redcap_cypress/www
     - git clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_docker.git /builds/ALDEFOUW/redcap_cypress/redcap_docker
     - ls -la
-    - docker-compose up -d --build
     - echo "Hello World"
