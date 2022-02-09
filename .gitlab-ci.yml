@@ -44,3 +44,5 @@ build-job:       # This job runs in the build stage, which runs first.
     - ls -la
     - cd /builds/ALDEFOUW
     - ls -la
+    - cd /
+    - ls -la
