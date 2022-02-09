@@ -23,10 +23,8 @@ before_script:
    - alias git="docker run --rm -v $(pwd):/git -v $HOME/.ssh:/root/.ssh alpine/git"
 
 services:
-  - mysql:latest
   - docker:dind
   - alpine/git:latest
-
 
 build-job:       # This job runs in the build stage, which runs first.
   variables:
@@ -40,7 +38,6 @@ build-job:       # This job runs in the build stage, which runs first.
     - ls
     - git clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_source.git /builds/ALDEFOUW/redcap_cypress/www
     - git clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_docker.git /builds/ALDEFOUW/redcap_cypress/redcap_docker
-    - cd /builds/ALDEFOUW/redcap_cypress/redcap_docker
     - ls
     - docker-compose up -d --build
     - echo "Hello World"
