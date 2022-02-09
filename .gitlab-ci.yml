@@ -46,3 +46,14 @@ build-job:       # This job runs in the build stage, which runs first.
     - ls -la
     - cd /
     - ls -la
+
+test-job:
+  stage: test
+  needs: [build-job]
+  script: 
+    - cd /
+    - ls -la
+    - cd /builds/AlDEFOUW
+    - ls -la
+    - cd ~
+    - ls -la    
