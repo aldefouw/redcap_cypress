@@ -20,7 +20,7 @@ image:
   name: docker/compose:latest
 
 before_script: 
-   - alias git="docker run -ti --rm -v $(pwd):/git -v $HOME/.ssh:/root/.ssh alpine/git"
+   - alias git="docker run --rm -v $(pwd):/git -v $HOME/.ssh:/root/.ssh alpine/git"
    - git clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_source.git www
    - git clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_docker.git redcap_docker
    - ls
