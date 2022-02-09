@@ -16,9 +16,6 @@
 stages:          # List of stages for jobs, and their order of execution
   - build
 
-before_script: 
-   - alias git="docker run --rm -v $(pwd):/git -v $HOME/.ssh:/root/.ssh alpine/git"
-
 services:
   - docker:dind
   - alpine/git:latest
