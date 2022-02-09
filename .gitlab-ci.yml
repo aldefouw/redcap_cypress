@@ -20,15 +20,15 @@ image:
   name: docker/compose:latest
 
 before_script: 
-   - docker run bitnami/git:2 clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_source.git www
-   - ls
-   - docker run bitnami/git:2 clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_docker.git redcap_docker
+   - alias git="docker run -ti --rm -v $(pwd):/git -v $HOME/.ssh:/root/.ssh alpine/git"
+   - git clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_source.git www
+   - git clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_docker.git redcap_docker
    - ls
 
 services:
   - mysql:latest
   - docker:dind
-  - bitnami/git:2
+  - alpine/git:latest
 
 
 build-job:       # This job runs in the build stage, which runs first.
