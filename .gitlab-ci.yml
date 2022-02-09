@@ -15,6 +15,7 @@
 
 stages:          # List of stages for jobs, and their order of execution
   - build
+  - test
 
 image:
   name: docker/compose:latest
@@ -27,8 +28,6 @@ services:
   - alpine/git:latest
 
 build-job:       # This job runs in the build stage, which runs first.
-  variables:
-    GIT_STRATEGY: clone
   stage: build
 
   tags:
@@ -43,6 +42,10 @@ build-job:       # This job runs in the build stage, which runs first.
     - ls -la
     - git clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_source.git /builds/ALDEFOUW/redcap_cypress/www
     - git clone --branch redcap-cypress https://gitlab-ci-token:${CI_JOB_TOKEN}@git.doit.wisc.edu/aldefouw/redcap_docker.git /builds/ALDEFOUW/redcap_cypress/redcap_docker
-    - ls
-    - docker-compose up -d --build
+
+
+test-job:
+  stage: test
+  script:
+    - ls -la    
     - echo "Hello World"
