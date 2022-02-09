@@ -56,7 +56,7 @@ test-job:
   script: 
     - cd /
     - ls -la
-    - cd /builds/AlDEFOUW
+    - cd /builds/ALDEFOUW
     - ls -la
     - cd ~
     - ls -la    
