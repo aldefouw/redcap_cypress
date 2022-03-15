@@ -346,8 +346,8 @@ describe('Logging', () => {
 
             it('Should allow all logging export)', () => {
                 var today = new Date();
-                var day = today.getDate();
-                var month = today.getMonth()+1;
+                var day = ("0"+today.getDate()).slice(-2);
+                var month = ("0"+(today.getMonth() + 1)).slice(-2);
                 var year = today.getFullYear();
 
                 cy.visit_version({page: "Logging/index.php", params: `pid=${PID}`})
