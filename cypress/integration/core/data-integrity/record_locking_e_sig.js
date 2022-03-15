@@ -139,14 +139,17 @@ describe('Record Locking and E-Signatures', () => {
 		
 		cy.get('button').contains('Save & Exit Form').click();
 
+		cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/Locking/single_form_action.php?*').as('single_form')
+
 		cy.get('div[role="dialog"]', { timeout: 10000 }).within(() => {
 
 			cy.get('input[type="password"][id="esign_password"]').type(Cypress.env("users").admin.pass)
 
-			cy.get('button').contains('Save').click();
+			cy.get('button').contains('Save').click()
 
-			cy.wait(1000);
-
+			cy.wait('@single_form').then(({ request, response }) => {
+				expect(response.statusCode).to.eq(200)
+			})
 		})
 
 		cy.visit_version({page: 'DataEntry/record_home.php', params: 'pid=7'})
@@ -1281,6 +1284,8 @@ describe('Record Locking and E-Signatures', () => {
 
 			})
 
+			cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/Design/online_designer_render_fields.php?*').as('online_designer')
+
 			cy.get('div[role="dialog"][aria-describedby="div_add_field"]', { timeout: 10000 }).within(() => {
 
 				cy.get('input[id="field_label_rich_text_checkbox"]').uncheck()
@@ -1288,7 +1293,9 @@ describe('Record Locking and E-Signatures', () => {
 
 				cy.get('button').contains("Save").click();
 
-				cy.wait(1000)
+				cy.wait('@online_designer').then(({ request, response }) => {
+					expect(response.statusCode).to.eq(200)
+				})
 
 			})
 
