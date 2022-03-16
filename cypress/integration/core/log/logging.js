@@ -489,12 +489,13 @@ describe('Logging', () => {
                     cy.get('td').contains('Text Validation').parent().within(() => {
                         cy.get('input#text_validation--42').check()
                     })
+
+                    cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/Design/designate_forms_ajax.php').as('designate_forms')
+
                     cy.get('button#save_btn').click().then(() => {
-    
-                        cy.get('span').contains('Saving').should('be.visible').then(($span) => {
-                            cy.get($span).should('not.exist')
-                        })
-    
+
+                        cy.wait('@designate_forms')
+                        
                         cy.get('tr td').contains('Text Validation').parent().within(($p) => {
                             cy.wrap($p).find('img#img--text_validation--42')
                         })
