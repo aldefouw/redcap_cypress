@@ -320,6 +320,11 @@ describe('Data Quality', () => {
         })
 
         cy.visit_version({page: 'Design/designate_forms.php', params: 'pid=13'})
+
+        cy.get('body').should(($body) => {
+            expect($body).to.contain('Begin Editing')
+        })
+
         cy.get('button').contains('Begin Editing').click().then(() => {
             cy.get('td').contains('My First Instrument').parent().within(() => {
                 cy.get('input#my_first_instrument--41').check()

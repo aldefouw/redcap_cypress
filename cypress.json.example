@@ -7,11 +7,11 @@
   "responseTimeout": 10000,
   "requestTimeout": 10000,
   "videoUploadOnPasses": false,
-  "video": true,
+  "video": false,
   "videoCompression": false,
   "integrationFolder": "cypress/integration/core",
   "retries": {
-    "runMode": 2,
+    "runMode": 0,
     "openMode": 0
   }
 }
