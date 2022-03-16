@@ -123,11 +123,11 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 			})
 
 			cy.get('input#descrip').type('Event2')
-			cy.get('input#addbutton').click().then(() => {
-				cy.get('span').contains('Processing').should('be.visible').then(($span) => {
-					cy.get($span).should('not.exist')
-				})
-			})
+
+			cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/Design/define_events_ajax.php?*').as('define_events')
+
+			cy.get('input#addbutton').click()
+			cy.wait('@define_events')
 
 			cy.visit_version({page: 'Design/designate_forms.php', params: 'pid=14'})
 			cy.get('button').contains('Begin Editing').click().then(() => {
