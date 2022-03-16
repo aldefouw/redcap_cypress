@@ -312,14 +312,13 @@ describe('Data Quality', () => {
 
         cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/Design/designate_forms_ajax.php').as('designate_forms')
 
+        cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/Design/define_events_ajax.php?*').as('define_events')
+
         cy.visit_version({page: 'Design/define_events.php', params: 'pid=13'})
 
         cy.get('input#descrip').type('Event 2')
-        cy.get('input#addbutton').click().then(() => {
-            cy.get('span').contains('Processing').should('be.visible').then(($span) => {
-                cy.get($span).should('not.exist')
-            })
-        })
+        cy.get('input#addbutton').click()
+        cy.wait('@define_events')
 
         cy.visit_version({page: 'Design/designate_forms.php', params: 'pid=13'})
 
@@ -331,7 +330,7 @@ describe('Data Quality', () => {
             cy.get('td').contains('My First Instrument').parent().within(() => {
                 cy.get('input#my_first_instrument--41').check()
             })
-            
+
             cy.get('button#save_btn').click().then(() => {
 
                 cy.wait('@designate_forms')
