@@ -7,6 +7,7 @@
   "responseTimeout": 10000,
   "requestTimeout": 10000,
   "videoUploadOnPasses": false,
+  "video": true,
   "videoCompression": false,
   "integrationFolder": "cypress/integration/core",
   "retries": {
