@@ -1,7 +1,7 @@
 {
   "baseUrl": "http://localhost:8080",
   "trashAssetsBeforeRuns": true,
-  "video": true,
+  "video": false,
   "projectId": "PID",
   "defaultCommandTimeout" : 10000,
   "responseTimeout": 10000,
