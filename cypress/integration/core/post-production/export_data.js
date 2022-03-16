@@ -30,15 +30,7 @@ describe('Export Data', () => {
         cy.get('div#repeating_forms_table_parent').find('td.data').first().find('a').click()
         cy.get('#submit-btn-savecompresp').click({force: true})
     })
-
-    after(() => {
-        cy.set_user_type('admin')
-        cy.delete_records(pid)
-        cy.remove_users_from_project([standard, admin], pid)
-        cy.delete_project(pid)
-        cy.mysql_db('projects/pristine')
-    })
-
+    
     describe('Basic Functionality', () => {
 
         before(() => {
