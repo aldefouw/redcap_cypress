@@ -139,21 +139,17 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 
 				cy.get('span').contains('My Renamed Instrument').then(($span) => {
 
+					cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/Design/update_form_order.php?*').as('reorder_request')
+					cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/Design/online_designer.php?*').as('designer_request')
+
 					//Click on the first element in the row
 					let elem = cy.wrap($span).parentsUntil('tr').last().prev()
-
 					elem.move({x: 0, y: 500, force: true})
-
-				}).then(() => {
-
-					//Make sure we know that this has happened before moving on
-					cy.get('div').contains('INSTRUMENT WAS MOVED').should('be.visible').then(($div) => {
-						//This will prevent the next step from happening too soon - we're waiting for element to go away
-						cy.get($div).should('not.exist')
-					})
 
 				})
 
+				cy.wait('@reorder_request')
+				cy.wait('@designer_request')
 			})
 
 			it('Should allow an instrument to be deleted', () => {
@@ -595,8 +591,8 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 			cy.wait('@data_dictionary').then(() =>{
 
 				var today = new Date();
-				var day = today.getDate();
-				var month = today.getMonth()+1;
+				var day = ("0"+today.getDate()).slice(-2);
+				var month = ("0"+(today.getMonth() + 1)).slice(-2);
 				var year = today.getFullYear();
 
 				cy.readFile(`cypress/downloads/TestProject_DataDictionary_${year}-${month}-${day}.csv`).should('contain',
