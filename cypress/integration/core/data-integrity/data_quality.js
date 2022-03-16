@@ -310,6 +310,8 @@ describe('Data Quality', () => {
             url: '/redcap_v' + Cypress.env('redcap_version') + '/DataQuality/execute_ajax.php?pid=13'
         }).as('execute_rule')
 
+        cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/Design/designate_forms_ajax.php').as('designate_forms')
+
         cy.visit_version({page: 'Design/define_events.php', params: 'pid=13'})
 
         cy.get('input#descrip').type('Event 2')
@@ -329,11 +331,10 @@ describe('Data Quality', () => {
             cy.get('td').contains('My First Instrument').parent().within(() => {
                 cy.get('input#my_first_instrument--41').check()
             })
+            
             cy.get('button#save_btn').click().then(() => {
 
-                cy.get('span').contains('Saving').should('be.visible').then(($span) => {
-                    cy.get($span).should('not.exist')
-                })
+                cy.wait('@designate_forms')
 
                 cy.get('tr td').contains('My First Instrument').parent().within(($p) => {
                     cy.wrap($p).find('img#img--my_first_instrument--41')
