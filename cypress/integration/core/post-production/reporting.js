@@ -265,14 +265,17 @@ describe('Reporting', () => {
 				})
 			})
 
+			cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/DataExport/report_copy_ajax.php?*').as('report_copy')
+			cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/DataExport/render_report_panel_ajax.php?*').as('report_panel')
+
 			//test copy
 			cy.get('div[role="dialog"]').within(() => {
 				cy.get('button').contains('Copy').click()
 			})
 
-			// UI Catch up 
-
-			cy.get('div').contains('Are you sure you wish to DELETE the report named', { timeout: 10000 }).click();
+			// UI Catch up
+			cy.wait('@report_copy')
+			cy.wait('@report_panel')
 
 			//should have copy
 			cy.get('table[id="table-report_list"]').within(() => {
@@ -307,15 +310,19 @@ describe('Reporting', () => {
 				})
 			})
 
+
+			cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/DataExport/report_delete_ajax.php?*').as('report_delete')
+			cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/DataExport/render_report_panel_ajax.php?*').as('report_panel')
+
 			//test delete
 			cy.get('div[role="dialog"]').within(() => {
 				cy.get('button').contains('Delete').click()
 			})
 
 			// UI Catch up 
-
-			cy.get('div').contains('Are you sure you wish to DELETE the report named', { timeout: 10000 }).click();
-
+			cy.wait('@report_delete')
+			cy.wait('@report_panel')
+			
 			//should not contain copy
 			cy.get('table[id="table-report_list"]').within(() => {
 				cy.get('tr').should('not.contain', 'Report 1 (copy)')
