@@ -200,19 +200,23 @@ Cypress.Commands.add('add_field', (field_name, type) => {
 Cypress.Commands.add('add_users_to_project', (usernames = [], project_id) => {
       cy.visit_version({page: 'UserRights/index.php', params: 'pid=' + project_id})
 
+      cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/UserRights/edit_user.php?*').as('edit_user')
+
       //Add each username specified
       for(var username of usernames){
-        cy.get('input#new_username',).type(username, {force: true})
-        cy.get('button#addUserBtn').click({force: true})
-        cy.get('div#editUserPopup').should(($div) => {
-          expect($div).to.be.visible
-        })
+        cy.get('input#new_username',).type(username, {force: true}).then(() => {
+          cy.get('button#addUserBtn').click({force: true})
+          cy.get('div#editUserPopup').should(($div) => {
+            expect($div).to.be.visible
+          })
 
-        let button_label = /(Save Changes|Add user)/
+          let button_label = /(Save Changes|Add user)/
 
-        cy.get('button').contains(button_label).click()
-        cy.get('div#working').should(($div) => {
-          expect($div).to.not.be.visible
+          cy.get('button').contains(button_label).click()
+
+          cy.get('div#working').should(($div) => {
+            cy.wait('@edit_user')
+          })
         })
       }
 })
