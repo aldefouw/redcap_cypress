@@ -41,7 +41,7 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use stable
             npm install
-            npx cypress run --record --key $RECORD_KEY --spec "cypress/integration/core/data-integrity/data-quality.js"
+            npx cypress run --record --key $RECORD_KEY --spec "cypress/integration/core/data-integrity/data_quality.js"
 workflows:
   version: 2
   workflow:
