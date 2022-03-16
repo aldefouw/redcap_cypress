@@ -50,7 +50,7 @@ describe('Logging', () => {
 
         // Steps come from manual testing protocol script #23 (Logging)
         cy.set_user_type('standard')
-        cy.wait(3000)
+
         // Step 3 - Add record
         cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${PID}`})
         cy.get('button').contains('Add new record').should('be.visible').click()
@@ -138,7 +138,7 @@ describe('Logging', () => {
     //Step 14 - Raw Export Data
     it('Should have the ability to export the logs to a CSV file', () => {
         cy.set_user_type('standard2')
-        cy.wait(2000)
+
         cy.visit_version({page: 'DataExport/index.php', params: `pid=${PID}`})
         cy.get('tr#reprow_ALL').find('button.data_export_btn').should('be.visible').contains('Export Data').click()
         cy.get('input[value="csvraw"]').click()
@@ -405,7 +405,7 @@ describe('Logging', () => {
             //step 32
             it('Should allow deleting a record’s logging activity when deleting the records)', () => {
                 cy.set_user_type('admin')
-                cy.wait(2000)
+
                 cy.visit_version({page: 'ControlCenter/edit_project.php', params: `pid=${PID}`})
                 cy.get('select').select('Logging Test').should('have.value', '23')
                 cy.get('select[name="allow_delete_record_from_log"]').select('Yes, delete the record\'s logged events when deleting the record').should('have.value', '1')
@@ -415,7 +415,7 @@ describe('Logging', () => {
             //step 34
             it('Should allow deleting a record)', () => {
                 cy.set_user_type('standard')
-                cy.wait(3000)
+
                 cy.visit_version({page: "DataEntry/record_home.php", params: `pid=${PID}`})
                 cy.get('select[id="record"]').select('2').should('have.value', '2')
                 cy.get('button#recordActionDropdownTrigger').click()
