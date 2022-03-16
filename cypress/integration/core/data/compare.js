@@ -16,14 +16,7 @@ describe('Data Comparison Tool / DDE Module', () => {
             cy.set_double_data_entry_module(pid, true)    
         })
     })
-
-    after(() => {
-        cy.mysql_db('projects/pristine')
-        cy.delete_records(pid)
-        cy.remove_users_from_project([user1, user2, admin], pid)
-        cy.delete_project(pid)
-    })
-
+    
     describe('Data Entry Person Roles', () => {
 
         before(() => {
