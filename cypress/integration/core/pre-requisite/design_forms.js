@@ -588,28 +588,29 @@ describe('Design Forms using Data Dictionary & Online Designer', () => {
 				cy.get('a').contains('Download the current Data Dictionary').click()
 			})
 
+			const downloads_folder = Cypress.config('downloadsFolder')
+
 			cy.wait('@data_dictionary').then(() =>{
-
-				var today = new Date();
-				var day = ("0"+today.getDate()).slice(-2);
-				var month = ("0"+(today.getMonth() + 1)).slice(-2);
-				var year = today.getFullYear();
-
-				cy.readFile(`cypress/downloads/TestProject_DataDictionary_${year}-${month}-${day}.csv`).should('contain',
-					'"Variable / Field Name","Form Name","Section Header","Field Type","Field Label","Choices, Calculations, OR Slider Labels","Field Note","Text Validation Type OR Show Slider Number","Text Validation Min","Text Validation Max",Identifier?,"Branching Logic (Show field only if...)","Required Field?","Custom Alignment","Question Number (surveys only)","Matrix Group Name","Matrix Ranking?","Field Annotation"\n' +
-					'record_id,my_first_instrument,,text,"Record ID",,,,,,,,,,,,,\n' +
-					'h_i,my_first_instrument,"New Section",text,"Renamed Field",,,,,,y,,,,,,,\n' +
-					'h_i_2,my_first_instrument,,text,"Renamed Field",,,,,,,,,,,,,\n' +
-					'new_text_box,my_first_instrument,,text,"New Text Box",,,,,,,,,,,,,\n' +
-					'new_note_box,my_first_instrument,,notes,"New Note Box",,,,,,,,,,,,,\n' +
-					'new_calc_field,my_first_instrument,,calc,"New Calc Field",,,,,,,,,,,,,\n' +
-					'new_drop_down,my_first_instrument,,dropdown,"New Drop Down","1, NEW LABEL 1 | 2, NEW LABEL 2 | 3, NEW LABEL 3",,,,,,,,,,,,\n' +
-					'new_radio,my_first_instrument,,radio,"New Radio","1, NEW LABEL 1 | 2, NEW LABEL 2 | 3, NEW LABEL 3",,,,,,,,,,,,\n' +
-					'new_check_box,my_first_instrument,,checkbox,"New Check Box","1, NEW LABEL 1 | 2, NEW LABEL 2 | 3, NEW LABEL 3",,,,,,,,,,,,\n' +
-					'new_sign,my_first_instrument,,file,"New Sign",,,signature,,,,,,,,,,\n' +
-					'new_file_upload,my_first_instrument,,file,"New File Upload",,,,,,,,,,,,,\n' +
-					'new_desc_text,my_first_instrument,"New Section",descriptive,"New Desc Text",,,,,,,,,,,,,')
-
+				cy.read_directory(downloads_folder).then((downloads) => {
+					downloads.forEach(function(file, index) {
+						if(index === 0){
+							cy.readFile(downloads_folder + '/' + file).should('contain',
+								'"Variable / Field Name","Form Name","Section Header","Field Type","Field Label","Choices, Calculations, OR Slider Labels","Field Note","Text Validation Type OR Show Slider Number","Text Validation Min","Text Validation Max",Identifier?,"Branching Logic (Show field only if...)","Required Field?","Custom Alignment","Question Number (surveys only)","Matrix Group Name","Matrix Ranking?","Field Annotation"\n' +
+								'record_id,my_first_instrument,,text,"Record ID",,,,,,,,,,,,,\n' +
+								'h_i,my_first_instrument,"New Section",text,"Renamed Field",,,,,,y,,,,,,,\n' +
+								'h_i_2,my_first_instrument,,text,"Renamed Field",,,,,,,,,,,,,\n' +
+								'new_text_box,my_first_instrument,,text,"New Text Box",,,,,,,,,,,,,\n' +
+								'new_note_box,my_first_instrument,,notes,"New Note Box",,,,,,,,,,,,,\n' +
+								'new_calc_field,my_first_instrument,,calc,"New Calc Field",,,,,,,,,,,,,\n' +
+								'new_drop_down,my_first_instrument,,dropdown,"New Drop Down","1, NEW LABEL 1 | 2, NEW LABEL 2 | 3, NEW LABEL 3",,,,,,,,,,,,\n' +
+								'new_radio,my_first_instrument,,radio,"New Radio","1, NEW LABEL 1 | 2, NEW LABEL 2 | 3, NEW LABEL 3",,,,,,,,,,,,\n' +
+								'new_check_box,my_first_instrument,,checkbox,"New Check Box","1, NEW LABEL 1 | 2, NEW LABEL 2 | 3, NEW LABEL 3",,,,,,,,,,,,\n' +
+								'new_sign,my_first_instrument,,file,"New Sign",,,signature,,,,,,,,,,\n' +
+								'new_file_upload,my_first_instrument,,file,"New File Upload",,,,,,,,,,,,,\n' +
+								'new_desc_text,my_first_instrument,"New Section",descriptive,"New Desc Text",,,,,,,,,,,,,')
+						}
+					})
+				})
 			})
 		})
 

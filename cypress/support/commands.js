@@ -723,6 +723,12 @@ Cypress.Commands.add('change_survey_edit_rights', (pid, username, form) => {
     cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
 })
 
+Cypress.Commands.add('read_directory', (dir) => {
+    cy.task('readDirectory', (dir)).then((files) => {
+        return files
+    })
+})
+
 
 //
 // -- This is a child command --

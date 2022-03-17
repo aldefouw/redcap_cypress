@@ -124,7 +124,15 @@ module.exports = (on, config) => {
 
 	parseCsv({csv_string}) {
 		return csv.parse(csv_string)
-	}
+	},
+
+	readDirectory(dir) {
+		if (fs.existsSync(dir)) {
+			return fs.readdirSync(dir)
+		}
+
+		return null
+	},
 
   })
 
