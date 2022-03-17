@@ -187,13 +187,18 @@ describe('Reporting', () => {
 
 			cy.get('button').contains('Quick Add').click()
 
-			cy.get('input[name="description"]').uncheck().trigger('click').click()
+			cy.get('input[value="description"]').then(($el) => {
 
-			cy.get('button').contains('Close').click()
+				cy.get('input[name="description"]').click().then(() => {
+					cy.get('button').contains('Close').then(($el) => {
+						cy.wrap($el).click()
+						cy.wrap($el).should('not.be.visible')
+					})
+				})
 
-			//UI Catch up
-
-			cy.wait(500)
+				//This is key.  We want to ensure that the DOM element for "Description" does not exist before saving.
+				cy.wrap($el).should('not.exist')
+			})
 
 			cy.get('div[id="quickAddField_dialog"]', { timeout: 10000 }).should('not.be.visible');
 
@@ -201,8 +206,6 @@ describe('Reporting', () => {
 
 			cy.get('button').contains('Save Report').click()
 
-
-			//UI Catch up
 
 			cy.get('div[id="report_saved_success_dialog"]', { timeout: 10000 }).click();
 
@@ -874,8 +877,6 @@ describe('Reporting', () => {
 		})
 
 		afterEach(() => {
-
-			cy.wait(1000)
 
 			cy.get('div[role="dialog"]:visible').contains('Data export was successful!')
 				.parents('div[role="dialog"]').within(() => {
