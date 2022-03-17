@@ -296,7 +296,7 @@ describe('Draft Mode', () => {
 
 				//These are the changes that should be present from the last test in the series above
 				cy.get('body').should(($body) => {
-					expect($body).to.contain('Production revision #1')
+					expect($body).to.contain('Production revision')
 					expect($body).to.contain('Requested by')
 					expect($body).to.contain('Approved by')
 					expect($body).to.contain('Moved to production')
