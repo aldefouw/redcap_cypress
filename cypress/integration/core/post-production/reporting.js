@@ -15,44 +15,50 @@ describe('Reporting', () => {
 		//Create the project with the Data Dictionary
 		cy.visit_base({ url: './index.php?action=create' })
 
-		cy.get('input[name="app_title"]').type('22_Reporting_v913')
+		cy.get('input[name="app_title"]').type('22_Reporting_v913').then(() => {
 
-		cy.get('select[name="purpose"]').select('4')
+			cy.get('select[name="purpose"]').select('4')
 
-		cy.get('input[id="project_template_radio2"]').check()
+			cy.get('input[id="project_template_radio2"]').check()
 
-		cy.fixture('core/post-production/reporting/22Reportingv913.xml')
-			.then(Cypress.Blob.binaryStringToBlob)
-			.then(blob => {
-				cy.get('input[type="file"]').then($input => {
-					const dd = new File([blob], '22Reportingv913.xml', {
-						type: 'text/xml'
+			cy.fixture('core/post-production/reporting/22Reportingv913.xml')
+				.then(Cypress.Blob.binaryStringToBlob)
+				.then(blob => {
+					cy.get('input[type="file"]').then($input => {
+						const dd = new File([blob], '22Reportingv913.xml', {
+							type: 'text/xml'
+						})
+						const dataTransfer = new DataTransfer()
+						dataTransfer.items.add(dd)
+						$input[0].files = dataTransfer.files
 					})
-					const dataTransfer = new DataTransfer()
-					dataTransfer.items.add(dd)
-					$input[0].files = dataTransfer.files
 				})
+
+			cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/ProjectSetup/index.php?*').as('create_project')
+
+			cy.get('button').contains('Create Project').click()
+
+			cy.wait('@create_project')
+
+			cy.get('a').contains('User Rights').click()
+
+			cy.get('input[id="new_username"]').type("test_user")
+
+			cy.get('button').contains('Add with custom rights').click()
+
+			cy.get('div[aria-describedby="editUserPopup"]').within(() => {
+
+				cy.get('input[name="user_rights"]').check()
+
+				cy.get('input[name="data_export_tool"][value=1]').check()
+
+				cy.get('button').contains('Add user').click()
+
 			})
 
-		cy.get('button').contains('Create Project').click()
-
-		cy.get('a').contains('User Rights').click()
-
-		cy.get('input[id="new_username"]').type("test_user")
-
-		cy.get('button').contains('Add with custom rights').click()
-
-		cy.get('div[aria-describedby="editUserPopup"]').within(() => {
-
-			cy.get('input[name="user_rights"]').check()
-
-			cy.get('input[name="data_export_tool"][value=1]').check()
-
-			cy.get('button').contains('Add user').click()
+			cy.set_user_type('standard')
 
 		})
-
-		cy.set_user_type('standard')
 
 	})
 
