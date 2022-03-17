@@ -871,12 +871,16 @@ describe('Reporting', () => {
 			//UI Catch up
 
 			cy.get('div[id="report_saved_success_dialog"]', { timeout: 10000 }).click();
-			
+
+			cy.intercept('/redcap_v9.1.3/DataExport/report_ajax.php?*').as('report_ajax')
 
 			cy.get('button').contains('View report').click()
 
-			cy.wait(500)
+			cy.wait('@report_ajax')
+		})
 
+		beforeEach(() => {
+			cy.intercept('/redcap_v9.1.3/DataExport/data_export_ajax.php?*').as('data_export')
 		})
 
 		afterEach(() => {
@@ -899,11 +903,8 @@ describe('Reporting', () => {
 			})
 
 			cy.get('div[class="ui-dialog-buttonset"]').within(() => {
-
 				cy.get('button').contains('Export Data').click()
-
-				cy.wait(1000)
-
+				cy.wait('@data_export')
 			})
 
 			cy.get('a[href*="/FileRepository/file_download.php"]:visible').then((anchor) => {
@@ -935,7 +936,7 @@ describe('Reporting', () => {
 
 				cy.get('button').contains('Export Data').click()
 
-				cy.wait(1000)
+				cy.wait('@data_export')
 
 			})
 
@@ -998,7 +999,7 @@ describe('Reporting', () => {
 
 				cy.get('button').contains('Export Data').click()
 
-				cy.wait(1000)
+				cy.wait('@data_export')
 
 			})
 
@@ -1061,7 +1062,7 @@ describe('Reporting', () => {
 
 				cy.get('button').contains('Export Data').click()
 
-				cy.wait(1000)
+				cy.wait('@data_export')
 
 			})
 
@@ -1109,7 +1110,7 @@ describe('Reporting', () => {
 
 				cy.get('button').contains('Export Data').click()
 
-				cy.wait(1000)
+				cy.wait('@data_export')
 
 			})
 
@@ -1157,7 +1158,7 @@ describe('Reporting', () => {
 
 				cy.get('button').contains('Export Data').click()
 
-				cy.wait(1000)
+				cy.wait('@data_export')
 
 			})
 
