@@ -560,6 +560,8 @@ describe('Reporting', () => {
 				})
 			})
 
+			cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/DataExport/report_filter_ajax.php?*').as('report_filter')
+
 			cy.get('tr[class="limiter_row nodrop"]').within(() => {
 				cy.get('button[title="View full list of fields"]').click()
 
@@ -570,10 +572,9 @@ describe('Reporting', () => {
 
 
 				// UI Catch up
-
 				cy.get('select[name="limiter_operator[]"]', { timeout: 10000 }).should('not.be.disabled')
 
-				cy.wait(1000)
+				cy.wait('@report_filter')
 
 				//check limiters
 				cy.get('select[name="limiter_operator[]"]').children()
@@ -583,6 +584,8 @@ describe('Reporting', () => {
 					.should('have.value', 'LTE').next()
 					.should('have.value', 'GT').next()
 					.should('have.value', 'GTE')
+
+
 
 				cy.get('select[name="limiter_operator[]"]').select('GT')
 				
