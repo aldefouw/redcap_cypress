@@ -2,6 +2,9 @@ describe('Reporting', () => {
 
 	beforeEach(() => {
 		cy.maintain_login()
+
+		cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/DataExport/data_export_ajax.php?*').as('data_export')
+		cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/DataExport/report_filter_ajax.php?*').as('report_filter')
 	})
 
 	before(() => {
@@ -560,7 +563,7 @@ describe('Reporting', () => {
 				})
 			})
 
-			cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/DataExport/report_filter_ajax.php?*').as('report_filter')
+
 
 			cy.get('tr[class="limiter_row nodrop"]').within(() => {
 				cy.get('button[title="View full list of fields"]').click()
@@ -637,7 +640,7 @@ describe('Reporting', () => {
 
 				cy.get('select[name="limiter[]"] option:selected').should('have.value', 'fname', { timeout: 10000 })
 
-				cy.wait(1000)
+				cy.wait('@report_filter')
 
 				//check limiters
 				cy.get('select[name="limiter_operator[]"]').children()
@@ -799,7 +802,7 @@ describe('Reporting', () => {
 				
 				cy.get('select[name="limiter[]"] option:selected').should('have.value', 'lname', { timeout: 10000 })
 
-				cy.wait(1000)
+				cy.wait('@report_filter')
 
 				// UI Catch up
 
@@ -877,10 +880,6 @@ describe('Reporting', () => {
 			cy.get('button').contains('View report').click()
 
 			cy.wait('@report_ajax')
-		})
-
-		beforeEach(() => {
-			cy.intercept('/redcap_v9.1.3/DataExport/data_export_ajax.php?*').as('data_export')
 		})
 
 		afterEach(() => {
