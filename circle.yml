@@ -51,10 +51,10 @@ jobs:
           name: JUnit timing data
           command: cp junit.xml ~/junit/
           when: always
-          - store_test_results:
-              path: ~/junit
-          - store_artifacts:
-              path: ~/junit
+      - store_test_results:
+          path: ~/junit
+      - store_artifacts:
+          path: ~/junit
 workflows:
   version: 2
   workflow:
