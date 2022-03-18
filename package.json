@@ -11,7 +11,7 @@
     "cypress-iframe": "1.0.1",
     "sed-lite": "0.8.2",
     "shelljs": "0.8.5"
-  }
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
