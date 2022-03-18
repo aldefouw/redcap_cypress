@@ -4,7 +4,7 @@ jobs:
   build:
     machine:
       image: ubuntu-2004:202201-02
-    parallelism: 4
+    parallelism: 5
     steps:
       - checkout
       - run:
@@ -35,7 +35,6 @@ jobs:
             cd /home/circleci/project
             sed s/PID/$PROJECT_ID/g cypress.json.example > cypress.json
             mv cypress.env.json.example cypress.env.json              
-      - run: mkdir ~/junit
       - run:
           name: Install Cypress
           command: |
