@@ -44,52 +44,66 @@ describe('Data Access Groups (DAGs)', () => {
 		})
 	})
 
-	    describe('Data Restriction Abilities', () => {
-			before(() => {
-				cy.add_users_to_project(['test_user', 'test_user2'], '13')
-				cy.add_users_to_data_access_groups(['Group 1', 'Group 2'], ['test_user', 'test_user2'], '13')
+	describe('Data Restriction Abilities', () => {
+		before(() => {
+			cy.add_users_to_project(['test_user', 'test_user2'], '13')
+			cy.add_users_to_data_access_groups(['Group 1', 'Group 2'], ['test_user', 'test_user2'], '13')
+		})
+
+		it('Should have the ability to restrict a user to the data of the same Data Access Group', () => {
+			cy.intercept('/redcap_v'+ Cypress.env('redcap_version') +'/DataEntry/index.php?*').as('data_entry')
+			cy.intercept('/redcap_v'+ Cypress.env('redcap_version') +'/index.php?*').as('project_setup')
+
+			cy.set_user_type('standard')
+			cy.visit_version({page: 'index.php', params: 'pid=13'})
+			cy.wait('@project_setup')
+
+			cy.get('a').contains("Add / Edit Records").click()
+			
+			cy.get('button').contains('Add new record').click()
+
+			cy.wait('@data_entry')
+
+			cy.get('button#submit-btn-saverecord').first().click()
+
+			cy.set_user_type('standard2')
+			cy.visit_version({page: 'index.php', params: 'pid=13'})
+			cy.get('a').contains("Add / Edit Records").click()
+			cy.get('button').contains('Add new record').click()
+
+			cy.get('button#submit-btn-saverecord').click()
+
+			cy.wait('@data_entry')
+
+			cy.get('a').contains('Record Status Dashboard').click()
+
+			cy.get('table#record_status_table').should(($table) => {
+				expect($table).not.to.contain('3-1')
+				expect($table).to.contain('4-1')
 			})
 
-		    it('Should have the ability to restrict a user to the data they entered', () => {
-				
-		    })
+			cy.set_user_type('standard')
+			cy.visit_version({page: 'index.php', params: 'pid=13'})
+			cy.wait('@project_setup')
 
-		    it('Should have the ability to restrict a user to the data of the same Data Access Group', () => {
-				cy.set_user_type('standard')  
-				cy.visit_version({page: 'index.php', params: 'pid=13'})
-				cy.get('a').contains("Add / Edit Records").click()
-				
-				cy.get('button').contains('Add new record').click().then(() => {
+			cy.get('a').contains('Record Status Dashboard').click()
 
-					cy.get('button#submit-btn-saverecord').first().click()
+			cy.get('table#record_status_table').should(($table) => {
+				expect($table).not.to.contain('4-1')
+				expect($table).to.contain('3-1')
+			})
 
-					cy.set_user_type('standard2')
-					cy.visit_version({page: 'index.php', params: 'pid=13'})
-					cy.get('a').contains("Add / Edit Records").click()
-					cy.get('button').contains('Add new record').click()
-					cy.get('button#submit-btn-saverecord').click()
-					cy.get('a').contains('Record Status Dashboard').click()
-					cy.get('table#record_status_table').should(($table) => {
-						expect($table).not.to.contain('3-1')
-						expect($table).to.contain('4-1')
-					})
-					cy.set_user_type('standard') 
-					cy.visit_version({page: 'index.php', params: 'pid=13'})
-					cy.get('a').contains('Record Status Dashboard').click()
-					cy.get('table#record_status_table').should(($table) => {
-						expect($table).not.to.contain('4-1')
-						expect($table).to.contain('3-1')
-					})
-					cy.set_user_type('admin')
-					cy.visit_version({page: 'index.php', params: 'pid=13'})
-					cy.get('a').contains('Record Status Dashboard').click()
-					cy.get('table#record_status_table').should(($table) => {
-						expect($table).to.contain('4-1')
-						expect($table).to.contain('3-1')
-					})
+			cy.set_user_type('admin')
+			cy.visit_version({page: 'index.php', params: 'pid=13'})
+			cy.wait('@project_setup')
 
-				})
-		    })
+			cy.get('a').contains('Record Status Dashboard').click()
 
-	    })
-	}) 
+			cy.get('table#record_status_table').should(($table) => {
+				expect($table).to.contain('4-1')
+				expect($table).to.contain('3-1')
+			})
+
+		})
+	})
+})
