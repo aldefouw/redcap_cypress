@@ -48,8 +48,9 @@ jobs:
             TEST=$(circleci tests glob **/cypress/integration/core/*.js | circleci tests split --split-by=timings)
             npm test $TEST --record --key $RECORD_KEY
       - run:
-        command: cp junit.xml ~/junit/
-        when: always
+          name: JUnit timing data
+          command: cp junit.xml ~/junit/
+          when: always
           - store_test_results:
               path: ~/junit
           - store_artifacts:
