@@ -45,6 +45,7 @@ jobs:
             npm install
       - run:
           name: Run Tests
+          command: |
             TEST=$(circleci tests glob **/cypress/integration/core/*.js | circleci tests split --split-by=timings)
             npm test $TEST --record --key $RECORD_KEY
       - run:
