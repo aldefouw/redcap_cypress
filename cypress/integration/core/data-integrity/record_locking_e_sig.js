@@ -1298,9 +1298,7 @@ describe('Record Locking and E-Signatures', () => {
 				})
 
 			})
-
-			cy.get('table[id="design-study_id"]', { timeout: 10000 }).contains("Study ID Test")
-
+			
 	    })
     })    
 
