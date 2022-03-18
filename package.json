@@ -12,6 +12,15 @@
     "sed-lite": "0.8.2",
     "shelljs": "0.8.5"
   },
+  "jest": {
+    "reporters": [
+      "default",
+      "jest-junit"
+    ]
+  },
+  "jest-junit": {
+    "addFileAttribute": "true"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,6 +31,7 @@
   "author": "Adam De Fouw",
   "license": "MIT",
   "dependencies": {
-    "cypress-downloadfile": "^1.2.1"
+    "cypress-downloadfile": "^1.2.1",
+    "jest-junit": "^13.0.0"
   }
 }
