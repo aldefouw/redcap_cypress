@@ -19,10 +19,15 @@ describe('Assign User Rights', () => {
 				cy.get('button').contains('Enable').first().click()
 				cy.wait('@enable_survey')
 
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('Main project settings')
+				})
+
 				//Visit the Online Designer
-				cy.visit_version({page: 'Design/online_designer.php', params:'pid=' + project_id})
-				cy.get('html').should(($html) => {
-					expect($html).to.contain('Data Collection Instruments')
+				cy.visit_version({page: 'Design/online_designer.php', params:'pid=' + project_id}).then(() => {
+					cy.get('body').should(($body) => {
+						expect($body).to.contain('Data Collection Instruments')
+					})
 				})
 
 				//Enable the First Data Collection Instrument as a Survey
