@@ -41,7 +41,12 @@ describe('System Security Settings', () => {
 			cy.set_user_type('admin')
 			cy.visit_version({page: 'ControlCenter/general_settings.php'})
 			cy.get('select').contains('SYSTEM OFFLINE').parent().select('SYSTEM OFFLINE')
-			cy.get('input').contains('Save Changes').click({force: true})
+
+			cy.get('input').contains('Save Changes').click({force: true}).then(() => {
+				cy.get('body').should(($body) => {
+					expect($body).to.contain('Your system configuration values have now been changed')
+				})
+			})
 		})
 
 		it('Should display system offline message when user logs in', () => {
