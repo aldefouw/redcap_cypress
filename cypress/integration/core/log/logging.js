@@ -423,6 +423,8 @@ describe('Logging', () => {
             it('Should allow deleting a record', () => {
                 cy.set_user_type('standard')
 
+                cy.maintain_login()
+
                 cy.visit_version({page: "DataEntry/record_home.php", params: `pid=${PID}`})
                 cy.get('select[id="record"]').select('2').should('have.value', '2')
                 cy.get('button#recordActionDropdownTrigger').click()
