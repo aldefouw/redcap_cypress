@@ -3,18 +3,19 @@ version: 2.0
 jobs:
   build:
     machine:
-      image: ubuntu-1604:201903-01
+      image: ubuntu-2004:202201-02
+    parallelism: 5
     steps:
       - checkout
       - run:
           name: Install MySQL Client
           command: |
             sudo apt-get update
-            sudo apt-get install mysql-client-core-5.7
+            sudo apt-get install mysql-client-core-8.0
       - run:
           name: Build the REDCap Image
           command: |
-            git clone --branch redcap-cypress https://github.com/aldefouw/redcap_docker
+            git clone --branch v11.1.29 https://github.com/aldefouw/redcap_docker
       - run:
           name: Get REDCap Source
           command: |
@@ -33,18 +34,21 @@ jobs:
           command: |
             cd /home/circleci/project
             sed s/PID/$PROJECT_ID/g cypress.json.example > cypress.json
-            mv cypress.env.json.example cypress.env.json              
-      - run:      
-          name: Install Cypress and Run Tests
+            mv cypress.env.json.example cypress.env.json
+      - run:
+          name: Install Cypress
           command: |
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use stable
             npm install
-            npx cypress run --record --key $RECORD_KEY
+      - run:
+          name: Run Tests
+          command: |
+            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests
 workflows:
   version: 2
   workflow:
     jobs:
-    - build:
-        context: REDCap Tests
+      - build:
+          context: REDCap Tests
