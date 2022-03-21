@@ -165,11 +165,16 @@ describe('Logging', () => {
         
         //Step 16
         cy.get('select[id="record"]').select('1').should('have.value', '1')
-        cy.get('a[href*="/redcap_v9.1.3/DataEntry/index.php?pid=23&id=1&event_id=41&page=text_validation"]').click()
+        cy.get('a[href*="/redcap_v' + Cypress.env('redcap_version') + '/DataEntry/index.php?pid=23&id=1&event_id=41&page=text_validation"]').click()
         cy.get('input[id="__LOCKRECORD__"]').check()
+
+        cy.intercept('redcap_v' + Cypress.env('redcap_version') + '/Locking/single_form_action.php?*').as('single_form_action')
+
         cy.get('button#submit-btn-dropdown').first().click()
         .closest('div').find('a#submit-btn-savecontinue').should('be.visible').click()
-        cy.wait(3000)
+
+        cy.wait('@single_form_action')
+
         cy.get('input[id="__LOCKRECORD__"]').should('be.checked')
 
         //Step 17
@@ -179,7 +184,9 @@ describe('Logging', () => {
         cy.get('input[id="esign_username"]').type('test_user2')
         cy.get('input[id="esign_password"').type('Testing123')
         cy.get('.ui-dialog-buttonset').contains('Save').click()
-        cy.wait(4000)
+
+        cy.wait('@single_form_action')
+
         cy.get('input[id="__ESIGNATURE__"]').should('be.checked')
 
         //Step 18
@@ -315,7 +322,7 @@ describe('Logging', () => {
             it('Should allow filtering by Page Views', () => {
                 cy.get('select[id="logtype"]').select('Page Views').should('have.value', 'page_view')
                 cy.get('table').contains('td', 'Page View');
-                cy.get('table').contains('td', '/redcap_v9.1.3/Logging/index.php?pid=23');
+                cy.get('table').contains('td', '/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=23');
             })
             
         })
@@ -473,18 +480,20 @@ describe('Logging', () => {
                 //Create new arm
                 cy.visit_version({page: "Design/define_events.php", params: `pid=${PID}`})
 
-                cy.get('a[href*="/redcap_v9.1.3/Design/define_events.php?pid=23&arm=2"]').click()
+                cy.get('a[href*="/redcap_v' + Cypress.env('redcap_version') + '/Design/define_events.php?pid=23&arm=2"]').click()
                 cy.get('input[id=arm_name]').type('Arm 2')
                 cy.get('input[value=Save]').click()
+
+                cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/Design/define_events_ajax.php?*').as('define_events')
 
                 //Create event in arm 2
                 cy.get('input[id=descrip]').type('Event 1')
                 cy.get('input[value="Add new event"]').click()
-                cy.wait(2000)
+                cy.wait('@define_events')
 
                 //Designate instrument to event
                 cy.visit_version({page: 'Design/designate_forms.php', params: `pid=${PID}`})
-                cy.get('a[href*="/redcap_v9.1.3/Design/designate_forms.php?pid=23&arm=2"]').click()
+                cy.get('a[href*="/redcap_v' + Cypress.env('redcap_version') + '/Design/designate_forms.php?pid=23&arm=2"]').click()
                 cy.get('button').contains('Begin Editing').click().then(() => {
                     cy.get('td').contains('Text Validation').parent().within(() => {
                         cy.get('input#text_validation--42').check()
@@ -513,10 +522,10 @@ describe('Logging', () => {
             //Step 39  
             it('Should have the ability to add a new record to a Arm)', () => {
                 cy.visit_version({page: 'DataEntry/record_home.php', params: `pid=${PID}`})
+                cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/DataEntry/record_home.php?*').as('record_home')
                 cy.get('select[id="arm_name"]').select('Arm 2: Arm 2').should('have.value', '2')
-                cy.wait(2000)
+                cy.wait('@record_home')
                 cy.get('button').contains('Add new record for the arm selected above').should('be.visible').click()
-                cy.wait(2000)
                 cy.get('input[name="ptname"]').type('Arm2')
                 cy.get('button#submit-btn-saverecord').first().click()
             })	
@@ -537,8 +546,9 @@ describe('Logging', () => {
             //Step 41
             it('Should have the ability to delete record from arm 2 )', () => {
                 cy.visit_version({page: "DataEntry/record_home.php", params: `pid=${PID}`})
+                cy.intercept('/redcap_v' + Cypress.env('redcap_version') + '/DataEntry/record_home.php?*').as('record_home')
                 cy.get('select[id="arm_name"]').select('Arm 2: Arm 2').should('have.value', '2')
-                cy.wait(3000)
+                cy.wait('@record_home')
                 cy.get('select[id="record"]').select('2').should('have.value', '2')
                 cy.get('button#recordActionDropdownTrigger').click()
                 cy.get('a').contains('Delete record (all forms/events)').should('be.visible').click()
