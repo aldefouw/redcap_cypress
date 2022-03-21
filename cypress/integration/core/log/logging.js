@@ -420,7 +420,7 @@ describe('Logging', () => {
             })		
             
             //step 34
-            it('Should allow deleting a record)', () => {
+            it('Should allow deleting a record', () => {
                 cy.set_user_type('standard')
 
                 cy.visit_version({page: "DataEntry/record_home.php", params: `pid=${PID}`})
