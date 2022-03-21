@@ -49,19 +49,19 @@ describe('System Security Settings', () => {
 			})
 		})
 
+		it('Should display system offline message when admin logs in', () => {
+			//User is already an Admin
+			cy.visit_base({url: 'index.php'})
+			cy.get('div').should(($div) => {
+				expect($div).to.contain('REDCap and all its projects are currently OFFLINE and are not accessible to normal users.')
+			})
+		})
+
 		it('Should display system offline message when user logs in', () => {
 			cy.set_user_type('standard')
 			cy.visit_base({url: 'index.php'})
 			cy.get('div').should(($div) => {
 				expect($div).to.contain('REDCap is currently offline. Please return at another time. We apologize for any inconvenience.')
-			})
-		})
-
-		it('Should display system offline message when admin logs in', () => {
-			cy.set_user_type('admin')
-			cy.visit_base({url: 'index.php'})
-			cy.get('div').should(($div) => {
-				expect($div).to.contain('REDCap and all its projects are currently OFFLINE and are not accessible to normal users.')
 			})
 		})
 
