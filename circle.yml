@@ -24,7 +24,7 @@ jobs:
           name: Start Docker REDCap Container
           command: |
             cd /home/circleci/project/redcap_docker
-            docker-compose up -d --build
+            docker-compose up -d
       - run:
           name: Change eDocs folder permissions
           command: |
