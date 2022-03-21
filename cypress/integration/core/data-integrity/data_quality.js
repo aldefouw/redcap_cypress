@@ -186,11 +186,11 @@ describe('Data Quality', () => {
 
         // === START: Setup of User Rights
         cy.intercept({  method: 'POST',
-            url: '/redcap_v' + Cypress.env('redcap_version') + '/UserRights/edit_user.php?pid=13'
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/UserRights/edit_user.php?*'
         }).as('user_rights')
 
         cy.intercept({  method: 'POST',
-            url: '/redcap_v' + Cypress.env('redcap_version') + '/DataQuality/execute_ajax.php?pid=13'
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/DataQuality/execute_ajax.php?*'
         }).as('execute_rule')
 
         cy.visit_version({page: 'UserRights/index.php', params: 'pid=13'})
@@ -199,12 +199,12 @@ describe('Data Quality', () => {
 
         cy.wait('@user_rights')
 
-        cy.get('td').contains('My First Instrument').parent().find('input[type=radio]').first().click().then(() =>{
-            cy.get('button').contains('Save Changes').click().then(() => {
-                cy.get('body').should(($body) => {
-                    expect($body).to.contain('User "test_user" was successfully edited')
-                })
-            })
+        cy.get('div').should('contain', 'Editing existing user "test_user')
+
+        cy.get('td').contains('My First Instrument').parent().find('input[type=radio]').first().click()
+        cy.get('button').contains('Save Changes').click()
+        cy.get('body').should(($body) => {
+            expect($body).to.contain('User "test_user" was successfully edited')
         })
         // === END: Setup of User Rights
 
