@@ -1,7 +1,7 @@
-Feature: Entry Via Survey
+Feature: Data Entry through the Survey
 
-  As a user
-  I want to see that public surveys work
+  As an standard user
+  I want to see that Data Entry through the Survey is functioning as expected
 
   Scenario: An external user visits a public survey
     Given I visit the public survey URL for Project ID 3
