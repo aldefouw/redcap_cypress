@@ -6,8 +6,8 @@
   "defaultCommandTimeout" : 10000,
   "responseTimeout": 10000,
   "requestTimeout": 10000,
-  "videoUploadOnPasses": true,
-  "video": true,
+  "videoUploadOnPasses": false,
+  "video": false,
   "videoCompression": false,
   "integrationFolder": "cypress/integration/core",
   "retries": {
