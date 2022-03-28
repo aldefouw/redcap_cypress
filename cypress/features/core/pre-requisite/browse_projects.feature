@@ -5,7 +5,7 @@ Feature: Browse Projects
 
   Background:
     Given I am an "admin" user who logs into REDCap
-    And I visit the "Control Center"
+    And I visit the "Control Center" page
     And I click on the link labeled "Browse Projects"
 
   Scenario: View all non-archived projects
