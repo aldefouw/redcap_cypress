@@ -35,6 +35,10 @@ Given('I enter {string} into the field labeled {string}', (text, label) => {
     })
 })
 
+Given('I click on the table cell containing a link labeled {string}', (text) => {
+    cy.get('td').contains(text).parent().find('a').click()
+})
+
 // Given(/^I should be able to locate and visit the Control Center link labeled and titled "(.*)"?$/, (link_label, title) => {
 //     cy.contains_cc_link(link_label, title)
 // })
