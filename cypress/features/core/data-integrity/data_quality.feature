@@ -1,4 +1,6 @@
 Feature: Data Quality
 
-  As an standard user
+  As a REDCap end user
   I want to see that Data Collection and Storage is functioning as expected
+
+  Scenario: Describe scenario here

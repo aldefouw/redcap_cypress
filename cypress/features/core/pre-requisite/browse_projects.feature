@@ -1,6 +1,6 @@
 Feature: Browse Projects
 
-  As an administrator
+  As a REDCap end user
   I want to see that I have the ability to access, search, and filter projects
 
   Background:

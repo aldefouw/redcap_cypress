@@ -1,6 +1,6 @@
 Feature: Data Entry through the Survey
 
-  As an standard user
+  As a REDCap end user
   I want to see that Data Entry through the Survey is functioning as expected
 
   Scenario: An external user visits a public survey
