@@ -22,7 +22,7 @@ Cypress.Commands.add('login', (options) => {
     cy.get('input[name=password]').type(options['password'])
     cy.get('button').contains('Log In').click()
 
-    cy.wait('@loginStatus').its('response.statusCode').should('eq', 302)
+    cy.wait('@loginStatus')
 })
 
 Cypress.Commands.add('logout', () => {
@@ -103,25 +103,24 @@ Cypress.Commands.add('maintain_login', () => {
     if(user_type === previous_user_type){
         cy.getCookies()
           .should((cookies) => {
-
             //In most cases, we'll have cookies to preserve to maintain a login
             if (cookies.length > 0){
+                console.log('Attempt Cookie Login')
 
-                console.log('Cookie Login')
+                let valid_cookie = false
 
-                //console.log(cookies)
+                cookies.forEach(cookie => {
+                            if(cookie['name'] === "PHPSESSID") {
+                                Cypress.Cookies.preserveOnce(cookie)
+                                valid_cookie = true
+                            }
+                        })
 
-                let valid_cookies = []
 
-                cookies
-                    .filter(cookie => cookie['name'] !== "PHPSESSID")
-                    .forEach(cookie => {
-                        valid_cookies << cookie['name']
-                    })
-
-                valid_cookies.forEach((cookie) => {
-                    Cypress.Cookies.preserveOnce(cookie)
-                })
+                if(valid_cookie === false){
+                    console.log('Cookie Login Failed; Logging in Through User Interface')
+                    cy.login({ username: user, password: pass })
+                }
 
             //But, if we don't, then let's simply re-login, right?
             } else {
