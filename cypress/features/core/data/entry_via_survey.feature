@@ -41,7 +41,7 @@ Feature: Data Entry through the Survey
     When I click on the survey option label containing "Log out" label and want to track the response with a tag of "logout_open_survey"
     Then I should see the survey open exactly once by watching the tag of "logout_open_survey"
 
-  Scenario: A standard user should be prompted to leave the survey to avoid overwriting survey responses when opening surveys from a data entry form when using Open Survey link
+  Scenario: A standard user is prompted to leave the survey to avoid overwriting survey responses when opening surveys from data entry form
     Given I visit Project ID 9
     And I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
@@ -53,3 +53,16 @@ Feature: Data Entry through the Survey
     When I click on the survey option label containing "Open survey" label
     Then I should see "Leave without saving changes"
     And I should see "Stay on page"
+
+  Scenario: A standard user is prompted to leave the survey to avoid overwriting survey responses when opening surveys from data entry form
+    Given I visit Project ID 9
+    And I click on the link labeled "Project Setup"
+    And I click on the button labeled "Online Designer"
+    Then I should see "Draft Mode"
+
+    When I click on the input button labeled "Enter Draft Mode"
+    Then I should see "The project is now in Draft Mode"
+
+    When I click on the link labeled "Record Status Dashboard"
+    When I click on the bubble for the "Pre-Screening Survey" data collection instrument
+

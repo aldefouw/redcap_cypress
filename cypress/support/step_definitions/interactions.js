@@ -8,9 +8,13 @@ Given("I click on the link labeled {string}", (text) => {
     cy.get('a').contains(text).click()
 })
 
+Given("I click on the input button labeled {string}", (text) => {
+    cy.get('input[type=button]').should('contain.value', text).click()
+})
+
 Given("I click on the bubble for the {string} data collection instrument", (text) => {
-    cy.get('td').contains(text).then(($td) => {
-        let table_row = $td.parent('tr')
+    cy.get('th').contains(text).then(($td) => {
+        let table_row = $th.parent('table')
         cy.get(table_row).within(($s) => { cy.get('a').click() })
     })
 })
