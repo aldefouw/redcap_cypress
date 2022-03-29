@@ -12,11 +12,52 @@ Given("I click on the input button labeled {string}", (text) => {
     cy.get('input[type=button]').should('contain.value', text).click()
 })
 
-Given("I click on the bubble for the {string} data collection instrument", (text) => {
-    cy.get('th').contains(text).then(($td) => {
-        let table_row = $th.parent('table')
-        cy.get(table_row).within(($s) => { cy.get('a').click() })
+Given("I click on the bubble for the {string} data collection instrument instrument for record ID {string}", (text, record_id) => {
+    let link_location = null
+
+    cy.get('table#record_status_table').within(() => {
+        cy.get('th').then(($th) => {
+            Cypress.$.each($th, (index, th) => {
+                if(th.innerText === text){
+                    cy.get('tr').then(($tr) => {
+                        Cypress.$.each($tr, (tri, tr) => {
+                            if(tri > 0) {
+                                cy.wrap(tr).within(() => {
+                                    cy.get('td').then((td) => {
+                                        if(td[0].innerText === record_id){
+                                            Cypress.$.each(td, (tdi, $td) => {
+                                                if(tdi === index){
+                                                    cy.wrap($td).within(() => {
+                                                        cy.get('a').then(($a) => {
+                                                           link_location = $a
+                                                        })
+                                                    })
+                                                }
+                                            })
+                                        }
+                                    })
+                                })
+                            }
+                        })
+                    })
+                }
+            })
+        })
+    }).then(() => {
+       cy.wrap(link_location).click()
     })
+})
+
+Given("I edit the field labeled {string}", (text) => {
+    cy.edit_field_by_label(text)
+})
+
+Given("I mark the field required", () => {
+    cy.get('input#field_req1').click()
+})
+
+Given("I save the field", () => {
+    cy.save_field()
 })
 
 Given("I visit Project ID {int}", (id) => {

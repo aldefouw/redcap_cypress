@@ -16,7 +16,6 @@ Feature: Data Entry through the Survey
 
   Scenario: A standard user disables survey functionality
     Given I visit Project ID 9
-    And I disable surveys for Project ID 9
 
     When I visit the "Data Entry" page with parameter string of "pid=9&id=1&page=prescreening_survey"
     Then I should see that the "E-mail address" field contains the value of "user1@yahoo.com"
@@ -54,7 +53,7 @@ Feature: Data Entry through the Survey
     Then I should see "Leave without saving changes"
     And I should see "Stay on page"
 
-  Scenario: A standard user is prompted to leave the survey to avoid overwriting survey responses when opening surveys from data entry form
+  Scenario: A participant can enter data in a data collection insrument enabled and distributed as a survey
     Given I visit Project ID 9
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Online Designer"
@@ -63,6 +62,13 @@ Feature: Data Entry through the Survey
     When I click on the input button labeled "Enter Draft Mode"
     Then I should see "The project is now in Draft Mode"
 
-    When I click on the link labeled "Record Status Dashboard"
-    When I click on the bubble for the "Pre-Screening Survey" data collection instrument
+    And I click on the link labeled "Pre-Screening Survey"
+    And I edit the field labeled "Date of birth"
 
+    And I mark the field required
+    And I save the field
+
+#    When I click on the link labeled "Record Status Dashboard"
+#    And I click on the bubble for the "Pre-Screening Survey" data collection instrument instrument for record ID "1"
+#
+#
