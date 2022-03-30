@@ -9,7 +9,7 @@ Given("I click on the link labeled {string}", (text) => {
 })
 
 Given("I click on the input button labeled {string}", (text) => {
-    cy.get('input[type=button]').should('contain.value', text).click()
+    cy.get('input[value="' + text + '"]').click()
 })
 
 Given("I click on the bubble for the {string} data collection instrument instrument for record ID {string}", (text, record_id) => {
@@ -58,6 +58,10 @@ Given("I mark the field required", () => {
 
 Given("I save the field", () => {
     cy.save_field()
+})
+
+Given("I want to pause", () => {
+    cy.pause()
 })
 
 Given("I visit Project ID {int}", (id) => {
