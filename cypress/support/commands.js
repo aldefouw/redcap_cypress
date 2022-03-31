@@ -108,59 +108,6 @@ Cypress.Commands.add('maintain_login', () => {
 
     if(user_type === previous_user_type){
         cy.getCookies()
-            .should((cookies) => {
-
-                //In most cases, we'll have cookies to preserve to maintain a login
-                if (cookies.length > 0){
-
-                    console.log('Cookie Login')
-
-                    //console.log(cookies)
-
-                    let valid_cookies = []
-
-                    cookies
-                        .filter(cookie => cookie['name'] !== "PHPSESSID")
-                        .forEach(cookie => {
-                            valid_cookies << cookie['name']
-                        })
-
-                    valid_cookies.forEach((cookie) => {
-                        Cypress.Cookies.preserveOnce(cookie)
-                    })
-
-                    //But, if we don't, then let's simply re-login, right?
-                } else {
-                    console.log('Regular Login')
-                    cy.login({ username: user, password: pass })
-                }
-
-            })
-
-        //If user type has changed, let's clear cookies and login again
-    } else {
-        //Ensure we logout when a user changes
-        cy.logout()
-        cy.get('body').should('contain', 'Log In')
-        cy.login({ username: user, password:  pass })
-    }
-
-    window.user_info.set_previous_user_type()
-})
-
-Cypress.Commands.add('maintain_login', () => {
-    let user = window.user_info.get_current_user()
-    let pass = window.user_info.get_current_pass()
-
-    let user_type = window.user_info.get_user_type()
-    let previous_user_type = window.user_info.get_previous_user_type()
-
-    console.log('User Type Change to ' + user_type + '.')
-    console.log('previous: ' + previous_user_type)
-    console.log('current: ' + user_type)
-
-    if(user_type === previous_user_type){
-        cy.getCookies()
           .should((cookies) => {
 
             //In most cases, we'll have cookies to preserve to maintain a login
