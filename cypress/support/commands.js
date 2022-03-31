@@ -14,9 +14,8 @@ const shell = require('shelljs')
 // They are very stable and do not change often, if ever
 
 Cypress.Commands.add('login', (options) => {
-
     cy.clearCookies()
-
+    
     cy.request({
         method: 'POST',
         url: '/', // baseUrl is prepended to url
@@ -30,6 +29,10 @@ Cypress.Commands.add('login', (options) => {
     }).should(($a) => {
         expect($a.status).to.equal(200)
     })
+})
+
+Cypress.Commands.add('logout', () => {
+    cy.visit('/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
 })
 
 Cypress.Commands.add('visit_version', (options) => {
@@ -112,18 +115,19 @@ Cypress.Commands.add('maintain_login', () => {
                 console.log('Cookie Login')
                 cookies.map(cookie =>  Cypress.Cookies.preserveOnce(cookie['name']) )
 
-            //But, if we don't, then let's simply re-login, right?    
-            } else {     
+            //But, if we don't, then let's simply re-login, right?
+            } else {
                 console.log('Regular Login')
                 cy.login({ username: user, password: pass })
-            }         
-            
-        })  
+            }
+
+        })
 
     //If user type has changed, let's clear cookies and login again
     } else {
         //Ensure we logout when a user changes
-        cy.visit('/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
+        cy.logout()
+        cy.get('body').should('contain', 'Log In')
         cy.login({ username: user, password:  pass })
     }
 
