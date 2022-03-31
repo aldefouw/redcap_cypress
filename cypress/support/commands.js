@@ -15,20 +15,15 @@ const shell = require('shelljs')
 
 Cypress.Commands.add('login', (options) => {
     cy.clearCookies()
-    
-    cy.request({
-        method: 'POST',
-        url: '/', // baseUrl is prepended to url
-        form: true, // indicates the body should be form urlencoded and sets Content-Type: application/x-www-form-urlencoded headers
-        body: {
-            'username': options['username'],
-            'password': options['password'],
-            'submitted': 1,
-            'redcap_login_a38us_09i85':'SG1nx2MZGGeW6vnUwnkRz5j/vHgHwPUCcw8TFRBWLSZ9/XxMdP2uQMfwph/TbCpOkG2FtO9R25SL4YMyPAI4Bg=='
-        }
-    }).should(($a) => {
-        expect($a.status).to.equal(200)
-    })
+
+    cy.visit('/')
+    cy.intercept('POST', '/').as('loginStatus')
+
+    cy.get('input[name=username]').type(options['username'])
+    cy.get('input[name=password]').type(options['password'])
+    cy.get('button').contains('Log In').click()
+
+    cy.wait('@loginStatus')
 })
 
 Cypress.Commands.add('logout', () => {
@@ -109,25 +104,24 @@ Cypress.Commands.add('maintain_login', () => {
     if(user_type === previous_user_type){
         cy.getCookies()
             .should((cookies) => {
-
                 //In most cases, we'll have cookies to preserve to maintain a login
                 if (cookies.length > 0){
+                    console.log('Attempt Cookie Login')
 
-                    console.log('Cookie Login')
+                    let valid_cookie = false
 
-                    //console.log(cookies)
-
-                    let valid_cookies = []
-
-                    cookies
-                        .filter(cookie => cookie['name'] !== "PHPSESSID")
-                        .forEach(cookie => {
-                            valid_cookies << cookie['name']
-                        })
-
-                    valid_cookies.forEach((cookie) => {
-                        Cypress.Cookies.preserveOnce(cookie)
+                    cookies.forEach(cookie => {
+                        if(cookie['name'] === "PHPSESSID") {
+                            Cypress.Cookies.preserveOnce(cookie)
+                            valid_cookie = true
+                        }
                     })
+
+
+                    if(valid_cookie === false){
+                        console.log('Cookie Login Failed; Logging in Through User Interface')
+                        cy.login({ username: user, password: pass })
+                    }
 
                     //But, if we don't, then let's simply re-login, right?
                 } else {
@@ -141,46 +135,6 @@ Cypress.Commands.add('maintain_login', () => {
     } else {
         //Ensure we logout when a user changes
         cy.logout()
-        cy.get('body').should('contain', 'Log In')
-        cy.login({ username: user, password:  pass })
-    }
-
-    window.user_info.set_previous_user_type()
-})
-
-Cypress.Commands.add('maintain_login', () => {
-    let user = window.user_info.get_current_user()
-    let pass = window.user_info.get_current_pass()
-
-    let user_type = window.user_info.get_user_type()
-    let previous_user_type = window.user_info.get_previous_user_type()
-
-    console.log('User Type Change to ' + user_type + '.')
-    console.log('previous: ' + previous_user_type)
-    console.log('current: ' + user_type)
-
-    if(user_type === previous_user_type){
-        cy.getCookies()
-          .should((cookies) => {
-
-            //In most cases, we'll have cookies to preserve to maintain a login
-            if (cookies.length > 0){
-                console.log('Cookie Login')
-                cookies.map(cookie =>  Cypress.Cookies.preserveOnce(cookie['name']) )
-
-            //But, if we don't, then let's simply re-login, right?    
-            } else {     
-                console.log('Regular Login')
-                cy.login({ username: user, password: pass })
-            }         
-            
-        })  
-
-    //If user type has changed, let's clear cookies and login again
-    } else {
-        //Ensure we logout when a user changes
-        cy.logout()
-        cy.get('body').should('contain', 'Log In')
         cy.login({ username: user, password:  pass })
     }
 
