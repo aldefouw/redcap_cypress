@@ -103,35 +103,22 @@ Cypress.Commands.add('maintain_login', () => {
 
     if(user_type === previous_user_type){
         cy.getCookies()
-            .should((cookies) => {
-                //In most cases, we'll have cookies to preserve to maintain a login
-                if (cookies.length > 0){
-                    console.log('Attempt Cookie Login')
+          .should((cookies) => {
 
-                    let valid_cookie = false
+            //In most cases, we'll have cookies to preserve to maintain a login
+            if (cookies.length > 0){
+                console.log('Cookie Login')
+                cookies.map(cookie =>  Cypress.Cookies.preserveOnce(cookie['name']) )
 
-                    cookies.forEach(cookie => {
-                        if(cookie['name'] === "PHPSESSID") {
-                            Cypress.Cookies.preserveOnce(cookie)
-                            valid_cookie = true
-                        }
-                    })
+            //But, if we don't, then let's simply re-login, right?
+            } else {
+                console.log('Regular Login')
+                cy.login({ username: user, password: pass })
+            }
 
+        })
 
-                    if(valid_cookie === false){
-                        console.log('Cookie Login Failed; Logging in Through User Interface')
-                        cy.login({ username: user, password: pass })
-                    }
-
-                    //But, if we don't, then let's simply re-login, right?
-                } else {
-                    console.log('Regular Login')
-                    cy.login({ username: user, password: pass })
-                }
-
-            })
-
-        //If user type has changed, let's clear cookies and login again
+    //If user type has changed, let's clear cookies and login again
     } else {
         //Ensure we logout when a user changes
         cy.logout()
@@ -143,6 +130,7 @@ Cypress.Commands.add('maintain_login', () => {
 
 Cypress.Commands.add('set_user_type', (user_type) => {
     window.user_info.set_user_type(user_type)
+    cy.maintain_login()
 })
 
 Cypress.Commands.add('set_user_info', (users) => {

@@ -156,11 +156,13 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 
 			cy.wait('@projectSettings')
 
-			cy.visit_version({page: 'Design/define_events.php', params: 'pid=14'}).then(() => {
-				cy.get('table#event_table').should(($t) => {
-					expect($t).to.contain('Days Offset')
-					expect($t).to.contain('Offset Range')
-				})
+			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
+
+			cy.get('button').contains('Define My Events').click()
+
+			cy.get('table#event_table').should(($t) => {
+				expect($t).to.contain('Days Offset')
+				expect($t).to.contain('Offset Range')
 			})
 			
 		})
@@ -171,7 +173,40 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 		})
 
 		it('Should require administrator approval to delete events for longitudinal projects while in Production mode', () => {
+			cy.set_user_type('admin')
+			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
 
+			cy.get('button').contains('Define My Events').click()
+
+			//There should be 3 delete buttons for an admin user
+			cy.get('img[title=Delete]').should('have.length', 3)
+
+			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
+			cy.get('button').contains('Move project to production').click()
+
+			cy.get('span').contains('Keep ALL data saved').click()
+			cy.get('button').contains('YES').click()
+
+			cy.get('body').should(($body) => {
+				expect($body).to.contain('The project is now in production')
+			})
+
+			cy.set_user_type('standard')
+			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
+
+			cy.get('button').contains('Define My Events').click()
+
+			//There should be no option for deleting an event here
+			cy.get('img[title=Delete]').should('have.length', 0)
+
+			//Change back to draft mode
+			cy.set_user_type('admin')
+			cy.visit_version({page: 'ProjectSetup/other_functionality.php', params: 'pid=14'})
+			cy.get('button').contains('development status').click()
+
+			cy.get('body').should(($body) => {
+				expect($body).to.contain('The project is now back in development status.')
+			})
 		})
 	})
 
