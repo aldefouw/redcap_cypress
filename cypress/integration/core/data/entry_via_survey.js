@@ -251,8 +251,14 @@ describe('Data Entry through the Survey Feature', () => {
 		})
 
 		it('Should have the ability to submitted survey responses to be changed by a user who has edit survey responses rights', () => {
+			//Marking this twice seems to check all Edit Survey rights
+			cy.change_survey_edit_rights(9, 'test_user', 'Pre-Screening Survey')
+			cy.change_survey_edit_rights(9, 'test_user', 'Pre-Screening Survey')
+
 			//Set to the standard user who has rights to this project
 			cy.set_user_type('standard')
+
+			cy.visit_version({page: '/DataEntry/index.php', params: 'pid=9&id=1&page=prescreening_survey&event_id=31&instance=1'})
 
 			//Attempt to edit the response
 			cy.get('button').contains('Edit response').click().then(() => {
