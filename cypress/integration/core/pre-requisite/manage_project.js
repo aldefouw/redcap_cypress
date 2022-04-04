@@ -156,11 +156,13 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 
 			cy.wait('@projectSettings')
 
-			cy.visit_version({page: 'Design/define_events.php', params: 'pid=14'}).then(() => {
-				cy.get('table#event_table').should(($t) => {
-					expect($t).to.contain('Days Offset')
-					expect($t).to.contain('Offset Range')
-				})
+			cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=14'})
+
+			cy.get('button').contains('Define My Events').click()
+
+			cy.get('table#event_table').should(($t) => {
+				expect($t).to.contain('Days Offset')
+				expect($t).to.contain('Offset Range')
 			})
 			
 		})
