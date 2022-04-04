@@ -127,7 +127,6 @@ Cypress.Commands.add('maintain_login', () => {
     } else {
         //Ensure we logout when a user changes
         cy.logout()
-        cy.get('body').should('contain', 'Log In')
         cy.login({ username: user, password:  pass })
     }
 
@@ -136,6 +135,7 @@ Cypress.Commands.add('maintain_login', () => {
 
 Cypress.Commands.add('set_user_type', (user_type) => {
     window.user_info.set_user_type(user_type)
+    cy.maintain_login()
 })
 
 Cypress.Commands.add('set_user_info', (users) => {
