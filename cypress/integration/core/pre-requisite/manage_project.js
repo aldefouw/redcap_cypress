@@ -185,7 +185,7 @@ describe('Manage Project Creation, Deletion, Settings', () => {
 			cy.get('button').contains('Move project to production').click()
 
 			cy.get('span').contains('Keep ALL data saved').click()
-			cy.get('button').contains('YES').click()
+			cy.get('button').contains('Yes').click()
 
 			cy.get('body').should(($body) => {
 				expect($body).to.contain('The project is now in production')

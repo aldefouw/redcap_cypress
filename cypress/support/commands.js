@@ -125,6 +125,9 @@ Cypress.Commands.add('maintain_login', () => {
     //If user type has changed, let's clear cookies and login again
     } else {
         console.log('User Type Change to ' + user_type + '.')
+
+        //Ensure we logout when a user changes
+        cy.logout()
         cy.login({ username: user, password:  pass })
     }
 
