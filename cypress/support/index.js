@@ -98,7 +98,6 @@ window.base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace(/\//g, "\\/")
 // }
 
 before(() => {
-    window.db_seed = false
 
     //Cypress Users
     cy.set_user_info(Cypress.env('users'))
@@ -118,9 +117,7 @@ before(() => {
 })
 
 beforeEach(() => {
-    if(window.db_seed){
-        cy.maintain_login()
-    }
+    cy.maintain_login()
 })
 
 Cypress.on("uncaught:exception", (err, runnable) => {

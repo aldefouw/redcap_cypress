@@ -79,7 +79,6 @@ Cypress.Commands.add('base_db_seed', () => {
 
                     //Clear out all cookies
                     cy.clearCookies()
-                    window.db_seed = true
                 })
 
             })          
@@ -122,7 +121,7 @@ Cypress.Commands.add('maintain_login', () => {
     //If user type has changed, let's clear cookies and login again
     } else {
         //Ensure we logout when a user changes
-        cy.logout()
+        //cy.logout()
         cy.login({ username: user, password:  pass })
     }
 
