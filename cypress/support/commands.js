@@ -79,6 +79,7 @@ Cypress.Commands.add('base_db_seed', () => {
 
                     //Clear out all cookies
                     cy.clearCookies()
+                    window.db_seed = true
                 })
 
             })          
