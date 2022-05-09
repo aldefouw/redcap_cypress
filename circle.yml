@@ -4,7 +4,7 @@ jobs:
   build:
     machine:
       image: ubuntu-2004:202201-02
-    parallelism: 5
+    parallelism: 6
     steps:
       - checkout
       - run:
