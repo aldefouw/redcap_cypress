@@ -50,7 +50,7 @@ Cypress.Commands.add('visit_version', (options) => {
 
 Cypress.Commands.add('visit_base', (options) => {
     cy.maintain_login().then(() => {
-        if ('url' in options) cy.visit(Cypress.config('baseUrl') + options['url'])
+        if ('url' in options) cy.visit(Cypress.config('baseUrl') + '/' + options['url'])
     })
 })
 
