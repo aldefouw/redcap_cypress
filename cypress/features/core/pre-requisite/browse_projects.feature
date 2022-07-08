@@ -7,7 +7,8 @@ Feature: Browse Projects
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center" page
     And I click on the link labeled "Browse Projects"
-
+ And I click on the link labeled "Browse Projects"
+ 
   Scenario: View all non-archived projects
     When I click on the button labeled "View all projects"
     Then I should see 13 rows displayed in the projects table
