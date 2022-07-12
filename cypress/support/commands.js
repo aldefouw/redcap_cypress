@@ -343,57 +343,90 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
     let admin_user = Cypress.env('users')['admin']['user']
     let current_token = null;
 
-    cy.maintain_login().then(($r) => {
+     cy.add_api_user_to_project(admin_user, pid).then(($response) => {
 
-        cy.add_api_user_to_project(admin_user, pid).then(() => {
+        if($response.hasOwnProperty('token')){
+
+            current_token = $response['token']
+
+            cy.fixture(`dictionaries/${fixture_file}`).then(data_dictionary => {
+
+                cy.request({
+                    method: 'POST',
+                    url: '/api/',
+                    headers: {
+                        "Accept":"application/json",
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: {
+                        token: current_token,
+                        content: 'metadata',
+                        format: 'csv',
+                        data: data_dictionary,
+                        returnFormat: 'json'
+                    },
+                    timeout: 50000
+
+                }).should(($a) => {
+                    expect($a.status).to.equal(200)
+
+                    cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
+                        expect($e.body).to.contain('List of Data Changes')
+                        expect($e.body).to.contain('Manage/Design')
+                    })
+                })
+            })
+
+        } else {
 
             cy.request({ url: '/redcap_v' +
-                     Cypress.env('redcap_version') +
+                    Cypress.env('redcap_version') +
                     '/ControlCenter/user_api_ajax.php?action=createToken&api_username=' +
                     admin_user +
                     '&api_pid=' +
                     pid +
                     '&api_export=1&api_import=1&mobile_app=0&api_send_email=0'}).should(($token) => {
 
-                        expect($token.body).to.contain('token has been created')
-                        expect($token.body).to.contain(admin_user)
+                expect($token.body).to.contain('token has been created')
+                expect($token.body).to.contain(admin_user)
 
-                        cy.request({ url: '/redcap_v' +
-                                     Cypress.env('redcap_version') +
-                                    '/ControlCenter/user_api_ajax.php?action=viewToken&api_username=test_admin&api_pid=' + pid}).then(($super_token) => {
+                cy.request({ url: '/redcap_v' +
+                        Cypress.env('redcap_version') +
+                        '/ControlCenter/user_api_ajax.php?action=viewToken&api_username=' + admin_user + '&api_pid=' + pid}).then(($super_token) => {
 
-                        current_token = Cypress.$($super_token.body).children('div')[0].innerText
+                    current_token = Cypress.$($super_token.body).children('div')[0].innerText
 
-                        cy.fixture(`dictionaries/${fixture_file}`).then(data_dictionary => {
+                    cy.fixture(`dictionaries/${fixture_file}`).then(data_dictionary => {
 
-                                cy.request({
-                                    method: 'POST',
-                                    url: '/api/',
-                                    headers: {
-                                      "Accept":"application/json",
-                                      "Content-Type": "application/x-www-form-urlencoded"
-                                    },
-                                    body: {
-                                        token: current_token,
-                                        content: 'metadata',
-                                        format: 'csv',
-                                        data: data_dictionary,
-                                        returnFormat: 'json'
-                                    },
-                                    timeout: 50000
+                        cy.request({
+                            method: 'POST',
+                            url: '/api/',
+                            headers: {
+                                "Accept":"application/json",
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            body: {
+                                token: current_token,
+                                content: 'metadata',
+                                format: 'csv',
+                                data: data_dictionary,
+                                returnFormat: 'json'
+                            },
+                            timeout: 50000
 
-                                }).should(($a) => {
-                                    expect($a.status).to.equal(200)
+                        }).should(($a) => {
+                            expect($a.status).to.equal(200)
 
-                                    cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
-                                        expect($e.body).to.contain('List of Data Changes')
-                                        expect($e.body).to.contain('Manage/Design')
-                                    })
-                                })
+                            cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
+                                expect($e.body).to.contain('List of Data Changes')
+                                expect($e.body).to.contain('Manage/Design')
+                            })
                         })
+                    })
                 })
             })
-        })
+        }
+
     })
 
 })
@@ -418,19 +451,40 @@ Cypress.Commands.add('create_cdisc_project', (project_name, project_type, cdisc_
 })
 
 Cypress.Commands.add('add_api_user_to_project', (username, pid) => {
-    cy.visit_version({ page: 'UserRights/index.php', params: 'pid=' + pid}).then(() => {
-        cy.get('input#new_username', {force: true}).clear({force: true}).type(username, {force: true}).then((element) => {
-            cy.get('button', {force: true}).contains('Add with custom rights').click({force: true}).then(() => {
-                cy.get('input[name=api_export]', {force: true}).click()
-                cy.get('input[name=api_import]', {force: true}).click()
-                cy.get('.ui-button', {force: true}).contains(/add user|save changes/i).click().then(() => {
-                    cy.get('table#table-user_rights_roles_table').should(($e) => {
-                        expect($e[0].innerText).to.contain(username)
+    cy.visit_version({ page: 'UserRights/index.php', params: 'pid=' + pid}).then(($e) => {
+
+        cy.get('html').should('contain', 'User Rights')
+
+        cy.get('#user_rights_roles_table').then(($r) => {
+
+            //If username has already been added to the project
+            if($r[0].innerText.indexOf(username) !== -1){
+
+                cy.access_api_token(pid, username).then(($request) => {
+                    return { token: $request }
+                })
+
+            } else {
+
+                cy.get('input#new_username', {force: true}).clear({force: true}).type(username, {force: true}).then((element) => {
+                    cy.get('button', {force: true}).contains('Add with custom rights').click({force: true}).then(() => {
+                        cy.get('input[name=api_export]', {force: true}).click()
+                        cy.get('input[name=api_import]', {force: true}).click()
+
+                        cy.get('.ui-button', {force: true}).contains(/add user|save changes/i).click().then(() => {
+                            cy.get('table#table-user_rights_roles_table').should(($e) => {
+                                expect($e[0].innerText).to.contain(username)
+                            })
+                        })
                     })
                 })
-            })
+
+            }
         })
+
+
     })
+
 })
 
 Cypress.Commands.add('mysql_query', (query) => {
@@ -493,29 +547,87 @@ Cypress.Commands.add('access_api_token', (pid, user) => {
     })
 })
 
-Cypress.Commands.add('import_data_file', (fixture_file, api_token) => {
+Cypress.Commands.add('import_data_file', (fixture_file,pid) => {
 
-    cy.fixture(`import_files/${fixture_file}`).then(import_data => {
+    let admin_user = Cypress.env('users')['admin']['user']
+    let current_token = null;
 
-        cy.request({
-            method: 'POST',
-            url: '/api/',
-            headers: {
-              "Accept":"application/json",
-              "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: {
-                token: api_token,
-                content: 'record',
-                format: 'csv',
-                type: 'flat',
-                data: import_data,
-                returnFormat: 'json'
-            },
-            timeout: 50000
-        }).should(($a) => {
-            expect($a.status).to.equal(200)
-        })
+    cy.add_api_user_to_project(admin_user, pid).then(($response) => {
+
+        if($response.hasOwnProperty('token')){
+
+            current_token = $response['token']
+
+            cy.fixture(`import_files/${fixture_file}`).then(import_data => {
+
+                cy.request({
+                    method: 'POST',
+                    url: '/api/',
+                    headers: {
+                        "Accept":"application/json",
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: {
+                        token: current_token,
+                        content: 'record',
+                        format: 'csv',
+                        type: 'flat',
+                        data: import_data,
+                        returnFormat: 'json'
+                    },
+                    timeout: 50000
+                }).should(($a) => {
+                    expect($a.status).to.equal(200)
+                })
+
+            })
+
+        } else {
+
+            cy.request({ url: '/redcap_v' +
+                    Cypress.env('redcap_version') +
+                    '/ControlCenter/user_api_ajax.php?action=createToken&api_username=' +
+                    admin_user +
+                    '&api_pid=' +
+                    pid +
+                    '&api_export=1&api_import=1&mobile_app=0&api_send_email=0'}).should(($token) => {
+
+                expect($token.body).to.contain('token has been created')
+                expect($token.body).to.contain(admin_user)
+
+                cy.request({ url: '/redcap_v' +
+                        Cypress.env('redcap_version') +
+                        '/ControlCenter/user_api_ajax.php?action=viewToken&api_username=' + admin_user + '&api_pid=' + pid}).then(($super_token) => {
+
+                    current_token = Cypress.$($super_token.body).children('div')[0].innerText
+
+                    cy.fixture(`import_files/${fixture_file}`).then(import_data => {
+
+                        cy.request({
+                            method: 'POST',
+                            url: '/api/',
+                            headers: {
+                                "Accept":"application/json",
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            body: {
+                                token: current_token,
+                                content: 'record',
+                                format: 'csv',
+                                type: 'flat',
+                                data: import_data,
+                                returnFormat: 'json'
+                            },
+                            timeout: 50000
+                        }).should(($a) => {
+                            expect($a.status).to.equal(200)
+                        })
+
+                    })
+                })
+            })
+
+        }
 
     })
 
