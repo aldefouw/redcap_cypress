@@ -1,0 +1,3 @@
+record_id,redcap_event_name,redcap_survey_identifier,demographics_timestamp,lname,fname,demographics_complete,email,reminder,description,survey_complete
+1,event_1_arm_1,,,test,one,2,test1@test.edu,,,0
+2,event_1_arm_1,,,test,two,2,test2@test.edu,,,0
