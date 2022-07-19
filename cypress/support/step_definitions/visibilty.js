@@ -12,3 +12,6 @@ Given("I should see {string} in the title", (title) => {
     cy.title().should('include', title)
 })
 
+Given("I should see a link labeled {string}", (label) => {
+    cy.get('a').contains(label)
+})
