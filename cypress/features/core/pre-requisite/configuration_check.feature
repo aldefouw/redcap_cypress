@@ -13,17 +13,15 @@ Scenario: Visible Tabs
     And I should see a link labeled "Help & FAQ"
     And I should see a link labeled "Control Center"
 
-Scenario: Control Center Link Visibiity for Projects 
+Scenario: Control Center Link Visibility for Projects
     Then I should see a Control Center link labeled "Browse Projects"
     And I should see a Control Center link labeled "Edit a Project's Settings"
 
-Scenario: Control Center Link Visibiity for Users 
-    Given I visit the "Control Center" page
+Scenario: Control Center Link Visibility for Users
     Then I should see a Control Center link labeled "Browse Users"
     And I should see a Control Center link labeled "Administrator Privileges"
 
-Scenario: Control Center Link Visibiity for Sysyem Configuration 
-    Given I visit the "Control Center" page
+Scenario: Control Center Link Visibility for System Configuration
     Then I should see a Control Center link labeled "Browse System Configuration"
     And I should see a Control Center link labeled "Configuration Check"
     And I should see a Control Center link labeled "General Configuration"
