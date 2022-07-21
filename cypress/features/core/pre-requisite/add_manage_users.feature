@@ -40,10 +40,11 @@ Scenario: Create a user
 Scenario: Bulk Create users 
     When I click on the link labeled "Add Users (Table-based Only" 
     And I click on the link labeled "Create users (bulk upload)"
-    And I click on the button labeled "Choose File"
-#NOT COMPLETE 
-    And I click on the link labeled "Create single user "
-    Then  I should see "To create a new user (Table-based authentication ONLY), provide the new user name along"
+    And I upload a "csv" format file located at "import_files/core/02_AddManageUsersv1115_userbulkupload.csv", by clicking "input[name=fname]" to select the file, and clicking "input[name=submit]" to upload the file
+
+    #NOT COMPLETE
+    #And I click on the link labeled "Create single user "
+    #Then  I should see "To create a new user (Table-based authentication ONLY), provide the new user name along"
 
 
 
