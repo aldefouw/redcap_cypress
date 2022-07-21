@@ -35,8 +35,8 @@ module.exports = (on, config) => {
 		var install_sql = sql_path + '/install.sql';
 		var data_sql = sql_path + '/install_data.sql';
 
-		var user_sql = seeds_location + '/user_info/standard.sql';
-    if(advanced_user_info) { user_sql = seeds_location + '/user_info/advanced.sql'; } 
+		var user_sql = seeds_location + '/user_info/standard.sql'
+		if(advanced_user_info) { user_sql = seeds_location + '/user_info/advanced.sql'; }
 
 		var auth_sql = seeds_location + '/auth.sql';
 		var rights_sql = seeds_location + '/rights.sql';
