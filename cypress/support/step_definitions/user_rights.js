@@ -21,5 +21,5 @@ Given("I want to verify user rights are available for {string} user type on the 
 })
 
 Given("I want to verify user rights are unavailable for {string} user type on the path {string} on project ID {int}", (user_type, path, pid) => {
-    cy.verify_user_rights_unavailable(user_type, path, pid, false)
+    cy.verify_user_rights_unavailable(user_type, path, pid, true)
 })
