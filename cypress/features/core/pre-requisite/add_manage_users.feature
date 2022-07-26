@@ -14,9 +14,9 @@ Scenario: 2- Visible Pages
 Scenario: 3- Save User Settings System Configurations 
     When I click on the link labeled "User Settings"
     Then I should see "System-level User Settings" 
-    And I select "No, only Administrators can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
+    When I select "No, only Administrators can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
     Then I should see "No, only Administrators can move projects to production"
-    And I click on the input button labeled "Save Changes"
+    When I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
 Scenario: 4- Display User Management for Table-based Authentication Page 
@@ -34,9 +34,9 @@ Scenario: 5- Create a user
     Then I should see "User has been successfully saved."
     And I should see "An email with login information was sent to: user1115@redcap.edu"
     
-Scenario: 6- Log out
+Scenario: 6- Log out as admin1115
     When I click on the link labeled "Log out"
-    then I should see "Please log in with your user name and password"
+    Then I should see "Please log in with your user name and password"
 
 #Scenario: 7- Change password for user 1115_1
     #aldefouw will handle password change feature test
@@ -46,9 +46,9 @@ Scenario: 8- Login as admin1115
 Scenario: 9- Bulk Create users 
     When I click on the link labeled "Add Users (Table-based Only)" 
     Then I should see "User Management for Table-based Authentication"
-    And I click on the link labeled "Create users (bulk upload)"
+    When I click on the link labeled "Create users (bulk upload)"
     Then I should see "In order to perform a bulk upload to create new users"
-    #And I click on the input button labeled "Choose File"
+    #When I click on the input button labeled "Choose File"
 #NOT COMPLETE 
     
 
@@ -70,7 +70,7 @@ Scenario: 11- Prevent a Second User with the Same Username
 Scenario: 12- Find user1115_1 Under Browse Users Page 
     When I click on the link labeled "Browse Users"
     Then I should see "User Search: Search for user by username, first name, last name, or primary email"
-    And I enter "user1115_1" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    When I enter "user1115_1" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     #Then I should see "Username"
 
@@ -80,7 +80,7 @@ Scenario: 13- Cancel Suspend user1115_1 Account
     And I click on the button labeled "Search"
     #And I click on the input button labeled "Suspend user account"
     #Then I should see "Do you wish to suspend this user’s REDCap account?"
-    #And I click on the button labeled "Cancel"
+    #When I click on the button labeled "Cancel"
     #Then I should not see "Success! The user has now been suspended from REDCap."
 
 
@@ -93,25 +93,55 @@ Scenario: 14- Suspend user1115_1 Account
     #Then I should see time of suspension field updated to current day and time
 
 
-Scenario: 15- Login with Suspended User Account
+#Scenario: 15- Login with Suspended User Account
+    #When I click on the link labeled "Log out"
+    #And I enter "user1115_1" into the field labeled "Username:"
+    #And I enter "1115_1Pswd" into the field labeled "Password:" 
+    #And I click on the button labeled "Log In"
+    #Then I should see "The following REDCap user account has been suspended"
+
+Scenario: 16- View user1115_1 in Suspended Users List
+    When I click on the link labeled "Browse Users"
+    Then I should see "User Search: Search for user by username, first name, last name, or primary email"
+    When I click on the link labeled "View User List By Criteria"
+    And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
+    And I click on the button labeled "Display User List"
+    #Then I should see a link labeled "user1115_1"
+
+Scenario: 17- Cancel Unsuspend user1115_1 Account
+    When I click on the link labeled "Browse Users"
+    And I click on the link labeled "View User List By Criteria"
+    And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
+    And I click on the button labeled "Display User List"
+    #And I click on the checkbox identified by "select[name=uiid_7]"
+    #And I click on the button labeled "Unsuspend user"
+    #Then I should see "Process sponsor request: Unsuspend user"
+    #When I click on the button labeled "Cancel"
+    #Then I should see a link labeled "user1115_1"
+
+Scenario: 18- Unsuspend user1115_1 Account
+    When I click on the link labeled "Browse Users"
+    And I click on the link labeled "View User List By Criteria"
+    And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
+    And I click on the button labeled "Display User List"
+    #And I click on the checkbox identified by "select[name=uiid_7]"
+    #And I click on the button labeled "Unsuspend user"
+    #Then I should see "Process sponsor request: Unsuspend user"
+    #When I click on the button labeled "Unsuspend user"
+    #Then I should see "The changes have been made successfully to the selected users!"
+
+Scenario: 19- Log out as admin1115
     When I click on the link labeled "Log out"
-    And I enter "user1115_1 " into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:"
-    
-    
+    Then I should see "Please log in with your user name and password"
 
-
-
-
-
-
-
-
-
-
-
-
-
+#Scenario: 20- Log in and out as user1115_1
+    #When I click on the link labeled "Log out"
+    #And I enter "user1115_1" into the field labeled "Username:"
+    #And I enter "1115_1Pswd" into the field labeled "Password:" 
+    #And I click on the button labeled "Log In"
+    #Then I should see a link labeled "Control Center"
+    #When I click on the link labeled "Log out"
+    #Then I should see "Please log in with your user name and password"
 
 
 
