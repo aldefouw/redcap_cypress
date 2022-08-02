@@ -92,7 +92,17 @@ Given('I select {string} from the dropdown identified by {string}', (value,label
     cy.get(label).select(value, { force: true })
 })
 
+Given("I click on the element identified by {string}", (sel) => {
+    cy.get(sel).click()
+})
 
+Given("I click on the checkbox identified by {string}", (sel) => {
+    cy.get(sel).click()
+})
+
+Given("I enter {string} into the field identified by {string}", (text, sel) => {
+    cy.get(sel).clear().type(text)
+})
 
 
 // Given(/^I should be able to locate and visit the Control Center link labeled and titled "(.*)"?$/, (link_label, title) => {
