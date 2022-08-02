@@ -25,14 +25,12 @@ Scenario: 4- Display User Management for Table-based Authentication Page
     Then I should see "User Management for Table-based Authentication"
 
 Scenario: 5- Create a user 
-        #this step passes to allow future tests to pass but needs checkbox
     When I click on the link labeled "Add Users (Table-based Only)" 
     And I enter "user1115_1" into the field labeled "Username:"
     And I enter "User1" into the field labeled "First name:"
     And I enter "1115_1" into the field labeled "Last name:"
     And I enter "user1115@redcap.edu" into the field labeled "Primary email:"
-    #And I click on the checkbox identified by "select[name=     ?????     ]"
-        #checkbox needs step definition
+        #checkbox for "Allow this user to request that projects be created for them by a REDCap administrator?" is already checked
     And I click on the input button labeled "Save"
     Then I should see "User has been successfully saved."
     And I should see "An email with login information was sent to: user1115@redcap.edu"
@@ -84,7 +82,7 @@ Scenario: 13- Cancel Suspend user1115_1 Account
     Then I should see "Do you wish to suspend this user’s REDCap account?"
         #this popup no longer exists, it just suspends the account immediately 
     When I click on the button labeled "Cancel"
-    Then I should not see "Success! The user has now been suspended from REDCap."
+    Then I should NOT see "Success! The user has now been suspended from REDCap."
 
 Scenario: 14- Suspend user1115_1 Account
     When I click on the link labeled "Browse Users"
@@ -118,21 +116,20 @@ Scenario: 17- Cancel Unsuspend user1115_1 Account
     And I click on the link labeled "View User List By Criteria"
     And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
     And I click on the button labeled "Display User List"
-    And I click on the checkbox identified by "select[name=uiid_7]"
-        #checkbox needs step definition
+    And I click on the checkbox identified by "[name=uiid_7]"
     And I click on the button labeled "Unsuspend user"
     Then I should see "Process sponsor request: Unsuspend user"
     When I click on the button labeled "Cancel"
-    Then I should not see "The changes have been made successfully to the selected users!"
+    Then I should NOT see "The changes have been made successfully to the selected users!"
 
 Scenario: 18- Unsuspend user1115_1 Account
     When I click on the link labeled "Browse Users"
     And I click on the link labeled "View User List By Criteria"
     And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
     And I click on the button labeled "Display User List"
-    And I click on the checkbox identified by "select[name=uiid_7]"
-        #checkbox needs step definition
+    And I click on the checkbox identified by "[name=uiid_7]"
     And I click on the button labeled "Unsuspend user"
+        #it detects the "Unsuspend user" button under the popup screen not the one in the popup screen
     Then I should see "Process sponsor request: Unsuspend user"
     When I click on the button labeled "Unsuspend user"
     Then I should see "The changes have been made successfully to the selected users!"
@@ -177,7 +174,7 @@ Scenario: 23- Find user1115_2 Under Browse Users Page by Last name and Cancel De
     When I click on the button labeled "Delete user from system"
     Then I should see "Do you wish to delete this user’s REDCap account?"
     When I click on the button labeled "Cancel"
-    Then I should not see "The user 'user1115_2' has now been removed and deleted from all REDCap projects"
+    Then I should NOT see "The user 'user1115_2' has now been removed and deleted from all REDCap projects"
 
 Scenario: 24- Delete User user1115_2 from System
     When I click on the link labeled "Browse Users"
@@ -221,24 +218,24 @@ Scenario: 29- Cancel Change password for user 1115_4 through Browse Users
     Then I should see "User1"
         #program doesnt detect "User1"
     And I should see "User2"
-        #program doesnt detect "User2"
+        #program doesnt detect "User2" - not created
     And I should see "User3"
-        #program doesnt detect "User3"
+        #program doesnt detect "User3" - not created
     And I should see "User4"
-        #program doesnt detect "User4"
-    When I click on the checkbox identified by "select[name=     ?????     ]"
-        #checkbox needs step definition
+        #program doesnt detect "User4" - not created
+    When I click on the checkbox identified by "[name=     ?????     ]"
+        #need checkbox name or id (user1115_4 does not exist)
     And I click on the button labeled "Reset password"
     Then I should see "RESET PASSWORD FOR USER"
     When I click on the button labeled "Cancel"
     Then I should not see "An email has been sent to user1115.4@redcap.edu with a new temporary password"
 
-Scenario: 30- Change password for user 1115_4 through Browse Users
+Scenario: 30- Change password for user1115_4 through Browse Users
     When I click on the link labeled "Browse Users"
     And I click on the link labeled "View User List By Criteria"
     And I click on the button labeled "Display User List"
-    And I click on the checkbox identified by "select[name=     ?????     ]"
-        #checkbox needs step definition
+    And I click on the checkbox identified by "[name=     ????     ]"
+        #need checkbox name or id (user1115_4 does not exist)
     And I click on the button labeled "Reset password"
     Then I should see "RESET PASSWORD FOR USER"
     When I click on the button labeled "Reset password"
@@ -254,8 +251,8 @@ Scenario: 31- Log Into user1115_4 with Old Password
 
 #Scenario: 32- Login to user1115_4 with New Password Email Link
         #aldefouw will handle 
-    #And I should not see a link labeled "Control Center"
-    #And I should not see a link labeled "Create New Project"
+    #And I should NOT see a link labeled "Control Center"
+    #And I should NOT see a link labeled "Create New Project"
 
 Scenario: 33- Change primary Email for user1115_4 
     When I click on the link labeled "Browse Users"
@@ -283,16 +280,15 @@ Scenario: 35- Add user1115_5
     And I enter "User5" into the field labeled "First name:"
     And I enter "1115_5" into the field labeled "Last name:"
     And I enter "user1115.5@redcap.edu" into the field labeled "Primary email:"
-    And I click on the checkbox identified by "select[name=     ?????     ]"
-        #checkbox needs step definition
+        #checkbox for "Allow this user to create or copy projects" is already checked
     And I click on the input button labeled "Save"
     Then I should see "User has been successfully saved."
     And I should see "An email with login information was sent to: user1115.5@redcap.edu"
 
 #Scenario: 36- Change password for user 1115_1 from email link 
         #aldefouw will handle password change feature test
-    #And I should not see a link labeled "Control Center"
-    #And I should not see a link labeled "Create New Project"
+    #And I should NOT see a link labeled "Control Center"
+    #And I should NOT see a link labeled "Create New Project"
 
 Scenario: 37- Edit Security & Authentication settings 
     When I click on the link labeled "Security & Authentication"
