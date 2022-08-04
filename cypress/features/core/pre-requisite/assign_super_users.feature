@@ -36,7 +36,14 @@ Scenario: 2- Control Center Links Visible
 
 Scenario: 3- Administrator Privileges Page Visible
     When I click on the link labeled "Administrator Privileges"
-    Then I should see "Set REDCap Administrator Privileges"
+    Then I should see "Set Administrator Privileges"
+    And I should see "Access to all projects and data with maximum user privileges"
+        #doesnt detect these in the table
+    And I should see "Manage user accounts"
+    And I should see "Modify system configuration pages"
+    And I should see "Perform REDCap upgrades"
+    And I should see "Install, upgrade, and configure External Modules"
+    And I should see "Access to Control Center dashboards"
 
 Scenario: 4 & 5- Add user1115_1 to Administrator List
     When I click on the link labeled "Administrator Privileges"
@@ -44,7 +51,7 @@ Scenario: 4 & 5- Add user1115_1 to Administrator List
     And I click on the checkbox identified by "[id=0-admin_rights]"
     And I click on the button labeled "Add"
     Then I should see "The user user1115_1 has now been granted one or more administrator privileges"
-        #program doesnt detect message or ok button in popup screen
+        #doesnt detect messge in popup screen 
     When I click on the button labeled "OK"
     Then I should see "user1115_1"
 
@@ -64,9 +71,8 @@ Scenario: 7, 8, and 9- Grant user1115_3 Administrator Privileges
     And I enter "user1115_3" into the field identified by "[id=user_search]"
     And I click on the checkbox identified by "[id=0-account_manager]"
     And I click on the button labeled "Add"
-        #user1115_3 does not exist (file in add manage users not uploaded)
     Then I should see "The user user1115_3 has now been granted one or more administrator privileges"
-        #program doesnt detect message or ok button in popup screen
+        #doesnt detect message or ok button in popup screen
     When I click on the button labeled "OK"
     Then I should see "user1115_3"
 
@@ -111,6 +117,7 @@ Scenario: 12- Verify user1115_3 Maximum User Privileges Priveledges
         #come back to this once password is reset
 
 Scenario: 13- View All Projects Page
+    When I click on the link labeled "Log out"
     And I enter "user1115_3" into the field labeled "Username:"
     And I enter "PASSWORD HERE" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
@@ -121,6 +128,7 @@ Scenario: 13- View All Projects Page
     Then I should see a link labeled "Classic Database"
 
 Scenario: 14 - View and Edit Project Settings Page 
+    When I click on the link labeled "Log out"
     And I enter "user1115_3" into the field labeled "Username:"
     And I enter "PASSWORD HERE" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
@@ -185,14 +193,16 @@ Scenario: 18- Verify user1115_3 Maximum User Privileges Priveledges
     And I should see "Miscellaneous Modules"
     And I should see "System Configuration"
         #not sure how to ensure a link is read only 
-        #come back to this once password is reset
+        #come back to this once password is reset - Something like ‘I should see an element identified by “[readonly=‘readonly’]” containing the text “foo”’
 
 Scenario: 19- Switch user1115_1 and user1115_3 to no admin privileges
     When I click on the link labeled "Administrator Privileges"
     And I click on the checkbox identified by "[id=8-access_admin_dashboards]"
     And I click on the checkbox identified by "[id=7-admin_rights]"
     And I click on the link labeled "Log out"
-    And I am an "admin" user who logs into REDCap
+    Then I enter "test_admin" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
+    And I click on the button labeled "Log In"
     And I click on the link labeled "Administrator Privileges"
     Then I should NOT see "user1115_1"
     And I should NOT see "user1115_1"
