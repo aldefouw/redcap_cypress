@@ -7,6 +7,8 @@ Background:
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center" page
 
+Scenario: 1- Login as admin1115
+
 Scenario: 2- Visible Pages
     When I click on the link labeled "User Settings"
     Then I should see "System-level User Settings" 
@@ -15,8 +17,7 @@ Scenario: 3- Save User Settings System Configurations
     When I click on the link labeled "User Settings"
     Then I should see "System-level User Settings" 
     When I select "No, only Administrators can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
-    Then I should see "No, only Administrators can move projects to production"
-        #I think these switch, someties thay show correctly in the snapshot, sometimes not
+    And I select "No" from the dropdown identified by "select[name=allow_create_db_default]"
     When I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
@@ -33,31 +34,27 @@ Scenario: 5- Create a user
         #checkbox for "Allow this user to request that projects be created for them by a REDCap administrator?" is already checked
     And I click on the input button labeled "Save"
     Then I should see "User has been successfully saved."
+    And I should see "An email with login information was sent to: user1115@redcap.edu"
 
-Scenario: Bulk Create users 
+#Scenario: 6- Logout as admin1115
+
+#Scenario: 7 - Reset password through email link 
+    #aldefouw will handle password change feature test
+
+#Scenario 8- Login as admin1115
+
+Scenario: 9- Bulk Create users 
     When I click on the link labeled "Add Users (Table-based Only" 
     And I click on the link labeled "Create users (bulk upload)"
     And I upload a "csv" format file located at "import_files/core/02_AddManageUsersv1115_userbulkupload.csv", by clicking "input[name=fname]" to select the file, and clicking "input[name=submit]" to upload the file
-
-    #NOT COMPLETE
-    #And I click on the link labeled "Create single user "
-    #Then  I should see "To create a new user (Table-based authentication ONLY), provide the new user name along"
-
-
-Scenario: 8- Login as admin1115
-
-Scenario: 9- Bulk Create users 
-    When I click on the link labeled "Add Users (Table-based Only)" 
-    Then I should see "User Management for Table-based Authentication"
-    When I click on the link labeled "Create users (bulk upload)"
-    Then I should see "In order to perform a bulk upload to create new users"
-    When I click on the button labeled "Choose File"
-        #does not find this button
-        #can not upload file
+    And I should see "User was successfully added, and an email with login info was sent to user"
+    And I should see "user1115_2"
+    And I should see "user1115_3"
+    And I should see "user1115_4"
 
 Scenario: 10- Display Create Single User Page 
-    When I click on the link labeled "Add Users (Table-based Only)" 
-    Then I should see "To create a new user (Table-based authentication ONLY)"
+    When I click on the link labeled "Add Users (Table-based Only"  
+    Then I should see "To create a new user"
 
 Scenario: 11- Prevent a Second User with the Same Username
     When I click on the link labeled "Add Users (Table-based Only)" 
@@ -73,8 +70,11 @@ Scenario: 12- Find user1115_1 Under Browse Users Page
     Then I should see "User Search: Search for user by username, first name, last name, or primary email"
     When I enter "user1115_1" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
+    And I want to pause   
+        #this works but may or may not be what we want
     Then I should see "User1"
-        #program doesnt detect "User1" in popup screen
+    
+#### 
 
 Scenario: 13- Cancel Suspend user1115_1 Account
     When I click on the link labeled "Browse Users"
