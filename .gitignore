@@ -23,3 +23,5 @@ cypress.env.json
 /mysql
 
 mysql-cli.zip
+
+/.vscode

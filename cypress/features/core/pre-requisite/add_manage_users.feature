@@ -33,14 +33,16 @@ Scenario: 5- Create a user
         #checkbox for "Allow this user to request that projects be created for them by a REDCap administrator?" is already checked
     And I click on the input button labeled "Save"
     Then I should see "User has been successfully saved."
-    And I should see "An email with login information was sent to: user1115@redcap.edu"
-    
-Scenario: 6- Log out as admin1115
-    When I click on the link labeled "Log out"
-    Then I should see "Please log in with your user name and password"
 
-#Scenario: 7- Change password for user 1115_1 from email link
-        #aldefouw will handle password change feature test
+Scenario: Bulk Create users 
+    When I click on the link labeled "Add Users (Table-based Only" 
+    And I click on the link labeled "Create users (bulk upload)"
+    And I upload a "csv" format file located at "import_files/core/02_AddManageUsersv1115_userbulkupload.csv", by clicking "input[name=fname]" to select the file, and clicking "input[name=submit]" to upload the file
+
+    #NOT COMPLETE
+    #And I click on the link labeled "Create single user "
+    #Then  I should see "To create a new user (Table-based authentication ONLY), provide the new user name along"
+
 
 Scenario: 8- Login as admin1115
 
