@@ -84,6 +84,12 @@ Given('I enter {string} into the field labeled {string}', (text, label) => {
     })
 })
 
+Given('I clear the field labeled {string}', (label) => {
+    cy.contains(label).then(($label) => {
+        cy.wrap($label).parent().find('input').clear()
+    })
+})
+
 Given('I click on the table cell containing a link labeled {string}', (text) => {
     cy.get('td').contains(text).parent().find('a').click()
 })
