@@ -73,12 +73,10 @@ Scenario: 12- Find user1115_1 Under Browse Users Page
     And I want to pause   
         #this works but may or may not be what we want
     Then I should see "User1"
-    
-#### 
 
 Scenario: 13- Cancel Suspend user1115_1 Account
     When I click on the link labeled "Browse Users"
-    And I enter "user1115_1" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I enter "test_user" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     And I click on the input button labeled "Suspend user account"
     Then I should see "Do you wish to suspend this user’s REDCap account?"
@@ -88,7 +86,7 @@ Scenario: 13- Cancel Suspend user1115_1 Account
 
 Scenario: 14- Suspend user1115_1 Account
     When I click on the link labeled "Browse Users"
-    And I enter "user1115_1" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I enter "test_user" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     And I click on the input button labeled "Suspend user account"
         #suspended in last scenario 
@@ -98,11 +96,10 @@ Scenario: 14- Suspend user1115_1 Account
 
 Scenario: 15- Login with Suspended User Account
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:"
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
-    Then I should see "The following REDCap user account has been suspended"
+    Then I should see "The following REDCap user account has been suspended:"
 
 Scenario: 16- View user1115_1 in Suspended Users List
     When I click on the link labeled "Browse Users"
@@ -110,15 +107,18 @@ Scenario: 16- View user1115_1 in Suspended Users List
     When I click on the link labeled "View User List By Criteria"
     And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
     And I click on the button labeled "Display User List"
-    Then I should see a link labeled "user1115_1"
-        #program doesnt detect "user1115_1" in popup screen
+    And I want to pause
+        #this works but may or may not be what we want
+    Then I should see a link labeled "test_user"       
 
 Scenario: 17- Cancel Unsuspend user1115_1 Account
     When I click on the link labeled "Browse Users"
     And I click on the link labeled "View User List By Criteria"
     And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
     And I click on the button labeled "Display User List"
-    And I click on the checkbox identified by "[name=uiid_7]"
+    And I want to pause
+        #this works but may or may not be what we want
+    And I click on the checkbox identified by "[name=uiid_2]"
     And I click on the button labeled "Unsuspend user"
     Then I should see "Process sponsor request: Unsuspend user"
     When I click on the button labeled "Cancel"
@@ -129,16 +129,18 @@ Scenario: 18- Unsuspend user1115_1 Account
     And I click on the link labeled "View User List By Criteria"
     And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
     And I click on the button labeled "Display User List"
-    And I click on the checkbox identified by "[name=uiid_7]"
-    And I click on the button labeled "Unsuspend user"
-        #it detects the "Unsuspend user" button under the popup screen not the one in the popup screen
-    Then I should see "Process sponsor request: Unsuspend user"
-    When I click on the button labeled "Unsuspend user"
-    Then I should see "The changes have been made successfully to the selected users!"
+    And I want to pause
+        #this works but may or may not be what we want
+    And I click on the link labeled "test_user"
+    And I click on the link labeled "unsuspend user"
+    And I want to pause
+    Then I should see "Success! The user has now been unsuspended and will now be able to access REDCap again." 
 
 Scenario: 19- Log out as admin1115
     When I click on the link labeled "Log out"
     Then I should see "Please log in with your user name and password"
+
+###
 
 Scenario: 20- Log in and out as user1115_1
     When I click on the link labeled "Log out"
