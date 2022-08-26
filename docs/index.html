@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset='utf-8'>
+  <title>redcap_cypress 1.0.0 | Documentation</title>
+  <meta name='description' content='This repository is a template to assist you in writing **automated tests for REDCap**.'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='assets/bass.css' rel='stylesheet'>
+  <link href='assets/style.css' rel='stylesheet'>
+  <link href='assets/github.css' rel='stylesheet'>
+  <link href='assets/split.css' rel='stylesheet'>
+</head>
+<body class='documentation m0'>
+    <div class='flex'>
+      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
+        <div class='py1 px2'>
+          <h3 class='mb0 no-anchor'>redcap_cypress</h3>
+          <div class='mb1'><code>1.0.0</code></div>
+          <input
+            placeholder='Filter'
+            id='filter-input'
+            class='col12 block input'
+            spellcheck='false'
+            autocapitalize='off'
+            autocorrect='off'
+            type='text' />
+          <div id='toc'>
+            <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#projectsetup'
+                  class="">
+                    ProjectSetup - I should see that surveys are &lt;enabled/disabled&gt;
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#projectsetup'
+                  class="">
+                    ProjectSetup - I should see that longitudinal mode is &lt;enabled/disabled&gt;
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#visibility'
+                  class="">
+                    Visibility - I should see {string}
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#visibility'
+                  class="">
+                    Visibility - I should see NOT {string}
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#visibility'
+                  class="">
+                    Visibility - I should see {string} in the title
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#visibility'
+                  class="">
+                    Visibility - I should see a link labeled {string}
+                  
+                </a>
+                
+                </li>
+              
+            </ul>
+          </div>
+          <div class='mt1 h6 quiet'>
+            <a href='https://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+          </div>
+        </div>
+      </div>
+      <div id='split-right' class='relative overflow-auto height-viewport-100'>
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+
+    
+    <h3 class='fl m0' id='projectsetup'>ProjectSetup</h3>
+    
+
+    
+    <h2 class='fl mb0 mt0' id='projectsetup'>
+      
+        
+          
+          I should see that surveys are &lt;enabled/disabled&gt;
+        
+      
+    </h2>
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>state</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the state of the button
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Visually verify whether Survey functionality is enabled or disabled in the project.</p>
+
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+
+    
+    <h3 class='fl m0' id='projectsetup'>ProjectSetup</h3>
+    
+
+    
+    <h2 class='fl mb0 mt0' id='projectsetup'>
+      
+        
+          
+          I should see that longitudinal mode is &lt;enabled/disabled&gt;
+        
+      
+    </h2>
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>state</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the state of the button
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Visually verify whether Longitudinal functionality is enabled or disabled in the project.</p>
+
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+
+    
+    <h3 class='fl m0' id='visibility'>Visibility</h3>
+    
+
+    
+    <h2 class='fl mb0 mt0' id='visibility'>
+      
+        
+          
+          I should see {string}
+        
+      
+    </h2>
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the text visually seen on screen
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Visually verify that text exists within the HTML object.</p>
+
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+
+    
+    <h3 class='fl m0' id='visibility'>Visibility</h3>
+    
+
+    
+    <h2 class='fl mb0 mt0' id='visibility'>
+      
+        
+          
+          I should see <span class="hljs-variable constant_">NOT</span> {string}
+        
+      
+    </h2>
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the text visually seen on screen
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Visually verify that text does NOT exist within the HTML object.</p>
+
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+
+    
+    <h3 class='fl m0' id='visibility'>Visibility</h3>
+    
+
+    
+    <h2 class='fl mb0 mt0' id='visibility'>
+      
+        
+          
+          I should see {string} <span class="hljs-keyword">in</span> the title
+        
+      
+    </h2>
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>title</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the HTML page title
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Visually verify that text does exist in the HTML page title.</p>
+
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+
+    
+    <h3 class='fl m0' id='visibility'>Visibility</h3>
+    
+
+    
+    <h2 class='fl mb0 mt0' id='visibility'>
+      
+        
+          
+          I should see a link labeled {string}
+        
+      
+    </h2>
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>label</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the label on an anchor tag
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Visually verify that there is a link with a specific label.</p>
+
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+      </div>
+    </div>
+  <script src='assets/anchor.js'></script>
+  <script src='assets/split.js'></script>
+  <script src='assets/site.js'></script>
+</body>
+</html>
