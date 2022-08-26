@@ -12,7 +12,7 @@ Given("I should see {string}", (text) => {
 
 /**
  * @module Visibility
- * @example I should see NOT {string}
+ * @example I should NOT see {string}
  * @param {string} text the text visually seen on screen
  * @description Visually verify that text does NOT exist within the HTML object.
  */
