@@ -31,7 +31,6 @@ document.getElementById('filter-input').addEventListener('keyup', function (e) {
   if (!value.match(/^\s*$/)) {
     match = function (element) {
       if(element.getElementsByTagName('a').length){
-        console.log(element.getElementsByTagName('a')[0])
         var html = element.getElementsByTagName('a')[0].innerText;
         return html && html.toLowerCase().indexOf(value) !== -1;
       }
@@ -72,9 +71,9 @@ function showHashTarget(targetId) {
     var hashTarget = document.getElementById(targetId);
     // new target is hidden
     if (
-        hashTarget &&
-        hashTarget.offsetHeight === 0 &&
-        hashTarget.parentNode.parentNode.classList.contains('display-none')
+      hashTarget &&
+      hashTarget.offsetHeight === 0 &&
+      hashTarget.parentNode.parentNode.classList.contains('display-none')
     ) {
       hashTarget.parentNode.parentNode.classList.remove('display-none');
     }
@@ -136,11 +135,11 @@ Split(['#split-left', '#split-right'], {
 
 function updateState() {
   history.replaceState(
-      {
-        left_top: split_left.scrollTop,
-        right_top: split_right.scrollTop
-      },
-      document.title
+    {
+      left_top: split_left.scrollTop,
+      right_top: split_right.scrollTop
+    },
+    document.title
   );
 }
 

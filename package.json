@@ -11,7 +11,6 @@
     "cypress-cucumber-preprocessor": "^4.3.1",
     "cypress-iframe": "1.0.1",
     "documentation": "^14.0.0",
-    "jsdoc": "^3.6.11",
     "redcap_cypress_doc_theme": "aldefouw/redcap_cypress_doc_theme",
     "sed-lite": "0.8.2",
     "shelljs": "0.8.5"
@@ -28,8 +27,5 @@
     "url": "https://github.com/aldefouw/redcap_cypress.git"
   },
   "author": "Adam De Fouw",
-  "license": "MIT",
-  "dependencies": {
-    "decamelize": "^6.0.0"
-  }
+  "license": "MIT"
 }
