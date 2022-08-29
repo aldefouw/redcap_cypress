@@ -355,6 +355,37 @@ Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector) => {
     })
 })
 
+//Downloads data dictionary to the directory specified by Cypress.config('downloadsFolder')
+Cypress.Commands.add('download_data_dictionary', (pid) => {
+
+    cy.get('body').then(($body) => {
+        //if DD download link is absent, check for PID
+        if ($body.find('a:contains("Download the current Data Dictionary")').length === 0) {
+            //if PID is not specified, throw error
+            if (pid === undefined) {
+                throw new Error('Unable to locate the link to download the data dictionary'
+                + ' on the current page. Please specify a project ID.')
+            }
+            //if PID is specified, visit project setup page for that PID
+            cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=' + pid})
+        }
+    })
+    
+    //Proceed to click the download link
+  
+    //Needed to prevent test from failing on expected timeout due to
+    //side effect of clicking on a link
+    cy.window().document().then(function (doc) {
+        doc.addEventListener('click', () => {
+            setTimeout(function () {
+                doc.location.reload()
+            }, 2000)
+        })
+
+        cy.intercept('**/Design/data_dictionary_download.php?pid=**').as('data_dictionary')
+        cy.get('a').contains('Download the current Data Dictionary').click()
+    }) 
+})
 
 Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format = "DMY") => {
 
