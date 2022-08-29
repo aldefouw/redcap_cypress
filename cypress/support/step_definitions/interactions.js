@@ -153,7 +153,3 @@ Given('I click on the table cell containing a link labeled {string}', (text) => 
 Given('I select {string} from the dropdown identified by {string}', (value,label) => {
     cy.get(label).select(value, { force: true })
 })
-
-// Given(/^I should be able to locate and visit the Control Center link labeled and titled "(.*)"?$/, (link_label, title) => {
-//     cy.contains_cc_link(link_label, title)
-// })
