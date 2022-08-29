@@ -1,6 +1,6 @@
 {
   "name": "redcap_cypress",
-  "version": "1.0.0",
+  "version": "11.1.5",
   "description": "This repository is a template to assist you in writing **automated tests for REDCap**.",
   "main": "index.js",
   "devDependencies": {
@@ -10,11 +10,11 @@
     "cypress": "9.7.0",
     "cypress-cucumber-preprocessor": "^4.3.1",
     "cypress-iframe": "1.0.1",
-    "sed-lite": "0.8.2",
-    "shelljs": "0.8.5",
-    "jsdoc": "^3.6.11",
     "documentation": "^14.0.0",
-    "redcap_cypress_doc_theme": "aldefouw/redcap_cypress_doc_theme"
+    "jsdoc": "^3.6.11",
+    "redcap_cypress_doc_theme": "aldefouw/redcap_cypress_doc_theme",
+    "sed-lite": "0.8.2",
+    "shelljs": "0.8.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -28,5 +28,8 @@
     "url": "https://github.com/aldefouw/redcap_cypress.git"
   },
   "author": "Adam De Fouw",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "decamelize": "^6.0.0"
+  }
 }
