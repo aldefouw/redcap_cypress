@@ -30,42 +30,6 @@ Given("I click on the input button labeled {string}", (text) => {
     cy.get('input[value="' + text + '"]').click()
 })
 
-Given("I click on the bubble for the {string} data collection instrument instrument for record ID {string}", (text, record_id) => {
-    let link_location = null
-
-    cy.get('table#record_status_table').within(() => {
-        cy.get('th').then(($th) => {
-            Cypress.$.each($th, (index, th) => {
-                if(th.innerText === text){
-                    cy.get('tr').then(($tr) => {
-                        Cypress.$.each($tr, (tri, tr) => {
-                            if(tri > 0) {
-                                cy.wrap(tr).within(() => {
-                                    cy.get('td').then((td) => {
-                                        if(td[0].innerText === record_id){
-                                            Cypress.$.each(td, (tdi, $td) => {
-                                                if(tdi === index){
-                                                    cy.wrap($td).within(() => {
-                                                        cy.get('a').then(($a) => {
-                                                           link_location = $a
-                                                        })
-                                                    })
-                                                }
-                                            })
-                                        }
-                                    })
-                                })
-                            }
-                        })
-                    })
-                }
-            })
-        })
-    }).then(() => {
-       cy.wrap(link_location).click()
-    })
-})
-
 /**
  * @module Interactions
  * @example I edit the field labeled {string}
@@ -92,30 +56,6 @@ Given("I mark the field required", () => {
  */
 Given("I save the field", () => {
     cy.save_field()
-})
-
-/**
- * @module Interactions
- * @example I want to pause
- * @description Pauses the Cypress session. NOTE: Should only be used during development of tests.
- */
-Given("I want to pause", () => {
-    cy.pause()
-})
-
-/**
- * @module Interactions
- * @example I should be able to locate and visit the Control Center link labeled "" and see the title ""
- * @param {string} link_label - the name of the link label in the Control Center panel
- * @param {string} title - the title of the page visited (optional)
- * @description Verifies a Control Center link is visible and visitable.
- */
-Given(/^I should be able to locate and visit the Control Center link labeled "(.*)"(?: and see the title "(.*)")?$/, (link_label, title) => {
-    if(title !== undefined){
-        cy.contains_cc_link(link_label, title)
-    } else {
-        cy.contains_cc_link(link_label)
-    }
 })
 
 /**
