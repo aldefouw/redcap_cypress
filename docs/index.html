@@ -29,6 +29,36 @@
               
                 
                 <li><a
+                  href='#dataimport'
+                  class="">
+                    DataImport - I upload a data dictionary located at {string} to project ID {int}
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#dataimport'
+                  class="">
+                    DataImport - I upload import data from the data import file located at {string} to project ID {int}
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#dataimport'
+                  class="">
+                    DataImport - I upload a {string} format file located at {string}, by clicking {string} to select the file, and clicking {string} to upload the file
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#interactions'
                   class="">
                     Interactions - I click on the button labeled {string}
@@ -375,6 +405,276 @@
         </div>
       </div>
       <div id='split-right' class='relative overflow-auto height-viewport-100'>
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+
+    
+    <h3 class='fl m0' id='dataimport'>DataImport</h3>
+    
+
+    
+    <h2 class='fl mb0 mt0' id='dataimport'>
+      
+        
+          
+          I upload a data dictionary located at {string} to project <span class="hljs-variable constant_">ID</span> {int}
+        
+      
+    </h2>
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>data_dictionary</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the path to the desired data dictionary located within the /fixtures/dictionaries/ folder.
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>pid</span> <code class='quiet'>(int)</code>
+  	    the Project ID where the data dictionary should be upploaded (e.g. 13)
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Uploads a data dictionary to a specific project given a Project ID.</p>
+
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+
+    
+    <h3 class='fl m0' id='dataimport'>DataImport</h3>
+    
+
+    
+    <h2 class='fl mb0 mt0' id='dataimport'>
+      
+        
+          
+          I upload <span class="hljs-keyword">import</span> data <span class="hljs-keyword">from</span> the data <span class="hljs-keyword">import</span> file located at {string} to project <span class="hljs-variable constant_">ID</span> {int}
+        
+      
+    </h2>
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>import_file</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the path to the desired data import file located within the /fixtures/import_files/ folder.
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>pid</span> <code class='quiet'>(int)</code>
+  	    the Project ID where the data dictionary should be upploaded (e.g. 13)
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Imports well-formed REDCap data import file to a specific project given a Project ID.</p>
+
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+          <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+
+    
+    <h3 class='fl m0' id='dataimport'>DataImport</h3>
+    
+
+    
+    <h2 class='fl mb0 mt0' id='dataimport'>
+      
+        
+          
+          I upload a {string} format file located at {string}, by clicking {string} to select the file, and clicking {string} to upload the file
+        
+      
+    </h2>
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>format</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the format of the file that is being uploaded (e.g. csv)
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>file_location</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the location of the file being uploaded (e.g. import_files/core/filename.csv)
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>upload_selector</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the selector of the upload field (e.g. input[name=fname])
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>button_selector</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the selector of the button to push in order to upload the specified file (e.g. input[name=submit])
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Imports well-formed REDCap data import file (of specific type) to a specific project given a Project ID.</p>
+
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
         
           
           <section class='p2 mb2 clearfix bg-white minishadow'>
