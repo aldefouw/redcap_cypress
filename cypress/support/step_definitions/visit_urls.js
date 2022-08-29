@@ -16,7 +16,7 @@ Given(/^I visit the "(.*)" page(?: with parameter string of "(.*)")?$/, (base_fo
 
 /**
  * @module VisitURLs
- * @example I want to pause
+ * @example I visit Project ID {int}
  * @param {int} pid - the URL of the Project you want to visit.
  * @description Visits the root of the Project ID specified.
  */
