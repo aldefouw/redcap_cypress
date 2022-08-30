@@ -70,25 +70,22 @@ Scenario: 12- Find user1115_1 Under Browse Users Page
     Then I should see "User Search: Search for user by username, first name, last name, or primary email"
     When I enter "user1115_1" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
-    And I want to pause   
     Then I should see "User1"
 
-Scenario: 13- Cancel Suspend test_user Account
+Scenario: 13 & 14 - Cancel and Suspend test_user Account
     When I click on the link labeled "Browse Users"
     And I enter "test_user" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
-    And I click on the input button labeled "Suspend user account"
-    And I want to pause
-    Then I should see "Do you wish to suspend this user’s REDCap account?"
-    When I click on the button labeled "Cancel"
-    Then I should NOT see "Success! The user has now been suspended from REDCap."
+    And I should see "User information for"
+    And after the next step, I will cancel a confirmation window containing the text "Do you wish to suspend this user's REDCap account?"
+    When I click on the input button labeled "Suspend user account"
+    Then I should NOT see "Success! The user has now been suspended from REDCap"
+    And I should NOT see "unsuspend user"  
 
-Scenario: 14- Suspend test_user Account
-    When I click on the link labeled "Browse Users"
-    And I enter "test_user" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
-    And I click on the button labeled "Search"
-    And I click on the input button labeled "Suspend user account"
-    Then I should see "Success! The user has now been suspended from REDCap"
+    But after the next step, I will accept a confirmation window containing the text "Do you wish to suspend this user's REDCap account?"
+    Then I click on the input button labeled "Suspend user account"
+    And I should see "Success! The user has now been suspended from REDCap"
+    And I should see "unsuspend user"
 
 Scenario: 15- Login with Suspended User Account
     When I click on the link labeled "Log out"
@@ -111,7 +108,6 @@ Scenario: 17- Cancel Unsuspend test_user Account
     And I click on the link labeled "View User List By Criteria"
     And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
     And I click on the button labeled "Display User List"
-    And I want to pause
     And I click on the checkbox identified by "[name=uiid_2]"
     And I click on the button labeled "Unsuspend user"
     Then I should see "Process sponsor request: Unsuspend user"
@@ -126,7 +122,6 @@ Scenario: 18- Unsuspend test_user Account
     And I want to pause
     And I click on the link labeled "test_user"
     And I click on the link labeled "unsuspend user"
-    And I want to pause
     Then I should see "Success! The user has now been unsuspended and will now be able to access REDCap again." 
 
 Scenario: 19- Log out as admin1115
@@ -144,42 +139,32 @@ Scenario: 21- Find test_user2 Under Browse Users Page
     When I click on the link labeled "Browse Users"
     And I enter "test_user2" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
-    And I want to pause
-    Then I should see a link labeled "test_user2"
+    Then I should see "test_user2"
 
 Scenario: 22- Find test_user2 Under Browse Users Page by email
     When I click on the link labeled "Browse Users"
     And I enter "test_user2@example.com" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
-    And I want to pause
     Then I should see a link labeled "test_user2"
 
-Scenario: 23- Find test_user2 Under Browse Users Page by Last name and Cancel Delete User from System
+Scenario: 23 & 24 - Find test_user2 Under Browse Users Page by Last name and Cancel Delete User from System
     When I click on the link labeled "Browse Users"
     And I enter "User" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
-    And I want to pause
+    And I should see "User information for"
     Then I should see "test_user2"
+    But after the next step, I will cancel a confirmation window containing the text "Are you sure you wish to delete the user from REDCap?"
     When I click on the button labeled "Delete user from system"
-    Then I should see "Do you wish to delete this user’s REDCap account?"
-    When I click on the button labeled "Cancel"
     Then I should NOT see "The user 'test_user2' has now been removed and deleted from all REDCap projects"
 
-Scenario: 24- Delete User test_user2 from System
-    When I click on the link labeled "Browse Users"
-    And I enter "test_user2" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
-    And I click on the button labeled "Search"
-    And I want to pause
+    But after the next step, I will accept a confirmation window containing the text "Are you sure you wish to delete the user from REDCap?"
     And I click on the button labeled "Delete user from system"
-    Then I should see "Do you wish to delete this user’s REDCap account?"
-    When I click on the button labeled "Delete user"
-    Then I should see "The user 'user1115_2' has now been removed and deleted from all REDCap projects"
+    Then I should see "The user 'test_user2' has now been removed and deleted from all REDCap projects"
 
 Scenario: 25- Confirm test_user2 Does Not Exist 
     When I click on the link labeled "Browse Users"
     And I enter "test_user2" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
-    And I want to pause
     Then I should see "User does not exist!"
 
 Scenario: 26- Login with Deleted User Account
@@ -197,21 +182,22 @@ Scenario: 28- Confirm test_user Does Not Have Access to Control Center or Create
     And I enter "test_user" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:"
     And I click on the button labeled "Log In"
-    Then I should NOT see "Control Center"
+    Then I should see "Welcome to REDCap!"
+    And I should NOT see "Control Center"
     And I should NOT see "Create New Project"
 
 Scenario: 29- Cancel Change password for user1115_4 through Browse Users 
     When I click on the link labeled "Browse Users"
     And I click on the link labeled "View User List By Criteria"
     And I click on the button labeled "Display User List"
-    And I want to pause
     Then I should see "user1115_1" 
     Then I should see "user1115_2" 
     Then I should see "user1115_3"
     Then I should see "user1115_4"
     When I click on the checkbox identified by "[name=uiid_10]"
     And I click on the button labeled "Reset password"
-    And I click on the button labeled "Cancel"
+    Then I should see "Process sponsor request:"
+    When I click on the button labeled "Cancel"
     Then I should NOT see "An email has been sent to user1115.4@redcap.edu with a new temporary password"
 
 Scenario: 30- Change password for user1115_4 through Browse Users
@@ -220,7 +206,8 @@ Scenario: 30- Change password for user1115_4 through Browse Users
     And I click on the button labeled "Display User List"
     And I click on the checkbox identified by "[name=uiid_10]"
     And I click on the button labeled "Reset password"
-    And I click on the button labeled "Reset password"
+    Then I should see "Process sponsor request:"
+    When I click on the button labeled "Reset password"
     Then I should see "An email has been sent to user1115.4@redcap.edu with a new temporary password"
 
 #Scenario: 31- Log Into user1115_4 with Old Password
@@ -233,11 +220,11 @@ Scenario: 33- Change primary Email for user1115_4
     When I click on the link labeled "Browse Users"
     And I enter "user1115_4" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
-    And I want to pause
-    And I click on the button labeled "Edit user info"
+    Then I should see "User information for"
+    When I click on the button labeled "Edit user info"
     And I enter "tester@test.edu" into the field labeled "Primary email:"
     And I click on the input button labeled "Save"
-    Then I should see "User has been successfully saved"
+    Then I should see "The user's primary email was changed, and the user was notified about this change."
     And I should see "tester@test.edu" 
 
 Scenario: 34- Update User Settings 
@@ -289,6 +276,7 @@ Scenario: 39- Log in test_user with Too Many Attempts
 Scenario: 40- Log in test_user with Correct Password after Buffer Period
     When I click on the link labeled "Log out"
     And I want to pause
+        #pause for at lease one minute 
     And I enter "test_user" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
