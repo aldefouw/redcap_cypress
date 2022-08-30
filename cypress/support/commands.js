@@ -18,8 +18,8 @@ Cypress.Commands.add('login', (options) => {
     cy.visit('/')
     cy.intercept('POST', '/').as('loginStatus')
 
-    cy.get('input[name=username]').type(options['username'])
-    cy.get('input[name=password]').type(options['password'])
+    cy.get('input[name=username]').invoke('attr', 'value', options['username'])
+    cy.get('input[name=password]').invoke('attr', 'value', options['password'])
     cy.get('button').contains('Log In').click()
 
     cy.wait('@loginStatus')
