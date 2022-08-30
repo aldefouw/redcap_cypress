@@ -1,4 +1,5 @@
 import { Given } from "cypress-cucumber-preprocessor/steps";
+import { defineParameterType } from "cypress-cucumber-preprocessor/steps";
 
 /**
  * @module Interactions
@@ -92,4 +93,25 @@ Given('I click on the table cell containing a link labeled {string}', (text) => 
  */
 Given('I select {string} from the dropdown identified by {string}', (value,label) => {
     cy.get(label).select(value, { force: true })
+})
+
+/**
+ * @module Interactions
+ * @example after the next step, I will <accept/cancel> a confirmation window containing the text {string}
+ * @param {string} action - valid choices are 'accept' OR 'cancel'
+ * @param {string} window_text - text that is expected to appear in the confirmation window
+ * @description Pre-emptively tell Cypress what to do about a confirmation window.  NOTE: This step must come BEFORE step that clicks button.
+ */
+
+defineParameterType({
+    name: 'confirmation',
+    regexp: /accept|cancel/,
+    transformer: s => new Confirmation(s)
+})
+
+Given('after the next step, I will {confirmation} a confirmation window containing the text {string}', (action, window_text) => {
+    cy.on('window:confirm', (str) => {
+        expect(str).to.contain(window_text)
+        action === "accept"
+    })
 })
