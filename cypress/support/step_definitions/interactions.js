@@ -127,8 +127,7 @@ Given("I enter {string} into the field identified by {string}", (text, sel) => {
 
 defineParameterType({
     name: 'confirmation',
-    regexp: /accept|cancel/,
-    transformer: s => new Confirmation(s)
+    regexp: /accept|cancel/
 })
 
 Given('after the next step, I will {confirmation} a confirmation window containing the text {string}', (action, window_text) => {
