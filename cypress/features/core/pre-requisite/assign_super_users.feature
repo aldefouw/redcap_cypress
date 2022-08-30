@@ -61,15 +61,13 @@ Scenario: 10- Verify test_user2 Account Manager Priveledges
     And I enter "test_user2" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:"
     And I click on the button labeled "Log In"
-    And I click on the link labeled "Control Center"
-    Then I should see a Control Center link labeled "Browse Users"
-    And I should see a Control Center link labeled "Add Users (Table-based Only)"
-    And I should see "Administrator Privileges"
-    And I should see "External Modules"
-        #no longer a heading - is now a link
+    Then I should see "Control Center Home"
+    And I should see a link labeled "Browse Users"
+    And I should see a link labeled "Add Users (Table-based Only)"
+    And I should see a link labeled "Administrator Privileges"
+    And I should see a link labeled "External Modules"
     And I should see "Miscellaneous Modules"
     And I should see "System Configuration"
-        #not sure how to ensure a link is read only 
 
 Scenario: 11- Switch test_user2 to Maximum User Privileges
     When I click on the link labeled "Administrator Privileges"
@@ -81,16 +79,14 @@ Scenario: 12- Verify test_user2 Maximum User Privileges Priveledges
     And I enter "test_user2" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:"
     And I click on the button labeled "Log In"
-    And I click on the link labeled "Control Center"
-    Then I should see a Control Center link labeled "Browse Users"
-    And I should see a Control Center link labeled "Edit a Project's Settings"
-    And I should see a Control Center link labeled "Survey Link Lookup"
-    And I should see "Administrator Privileges"
-    And I should see "External Modules"
-        #no longer a heading - is now a link
+    Then I should see "Control Center Home"
+    And I should see a link labeled "Browse Projects"
+    And I should see a link labeled "Edit a Project's Settings"
+    And I should see a link labeled "Survey Link Lookup"
+    And I should see a link labeled "Administrator Privileges"
+    And I should see a link labeled "External Modules"
     And I should see "Miscellaneous Modules"
     And I should see "System Configuration"
-        #not sure how to ensure a link is read only 
 
 Scenario: 13- View All Projects Page
     When I click on the link labeled "Log out"
@@ -99,7 +95,7 @@ Scenario: 13- View All Projects Page
     And I click on the button labeled "Log In"
     And I click on the link labeled "Browse Projects"
     Then I should see "Viewing projects accessible by user:"
-    And I click on the input button labeled "View all projects"
+    And I click on the button labeled "View all projects"
     Then I should see a link labeled "Classic Database"
 
 Scenario: 14 - View and Edit Project Settings Page 
@@ -109,9 +105,20 @@ Scenario: 14 - View and Edit Project Settings Page
     And I click on the button labeled "Log In"
     When I click on the link labeled "Edit a Project's Settings"
     Then I should see "You may modify the governing settings for any REDCap project on this page."
-    And I select "Classic Database" from the dropdown identified by "select[onchange=window.location.href='/redcap_v11.1.5/ControlCenter/edit_project.php?project=' + this.value]"
-        #I have no idea if that will work
+    And I select "Test Project" from the dropdown identified by "--- Select a project ---"
     Then I should see "Navigate to project Classic Database"
+
+
+
+
+
+
+
+
+
+
+
+
 
 Scenario: 15- Switch test_user2 to System Configuration Modifier
     When I click on the link labeled "Administrator Privileges"
@@ -123,22 +130,21 @@ Scenario: 16- Verify test_user2 System Configuration Access
     And I enter "test_user2" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:"
     And I click on the button labeled "Log In"
-    And I click on the link labeled "Control Center"
-    Then I should see a Control Center link labeled "Configuration Check"
-    And I should see a Control Center link labeled "General Configuration"
-    And I should see a Control Center link labeled "Security & Authentication"
-    And I should see a Control Center link labeled "User Settings"
-    And I should see a Control Center link labeled "File Upload Settings"
-    And I should see a Control Center link labeled "Modules/Services Configuration"
-    And I should see a Control Center link labeled "Field Validation Types"
-    And I should see a Control Center link labeled "Home Page Settings"
-    And I should see a Control Center link labeled "Project Templates"
-    And I should see a Control Center link labeled "Default Project Settings"
-    And I should see a Control Center link labeled "Footer Settings (All Projects)"
-    And I should see a Control Center link labeled "Cron Jobs"
+    Then I should see "Control Center Home"
+    And I should see a link labeled "Configuration Check"
+    And I should see a link labeled "General Configuration"
+    And I should see a link labeled "Security & Authentication"
+    And I should see a link labeled "User Settings"
+    And I should see a link labeled "File Upload Settings"
+    And I should see a link labeled "Modules/Services Configuration"
+    And I should see a link labeled "Field Validation Types"
+    And I should see a link labeled "Home Page Settings"
+    And I should see a link labeled "Project Templates"
+    And I should see a link labeled "Default Project Settings"
+    And I should see a link labeled "Footer Settings (All Projects)"
+    And I should see a link labeled "Cron Jobs"
     And I should NOT see "Users"
     And I should NOT see "Dashboard"
-        #come back to this once password is reset
     When I click on the link labeled "Configuration Check"
     Then I should see "Basic tests"
     And I should see "Secondary tests"
@@ -153,24 +159,21 @@ Scenario: 18- Verify test_user2 Maximum User Privileges Priveledges
     And I enter "test_user2" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:"
     And I click on the button labeled "Log In"
-    And I click on the link labeled "Control Center"
-    Then I should see "Dashboard"
-    And I should see a Control Center link labeled "System Statistics"
-    And I should see a Control Center link labeled "Activity Log"
-    And I should see a Control Center link labeled "Activity Graphs"
-    And I should see a Control Center link labeled "Map of Users"
-    And I should see "Administrator Privileges"
-    And I should see "External Modules"
-        #no longer a heading - is now a link
+    Then I should see "Control Center Home"
+    And I should see "Dashboard" 
+    And I should see a link labeled "System Statistics"
+    And I should see a link labeled "Activity Log"
+    And I should see a link labeled "Activity Graphs"
+    And I should see a link labeled "Map of Users"
+    And I should see "Projects"
+    And I should see "Technical / Developer Tools"
     And I should see "Miscellaneous Modules"
     And I should see "System Configuration"
-        #not sure how to ensure a link is read only 
-        #come back to this once password is reset - Something like ‘I should see an element identified by “[readonly=‘readonly’]” containing the text “foo”’
 
 Scenario: 19- Switch test_user and test_user2 to no admin privileges
     When I click on the link labeled "Administrator Privileges"
     And I click on the checkbox identified by "[id=4-access_admin_dashboards]"
-    And I click on the checkbox identified by "[id=3-admin_rights]"
+    And I click on the checkbox identified by "[id=2-admin_rights]"
     And I click on the link labeled "Log out"
     Then I enter "test_admin" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:" 
@@ -182,7 +185,7 @@ Scenario: 19- Switch test_user and test_user2 to no admin privileges
 Scenario: 20- Check Audit Log of User Actions
     When I click on the link labeled "Activity Log"
     And I should see "All User Activity for Today"
-    And I should see "(12 events)"
+    And I should see "(10 events)"
     And I should see "Time"
     And I should see "User"
     And I should see "Event"
