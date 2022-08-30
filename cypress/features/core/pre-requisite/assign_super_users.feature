@@ -7,27 +7,6 @@ Background:
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center" page
 
-Scenario: Create a user- from add_manage_users
-    When I click on the link labeled "Add Users (Table-based Only)" 
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "User1" into the field labeled "First name:"
-    And I enter "1115_1" into the field labeled "Last name:"
-    And I enter "user1115@redcap.edu" into the field labeled "Primary email:"
-    And I click on the input button labeled "Save"
-    Then I should see "User has been successfully saved."
-    And I should see "An email with login information was sent to: user1115@redcap.edu"
-
-Scenario: Create a user - from add_manage_users
-    When I click on the link labeled "Add Users (Table-based Only)" 
-    And I enter "user1115_3" into the field labeled "Username:"
-    And I enter "User3" into the field labeled "First name:"
-    And I enter "1115_3" into the field labeled "Last name:"
-    And I enter "user1115.3@redcap.edu" into the field labeled "Primary email:"
-    And I click on the input button labeled "Save"
-    Then I should see "User has been successfully saved."
-    And I should see "An email with login information was sent to: user1115.3@redcap.edu"
-
-
 Scenario: 2- Control Center Links Visible
     Then I should see "Control Center Home"
     And I should see "Projects"
@@ -36,52 +15,52 @@ Scenario: 2- Control Center Links Visible
 
 Scenario: 3- Administrator Privileges Page Visible
     When I click on the link labeled "Administrator Privileges"
-    Then I should see "Set Administrator Privileges"
+    Then I should see "Set administrator privileges"
     And I should see "Access to all projects and data with maximum user privileges"
-        #doesnt detect these in the table
     And I should see "Manage user accounts"
     And I should see "Modify system configuration pages"
     And I should see "Perform REDCap upgrades"
     And I should see "Install, upgrade, and configure External Modules"
     And I should see "Access to Control Center dashboards"
 
-Scenario: 4 & 5- Add user1115_1 to Administrator List
+Scenario: 4- Add test_user to Administrator List
     When I click on the link labeled "Administrator Privileges"
-    And I enter "user1115_1" into the field identified by "[id=user_search]"
+    And I enter "test_user" into the field identified by "[id=user_search]"
     And I click on the checkbox identified by "[id=0-admin_rights]"
     And I click on the button labeled "Add"
-    Then I should see "The user user1115_1 has now been granted one or more administrator privileges"
-        #doesnt detect messge in popup screen 
-    When I click on the button labeled "OK"
-    Then I should see "user1115_1"
-
-Scenario: 6- Verify user1115_1 Administrator Priveledges 
-    When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
-    And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
-    And I click on the link labeled "Control Center"
-    And I click on the link labeled "Users"
-    And I should see "Administrator Privileges"
-        #come back to this once password is reset
-
-Scenario: 7, 8, and 9- Grant user1115_3 Administrator Privileges
+    Then I should see "has now been granted one or more administrator privileges"
+    
+Scenario: 5- View test_user in Admin List 
     When I click on the link labeled "Administrator Privileges"
-    And I enter "user1115_3" into the field identified by "[id=user_search]"
+    Then I should see "test_user"
+
+Scenario: 6- Verify test_user Administrator Priveledges 
+    When I click on the link labeled "Log out"
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:"
+    And I click on the button labeled "Log In"
+    Then I should see "Control Center"
+    And I should see "Users"
+    When I click on the link labeled "Administrator Privileges"
+    #Then I should see "[<input id=2-admin_rights checked=checked disabled=disabled type=checkbox>]"
+        #come back to 
+
+Scenario: 7 & 8 - Grant test_user2 Administrator Privileges
+    When I click on the link labeled "Administrator Privileges"
+    And I enter "test_user2" into the field identified by "[id=user_search]"
     And I click on the checkbox identified by "[id=0-account_manager]"
     And I click on the button labeled "Add"
-    Then I should see "The user user1115_3 has now been granted one or more administrator privileges"
-        #doesnt detect message or ok button in popup screen
-    When I click on the button labeled "OK"
-    Then I should see "user1115_3"
+    Then I should see "has now been granted one or more administrator privileges"
 
-Scenario: 10- Verify user1115_3 Account Manager Priveledges 
+Scenario: 9- View test_user2 in Admin List 
+    When I click on the link labeled "Administrator Privileges"
+    Then I should see "test_user2"
+
+Scenario: 10- Verify test_user2 Account Manager Priveledges 
     When I click on the link labeled "Log out"
-    And I enter "user1115_3" into the field labeled "Username:"
-    And I enter "PASSWORD HERE" into the field labeled "Password:" 
+    And I enter "test_user2" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:"
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "Control Center"
     Then I should see a Control Center link labeled "Browse Users"
     And I should see a Control Center link labeled "Add Users (Table-based Only)"
@@ -91,19 +70,17 @@ Scenario: 10- Verify user1115_3 Account Manager Priveledges
     And I should see "Miscellaneous Modules"
     And I should see "System Configuration"
         #not sure how to ensure a link is read only 
-        #come back to this once password is reset
 
-Scenario: 11- Switch user1115_3 to Maximum User Privileges
+Scenario: 11- Switch test_user2 to Maximum User Privileges
     When I click on the link labeled "Administrator Privileges"
-    And I click on the checkbox identified by "[id=8-super_user]"
-    And I click on the checkbox identified by "[id=8-account_manager]"
+    And I click on the checkbox identified by "[id=4-super_user]"
+    And I click on the checkbox identified by "[id=4-account_manager]"
 
-Scenario: 12- Verify user1115_3 Maximum User Privileges Priveledges 
+Scenario: 12- Verify test_user2 Maximum User Privileges Priveledges 
     When I click on the link labeled "Log out"
-    And I enter "user1115_3" into the field labeled "Username:"
-    And I enter "PASSWORD HERE" into the field labeled "Password:" 
+    And I enter "test_user2" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:"
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "Control Center"
     Then I should see a Control Center link labeled "Browse Users"
     And I should see a Control Center link labeled "Edit a Project's Settings"
@@ -114,42 +91,38 @@ Scenario: 12- Verify user1115_3 Maximum User Privileges Priveledges
     And I should see "Miscellaneous Modules"
     And I should see "System Configuration"
         #not sure how to ensure a link is read only 
-        #come back to this once password is reset
 
 Scenario: 13- View All Projects Page
     When I click on the link labeled "Log out"
-    And I enter "user1115_3" into the field labeled "Username:"
-    And I enter "PASSWORD HERE" into the field labeled "Password:" 
+    And I enter "test_user2" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:"
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "Browse Projects"
     Then I should see "Viewing projects accessible by user:"
-    And I click on the input button labeled "View all Projects"
+    And I click on the input button labeled "View all projects"
     Then I should see a link labeled "Classic Database"
 
 Scenario: 14 - View and Edit Project Settings Page 
     When I click on the link labeled "Log out"
-    And I enter "user1115_3" into the field labeled "Username:"
-    And I enter "PASSWORD HERE" into the field labeled "Password:" 
+    And I enter "test_user2" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:"
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     When I click on the link labeled "Edit a Project's Settings"
     Then I should see "You may modify the governing settings for any REDCap project on this page."
     And I select "Classic Database" from the dropdown identified by "select[onchange=window.location.href='/redcap_v11.1.5/ControlCenter/edit_project.php?project=' + this.value]"
         #I have no idea if that will work
     Then I should see "Navigate to project Classic Database"
 
-Scenario: 15- Switch user1115_3 to System Configuration Modifier
+Scenario: 15- Switch test_user2 to System Configuration Modifier
     When I click on the link labeled "Administrator Privileges"
-    And I click on the checkbox identified by "[id=8-access_system_config]"
-    And I click on the checkbox identified by "[id=8-super_user]"
+    And I click on the checkbox identified by "[id=4-access_system_config]"
+    And I click on the checkbox identified by "[id=4-super_user]"
     
-Scenario: 16- Verify user1115_3 System Configuration Access 
+Scenario: 16- Verify test_user2 System Configuration Access 
     When I click on the link labeled "Log out"
-    And I enter "user1115_3" into the field labeled "Username:"
-    And I enter "PASSWORD HERE" into the field labeled "Password:" 
+    And I enter "test_user2" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:"
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "Control Center"
     Then I should see a Control Center link labeled "Configuration Check"
     And I should see a Control Center link labeled "General Configuration"
@@ -170,17 +143,16 @@ Scenario: 16- Verify user1115_3 System Configuration Access
     Then I should see "Basic tests"
     And I should see "Secondary tests"
 
-Scenario: 17- Switch user1115_3 to have access to Control Center Dashboards 
+Scenario: 17- Switch test_user2 to have access to Control Center Dashboards 
     When I click on the link labeled "Administrator Privileges"
-    And I click on the checkbox identified by "[id=8-access_admin_dashboards]"
-    And I click on the checkbox identified by "[id=8-access_system_config]"
+    And I click on the checkbox identified by "[id=4-access_admin_dashboards]"
+    And I click on the checkbox identified by "[id=4-access_system_config]"
 
-Scenario: 18- Verify user1115_3 Maximum User Privileges Priveledges 
+Scenario: 18- Verify test_user2 Maximum User Privileges Priveledges 
     When I click on the link labeled "Log out"
-    And I enter "user1115_3" into the field labeled "Username:"
-    And I enter "PASSWORD HERE" into the field labeled "Password:" 
+    And I enter "test_user2" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:"
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "Control Center"
     Then I should see "Dashboard"
     And I should see a Control Center link labeled "System Statistics"
@@ -195,10 +167,10 @@ Scenario: 18- Verify user1115_3 Maximum User Privileges Priveledges
         #not sure how to ensure a link is read only 
         #come back to this once password is reset - Something like ‘I should see an element identified by “[readonly=‘readonly’]” containing the text “foo”’
 
-Scenario: 19- Switch user1115_1 and user1115_3 to no admin privileges
+Scenario: 19- Switch test_user and test_user2 to no admin privileges
     When I click on the link labeled "Administrator Privileges"
-    And I click on the checkbox identified by "[id=8-access_admin_dashboards]"
-    And I click on the checkbox identified by "[id=7-admin_rights]"
+    And I click on the checkbox identified by "[id=4-access_admin_dashboards]"
+    And I click on the checkbox identified by "[id=3-admin_rights]"
     And I click on the link labeled "Log out"
     Then I enter "test_admin" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:" 
@@ -215,20 +187,18 @@ Scenario: 20- Check Audit Log of User Actions
     And I should see "User"
     And I should see "Event"
 
-Scenario: 21- Confirm user1115_1 does not have Admin Rights 
+Scenario: 21- Confirm test_user does not have Admin Rights 
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
+    And I enter "test_user" into the field labeled "Username:"
     And I enter "PASSWORD HERE" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     #And I should not have access to Control Center
 
-Scenario: 22- Confirm user1115_3 does not have Admin Rights 
+Scenario: 22- Confirm test_user2 does not have Admin Rights 
      When I click on the link labeled "Log out"
-    And I enter "user1115_3" into the field labeled "Username:"
+    And I enter "test_user2" into the field labeled "Username:"
     And I enter "PASSWORD HERE" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     #And I should not have access to Control Center
 
 
