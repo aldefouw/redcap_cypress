@@ -7,7 +7,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @description Visually verify that text exists within the HTML object.
  */
 Given("I should see {string}", (text) => {
-    cy.get('html').then(($html) => { expect($html).to.contain(text) })
+    cy.get('html').should(($html) => { expect($html).to.contain(text) })
 })
 
 /**
