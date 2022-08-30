@@ -3,6 +3,7 @@
 /node_modules
 
 test_db/structure_and_data.sql
+test_db/initial_db_seed.lock
 
 /www
 /redcap_docker
