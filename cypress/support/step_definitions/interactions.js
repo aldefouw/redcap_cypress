@@ -105,8 +105,7 @@ Given('I select {string} from the dropdown identified by {string}', (value,label
 
 defineParameterType({
     name: 'confirmation',
-    regexp: /accept|cancel/,
-    transformer: s => new Confirmation(s)
+    regexp: /accept|cancel/
 })
 
 Given('after the next step, I will {confirmation} a confirmation window containing the text {string}', (action, window_text) => {
