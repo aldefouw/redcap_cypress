@@ -78,6 +78,7 @@ Scenario: 13- Cancel Suspend test_user Account
     And I enter "test_user" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     And I click on the input button labeled "Suspend user account"
+    And I want to pause
     Then I should see "Do you wish to suspend this user’s REDCap account?"
     When I click on the button labeled "Cancel"
     Then I should NOT see "Success! The user has now been suspended from REDCap."
