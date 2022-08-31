@@ -2,7 +2,9 @@ import {Given} from "cypress-cucumber-preprocessor/steps";
 
 /**
  * @module UserRights
- * @example  I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example 
+  I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}
  * @param {string} rights - the specific user right desired (e.g. Stats & Charts)
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
@@ -15,7 +17,8 @@ Given("I want to assign the {string} user right to the user named {string} with 
 
 /**
  * @module UserRights
- * @example  I want to remove the {string} user right to the user named {string} with the username of {string} on project ID {int}
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I want to remove the {string} user right to the user named {string} with the username of {string} on project ID {int}
  * @param {string} rights - the specific user right desired (e.g. Stats & Charts)
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
@@ -29,7 +32,8 @@ Given("I want to remove the {string} user right to the user named {string} with 
 
 /**
  * @module UserRights
- * @example  I want to assign an expiration date to user {string} with username of {string} on project ID {int}
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I want to assign an expiration date to user {string} with username of {string} on project ID {int}
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
  * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
@@ -42,7 +46,8 @@ Given("I want to assign an expiration date to user {string} with username of {st
 
 /**
  * @module UserRights
- * @example  I want to assign an expiration date to user {string} with username of {string} on project ID {int}
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I want to assign an expiration date to user {string} with username of {string} on project ID {int}
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
  * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
@@ -56,7 +61,8 @@ Given("I want to remove the expiration date to user {string} with username of {s
 
 /**
  * @module UserRights
- * @example  I want to verify user rights are available for {string} user type on the path {string} on project ID {int}
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I want to verify user rights are available for {string} user type on the path {string} on project ID {int}
  * @param {string} user_type - the type of user (e.g. 'standard' - reference "Users" object within cypress.env.json)
  * @param {string} path - the URL path we are testing to see if that user can access (e.g. /ProjectSetup/)
  * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
@@ -69,7 +75,8 @@ Given("I want to verify user rights are available for {string} user type on the 
 
 /**
  * @module UserRights
- * @example  I want to verify user rights are unavailable for {string} user type on the path {string} on project ID {int}
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I want to verify user rights are unavailable for {string} user type on the path {string} on project ID {int}
  * @param {string} user_type - the type of user (e.g. 'standard' - reference "Users" object within cypress.env.json)
  * @param {string} path - the URL path we are testing to see if that user can access (e.g. /ProjectSetup/)
  * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)

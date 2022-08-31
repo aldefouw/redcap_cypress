@@ -2,6 +2,7 @@ import {Given} from "cypress-cucumber-preprocessor/steps";
 
 /**
  * @module TestSpecific/BrowseProjects
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see {int} row(s) displayed in the projects table
  * @param {int} num_rows - number of rows expected to be displayed in the Projects Table
  * @description Verifies the number of rows in the Browse Projects table.
@@ -18,6 +19,7 @@ Given('I should see {int} row(s) displayed in the projects table', (num_rows) =>
 
 /**
  * @module TestSpecific/BrowseProjects
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see a row labeled {string} in the projects table
  * @param {string} project_name - name of the REDCap Project we are expecting to see
  * @description Verifies a specific project - by name - is displayed within the projects table.
@@ -32,6 +34,7 @@ Given('I should see a row labeled {string} in the projects table', (project_name
 
 /**
  * @module TestSpecific/BrowseProjects
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see projects sorted correctly when I click on {string} to sort in either direction
  * @param {string} column_name - name of the Column we want to click on to change the sort direction
  * @description Clicks on a specific column to sort it in the opposite direction versus initial state.

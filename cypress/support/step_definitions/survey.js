@@ -2,6 +2,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I visit the public survey URL for Project ID {int}
  * @param {string} pid - the Project ID of the Public Survey you want to visit
  * @description Visit the Public Survey URL of a specif project identified by a Project ID.
@@ -30,6 +31,7 @@ Given("I visit the public survey URL for Project ID {int}", (pid) => {
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I enter {string} into the {string} survey text input field
  * @param {string} text - the text you want to enter into the survey field
  * @param {string} field - label of the survey field you want to enter text into
@@ -44,6 +46,7 @@ Given("I enter {string} into the {string} survey text input field", (text, field
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I disable surveys for Project ID {int}
  * @param {string} pid - the text you want to enter into the survey field
  * @description Disable surveys on a particular Project ID.
@@ -71,6 +74,7 @@ Given("I disable surveys for Project ID {int}", (pid) => {
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I enable surveys for Project ID {int}
  * @param {string} pid - the text you want to enter into the survey field
  * @description Enable surveys on a particular Project ID.
@@ -94,6 +98,7 @@ Given("I enable surveys for Project ID {int}", (project_id) => {
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see that the {string} field contains the value of {string}
  * @param {string} field_label - the label of the field targeted
  * @param {string} field_value - the value of the field targeted
@@ -105,6 +110,7 @@ Given("I should see that the {string} field contains the value of {string}", (fi
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the survey option label containing {string} label and want to track the response with a tag of {string}
  * @param {string} survey_option_label - the label of the survey option specified
  * @param {string} tag - (optional) the value of the tag specified
@@ -132,6 +138,7 @@ Given(/^I click on the survey option label containing "(.*)" label(?: and want t
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see the survey open exactly once by watching the tag of {string}
  * @param {string} tag - the value of the tag specified
  * @description Verify whether the survey has opened exactly once via the tracked tag.

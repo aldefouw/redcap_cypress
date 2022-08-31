@@ -2,6 +2,7 @@ import {Given} from "cypress-cucumber-preprocessor/steps";
 
 /**
  * @module RecordStatusDashboard
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the bubble for the {string} data collection instrument instrument for record ID {string}
  * @param {string} text - the text value of data collection instrument you want to target
  * @param {string} record_id - the value of the record_id you want to target

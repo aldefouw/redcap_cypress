@@ -2,6 +2,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
 
 /**
  * @module RequestMonitoring
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example the AJAX {string} request at {string} tagged by {string} is being monitored
  * @param {string} type - the type of request to monitor (e.g. GET, POST, etc.)
  * @param {string} request_url - the URL to monitor (e.g. Design/online_designer_render_fields.php?*)
@@ -17,6 +18,7 @@ Given("the AJAX {string} request at {string} tagged by {string} is being monitor
 
 /**
  * @module RequestMonitoring
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example the AJAX request tagged by {string} has completed
  * @param {string} tag - the specified name within Cypress we will use to keep track of this request
  * @description Wait until the tagged request we monitored is finished.
