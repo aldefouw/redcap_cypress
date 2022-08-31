@@ -26,3 +26,4 @@ cypress.env.json
 mysql-cli.zip
 
 /.vscode
+cypress/support/step_definitions/corey/old_code.txt

@@ -56,3 +56,13 @@ Given("I should see that the designate an email for communications setting is {s
     })
 
 })
+
+Given("I should see that the optional module {string} is {string}", (mod_text, state) => {
+
+    let expected_text = ((state.toLowerCase() === 'enabled') ? 'Disable' : 'Enable');
+    cy.get('#setupChklist-modules > table > tbody > tr > > > div')
+        .contains(mod_text, {matchCase: false}).within($div => {
+            cy.get('button').should('contain.text', expected_text);
+        })
+
+})

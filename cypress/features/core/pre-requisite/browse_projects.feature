@@ -4,7 +4,7 @@ Feature: Browse Projects
   I want to see that I have the ability to access, search, and filter projects
 
   Background:
-    Given I am an "admin" user who logs into REDCap
+    Given I am a "admin" user who logs into REDCap
     And I visit the "Control Center" page
     And I click on the link labeled "Browse Projects"
 
