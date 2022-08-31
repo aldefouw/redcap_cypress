@@ -6,7 +6,7 @@ import { defineParameterType } from "cypress-cucumber-preprocessor/steps";
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the button labeled {string}
  * @param {string} text - the text on the button element you want to click
- * @description Click on a button element with a specific text label.
+ * @description Clicks on a button element with a specific text label.
  */
 Given("I click on the button labeled {string}", (text) => {
     cy.get('button').contains(text).click()
@@ -17,7 +17,7 @@ Given("I click on the button labeled {string}", (text) => {
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the link labeled {string}
  * @param {string} text - the text on the anchor element you want to click
- * @description Click on an anchor element with a specific text label.
+ * @description Clicks on an anchor element with a specific text label.
  */
 Given("I click on the link labeled {string}", (text) => {
     cy.get('a').contains(text).click()
@@ -28,7 +28,7 @@ Given("I click on the link labeled {string}", (text) => {
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the input button labeled {string}
  * @param {string} text - the text value of the input element you want to click
- * @description Click on an input element with a specific text label.
+ * @description Clicks on an input element with a specific text label.
  */
 Given("I click on the input button labeled {string}", (text) => {
     cy.get('input[value="' + text + '"]').click()
@@ -39,7 +39,7 @@ Given("I click on the input button labeled {string}", (text) => {
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I edit the field labeled {string}
  * @param {string} text - the text value of the label associated with a specific field
- * @description Edit a field in the Online Designer by its specified field label.
+ * @description Edits a field in the Online Designer by its specified field label.
  */
 Given("I edit the field labeled {string}", (text) => {
     cy.edit_field_by_label(text)
@@ -49,7 +49,7 @@ Given("I edit the field labeled {string}", (text) => {
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I mark the field required
- * @description Mark a field as required within the Online Designer.
+ * @description Marks a field as required within the Online Designer.
  */
 Given("I mark the field required", () => {
     cy.get('input#field_req1').click()
@@ -59,7 +59,7 @@ Given("I mark the field required", () => {
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I save the field
- * @description Save a Field within the Online Designer.
+ * @description Saves a Field within the Online Designer.
  */
 Given("I save the field", () => {
     cy.save_field()
@@ -71,7 +71,7 @@ Given("I save the field", () => {
  * @example I enter {string} into the field labeled {string}
  * @param {string} text - the text to enter into the field
  * @param {string} label - the label of the field
- * @description Enter a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
+ * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
  */
 Given('I enter {string} into the field labeled {string}', (text, label) => {
     //We locate the label element first.  This isn't always a label which is unfortunate, but this approach seems to work so far.
@@ -86,7 +86,7 @@ Given('I enter {string} into the field labeled {string}', (text, label) => {
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the table cell containing a link labeled {string}
  * @param {string} text - the text in the table cell
- * @description Click on a table cell that is identified by a particular text string specified.
+ * @description Clicks on a table cell that is identified by a particular text string specified.
  */
 Given('I click on the table cell containing a link labeled {string}', (text) => {
     cy.get('td').contains(text).parent().find('a').click()
@@ -98,7 +98,7 @@ Given('I click on the table cell containing a link labeled {string}', (text) => 
  * @example I select {string} from the dropdown identified by {string}
  * @param {string} value - the option to select from the dropdown
  * @param {string} label - the label of the dropdown to choose an option from
- * @description Select a dropdown by its label and the option via a specific string.
+ * @description Selects a dropdown by its label and the option via a specific string.
  */
 Given('I select {string} from the dropdown identified by {string}', (value,label) => {
     cy.get(label).select(value, { force: true })

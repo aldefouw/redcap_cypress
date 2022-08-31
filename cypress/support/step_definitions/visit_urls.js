@@ -5,7 +5,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I visit the {string} page with parameter string of {string}
  * @param {string} label the label on an anchor tag
- * @description Instruct Cypress to visit a REDCap route with optional parameters.
+ * @description Instructs Cypress to visit a REDCap route with optional parameters.
  */
 Given(/^I visit the "(.*)" page(?: with parameter string of "(.*)")?$/, (base_folder, params) => {
     if(params !== undefined){
