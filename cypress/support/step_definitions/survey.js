@@ -2,9 +2,10 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I visit the public survey URL for Project ID {int}
  * @param {string} pid - the Project ID of the Public Survey you want to visit
- * @description Visit the Public Survey URL of a specif project identified by a Project ID.
+ * @description Visits the Public Survey URL of a specif project identified by a Project ID.
  */
 Given("I visit the public survey URL for Project ID {int}", (pid) => {
     //Get the public survey URL as an admin so we know survey tools are available
@@ -30,10 +31,11 @@ Given("I visit the public survey URL for Project ID {int}", (pid) => {
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I enter {string} into the {string} survey text input field
  * @param {string} text - the text you want to enter into the survey field
  * @param {string} field - label of the survey field you want to enter text into
- * @description Enter text into a survey field specified by a particular label.
+ * @description Enters text into a survey field specified by a particular label.
  */
 Given("I enter {string} into the {string} survey text input field", (text, field) => {
     cy.get('label').contains(field).then(($label) => {
@@ -44,9 +46,10 @@ Given("I enter {string} into the {string} survey text input field", (text, field
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I disable surveys for Project ID {int}
  * @param {string} pid - the text you want to enter into the survey field
- * @description Disable surveys on a particular Project ID.
+ * @description Disables surveys on a particular Project ID.
  */
 Given("I disable surveys for Project ID {int}", (pid) => {
     cy.intercept({
@@ -71,9 +74,10 @@ Given("I disable surveys for Project ID {int}", (pid) => {
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I enable surveys for Project ID {int}
  * @param {string} pid - the text you want to enter into the survey field
- * @description Enable surveys on a particular Project ID.
+ * @description Enables surveys on a particular Project ID.
  */
 Given("I enable surveys for Project ID {int}", (project_id) => {
     cy.intercept({
@@ -94,10 +98,11 @@ Given("I enable surveys for Project ID {int}", (project_id) => {
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see that the {string} field contains the value of {string}
  * @param {string} field_label - the label of the field targeted
  * @param {string} field_value - the value of the field targeted
- * @description Verify the value present within a specific survey field.
+ * @description Verifies the value present within a specific survey field.
  */
 Given("I should see that the {string} field contains the value of {string}", (field_label, field_value) => {
     cy.get('td').contains(field_label).parentsUntil('tr').last().parent().find('input').should('have.value', field_value)
@@ -105,10 +110,11 @@ Given("I should see that the {string} field contains the value of {string}", (fi
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the survey option label containing {string} label and want to track the response with a tag of {string}
  * @param {string} survey_option_label - the label of the survey option specified
  * @param {string} tag - (optional) the value of the tag specified
- * @description Click on a survey option label.  Track it via an optional tag.
+ * @description Clicks on a survey option label.  Track it via an optional tag.
  */
 Given(/^I click on the survey option label containing "(.*)" label(?: and want to track the response with a tag of "(.*)")?$/, (survey_option_label, tag) => {
     if(tag !== undefined){
@@ -132,9 +138,10 @@ Given(/^I click on the survey option label containing "(.*)" label(?: and want t
 
 /**
  * @module Survey
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see the survey open exactly once by watching the tag of {string}
  * @param {string} tag - the value of the tag specified
- * @description Verify whether the survey has opened exactly once via the tracked tag.
+ * @description Verifies whether the survey has opened exactly once via the tracked tag.
  */
 Then("I should see the survey open exactly once by watching the tag of {string}", (tag) => {
     //Check to see if the window would have opened
