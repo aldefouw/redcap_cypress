@@ -124,8 +124,31 @@ module.exports = (on, config) => {
 
 	parseCsv({csv_string}) {
 		return csv.parse(csv_string)
+	},
+
+	createInitialDbSeedLock(){
+	  const file = shell.cat("").to(shell.pwd() + '/test_db/initial_db_seed.lock')
+	  return fs.existsSync(file)
+	},
+
+	removeInitialDbSeedLock(){
+		const path = shell.pwd() + '/test_db/initial_db_seed.lock'
+
+		if (fs.existsSync(path)) {
+			shell.rm(path)
+
+			if (!fs.existsSync(path)) {
+				return true
+			}
+
+			return false
+		}
+	},
+
+	dbSeedLockExists(){
+		const file = shell.pwd() + '/test_db/initial_db_seed.lock'
+		return fs.existsSync(file)
 	}
 
   })
-
 }
