@@ -7,16 +7,6 @@ Background:
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center" page
 
-Scenario: Create a user - from add_manage_users
-    When I click on the link labeled "Add Users (Table-based Only)" 
-    And I enter "user1115_3" into the field labeled "Username:"
-    And I enter "User3" into the field labeled "First name:"
-    And I enter "1115_3" into the field labeled "Last name:"
-    And I enter "user1115.3@redcap.edu" into the field labeled "Primary email:"
-    And I click on the input button labeled "Save"
-    Then I should see "User has been successfully saved."
-    And I should see "An email with login information was sent to: user1115.3@redcap.edu"
-
 Scenario: 2- User Settings Configuration - Create Projects 
     When I click on the link labeled "User Settings"
     And I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
@@ -62,42 +52,38 @@ Scenario: 7- User Settings Configuration - Modify Events and Arms in Production 
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
-Scenario: 8- Verify user1115_3 can not Create or Copy Projects 
+Scenario: 8- Verify test_user2 can not Create or Copy Projects 
     When I click on the link labeled "Browse Users"
-    And I enter "user1115_3" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I enter "test_user2" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     Then I should see "(NOTE: Currently normal users CANNOT create or copy projects. See the User Settings page in the Control Center to change this setting.)"
       #I dont think this detects 
 
-Scenario: 9- Login with user1115_3
+Scenario: 9- Login with test_user2
     When I click on the link labeled "Log out"
-    And I enter "user1115_3" into the field labeled "Username:"
-    And I enter "1115_3Pswd" into the field labeled "Password:" 
+    And I enter "test_user2" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
-    Then I should NOT see "input"
-        #New Project tab is not visible
+    Then I should NOT see "New Project"
 
-Scenario: 10- Login with user1115_1
+Scenario: 10- Login with test_user
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "tets_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     Then I should see a link labeled "New Project"
 
 Scenario: 11- Cancel Create Project Request
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the button labeled "Send Request"
     And I click on the input button labeled "Cancel"
     Then I should see "input"
         #Project not requested.
 
-Scenario: 12- Logout as user1115_1
+Scenario: 12- Logout as test_user
 
 Scenario: 13- Allow Normal Users to Create New Projects
     When I click on the link labeled "User Settings"
@@ -106,19 +92,17 @@ Scenario: 13- Allow Normal Users to Create New Projects
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
-Scenario: 14- Login with user1115_1
+Scenario: 14- Login with test_user
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "tets_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     
-Scenario: 15- Crteate Project and add admin1115 to Project
+Scenario: 15- Create Project and add admin1115 to Project
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "New Project"
     And I enter "FirstProject_1115" into the field labeled "Project title:"
     And I select "Operational Support" from the dropdown identified by "Project's purpose:"
@@ -135,10 +119,9 @@ Scenario: 15- Crteate Project and add admin1115 to Project
 
 Scenario: 16- Change Project to Just for Fun
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -150,10 +133,9 @@ Scenario: 16- Change Project to Just for Fun
 
 Scenario: 17- Open and Add First Instrument
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Designer"
@@ -172,10 +154,9 @@ Scenario: 17- Open and Add First Instrument
 
 Scenario: 18- Copy Instrument
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Designer"
@@ -189,10 +170,9 @@ Scenario: 18- Copy Instrument
 
 Scenario: 19- Add Email Field to My First Instrument 2
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Designer"
@@ -210,10 +190,9 @@ Scenario: 19- Add Email Field to My First Instrument 2
 
 Scenario: 20- Verify Project Home and Other Functionality Pages
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Home"
@@ -223,10 +202,9 @@ Scenario: 20- Verify Project Home and Other Functionality Pages
 
 Scenario: 21- Copy Project 
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Other Functionality"
@@ -244,10 +222,9 @@ Scenario: 21- Copy Project
 
 Scenario: 22 - Cancel Move Project to Production
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "ProjectCopy_1115"
     And I click on the link labeled "Project Setup"
@@ -268,19 +245,17 @@ Scenario: 24 - Allow Normal Users to Move to Production
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
-Scenario: 25 - Login with user1115_1
+Scenario: 25 - Login with test_user
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
 
 Scenario: 26 - Move ProjectCopy_1115 to Production
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "ProjectCopy_1115"
     And I click on the link labeled "Project Setup"
@@ -294,10 +269,9 @@ Scenario: 26 - Move ProjectCopy_1115 to Production
 
 Scenario: 27 - Other Functionality Tab Options Visibility
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "ProjectCopy_1115"
     And I click on the link labeled "Other Functionality"
@@ -335,19 +309,17 @@ Scenario: 30 - Delete Project ProjectCopy_1115
     And I click on the button labeled "Delete the project"
     Then I should see "Project successfully deleted!"
 
-Scenario: 31 - Login with user1115_1
+Scenario: 31 - Login with test_user
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
 
 Scenario: 32 - Diasble / Inable Longitudinal Data Collection
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -368,10 +340,9 @@ Scenario: 32 - Diasble / Inable Longitudinal Data Collection
 
 Scenario: 33 - Add Event 2 in Arm 1
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -383,10 +354,9 @@ Scenario: 33 - Add Event 2 in Arm 1
 
 Scenario: 34 - Add Event 1 in Arm 2
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -401,10 +371,9 @@ Scenario: 34 - Add Event 1 in Arm 2
 
 Scenario: 35 - Edit Designate Instruments for Arm 1
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -418,10 +387,9 @@ Scenario: 35 - Edit Designate Instruments for Arm 1
 
 Scenario: 36 - Edit Designate Instruments for Arm 2
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -434,10 +402,9 @@ Scenario: 36 - Edit Designate Instruments for Arm 2
 
 Scenario: 37 - Enable Repeatable Instruments and Events
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -460,10 +427,9 @@ Scenario: 37 - Enable Repeatable Instruments and Events
 
 Scenario: 38 - Diasble / Inable Surveys
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -484,10 +450,9 @@ Scenario: 38 - Diasble / Inable Surveys
 
 Scenario: 39 -  Enable Survey for My First Instrument
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:"  
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -508,10 +473,9 @@ Scenario: 39 -  Enable Survey for My First Instrument
 
 Scenario: 40 - Delete Survey 
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -527,10 +491,9 @@ Scenario: 40 - Delete Survey
 
 Scenario: 41 - Enable Survey for My First Instrument
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -545,10 +508,9 @@ Scenario: 41 - Enable Survey for My First Instrument
 
 Scenario: 42 - Change Survey Status to Offline
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:"  
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -562,10 +524,9 @@ Scenario: 42 - Change Survey Status to Offline
 
 Scenario: 43 - Change Survey Status to Active
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -577,10 +538,9 @@ Scenario: 43 - Change Survey Status to Active
 
 Scenario: 44 - Open and Submit Public Survey
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Survey Distribution Tools"
@@ -594,10 +554,9 @@ Scenario: 44 - Open and Submit Public Survey
 
 Scenario: 45 - Verify Survey Responses are Read Only
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Add / Edit Records"
@@ -615,19 +574,17 @@ Scenario: 47 - Allow Users to Edit Survey Responses
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
-Scenario: 48 - Login with user1115_1
+Scenario: 48 - Login with test_user
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
 
-Scenario: 49 - Edit User Rights for user1115_1
+Scenario: 49 - Edit User Rights for test_user
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "User Rights"
@@ -638,10 +595,9 @@ Scenario: 49 - Edit User Rights for user1115_1
 
 Scenario: 50 - Verify Survey Responses are Visible and Editable
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Add / Edit Records"
@@ -654,10 +610,9 @@ Scenario: 50 - Verify Survey Responses are Visible and Editable
 
 Scenario: 51 - Enable the Designate an email field…
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -674,10 +629,9 @@ Scenario: 51 - Enable the Designate an email field…
 
 Scenario: 52 - Move FirstProject_1115 to Production
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
@@ -700,12 +654,11 @@ Scenario: 57 - Allow Users to Make Draft Mode Changes
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
-Scenario: 58 - Login with user1115_1
+Scenario: 58 - Login with test_user
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
 
 Scenario: 59 - 
 
@@ -722,12 +675,11 @@ Scenario: 63 - Allow Normal Users to Modify the Repeatable Instruments & Events
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
-Scenario: 64 - Login with user1115_1
+Scenario: 64 - Login with test_user
     When I click on the link labeled "Log out"
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "1115_1Pswd" into the field labeled "Password:" 
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-        #password was never reset, login is invalid
 
 Scenario: 65 - 
 
