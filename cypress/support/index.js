@@ -99,14 +99,17 @@ window.base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace(/\//g, "\\/")
 
 before(() => {
 
+    //Clear out the cookies
+    window.lastCookie = []
+
+    //Create the initial database structure
+    cy.base_db_seed()
+
     //Cypress Users
     cy.set_user_info(Cypress.env('users'))
 
     //By default, we are going to login as a standard user
     cy.set_user_type('standard')
-
-    //Create the initial database structure
-    cy.base_db_seed()
 
     // Import the bootstrapping from these files:
     core()          // /support/core/index.js
@@ -116,8 +119,12 @@ before(() => {
     projects()      // /support/projects/index.js
 })
 
-beforeEach(() => {  
-    cy.maintain_login()  
+afterEach(() => {
+    cy.maintain_login()
+})
+
+beforeEach(() => {
+    cy.maintain_login()
 })
 
 Cypress.on("uncaught:exception", (err, runnable) => {

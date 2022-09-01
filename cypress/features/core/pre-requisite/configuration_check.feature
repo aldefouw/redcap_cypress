@@ -3,11 +3,9 @@ Feature: Configuration Checklist
   As a REDCap end user
   I want to see that Configuration Checklist is functioning as expected
 
-  Background:
+  Scenario: Visible Tabs
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center" page
-
-  Scenario: Visible Tabs
     Then I should see a link labeled "My Projects"
     And I should see a link labeled "New Project"
     And I should see a link labeled "Help & FAQ"

@@ -3,11 +3,11 @@ Feature: Add / Manage Users
   As a REDCap end user
   I want to see that Add / Manage Users is functioning as expected
 
-Background: 
-    Given I am an "admin" user who logs into REDCap
-    And I visit the "Control Center" page
+Background:
+    Given I visit the "Control Center" page
 
 Scenario: 1- Login as admin1115
+    Given I am an "admin" user who logs into REDCap
 
 Scenario: 2- Visible Pages
     When I click on the link labeled "User Settings"
@@ -88,13 +88,17 @@ Scenario: 13 & 14 - Cancel and Suspend test_user Account
     And I should see "unsuspend user"
 
 Scenario: 15- Login with Suspended User Account
-    When I click on the link labeled "Log out"
+    Given I logout of REDCap
+    And I visit the "/" page
     And I enter "test_user" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "The following REDCap user account has been suspended:"
 
 Scenario: 16- View test_user in Suspended Users List
+    Given I logout of REDCap
+    And I am an "admin" user who logs into REDCap
+    And I visit the "Control Center" page
     When I click on the link labeled "Browse Users"
     Then I should see "User Search: Search for user by username, first name, last name, or primary email"
     When I click on the link labeled "View User List By Criteria"

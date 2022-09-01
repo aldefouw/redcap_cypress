@@ -27,6 +27,7 @@ Cypress.Commands.add('login', (options) => {
 
 Cypress.Commands.add('logout', () => {
     cy.visit('/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
+    cy.clearCookies()
 })
 
 Cypress.Commands.add('visit_version', (options) => {
@@ -89,9 +90,6 @@ Cypress.Commands.add('base_db_seed', () => {
                                 cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
                             }
 
-                            //Clear out all cookies
-                            cy.clearCookies()
-
                             //Create a DB Seed Lock file
                             cy.task('createInitialDbSeedLock')
                         })
@@ -114,44 +112,60 @@ Cypress.Commands.add('maintain_login', () => {
     let user_type = window.user_info.get_user_type()
     let previous_user_type = window.user_info.get_previous_user_type()
 
-    console.log('User Type Change to ' + user_type + '.')
     console.log('previous: ' + previous_user_type)
     console.log('current: ' + user_type)
 
     if(user_type === previous_user_type){
+
+        if(!window.lastCookie.hasOwnProperty(user_type)){
+            window.lastCookie[user_type] = null
+        }
+
         cy.getCookies()
           .should((cookies) => {
             //In most cases, we'll have cookies to preserve to maintain a login
-            if (cookies.length > 0){
+
+              if (cookies.length > 0){
                 console.log('Attempt Cookie Login')
 
                 let valid_cookie = false
 
                 cookies.forEach(cookie => {
                             if(cookie['name'] === "PHPSESSID") {
+                                console.log('Found valid cookie for ' + user_type)
                                 Cypress.Cookies.preserveOnce(cookie)
+                                window.lastCookie[user_type] = cookie
                                 valid_cookie = true
                             }
                         })
 
 
-                if(valid_cookie === false){
+                if(valid_cookie && window.lastCookie[user_type] !== null) {
+                    console.log('Setting through cookie')
+                    cy.setCookie(window.lastCookie[user_type]['name'], window.lastCookie[user_type]['value'])
+                } else {
                     console.log('Cookie Login Failed; Logging in Through User Interface')
                     cy.login({ username: user, password: pass })
                 }
 
-            //But, if we don't, then let's simply re-login, right?
+            //If we find cookies sitting in the window for this user type, attempt ot set those
+            } else if(window.lastCookie !== undefined && window.lastCookie.hasOwnProperty(user_type) && window.lastCookie[user_type] !== null) {
+
+                //Let's use the last cookie, thank you very much!
+                cy.setCookie(window.lastCookie[user_type]['name'], window.lastCookie[user_type]['value'])
+
+            //If we don't find cookies, then let's fallback and login
             } else {
-                console.log('Regular Login')
-                cy.login({ username: user, password: pass })
+                cy.login({ username: user, password:  pass })
             }
 
         })
 
     //If user type has changed, let's clear cookies and login again
+    } else if (window.lastCookie !== undefined && window.lastCookie.hasOwnProperty(user_type)) {
+        cy.clearCookies()
+        cy.setCookie(window.lastCookie[user_type]['name'], window.lastCookie[user_type]['value'])
     } else {
-        //Ensure we logout when a user changes
-        cy.logout()
         cy.login({ username: user, password:  pass })
     }
 
