@@ -99,6 +99,20 @@ window.base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace(/\//g, "\\/")
 
 before(() => {
 
+    //Intercept all requests sent to Vanderbilt
+    cy.intercept({ method: 'GET', url: 'https://redcap.vanderbilt.edu/consortium/collect_stats.php?*'}, []).as('Collect Stats')
+    cy.intercept({ method: 'GET', url: '*/consortium/collect_stats.php?*'}, []).as('Stats')
+    cy.intercept({ method: 'GET', url: '*/ControlCenter/check_server_ping.php'}, []).as('Ping')
+    cy.intercept({ method: 'GET', url: '*/ControlCenter/report_site_stats.php'}, []).as('Control Center Stats')
+
+    //Clear out the cookies
+    window.lastCookie = []
+
+    //Last URL
+    window.lastUrl = ''
+
+    Cypress.session.clearAllSavedSessions()
+
     //Cypress Users
     cy.set_user_info(Cypress.env('users'))
 
