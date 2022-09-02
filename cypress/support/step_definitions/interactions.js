@@ -81,6 +81,14 @@ Given('I enter {string} into the field labeled {string}', (text, label) => {
     })
 })
 
+
+Given('I clear the field labeled {string}', (label) => {
+    cy.contains(label).then(($label) => {
+        cy.wrap($label).parent().find('input').clear()
+    })
+})
+
+
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -103,6 +111,20 @@ Given('I click on the table cell containing a link labeled {string}', (text) => 
 Given('I select {string} from the dropdown identified by {string}', (value,label) => {
     cy.get(label).select(value, { force: true })
 })
+
+
+Given("I click on the element identified by {string}", (sel) => {
+    cy.get(sel).click()
+})
+
+Given("I click on the checkbox identified by {string}", (sel) => {
+    cy.get(sel).click()
+})
+
+Given("I enter {string} into the field identified by {string}", (text, sel) => {
+    cy.get(sel).clear().type(text)
+})
+
 
 /**
  * @module Interactions
