@@ -7,9 +7,19 @@ Background:
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center" page
 
+Scenario: Edit test_user2 to not Create or Copy Projects 
+    When I click on the link labeled "Browse Users"
+    And I enter "test_user2" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I click on the button labeled "Search"
+    Then I should see "User information for"
+    When I click on the button labeled "Edit user info"
+    And I click on the checkbox identified by "[name=allow_create_db]"
+    And I click on the input button labeled "Save"
+
 Scenario: 2- User Settings Configuration - Create Projects 
     When I click on the link labeled "User Settings"
-    And I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
+    Then I should see "Yes, normal users can create new projects"
+    #And I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
     And I select "No, only Administrators can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
@@ -68,7 +78,7 @@ Scenario: 9- Login with test_user2
 
 Scenario: 10- Login with test_user
     When I click on the link labeled "Log out"
-    And I enter "tets_user" into the field labeled "Username:"
+    And I enter "test_user" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
     Then I should see a link labeled "New Project"
@@ -78,10 +88,10 @@ Scenario: 11- Cancel Create Project Request
     And I enter "test_user" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-    And I click on the button labeled "Send Request"
-    And I click on the input button labeled "Cancel"
-    Then I should see "input"
-        #Project not requested.
+    And I click on the link labeled "New Project"
+    Then I should see "Send Request"
+    And I click on the button labeled "Cancel"
+    Then I should see "Welcome to REDCap!"
 
 Scenario: 12- Logout as test_user
 
@@ -104,16 +114,17 @@ Scenario: 15- Create Project and add admin1115 to Project
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
     And I click on the link labeled "New Project"
-    And I enter "FirstProject_1115" into the field labeled "Project title:"
-    And I select "Operational Support" from the dropdown identified by "Project's purpose:"
+    And I enter "FirstProject_1115" into the field identified by "[name=app_title]"
+    And I select "Operational Support" from the dropdown identified by "[name=purpose]"
     And I click on the button labeled "Create Project"
     Then I should see "input"
         #Message box confirms new project created. 
     When I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "User Rights"
-    And I enter "admin1115" into the field identified by "input"
-        #Add admin1115 to the project
+    And I enter "admin1115" into the field identified by "[id=new_username]"
+    And I click on the button labeled "Add with custom rights"
+        #maybe just add as a role 
     And I should see "input"
         #User successfully added
 
