@@ -12,6 +12,18 @@ import '@4tw/cypress-drag-drop'
 // Commands in this file are CRUCIAL and are an embedded part of the REDCap Cypress Framework.
 // They are very stable and do not change often, if ever
 
+function preventTimeoutFail() {
+    //Needed to prevent test from failing on expected timeout due to
+    //side effect of clicking on a download link
+    cy.window().document().then(function (doc) {
+        doc.addEventListener('click', () => {
+            setTimeout(function () {
+                doc.location.reload()
+            }, 2000)
+        })
+    })
+}
+
 Cypress.Commands.add('login', (options) => {
     cy.clearCookies()
 
@@ -355,6 +367,7 @@ Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector) => {
     })
 })
 
+//TODO:
 //Downloads data dictionary to the directory specified by Cypress.config('downloadsFolder')
 Cypress.Commands.add('download_data_dictionary', (pid) => {
 
@@ -374,7 +387,7 @@ Cypress.Commands.add('download_data_dictionary', (pid) => {
     //Proceed to click the download link
   
     //Needed to prevent test from failing on expected timeout due to
-    //side effect of clicking on a link
+    //side effect of clicking on a download link
     cy.window().document().then(function (doc) {
         doc.addEventListener('click', () => {
             setTimeout(function () {
@@ -420,8 +433,8 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
                     expect($a.status).to.equal(200)
 
                     cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
-                        expect($e.body).to.contain('List of Data Changes')
-                        expect($e.body).to.contain('Manage/Design')
+                        expect($e.body.includes('List of Data Changes'), 'Body contains "List of Data Changes"').to.be.true
+                        expect($e.body.includes('Manage/Design'), 'Body contains "Manage/Design"').to.be.true
                     })
                 })
             })
@@ -467,8 +480,8 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
                             expect($a.status).to.equal(200)
 
                             cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
-                                expect($e.body).to.contain('List of Data Changes')
-                                expect($e.body).to.contain('Manage/Design')
+                                expect($e.body.includes('List of Data Changes'), 'Body contains "List of Data Changes"').to.be.true
+                                expect($e.body.includes('Manage/Design'), 'Body contains "Manage/Design"').to.be.true
                             })
                         })
                     })
@@ -890,6 +903,32 @@ Cypress.Commands.add('change_survey_edit_rights', (pid, username, form) => {
 
     //Should not be visible before we start our next step or test
     cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
+})
+
+//Corey
+Cypress.Commands.add('download_instr_pdf', (label) => {
+    //get table row
+    cy.get(`tr:has(div.projtitle:contains(${label}))`).within(($tr) => {
+
+        preventTimeoutFail()
+
+        //click PDF download anchor within row
+        cy.get('a[href*="route=PdfController"]').click()
+    })
+})
+
+Cypress.Commands.add('download_instr_zip', (label) => {
+    //get row from instruments table
+    cy.get(`tr:has(div.projtitle:contains(${label}))`).within(($tr) => {
+
+    })
+})
+
+Cypress.Commands.add('rename_instrument', (from, to) => {
+    //get row from instruments table
+    cy.get(`tr:has(div.projtitle:contains(${label}))`).within(($tr) => {
+
+    })
 })
 
 Cypress.Commands.add('read_directory', (dir) => {
