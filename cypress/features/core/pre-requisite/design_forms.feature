@@ -1,4 +1,4 @@
-Feature: Design Forms using Data Dictionary & Online Designer **
+Feature: Design Forms using Data Dictionary & Online Designer
 
   As a REDCap end user
   I want to see that Design Forms using Data Dictionary & Online Designer are functioning as expected
@@ -29,7 +29,36 @@ Feature: Design Forms using Data Dictionary & Online Designer **
     # And I should see an element identified by "#setupChklist-design * a" containing the text "Download the current Data Dictionary"
     # And I should see an element identified by "#setupChklist-design * a" containing the text "Check For Identifiers"
 
-    #Step 4
-    #When I click on the link labeled "Download the current Data Dictionary"
-    When I download the data dictionary
-    # Then The contents of the file "downloads/test.txt" should match the fixture "test_fixture.txt"
+    #Steps 4-11
+    Given I am a "admin" user who logs into REDCap
+    
+    When I upload a data dictionary located at "core/07_DesignForms_v1115_DataDictionary_1.csv" to project ID 13
+    # Then I should see "Changes Made Successfully"
+
+    # When I upload a data dictionary located at "core/07_DesignForms_v1115_DataDictionary_2.csv" to project ID 13
+    # Then I should see "The following variable/field names were duplicated...dd_form"
+
+    And I upload a data dictionary located at "core/07_DesignForms_v1115_DataDictionary_3.csv" to project ID 13
+    # Then I should see "Changes Made Successfully"
+
+    Then I am a "standard" user who logs into REDCap
+
+    #Step 11
+    When I click on the link labeled "Designer"
+    And I click on the link labeled "Data Dictionary Form"
+    Then I should see "Testing data dictionary upload"
+
+    When I click on the button labeled "Return to list of instruments"
+
+    #Step 12
+    #Using selector-based interaction steps to work around multiple matches
+    #when getting by label / inner text
+    When I click on the element identified by "[onclick*='showAddForm();']"
+    And I click on the button labeled "Add instrument here"
+    And I enter "Demo Branching" into the field identified by "#new_form-data_dictionary_form"
+ 
+    And I click on the element identified by "[onclick*='addNewForm(']"
+    And I download the instrument labeled "Demo Branching" as a PDF
+    # And I should see "Demo Branching"
+    # And I click on the element identified by "#row_2 > :nth-child(6) > .fc > .formActions > .jqbuttonsm > span"
+    # And I click on the link labeled "Rename"
