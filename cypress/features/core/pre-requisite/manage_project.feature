@@ -108,7 +108,7 @@ Scenario: 14- Login with test_user
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
     
-Scenario: 15- Create Project and add admin1115 to Project
+Scenario: 15- Create Project and add test_admin to Project
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:" 
@@ -117,16 +117,15 @@ Scenario: 15- Create Project and add admin1115 to Project
     And I enter "FirstProject_1115" into the field identified by "[name=app_title]"
     And I select "Operational Support" from the dropdown identified by "[name=purpose]"
     And I click on the button labeled "Create Project"
-    Then I should see "input"
-        #Message box confirms new project created. 
+    Then I should see "Your new REDCap project has been created and is ready to be accessed."
     When I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "User Rights"
-    And I enter "admin1115" into the field identified by "[id=new_username]"
+    And I enter "test_admin" into the field identified by "[id=new_username]"
     And I click on the button labeled "Add with custom rights"
-        #maybe just add as a role 
-    And I should see "input"
-        #User successfully added
+    Then I should see "Adding new user" 
+    When I click on the button labeled "Add user"
+    Then I should see "test_admin"
 
 Scenario: 16- Change Project to Just for Fun
     When I click on the link labeled "Log out"
@@ -138,8 +137,9 @@ Scenario: 16- Change Project to Just for Fun
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Modify project title, purpose, etc."
     Then I should see "Modify Project Settings"
-    When I select "Practice/Just for fun" from the dropdown identified by "Project's purpose:"
-    And I click on the link labeled "Save"
+    When I select "Practice / Just for fun" from the dropdown identified by "[name=purpose]"
+    Then I should see "Modify Project Settings"
+    When I click on the button labeled "Save"
     Then I should see "Success! Your changes have been saved."
 
 Scenario: 17- Open and Add First Instrument
@@ -151,10 +151,11 @@ Scenario: 17- Open and Add First Instrument
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Designer"
     Then I should see "Data Collection Instruments"
-    When I click on the link labeled "My First Instrument"
+    When I click on the link labeled "Form 1"
+        #my first instrument? 
     Then I should see "Record ID"
         #add inspect link
-    And I click on the button labeled "Add Field"
+    And I click on the input button labeled "select[id=btn-last]"
     And I select "COPY PASTE HERE" from the dropdown identified by "Field Type:"
         #"Text Box ( ..."
     And I enter "Name" into the field labeled "Field Label"
