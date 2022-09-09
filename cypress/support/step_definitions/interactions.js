@@ -18,7 +18,7 @@ Given("I click on the button labeled {string}", (text) => {
  * @description Click on an anchor element with a specific text label.
  */
 Given("I click on the link labeled {string}", (text) => {
-    cy.get('a').contains(text).click()
+    cy.get(`a:contains("${text}")`).first().click()
 })
 
 /**
