@@ -12,8 +12,8 @@ import '@4tw/cypress-drag-drop'
 // Commands in this file are CRUCIAL and are an embedded part of the REDCap Cypress Framework.
 // They are very stable and do not change often, if ever
 
-function preventTimeoutFail() {
-    //Needed to prevent test from failing on expected timeout due to
+function preventClickTimeoutFail() {
+    //Needed to prevent tests from failing on expected timeout due to
     //side effect of clicking on a download link
     cy.window().document().then(function (doc) {
         doc.addEventListener('click', () => {
@@ -367,37 +367,10 @@ Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector) => {
     })
 })
 
-//TODO:
-//Downloads data dictionary to the directory specified by Cypress.config('downloadsFolder')
-Cypress.Commands.add('download_data_dictionary', (pid) => {
-
-    cy.get('body').then(($body) => {
-        //if DD download link is absent, check for PID
-        if ($body.find('a:contains("Download the current Data Dictionary")').length === 0) {
-            //if PID is not specified, throw error
-            if (pid === undefined) {
-                throw new Error('Unable to locate the link to download the data dictionary'
-                + ' on the current page. Please specify a project ID.')
-            }
-            //if PID is specified, visit project setup page for that PID
-            cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=' + pid})
-        }
-    })
-    
-    //Proceed to click the download link
-  
-    //Needed to prevent test from failing on expected timeout due to
-    //side effect of clicking on a download link
-    cy.window().document().then(function (doc) {
-        doc.addEventListener('click', () => {
-            setTimeout(function () {
-                doc.location.reload()
-            }, 2000)
-        })
-
-        cy.intercept('**/Design/data_dictionary_download.php?pid=**').as('data_dictionary')
-        cy.get('a').contains('Download the current Data Dictionary').click()
-    }) 
+//Requires that the current page is Project Setup
+Cypress.Commands.add('download_data_dictionary', () => {
+    preventClickTimeoutFail()
+    cy.get('a').contains('Download the current Data Dictionary').click()
 })
 
 Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format = "DMY") => {
@@ -906,29 +879,62 @@ Cypress.Commands.add('change_survey_edit_rights', (pid, username, form) => {
 })
 
 //Corey
-Cypress.Commands.add('download_instr_pdf', (label) => {
-    //get table row
-    cy.get(`tr:has(div.projtitle:contains(${label}))`).within(($tr) => {
+//Creates a new instrument at the end of the instrument list
+Cypress.Commands.add('create_instrument', (instr_name) => {
+    cy.get('[onclick*="showAddForm()"]').click()
+    //If there is already at least 1 instrument,REDCap lets us choose position
+    //of new instrument in the list, choose last.
+    //First we check if there are any instruments
+    cy.get('body').then(($body) => {
+        //if at least 1 instrument already exists, we need to click button to add after an instrument
+        if ($body.find('table#table-forms_surveys tr').length > 0) {
+            cy.get('button:contains("Add instrument here")').last().click()
+        }
 
-        preventTimeoutFail()
-
-        //click PDF download anchor within row
-        cy.get('a[href*="route=PdfController"]').click()
+        cy.get('table#table-forms_surveys tr.addNewInstrRow').last().within(($tr) => {
+            cy.get(':text[id^="new_form"]').type(instr_name)
+            cy.get('input[onclick*="addNewForm("]').click()
+        })
     })
 })
 
+//Corey
+Cypress.Commands.add('download_instr_pdf', (label) => {
+    //get row in instrument table
+    // cy.get('.projtitle').filter((i, tr) => {
+    cy.get('#table-forms_surveys tr').filter(function (i, tr) {
+        //cy.log(tr.querySelector('.projtitle'))
+        cy.log(i)
+        var test = tr
+        // cy.log(tr.querySelector('.projtitle').innerText === label)
+        // if (tr.querySelector('.projtitle').innertext === label) return true
+        cy.log(Object.keys(test))
+        return i >= 0 && tr.querySelector('.projtitle').innerText === label
+    })
+    // cy.get(`div.projtitle:contains(${label})`).parentsUntil('tr').last().parent().within(($tr) => {
+    //     preventClickTimeoutFail()
+    //     cy.get('a[href*="route=PdfController"]').click()
+    // })
+})
+
 Cypress.Commands.add('download_instr_zip', (label) => {
-    //get row from instruments table
+    //get row in instruments table
     cy.get(`tr:has(div.projtitle:contains(${label}))`).within(($tr) => {
 
     })
 })
 
 Cypress.Commands.add('rename_instrument', (from, to) => {
-    //get row from instruments table
-    cy.get(`tr:has(div.projtitle:contains(${label}))`).within(($tr) => {
-
+    //get row, click actions dropdown
+    cy.get(`div.projtitle:contains("${from}")`).parentsUntil('tr').last().parent().within(($tr) => {
+        cy.get('button:contains("Choose action")').click()
     })
+    //dropdown menu is inserted into HTML outside of the tr, so we exit the within() block
+    cy.get('ul#formActionDropdown').within(($ul) => {
+        cy.get('a:contains("Rename")').click()
+    })
+    //type new name and save
+    // cy.get()
 })
 
 Cypress.Commands.add('read_directory', (dir) => {
