@@ -154,15 +154,12 @@ Scenario: 17- Open and Add First Instrument
     When I click on the link labeled "Form 1"
         #my first instrument? 
     Then I should see "Record ID"
-        #add inspect link
-    And I click on the input button labeled "select[id=btn-last]"
-    And I select "COPY PASTE HERE" from the dropdown identified by "Field Type:"
-        #"Text Box ( ..."
-    And I enter "Name" into the field labeled "Field Label"
-    And I enter "ptname" into the field labeled "Variable Name"
+    And I click on the element identified by "input[id=btn-last]"
+    And I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[name=field_type]"
+    And I enter "Name" into the field identified by "[id=field_label]"
+    And I enter "ptname" into the field identified by "[id=field_name]"
     And I click on the button labeled "Save"
-    Then I should see "input" 
-        #Add something here 
+    Then I should see "Variable: ptname" 
 
 Scenario: 18- Copy Instrument
     When I click on the link labeled "Log out"
@@ -173,8 +170,7 @@ Scenario: 18- Copy Instrument
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Designer"
     Then I should see "Data Collection Instruments"
-    When I select "Copy" from the dropdown identified by "input"
-        #find this later 
+    When I select "Copy" from the dropdown identified by "Choose action"
     And I enter "My First Instrument 2" into the field labeled "New instrument name:"
         #this should actually be a "I should see"
     And I click on the button labeled "Copy instrument"
