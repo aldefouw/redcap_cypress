@@ -107,7 +107,7 @@ Scenario: 14- Login with test_user
     And I enter "tets_user" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
-    
+ 
 Scenario: 15- Create Project and add test_admin to Project
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -170,11 +170,14 @@ Scenario: 18- Copy Instrument
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Designer"
     Then I should see "Data Collection Instruments"
-    When I select "Copy" from the dropdown identified by "Choose action"
-    And I enter "My First Instrument 2" into the field labeled "New instrument name:"
+    When I click on the button labeled "Choose action"
+    And I click on the link labeled "Copy"
+    #And I enter "My First Instrument 2" into the field labeled "New instrument name:"
         #this should actually be a "I should see"
+        #name is off
     And I click on the button labeled "Copy instrument"
-    Then I should see "SUCCESS! The instrument was successfully copied. The page will now reload to reflect the changes."
+    Then I should see "Form 1 2"
+    And I should see "SUCCESS! The instrument was successfully copied. The page will now reload to reflect the changes."
 
 Scenario: 19- Add Email Field to My First Instrument 2
     When I click on the link labeled "Log out"
@@ -184,17 +187,15 @@ Scenario: 19- Add Email Field to My First Instrument 2
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Designer"
-    And I click on the link labeled "My First Instrument 2"
-    Then I should see "Current instrument: My First Instrument 2"
-    When I click on the button labeled "Add Field"
-    And I select "COPY PASTE HERE" from the dropdown identified by "Field Type:"
-        #"Text Box ( ..."
-    And I enter "Email" into the field labeled "Field Label"
-    And I enter "email" into the field labeled "Variable Name"
-    And I select "Email" from the dropdown identified by "Validation?"
+    And I click on the link labeled "Form 1 2"
+    Then I should see "Current instrument:" 
+    When I click on the element identified by "input[id=btn-last]"
+    And I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[name=field_type]"
+    And I enter "Email" into the field identified by "[id=field_label]"
+    And I enter "email" into the field identified by "[id=field_name]"
+    And I select "Email" from the dropdown identified by "[id=val_type]"
     And I click on the button labeled "Save"
-    Then I should see "input" 
-        #Add something here 
+    Then I should see "Variable: email" 
 
 Scenario: 20- Verify Project Home and Other Functionality Pages
     When I click on the link labeled "Log out"
@@ -204,7 +205,7 @@ Scenario: 20- Verify Project Home and Other Functionality Pages
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Home"
-    Then I should see "The tables below provide general dashboard information, such as a list of all users with access to this project, general project statistics, and upcoming calendar events (if any)."
+    Then I should see "The tables below provide general dashboard information"
     When I click on the link labeled "Other Functionality"
     Then I should see "Project Status Management"
 
@@ -218,15 +219,19 @@ Scenario: 21- Copy Project
     And I click on the link labeled "Other Functionality"
     And I click on the button labeled "Copy the project"
     Then I should see "Make a Copy of the Project"
-    When I enter "ProjectCopy_1115" into the field labeled "Project title:"
+    #When I clear the field labeled "Project title:"
+    And I enter "ProjectCopy_1115" into the field identified by "[name=app_title]"
     And I click on the link labeled "Select All"
     And I click on the button labeled "Copy project"
-    #confirm
-    And I should see "input"
-        #and i should see "confirmation message"
-        #Verify 1
-        #Verify 2
-        #Verify 3
+    Then I should see "COPY SUCCESSFUL!"
+    When I click on the link labeled "User Rights"
+    Then I should see a link labeled "test_user"
+    When I click on the link labeled "Record Status Dashboard"
+    Then I should see "No records exist yet"
+    When I click on the link labeled "Project Setup"
+    And I click on the link labeled "Other Functionality"
+    Then I should see "Delete the project"
+    And I should see "Erase all data"
 
 Scenario: 22 - Cancel Move Project to Production
     When I click on the link labeled "Log out"
@@ -237,13 +242,10 @@ Scenario: 22 - Cancel Move Project to Production
     And I click on the link labeled "ProjectCopy_1115"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Move project to production"
-    And I click on the element identified by "BUBBLE HERE"
-        #bubble identifyer for Keep all data 
-    Then I should see "input"
-        #The Request Admin to Move to Production Status button is available.
+    And I click on the element identified by "[id=keep_data]" 
+    Then I should see "Yes, Request Admin to Move to Production Status"
     When I click on the button labeled "Cancel"
-    Then I should see "input"
-        #Project is not moved to production.
+    Then I should see "Move project to production"
 
 Scenario: 23 - Login as admin1115
 
@@ -268,10 +270,8 @@ Scenario: 26 - Move ProjectCopy_1115 to Production
     And I click on the link labeled "ProjectCopy_1115"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Move project to production"
-    Then I should see "input"
-        #button identifyer for "YES, Move to Production Status"
-    When I click on the element identified by "BUBBLE HERE"
-        #bubble identifyer for Keep all data 
+    Then I should see "YES, Move to Production Status"
+    When I click on the element identified by "[id=keep_data]"
     And I click on the button labeled "YES, Move to Production Status"
     Then I should see "Success! The project is now in production."
 
@@ -283,12 +283,9 @@ Scenario: 27 - Other Functionality Tab Options Visibility
     And I click on the link labeled "My Projects"
     And I click on the link labeled "ProjectCopy_1115"
     And I click on the link labeled "Other Functionality"
-    Then I should NOT see "input"
-        #Delete project option is not available. User cannot delete production project. 
-    And I should see "input"
-        #Rather, the Request delete project is available.
-    And I should NOT see "input"
-        #The Erase all data button is not visible.
+    Then I should NOT see "Delete the project"
+    And I should see "Request delete project"
+    And I should NOT see "Erase all data"
 
 Scenario: 28 - Login as admin1115
 
@@ -296,25 +293,22 @@ Scenario: 29 - Admin Other Functionality Tab Options Visibility
     When I click on the link labeled "My Projects"
     And I click on the link labeled "ProjectCopy_1115"
     And I click on the link labeled "Other Functionality"
-    Then I should see "input"
-        #verify the Delete the project 
-    And I should see "input"
-        #Erase all data buttons are present.
-    When I click on the button labeled "Delete the Project"
-    Then I should see "input"
-        #Permanently delete this project confirmation page displays.
+    Then I should see "Delete the project"
+    And I should see "Erase all data"
+    When I click on the button labeled "Delete the project"
+    Then I should see "Permanently delete this project?"
     When I click on the button labeled "Cancel"
-    Then I should see "input"
-        #Project is not deleted
+    Then I should see "Delete the project"
 
 Scenario: 30 - Delete Project ProjectCopy_1115
     When I click on the link labeled "My Projects"
     And I click on the link labeled "ProjectCopy_1115"
     And I click on the link labeled "Other Functionality"
-    When I click on the button labeled "Delete the Project"
-    And I enter "DELETE" into the field identified by "input"
-        #Complete the required “delete” field 
-    And I click on the button labeled "Delete the project"
+    When I click on the button labeled "Delete the project"
+    And I enter "DELETE" into the field identified by "[id=delete_project_confirm]"
+    Then I should see "DELETE"
+    When I click on the button labeled "Delete the project"
+        #too many same name buttons 
     Then I should see "Project successfully deleted!"
 
 Scenario: 31 - Login with test_user
