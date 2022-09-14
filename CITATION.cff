@@ -1,0 +1,9 @@
+cff-version: 1.0.0
+message: "If you reference this software in scholarly articles, please cite it as below."
+authors:
+- family-names: "De Fouw"
+  given-names: "Adam"
+title: "REDCap Cypress Test Framework"
+version: 9.1.3
+date-released: 2022-03-18
+url: "https://github.com/aldefouw/redcap_cypress"
