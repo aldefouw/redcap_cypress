@@ -32,7 +32,7 @@ Cypress.Commands.add('login', (options) => {
 })
 
 Cypress.Commands.add('logout', () => {
-    cy.visit('/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
+    cy.visit(Cypress.config('baseUrl') + '/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
 })
 
 Cypress.Commands.add('visit_version', (options) => {
@@ -41,16 +41,16 @@ Cypress.Commands.add('visit_version', (options) => {
 
     cy.maintain_login().then(() => {
         if('params' in options){
-            cy.visit('/redcap_v' + version + '/' + options['page'] +  '?' + options['params'])
+            cy.visit(Cypress.config('baseUrl') + '/redcap_v' + version + '/' + options['page'] +  '?' + options['params'])
         } else {
-            cy.visit('/redcap_v' + version + '/' + options['page'])
+            cy.visit(Cypress.config('baseUrl') + '/redcap_v' + version + '/' + options['page'])
         }
     })
 })
 
 Cypress.Commands.add('visit_base', (options) => {
     cy.maintain_login().then(() => {
-        if ('url' in options) cy.visit(options['url']) 
+        if ('url' in options) cy.visit(options['url'])
     })
 })
 
