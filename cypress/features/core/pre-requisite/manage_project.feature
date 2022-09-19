@@ -306,7 +306,7 @@ Scenario: 30 - Delete Project ProjectCopy_1115
     And I click on the link labeled "Other Functionality"
     When I click on the button labeled "Delete the project"
     And I enter "DELETE" into the field identified by "[id=delete_project_confirm]"
-    Then I should see "DELETE"
+    Then I should see "Deleting the project named"
     When I click on the button labeled "Delete the project"
         #too many same name buttons 
     Then I should see "Project successfully deleted!"
@@ -325,20 +325,13 @@ Scenario: 32 - Diasble / Inable Longitudinal Data Collection
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
-    Then I should see "input"
-        #The Enable button appears next to the red dash circle for ‘Use longitudinal data collection…’
-    When I click on the button labeled "input"
-        #Enable ‘Use longitudinal data collection…’
-    Then I should see "input"
-        #Disable button appears next to the green checkmark circle for ‘Use longitudinal…’
-    When I click on the button labeled "input"
-        #Disable ‘Use longitudinal data collection…’
-    Then I should not see "input"
-        #The Enable button appears next to the red dash circle for ‘Use longitudinal data collection…’
-    When I click on the button labeled "input"
-        #Enable ‘Use longitudinal data collection…’
-    Then I should see "input"
-        #Disable button appears next to the green checkmark circle for ‘Use longitudinal…’
+    Then I should see that longitudinal mode is "Enable"
+    When I click on the element identified by "[id=setupLongiBtn]"
+    Then I should see that longitudinal mode is "Disable"
+    When I click on the elenent identified by "[id=setupLongiBtn]"
+    Then I should see that longitudinal mode is "Enable"
+    When I click on the elenent identified by "[id=setupLongiBtn]"
+    Then I should see that longitudinal mode is "Disable"
 
 Scenario: 33 - Add Event 2 in Arm 1
     When I click on the link labeled "Log out"
