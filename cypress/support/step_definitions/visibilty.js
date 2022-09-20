@@ -12,3 +12,7 @@ Given("I should see {string} in the title", (title) => {
     cy.title().should('include', title)
 })
 
+Given("I should see a new dialog box named {string}", (text) => {
+    cy.get('div[id="' + text + '"]', { timeout: 10000 }).should('be.visible')
+
+})
