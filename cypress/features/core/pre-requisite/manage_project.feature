@@ -107,7 +107,8 @@ Scenario: 14- Login with test_user
     And I enter "tets_user" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
- 
+
+@focus
 Scenario: 15- Create Project and add test_admin to Project
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -127,6 +128,7 @@ Scenario: 15- Create Project and add test_admin to Project
     When I click on the button labeled "Add user"
     Then I should see "test_admin"
 
+@focus
 Scenario: 16- Change Project to Just for Fun
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -142,6 +144,7 @@ Scenario: 16- Change Project to Just for Fun
     When I click on the button labeled "Save"
     Then I should see "Success! Your changes have been saved."
 
+@focus
 Scenario: 17- Open and Add First Instrument
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -161,6 +164,7 @@ Scenario: 17- Open and Add First Instrument
     And I click on the button labeled "Save"
     Then I should see "Variable: ptname" 
 
+@focus
 Scenario: 18- Copy Instrument
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -179,6 +183,7 @@ Scenario: 18- Copy Instrument
     Then I should see "Form 1 2"
     And I should see "SUCCESS! The instrument was successfully copied. The page will now reload to reflect the changes."
 
+@focus
 Scenario: 19- Add Email Field to My First Instrument 2
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -307,8 +312,8 @@ Scenario: 30 - Delete Project ProjectCopy_1115
     When I click on the button labeled "Delete the project"
     And I enter "DELETE" into the field identified by "[id=delete_project_confirm]"
     Then I should see "Deleting the project named"
-    When I click on the button labeled "Delete the project"
-        #too many same name buttons 
+    When I click on the element identified by "button:contains('Delete the project'):last"
+    And I click on the button labeled "Yes, delete the project"
     Then I should see "Project successfully deleted!"
 
 Scenario: 31 - Login with test_user
@@ -317,6 +322,7 @@ Scenario: 31 - Login with test_user
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
 
+@focus
 Scenario: 32 - Diasble / Inable Longitudinal Data Collection
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -328,11 +334,12 @@ Scenario: 32 - Diasble / Inable Longitudinal Data Collection
     Then I should see that longitudinal mode is "Enable"
     When I click on the element identified by "[id=setupLongiBtn]"
     Then I should see that longitudinal mode is "Disable"
-    When I click on the elenent identified by "[id=setupLongiBtn]"
+    When I click on the element identified by "[id=setupLongiBtn]"
     Then I should see that longitudinal mode is "Enable"
-    When I click on the elenent identified by "[id=setupLongiBtn]"
+    When I click on the element identified by "[id=setupLongiBtn]"
     Then I should see that longitudinal mode is "Disable"
 
+@focus
 Scenario: 33 - Add Event 2 in Arm 1
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -343,10 +350,11 @@ Scenario: 33 - Add Event 2 in Arm 1
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
     Then I should see "Event 1"
-    When I enter "Event 2" into the field labeled "Event Name"
-        #"Event Name" might not work there 
+    When I enter "Event 2" into the field identified by "[id=descrip]"
+    And I click on the input button labeled "Add new event"
     Then I should see "Event 2"
 
+@focus
 Scenario: 34 - Add Event 1 in Arm 2
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -357,13 +365,14 @@ Scenario: 34 - Add Event 1 in Arm 2
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
     And I click on the link labeled "Add New Arm"
-    And I enter "Arm 2" into the field identified by "Arm name:"
-    And I click on the button labeled "Save"
+    And I enter "Arm 2" into the field identified by "[id=arm_name]"
+    And I click on the input button labeled "Save"
     Then I should see "No events have been defined for this Arm"
-    When I enter "Event 1" into the field labeled "Event Name"
-        #"Event Name" might not work there 
+    When I enter "Event 1" into the field identified by "[id=descrip]"
+    And I click on the input button labeled "Add new event"
     Then I should see "Event 1"
 
+@focus
 Scenario: 35 - Edit Designate Instruments for Arm 1
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -373,13 +382,13 @@ Scenario: 35 - Edit Designate Instruments for Arm 1
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Designate Instruments for My Events"
-    And I click on the button labeled "Begin Editing"
-    And I click on the checkbox identified by "input"
-        #Checkbox for Event 1 - My First Instrument
-    And I click on the checkbox identified by "input"
-        #Checkbox for Event 1 - My First Instrument 2
+    Then I should see "Arm name:"
+    And I should see "Arm 1"
+    When I click on the button labeled "Begin Editing"
+    And I click on the checkbox identified by "[id=form_1--41"
     And I click on the button labeled "Save"
 
+@focus
 Scenario: 36 - Edit Designate Instruments for Arm 2
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -389,12 +398,14 @@ Scenario: 36 - Edit Designate Instruments for Arm 2
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Designate Instruments for My Events"
-    And I click on the link labeled "Arm 2: Arm 2"
-    And I click on the button labeled "Begin Editing"
-    And I click on the checkbox identified by "input"
-        #Checkbox for Event 1 - My First Instrument
+    And I click on the link labeled "Arm 2"
+    Then I should see "Arm name:"
+    And I should see "Arm 2"
+    When I click on the button labeled "Begin Editing"
+    And I click on the checkbox identified by "[id=form_1--43]"
     And I click on the button labeled "Save"
 
+@focus
 Scenario: 37 - Enable Repeatable Instruments and Events
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -403,23 +414,17 @@ Scenario: 37 - Enable Repeatable Instruments and Events
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
-    Then I should see "input"
-        #The Enable button appears next to the red dash circle for ‘Repeatable instruments and events’
-    When I click on the button labeled "input"
-        #Enable ‘Repeatable instruments and events’
-    Then I should see "use repeatable instruments and/or repeatable events"
-    When I select "Repeat Instruments" from the dropdown identified by "input"
-        #In the dropdown for Event 1 Arm 1, select ‘Repeat Instruments’ 
-    And I click on the checkbox identified by "input"
-        #Mark the checkbox next to My First Instrument 2
-    And I select "Repeat Entire Event" from the dropdown identified by "input"
-        #In the dropdown for Event 1 Arm 2, select ‘Repeat Entire Event’
+    Then I should see that repeatable instruments are "Enable"
+    When I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
+    Then I should see that repeatable instruments are "Disable"
+    When I select "Repeat Instruments (repeat independently of each other)" from the dropdown identified by "[name=repeat_whole_event-41]"
+    And I click on the checkbox identified by "[name=repeat_form-41-form_1_2]"
+    And I select "Repeat Entire Event (repeat all instruments together)" from the dropdown identified by "[name=repeat_whole_event-43]"
     And I click on the button labeled "Save"
-    Then I should see "Your settings…have been successfully saved!"
-        #something like that
-    And I should see "input"
-        #Modify button appears next to the green checkmark circle for ‘Repeatable instruments …’
+    Then I should see "Your settings for repeating instruments and/or events have been successfully saved. (The page will now reload.)"
+    And I should see that repeatable instruments are "Modify"     
 
+@focus
 Scenario: 38 - Diasble / Inable Surveys
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -428,7 +433,7 @@ Scenario: 38 - Diasble / Inable Surveys
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
-    Then I should see "input"
+    Then I should see that surveys are enabled
         #The Enable button appears next to the red dash circle for ‘Use surveys in this project.’
     When I click on the button labeled "input"
         #Enable surveys in the project
