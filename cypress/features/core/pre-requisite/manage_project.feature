@@ -314,6 +314,7 @@ Scenario: 30 - Delete Project ProjectCopy_1115
     Then I should see "Deleting the project named"
     When I click on the element identified by "button:contains('Delete the project'):last"
     And I click on the button labeled "Yes, delete the project"
+
     Then I should see "Project successfully deleted!"
 
 Scenario: 31 - Login with test_user
@@ -340,6 +341,7 @@ Scenario: 32 - Diasble / Inable Longitudinal Data Collection
     Then I should see that longitudinal mode is "Disable"
 
 @focus
+
 Scenario: 33 - Add Event 2 in Arm 1
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
