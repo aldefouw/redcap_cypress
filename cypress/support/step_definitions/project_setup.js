@@ -1,4 +1,10 @@
-import { Given } from "cypress-cucumber-preprocessor/steps";
+import { defineParameterType, Given } from "cypress-cucumber-preprocessor/steps";
+
+defineParameterType({
+    name: 'status',
+    regexp: /enabled|disabled/
+})
+
 
 /**
  * @module ProjectSetup
@@ -7,7 +13,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @param {string} state the state of the button
  * @description Visually verifies whether Survey functionality is enabled or disabled in the project.
  */
-Given("I should see that surveys are (enabled|disabled)", (state) => {
+Given("I should see that surveys are {status}", (state) => {
     let expected_text = ((state.toLowerCase() === 'enabled') ? 'Disable' : 'Enable');
     cy.get('#setupEnableSurveysBtn').should('contain.text', expected_text);
 })

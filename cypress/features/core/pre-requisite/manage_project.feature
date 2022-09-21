@@ -433,7 +433,7 @@ Scenario: 38 - Diasble / Inable Surveys
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
-    Then I should see that surveys are enabled
+    Then I should see that surveys are disabled
         #The Enable button appears next to the red dash circle for ‘Use surveys in this project.’
     When I click on the button labeled "input"
         #Enable surveys in the project
