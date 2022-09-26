@@ -13,9 +13,9 @@ Feature: Logging
     And I enter "test@test.com" into the "Email" survey text input field
     Then I click on the button labeled "Save & Stay"
     And I enter "Test" into the "Name" survey text input field
-    Then I click on the button labeled "Save & Exit" 
+    Then I click on the button labeled "Save & Exit"
 
-  #   Scenario: Add new record
+  # Scenario: Add new record
   #   When I click on the link labeled "Add / Edit Records"
   #   And I click on the button labeled "Add new record"
   #   And I enter "Test2" into the "Name" survey text input field
