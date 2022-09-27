@@ -4,10 +4,20 @@ Feature: Logging
   I want to see that Logging is functioning as expected
 
   Background: 
-    Given I create a project named "23_Logging_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/logging.xml"
+    Given I am an "admin" user who logs into REDCap
+    
+  Scenario: 0 - Project Setup
+    When I create a project named "23_Logging_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/logging.xml"
+
+  Scenario: 1 - Login as test_user
+
+  Scenario: 2 - Go to my projects and open 23_Logging_v1115
+    When I visit Project ID 14
+    Then I should see "23_Logging_v1115"
 
   Scenario: 3 - Add new record
-    When I click on the link labeled "Add / Edit Records"
+    When I visit Project ID 14
+    Then I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
     And I enter "Test" into the "ptname" text input field
     And I enter "test@test.com" into the "email" text input field
@@ -16,14 +26,17 @@ Feature: Logging
     Then I click on the button labeled "Save & Exit"
 
   Scenario: 4 - Add new record
-    When I click on the link labeled "Add / Edit Records"
+    When I visit Project ID 14
+    Then I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
     And I enter "Test2" into the "ptname" text input field
     And I enter "test@test.com" into the "email" text input field
     Then I click on the button labeled "Save & Exit"
 
   Scenario: 5 - Add new record
-    When I click on the link labeled "Add / Edit Records"
+    When I visit Project ID 14
+    Then I click on the link labeled "Add / Edit Records"
+    And I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
     And I enter "Delete" into the "ptname" text input field
     And I enter "delete@test.com" into the "email" text input field
