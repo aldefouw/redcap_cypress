@@ -29,7 +29,7 @@ Feature: Logging
   #   And I enter "delete@test.com" into the "email" text input field
   #   Then I click on the button labeled "Save & Exit"
 
-  # Scenario: Delete record
+  # Scenario: 6 - Delete record
   #   When I click on the link labeled "Record Status Dashboard"
   #   And I click on the link labeled "3" under Record ID
   #   Then I should see dropdown menu labeled "Choose action for record"
@@ -39,7 +39,7 @@ Feature: Logging
   #   Then I should see popup message "Record deleted!"
   #   And I click on the button labeled "Close"
 
-  # Scenario: Add new role
+  # Scenario: 7 - Add new role
   #   When I click on the link labeled "User Rights"
   #   And I fill in role name with "Data"
   #   And I click on the button labeled "Create role"
@@ -47,38 +47,44 @@ Feature: Logging
   #   And I click on the button labeled "Create role"
   #   Then I should see popup message "Role was successfully added!" 
 
-  # Scenario: Edit role
+  # Scenario: 8 - Edit role
   #   When I click on the link labeled "Data"
   #   And I select the "Project Design and Setup" option
   #   Then I click on the button labeled "Save Changes"
 
-  # Scenario: Delete role
+  # Scenario: 9 - Delete role
   #   When I click on the link labeled "Data"
   #   And I click on the button labeled "Delete role"
   #   Then I should see popup message "Delete role?"
   #   And I click on the button labeled "Delete role"
   #   Then I should see popup message "Role "Data\" was successfully deleted!"
   
-  # Scenario: Add new user
+  # Scenario: 10 - Add new user
   #   When I click on the link labeled "User Rights"    
   #   And I fill in the "Add new user" field with "user1115_3"
   #   And I select the user "user1115_3"
   #   And I click on the button labeled "Add with custom rights"
   #   Then I should see a new user added when I click on the button labeled "Add user"
   
-  # Scenario: Remove user
+  # Scenario: 11 - Edit user
+  #   When I click on the link labeled "User Rights"    
+  #   And I select the user "user1115_3"
+  #Add project design and setup
+  #save 
+
+  # Scenario: 12 - Remove user
   #   When I click on the link labeled "user1115_3"
   #   And I click on the button labeled "Edit user privileges"
   #   Then I should see get warning "Remove user?" when I click on the button labeled "Remove user"
   #   And I click on the button labeled "Remove user"
   
-  # Scenario: Login as test_user2
+  # Scenario: 13 - Login as test_user2
   #   When I click on the button labeled "Log out"
   #   Then I should see the login page
   #   And I login as test_user2
   #   Then I should see the text "Logged in as test_user2"
 
-  # Scenario: Data Exports, Reports, and Stats
+  # Scenario: 14 - Data Exports, Reports, and Stats
   #   When I click on the link labeled "Data Exports, Reports, and Stats"
   #   And I click on the button labeled "Export Data"
   #   And I select the radio button labeled "CSV / Microsoft Excel (raw data)"
@@ -87,7 +93,7 @@ Feature: Logging
   #   And I click on the icon "Excel CSV"
   #   Then I should see the file downloaded
 
-  # Scenario: Edit user privileges for test_user1
+  # Scenario: 15 - Edit user privileges for test_user1
   #   When I click on the link labeled "User Rights"
   #   Then I click on the link labeled "test_user1"
   #   And I want to assign the "Record Locking Customization" user right 
@@ -96,7 +102,7 @@ Feature: Logging
   #   And I click on the button labeled "Saved Changes"
   #   Then I should see a green checkmark for "Record Locking Customization" and a green shield for "Lock/Unlock Records"
 
-  # Scenario: Edit record - Lock/E-signature
+  # Scenario: 16 - Edit record - Lock/E-signature
   #   When I click on the dropdown labelled "select record"
   #   Then I should see two records 
   #   And I select the record labelled "1"
