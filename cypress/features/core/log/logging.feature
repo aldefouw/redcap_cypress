@@ -17,7 +17,7 @@ Feature: Logging
 
   Scenario: 3 - Add new record
     When I visit Project ID 14
-    Then I click on the link labeled "Add / Edit Records"
+    And I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
     And I enter "Test" into the "ptname" text input field
     And I enter "test@test.com" into the "email" text input field
@@ -27,7 +27,7 @@ Feature: Logging
 
   Scenario: 4 - Add new record
     When I visit Project ID 14
-    Then I click on the link labeled "Add / Edit Records"
+    And I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
     And I enter "Test2" into the "ptname" text input field
     And I enter "test@test.com" into the "email" text input field
@@ -35,7 +35,6 @@ Feature: Logging
 
   Scenario: 5 - Add new record
     When I visit Project ID 14
-    Then I click on the link labeled "Add / Edit Records"
     And I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
     And I enter "Delete" into the "ptname" text input field
