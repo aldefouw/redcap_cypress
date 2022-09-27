@@ -46,6 +46,30 @@ Given("I enter {string} into the {string} survey text input field", (text, field
 
 /**
  * @module Survey
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I enter {string} into the {string} text input field
+ * @param {string} text - the text you want to input into the survey field
+ * @param {string} variable - variable of the survey field you want to input text into
+ * @description Enters text into a survey field specified by a particular label.
+ */
+ Given("I enter {string} into the {string} text input field", (text, variable) => {
+    cy.get('input[name='+variable+']').type(text)
+})
+
+/**
+ * @module Survey
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I enter {string} into the {string} text input field
+ * @param {string} text - the text you want to input into the survey field
+ * @param {string} variable - variable of the survey field you want to input text into
+ * @description Clear text from field and enter new text into a survey field.
+ */
+ Given("I clear the field and enter {string} into the {string} text input field", (text, variable) => {
+    cy.get('input[name='+variable+']').clear().type(text)
+})
+
+/**
+ * @module Survey
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I disable surveys for Project ID {int}
  * @param {string} pid - the text you want to enter into the survey field
