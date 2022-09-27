@@ -22,12 +22,12 @@ Feature: Logging
     And I enter "test@test.com" into the "email" text input field
     Then I click on the button labeled "Save & Exit"
 
-  # Scenario: 5 - Add new record
-  #   When I click on the link labeled "Add / Edit Records"
-  #   And I click on the button labeled "Add new record"
-  #   And I enter "Delete" into the "ptname" text input field
-  #   And I enter "delete@test.com" into the "email" text input field
-  #   Then I click on the button labeled "Save & Exit"
+  Scenario: 5 - Add new record
+    When I click on the link labeled "Add / Edit Records"
+    And I click on the button labeled "Add new record"
+    And I enter "Delete" into the "ptname" text input field
+    And I enter "delete@test.com" into the "email" text input field
+    Then I click on the button labeled "Save & Exit"
 
   # Scenario: 6 - Delete record
   #   When I click on the link labeled "Record Status Dashboard"
