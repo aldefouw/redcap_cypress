@@ -15,7 +15,7 @@ Given("I click on the button labeled {string}", (text) => {
 /**
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I click on the button labeled {string}
+ * @example I click on the button labeled Save & Stay
  * @param {string} text - the text on the button element you want to click
  * @description Clicks on a button element with a specific text label.
  */
