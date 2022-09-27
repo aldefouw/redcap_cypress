@@ -14,6 +14,18 @@ Given("I click on the button labeled {string}", (text) => {
 
 /**
  * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I click on the button labeled {string}
+ * @param {string} text - the text on the button element you want to click
+ * @description Clicks on a button element with a specific text label.
+ */
+ Given("I click on the button labeled Save & Stay", () => {
+    cy.get('button#submit-btn-dropdown').first().click()
+	.closest('div').find('a#submit-btn-savecontinue').should('be.visible').click()
+})
+
+/**
+ * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the link labeled {string}
  * @param {string} text - the text on the anchor element you want to click
