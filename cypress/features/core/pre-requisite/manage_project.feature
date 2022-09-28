@@ -13,7 +13,7 @@ Scenario: Edit test_user2 to not Create or Copy Projects
     And I click on the button labeled "Search"
     Then I should see "User information for"
     When I click on the button labeled "Edit user info"
-    And I click on the checkbox identified by "[name=allow_create_db]"
+    And I click on the element identified by "[name=allow_create_db]"
     And I click on the input button labeled "Save"
 
 Scenario: 2- User Settings Configuration - Create Projects 
@@ -95,6 +95,7 @@ Scenario: 11- Cancel Create Project Request
 
 Scenario: 12- Logout as test_user
 
+@focus
 Scenario: 13- Allow Normal Users to Create New Projects
     When I click on the link labeled "User Settings"
     Then I should see "Settings related to Project Creation and Project Status Changes"
@@ -128,7 +129,6 @@ Scenario: 15- Create Project and add test_admin to Project
     When I click on the button labeled "Add user"
     Then I should see "test_admin"
 
-@focus
 Scenario: 16- Change Project to Just for Fun
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -183,7 +183,6 @@ Scenario: 18- Copy Instrument
     Then I should see "Form 1 2"
     And I should see "SUCCESS! The instrument was successfully copied. The page will now reload to reflect the changes."
 
-@focus
 Scenario: 19- Add Email Field to My First Instrument 2
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -314,7 +313,6 @@ Scenario: 30 - Delete Project ProjectCopy_1115
     Then I should see "Deleting the project named"
     When I click on the element identified by "button:contains('Delete the project'):last"
     And I click on the button labeled "Yes, delete the project"
-
     Then I should see "Project successfully deleted!"
 
 Scenario: 31 - Login with test_user
@@ -323,7 +321,6 @@ Scenario: 31 - Login with test_user
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
 
-@focus
 Scenario: 32 - Diasble / Inable Longitudinal Data Collection
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -340,8 +337,6 @@ Scenario: 32 - Diasble / Inable Longitudinal Data Collection
     When I click on the element identified by "[id=setupLongiBtn]"
     Then I should see that longitudinal mode is "Disable"
 
-@focus
-
 Scenario: 33 - Add Event 2 in Arm 1
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -356,7 +351,6 @@ Scenario: 33 - Add Event 2 in Arm 1
     And I click on the input button labeled "Add new event"
     Then I should see "Event 2"
 
-@focus
 Scenario: 34 - Add Event 1 in Arm 2
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -374,7 +368,6 @@ Scenario: 34 - Add Event 1 in Arm 2
     And I click on the input button labeled "Add new event"
     Then I should see "Event 1"
 
-@focus
 Scenario: 35 - Edit Designate Instruments for Arm 1
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -387,10 +380,9 @@ Scenario: 35 - Edit Designate Instruments for Arm 1
     Then I should see "Arm name:"
     And I should see "Arm 1"
     When I click on the button labeled "Begin Editing"
-    And I click on the checkbox identified by "[id=form_1--41"
+    And I click on the element identified by "[id=form_1--41"
     And I click on the button labeled "Save"
 
-@focus
 Scenario: 36 - Edit Designate Instruments for Arm 2
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -404,10 +396,9 @@ Scenario: 36 - Edit Designate Instruments for Arm 2
     Then I should see "Arm name:"
     And I should see "Arm 2"
     When I click on the button labeled "Begin Editing"
-    And I click on the checkbox identified by "[id=form_1--43]"
+    And I click on the element identified by "[id=form_1--44]"
     And I click on the button labeled "Save"
 
-@focus
 Scenario: 37 - Enable Repeatable Instruments and Events
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -420,7 +411,7 @@ Scenario: 37 - Enable Repeatable Instruments and Events
     When I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
     Then I should see that repeatable instruments are "Disable"
     When I select "Repeat Instruments (repeat independently of each other)" from the dropdown identified by "[name=repeat_whole_event-41]"
-    And I click on the checkbox identified by "[name=repeat_form-41-form_1_2]"
+    And I click on the element identified by "[name=repeat_form-41-form_1_2]"
     And I select "Repeat Entire Event (repeat all instruments together)" from the dropdown identified by "[name=repeat_whole_event-43]"
     And I click on the button labeled "Save"
     Then I should see "Your settings for repeating instruments and/or events have been successfully saved. (The page will now reload.)"
@@ -436,19 +427,12 @@ Scenario: 38 - Diasble / Inable Surveys
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
     Then I should see that surveys are disabled
-        #The Enable button appears next to the red dash circle for ‘Use surveys in this project.’
-    When I click on the button labeled "input"
-        #Enable surveys in the project
-    Then I should see "input"
-        #Disable button appears next to the green checkmark circle for ‘Use surveys…’ 
-    When I click on the button labeled "input"
-        #Disable surveys in the project
-    Then I should see "input"
-        #The Enable button appears next to the red dash circle for ‘Use surveys in this project.
-    When I click on the button labeled "input"
-        #Enable surveys in the project
-    Then I should see "input"
-        #Disable button appears next to the green checkmark circle for ‘Use surveys…’ 
+    When I click on the element identified by "[id=setupEnableSurveysBtn]"
+    Then I should see that surveys are enabled
+    When I click on the element identified by "[id=setupEnableSurveysBtn]"
+    Then I should see that surveys are disabled
+    When I click on the element identified by "[id=setupEnableSurveysBtn]"
+    Then I should see that surveys are enabled 
 
 Scenario: 39 -  Enable Survey for My First Instrument
     When I click on the link labeled "Log out"
@@ -460,17 +444,15 @@ Scenario: 39 -  Enable Survey for My First Instrument
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Online Designer"
     Then I should see "The Online Designer will allow you to make project modifications"
-    And I should not see "input"
+    #And I should see that surveys are enabled
         #The Enable button appears in the Enabled a survey column for all instruments.
-    And I should see "input"
+    #And I should see that surveys are enabled
         #The Enable button appears in the Enabled a survey column for all instruments.
-    When I click on the button labeled "input"
-        #Enable My First instrument
+    When I click on the element identified by "button:contains('Enable'):first"
     Then I should see "Set up my survey for data collection instrument"
     When I click on the button labeled "Save Changes"
     Then I should see "Your survey settings were successfully saved!"
-        #or something like it 
-    And I should see "input"
+    #And I should NOT see "input"
         #Survey symbol replaces Enable button.
 
 Scenario: 40 - Delete Survey 
@@ -482,15 +464,17 @@ Scenario: 40 - Delete Survey
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Online Designer"
-    And I click on the button labeled "Survey Settings"
+    And I click on the button labeled "Survey settings"
     Then I should see "Modify survey settings for data collection instrument"
     When I click on the button labeled "Delete Survey Settings"
-    And I click on the button labeled "Delete Survey Settings"
+    Then I should see "Delete this instrument's survey settings"
+    And I click on the element identified by "button:contains('Delete Survey Settings'):last"
     Then I should see "Survey successfully deleted!"
-    When I click on the button labeled "Close"
-    Then I should see "input"
-        #Enable button is visible
+    #When I click on the button labeled "Close"
+    #Then I should see that surveys are disabled
+        #The Enable button appears in the Enabled a survey column for all instruments.
 
+@focus
 Scenario: 41 - Enable Survey for My First Instrument
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -500,14 +484,13 @@ Scenario: 41 - Enable Survey for My First Instrument
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Online Designer"
-    And I click on the button labeled "input"
-        #Enable My First instrument
+    When I click on the element identified by "button:contains('Enable'):first"
     And I click on the button labeled "Save Changes"
     Then I should see "Your survey settings were successfully saved!"
-        #or something like it 
-    And I should see "input"
+     #And I should NOT see "input"
         #Survey symbol replaces Enable button.
 
+@focus
 Scenario: 42 - Change Survey Status to Offline
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -517,13 +500,14 @@ Scenario: 42 - Change Survey Status to Offline
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Online Designer"
-    And I click on the button labeled "Survey Settings"
-    And I select "Survey Offline" from the dropdown identified by "Survey Status" 
+    And I click on the button labeled "Survey settings"
+    And I select "Survey Offline" from the dropdown identified by "[name=survey_enabled]" 
     And I click on the button labeled "Save Changes"
-    Then I should see "Survey settings successful!"
-    And I should see "input"
-        #Survey symbol is visible
+    Then I should see "Your survey settings were successfully saved!"
+    #And I should NOT see "input"
+        #Survey symbol replaces Enable button.
 
+@focus
 Scenario: 43 - Change Survey Status to Active
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -533,11 +517,12 @@ Scenario: 43 - Change Survey Status to Active
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Online Designer"
-    And I click on the button labeled "Survey Settings"
-    And I select "Survey Active" from the dropdown identified by "Survey Status" 
+    And I click on the button labeled "Survey settings"
+    And I select "Survey Active" from the dropdown identified by "[name=survey_enabled]" 
     And I click on the button labeled "Save Changes"
-    Then I should see "Survey settings successful!"
+    Then I should see "Your survey settings were successfully saved!"
 
+@focus
 Scenario: 44 - Open and Submit Public Survey
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -547,8 +532,9 @@ Scenario: 44 - Open and Submit Public Survey
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Survey Distribution Tools"
     Then I should see "Using a public survey link is the simplest and fastest way to collect responses for your survey"
-    When I click on the link labeled "Open public survey"
+    #When I click on the link labeled "Open public survey"
         #This will open a new page - probably wont run, but maybe
+    When I visit the public survey URL for Project ID "14"
 
         #so come back to this one 
 
