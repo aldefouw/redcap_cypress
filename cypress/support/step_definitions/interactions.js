@@ -15,6 +15,16 @@ Given("I click on the button labeled {string}", (text) => {
 /**
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I close popup
+ * @description Closes popup with button labeled "Close"
+ */
+ Given("I close popup", (text) => {
+    cy.focused().should('have.text', 'Close').click()
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I click on the button labeled Save & Stay
  * @param {string} text - the text on the button element you want to click
  * @description Clicks on a button element with a specific text label.
@@ -124,6 +134,17 @@ Given('I select {string} from the dropdown identified by {string}', (value,label
     cy.get(label).select(value, { force: true })
 })
 
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I select the option labelled {string}
+ * @param {string} value - the option to select from the dropdown
+ * @description Selects the option via a specific string.
+ */
+ Given('I select the option labeled {string}', (text) => {
+    cy.get('a').contains(text).should('be.visible').click()
+})
 
 Given("I click on the element identified by {string}", (sel) => {
     cy.get(sel).click()
