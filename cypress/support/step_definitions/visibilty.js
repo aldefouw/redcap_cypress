@@ -72,3 +72,16 @@ Given("I should see a new dialog box named {string}", (text) => {
     //Really only added this to delay cypress cause sometimes it was moving forward without being checked
     check == 'checked' ? cy.get(sel).should('be.checked') : cy.get(sel).should('not.be.checked')
 })
+
+/**
+ * @module Visibility
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I should see the input field identified by {string} with the value {string}
+ * @param {string} selector the selector that identifies an input field
+ * @param {string} text the text that the input field should be set to
+ * @description Visually verifies that a specified input field is set to text
+ */
+
+ Given("I should see the input field identified by {string} with the value {string}", (selector, text) => {
+    cy.get(selector).should("have.value", text)
+})
