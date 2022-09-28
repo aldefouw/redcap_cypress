@@ -17,47 +17,46 @@ Feature: Logging
 
   Scenario: 3 - Add new record
     When I visit Project ID 14
-    And I click on the link labeled "Add / Edit Records"
+    Then I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
     And I enter "Test" into the "ptname" text input field
     And I enter "test@test.com" into the "email" text input field
     Then I click on the button labeled Save & Stay
     And I clear the field and enter "Testing" into the "ptname" text input field
     Then I click on the button labeled "Save & Exit"
+    
+  # Scenario: 4 - Add new record
+  #   When I visit Project ID 14
+  #   Then I click on the link labeled "Add / Edit Records"
+  #   And I click on the button labeled "Add new record"
+  #   And I enter "Test2" into the "ptname" text input field
+  #   And I enter "test@test.com" into the "email" text input field
+  #   Then I click on the button labeled "Save & Exit"
 
-  Scenario: 4 - Add new record
-    When I visit Project ID 14
-    And I click on the link labeled "Add / Edit Records"
-    And I click on the button labeled "Add new record"
-    And I enter "Test2" into the "ptname" text input field
-    And I enter "test@test.com" into the "email" text input field
-    Then I click on the button labeled "Save & Exit"
-
-  Scenario: 5 - Add new record
-    When I visit Project ID 14
-    And I click on the link labeled "Add / Edit Records"
-    And I click on the button labeled "Add new record"
-    And I enter "Delete" into the "ptname" text input field
-    And I enter "delete@test.com" into the "email" text input field
-    Then I click on the button labeled "Save & Exit"
+  # Scenario: 5 - Add new record
+  #   When I visit Project ID 14
+  #   Then I click on the link labeled "Add / Edit Records"
+  #   And I click on the button labeled "Add new record"
+  #   And I enter "Delete" into the "ptname" text input field
+  #   And I enter "delete@test.com" into the "email" text input field
+  #   Then I click on the button labeled "Save & Exit"
 
   # Scenario: 6 - Delete record
-  #   When I click on the link labeled "Record Status Dashboard"
-  #   And I click on the link labeled "3" under Record ID
-  #   Then I should see dropdown menu labeled "Choose action for record"
-  #   And I select option labeled "Delete record (all forms)"
-  #   Then I should see popup message "Delete record "3\"?"
+  #   When I visit Project ID 14
+  #   Then I click on the link labeled "Record Status Dashboard"
+  #   And I click on the link labeled "3"
+  #   And I click on the button labeled "Choose action for record"
+  #   And I select the option labeled "Delete record (all forms)"
   #   And I click on the button labeled "DELETE RECORD"
-  #   Then I should see popup message "Record deleted!"
-  #   And I click on the button labeled "Close"
+  #   Then I close popup
 
-  # Scenario: 7 - Add new role
-  #   When I click on the link labeled "User Rights"
-  #   And I fill in role name with "Data"
-  #   And I click on the button labeled "Create role"
-  #   Then I should see default privileges selected 
-  #   And I click on the button labeled "Create role"
-  #   Then I should see popup message "Role was successfully added!" 
+  Scenario: 7 - Add new role
+    When I click on the link labeled "User Rights"
+    And I fill in role name with "Data"
+    And I click on the button labeled "Create role"
+    Then I should see default privileges selected 
+    And I click on the button labeled "Create role"
+    Then I should see popup message "Role was successfully added!" 
 
   # Scenario: 8 - Edit role
   #   When I click on the link labeled "Data"
