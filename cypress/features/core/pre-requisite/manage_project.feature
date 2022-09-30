@@ -31,6 +31,7 @@ Scenario: 3- User Settings Configuration - Move Projects to Production
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
+@focus
 Scenario: 4- User Settings Configuration - Edit Survey Responses
     When I click on the link labeled "User Settings"
     And I select "Enabled" from the dropdown identified by "select[name=enable_edit_survey_response]"
@@ -532,14 +533,10 @@ Scenario: 44 - Open and Submit Public Survey
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Survey Distribution Tools"
     Then I should see "Using a public survey link is the simplest and fastest way to collect responses for your survey"
-    #When I click on the link labeled "Open public survey"
-        #This will open a new page - probably wont run, but maybe
-    When I visit the public survey URL for Project ID "14"
+    When I visit the public survey URL for Project ID 14
+    And I click on the element identified by "[name=submit-btn-saverecord]"
 
-        #so come back to this one 
-
-
-
+@focus
 Scenario: 45 - Verify Survey Responses are Read Only
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -548,26 +545,31 @@ Scenario: 45 - Verify Survey Responses are Read Only
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Add / Edit Records"
-    Then I should see "You may view an existing record/response by selecting it from the drop-down lists below."
-    And I click on the link labeled "input"
+    And I select "1" from the dropdown identified by "[id=record]"
+    Then I should see "Record Home Page"
+    When I click on the element identified by "[src=/redcap_v11.1.5/Resources/images/circle_green_tick.png]"
+
         #Select My First Instrument with the green checkmark.
     Then I should see "input"
         #Survey response is read-only message appears on My First instrument page.
 
 Scenario: 46 - Login as admin1115
 
+@focus
 Scenario: 47 - Allow Users to Edit Survey Responses
     When I click on the link labeled "User Settings"
     And I select "Enabled" from the dropdown identified by "select[name=enable_edit_survey_response]"
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
+@focus
 Scenario: 48 - Login with test_user
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
 
+@focus
 Scenario: 49 - Edit User Rights for test_user
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -580,7 +582,7 @@ Scenario: 49 - Edit User Rights for test_user
 
 
 
-
+@focus
 Scenario: 50 - Verify Survey Responses are Visible and Editable
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
