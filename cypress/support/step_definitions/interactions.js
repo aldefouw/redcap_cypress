@@ -8,7 +8,7 @@ import { defineParameterType } from "cypress-cucumber-preprocessor/steps";
  * @description Click on a button element with a specific text label.
  */
 Given("I click on the button labeled {string}", (text) => {
-    cy.get('button').contains(text).click()
+    cy.get(`:button:contains(${text}),:button[value="${text}"]`).click()
 })
 
 /**
@@ -91,7 +91,7 @@ Given('I click on the table cell containing a link labeled {string}', (text) => 
  * @param {string} label - the label of the dropdown to choose an option from
  * @description Select a dropdown by its label and the option via a specific string.
  */
-Given('I select {string} from the dropdown identified by {string}', (value,label) => {
+Given('I select {string} from the dropdown labeled {string}', (value,label) => {
     cy.get(label).select(value, { force: true })
 })
 
