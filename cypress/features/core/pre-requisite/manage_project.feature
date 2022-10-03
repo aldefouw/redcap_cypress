@@ -547,7 +547,7 @@ Scenario: 45 - Verify Survey Responses are Read Only
     And I click on the link labeled "Add / Edit Records"
     And I select "1" from the dropdown identified by "[id=record]"
     Then I should see "Record Home Page"
-    When I click on the element identified by "[src=/redcap_v11.1.5/Resources/images/circle_green_tick.png]"
+    When I click on the link labeled "[src=/redcap_v11.1.5/Resources/images/circle_green_tick.png]"
 
         #Select My First Instrument with the green checkmark.
     Then I should see "input"
@@ -578,9 +578,12 @@ Scenario: 49 - Edit User Rights for test_user
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "User Rights"
-        #The Editing existing user page displays - does not exist? 
-
-
+    And I click on the link labeled "test_user"
+    And I click on the button labeled "Edit user privileges"
+    Then I should see "Editing existing user"
+    When I click on the element identified by "[id=form-editresp-form_1]"
+    And I click on the button labeled "Save Changes"
+    Then I should see "was successfully edited"
 
 @focus
 Scenario: 50 - Verify Survey Responses are Visible and Editable
@@ -591,13 +594,16 @@ Scenario: 50 - Verify Survey Responses are Visible and Editable
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Add / Edit Records"
-    And I select "input" from the dropdown identified by "input"
-        #choose the existing record
+    And I select "1" from the dropdown identified by "[id=record]"
+    Then I should see "Record Home Page"
+    When I click on the link labeled "[src=/redcap_v11.1.5/Resources/images/circle_green_tick.png]"
 
-        #Open My First Instrument with the green checkmark ?
+        #Select My First Instrument with the green checkmark.
+    And I should see "Survey response is editable"
+    And I should see "[id=edit-response-btn]"
 
 
-
+@focus
 Scenario: 51 - Enable the Designate an email field…
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -606,8 +612,7 @@ Scenario: 51 - Enable the Designate an email field…
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
-    Then I should see "input"
-        #The Enable button appears next to the red dash circle for ‘Designate an email field…’
+    Then I should see that the designate an email for communications setting is "Enable"
     When I click on the button labeled "input"
         #Enable the ‘Designate an email field…’
     Then I should see "Choose an email field to use for invitations to survey participants:"
@@ -617,6 +622,7 @@ Scenario: 51 - Enable the Designate an email field…
     Then I should see "input"
         #Disable button appears next to the green checkmark circle for ‘Designate an email field…’
 
+@focus
 Scenario: 52 - Move FirstProject_1115 to Production
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -626,8 +632,10 @@ Scenario: 52 - Move FirstProject_1115 to Production
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Move project to production"
-
-        #so come back to this one 
+    Then I should see "Move Project to Production Status?"
+    When I click on the element identified by "[id=keep_data]"
+    And I click on the button labeled "YES, Move to Production Status"
+    Then I should see "Success! The project is now in production."
 
 
 Scenario: 53 - 
