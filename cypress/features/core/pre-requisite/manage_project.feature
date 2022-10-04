@@ -184,6 +184,7 @@ Scenario: 18- Copy Instrument
     Then I should see "Form 1 2"
     And I should see "SUCCESS! The instrument was successfully copied. The page will now reload to reflect the changes."
 
+@focus
 Scenario: 19- Add Email Field to My First Instrument 2
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -254,6 +255,7 @@ Scenario: 22 - Cancel Move Project to Production
 
 Scenario: 23 - Login as admin1115
 
+@focus
 Scenario: 24 - Allow Normal Users to Move to Production
     When I click on the link labeled "User Settings"
     And I select "Yes, normal users can move projects to production" from the dropdown identified by "select[name=superusers_only_move_to_prod]"
@@ -435,6 +437,7 @@ Scenario: 38 - Diasble / Inable Surveys
     When I click on the element identified by "[id=setupEnableSurveysBtn]"
     Then I should see that surveys are enabled 
 
+@focus
 Scenario: 39 -  Enable Survey for My First Instrument
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -491,7 +494,6 @@ Scenario: 41 - Enable Survey for My First Instrument
      #And I should NOT see "input"
         #Survey symbol replaces Enable button.
 
-@focus
 Scenario: 42 - Change Survey Status to Offline
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -508,7 +510,6 @@ Scenario: 42 - Change Survey Status to Offline
     #And I should NOT see "input"
         #Survey symbol replaces Enable button.
 
-@focus
 Scenario: 43 - Change Survey Status to Active
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -546,9 +547,8 @@ Scenario: 45 - Verify Survey Responses are Read Only
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Add / Edit Records"
     And I select "1" from the dropdown identified by "[id=record]"
-    Then I should see "Record Home Page"
-    When I click on the link labeled "[src=/redcap_v11.1.5/Resources/images/circle_green_tick.png]"
-
+    Then I should see "Record Home Page" 
+    When I click on the element identified by ".odd > .nowrap > a > img"
         #Select My First Instrument with the green checkmark.
     Then I should see "input"
         #Survey response is read-only message appears on My First instrument page.
@@ -562,7 +562,6 @@ Scenario: 47 - Allow Users to Edit Survey Responses
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
-@focus
 Scenario: 48 - Login with test_user
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -596,11 +595,10 @@ Scenario: 50 - Verify Survey Responses are Visible and Editable
     And I click on the link labeled "Add / Edit Records"
     And I select "1" from the dropdown identified by "[id=record]"
     Then I should see "Record Home Page"
-    When I click on the link labeled "[src=/redcap_v11.1.5/Resources/images/circle_green_tick.png]"
-
+    When I click on the element identified by ".odd > .nowrap > a > img"
         #Select My First Instrument with the green checkmark.
     And I should see "Survey response is editable"
-    And I should see "[id=edit-response-btn]"
+    And I should see "Edit response"
 
 
 @focus
@@ -612,15 +610,13 @@ Scenario: 51 - Enable the Designate an email field…
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
-    Then I should see that the designate an email for communications setting is "Enable"
-    When I click on the button labeled "input"
-        #Enable the ‘Designate an email field…’
+    Then I should see that the designate an email field for communications setting is "Enable"
+    When I click on the element identified by "[id=enableSurveyPartEmailFieldBtn]"
     Then I should see "Choose an email field to use for invitations to survey participants:"
-    When I select "input" from the dropdown identified by "input"
-        #Choose [email] field
+    When I select "email" from the dropdown identified by "[id=surveyPartEmailFieldName]"
+        #this fails 
     And I click on the button labeled "Save"
-    Then I should see "input"
-        #Disable button appears next to the green checkmark circle for ‘Designate an email field…’
+    Then I should see that the designate an email field for communications setting is "Disable"
 
 @focus
 Scenario: 52 - Move FirstProject_1115 to Production
@@ -632,26 +628,66 @@ Scenario: 52 - Move FirstProject_1115 to Production
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Move project to production"
-    Then I should see "Move Project to Production Status?"
+    Then I should see "Move Project To Production Status?"
     When I click on the element identified by "[id=keep_data]"
     And I click on the button labeled "YES, Move to Production Status"
     Then I should see "Success! The project is now in production."
 
+@focus
+Scenario: 53 - Enter Draft Mode and Verify Can Not Delete an Event 
+    When I click on the link labeled "Log out"
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
+    And I click on the button labeled "Log In"
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "FirstProject_1115"
+    And I click on the link labeled "Project Setup"
+    And I click on the button labeled "Online Designer"
+    Then I should see "Enter Draft Mode"
+    When I click on the input button labeled "Enter Draft Mode"
+    Then I should see "Data Collection Instruments" 
+    When I click on the link labeled "Project Setup"
+    And I click on the button labeled "Define My Events"
 
-Scenario: 53 - 
+@focus
+Scenario: 54 - Add New Field and Submit Changes 
+    When I click on the link labeled "Log out"
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
+    And I click on the button labeled "Log In"
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "FirstProject_1115"
+    And I click on the link labeled "Designer"
+    Then I should see "Submit Changes for Review"
+    When I click on the link labeled "Form 1"
+    And I click on the element identified by "input[id=btn-last]"
+    And I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[name=field_type]"
+    And I enter "Text2" into the field identified by "[id=field_label]"
+    And I enter "text2" into the field identified by "[id=field_name]"
+    And I click on the button labeled "Save"
+    Then I should see "Variable: text2" 
+    When I click on the button labeled "Submit Changes for Review"
+    Then I should see "SUBMIT CHANGES FOR REVIEW?"
+    When I click on the button labeled "Submit"
+    Then I should see "Awaiting review of project changes"
+        #this is not what I see
 
-Scenario: 54 - 
-
+@focus
 Scenario: 55 - Login as admin1115
 
+
+@focus
 Scenario: 56 - 
 
+
+@focus
 Scenario: 57 - Allow Users to Make Draft Mode Changes
     When I click on the link labeled "User Settings"
     And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
+@focus
 Scenario: 58 - Login with test_user
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
