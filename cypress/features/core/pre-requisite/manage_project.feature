@@ -31,7 +31,6 @@ Scenario: 3- User Settings Configuration - Move Projects to Production
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
-@focus
 Scenario: 4- User Settings Configuration - Edit Survey Responses
     When I click on the link labeled "User Settings"
     And I select "Enabled" from the dropdown identified by "select[name=enable_edit_survey_response]"
@@ -96,7 +95,6 @@ Scenario: 11- Cancel Create Project Request
 
 Scenario: 12- Logout as test_user
 
-@focus
 Scenario: 13- Allow Normal Users to Create New Projects
     When I click on the link labeled "User Settings"
     Then I should see "Settings related to Project Creation and Project Status Changes"
@@ -110,7 +108,6 @@ Scenario: 14- Login with test_user
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
 
-@focus
 Scenario: 15- Create Project and add test_admin to Project
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -145,7 +142,6 @@ Scenario: 16- Change Project to Just for Fun
     When I click on the button labeled "Save"
     Then I should see "Success! Your changes have been saved."
 
-@focus
 Scenario: 17- Open and Add First Instrument
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -165,7 +161,6 @@ Scenario: 17- Open and Add First Instrument
     And I click on the button labeled "Save"
     Then I should see "Variable: ptname" 
 
-@focus
 Scenario: 18- Copy Instrument
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -184,7 +179,6 @@ Scenario: 18- Copy Instrument
     Then I should see "Form 1 2"
     And I should see "SUCCESS! The instrument was successfully copied. The page will now reload to reflect the changes."
 
-@focus
 Scenario: 19- Add Email Field to My First Instrument 2
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -255,7 +249,6 @@ Scenario: 22 - Cancel Move Project to Production
 
 Scenario: 23 - Login as admin1115
 
-@focus
 Scenario: 24 - Allow Normal Users to Move to Production
     When I click on the link labeled "User Settings"
     And I select "Yes, normal users can move projects to production" from the dropdown identified by "select[name=superusers_only_move_to_prod]"
@@ -420,7 +413,6 @@ Scenario: 37 - Enable Repeatable Instruments and Events
     Then I should see "Your settings for repeating instruments and/or events have been successfully saved. (The page will now reload.)"
     And I should see that repeatable instruments are "Modify"     
 
-@focus
 Scenario: 38 - Diasble / Inable Surveys
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -437,7 +429,6 @@ Scenario: 38 - Diasble / Inable Surveys
     When I click on the element identified by "[id=setupEnableSurveysBtn]"
     Then I should see that surveys are enabled 
 
-@focus
 Scenario: 39 -  Enable Survey for My First Instrument
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -478,7 +469,6 @@ Scenario: 40 - Delete Survey
     #Then I should see that surveys are disabled
         #The Enable button appears in the Enabled a survey column for all instruments.
 
-@focus
 Scenario: 41 - Enable Survey for My First Instrument
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -524,7 +514,6 @@ Scenario: 43 - Change Survey Status to Active
     And I click on the button labeled "Save Changes"
     Then I should see "Your survey settings were successfully saved!"
 
-@focus
 Scenario: 44 - Open and Submit Public Survey
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -537,7 +526,6 @@ Scenario: 44 - Open and Submit Public Survey
     When I visit the public survey URL for Project ID 14
     And I click on the element identified by "[name=submit-btn-saverecord]"
 
-@focus
 Scenario: 45 - Verify Survey Responses are Read Only
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -555,7 +543,6 @@ Scenario: 45 - Verify Survey Responses are Read Only
 
 Scenario: 46 - Login as admin1115
 
-@focus
 Scenario: 47 - Allow Users to Edit Survey Responses
     When I click on the link labeled "User Settings"
     And I select "Enabled" from the dropdown identified by "select[name=enable_edit_survey_response]"
@@ -568,7 +555,6 @@ Scenario: 48 - Login with test_user
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
 
-@focus
 Scenario: 49 - Edit User Rights for test_user
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -584,7 +570,6 @@ Scenario: 49 - Edit User Rights for test_user
     And I click on the button labeled "Save Changes"
     Then I should see "was successfully edited"
 
-@focus
 Scenario: 50 - Verify Survey Responses are Visible and Editable
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -600,8 +585,6 @@ Scenario: 50 - Verify Survey Responses are Visible and Editable
     And I should see "Survey response is editable"
     And I should see "Edit response"
 
-
-@focus
 Scenario: 51 - Enable the Designate an email field…
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -614,11 +597,9 @@ Scenario: 51 - Enable the Designate an email field…
     When I click on the element identified by "[id=enableSurveyPartEmailFieldBtn]"
     Then I should see "Choose an email field to use for invitations to survey participants:"
     When I select "email" from the dropdown identified by "[id=surveyPartEmailFieldName]"
-        #this fails 
     And I click on the button labeled "Save"
     Then I should see that the designate an email field for communications setting is "Disable"
 
-@focus
 Scenario: 52 - Move FirstProject_1115 to Production
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -633,7 +614,6 @@ Scenario: 52 - Move FirstProject_1115 to Production
     And I click on the button labeled "YES, Move to Production Status"
     Then I should see "Success! The project is now in production."
 
-@focus
 Scenario: 53 - Enter Draft Mode and Verify Can Not Delete an Event 
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
@@ -646,11 +626,13 @@ Scenario: 53 - Enter Draft Mode and Verify Can Not Delete an Event
     Then I should see "Enter Draft Mode"
     When I click on the input button labeled "Enter Draft Mode"
     Then I should see "Data Collection Instruments" 
+    And I should see a link labeled "Form 1"
+    And I should see a link labeled "Form 1 2"
     When I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
+    Then I should NOT see "[title=Delete]"
 
-@focus
-Scenario: 54 - Add New Field and Submit Changes 
+Scenario: 54 - Add New Field and Submit Changes for Review
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:" 
@@ -658,7 +640,7 @@ Scenario: 54 - Add New Field and Submit Changes
     And I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     And I click on the link labeled "Designer"
-    Then I should see "Submit Changes for Review"
+    Then I should see "Since this project is currently in PRODUCTION"
     When I click on the link labeled "Form 1"
     And I click on the element identified by "input[id=btn-last]"
     And I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[name=field_type]"
@@ -666,39 +648,75 @@ Scenario: 54 - Add New Field and Submit Changes
     And I enter "text2" into the field identified by "[id=field_name]"
     And I click on the button labeled "Save"
     Then I should see "Variable: text2" 
-    When I click on the button labeled "Submit Changes for Review"
+    When I click on the input button labeled "Submit Changes for Review"
     Then I should see "SUBMIT CHANGES FOR REVIEW?"
     When I click on the button labeled "Submit"
     Then I should see "Awaiting review of project changes"
-        #this is not what I see
+        #this is not what shows
 
-@focus
 Scenario: 55 - Login as admin1115
 
+Scenario: 56 - Remove Drafted Changes 
+    When I click on the link labeled "My Projects"
+    And I click on the link labeled "FirstProject_1115"
+    And I click on the link labeled "Designer"
+    And I click on the button labeled "Project Modification Module"
+    Then I should see "Below is a listing of the changes to be committed to this project."
+    When click on the button labeled "Remove All Drafted Changes"
+    And I click on the element identified by "button:contains('Remove All Drafted Changes'):first"
+    Then I should see "the project was reset back to before it entered Draft Mode"
 
-@focus
-Scenario: 56 - 
-
-
-@focus
 Scenario: 57 - Allow Users to Make Draft Mode Changes
     When I click on the link labeled "User Settings"
     And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
-@focus
 Scenario: 58 - Login with test_user
     When I click on the link labeled "Log out"
     And I enter "test_user" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
 
-Scenario: 59 - 
+Scenario: 59 - Add New Field and Submit Changes
+    When I click on the link labeled "Log out"
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
+    And I click on the button labeled "Log In"
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "FirstProject_1115"
+    And I click on the link labeled "Designer"
+    Then I should see "Since this project is currently in PRODUCTION"
+    And I click on the input button labeled "Enter Draft Mode"
+    And I click on the link labeled "Form 1"
+    And I click on the element identified by "input[id=btn-last]"
+    And I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[name=field_type]"
+    And I enter "Text2" into the field identified by "[id=field_label]"
+    And I enter "text2" into the field identified by "[id=field_name]"
+    And I click on the button labeled "Save"
+    Then I should see "Success! The changes were made automatically"
+    
 
-Scenario: 60 - 
+Scenario: 60 - Verify Repeatable Instruments is Disabled 
+    When I click on the link labeled "Log out"
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
+    And I click on the button labeled "Log In"
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "FirstProject_1115"
+    And I click on the link labeled "Designer"
+    And I click on the input button labeled "Enter Draft Mode"
+    Then I should see "Since this project is currently in PRODUCTION"
+    When I click on the link labeled "Project Setup"
+    Then I should see that repeatable instruments are "Enable"
+    When I click on the button labeled "Define My Events"
+    Then I should see "Events cannot be modified in production status"
 
 Scenario: 61 - 
+    When I click on the link labeled "Log out"
+    And I enter "test_user" into the field labeled "Username:"
+    And I enter "Testing123" into the field labeled "Password:" 
+    And I click on the button labeled "Log In"
 
 Scenario: 62 - Login as admin1115
 
