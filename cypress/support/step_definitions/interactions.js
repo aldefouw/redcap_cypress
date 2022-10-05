@@ -161,8 +161,15 @@ Given("I select {string} from the dropdown identified by {string} for the {strin
     })
 })
 
-Given("I click on the element identified by {string}", (sel) => {
-    cy.get(sel).click()
+/**
+ * @module Interactions
+ * @author Corey Debacker <debacker@wisc.edu>
+ * @example When I click on the element identified by {string}
+ * @param {string} selector - the selector of the element to click on
+ * @description Clicks on an element identified by specific selector
+ */
+Given("I click on the element identified by {string}", (selector) => {
+    cy.get(selector).click()
 })
 
 Given("I click on the checkbox identified by {string}", (sel) => {
@@ -170,7 +177,7 @@ Given("I click on the checkbox identified by {string}", (sel) => {
 })
 
 Given("I enter {string} into the field identified by {string}", (text, sel) => {
-    cy.get(sel).clear().type(text)
+    cy.get(sel).type(text)
 })
 
 /**
