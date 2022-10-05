@@ -4,6 +4,7 @@ Feature: Reporting
   I want to see that Reporting is functioning as expected
 
   Scenario: 1 - Navigate to the validation website's REDCap login page; Login as test_user
+    Given I am an "standard" user who logs into REDCap
 
   Scenario: 1.5 - Upload the data dictionary
     Given I create a project named "22Reportingv913" with project purpose Operational Support via CDISC XML import from fixture location "core/post-production/reporting/22Reportingv913.xml"
