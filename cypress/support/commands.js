@@ -13,52 +13,36 @@ import '@4tw/cypress-drag-drop'
 // They are very stable and do not change often, if ever
 
 Cypress.Commands.add('login', (options) => {
-    cy.session(options['username'], () => {
-        cy.visit('/')
-        cy.intercept('POST', '/').as('loginStatus')
-        cy.get('input[name=username]').invoke('attr', 'value', options['username'])
-        cy.get('input[name=password]').invoke('attr', 'value', options['password'])
-        cy.get('button').contains('Log In').click()
-        cy.wait('@loginStatus')
-    })
-
-    //Since Cypress session clears the page, we need to visit the last URL present
-    if(window.lastUrl !== '') {
-        cy.visit(window.lastUrl)
-    }
+    cy.logout()
+    cy.visit('/')
+    cy.intercept('POST', '/').as('loginStatus')
+    cy.get('input[name=username]').invoke('attr', 'value', options['username'])
+    cy.get('input[name=password]').invoke('attr', 'value', options['password'])
+    cy.get('button').contains('Log In').click()
 })
 
 Cypress.Commands.add('logout', () => {
     const url = '/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1'
     cy.visit('/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
-    window.lastUrl = url
 })
 
 Cypress.Commands.add('visit_version', (options) => {
     let version = Cypress.env('redcap_version')
     let url = ''
 
-    cy.maintain_login().then(() => {
-        if('params' in options){
-            url = '/redcap_v' + version + '/' + options['page'] +  '?' + options['params']
-            cy.visit()
-        } else {
-            url = '/redcap_v' + version + '/' + options['page']
-            cy.visit('/redcap_v' + version + '/' + options['page'])
-        }
+    if('params' in options){
+        url = '/redcap_v' + version + '/' + options['page'] +  '?' + options['params']
+        cy.visit(url)
+    } else {
+        url = '/redcap_v' + version + '/' + options['page']
+        cy.visit(url)
+    }
 
-        window.lastUrl = url
-    })
 })
 
 Cypress.Commands.add('visit_base', (options) => {
     const url = options['url']
-
-    cy.maintain_login().then(() => {
-        if ('url' in options) cy.visit(url)
-    })
-
-    window.lastUrl = url
+    if ('url' in options) cy.visit(url)
 })
 
 Cypress.Commands.add('base_db_seed', () => {
@@ -120,7 +104,7 @@ Cypress.Commands.add('base_db_seed', () => {
     })
 })
 
-Cypress.Commands.add('maintain_login', () => {
+Cypress.Commands.add('fetch_login', () => {
     let user = window.user_info.get_current_user()
     let pass = window.user_info.get_current_pass()
 
@@ -528,7 +512,7 @@ Cypress.Commands.add('delete_records', (pid) => {
 
 Cypress.Commands.add('access_api_token', (pid, user) => {
     // This assumes user already has API token created
-    cy.maintain_login().then(($r) => {
+    cy.fetch_login().then(($r) => {
         cy.request({ url: `/redcap_v${Cypress.env('redcap_version')}/ControlCenter/user_api_ajax.php?action=viewToken&api_pid=${pid}&api_username=${user}`})
             .then(($token) => {
                 return cy.wrap(Cypress.$($token.body).children('div')[0].innerText);

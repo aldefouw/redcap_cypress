@@ -3,11 +3,9 @@ Feature: Manage Project
   As a REDCap end user
   I want to see that Manage Project is functioning as expected
 
-Background: 
+Scenario: 2- User Settings Configuration - Create Projects
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center" page
-
-Scenario: 2- User Settings Configuration - Create Projects 
     When I click on the link labeled "User Settings"
     And I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
     And I select "No, only Administrators can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
@@ -68,7 +66,7 @@ Scenario: 9- Login with test_user2
 
 Scenario: 10- Login with test_user
     When I click on the link labeled "Log out"
-    And I enter "tets_user" into the field labeled "Username:"
+    And I enter "test_user" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:" 
     And I click on the button labeled "Log In"
     Then I should see a link labeled "New Project"

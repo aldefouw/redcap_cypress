@@ -3,12 +3,10 @@ Feature: Browse Projects
   As a REDCap end user
   I want to see that I have the ability to access, search, and filter projects
 
-  Background:
+  Scenario: View all non-archived projects
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center" page
     And I click on the link labeled "Browse Projects"
-
-  Scenario: View all non-archived projects
     When I click on the button labeled "View all projects"
     Then I should see 13 rows displayed in the projects table
 
