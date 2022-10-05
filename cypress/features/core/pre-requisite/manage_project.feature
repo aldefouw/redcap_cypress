@@ -68,17 +68,12 @@ Feature: Manage Project
       #I dont think this detects
 
     Scenario: 9- Login with test_user2
-        When I click on the link labeled "Log out"
-        And I enter "test_user2" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
-        Then I should NOT see "New Project"
+        Given I logout
+        And I am an "standard2" user who logs into REDCap
 
     Scenario: 10- Login with test_user
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
+        Given I logout
+        And I am an "standard" user who logs into REDCap
         Then I should NOT see "New Project"
         Then I should see a link labeled "New Project"
 
@@ -115,11 +110,11 @@ Feature: Manage Project
         When I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "User Rights"
-        And I enter "test_admin" into the field identified by "[id=new_username]"
+        And I enter "test_user" into the field identified by "[id=new_username]"
         And I click on the button labeled "Add with custom rights"
         Then I should see "Adding new user"
         When I click on the button labeled "Add user"
-        Then I should see "test_admin"
+        Then I should see "test_user"
 
     Scenario: 16- Change Project to Just for Fun
         And I click on the link labeled "My Projects"
@@ -148,10 +143,6 @@ Feature: Manage Project
         Then I should see "Variable: ptname"
 
     Scenario: 18- Copy Instrument
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
@@ -166,10 +157,6 @@ Feature: Manage Project
         And I should see "SUCCESS! The instrument was successfully copied. The page will now reload to reflect the changes."
 
     Scenario: 19- Add Email Field to My First Instrument 2
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
@@ -184,10 +171,6 @@ Feature: Manage Project
         Then I should see "Variable: email"
 
     Scenario: 20- Verify Project Home and Other Functionality Pages
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Home"
@@ -196,10 +179,6 @@ Feature: Manage Project
         Then I should see "Project Status Management"
 
     Scenario: 21- Copy Project
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Other Functionality"
@@ -220,10 +199,6 @@ Feature: Manage Project
         And I should see "Erase all data"
 
     Scenario: 22 - Cancel Move Project to Production
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "ProjectCopy_1115"
         And I click on the link labeled "Project Setup"
@@ -234,6 +209,8 @@ Feature: Manage Project
         Then I should see "Move project to production"
 
     Scenario: 23 - Login as admin1115
+        Given I logout
+        And I am an "admin" user who logs into REDCap
 
     Scenario: 24 - Allow Normal Users to Move to Production
         When I click on the link labeled "User Settings"
@@ -242,16 +219,10 @@ Feature: Manage Project
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 25 - Login with test_user
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
+        Given I logout
+        And I am an "standard" user who logs into REDCap
 
     Scenario: 26 - Move ProjectCopy_1115 to Production
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "ProjectCopy_1115"
         And I click on the link labeled "Project Setup"
@@ -262,10 +233,6 @@ Feature: Manage Project
         Then I should see "Success! The project is now in production."
 
     Scenario: 27 - Other Functionality Tab Options Visibility
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "ProjectCopy_1115"
         And I click on the link labeled "Other Functionality"
@@ -298,16 +265,10 @@ Feature: Manage Project
         Then I should see "Project successfully deleted!"
 
     Scenario: 31 - Login with test_user
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
+        Given I logout
+        And I am an "standard" user who logs into REDCap
 
     Scenario: 32 - Diasble / Inable Longitudinal Data Collection
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -320,10 +281,6 @@ Feature: Manage Project
         Then I should see that longitudinal mode is "Disable"
 
     Scenario: 33 - Add Event 2 in Arm 1
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -334,10 +291,6 @@ Feature: Manage Project
         Then I should see "Event 2"
 
     Scenario: 34 - Add Event 1 in Arm 2
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -351,10 +304,6 @@ Feature: Manage Project
         Then I should see "Event 1"
 
     Scenario: 35 - Edit Designate Instruments for Arm 1
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -366,10 +315,6 @@ Feature: Manage Project
         And I click on the button labeled "Save"
 
     Scenario: 36 - Edit Designate Instruments for Arm 2
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -382,10 +327,6 @@ Feature: Manage Project
         And I click on the button labeled "Save"
 
     Scenario: 37 - Enable Repeatable Instruments and Events
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -400,10 +341,6 @@ Feature: Manage Project
         And I should see that repeatable instruments are "Modify"
 
     Scenario: 38 - Diasble / Inable Surveys
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -416,10 +353,6 @@ Feature: Manage Project
         Then I should see that surveys are enabled
 
     Scenario: 39 -  Enable Survey for My First Instrument
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -437,10 +370,6 @@ Feature: Manage Project
         #Survey symbol replaces Enable button.
 
     Scenario: 40 - Delete Survey
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -456,10 +385,6 @@ Feature: Manage Project
         #The Enable button appears in the Enabled a survey column for all instruments.
 
     Scenario: 41 - Enable Survey for My First Instrument
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -471,10 +396,6 @@ Feature: Manage Project
         #Survey symbol replaces Enable button.
 
     Scenario: 42 - Change Survey Status to Offline
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -487,10 +408,6 @@ Feature: Manage Project
         #Survey symbol replaces Enable button.
 
     Scenario: 43 - Change Survey Status to Active
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -501,10 +418,6 @@ Feature: Manage Project
         Then I should see "Your survey settings were successfully saved!"
 
     Scenario: 44 - Open and Submit Public Survey
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Survey Distribution Tools"
@@ -513,10 +426,6 @@ Feature: Manage Project
         And I click on the element identified by "[name=submit-btn-saverecord]"
 
     Scenario: 45 - Verify Survey Responses are Read Only
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Add / Edit Records"
@@ -528,6 +437,8 @@ Feature: Manage Project
         #Survey response is read-only message appears on My First instrument page.
 
     Scenario: 46 - Login as admin1115
+        Given I logout
+        And I am an "admin" user who logs into REDCap
 
     Scenario: 47 - Allow Users to Edit Survey Responses
         When I click on the link labeled "User Settings"
@@ -536,16 +447,10 @@ Feature: Manage Project
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 48 - Login with test_user
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
+        Given I logout
+        And I am an "standard" user who logs into REDCap
 
     Scenario: 49 - Edit User Rights for test_user
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "User Rights"
@@ -557,10 +462,6 @@ Feature: Manage Project
         Then I should see "was successfully edited"
 
     Scenario: 50 - Verify Survey Responses are Visible and Editable
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Add / Edit Records"
@@ -572,10 +473,6 @@ Feature: Manage Project
         And I should see "Edit response"
 
     Scenario: 51 - Enable the Designate an email field…
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -587,10 +484,6 @@ Feature: Manage Project
         Then I should see that the designate an email field for communications setting is "Disable"
 
     Scenario: 52 - Move FirstProject_1115 to Production
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -601,10 +494,6 @@ Feature: Manage Project
         Then I should see "Success! The project is now in production."
 
     Scenario: 53 - Enter Draft Mode and Verify Can Not Delete an Event
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -619,10 +508,6 @@ Feature: Manage Project
         Then I should NOT see "[title=Delete]"
 
     Scenario: 54 - Add New Field and Submit Changes for Review
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
@@ -641,6 +526,8 @@ Feature: Manage Project
         #this is not what shows
 
     Scenario: 55 - Login as admin1115
+        Given I logout
+        And I am an "admin" user who logs into REDCap
 
     Scenario: 56 - Remove Drafted Changes
         When I click on the link labeled "My Projects"
@@ -659,16 +546,10 @@ Feature: Manage Project
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 58 - Login with test_user
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
+        Given I logout
+        And I am an "standard" user who logs into REDCap
 
     Scenario: 59 - Add New Field and Submit Changes
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
@@ -684,10 +565,6 @@ Feature: Manage Project
 
 
     Scenario: 60 - Verify Repeatable Instruments is Disabled
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
@@ -699,12 +576,11 @@ Feature: Manage Project
         Then I should see "Events cannot be modified in production status"
 
     Scenario: 61 -
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
+
 
     Scenario: 62 - Login as admin1115
+        Given I logout
+        And I am an "admin" user who logs into REDCap
 
     Scenario: 63 - Allow Normal Users to Modify the Repeatable Instruments & Events
         When I click on the link labeled "User Settings"
@@ -714,10 +590,8 @@ Feature: Manage Project
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 64 - Login with test_user
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
+        Given I logout
+        And I am an "standard" user who logs into REDCap
 
     Scenario: 65 -
 
