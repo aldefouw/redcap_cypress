@@ -96,6 +96,8 @@ Feature: Manage Project
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 14- Login with test_user
+        Given I logout
+        And I am an "standard" user who logs into REDCap
 #        When I click on the link labeled "Log out"
 #        And I enter "test_user" into the field labeled "Username:"
 #        And I enter "Testing123" into the field labeled "Password:"
