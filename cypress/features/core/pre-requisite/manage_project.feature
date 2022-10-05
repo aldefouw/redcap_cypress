@@ -98,10 +98,6 @@ Feature: Manage Project
     Scenario: 14- Login with test_user
         Given I logout
         And I am an "standard" user who logs into REDCap
-#        When I click on the link labeled "Log out"
-#        And I enter "test_user" into the field labeled "Username:"
-#        And I enter "Testing123" into the field labeled "Password:"
-#        And I click on the button labeled "Log In"
 
     Scenario: 15- Create Project and add test_admin to Project
         And I click on the link labeled "New Project"
@@ -111,12 +107,13 @@ Feature: Manage Project
         Then I should see "Your new REDCap project has been created and is ready to be accessed."
         When I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
+        And I should see "User Rights"
         And I click on the link labeled "User Rights"
-        And I enter "test_user" into the field identified by "[id=new_username]"
+        And I enter "test_admin" into the field identified by "[id=new_username]"
         And I click on the button labeled "Add with custom rights"
         Then I should see "Adding new user"
         When I click on the button labeled "Add user"
-        Then I should see "test_user"
+        Then I should see "test_admin"
 
     Scenario: 16- Change Project to Just for Fun
         And I click on the link labeled "My Projects"
