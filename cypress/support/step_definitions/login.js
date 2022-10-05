@@ -12,3 +12,7 @@ Given("I am a(n) {string} user who logs into REDCap", (user_type) => {
     cy.set_user_type(user_type)
     cy.fetch_login()
 })
+
+Given("I logout", () => {
+    cy.logout()
+})

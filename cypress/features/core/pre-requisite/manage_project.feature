@@ -3,11 +3,9 @@ Feature: Manage Project
     As a REDCap end user
     I want to see that Manage Project is functioning as expected
 
-    Background:
+    Scenario: Edit test_user2 to not Create or Copy Projects
         Given I am an "admin" user who logs into REDCap
         And I visit the "Control Center" page
-
-    Scenario: Edit test_user2 to not Create or Copy Projects
         When I click on the link labeled "Browse Users"
         And I enter "test_user2" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
         And I click on the button labeled "Search"
@@ -81,21 +79,21 @@ Feature: Manage Project
         And I enter "test_user" into the field labeled "Username:"
         And I enter "Testing123" into the field labeled "Password:"
         And I click on the button labeled "Log In"
+        Then I should NOT see "New Project"
         Then I should see a link labeled "New Project"
 
     Scenario: 11- Cancel Create Project Request
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "New Project"
         Then I should see "Send Request"
         And I click on the button labeled "Cancel"
         Then I should see "Welcome to REDCap!"
 
     Scenario: 12- Logout as test_user
+        Given I logout
 
     Scenario: 13- Allow Normal Users to Create New Projects
+        And I am an "admin" user who logs into REDCap
+        And I visit the "Control Center" page
         When I click on the link labeled "User Settings"
         Then I should see "Settings related to Project Creation and Project Status Changes"
         And I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
@@ -103,16 +101,12 @@ Feature: Manage Project
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 14- Login with test_user
-        When I click on the link labeled "Log out"
-        And I enter "tets_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
+#        When I click on the link labeled "Log out"
+#        And I enter "test_user" into the field labeled "Username:"
+#        And I enter "Testing123" into the field labeled "Password:"
+#        And I click on the button labeled "Log In"
 
     Scenario: 15- Create Project and add test_admin to Project
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "New Project"
         And I enter "FirstProject_1115" into the field identified by "[name=app_title]"
         And I select "Operational Support" from the dropdown identified by "[name=purpose]"
@@ -128,10 +122,6 @@ Feature: Manage Project
         Then I should see "test_admin"
 
     Scenario: 16- Change Project to Just for Fun
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -143,10 +133,6 @@ Feature: Manage Project
         Then I should see "Success! Your changes have been saved."
 
     Scenario: 17- Open and Add First Instrument
-        When I click on the link labeled "Log out"
-        And I enter "test_user" into the field labeled "Username:"
-        And I enter "Testing123" into the field labeled "Password:"
-        And I click on the button labeled "Log In"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
