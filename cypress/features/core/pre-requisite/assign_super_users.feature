@@ -26,7 +26,7 @@ Scenario: 3- Administrator Privileges Page Visible
 Scenario: 4- Add test_user to Administrator List
     When I click on the link labeled "Administrator Privileges"
     And I enter "test_user" into the field identified by "[id=user_search]"
-    And I click on the checkbox identified by "[id=0-admin_rights]"
+    And I click on the element identified by "[id=0-admin_rights]"
     And I click on the button labeled "Add"
     Then I should see "has now been granted one or more administrator privileges"
     
@@ -48,7 +48,7 @@ Scenario: 6- Verify test_user Administrator Priveledges
 Scenario: 7 & 8 - Grant test_user2 Administrator Privileges
     When I click on the link labeled "Administrator Privileges"
     And I enter "test_user2" into the field identified by "[id=user_search]"
-    And I click on the checkbox identified by "[id=0-account_manager]"
+    And I click on the element identified by "[id=0-account_manager]"
     And I click on the button labeled "Add"
     Then I should see "has now been granted one or more administrator privileges"
 
@@ -71,8 +71,8 @@ Scenario: 10- Verify test_user2 Account Manager Priveledges
 
 Scenario: 11- Switch test_user2 to Maximum User Privileges
     When I click on the link labeled "Administrator Privileges"
-    And I click on the checkbox identified by "[id=4-super_user]"
-    And I click on the checkbox identified by "[id=4-account_manager]"
+    And I click on the element identified by "[id=4-super_user]"
+    And I click on the element identified by "[id=4-account_manager]"
 
 Scenario: 12- Verify test_user2 Maximum User Privileges Priveledges 
     When I click on the link labeled "Log out"
@@ -105,25 +105,13 @@ Scenario: 14 - View and Edit Project Settings Page
     And I click on the button labeled "Log In"
     When I click on the link labeled "Edit a Project's Settings"
     Then I should see "You may modify the governing settings for any REDCap project on this page."
-    And I select "Test Project" from the dropdown identified by "--- Select a project ---"
+    And I select "Test Project" from the dropdown identified by "Choose an existing project to edit its settings:"
     Then I should see "Navigate to project Classic Database"
-
-
-
-
-
-
-
-
-
-
-
-
 
 Scenario: 15- Switch test_user2 to System Configuration Modifier
     When I click on the link labeled "Administrator Privileges"
-    And I click on the checkbox identified by "[id=4-access_system_config]"
-    And I click on the checkbox identified by "[id=4-super_user]"
+    And I click on the element identified by "[id=4-access_system_config]"
+    And I click on the element identified by "[id=4-super_user]"
     
 Scenario: 16- Verify test_user2 System Configuration Access 
     When I click on the link labeled "Log out"
@@ -151,8 +139,8 @@ Scenario: 16- Verify test_user2 System Configuration Access
 
 Scenario: 17- Switch test_user2 to have access to Control Center Dashboards 
     When I click on the link labeled "Administrator Privileges"
-    And I click on the checkbox identified by "[id=4-access_admin_dashboards]"
-    And I click on the checkbox identified by "[id=4-access_system_config]"
+    And I click on the element identified by "[id=4-access_admin_dashboards]"
+    And I click on the element identified by "[id=4-access_system_config]"
 
 Scenario: 18- Verify test_user2 Maximum User Privileges Priveledges 
     When I click on the link labeled "Log out"
@@ -172,8 +160,8 @@ Scenario: 18- Verify test_user2 Maximum User Privileges Priveledges
 
 Scenario: 19- Switch test_user and test_user2 to no admin privileges
     When I click on the link labeled "Administrator Privileges"
-    And I click on the checkbox identified by "[id=4-access_admin_dashboards]"
-    And I click on the checkbox identified by "[id=2-admin_rights]"
+    And I click on the element identified by "[id=4-access_admin_dashboards]"
+    And I click on the element identified by "[id=2-admin_rights]"
     And I click on the link labeled "Log out"
     Then I enter "test_admin" into the field labeled "Username:"
     And I enter "Testing123" into the field labeled "Password:" 

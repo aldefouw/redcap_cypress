@@ -1,4 +1,4 @@
-import { Given } from "cypress-cucumber-preprocessor/steps";
+import {defineParameterType, Given} from "cypress-cucumber-preprocessor/steps";
 
 /**
  * @module DataImport
@@ -39,4 +39,22 @@ Given("I upload a {string} format file located at {string}, by clicking {string}
         cy.wait(1000)
         cy.get(button_selector).click()
     })
+})
+
+defineParameterType({
+    name: 'project_type',
+    regexp: /Practice \/ Just for fun|Operational Support|Research|Quality Improvement|Other/
+})
+
+/**
+ * @module DataImport
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I create a project named {string} with project purpose <Practice | Just for fun | Operational Support | Research | Quality Improvement | Other> via CDISC XML import from fixture location {string}
+ * @param {string} project_name - the desired name for the project
+ * @param {string} project_type - the project purpose specified when the project is created
+ * @param {string} cdisc_file - the fixture path to the CDISC XML file (relative path; fixtures are located in /cypress/fixtures/)
+ * @description Creates a project from a CDISC XML fixture file given a project name and project purpose.
+ */
+Given("I create a project named {string} with project purpose {project_type} via CDISC XML import from fixture location {string}", (project_name, project_type, cdisc_file) => {
+    cy.create_cdisc_project(project_name, project_type, cdisc_file)
 })

@@ -404,11 +404,7 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
 
 })
 
-Cypress.Commands.add('create_cdisc_project', (project_name, project_type, cdisc_file, project_id) => {
-    //Set the Desired Project ID
-    const desired_pid = 'MAGIC_AUTO_NUMBER/' + project_id;
-    cy.mysql_db('set_auto_increment_value', desired_pid)
-
+Cypress.Commands.add('create_cdisc_project', (project_name, project_type, cdisc_file) => {
     //Run through the steps to import the project via CDISC ODM
     cy.visit_base({url: 'index.php?action=create'})
     cy.get('input#app_title').type(project_name)
