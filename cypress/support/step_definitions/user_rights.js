@@ -86,3 +86,18 @@ Given("I want to verify user rights are available for {string} user type on the 
 Given("I want to verify user rights are unavailable for {string} user type on the path {string} on project ID {int}", (user_type, path, pid) => {
     cy.verify_user_rights_unavailable(user_type, path, pid, false)
 })
+
+/**
+ * @module UserRights
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example
+ I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}
+ * @param {string} rights - the specific user right desired (e.g. Stats & Charts)
+ * @param {string} name - the proper name of the user (e.g. Jane Doe)
+ * @param {string} username - the username assigned to the user (e.g. jdoe)
+ * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
+ * @description Assigns a specific user right to a given user when provided a valid Project ID.
+ */
+Given("I change survey edit rights for {string} user on the form called {string} on project ID {int}", (user, form, pid) => {
+    cy.change_survey_edit_rights(pid, user, form)
+})

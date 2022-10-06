@@ -13,6 +13,12 @@ Given("I am a(n) {string} user who logs into REDCap", (user_type) => {
     cy.fetch_login()
 })
 
+/**
+ * @module Login
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I logout
+ * @description Logs a given user out of REDCap
+ */
 Given("I logout", () => {
     cy.logout()
 })
