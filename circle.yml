@@ -33,8 +33,8 @@ jobs:
           name: Configure Cypress environment
           command: |
             cd /home/circleci/project
-            sed s/PID/$PROJECT_ID/g cypress.json.example > cypress.json
-            mv cypress.config.js.example cypress.config.js
+            sed s/PID/$PROJECT_ID/g cypress.config.js.example > cypress.config.js
+
       - run:
           name: Install Cypress
           command: |
