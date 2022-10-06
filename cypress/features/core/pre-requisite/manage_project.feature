@@ -96,10 +96,12 @@ Feature: Manage Project
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
+    
     Scenario: 14- Login with test_user
         Given I logout
         And I am an "standard" user who logs into REDCap
 
+    
     Scenario: 15- Create Project and add test_admin to Project
         And I click on the link labeled "New Project"
         And I enter "FirstProject_1115" into the field identified by "[name=app_title]"
@@ -271,26 +273,29 @@ Feature: Manage Project
         Given I logout
         And I am an "standard" user who logs into REDCap
 
+    
     Scenario: 32 - Diasble / Inable Longitudinal Data Collection
+        Given I am an "standard" user who logs into REDCap
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
         Then I should see that longitudinal mode is "Enable"
         When I click on the element identified by "[id=setupLongiBtn]"
         Then I should see that longitudinal mode is "Disable"
-
+    
     Scenario: 33 - Add Event 2 in Arm 1
-        Given I should see "Define My Events"
+        Given the AJAX "GET" request at "Design/define_events_ajax.php?*" tagged by "events" is being monitored
+        And I should see "Define My Events"
         And I click on the button labeled "Define My Events"
         Then I should see "Event 1"
         When I enter "Event 2" into the field identified by "[id=descrip]"
         And I click on the input button labeled "Add new event"
-        Then I should see "Event 2"
+        And the AJAX request tagged by "events" has completed
 
+    
     Scenario: 34 - Add Event 1 in Arm 2
-        Given I should see "Add New Arm"
-        Given I click on the link labeled "+Add New Arm"
-        And I should see "Arm 2"
+        Given I visit the version URL "Design/define_events.php?pid=14&arm=2"
+        And I click on the link labeled "+Add New Arm"
         And I enter "Arm 2" into the field identified by "[id=arm_name]"
         And I click on the input button labeled "Save"
         Then I should see "No events have been defined for this Arm"
@@ -298,25 +303,25 @@ Feature: Manage Project
         And I click on the input button labeled "Add new event"
         Then I should see "Event 1"
 
+    
     Scenario: 35 - Edit Designate Instruments for Arm 1
+        Given I visit the version URL "Design/designate_forms.php?pid=14&arm=1"
         Given I should see "Arm name:"
         And I should see "Arm 1"
         When I click on the button labeled "Begin Editing"
-        And I click on the element identified by "[id=form_1--41"
+        And I click on the element identified by "[id=form_1--41]"
         And I click on the button labeled "Save"
 
+    
     Scenario: 36 - Edit Designate Instruments for Arm 2
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
-        And I click on the button labeled "Designate Instruments for My Events"
-        And I click on the link labeled "Arm 2"
-        Then I should see "Arm name:"
+        Given I visit the version URL "Design/designate_forms.php?pid=14&arm=2"
+        Given I should see "Arm name:"
         And I should see "Arm 2"
         When I click on the button labeled "Begin Editing"
         And I click on the element identified by "[id=form_1--44]"
         And I click on the button labeled "Save"
 
+    
     Scenario: 37 - Enable Repeatable Instruments and Events
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
@@ -325,13 +330,14 @@ Feature: Manage Project
         When I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
         Then I should see that repeatable instruments are "Disable"
         When I select "Repeat Instruments (repeat independently of each other)" from the dropdown identified by "[name=repeat_whole_event-41]"
-        And I click on the element identified by "[name=repeat_form-41-form_1_2]"
+        And I click on the checkbox labeled "Form 1"
         And I select "Repeat Entire Event (repeat all instruments together)" from the dropdown identified by "[name=repeat_whole_event-43]"
         And I click on the button labeled "Save"
         Then I should see "Your settings for repeating instruments and/or events have been successfully saved. (The page will now reload.)"
         And I should see that repeatable instruments are "Modify"
 
-    Scenario: 38 - Diasble / Inable Surveys
+    
+    Scenario: 38 - Disable / Enable Surveys
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -343,21 +349,22 @@ Feature: Manage Project
         When I click on the element identified by "[id=setupEnableSurveysBtn]"
         Then I should see that surveys are enabled
 
-    Scenario: 39 -  Enable Survey for My First Instrument
+    
+    Scenario: 39 - Enable Survey for My First Instrument
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
         And I click on the button labeled "Online Designer"
         Then I should see "The Online Designer will allow you to make project modifications"
-    #And I should see that surveys are enabled
+        #And I should see that surveys are enabled
         #The Enable button appears in the Enabled a survey column for all instruments.
-    #And I should see that surveys are enabled
+        #And I should see that surveys are enabled
         #The Enable button appears in the Enabled a survey column for all instruments.
         When I click on the element identified by "button:contains('Enable'):first"
         Then I should see "Set up my survey for data collection instrument"
         When I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
-    #And I should NOT see "input"
+        #And I should NOT see "input"
         #Survey symbol replaces Enable button.
 
     Scenario: 40 - Delete Survey
@@ -371,8 +378,8 @@ Feature: Manage Project
         Then I should see "Delete this instrument's survey settings"
         And I click on the element identified by "button:contains('Delete Survey Settings'):last"
         Then I should see "Survey successfully deleted!"
-    #When I click on the button labeled "Close"
-    #Then I should see that surveys are disabled
+        #When I click on the button labeled "Close"
+        #Then I should see that surveys are disabled
         #The Enable button appears in the Enabled a survey column for all instruments.
 
     Scenario: 41 - Enable Survey for My First Instrument
@@ -383,7 +390,7 @@ Feature: Manage Project
         When I click on the element identified by "button:contains('Enable'):first"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
-     #And I should NOT see "input"
+        #And I should NOT see "input"
         #Survey symbol replaces Enable button.
 
     Scenario: 42 - Change Survey Status to Offline
@@ -395,7 +402,7 @@ Feature: Manage Project
         And I select "Survey Offline" from the dropdown identified by "[name=survey_enabled]"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
-    #And I should NOT see "input"
+        #And I should NOT see "input"
         #Survey symbol replaces Enable button.
 
     Scenario: 43 - Change Survey Status to Active
@@ -417,6 +424,7 @@ Feature: Manage Project
         And I click on the element identified by "[name=submit-btn-saverecord]"
 
     Scenario: 45 - Verify Survey Responses are Read Only
+        Given I am an "standard" user who logs into REDCap
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Add / Edit Records"
@@ -432,6 +440,7 @@ Feature: Manage Project
         And I am an "admin" user who logs into REDCap
 
     Scenario: 47 - Allow Users to Edit Survey Responses
+        Given I visit the "Control Center" page
         When I click on the link labeled "User Settings"
         And I select "Enabled" from the dropdown identified by "select[name=enable_edit_survey_response]"
         And I click on the input button labeled "Save Changes"
@@ -442,15 +451,7 @@ Feature: Manage Project
         And I am an "standard" user who logs into REDCap
 
     Scenario: 49 - Edit User Rights for test_user
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "User Rights"
-        And I click on the link labeled "test_user"
-        And I click on the button labeled "Edit user privileges"
-        Then I should see "Editing existing user"
-        When I click on the element identified by "[id=form-editresp-form_1]"
-        And I click on the button labeled "Save Changes"
-        Then I should see "was successfully edited"
+        Given I change survey edit rights for "test_user" user on the form called "Form 1" on project ID 14
 
     Scenario: 50 - Verify Survey Responses are Visible and Editable
         And I click on the link labeled "My Projects"
@@ -513,7 +514,8 @@ Feature: Manage Project
         When I click on the input button labeled "Submit Changes for Review"
         Then I should see "SUBMIT CHANGES FOR REVIEW?"
         When I click on the button labeled "Submit"
-        Then I should see "Awaiting review of project changes"
+        And I click on the link labeled "Review & approve changes"
+
         #this is not what shows
 
     Scenario: 55 - Login as admin1115
@@ -526,11 +528,13 @@ Feature: Manage Project
         And I click on the link labeled "Designer"
         And I click on the button labeled "Project Modification Module"
         Then I should see "Below is a listing of the changes to be committed to this project."
-        When click on the button labeled "Remove All Drafted Changes"
-        And I click on the element identified by "button:contains('Remove All Drafted Changes'):first"
+        When I click on the button labeled "Remove All Drafted Changes"
+        And I should see "DELETE ALL DRAFT MODE CHANGES"
+        And I click on the element identified by ".ui-dialog-buttonset > :nth-child(2)"
         Then I should see "the project was reset back to before it entered Draft Mode"
 
     Scenario: 57 - Allow Users to Make Draft Mode Changes
+        Given I visit the "Control Center" page
         When I click on the link labeled "User Settings"
         And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
         And I click on the input button labeled "Save Changes"
