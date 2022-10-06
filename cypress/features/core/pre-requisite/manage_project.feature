@@ -70,11 +70,12 @@ Feature: Manage Project
     Scenario: 9- Login with test_user2
         Given I logout
         And I am an "standard2" user who logs into REDCap
+        Then I should NOT see "New Project"
 
     Scenario: 10- Login with test_user
         Given I logout
         And I am an "standard" user who logs into REDCap
-        Then I should NOT see "New Project"
+        Then I should see "New Project"
         Then I should see a link labeled "New Project"
 
     Scenario: 11- Cancel Create Project Request
@@ -212,6 +213,7 @@ Feature: Manage Project
         And I am an "admin" user who logs into REDCap
 
     Scenario: 24 - Allow Normal Users to Move to Production
+        Given I visit the "Control Center" page
         When I click on the link labeled "User Settings"
         And I select "Yes, normal users can move projects to production" from the dropdown identified by "select[name=superusers_only_move_to_prod]"
         And I click on the input button labeled "Save Changes"
@@ -240,6 +242,8 @@ Feature: Manage Project
         And I should NOT see "Erase all data"
 
     Scenario: 28 - Login as admin1115
+        Given I logout
+        And I am an "admin" user who logs into REDCap
 
     Scenario: 29 - Admin Other Functionality Tab Options Visibility
         When I click on the link labeled "My Projects"
@@ -274,15 +278,9 @@ Feature: Manage Project
         Then I should see that longitudinal mode is "Enable"
         When I click on the element identified by "[id=setupLongiBtn]"
         Then I should see that longitudinal mode is "Disable"
-        When I click on the element identified by "[id=setupLongiBtn]"
-        Then I should see that longitudinal mode is "Enable"
-        When I click on the element identified by "[id=setupLongiBtn]"
-        Then I should see that longitudinal mode is "Disable"
 
     Scenario: 33 - Add Event 2 in Arm 1
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
+        Given I should see "Define My Events"
         And I click on the button labeled "Define My Events"
         Then I should see "Event 1"
         When I enter "Event 2" into the field identified by "[id=descrip]"
@@ -290,11 +288,9 @@ Feature: Manage Project
         Then I should see "Event 2"
 
     Scenario: 34 - Add Event 1 in Arm 2
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
-        And I click on the button labeled "Define My Events"
-        And I click on the link labeled "Add New Arm"
+        Given I should see "Add New Arm"
+        Given I click on the link labeled "+Add New Arm"
+        And I should see "Arm 2"
         And I enter "Arm 2" into the field identified by "[id=arm_name]"
         And I click on the input button labeled "Save"
         Then I should see "No events have been defined for this Arm"
@@ -303,11 +299,7 @@ Feature: Manage Project
         Then I should see "Event 1"
 
     Scenario: 35 - Edit Designate Instruments for Arm 1
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
-        And I click on the button labeled "Designate Instruments for My Events"
-        Then I should see "Arm name:"
+        Given I should see "Arm name:"
         And I should see "Arm 1"
         When I click on the button labeled "Begin Editing"
         And I click on the element identified by "[id=form_1--41"
