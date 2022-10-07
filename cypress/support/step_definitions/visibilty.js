@@ -43,3 +43,20 @@ Given("I should see {string} in the title", (title) => {
 Given("I should see a link labeled {string}", (label) => {
     cy.get('a').contains(label)
 })
+
+/**
+ * @module Visibility
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I should see the checkbox identified by {string}, {check}
+ * @param {string} text the selector that identifies a checkbox
+ * @param {string} check - valid choices are 'checked' OR 'unchecked'
+ * @description Visually verifies that a specified checkbox is checked or uncheck
+ */
+ defineParameterType({
+    name: 'check',
+    regexp: /checked|unchecked/
+})
+ Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
+    //Really only added this to delay cypress cause sometimes it was moving forward without being checked
+    check == 'checked' ? cy.get(sel).should('be.checked') : cy.get(sel).should('not.be.checked')
+})
