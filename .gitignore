@@ -9,6 +9,8 @@ test_db/initial_db_seed.lock
 /redcap_docker
 /cypress/downloads
 
+cypress.config.js
+
 cypress.json
 cypress.env.json
 .DS_STORE

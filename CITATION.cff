@@ -1,0 +1,34 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: REDCap Cypress Test Framework
+message: >-
+  If you reference this software in scholarly
+  articles, please cite it as below.
+type: software
+authors:
+  - given-names: Adam
+    family-names: De Fouw
+    email: aldefouw@medicine.wisc.edu
+    affiliation: University of Wisconsin-Madison
+identifiers:
+  - type: url
+    value: >-
+      https://github.com/aldefouw/redcap_cypress/tree/v11.1.5
+    description: >-
+      The URL of REDCap Cypress Test Framework to use
+      against v11.1.5 LTS of REDCap.
+repository-code: >-
+  https://github.com/aldefouw/redcap_cypress/tree/v11.1.5
+keywords:
+  - REDCap
+  - Cypress
+  - Test Framework
+  - Automated Testing
+license: MIT
+version: 11.1.5
+date-released: '2022-03-18'
+
+
+

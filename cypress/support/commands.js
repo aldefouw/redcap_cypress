@@ -25,39 +25,36 @@ function preventClickTimeoutFail() {
 }
 
 Cypress.Commands.add('login', (options) => {
-    cy.clearCookies()
-
+    cy.logout()
     cy.visit('/')
     cy.intercept('POST', '/').as('loginStatus')
-
     cy.get('input[name=username]').invoke('attr', 'value', options['username'])
     cy.get('input[name=password]').invoke('attr', 'value', options['password'])
     cy.get('button').contains('Log In').click()
-
-    cy.wait('@loginStatus')
 })
 
 Cypress.Commands.add('logout', () => {
+    const url = '/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1'
     cy.visit('/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
 })
 
 Cypress.Commands.add('visit_version', (options) => {
-
     let version = Cypress.env('redcap_version')
+    let url = ''
 
-    cy.maintain_login().then(() => {
-        if('params' in options){
-            cy.visit('/redcap_v' + version + '/' + options['page'] +  '?' + options['params'])
-        } else {
-            cy.visit('/redcap_v' + version + '/' + options['page'])
-        }
-    })
+    if('params' in options){
+        url = '/redcap_v' + version + '/' + options['page'] +  '?' + options['params']
+        cy.visit(url)
+    } else {
+        url = '/redcap_v' + version + '/' + options['page']
+        cy.visit(url)
+    }
+
 })
 
 Cypress.Commands.add('visit_base', (options) => {
-    cy.maintain_login().then(() => {
-        if ('url' in options) cy.visit(options['url'])
-    })
+    const url = options['url']
+    if ('url' in options) cy.visit(url)
 })
 
 Cypress.Commands.add('base_db_seed', () => {
@@ -119,53 +116,11 @@ Cypress.Commands.add('base_db_seed', () => {
     })
 })
 
-Cypress.Commands.add('maintain_login', () => {
+Cypress.Commands.add('fetch_login', () => {
     let user = window.user_info.get_current_user()
     let pass = window.user_info.get_current_pass()
 
-    let user_type = window.user_info.get_user_type()
-    let previous_user_type = window.user_info.get_previous_user_type()
-
-    console.log('User Type Change to ' + user_type + '.')
-    console.log('previous: ' + previous_user_type)
-    console.log('current: ' + user_type)
-
-    if(user_type === previous_user_type){
-        cy.getCookies()
-          .should((cookies) => {
-            //In most cases, we'll have cookies to preserve to maintain a login
-            if (cookies.length > 0){
-                console.log('Attempt Cookie Login')
-
-                let valid_cookie = false
-
-                cookies.forEach(cookie => {
-                            if(cookie['name'] === "PHPSESSID") {
-                                Cypress.Cookies.preserveOnce(cookie)
-                                valid_cookie = true
-                            }
-                        })
-
-
-                if(valid_cookie === false){
-                    console.log('Cookie Login Failed; Logging in Through User Interface')
-                    cy.login({ username: user, password: pass })
-                }
-
-            //But, if we don't, then let's simply re-login, right?
-            } else {
-                console.log('Regular Login')
-                cy.login({ username: user, password: pass })
-            }
-
-        })
-
-    //If user type has changed, let's clear cookies and login again
-    } else {
-        //Ensure we logout when a user changes
-        cy.logout()
-        cy.login({ username: user, password:  pass })
-    }
+    cy.login({ username: user, password:  pass })
 
     window.user_info.set_previous_user_type()
 })
@@ -525,11 +480,7 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
 
 })
 
-Cypress.Commands.add('create_cdisc_project', (project_name, project_type, cdisc_file, project_id) => {
-    //Set the Desired Project ID
-    const desired_pid = 'MAGIC_AUTO_NUMBER/' + project_id;
-    cy.mysql_db('set_auto_increment_value', desired_pid)
-
+Cypress.Commands.add('create_cdisc_project', (project_name, project_type, cdisc_file) => {
     //Run through the steps to import the project via CDISC ODM
     cy.visit_base({url: 'index.php?action=create'})
     cy.get('input#app_title').type(project_name)
@@ -633,7 +584,7 @@ Cypress.Commands.add('delete_records', (pid) => {
 
 Cypress.Commands.add('access_api_token', (pid, user) => {
     // This assumes user already has API token created
-    cy.maintain_login().then(($r) => {
+    cy.fetch_login().then(($r) => {
         cy.request({ url: `/redcap_v${Cypress.env('redcap_version')}/ControlCenter/user_api_ajax.php?action=viewToken&api_pid=${pid}&api_username=${user}`})
             .then(($token) => {
                 return cy.wrap(Cypress.$($token.body).children('div')[0].innerText);
