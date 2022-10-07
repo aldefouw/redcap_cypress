@@ -189,7 +189,7 @@ defineParameterType({
  * @param {string} selector - the selector of the element to click on
  * @description Clicks on an element identified by specific selector
  */
-Given("I click on the {element_type} identified by {string}", (selector) => {
+Given("I click on the {element_type} identified by {string}", (type, selector) => {
     cy.get(selector).click()
 })
 
