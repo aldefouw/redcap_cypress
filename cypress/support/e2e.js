@@ -88,8 +88,6 @@ window.base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace(/\//g, "\\/")
 // var change_db_name = sed_lite(`s/${window.base_url}/`)
 // console.log(change_db_name("BASE_URL"));
 
-
-
 //Set the Base URL in the REDCap Configuration Database
 // if(Cypress.config('baseUrl') !== null){
 //     const base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace('http://', 'http\\:\\\\/\\\\/')
@@ -98,6 +96,18 @@ window.base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace(/\//g, "\\/")
 // }
 
 before(() => {
+    Cypress.Cookies.defaults({
+        preserve: ['PHPSESSID', 'redcap_external_module_csrf_token']
+    })
+
+    //Intercept all requests sent to Vanderbilt
+    cy.intercept({ method: 'GET', url: 'https://redcap.vanderbilt.edu/consortium/collect_stats.php?*'}, []).as('Collect Stats')
+    cy.intercept({ method: 'GET', url: '*/consortium/collect_stats.php?*'}, []).as('Stats')
+    cy.intercept({ method: 'GET', url: '*/ControlCenter/check_server_ping.php'}, []).as('Ping')
+    cy.intercept({ method: 'GET', url: '*/ControlCenter/report_site_stats.php'}, []).as('Control Center Stats')
+
+    //Clear out the cookies
+    window.lastCookie = []
 
     //Cypress Users
     cy.set_user_info(Cypress.env('users'))
@@ -116,11 +126,11 @@ before(() => {
     projects()      // /support/projects/index.js
 })
 
-beforeEach(() => {  
-    cy.maintain_login()  
+beforeEach(() => {
+    Cypress.Cookies.debug()
 })
 
 Cypress.on("uncaught:exception", (err, runnable) => {
-  console.debug(">> uncaught:exception disabled in cypress/support/index.js");
+  console.debug(">> uncaught:exception disabled in cypress/support/e2e.js");
   return false;  // prevents Cypress from failing the test
 });

@@ -3,7 +3,21 @@ Feature: Data Entry through the Survey
   As a REDCap end user
   I want to see that Data Entry through the Survey is functioning as expected
 
+  Scenario: Step 1 - Create the Project
+    Given I am an "admin" user who logs into REDCap
+    And I visit Project ID 13
+    And I upload a data dictionary located at "core/15_DirectDataEntry_SurveyDD.csv" to project ID 13
+    And I visit the "Project Setup" page with parameter string of "pid=13"
+    And I click on the button labeled "Disable"
+
+    And I should see "Enable"
+
+    And I click on the button labeled "Define My Events"
+
+    And I should see "Event 1"
+
   Scenario: An external user visits a public survey
+    And I am a "standard" user who logs into REDCap
     Given I visit the public survey URL for Project ID 3
     Then I should see "Example Survey" in the title
 

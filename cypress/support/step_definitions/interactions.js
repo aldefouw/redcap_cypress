@@ -50,7 +50,7 @@ Given("I click on the button labeled {string} in the dialog box", (text) => {
  * @description Clicks on an anchor element with a specific text label.
  */
 Given("I click on the link labeled {string}", (text) => {
-    cy.get('a').contains(text).click()
+    cy.get('a').contains(text).should('be.visible').click({force:true})
 })
 
 /**
@@ -111,13 +111,18 @@ Given('I enter {string} into the field labeled {string}', (text, label) => {
     })
 })
 
-
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I clear the field labeled {string}
+ * @param {string} label - the label of the field to select
+ * @description Clears the text from an input field based upon its label
+ */
 Given('I clear the field labeled {string}', (label) => {
     cy.contains(label).then(($label) => {
         cy.wrap($label).parent().find('input').clear()
     })
 })
-
 
 /**
  * @module Interactions
@@ -172,12 +177,42 @@ Given("I click on the element identified by {string}", (selector) => {
     cy.get(selector).click()
 })
 
-Given("I click on the checkbox identified by {string}", (sel) => {
-    cy.get(sel).click()
-})
-
+/**
+ * @module Interactions
+ * @author Corey Debacker <debacker@wisc.edu>
+ * @example I enter {string} into the field identified by {string}
+ * @param {string} text - the text to enter into the field
+ * @param {string} selector - the selector of the element to enter the text into
+ * @description Enter text into a specific field
+ */
 Given("I enter {string} into the field identified by {string}", (text, sel) => {
     cy.get(sel).type(text)
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click on the checkbox labeled {string}
+ * @param {string} label - the label associated with the checkbox field
+ * @description Selects a checkbox field by its label
+ */
+Given("I click on the checkbox labeled {string}", (label) => {
+    cy.contains(label).then(($label) => {
+        cy.wrap($label).parent().find('input').click()
+    })
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click on the input element labeled {string}
+ * @param {string} label - the label associated with the checkbox field
+ * @description Selects a checkbox field by its label
+ */
+Given("I click on the input element labeled {string}", (label) => {
+    cy.contains(label).then(($label) => {
+        cy.wrap($label).parent().find('input').click()
+    })
 })
 
 /**
@@ -197,6 +232,11 @@ Given('I enter {string} into the input field named {string} for the {string} cat
     })
 })
 
+
+defineParameterType({
+    name: 'confirmation',
+    regexp: /accept|cancel/
+})
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -205,12 +245,6 @@ Given('I enter {string} into the input field named {string} for the {string} cat
  * @param {string} window_text - text that is expected to appear in the confirmation window
  * @description Pre-emptively tell Cypress what to do about a confirmation window.  NOTE: This step must come BEFORE step that clicks button.
  */
-
-defineParameterType({
-    name: 'confirmation',
-    regexp: /accept|cancel/
-})
-
 Given('after the next step, I will {confirmation} a confirmation window containing the text {string}', (action, window_text) => {
     cy.on('window:confirm', (str) => {
         expect(str).to.contain(window_text)

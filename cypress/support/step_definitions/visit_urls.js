@@ -18,6 +18,17 @@ Given(/^I visit the "(.*)" page(?: with parameter string of "(.*)")?$/, (base_fo
 /**
  * @module VisitUrls
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I visit the version URL {string}
+ * @param {string} url the URL witout the version folder
+ * @description Instructs Cypress to visit specific URL
+ */
+Given("I visit the version URL {string}", (url) => {
+    cy.visit_version({page: url})
+})
+
+/**
+ * @module VisitUrls
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I visit Project ID {int}
  * @param {int} pid - the URL of the Project you want to visit.
  * @description Visits the root of the Project ID specified.

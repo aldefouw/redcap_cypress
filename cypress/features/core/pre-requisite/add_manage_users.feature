@@ -3,11 +3,8 @@ Feature: Add / Manage Users
   As a REDCap end user
   I want to see that Add / Manage Users is functioning as expected
 
-Background: 
-    Given I am an "admin" user who logs into REDCap
-    And I visit the "Control Center" page
-
 Scenario: 1- Login as admin1115
+    Given I am an "admin" user who logs into REDCap
 
 Scenario: 2- Visible Pages
     When I click on the link labeled "User Settings"

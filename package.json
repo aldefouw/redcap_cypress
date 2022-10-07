@@ -7,7 +7,7 @@
     "@4tw/cypress-drag-drop": "^1.8.0",
     "async-csv": "^2.1.3",
     "compare-versions": "3.6.0",
-    "cypress": "9.7.0",
+    "cypress": "10.9.0",
     "cypress-cucumber-preprocessor": "^4.3.1",
     "cypress-iframe": "1.0.1",
     "sed-lite": "0.8.2",
@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "documentation": "^14.0.0",
-    "redcap_cypress_doc_theme": "aldefouw/redcap_cypress_doc_theme"
+    "redcap_cypress_doc_theme": "github:aldefouw/redcap_cypress_doc_theme"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -5,7 +5,6 @@ defineParameterType({
     regexp: /enabled|disabled/
 })
 
-
 /**
  * @module ProjectSetup
  * @author Corey Debacker <debacker@wisc.edu>
