@@ -166,6 +166,10 @@ Given("I select {string} from the dropdown identified by {string} for the {strin
     })
 })
 
+defineParameterType({
+    name: 'element_type',
+    regexp: /element|checkbox/
+})
 /**
  * @module Interactions
  * @author Corey Debacker <debacker@wisc.edu>
@@ -173,7 +177,7 @@ Given("I select {string} from the dropdown identified by {string} for the {strin
  * @param {string} selector - the selector of the element to click on
  * @description Clicks on an element identified by specific selector
  */
-Given("I click on the element identified by {string}", (selector) => {
+Given("I click on the {element_type} identified by {string}", (selector) => {
     cy.get(selector).click()
 })
 
