@@ -67,11 +67,7 @@ Feature: Logging
   Scenario: 9 - Delete role
     When I visit Project ID 14 
     Then I click on the link labeled "User Rights" 
-    And I click on the link labeled "Data"
-    And I click on the button labeled "Delete role"
-    Then I should see "Delete role?"
-    And I click on the button labeled "Delete role"
-    Then I should see "Role "Data\" was successfully deleted!"
+    And I delete role name "Data"
   
   # Scenario: 10 - Add new user
   #   When I click on the link labeled "User Rights"    
