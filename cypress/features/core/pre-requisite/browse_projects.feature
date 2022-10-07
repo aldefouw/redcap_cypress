@@ -46,6 +46,7 @@ Feature: Browse Projects
     Then I should see 1 rows displayed in the projects table
 
   Scenario: View no projects when a user has no user rights assigned to any projects
-    When I enter "test_user2" into the field labeled "Viewing projects accessible by user:"
-    And I click on the button labeled "View"
+    Given I clear the field labeled "Viewing projects accessible by user:"
+    And I enter "test_user2" into the field labeled "Viewing projects accessible by user:"
+    And I click on the button labeled exactly "View"
     Then I should see "There are no projects to display"
