@@ -58,7 +58,6 @@ Given("I want to remove the expiration date to user {string} with username of {s
     cy.remove_expiration_date_from_user(username, proper_name, project_id)
 })
 
-
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -85,4 +84,54 @@ Given("I want to verify user rights are available for {string} user type on the 
  */
 Given("I want to verify user rights are unavailable for {string} user type on the path {string} on project ID {int}", (user_type, path, pid) => {
     cy.verify_user_rights_unavailable(user_type, path, pid, false)
+})
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I enter {string} into the rolename input field
+ * @param {string} text - rolename
+ * @description Enters a rolename
+ *
+ */
+ Given("I enter {string} into the rolename input field", (text) => {
+    cy.get('input#new_rolename').should('be.visible').type(text)
+})
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I click on the button labeled {string} and I create role
+ * @param {string} text - name of button
+ * @description Click on the create role button and create role
+ *
+ */
+ Given("I click on the button labeled {string} and I create role", (text) => {
+    cy.get('button').contains(text).click()
+    cy.get('div#editUserPopup').should('be.visible').parent().find('button').contains("Create role").should('be.visible').click()
+    cy.get('div.userSaveMsg').should('not.be.visible')
+})
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I click to edit role name {string}
+ * @param {string} text - name of role
+ * @description Edit role
+ *
+ */
+ Given("I click to edit role name {string}", (text) => {
+    cy.get('a[title="Edit role privileges"]').contains(text).should('be.visible').click()
+})
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I assign the {string} user right
+ * @param {string} text - name of user right
+ * @description Assign user right to role
+ *
+ */
+ Given("I assign the {string} user right", (text) => {
+    cy.get('input[name='+text+']').should('be.visible').check()
 })
