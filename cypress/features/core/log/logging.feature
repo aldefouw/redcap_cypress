@@ -4,7 +4,7 @@ Feature: Logging
   I want to see that Logging is functioning as expected
 
   Background: 
-    Given I am an "admin" user who logs into REDCap
+    Given I am a "admin" user who logs into REDCap
     
   Scenario: 0 - Project Setup
     When I create a project named "23_Logging_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/logging.xml"
@@ -15,15 +15,15 @@ Feature: Logging
     When I visit Project ID 14
     Then I should see "23_Logging_v1115"
 
-  Scenario: 3 - Add new record
-    When I visit Project ID 14
-    Then I click on the link labeled "Add / Edit Records"
-    And I click on the button labeled "Add new record"
-    And I enter "Test" into the "ptname" text input field
-    And I enter "test@test.com" into the "email" text input field
-    Then I click on the button labeled Save & Stay
-    And I clear the field and enter "Testing" into the "ptname" text input field
-    Then I click on the button labeled "Save & Exit"
+  # Scenario: 3 - Add new record
+  #   When I visit Project ID 14
+  #   Then I click on the link labeled "Add / Edit Records"
+  #   And I click on the button labeled "Add new record"
+  #   And I enter "Test" into the "ptname" text input field
+  #   And I enter "test@test.com" into the "email" text input field
+  #   Then I click on the button labeled Save & Stay
+  #   And I clear the field and enter "Testing" into the "ptname" text input field
+  #   Then I click on the button labeled "Save & Exit"
     
   # Scenario: 4 - Add new record
   #   When I visit Project ID 14
@@ -48,27 +48,30 @@ Feature: Logging
   #   And I click on the button labeled "Choose action for record"
   #   And I select the option labeled "Delete record (all forms)"
   #   And I click on the button labeled "DELETE RECORD"
-  #   Then I close popup
+  #  Then I close popup
 
   Scenario: 7 - Add new role
-    When I click on the link labeled "User Rights"
-    And I fill in role name with "Data"
-    And I click on the button labeled "Create role"
-    Then I should see default privileges selected 
-    And I click on the button labeled "Create role"
-    Then I should see popup message "Role was successfully added!" 
+    When I visit Project ID 14 
+    Then I click on the link labeled "User Rights"
+    And I enter "Data" into the rolename input field
+    And I click on the button labeled "Create role" and I create role
+    Then I should see a link labeled "Data"
 
-  # Scenario: 8 - Edit role
-  #   When I click on the link labeled "Data"
-  #   And I select the "Project Design and Setup" option
-  #   Then I click on the button labeled "Save Changes"
+  Scenario: 8 - Edit role
+    When I visit Project ID 14
+    Then I click on the link labeled "User Rights" 
+    And I click to edit role name "Data"
+    And I assign the "design" user right
+    Then I click on the button labeled "Save Changes"
 
   # Scenario: 9 - Delete role
-  #   When I click on the link labeled "Data"
+  #   When I visit Project ID 14 
+  #   Then I click on the link labeled "User Rights" 
+  #   And I click on the link labeled "Data"
   #   And I click on the button labeled "Delete role"
-  #   Then I should see popup message "Delete role?"
-  #   And I click on the button labeled "Delete role"
-  #   Then I should see popup message "Role "Data\" was successfully deleted!"
+  #   # Then I should see "Delete role?"
+  #   # And I click on the button labeled "Delete role"
+  #   # Then I should see "Role "Data\" was successfully deleted!"
   
   # Scenario: 10 - Add new user
   #   When I click on the link labeled "User Rights"    
