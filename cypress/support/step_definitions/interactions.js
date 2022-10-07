@@ -173,7 +173,8 @@ defineParameterType({
 /**
  * @module Interactions
  * @author Corey Debacker <debacker@wisc.edu>
- * @example When I click on the element identified by {string}
+ * @example When I click on the < element | checkbox > identified by {string}
+ * @param {string} element_type - valid choices are 'element' OR 'checkbox'
  * @param {string} selector - the selector of the element to click on
  * @description Clicks on an element identified by specific selector
  */
