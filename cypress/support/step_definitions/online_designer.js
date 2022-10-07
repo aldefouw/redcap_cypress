@@ -20,3 +20,16 @@ Given('I reorder the instrument at position {int} to position {int}', (from, to)
 Given('I should see an instrument labeled {string} in row {int} of the instruments table', (label, row_num) => {
     cy.get(`#row_${row_num}`).should('contain.text', label)
 })
+
+//TODO: refactor to use regex, check for empty/missing optional group
+//I mark the field labeled (.*) as ()?
+Given(/^I mark the field labeled (.*) as (not )?an identifier/, (label, identifier) => {
+    let set_identifier = identifier != "not "
+    cy.log(identifier)
+    cy.edit_field_by_label(label, {is_identifier: set_identifier})
+})
+
+//requires "Add New Field" or "Edit Field" modal window is open
+Given("I set the {string} subfield to {string}", (subfield, value) => {
+    cy.edit_subfield(subfield, value)
+})

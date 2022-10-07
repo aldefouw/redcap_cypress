@@ -78,14 +78,39 @@ Feature: Design Forms using Data Dictionary & Online Designer
     #Script step involves deleting an instrument that doesn't exist, presumably due to differing initial project state
 
     #Step 17
-    When I reorder the instrument at position 3 to position 1
-    Then I should see an instrument labeled "Text Validation" in row 1 of the instruments table
+    # When I reorder the instrument at position 3 to position 1
+    # Then I should see an instrument labeled "Text Validation" in row 1 of the instruments table
 
-    # And I download the instrument labeled "Demo Branching" as a PDF
-    # And I enter "Demo Branching" into the field identified by "#new_form-data_dictionary_form"
+    #Step 18
+    # When I click on the link labeled "Project Setup"
+    #--Initial project state doesn't allow for designating instruments to events, since only 1 is defined
+    #--so I am skipping the step to designate instruments
 
-    # And I click on the element identified by "[onclick*='addNewForm(']"
-    # And I download the instrument labeled "Demo Branching" as a PDF
-    # And I should see "Demo Branching"
-    # And I click on the element identified by "#row_2 > :nth-child(6) > .fc > .formActions > .jqbuttonsm > span"
-    # And I click on the link labeled "Rename"
+    #Step 19*
+    When I click on the link labeled "Data Types"
+    # Then I should see "Current instrument: Data Types" --phrase is split across two spans, so isn't found
+
+    #Step 20
+    When I click on the button labeled "Add Field"
+    Then The field types specified in step 20 of script 07 should be available
+
+    #Step 21* - Does not verify subfields have default values, just that they appear
+    When I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "select#field_type"
+    Then I should see "Field Label"
+    And I should see "Variable Name"
+    And I should see "Validation?"
+    And I should see "Required?"
+    And I should see "Identifier?"
+    And I should see "Custom Alignment"
+    And I should see "Field Note"
+
+    #Step 22
+    When I set the "type" subfield to "Yes - No"
+
+# Field Label
+# Variable Name
+# Validation  (None)
+# Required  (No)
+# Identifier  (No)
+# Custom Alignment  (RV)
+# Field Note (null)

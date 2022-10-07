@@ -293,8 +293,67 @@ Cypress.Commands.add('select_checkbox_by_label', ($name, $value) => {
     cy.set_field_value_by_label($name, $value, 'input', '__chkn__', '')
 })
 
-Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000) => {
-    cy.find_online_designer_field(name).parent().parentsUntil('tr').find('img[title=Edit]').parent().click()
+//Opens the "Edit Field" modal window. If `options` argument is passed, subfields are then edited accordingly.
+Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000, options) => {
+    cy.find_online_designer_field(name).parent().parentsUntil('tr').find('img[title=Edit]').parent().click().then(() => {
+        if ('label' in options) {
+            //Edit field label -- NOT variable name
+            cy.log("Editing field label not yet implemented")
+        }
+        if ('validation' in options) {
+            //Edit validation type
+            cy.log("Editing field validation type not yet implemented")
+        }
+        if ("is_required" in options) {
+            //Edit whether field is required
+            cy.log("Editing \"Required?\" not yet implemented")
+        }
+        if ("is_identifier" in options) {
+            //Edit whether field is an identifier
+            cy.log("Editing whether field is an identifier not yet implemented")
+        }
+    })
+})
+
+//Edit field metadata (subfields) for the field associated with the open "Add New Field"
+//or "Edit Field" modal, without saving
+Cypress.Commands.add('edit_subfield', (subfield, value) => {
+    //allows for more readable and compact selector mapping with multiple keys to the same value
+    function expand(obj) {
+        var keys = Object.keys(obj);
+        for (var i = 0; i < keys.length; ++i) {
+            var key = keys[i],
+                subkeys = key.split(/\s*,\s*/),
+                target = obj[key];
+            delete obj[key];
+            subkeys.forEach(function(key) { obj[key] = target; })
+        }
+        return obj;
+    }
+    cy.log(typeof(subfield), subfield)
+
+    //sanitize `subfield` by converting to lowercase and trimming whitespace
+    subfield = subfield.toLowerCase().trim()
+    //declare selectors corresponding to subfields for easier code maintenance
+    const selectors = {
+        'field type, variable type, type' : 'select#field_type',
+        'field label, label' : 'textarea[name="field_label"]',
+        'field name, variable name, name' : 'input#field_name',
+        'validation?, validation, validation type': 'select#val_type',
+    }
+
+    cy.log(selectors[subfield])
+    cy.log(subfield).then(() => {
+        //get selector corresponding to `subfield`
+        let sel = selectors[subfield]
+        
+        //edit the appropriate subfield
+        if (['field type', 'type'].includes(subfield)) {
+            cy.get(sel).select(value)
+        }
+    })
+    
+
 })
 
 Cypress.Commands.add('select_field_choices', (timeout = 10000) => {
