@@ -431,9 +431,7 @@ Feature: Manage Project
         And I select "1" from the dropdown identified by "[id=record]"
         Then I should see "Record Home Page"
         When I click on the element identified by ".odd > .nowrap > a > img"
-        #Select My First Instrument with the green checkmark.
-        Then I should see "input"
-        #Survey response is read-only message appears on My First instrument page.
+        Then I should see "Survey response is read-only"
 
     Scenario: 46 - Login as admin1115
         Given I logout
@@ -460,7 +458,6 @@ Feature: Manage Project
         And I select "1" from the dropdown identified by "[id=record]"
         Then I should see "Record Home Page"
         When I click on the element identified by ".odd > .nowrap > a > img"
-        #Select My First Instrument with the green checkmark.
         And I should see "Survey response is editable"
         And I should see "Edit response"
 
@@ -477,7 +474,6 @@ Feature: Manage Project
 
     Scenario: 52 - Move FirstProject_1115 to Production
         And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
         And I click on the button labeled "Move project to production"
         Then I should see "Move Project To Production Status?"
@@ -514,9 +510,7 @@ Feature: Manage Project
         When I click on the input button labeled "Submit Changes for Review"
         Then I should see "SUBMIT CHANGES FOR REVIEW?"
         When I click on the button labeled "Submit"
-        And I click on the link labeled "Review & approve changes"
-
-        #this is not what shows
+        #And I click on the link labeled "Review & approve changes"
 
     Scenario: 55 - Login as admin1115
         Given I logout
@@ -532,6 +526,7 @@ Feature: Manage Project
         And I should see "DELETE ALL DRAFT MODE CHANGES"
         And I click on the element identified by ".ui-dialog-buttonset > :nth-child(2)"
         Then I should see "the project was reset back to before it entered Draft Mode"
+        When I click on the link labeled "FirstProject_1115"
 
     Scenario: 57 - Allow Users to Make Draft Mode Changes
         Given I visit the "Control Center" page
@@ -548,7 +543,7 @@ Feature: Manage Project
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
-        Then I should see "Since this project is currently in PRODUCTION"
+        #Then I should see "Since this project is currently in PRODUCTION"
         And I click on the input button labeled "Enter Draft Mode"
         And I click on the link labeled "Form 1"
         And I click on the element identified by "input[id=btn-last]"
@@ -578,7 +573,8 @@ Feature: Manage Project
         And I am an "admin" user who logs into REDCap
 
     Scenario: 63 - Allow Normal Users to Modify the Repeatable Instruments & Events
-        When I click on the link labeled "User Settings"
+        When I click on the link labeled "Control Center"
+        And I click on the link labeled "User Settings"
         And I select "Yes, normal users can modify the repeatable instance setup in production" from the dropdown identified by "select[name=enable_edit_prod_repeating_setup]"
         And I select "Yes, normal users can add/modify events in production" from the dropdown identified by "select[name=enable_edit_prod_events]"
         And I click on the input button labeled "Save Changes"
