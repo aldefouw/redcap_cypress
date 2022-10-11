@@ -3,6 +3,14 @@ Feature: Manage Project
     As a REDCap end user
     I want to see that Manage Project is functioning as expected
 
+    Scenario: Add from Email Address
+        Given I am an "admin" user who logs into REDCap
+        And I visit the "Control Center" page
+        And I click on the link labeled "General Configuration"
+        And I enter "no-reply@test.com" into the field identified by "[name=from_email]"
+        And I click on the input button labeled "Save Changes"
+        Then I should see "Your system configuration values have now been changed!"
+
     Scenario: Edit test_user2 to not Create or Copy Projects
         Given I am an "admin" user who logs into REDCap
         And I visit the "Control Center" page
@@ -11,13 +19,13 @@ Feature: Manage Project
         And I click on the button labeled "Search"
         Then I should see "User information for"
         When I click on the button labeled "Edit user info"
-        And I click on the element identified by "[name=allow_create_db]"
+        And I click on the input element labeled "Allow this user to create or copy projects?"
         And I click on the input button labeled "Save"
 
     Scenario: 2- User Settings Configuration - Create Projects
         When I click on the link labeled "User Settings"
         Then I should see "Yes, normal users can create new projects"
-    #And I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
+        #And I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
         And I select "No, only Administrators can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
@@ -510,7 +518,7 @@ Feature: Manage Project
         When I click on the input button labeled "Submit Changes for Review"
         Then I should see "SUBMIT CHANGES FOR REVIEW?"
         When I click on the button labeled "Submit"
-        #And I click on the link labeled "Review & approve changes"
+        #Then I should see "Awaiting review of project changes"
 
     Scenario: 55 - Login as admin1115
         Given I logout
@@ -525,13 +533,12 @@ Feature: Manage Project
         When I click on the button labeled "Remove All Drafted Changes"
         And I should see "DELETE ALL DRAFT MODE CHANGES"
         And I click on the element identified by ".ui-dialog-buttonset > :nth-child(2)"
-        Then I should see "the project was reset back to before it entered Draft Mode"
-        When I click on the link labeled "FirstProject_1115"
+        Then I should see "The changes were NOT committed to the project but were removed"
 
     Scenario: 57 - Allow Users to Make Draft Mode Changes
         Given I visit the "Control Center" page
         When I click on the link labeled "User Settings"
-        And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
+        And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "[name=auto_prod_changes]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
@@ -543,7 +550,7 @@ Feature: Manage Project
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
-        #Then I should see "Since this project is currently in PRODUCTION"
+        Then I should see "The project is currently in PRODUCTION status"
         And I click on the input button labeled "Enter Draft Mode"
         And I click on the link labeled "Form 1"
         And I click on the element identified by "input[id=btn-last]"
