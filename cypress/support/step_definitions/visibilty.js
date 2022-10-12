@@ -47,8 +47,6 @@ Given("I should see a link labeled {string}", (label) => {
 /**
  * @module Visibility
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
-<<<<<<< HEAD
-=======
  * @example I should see a new dialog box named {string}
  * @param {string} text the id of the new dialog box
  * @description Visually verifies that there is a new dialog box with the id text
@@ -61,13 +59,11 @@ Given("I should see a new dialog box named {string}", (text) => {
 /**
  * @module Visibility
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
->>>>>>> upstream/v11.1.5
  * @example I should see the checkbox identified by {string}, {check}
  * @param {string} text the selector that identifies a checkbox
  * @param {string} check - valid choices are 'checked' OR 'unchecked'
  * @description Visually verifies that a specified checkbox is checked or uncheck
  */
-<<<<<<< HEAD
  defineParameterType({
     name: 'check',
     regexp: /checked|unchecked/
@@ -76,7 +72,6 @@ Given("I should see a new dialog box named {string}", (text) => {
     //Really only added this to delay cypress cause sometimes it was moving forward without being checked
     check == 'checked' ? cy.get(sel).should('be.checked') : cy.get(sel).should('not.be.checked')
 })
-=======
 defineParameterType({
     name: 'check',
     regexp: /checked|unchecked/
@@ -98,4 +93,3 @@ Given("I should see the checkbox identified by {string}, {check}", (sel, check) 
 Given("I should see the input field identified by {string} with the value {string}", (selector, text) => {
     cy.get(selector).should("have.value", text)
 })
->>>>>>> upstream/v11.1.5
