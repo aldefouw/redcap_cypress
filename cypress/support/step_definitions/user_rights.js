@@ -179,6 +179,7 @@ Given("I want to verify user rights are unavailable for {string} user type on th
     cy.visit_version({page: 'UserRights/index.php', params: `pid=${PID}`})
     cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click()
  })
+ 
  /**
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example
