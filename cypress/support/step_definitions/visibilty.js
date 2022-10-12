@@ -64,19 +64,11 @@ Given("I should see a new dialog box named {string}", (text) => {
  * @param {string} check - valid choices are 'checked' OR 'unchecked'
  * @description Visually verifies that a specified checkbox is checked or uncheck
  */
- defineParameterType({
-    name: 'check',
-    regexp: /checked|unchecked/
-})
- Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
-    //Really only added this to delay cypress cause sometimes it was moving forward without being checked
-    check == 'checked' ? cy.get(sel).should('be.checked') : cy.get(sel).should('not.be.checked')
-})
 defineParameterType({
     name: 'check',
     regexp: /checked|unchecked/
 })
-Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
+ Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
     //Really only added this to delay cypress cause sometimes it was moving forward without being checked
     check == 'checked' ? cy.get(sel).should('be.checked') : cy.get(sel).should('not.be.checked')
 })
