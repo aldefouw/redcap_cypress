@@ -303,3 +303,4 @@ Given('after the next step, I will {confirmation} a confirmation window containi
         expect([...new Set(csv.map((row) => row[0]).slice(1))]).to.have.lengthOf(2)                     // 2 records
     })
 })
+
