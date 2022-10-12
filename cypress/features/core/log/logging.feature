@@ -89,10 +89,7 @@ Feature: Logging
   #   And I click on the button labeled "Remove user"
   
   # Scenario: 13 - Login as test_user2
-  #   When I click on the button labeled "Log out"
-  #   Then I should see the login page
-  #   And I login as test_user2
-  #   Then I should see the text "Logged in as test_user2"
+  #   When I am a "test_user2" user who logs into REDCap
 
   # Scenario: 14 - Data Exports, Reports, and Stats
   #   When I visit Project ID 14
@@ -103,10 +100,11 @@ Feature: Logging
   #   When I visit Project ID 14 
   #   Then I click on the link labeled "User Rights"
   #   And I click on the link labeled "test_user"
-  #   And I check the user right identified by "input[name="lock_record_customize"]"
-  #   And I click the user right identified by "input[name="lock_record"][value="2"]"
-  #   #Then I should see a popup with "NOTICE" and I close popup
+  #   And I check the user right identified by "input[name="lock_record_customize\"]"
+  #   And I click the user right identified by "input[name="lock_record\"][value="2\"]"
+  #   Then I should see "NOTICE" 
+  #   And I close popup
   #   And I click on the button labeled "Saved Changes"
-  #   #Then I should see a green checkmark for "Record Locking Customization" and a green shield for "Lock/Unlock Records"
+  #   Then I should see a green checkmark for "Record Locking Customization" and a green shield for "Lock/Unlock Records"
 
  
