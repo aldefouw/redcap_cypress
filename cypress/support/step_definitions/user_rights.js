@@ -88,6 +88,7 @@ Given("I want to verify user rights are unavailable for {string} user type on th
 
 /**
  * @module UserRights
+<<<<<<< HEAD
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I enter {string} into the rolename input field
  * @param {string} text - rolename
@@ -178,4 +179,17 @@ Given("I want to verify user rights are unavailable for {string} user type on th
     cy.add_users_to_project([STANDARD2], PID)
     cy.visit_version({page: 'UserRights/index.php', params: `pid=${PID}`})
     cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click()
+=======
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example
+ I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}
+ * @param {string} rights - the specific user right desired (e.g. Stats & Charts)
+ * @param {string} name - the proper name of the user (e.g. Jane Doe)
+ * @param {string} username - the username assigned to the user (e.g. jdoe)
+ * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
+ * @description Assigns a specific user right to a given user when provided a valid Project ID.
+ */
+Given("I change survey edit rights for {string} user on the form called {string} on project ID {int}", (user, form, pid) => {
+    cy.change_survey_edit_rights(pid, user, form)
+>>>>>>> upstream/v11.1.5
 })
