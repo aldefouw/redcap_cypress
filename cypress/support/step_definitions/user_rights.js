@@ -127,6 +127,18 @@ Given("I want to verify user rights are unavailable for {string} user type on th
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I click to edit username {string}
+ * @param {string} text - username
+ * @description Edit username
+ *
+ */
+ Given("I click to edit username {string}", (text) => {
+    cy.get('a[title="Edit user privileges or assign to role"]').contains(text).should('be.visible').click()
+})
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I select the user right identified by {string}
  * @param {string} text - name of user right
  * @description Assign user right to role/user
@@ -134,6 +146,18 @@ Given("I want to verify user rights are unavailable for {string} user type on th
  */
  Given("I check the user right identified by {string}", (text) => {
     cy.get(text).should('be.visible').check()
+})
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I check the user right identified by {string} and check option {string}
+ * @param {string} text - name of user right
+ * @description Assign user right to role/user
+ *
+ */
+ Given("I check the user right identified by {string} and select option {string}", (text, option) => {
+    cy.get(text).check(option)
 })
 
 /**
@@ -148,6 +172,29 @@ Given("I want to verify user rights are unavailable for {string} user type on th
     cy.get(text).click()
 })
 
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example the user right identified by {string} should be checked
+ * @param {string} text - name of user right
+ * @description User right should be checked
+ *
+ */
+ Given("the user right identified by {string} should be checked", (text) => {
+    cy.get(text).should('be.checked')
+})
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example the user right identified by {string} should not be checked
+ * @param {string} text - name of user right
+ * @description User right should not be checked
+ *
+ */
+ Given("the user right identified by {string} should not be checked", (text) => {
+    cy.get(text).should('not.be.checked')
+})
 
 /**
  * @module UserRights
@@ -170,16 +217,38 @@ Given("I want to verify user rights are unavailable for {string} user type on th
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I add a new user named {string} to the project
+ * @example I enter {string} into the username input field
  * @param {string} text - username of user to be added to the project
  * @description Add new user in the User Rights page
  */
- Given("I add a new user named {string} to the project", (text) => {
-    cy.add_users_to_project([STANDARD2], PID)
-    cy.visit_version({page: 'UserRights/index.php', params: `pid=${PID}`})
-    cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click()
+ Given("I enter {string} into the username input field", (text) => {
+    cy.get('input#new_username').should('be.visible').type(text)
  })
- 
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I add user
+ * @description Click on the create add user button and add user
+ *
+ */
+ Given("I add user", () => {
+    cy.get('div#editUserPopup').should('be.visible').parent().find('button').contains("Add user").should('be.visible').click()
+    cy.get('div.userSaveMsg').should('not.be.visible')
+})
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I select the Also display E-signature option on instrument? for the instrument identified by {string}
+ * @param {string} text - Instrument name
+ * @description Enable E-Signature option on instrument
+ *
+ */
+ Given("I select the Also display E-signature option on instrument? for the instrument identified by {string}", (text) => {
+    cy.get(text).closest('td').find('input').check()
+})
+
  /**
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example
