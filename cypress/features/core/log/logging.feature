@@ -3,17 +3,43 @@ Feature: Logging
   As a REDCap end user
   I want to see that Logging is functioning as expected
 
-  Background: 
-    Given I am a "admin" user who logs into REDCap
+  # Background: 
+  #   Given I am a "admin" user who logs into REDCap
     
   Scenario: 0 - Project Setup
-    When I create a project named "23_Logging_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/logging.xml"
+    When I am a "admin" user who logs into REDCap
+    Then I create a project named "23_Logging_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/logging.xml"
+    And I click on the link labeled "User Rights"    
+    #Add user 1
+    Then I enter "test_user" into the username input field
+    And I click on the button labeled "Add with custom rights"
+    And I check the user right identified by 'input[name="design"]'
+    And I check the user right identified by 'input[name="user_rights"]'
+    And I check the user right identified by 'input[name="data_export_tool"]' and select option "1"
+    And I check the user right identified by 'input[name="record_delete"]'
+    And the user right identified by 'input[name="lock_record_customize"]' should not be checked
+    And the user right identified by 'input[name="lock_record"][value="2"]' should not be checked
+    And the user right identified by 'input[name="record_create"]' should be checked
+    Then I add user
+    #Add user 2
+    And I enter "test_user2" into the username input field
+    Then I click on the button labeled "Add with custom rights"
+    And I check the user right identified by 'input[name="design"]'
+    Then I add user
+    #enable e-sig
+    And I click on the link labeled "Customize & Manage Locking/E-signatures"
+    Then I select the Also display E-signature option on instrument? for the instrument identified by '#savedEsign-text_validation'
+    #move to prod
+    And I click on the link labeled "Project Setup"
+    And I click on the button labeled "Move project to production"
+    Then I move the project to production by selection option 'input#keep_data'
 
-  Scenario: 1 - Login as test_user
+  # Scenario: 1 - Login as test_user
+  #   When I am a "test_user" user who logs into REDCap
 
-  Scenario: 2 - Go to my projects and open 23_Logging_v1115
-    When I visit Project ID 14
-    Then I should see "23_Logging_v1115"
+  # Scenario: 2 - Go to my projects and open 23_Logging_v1115
+  #   When I visit Project ID 14
+  #   Then I should see "23_Logging_v1115"
 
   # Scenario: 3 - Add new record
   #   When I visit Project ID 14
@@ -69,24 +95,26 @@ Feature: Logging
   #   Then I click on the link labeled "User Rights" 
   #   And I delete role name "Data"
   
-  Scenario: 10 - Add new user
-    When I visit Project ID 14 
-    Then I click on the link labeled "User Rights"    
-    And I add a new user named "standard" to the project
-    And I click on the button labeled "Add with custom rights"
-    Then I should see a link labeled "Test User"
+  # Scenario: 10 - Add new user
+  #   When I visit Project ID 14 
+  #   Then I click on the link labeled "User Rights"    
+  #   And I add a new user named "test_user" to the project
+  #   And I click on the button labeled "Add with custom rights" and I create user
+  #   Then I should see a link labeled "Test User"
   
   # Scenario: 11 - Edit user
-  #   When I click on the link labeled "User Rights"    
-  #   And I select the user "user1115_3"
-  # Add project design and setup
-  # save 
+  #   When I visit Project ID 14 
+  #   Then I click on the link labeled "User Rights"    
+  #   And I click to edit username "test_user (Test User)"
+  #   And I click on the button labeled "Edit user privileges"
+  #   And I check the user right identified by "design"
+  #   Then I click on the button labeled "Save Changes"
 
   # Scenario: 12 - Remove user
-  #   When I click on the link labeled "user1115_3"
+  #   When I visit Project ID 14
+  #   Then I click on the link labeled "test_user"
   #   And I click on the button labeled "Edit user privileges"
-  #   Then I should see get warning "Remove user?" when I click on the button labeled "Remove user"
-  #   And I click on the button labeled "Remove user"
+  #   Then I click on the button labeled "Remove user"
   
   # Scenario: 13 - Login as test_user2
   #   When I am a "test_user2" user who logs into REDCap
@@ -100,8 +128,8 @@ Feature: Logging
   #   When I visit Project ID 14 
   #   Then I click on the link labeled "User Rights"
   #   And I click on the link labeled "test_user"
-  #   And I check the user right identified by "input[name="lock_record_customize\"]"
-  #   And I click the user right identified by "input[name="lock_record\"][value="2\"]"
+  #   And I check the user right identified by "input[name='lock_record_customize']"
+  #   And I click the user right identified by "input[name='lock_record'][value='2']"
   #   Then I should see "NOTICE" 
   #   And I close popup
   #   And I click on the button labeled "Saved Changes"
