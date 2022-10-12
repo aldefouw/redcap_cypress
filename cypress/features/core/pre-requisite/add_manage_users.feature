@@ -3,13 +3,11 @@ Feature: Add / Manage Users
   As a REDCap end user
   I want to see that Add / Manage Users is functioning as expected
 
-Background: 
-    Given I am an "admin" user who logs into REDCap
-    And I visit the "Control Center" page
-
 Scenario: 1- Login as admin1115
+    Given I am an "admin" user who logs into REDCap
 
 Scenario: 2- Visible Pages
+    Given I visit the "Control Center" page
     When I click on the link labeled "User Settings"
     Then I should see "System-level User Settings" 
 
@@ -31,7 +29,7 @@ Scenario: 5- Create a user
     And I enter "User1" into the field labeled "First name:"
     And I enter "1115_1" into the field labeled "Last name:"
     And I enter "user1115@redcap.edu" into the field labeled "Primary email:"
-    And I click on the checkbox identified by "[name=allow_create_db]"
+    And I click on the element identified by "[name=allow_create_db]"
     And I click on the input button labeled "Save"
     Then I should see "User has been successfully saved."
     And I should see "An email with login information was sent to: user1115@redcap.edu"
@@ -95,20 +93,21 @@ Scenario: 15- Login with Suspended User Account
     Then I should see "The following REDCap user account has been suspended:"
 
 Scenario: 16- View test_user in Suspended Users List
+    Given I am an "admin" user who logs into REDCap
+    And I visit the "Control Center" page
     When I click on the link labeled "Browse Users"
     Then I should see "User Search: Search for user by username, first name, last name, or primary email"
     When I click on the link labeled "View User List By Criteria"
     And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
     And I click on the button labeled "Display User List"
-    And I want to pause
-    Then I should see a link labeled "test_user"       
+    Then I should see a link labeled "test_user"
 
 Scenario: 17- Cancel Unsuspend test_user Account
     When I click on the link labeled "Browse Users"
     And I click on the link labeled "View User List By Criteria"
     And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
     And I click on the button labeled "Display User List"
-    And I click on the checkbox identified by "[name=uiid_2]"
+    And I click on the element identified by "[name=uiid_2]"
     And I click on the button labeled "Unsuspend user"
     Then I should see "Process sponsor request: Unsuspend user"
     When I click on the button labeled "Cancel"
@@ -119,7 +118,6 @@ Scenario: 18- Unsuspend test_user Account
     And I click on the link labeled "View User List By Criteria"
     And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
     And I click on the button labeled "Display User List"
-    And I want to pause
     And I click on the link labeled "test_user"
     And I click on the link labeled "unsuspend user"
     Then I should see "Success! The user has now been unsuspended and will now be able to access REDCap again." 
@@ -194,7 +192,7 @@ Scenario: 29- Cancel Change password for user1115_4 through Browse Users
     Then I should see "user1115_2" 
     Then I should see "user1115_3"
     Then I should see "user1115_4"
-    When I click on the checkbox identified by "[name=uiid_10]"
+    When I click on the element identified by "[name=uiid_10]"
     And I click on the button labeled "Reset password"
     Then I should see "Process sponsor request:"
     When I click on the button labeled "Cancel"
@@ -204,7 +202,7 @@ Scenario: 30- Change password for user1115_4 through Browse Users
     When I click on the link labeled "Browse Users"
     And I click on the link labeled "View User List By Criteria"
     And I click on the button labeled "Display User List"
-    And I click on the checkbox identified by "[name=uiid_10]"
+    And I click on the element identified by "[name=uiid_10]"
     And I click on the button labeled "Reset password"
     Then I should see "Process sponsor request:"
     When I click on the button labeled "Reset password"
@@ -240,7 +238,7 @@ Scenario: 35- Add user1115_5
     And I enter "User5" into the field labeled "First name:"
     And I enter "1115_5" into the field labeled "Last name:"
     And I enter "user1115.5@redcap.edu" into the field labeled "Primary email:"
-    And I click on the checkbox identified by "[name=allow_create_db]"
+    And I click on the element identified by "[name=allow_create_db]"
     And I click on the input button labeled "Save"
     Then I should see "User has been successfully saved."
     And I should see "An email with login information was sent to: user1115.5@redcap.edu"
