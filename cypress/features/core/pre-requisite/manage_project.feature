@@ -558,22 +558,33 @@ Feature: Manage Project
         And I enter "Text2" into the field identified by "[id=field_label]"
         And I enter "text2" into the field identified by "[id=field_name]"
         And I click on the button labeled "Save"
-        Then I should see "Success! The changes were made automatically"
+        Then I should see "Variable: text2"
+        When I click on the input button labeled "Submit Changes for Review"
+        And I click on the button labeled "Submit"
+        Then I should see "SUCCESS! The changes you just submitted were made AUTOMATICALLY"
 
 
-    Scenario: 60 - Verify Repeatable Instruments is Disabled
+    Scenario: 60 - Verify Can Not Edit Define My Events in Production
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
         And I click on the input button labeled "Enter Draft Mode"
         Then I should see "Since this project is currently in PRODUCTION"
         When I click on the link labeled "Project Setup"
-        Then I should see that repeatable instruments are "Enable"
+        #Then I should see that repeatable instruments are "disabled"
+        Then I should see "[id=enableRepeatingFormsEventsBtn disabled='disabled'"
         When I click on the button labeled "Define My Events"
+        And I click on the element identified by "[title=Edit]"
         Then I should see "Events cannot be modified in production status"
 
-    Scenario: 61 -
-
+    Scenario: 61 - Verify Can Not Edit Designate Instruments Tab in Production
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Designer"
+        When I click on the link labeled "Project Setup"
+        When I click on the button labeled "Define My Events"
+        And I click on the link labeled "Designate Instruments for My Events"
+        Then I should see "Events cannot be modified in production status except by a REDCap administrator"
 
     Scenario: 62 - Login as admin1115
         Given I logout
@@ -591,15 +602,63 @@ Feature: Manage Project
         Given I logout
         And I am an "standard" user who logs into REDCap
 
-    Scenario: 65 -
+    Scenario: 65 - Verify Changing Repeating Forms 
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
+        Then I should see "Please be aware that if you uncheck any of the instruments or events that have currently been set as a repeating instrument or repeating event"
+        When I click on the button labeled "Close"
+        And I click on the button labeled "Cancel"
 
-    Scenario: 66 -
+    Scenario: 66 - Add Event 3 to Arm 1
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Define My Events"
+        Then I should see "Arm 1"
+        When I enter "Event 3" into the field identified by "[id=descrip]"
+        And I click on the input button labeled "Add new event"
+        Then I should see "Event 3"
 
-    Scenario: 67 -
+    Scenario: 67 - Add Arm 3 
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Define My Events"
+        Then I should see a link labeled "Add New Arm"
+        When I click on the link labeled "Add New Arm"
+        And I enter "Arm 3" into the field identified by "[id=arm_name]"
+        And I click on the input button labeled "Save"
+        Then I should see "Arm 3"
 
-    Scenario: 68 -
+    Scenario: 68 - Verify Can Not Edit Event 3
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Define My Events"
+        Then I should see "Arm 1"
+        When I click on the element identified by "#row_a43 > a > img"
+            #can not edit event, message pops up immediately
+        Then I should see "Sorry, but events can only be renamed by REDCap administrators when a project is in production status"
+        When I click on the button labeled "Close"
+        Then I should see "Event 3"
 
     Scenario: 69 -
+        Given I logout
+        And I am an "admin" user who logs into REDCap
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Define My Events"
+        Then I should see "Arm 1"
+        When I click on the element identified by "#row_a43 > a > img"
+
+
+
+
+
+        
 
     Scenario: 70 -
 
