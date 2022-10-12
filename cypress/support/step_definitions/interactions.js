@@ -25,14 +25,15 @@ Given("I click on the button labeled {string}", (text) => {
 
 /**
  * @module Interactions
-<<<<<<< HEAD
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I close popup
  * @description Closes popup with button labeled "Close"
  */
  Given("I close popup", (text) => {
     cy.focused().should('have.text', 'Close').click()
-=======
+ })
+
+ /**
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I click on the button titled {string} for the {string} category
  * @param {string} text - the text on the button element you want to click
@@ -45,21 +46,10 @@ Given("I click on the button titled {string} for the {string} category", (text, 
         // Find the button element
         cy.get('button[title="' + text +'"]').click()
     })
->>>>>>> upstream/v11.1.5
 })
 
 /**
  * @module Interactions
-<<<<<<< HEAD
- * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I click on the button labeled Save & Stay
- * @param {string} text - the text on the button element you want to click
- * @description Clicks on a button element with a specific text label.
- */
- Given("I click on the button labeled Save & Stay", () => {
-    cy.get('button#submit-btn-dropdown').first().click()
-	.closest('div').find('a#submit-btn-savecontinue').should('be.visible').click()
-=======
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the button labeled {string} in the dialog box
  * @param {string} text - the text on the button element you want to click
@@ -70,7 +60,6 @@ Given("I click on the button labeled {string} in the dialog box", (text) => {
         cy.get('button').contains(text).click()
     })
     
->>>>>>> upstream/v11.1.5
 })
 
 /**
@@ -178,10 +167,6 @@ Given('I select {string} from the dropdown identified by {string}', (value,label
     cy.get(label).select(value, { force: true })
 })
 
-<<<<<<< HEAD
-Given("I click on the element identified by {string}", (sel) => {
-    cy.get(sel).click()
-=======
 /**
  * @module Interactions
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
@@ -199,7 +184,6 @@ Given("I select {string} from the dropdown identified by {string} for the {strin
             cy.wrap($label).select(value, {force: true})
         })
     })
->>>>>>> upstream/v11.1.5
 })
 
 defineParameterType({
@@ -319,4 +303,3 @@ Given('after the next step, I will {confirmation} a confirmation window containi
         expect([...new Set(csv.map((row) => row[0]).slice(1))]).to.have.lengthOf(2)                     // 2 records
     })
 })
-
