@@ -127,11 +127,55 @@ Given("I want to verify user rights are unavailable for {string} user type on th
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I assign the {string} user right
+ * @example I select the user right identified by {string}
  * @param {string} text - name of user right
- * @description Assign user right to role
+ * @description Assign user right to role/user
  *
  */
- Given("I assign the {string} user right", (text) => {
-    cy.get('input[name='+text+']').should('be.visible').check()
+ Given("I check the user right identified by {string}", (text) => {
+    cy.get(text).should('be.visible').check()
+})
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I click the user right identified by {string}
+ * @param {string} text - name of user right
+ * @description select user right for role/user
+ *
+ */
+ Given("I click the user right identified by {string}", (text) => {
+    cy.get(text).click()
+})
+
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I delete role name {string}
+ * @param {string} text - role name
+ * @description Delete role
+ *
+ */
+ Given("I delete role name {string}", (text) => {
+    cy.get('a[title="Edit role privileges"]').contains(text).should('be.visible').click().then(() => {
+        cy.get('button').should(($button) => {
+            expect($button).to.contain('Delete role')
+        })
+        cy.get('button').contains("Delete role").click({ force: true })
+        cy.get('div[role="dialog"][aria-describedby!="editUserPopup"]').find('button').contains('Delete role').should('be.visible').click()
+    })
+})
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I add a new user named {string} to the project
+ * @param {string} text - username of user to be added to the project
+ * @description Add new user in the User Rights page
+ */
+ Given("I add a new user named {string} to the project", (text) => {
+    cy.add_users_to_project([STANDARD2], PID)
+    cy.visit_version({page: 'UserRights/index.php', params: `pid=${PID}`})
+    cy.get(`a.userLinkInTable[userid="${STANDARD2}"]`).should('be.visible').click()
 })
