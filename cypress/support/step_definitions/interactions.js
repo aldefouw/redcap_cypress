@@ -134,18 +134,6 @@ Given('I select {string} from the dropdown identified by {string}', (value,label
     cy.get(label).select(value, { force: true })
 })
 
-
-/**
- * @module Interactions
- * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I select the option labelled {string}
- * @param {string} value - the option to select from the dropdown
- * @description Selects the option via a specific string.
- */
- Given('I select the option labeled {string}', (text) => {
-    cy.get('a').contains(text).should('be.visible').click()
-})
-
 Given("I click on the element identified by {string}", (sel) => {
     cy.get(sel).click()
 })
@@ -179,3 +167,31 @@ Given('after the next step, I will {confirmation} a confirmation window containi
         action === "accept"
     })
 })
+
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I select the option labelled {string}
+ * @param {string} value - the option to select from the dropdown
+ * @description Selects the option via a specific string.
+ */
+ Given('I select the option labeled {string}', (text) => {
+    cy.get('a').contains(text).should('be.visible').click()
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I export all data in {string} format
+ * @param {string} value - the option to select from the dropdown
+ * @description Selects the option via a specific string.
+ */
+ Given('I export all data in {string} format', (value) => {
+    cy.get('tr#reprow_ALL').find('button.data_export_btn').should('be.visible').contains('Export Data').click()
+    cy.get('input[value='+value+']').click()
+    cy.export_csv_report().should((csv) => {
+        expect([...new Set(csv.map((row) => row[0]).slice(1))]).to.have.lengthOf(2)                     // 2 records
+    })
+})
+
