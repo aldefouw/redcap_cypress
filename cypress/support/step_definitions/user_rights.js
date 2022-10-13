@@ -87,6 +87,20 @@ Given("I want to verify user rights are unavailable for {string} user type on th
 })
 
 /**
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example
+ I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}
+ * @param {string} rights - the specific user right desired (e.g. Stats & Charts)
+ * @param {string} name - the proper name of the user (e.g. Jane Doe)
+ * @param {string} username - the username assigned to the user (e.g. jdoe)
+ * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
+ * @description Assigns a specific user right to a given user when provided a valid Project ID.
+ */
+Given("I change survey edit rights for {string} user on the form called {string} on project ID {int}", (user, form, pid) => {
+    cy.change_survey_edit_rights(pid, user, form)
+})
+
+/**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I enter {string} into the rolename input field
@@ -228,13 +242,12 @@ Given("I want to verify user rights are unavailable for {string} user type on th
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I add user
+ * @example I add user|save changes
  * @description Click on the create add user button and add user
  *
  */
- Given("I add user", () => {
-    cy.get('div#editUserPopup').should('be.visible').parent().find('button').contains("Add user").should('be.visible').click()
-    cy.get('div.userSaveMsg').should('not.be.visible')
+ Given("I add user|save changes", () => {
+    cy.get('.ui-button').contains(/add user|save changes/i).click()
 })
 
 /**
@@ -245,20 +258,16 @@ Given("I want to verify user rights are unavailable for {string} user type on th
  * @description Enable E-Signature option on instrument
  *
  */
- Given("I select the Also display E-signature option on instrument? for the instrument identified by {string}", (text) => {
+ Given("I select the option to display E-signature option for the instrument identified by {string}", (text) => {
     cy.get(text).closest('td').find('input').check()
 })
 
- /**
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example
- I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}
- * @param {string} rights - the specific user right desired (e.g. Stats & Charts)
- * @param {string} name - the proper name of the user (e.g. Jane Doe)
- * @param {string} username - the username assigned to the user (e.g. jdoe)
- * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
- * @description Assigns a specific user right to a given user when provided a valid Project ID.
+/**
+ * @module User Rights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I scroll the user rights page to the bottom
+ * @description scroll user rights pop up page to the bottom
  */
-Given("I change survey edit rights for {string} user on the form called {string} on project ID {int}", (user, form, pid) => {
-    cy.change_survey_edit_rights(pid, user, form)
+ Given('I scroll the user rights page to the bottom', () => {
+    cy.get('input[name="api_import"]').scrollIntoView()
 })
