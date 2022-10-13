@@ -15,6 +15,18 @@ Given("I click on the button labeled exactly {string}", (text) => {
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click on the dropdown and select the button identified by 'a#submit-btn-savecontinue'
+ * @param {string} text - button id
+ * @description Clicks on the button in the dropdown of the survey
+ */
+ Given("I click on the dropdown and select the button identified by {string}", (text) => {
+    cy.get('button#submit-btn-dropdown').first().click()
+    .closest('div').find(text).should('be.visible').click()
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the button labeled {string}
  * @param {string} text - the text on the button element you want to click
  * @description Clicks on a button element with a specific text label.
@@ -277,7 +289,6 @@ Given('after the next step, I will {confirmation} a confirmation window containi
     })
 })
 
-
 /**
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
@@ -304,3 +315,24 @@ Given('after the next step, I will {confirmation} a confirmation window containi
     })
 })
 
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I click on the dropdown identified by {string} and select record labelled by {string}
+ * @param {string} value - the option to select from the dropdown
+ * @description Selects the option via a specific string.
+ */
+ Given('I click on the dropdown identified by {string} and select record labelled by {string}', (text, record) => {
+    cy.get(text).select(record).should('have.value', record)
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I check the checkbox identified by {string}
+ * @param {string} value - the option to select from the dropdown
+ * @description Selects the option via a specific string.
+ */
+ Given('I check the checkbox identified by {string}', (value) => {
+    cy.get(value).check()
+})
