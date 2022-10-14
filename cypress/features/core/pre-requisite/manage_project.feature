@@ -652,22 +652,82 @@ Feature: Manage Project
         And I click on the link labeled "Project Setup"
         And I click on the button labeled "Define My Events"
         Then I should see "Arm 1"
-        When I click on the element identified by "#row_a43 > a > img"
-
-
-
-
-
-        
+        #When I click on the element identified by "#row_a43 > a > img"
+        When I click on the element identified by "image:contains('Edit'):last"
 
     Scenario: 70 -
+        Given I logout
+        And I am a "standard" user who logs into REDCap
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Define My Events"
+        Then I should see "Arm 2"
+        When I click on the link labeled "Rename Arm 2"
+            #doesnt let you attempt name change 
+        Then I should see "Sorry, but arms can only be renamed by REDCap administrators when a project is in production status"
+        When I click on the button labeled "Close"
+        Then I should see a link labeled "Rename Arm 2"
+
 
     Scenario: 71 -
+        Given I logout
+        And I am an "admin" user who logs into REDCap
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Define My Events"
+        Then I should see "Arm 2"
+        When I click on the link labeled "Rename Arm 2"
+        Then I should see "Arm name:"
+        And I enter "Arm Two" into the field labeled "Arm name:"
+        And I click on the input button labeled "Save"
+        Then I should see "Arm Two"
 
     Scenario: 72 -
+        Given I logout
+        And I am a "standard" user who logs into REDCap
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Designate Instruments for My Events"
+        Then I should see "Data Collection Instrument"
+        When I click on the button labeled "Begin Editing"
+        And I click on the checkbox labeled "[id=form_1--44]"
+        And I click on the button labeled "Save"
+        Then I should see "Since this project is in production, only REDCap administrators are allowed to uncheck any instruments that are already designated"
+
+
+
+
+
+
 
     Scenario: 73 -
+        Given I logout
+        And I am a "admin" user who logs into REDCap
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Define My Events"
+        And I click on the button labeled "Designate Instruments for My Events"
+        Then I should see "Data Collection Instrument"
+        When I click on the link labeled "Arm Two"
+
+
+
+
+
 
     Scenario: 74 -
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        
+
+
+
+
+
 
     Scenario: 75 -
