@@ -22,19 +22,19 @@ Feature: Logging
     And the user right identified by 'input[name="lock_record"][value="2"]' should not be checked
     And the user right identified by 'input[name="record_create"]' should be checked
     And I add user|save changes
-    # #Add user 2
-    # And I click on the link labeled "User Rights"   
-    # And I enter "test_user2" into the username input field
-    # Then I click on the button labeled "Add with custom rights"
-    # And I check the user right identified by 'input[name="design"]'
-    # Then I add user|save changes
-    # #enable e-sig
-    # And I click on the link labeled "Customize & Manage Locking/E-signatures"
-    # Then I select the option to display E-signature option for the instrument identified by '#savedEsign-text_validation'
-    # #move to prod
-    # And I click on the link labeled "Project Setup"
-    # And I click on the button labeled "Move project to production"
-    # Then I move the project to production by selection option 'input#keep_data'
+    #Add user 2
+    And I click on the link labeled "User Rights"   
+    And I enter "test_user2" into the username input field
+    Then I click on the button labeled "Add with custom rights"
+    And I check the user right identified by 'input[name="design"]'
+    Then I add user|save changes
+    #enable e-sig
+    And I click on the link labeled "Customize & Manage Locking/E-signatures"
+    Then I select the option to display E-signature option for the instrument identified by '#savedEsign-text_validation'
+    #move to prod
+    And I click on the link labeled "Project Setup"
+    And I click on the button labeled "Move project to production"
+    Then I move the project to production by selection option 'input#keep_data'
 
   # Scenario: 1 - Login as test_user
   #   When I am a "test_user" user who logs into REDCap
@@ -160,6 +160,34 @@ Feature: Logging
   #   And I click on the button labeled "Close"
   #   And I click on the button labeled "Save and Exit Form"
   #   Then I should see "Record Home Page"
+  
+  Scenario: 19 - Enter draft mode and edit instrument
+    When I visit Project ID 14
+    Then I click on the link labeled "Designer"
+    And I enter draft mode
+    And I click on the link labeled "Text Validation"
+    And I add a new field of type "text" and enter "textbox" into the field labeled "textbox"
+    And I click on the button labeled "Save"
+    Then I should see "textbox"
+    And I click on the button labeled " Return to the list of instruments"
+    Then I should see "Data Collection Instruments"
+  
+  Scenario: 20 - Create a new instrument
+    When I visit Project ID 14
+    Then I click on the link labeled "Designer"
+    And I create a new instrument from scratch
+    And I click on the button labeled "Add instrument here" 
+    And I enter name "Form 2" and create instrument
+    Then I should see "Form 2"
+    And I click on the button labeled "Close"
+  
+  Scenario: 20 - Submit changes for review
+    When I visit Project ID 14
+    Then I click on the link labeled "Designer"
+    And I submit draft changes for review
+
+  # Scenario: 21 - Logging Page
+
 
 
  
