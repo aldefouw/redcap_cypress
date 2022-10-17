@@ -643,8 +643,8 @@ Feature: Manage Project
         Then I should see "Sorry, but events can only be renamed by REDCap administrators when a project is in production status"
         When I click on the button labeled "Close"
         Then I should see "Event 3"
-
-    Scenario: 69 -
+ 
+    Scenario: 69 - Edit Event 3 
         Given I logout
         And I am an "admin" user who logs into REDCap
         And I click on the link labeled "My Projects"
@@ -653,15 +653,10 @@ Feature: Manage Project
         And I click on the button labeled "Define My Events"
         Then I should see "Arm 1"
         #When I click on the element identified by "#row_a43 > a > img"
-        When I click on the element identified by "image:contains('Edit'):last"
+        When I click on the element identified by "img:contains('Edit'):last"
 
-    Scenario: 70 -
-        Given I logout
-        And I am a "standard" user who logs into REDCap
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
-        And I click on the button labeled "Define My Events"
+    Scenario: 70 - Attempt to Remane Arm 2
+        Given I visit the version URL "Design/define_events.php?arm=2&pid=14"
         Then I should see "Arm 2"
         When I click on the link labeled "Rename Arm 2"
             #doesnt let you attempt name change 
@@ -670,13 +665,8 @@ Feature: Manage Project
         Then I should see a link labeled "Rename Arm 2"
 
 
-    Scenario: 71 -
-        Given I logout
-        And I am an "admin" user who logs into REDCap
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
-        And I click on the button labeled "Define My Events"
+    Scenario: 71 - Rename Arm 2
+        Given I visit the version URL "Design/define_events.php?arm=2&pid=14"
         Then I should see "Arm 2"
         When I click on the link labeled "Rename Arm 2"
         Then I should see "Arm name:"
@@ -684,7 +674,7 @@ Feature: Manage Project
         And I click on the input button labeled "Save"
         Then I should see "Arm Two"
 
-    Scenario: 72 -
+    Scenario: 72 - Check Instrument Designation
         Given I logout
         And I am a "standard" user who logs into REDCap
         And I click on the link labeled "My Projects"
@@ -693,41 +683,39 @@ Feature: Manage Project
         And I click on the button labeled "Designate Instruments for My Events"
         Then I should see "Data Collection Instrument"
         When I click on the button labeled "Begin Editing"
-        And I click on the checkbox labeled "[id=form_1--44]"
-        And I click on the button labeled "Save"
         Then I should see "Since this project is in production, only REDCap administrators are allowed to uncheck any instruments that are already designated"
+        When I click on the checkbox identified by "[id=form_1--43]"
+        And I click on the button labeled "Save"
+        Then I should see "[id=img--form_1--43]"
+        When I click on the button labeled "Begin Editing"
+        Then I should see "Since this project is in production, only REDCap administrators are allowed to uncheck any instruments that are already designated"
+        And I should see "[id=form_1--41] checked='disabled']"
 
-
-
-
-
-
-
-    Scenario: 73 -
+    Scenario: 73 - Uncheck Instrument Designation
         Given I logout
         And I am a "admin" user who logs into REDCap
         And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
-        And I click on the button labeled "Define My Events"
-        And I click on the button labeled "Designate Instruments for My Events"
-        Then I should see "Data Collection Instrument"
-        When I click on the link labeled "Arm Two"
+        Given I visit the version URL "Design/designate_forms.php?pid=14&arm=2"
+        Then I should see "[img--form_1--43]"
+        When I click on the button labeled "Begin Editing"
+        And I click on the checkbox labeled "[id=form_1--43]"
+        And I click on the input button labeled "Save"
+        Then I should NOT see "[id=img--form_1--43]"
 
-
-
-
-
-
-    Scenario: 74 -
+    Scenario: 74 - Submit Automatic Changes
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
-        
+        And I click on the link labeled "Designer"
+        Then I should see "Since this project is currently in PRODUCTION, changes will not be made in real time"
+        When I click on the input button labeled "Submit Changes for Review"
+        Then I should see "SUBMIT CHANGES FOR REVIEW?"
+        When I click on the button labeled "Submit"
+        Then I should see "SUCCESS! The changes you just submitted were made AUTOMATICALLY."
 
-
-
-
-
-
-    Scenario: 75 -
+    Scenario: 75 - Confirm One Record and Two Instruments 
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Record Status Dashboard"
+        Then I should see a link labeled "1"
+        And I should see a link labeled "Arm 1"
+        And I should see a link labeled "Arm 2"
