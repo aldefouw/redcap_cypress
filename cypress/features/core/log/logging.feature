@@ -9,7 +9,17 @@ Feature: Logging
   Scenario: 0 - Project Setup
     When I am a "admin" user who logs into REDCap
     Then I create a project named "23_Logging_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/logging.xml"
-    And I click on the link labeled "User Rights"    
+    And I click on the link labeled "User Rights"
+    And I click to edit username "test_admin (Test User)"
+
+    #test as admin until, login is fixed for testuser 1 and 2
+    And I click on the button labeled "Edit user privileges"
+    And I scroll the user rights page to the bottom 
+    And I check the user right identified by 'input[name="lock_record_customize"]'
+    And I click the user right identified by 'input[name="lock_record"][value="2"]'
+    And I close popup
+    And I add user|save changes
+
     #Add user 1
     Then I enter "test_user" into the username input field
     And I click on the button labeled "Add with custom rights"
