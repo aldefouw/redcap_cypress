@@ -336,3 +336,18 @@ Given('after the next step, I will {confirmation} a confirmation window containi
  Given('I check the checkbox identified by {string}', (value) => {
     cy.get(value).check()
 })
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I create a new instrument from scratch
+ * @description Clicks the button to create new instrument and prompts the user to add instrument
+ */
+ Given('I create a new instrument from scratch', () => {
+    cy.get('div').
+    contains('a new instrument from scratch').
+    parent().
+    within(($div) => {
+        cy.get('button').contains('Create').click()
+    })
+})
