@@ -26,14 +26,14 @@ Given("I click on the button labeled {string}", (text) => {
 /**
  * @module Interactions
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
- * @example I click on the button titled {string} for the {string} category
+ * @example I click on the button labeled {string} for the row labeled {string}
  * @param {string} text - the text on the button element you want to click
- * @param {string} category - the text on the table row of the button you want to click
- * @description Clicks on a button element with a specific text title inside the table row labeled category
+ * @param {string} label - the lable of the row with the button you want to click
+ * @description Clicks on a button element with a specific text title inside the table row label
  */
-Given("I click on the button titled {string} for the {string} category", (text, category) => {
-    // Find the cell that contains the Category label and find the parent
-    cy.get('td').contains(category).parents('tr').within(() => {
+Given("I click on the button labeled {string} for the row labeled {string}", (text, label) => {
+    // Find the cell that contains the label and find the parent
+    cy.get('td').contains(label).parents('tr').within(() => {
         // Find the button element
         cy.get('button[title="' + text +'"]').click()
     })
@@ -161,17 +161,17 @@ Given('I select {string} from the dropdown identified by {string}', (value,label
 /**
  * @module Interactions
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
- * @example I select {string} from the dropdown identified by {string} for the {string} category
+ * @example I select {string} from the dropdown identified by {string} labeled {string}
  * @param {string} value - the option to select from the dropdown
- * @param {string} sel - the selector of the dropdown to choose an option from
- * @param {string} category - the label of the table row to choose an option from
+ * @param {string} selector - the selector of the dropdown to choose an option from
+ * @param {string} label - the label of the dropdown to choose and option from
  * @description Selects a dropdown by its table row name, label, and the option via a specific string.
  */
-Given("I select {string} from the dropdown identified by {string} for the {string} category", (value, sel, category) => {
-    // Find the cell that contains the Category label and find the parent
-    cy.get('td').contains(category).parents('tr').within(() => {
+Given("I select {string} from the dropdown identified by {string} labeled {string}", (value, selector, label) => {
+    // Find the cell that contains the label and find the parent
+    cy.get('td').contains(label).parents('tr').within(() => {
         //cy.get(sel).contains(value).parents("select").select(value, { force: true })
-        cy.contains(sel, value).then(($label) => {
+        cy.contains(selector, value).then(($label) => {
             cy.wrap($label).select(value, {force: true})
         })
     })
@@ -234,17 +234,17 @@ Given("I click on the input element labeled {string}", (label) => {
 /**
  * @module Interactions
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
- * @example I enter {string} into the input field named {string} for the {string} category
- * @param {string} text - the text to enter into the input field
- * @param {string} label - the name of the input field to type
- * @param {string} category - the label of the table row to choose an option from
- * @description Selects an input field by its row name, input name, and types the text to the input field
+ * @example I enter {string} into the field identified by {string} for the label {string}
+ * @param {string} text - the text to enter into the field
+ * @param {string} selector - the selector of the element to enter the text into
+ * @param {string} label - the label associated with the field
+ * @description Selects an input field by its label and then by selector
  */
-Given('I enter {string} into the input field named {string} for the {string} category', (text, label, category) => {
+Given('I enter {string} into the field identified by {string} labeled {string}', (text, selector, label) => {
     // Method is because the input on Edit Reports doesn't have a label
-    // Find the cell that contains the Category label and find the parent
-    cy.get('td').contains(category).parents('tr').within(() => {
-        cy.get('input[name="' + label +'"]').type(text)
+    // Find the cell that contains the label and find the parent
+    cy.get('td').contains(label).parents('tr').within(() => {
+        cy.get(selector).type(text)
     })
 })
 

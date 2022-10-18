@@ -65,7 +65,7 @@ Given("I should see a new dialog box named {string}", (text) => {
  * @module Visibility
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I should see the checkbox identified by {string}, {check}
- * @param {string} text the selector that identifies a checkbox
+ * @param {string} selector - the selector that identifies a checkbox
  * @param {string} check - valid choices are 'checked' OR 'unchecked'
  * @description Visually verifies that a specified checkbox is checked or uncheck
  */
@@ -75,6 +75,7 @@ defineParameterType({
 })
 Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
     //Really only added this to delay cypress cause sometimes it was moving forward without being checked
+    //ATTN: Function no longer needed, can probably delete if no one needs it
     check == 'checked' ? cy.get(sel).should('be.checked') : cy.get(sel).should('not.be.checked')
 })
 
@@ -89,4 +90,17 @@ Given("I should see the checkbox identified by {string}, {check}", (sel, check) 
 
 Given("I should see the input field identified by {string} with the value {string}", (selector, text) => {
     cy.get(selector).should("have.value", text)
+})
+
+/**
+ * @module Reporting
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I should see the dropdown identified by {string} with the option {string} selected
+ * @param {string} selector the selector that identifies a checkbox
+ * @param {string} option the option that should be selected
+ * @description Visibility - Visually verifies that a specified dropdown has the option selected
+ */
+ Given("I should see the dropdown identified by {string} with the option {string} selected", (selector, option) => {
+    //cy.get(selector).invoke('val').should('eq', option)
+    cy.get(selector).find(':selected').should('have.text', option)
 })
