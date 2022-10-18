@@ -334,15 +334,14 @@ Feature: Manage Project
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
-        Then I should see that repeatable instruments are "Enable"
+        Then I should see that repeatable instruments are disabled 
         When I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
-        Then I should see that repeatable instruments are "Disable"
         When I select "Repeat Instruments (repeat independently of each other)" from the dropdown identified by "[name=repeat_whole_event-41]"
         And I click on the checkbox labeled "Form 1"
         And I select "Repeat Entire Event (repeat all instruments together)" from the dropdown identified by "[name=repeat_whole_event-43]"
         And I click on the button labeled "Save"
         Then I should see "Your settings for repeating instruments and/or events have been successfully saved. (The page will now reload.)"
-        And I should see that repeatable instruments are "Modify"
+        Then I should see that repeatable instruments are modifiable
 
     
     Scenario: 38 - Disable / Enable Surveys
@@ -389,6 +388,7 @@ Feature: Manage Project
         #When I click on the button labeled "Close"
         #Then I should see that surveys are disabled
         #The Enable button appears in the Enabled a survey column for all instruments.
+
 
     Scenario: 41 - Enable Survey for My First Instrument
         And I click on the link labeled "My Projects"
@@ -481,8 +481,7 @@ Feature: Manage Project
         Then I should see that the designate an email field for communications setting is "Disable"
 
     Scenario: 52 - Move FirstProject_1115 to Production
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "Project Setup"
+        Given I should see "Move project to production"
         And I click on the button labeled "Move project to production"
         Then I should see "Move Project To Production Status?"
         When I click on the element identified by "[id=keep_data]"
@@ -571,8 +570,8 @@ Feature: Manage Project
         And I click on the input button labeled "Enter Draft Mode"
         Then I should see "Since this project is currently in PRODUCTION"
         When I click on the link labeled "Project Setup"
-        #Then I should see that repeatable instruments are "disabled"
-        Then I should see "[id=enableRepeatingFormsEventsBtn disabled='disabled'"
+        #Then I should see that repeatable instruments are enabled
+        #Then I should see "[id=enableRepeatingFormsEventsBtn disabled='disabled'"
         When I click on the button labeled "Define My Events"
         And I click on the element identified by "[title=Edit]"
         Then I should see "Events cannot be modified in production status"
@@ -653,7 +652,7 @@ Feature: Manage Project
         And I click on the button labeled "Define My Events"
         Then I should see "Arm 1"
         #When I click on the element identified by "#row_a43 > a > img"
-        When I click on the element identified by "img:contains('Edit'):last"
+        When I click on the element identified by "img[title=Edit]:last"
 
     Scenario: 70 - Attempt to Remane Arm 2
         Given I visit the version URL "Design/define_events.php?arm=2&pid=14"
