@@ -3,6 +3,14 @@ Feature: Manage Project
     As a REDCap end user
     I want to see that Manage Project is functioning as expected
 
+    Scenario: Add from Email Address
+        Given I am an "admin" user who logs into REDCap
+        And I visit the "Control Center" page
+        And I click on the link labeled "General Configuration"
+        And I enter "no-reply@test.com" into the field identified by "[name=from_email]"
+        And I click on the input button labeled "Save Changes"
+        Then I should see "Your system configuration values have now been changed!"
+
     Scenario: Edit test_user2 to not Create or Copy Projects
         Given I am an "admin" user who logs into REDCap
         And I visit the "Control Center" page
@@ -11,13 +19,13 @@ Feature: Manage Project
         And I click on the button labeled "Search"
         Then I should see "User information for"
         When I click on the button labeled "Edit user info"
-        And I click on the element identified by "[name=allow_create_db]"
+        And I click on the input element labeled "Allow this user to create or copy projects?"
         And I click on the input button labeled "Save"
 
     Scenario: 2- User Settings Configuration - Create Projects
         When I click on the link labeled "User Settings"
         Then I should see "Yes, normal users can create new projects"
-    #And I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
+        #And I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
         And I select "No, only Administrators can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
@@ -431,9 +439,7 @@ Feature: Manage Project
         And I select "1" from the dropdown identified by "[id=record]"
         Then I should see "Record Home Page"
         When I click on the element identified by ".odd > .nowrap > a > img"
-        #Select My First Instrument with the green checkmark.
-        Then I should see "input"
-        #Survey response is read-only message appears on My First instrument page.
+        Then I should see "Survey response is read-only"
 
     Scenario: 46 - Login as admin1115
         Given I logout
@@ -460,7 +466,6 @@ Feature: Manage Project
         And I select "1" from the dropdown identified by "[id=record]"
         Then I should see "Record Home Page"
         When I click on the element identified by ".odd > .nowrap > a > img"
-        #Select My First Instrument with the green checkmark.
         And I should see "Survey response is editable"
         And I should see "Edit response"
 
@@ -477,7 +482,6 @@ Feature: Manage Project
 
     Scenario: 52 - Move FirstProject_1115 to Production
         And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
         And I click on the button labeled "Move project to production"
         Then I should see "Move Project To Production Status?"
@@ -514,9 +518,7 @@ Feature: Manage Project
         When I click on the input button labeled "Submit Changes for Review"
         Then I should see "SUBMIT CHANGES FOR REVIEW?"
         When I click on the button labeled "Submit"
-        And I click on the link labeled "Review & approve changes"
-
-        #this is not what shows
+        #Then I should see "Awaiting review of project changes"
 
     Scenario: 55 - Login as admin1115
         Given I logout
@@ -531,12 +533,12 @@ Feature: Manage Project
         When I click on the button labeled "Remove All Drafted Changes"
         And I should see "DELETE ALL DRAFT MODE CHANGES"
         And I click on the element identified by ".ui-dialog-buttonset > :nth-child(2)"
-        Then I should see "the project was reset back to before it entered Draft Mode"
+        Then I should see "The changes were NOT committed to the project but were removed"
 
     Scenario: 57 - Allow Users to Make Draft Mode Changes
         Given I visit the "Control Center" page
         When I click on the link labeled "User Settings"
-        And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
+        And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "[name=auto_prod_changes]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
@@ -548,7 +550,7 @@ Feature: Manage Project
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
-        Then I should see "Since this project is currently in PRODUCTION"
+        Then I should see "The project is currently in PRODUCTION status"
         And I click on the input button labeled "Enter Draft Mode"
         And I click on the link labeled "Form 1"
         And I click on the element identified by "input[id=btn-last]"
@@ -556,29 +558,41 @@ Feature: Manage Project
         And I enter "Text2" into the field identified by "[id=field_label]"
         And I enter "text2" into the field identified by "[id=field_name]"
         And I click on the button labeled "Save"
-        Then I should see "Success! The changes were made automatically"
+        Then I should see "Variable: text2"
+        When I click on the input button labeled "Submit Changes for Review"
+        And I click on the button labeled "Submit"
+        Then I should see "SUCCESS! The changes you just submitted were made AUTOMATICALLY"
 
 
-    Scenario: 60 - Verify Repeatable Instruments is Disabled
+    Scenario: 60 - Verify Can Not Edit Define My Events in Production
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
         And I click on the input button labeled "Enter Draft Mode"
         Then I should see "Since this project is currently in PRODUCTION"
         When I click on the link labeled "Project Setup"
-        Then I should see that repeatable instruments are "Enable"
+        #Then I should see that repeatable instruments are "disabled"
+        Then I should see "[id=enableRepeatingFormsEventsBtn disabled='disabled'"
         When I click on the button labeled "Define My Events"
+        And I click on the element identified by "[title=Edit]"
         Then I should see "Events cannot be modified in production status"
 
-    Scenario: 61 -
-
+    Scenario: 61 - Verify Can Not Edit Designate Instruments Tab in Production
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Designer"
+        When I click on the link labeled "Project Setup"
+        When I click on the button labeled "Define My Events"
+        And I click on the link labeled "Designate Instruments for My Events"
+        Then I should see "Events cannot be modified in production status except by a REDCap administrator"
 
     Scenario: 62 - Login as admin1115
         Given I logout
         And I am an "admin" user who logs into REDCap
 
     Scenario: 63 - Allow Normal Users to Modify the Repeatable Instruments & Events
-        When I click on the link labeled "User Settings"
+        When I click on the link labeled "Control Center"
+        And I click on the link labeled "User Settings"
         And I select "Yes, normal users can modify the repeatable instance setup in production" from the dropdown identified by "select[name=enable_edit_prod_repeating_setup]"
         And I select "Yes, normal users can add/modify events in production" from the dropdown identified by "select[name=enable_edit_prod_events]"
         And I click on the input button labeled "Save Changes"
@@ -588,24 +602,120 @@ Feature: Manage Project
         Given I logout
         And I am an "standard" user who logs into REDCap
 
-    Scenario: 65 -
+    Scenario: 65 - Verify Changing Repeating Forms 
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
+        Then I should see "Please be aware that if you uncheck any of the instruments or events that have currently been set as a repeating instrument or repeating event"
+        When I click on the button labeled "Close"
+        And I click on the button labeled "Cancel"
 
-    Scenario: 66 -
+    Scenario: 66 - Add Event 3 to Arm 1
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Define My Events"
+        Then I should see "Arm 1"
+        When I enter "Event 3" into the field identified by "[id=descrip]"
+        And I click on the input button labeled "Add new event"
+        Then I should see "Event 3"
 
-    Scenario: 67 -
+    Scenario: 67 - Add Arm 3 
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Define My Events"
+        Then I should see a link labeled "Add New Arm"
+        When I click on the link labeled "Add New Arm"
+        And I enter "Arm 3" into the field identified by "[id=arm_name]"
+        And I click on the input button labeled "Save"
+        Then I should see "Arm 3"
 
-    Scenario: 68 -
+    Scenario: 68 - Verify Can Not Edit Event 3
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Define My Events"
+        Then I should see "Arm 1"
+        When I click on the element identified by "#row_a43 > a > img"
+            #can not edit event, message pops up immediately
+        Then I should see "Sorry, but events can only be renamed by REDCap administrators when a project is in production status"
+        When I click on the button labeled "Close"
+        Then I should see "Event 3"
+ 
+    Scenario: 69 - Edit Event 3 
+        Given I logout
+        And I am an "admin" user who logs into REDCap
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Define My Events"
+        Then I should see "Arm 1"
+        #When I click on the element identified by "#row_a43 > a > img"
+        When I click on the element identified by "img:contains('Edit'):last"
 
-    Scenario: 69 -
+    Scenario: 70 - Attempt to Remane Arm 2
+        Given I visit the version URL "Design/define_events.php?arm=2&pid=14"
+        Then I should see "Arm 2"
+        When I click on the link labeled "Rename Arm 2"
+            #doesnt let you attempt name change 
+        Then I should see "Sorry, but arms can only be renamed by REDCap administrators when a project is in production status"
+        When I click on the button labeled "Close"
+        Then I should see a link labeled "Rename Arm 2"
 
-    Scenario: 70 -
 
-    Scenario: 71 -
+    Scenario: 71 - Rename Arm 2
+        Given I visit the version URL "Design/define_events.php?arm=2&pid=14"
+        Then I should see "Arm 2"
+        When I click on the link labeled "Rename Arm 2"
+        Then I should see "Arm name:"
+        And I enter "Arm Two" into the field labeled "Arm name:"
+        And I click on the input button labeled "Save"
+        Then I should see "Arm Two"
 
-    Scenario: 72 -
+    Scenario: 72 - Check Instrument Designation
+        Given I logout
+        And I am a "standard" user who logs into REDCap
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Designate Instruments for My Events"
+        Then I should see "Data Collection Instrument"
+        When I click on the button labeled "Begin Editing"
+        Then I should see "Since this project is in production, only REDCap administrators are allowed to uncheck any instruments that are already designated"
+        When I click on the checkbox identified by "[id=form_1--43]"
+        And I click on the button labeled "Save"
+        Then I should see "[id=img--form_1--43]"
+        When I click on the button labeled "Begin Editing"
+        Then I should see "Since this project is in production, only REDCap administrators are allowed to uncheck any instruments that are already designated"
+        And I should see "[id=form_1--41] checked='disabled']"
 
-    Scenario: 73 -
+    Scenario: 73 - Uncheck Instrument Designation
+        Given I logout
+        And I am a "admin" user who logs into REDCap
+        And I click on the link labeled "My Projects"
+        Given I visit the version URL "Design/designate_forms.php?pid=14&arm=2"
+        Then I should see "[img--form_1--43]"
+        When I click on the button labeled "Begin Editing"
+        And I click on the checkbox labeled "[id=form_1--43]"
+        And I click on the input button labeled "Save"
+        Then I should NOT see "[id=img--form_1--43]"
 
-    Scenario: 74 -
+    Scenario: 74 - Submit Automatic Changes
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Designer"
+        Then I should see "Since this project is currently in PRODUCTION, changes will not be made in real time"
+        When I click on the input button labeled "Submit Changes for Review"
+        Then I should see "SUBMIT CHANGES FOR REVIEW?"
+        When I click on the button labeled "Submit"
+        Then I should see "SUCCESS! The changes you just submitted were made AUTOMATICALLY."
 
-    Scenario: 75 -
+    Scenario: 75 - Confirm One Record and Two Instruments 
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Record Status Dashboard"
+        Then I should see a link labeled "1"
+        And I should see a link labeled "Arm 1"
+        And I should see a link labeled "Arm 2"
