@@ -36,14 +36,11 @@ defineParameterType({
 
 /**
  * @module ProjectSetup
- * @author Corey Debacker <debacker@wisc.edu>
- * @example I should see that repeatable instruments are <enabled/disabled/modifiable>
- * @param {string} state the state of the button
+ * @author Corey Debacker <debacker@wisc.edu> * @example I should see that repeatable instruments are <enabled/disabled/modifiable> * @param {string} state the state of the button
  * @description Visually verifies Repeatable Instrument functionality is enabled or disabled in the project.
  */
 Given("I should see that repeatable instruments are {repeatability}", (state) => {
-   let expected_text = ''
-
+    let expected_text = ''
     switch (state.toLowerCase()) {
         case 'enabled':
             expected_text = "Disable"
