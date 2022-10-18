@@ -1,13 +1,18 @@
 import { Given } from "cypress-cucumber-preprocessor/steps";
 
+defineParameterType({
+    name: 'see',
+    regexp: /should see|see/
+})
+
 /**
  * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I should see {string}
+ * @example I (should) see {string}
  * @param {string} text the text visually seen on screen
- * @description Visually verifies that text exists within the HTML object.
+ * @description Visually verifies that text exists within the HTML object. NOTE: "should" is optional for readability.
  */
-Given("I should see {string}", (text) => {
+Given("I {see} {string}", (see, text) => {
     cy.get('html').should(($html) => { expect($html).to.contain(text) })
 })
 
