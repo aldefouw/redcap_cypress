@@ -31,21 +31,18 @@ Feature: Manage Project
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 3- User Settings Configuration - Move Projects to Production
-        When I click on the link labeled "User Settings"
         And I select "Yes, normal users can move projects to production" from the dropdown identified by "select[name=superusers_only_move_to_prod]"
         And I select "No, only Administrators can move projects to production" from the dropdown identified by "select[name=superusers_only_move_to_prod]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 4- User Settings Configuration - Edit Survey Responses
-        When I click on the link labeled "User Settings"
         And I select "Enabled" from the dropdown identified by "select[name=enable_edit_survey_response]"
         And I select "Disabled" from the dropdown identified by "select[name=enable_edit_survey_response]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 5- User Settings Configuration - Allow Production Draft Mode Changes
-        When I click on the link labeled "User Settings"
         And I select "Yes, if no existing fields were modified" from the dropdown identified by "select[name=auto_prod_changes]"
         And I select "Yes, if project has no records OR if has records and no existing fields were modified" from the dropdown identified by "select[name=auto_prod_changes]"
         And I select "Yes, if no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
@@ -55,14 +52,12 @@ Feature: Manage Project
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 6- User Settings Configuration - Modify Repeatable Instruments & Events
-        When I click on the link labeled "User Settings"
         And I select "Yes, normal users can modify the repeatable instance setup in production" from the dropdown identified by "select[name=enable_edit_prod_repeating_setup]"
         And I select "No, only Administrators can modify the repeatable instance setup in production" from the dropdown identified by "select[name=enable_edit_prod_repeating_setup]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 7- User Settings Configuration - Modify Events and Arms in Production Status
-        When I click on the link labeled "User Settings"
         And I select "Yes, normal users can add/modify events in production" from the dropdown identified by "select[name=enable_edit_prod_events]"
         And I select "No, only Administrators can add/modify events in production" from the dropdown identified by "select[name=enable_edit_prod_events]"
         And I click on the input button labeled "Save Changes"
@@ -87,7 +82,7 @@ Feature: Manage Project
         Then I should see a link labeled "New Project"
 
     Scenario: 11- Cancel Create Project Request
-        And I click on the link labeled "New Project"
+        When I click on the link labeled "New Project"
         Then I should see "Send Request"
         And I click on the button labeled "Cancel"
         Then I should see "Welcome to REDCap!"
@@ -96,7 +91,7 @@ Feature: Manage Project
         Given I logout
 
     Scenario: 13- Allow Normal Users to Create New Projects
-        And I am an "admin" user who logs into REDCap
+        Given I am an "admin" user who logs into REDCap
         And I visit the "Control Center" page
         When I click on the link labeled "User Settings"
         Then I should see "Settings related to Project Creation and Project Status Changes"
@@ -127,8 +122,6 @@ Feature: Manage Project
         Then I should see "test_admin"
 
     Scenario: 16- Change Project to Just for Fun
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
         And I click on the button labeled "Modify project title, purpose, etc."
         Then I should see "Modify Project Settings"
@@ -138,8 +131,6 @@ Feature: Manage Project
         Then I should see "Success! Your changes have been saved."
 
     Scenario: 17- Open and Add First Instrument
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
         Then I should see "Data Collection Instruments"
         When I click on the link labeled "Form 1"
@@ -153,10 +144,8 @@ Feature: Manage Project
         Then I should see "Variable: ptname"
 
     Scenario: 18- Copy Instrument
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Designer"
-        Then I should see "Data Collection Instruments"
+       When I click on the link labeled "Designer"
+       Then I should see "Data Collection Instruments"
         When I click on the button labeled "Choose action"
         And I click on the link labeled "Copy"
     #And I enter "My First Instrument 2" into the field labeled "New instrument name:"
@@ -167,9 +156,6 @@ Feature: Manage Project
         And I should see "SUCCESS! The instrument was successfully copied. The page will now reload to reflect the changes."
 
     Scenario: 19- Add Email Field to My First Instrument 2
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Designer"
         And I click on the link labeled "Form 1 2"
         Then I should see "Current instrument:"
         When I click on the element identified by "input[id=btn-last]"
@@ -181,20 +167,14 @@ Feature: Manage Project
         Then I should see "Variable: email"
 
     Scenario: 20- Verify Project Home and Other Functionality Pages
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Home"
         Then I should see "The tables below provide general dashboard information"
         When I click on the link labeled "Other Functionality"
         Then I should see "Project Status Management"
 
     Scenario: 21- Copy Project
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Other Functionality"
         And I click on the button labeled "Copy the project"
         Then I should see "Make a Copy of the Project"
-    #When I clear the field labeled "Project title:"
         And I enter "ProjectCopy_1115" into the field identified by "[name=app_title]"
         And I click on the link labeled "Select All"
         And I click on the button labeled "Copy project"
@@ -209,8 +189,6 @@ Feature: Manage Project
         And I should see "Erase all data"
 
     Scenario: 22 - Cancel Move Project to Production
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "ProjectCopy_1115"
         And I click on the link labeled "Project Setup"
         And I click on the button labeled "Move project to production"
         And I click on the element identified by "[id=keep_data]"
@@ -244,8 +222,6 @@ Feature: Manage Project
         Then I should see "Success! The project is now in production."
 
     Scenario: 27 - Other Functionality Tab Options Visibility
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "ProjectCopy_1115"
         And I click on the link labeled "Other Functionality"
         Then I should NOT see "Delete the project"
         And I should see "Request delete project"
@@ -267,9 +243,6 @@ Feature: Manage Project
         Then I should see "Delete the project"
 
     Scenario: 30 - Delete Project ProjectCopy_1115
-        When I click on the link labeled "My Projects"
-        And I click on the link labeled "ProjectCopy_1115"
-        And I click on the link labeled "Other Functionality"
         When I click on the button labeled "Delete the project"
         And I enter "DELETE" into the field identified by "[id=delete_project_confirm]"
         Then I should see "Deleting the project named"
@@ -283,7 +256,6 @@ Feature: Manage Project
 
     
     Scenario: 32 - Diasble / Inable Longitudinal Data Collection
-        Given I am an "standard" user who logs into REDCap
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -331,8 +303,6 @@ Feature: Manage Project
 
     
     Scenario: 37 - Enable Repeatable Instruments and Events
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
         Then I should see that repeatable instruments are disabled 
         When I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
@@ -345,9 +315,6 @@ Feature: Manage Project
 
     
     Scenario: 38 - Disable / Enable Surveys
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
         Then I should see that surveys are disabled
         When I click on the element identified by "[id=setupEnableSurveysBtn]"
         Then I should see that surveys are enabled
@@ -358,9 +325,6 @@ Feature: Manage Project
 
     
     Scenario: 39 - Enable Survey for My First Instrument
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
         And I click on the button labeled "Online Designer"
         Then I should see "The Online Designer will allow you to make project modifications"
         #And I should see that surveys are enabled
@@ -375,10 +339,6 @@ Feature: Manage Project
         #Survey symbol replaces Enable button.
 
     Scenario: 40 - Delete Survey
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
-        And I click on the button labeled "Online Designer"
         And I click on the button labeled "Survey settings"
         Then I should see "Modify survey settings for data collection instrument"
         When I click on the button labeled "Delete Survey Settings"
@@ -391,10 +351,7 @@ Feature: Manage Project
 
 
     Scenario: 41 - Enable Survey for My First Instrument
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
-        And I click on the button labeled "Online Designer"
+        And I click on the link labeled "Online Designer"
         When I click on the element identified by "button:contains('Enable'):first"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
@@ -402,10 +359,6 @@ Feature: Manage Project
         #Survey symbol replaces Enable button.
 
     Scenario: 42 - Change Survey Status to Offline
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
-        And I click on the button labeled "Online Designer"
         And I click on the button labeled "Survey settings"
         And I select "Survey Offline" from the dropdown identified by "[name=survey_enabled]"
         And I click on the button labeled "Save Changes"
@@ -414,18 +367,12 @@ Feature: Manage Project
         #Survey symbol replaces Enable button.
 
     Scenario: 43 - Change Survey Status to Active
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
-        And I click on the button labeled "Online Designer"
         And I click on the button labeled "Survey settings"
         And I select "Survey Active" from the dropdown identified by "[name=survey_enabled]"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
 
     Scenario: 44 - Open and Submit Public Survey
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Survey Distribution Tools"
         Then I should see "Using a public survey link is the simplest and fastest way to collect responses for your survey"
         When I visit the public survey URL for Project ID 14
@@ -470,8 +417,6 @@ Feature: Manage Project
         And I should see "Edit response"
 
     Scenario: 51 - Enable the Designate an email field…
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
         Then I should see that the designate an email field for communications setting is "Enable"
         When I click on the element identified by "[id=enableSurveyPartEmailFieldBtn]"
@@ -481,7 +426,6 @@ Feature: Manage Project
         Then I should see that the designate an email field for communications setting is "Disable"
 
     Scenario: 52 - Move FirstProject_1115 to Production
-        Given I should see "Move project to production"
         And I click on the button labeled "Move project to production"
         Then I should see "Move Project To Production Status?"
         When I click on the element identified by "[id=keep_data]"
@@ -489,9 +433,6 @@ Feature: Manage Project
         Then I should see "Success! The project is now in production."
 
     Scenario: 53 - Enter Draft Mode and Verify Can Not Delete an Event
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
         And I click on the button labeled "Online Designer"
         Then I should see "Enter Draft Mode"
         When I click on the input button labeled "Enter Draft Mode"
@@ -503,8 +444,6 @@ Feature: Manage Project
         Then I should NOT see "[title=Delete]"
 
     Scenario: 54 - Add New Field and Submit Changes for Review
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
         Then I should see "Since this project is currently in PRODUCTION"
         When I click on the link labeled "Form 1"
@@ -561,27 +500,19 @@ Feature: Manage Project
         When I click on the input button labeled "Submit Changes for Review"
         And I click on the button labeled "Submit"
         Then I should see "SUCCESS! The changes you just submitted were made AUTOMATICALLY"
-
+        When I click on the button labeled "Close"
 
     Scenario: 60 - Verify Can Not Edit Define My Events in Production
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Designer"
         And I click on the input button labeled "Enter Draft Mode"
         Then I should see "Since this project is currently in PRODUCTION"
         When I click on the link labeled "Project Setup"
         #Then I should see that repeatable instruments are enabled
         #Then I should see "[id=enableRepeatingFormsEventsBtn disabled='disabled'"
         When I click on the button labeled "Define My Events"
-        And I click on the element identified by "[title=Edit]"
+        #And I click on the element identified by "[title=Edit]"
         Then I should see "Events cannot be modified in production status"
 
     Scenario: 61 - Verify Can Not Edit Designate Instruments Tab in Production
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Designer"
-        When I click on the link labeled "Project Setup"
-        When I click on the button labeled "Define My Events"
         And I click on the link labeled "Designate Instruments for My Events"
         Then I should see "Events cannot be modified in production status except by a REDCap administrator"
 
@@ -611,9 +542,6 @@ Feature: Manage Project
         And I click on the button labeled "Cancel"
 
     Scenario: 66 - Add Event 3 to Arm 1
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
         And I click on the button labeled "Define My Events"
         Then I should see "Arm 1"
         When I enter "Event 3" into the field identified by "[id=descrip]"
@@ -621,10 +549,6 @@ Feature: Manage Project
         Then I should see "Event 3"
 
     Scenario: 67 - Add Arm 3 
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
-        And I click on the button labeled "Define My Events"
         Then I should see a link labeled "Add New Arm"
         When I click on the link labeled "Add New Arm"
         And I enter "Arm 3" into the field identified by "[id=arm_name]"
@@ -632,10 +556,6 @@ Feature: Manage Project
         Then I should see "Arm 3"
 
     Scenario: 68 - Verify Can Not Edit Event 3
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Project Setup"
-        And I click on the button labeled "Define My Events"
         Then I should see "Arm 1"
         When I click on the element identified by "#row_a43 > a > img"
             #can not edit event, message pops up immediately
@@ -702,8 +622,6 @@ Feature: Manage Project
         Then I should NOT see "[id=img--form_1--43]"
 
     Scenario: 74 - Submit Automatic Changes
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
         Then I should see "Since this project is currently in PRODUCTION, changes will not be made in real time"
         When I click on the input button labeled "Submit Changes for Review"
@@ -712,8 +630,6 @@ Feature: Manage Project
         Then I should see "SUCCESS! The changes you just submitted were made AUTOMATICALLY."
 
     Scenario: 75 - Confirm One Record and Two Instruments 
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Record Status Dashboard"
         Then I should see a link labeled "1"
         And I should see a link labeled "Arm 1"
