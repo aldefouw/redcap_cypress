@@ -303,27 +303,30 @@ Given('after the next step, I will {confirmation} a confirmation window containi
 /**
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I export all data in {string} format
+ * @example I export all data in {string} format and expect {int} record
  * @param {string} value - the option to select from the dropdown
+ * @param {int} num - expect this many records
  * @description Selects the option via a specific string.
  */
- Given('I export all data in {string} format', (value) => {
+ Given('I export all data in {string} format and expect {int} record', (value, num) => {
     cy.get('tr#reprow_ALL').find('button.data_export_btn').should('be.visible').contains('Export Data').click()
     cy.get('input[value='+value+']').click()
     cy.export_csv_report().should((csv) => {
-        expect([...new Set(csv.map((row) => row[0]).slice(1))]).to.have.lengthOf(2)                     // 2 records
+        expect([...new Set(csv.map((row) => row[0]).slice(1))]).to.have.lengthOf(num)                     // 2 records
     })
 })
 
 /**
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I click on the dropdown identified by {string} and select record labelled by {string}
- * @param {string} value - the option to select from the dropdown
+ * @example I click on the dropdown identified by {string} and select value {string} labelled by {string}
+ * @param {string} text - select
+ * @param {string} label - the label of the select
+ * @param {string} value - the value to expect
  * @description Selects the option via a specific string.
  */
  Given('I click on the dropdown identified by {string} and select record labelled by {string}', (text, record) => {
-    cy.get(text).select(record).should('have.value', record)
+    cy.get(text).select(label).should('have.value', label)
 })
 
 /**
@@ -340,6 +343,17 @@ Given('after the next step, I will {confirmation} a confirmation window containi
 /**
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I should see that the checkbox identified by {string} should be checked
+ * @param {string} value - input id of the checkbox
+ * @description Ensure checkbox is checked
+ */
+ Given('I should see that the checkbox identified by {string} should be checked', (value) => {
+    cy.get(value).should('be.checked')
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I create a new instrument from scratch
  * @description Clicks the button to create new instrument and prompts the user to add instrument
  */
@@ -350,4 +364,26 @@ Given('after the next step, I will {confirmation} a confirmation window containi
     within(($div) => {
         cy.get('button').contains('Create').click()
     })
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I click on the button labeled Remove User
+ * @description Clicks the button to remove user from the User Rights page
+ */
+ Given('I click on the button labeled Remove User', () => {
+    cy.get('div#editUserPopup').should('be.visible').parent().find('button').contains("Remove user").should('be.visible').click()
+    cy.get('span').contains("Remove user?").should('be.visible').closest('div[role="dialog"]').find('button').contains("Remove user").click()
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I click the input element identified by {string}
+ * @param {string} value - input element
+ * @description Clicks the input field
+ */
+ Given('I click the input element identified by {string}', (value) => {
+    cy.get(value).click()
 })
