@@ -17,6 +17,7 @@ Feature: Logging
     And I scroll the user rights page to the bottom 
     And I check the user right identified by 'input[name="lock_record_customize"]'
     And I click the user right identified by 'input[name="lock_record"][value="2"]'
+    Then I should see "NOTICE"
     And I close popup
     And I add user|save changes
 
@@ -69,7 +70,7 @@ Feature: Logging
     Then I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
     And I enter "Test2" into the "ptname" text input field
-    And I enter "test@test.com" into the "email" text input field
+    And I enter "test2@test.com" into the "email" text input field
     Then I click on the button labeled "Save & Exit"
 
   Scenario: 5 - Add new record
@@ -117,9 +118,9 @@ Feature: Logging
     Then I click on the link labeled "User Rights"
     And I click to edit username "test_user2 (Test User)"
     And I click on the button labeled "Edit user privileges"
-    Then I click on the button labeled "Remove user"
+    Then I click on the button labeled Remove User
 
-  #Add testuser2 again since we only have 2 users
+  #Add testuser2 again since we only have 2 standard users
   Scenario: Add user
     When I visit Project ID 14
     Then I click on the link labeled "User Rights"
@@ -132,6 +133,8 @@ Feature: Logging
     And I check the user right identified by 'input[name="record_delete"]'
     And I check the user right identified by 'input[name="lock_record_customize"]'
     And I click the user right identified by 'input[name="lock_record"][value="2"]'
+    Then I should see "NOTICE"
+    And I close popup
     And I click the user right identified by 'input[name="record_create"]'
     And I add user|save changes
   
@@ -191,9 +194,8 @@ Feature: Logging
     And I enter draft mode
     And I click on the link labeled "Text Validation"
     And I add a new field of type "text" and enter "textbox" into the field labeled "textbox"
-    And I click on the button labeled "Save"
     Then I should see "textbox"
-    And I click on the button labeled " Return to the list of instruments"
+    And I click on the link labeled "Designer"
     Then I should see "Data Collection Instruments"
   
   Scenario: 20 - Create a new instrument
@@ -203,7 +205,7 @@ Feature: Logging
     And I click on the button labeled "Add instrument here" 
     And I enter name "Form 2" and create instrument
     Then I should see "Form 2"
-    And I click on the button labeled "Close"
+    #And I click on the button labeled "Close"
   
   Scenario: 20 - Submit changes for review
     When I visit Project ID 14
@@ -269,8 +271,8 @@ Feature: Logging
     And I select the "Record locking & e-signatures" option identified by "lock_record" from the Filter by event dropdown field
     Then I should see 'Lock/Unlock Record' in the logging table
     #And I should see 'E-signature' in the logging table
-    And I should see 'Action: Lock record' in the logging table
-    And I should see 'Action: Unlock record' in the logging table
+    And I should see 'Action: Lock instrument' in the logging table
+    And I should see 'Action: Unlock instrument' in the logging table
     #And I should see 'Action: Save e-signature' in the logging table
     #And I should see 'Action: Negate e-signature' in the logging table
 
@@ -298,4 +300,4 @@ Feature: Logging
   # Scenario: 30 - Download All logging
   #   When I am on the Logging page
   #   And I click on the button labelled "All logging"
-  #   Then I should see a file downloaded
+  #   Then I should see a file downloaded814137
