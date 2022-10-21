@@ -36,10 +36,11 @@ Given("I click on the button titled {string} for the {string} category", (text, 
  * @description Clicks on a button element with a specific text label in a dialog box.
  */
 Given("I click on the button labeled {string} in the dialog box", (text) => {
-    cy.get('div[role="dialog"]').within(() => {
-        cy.get('button').contains(text).click()
-    })
-    
+    // cy.get('div[role="dialog"]:visible').last().within(() => {
+    //     cy.get('button').contains(text).click()
+    // })
+    cy.click_top_dialog_button(text)
+
 })
 
 /**

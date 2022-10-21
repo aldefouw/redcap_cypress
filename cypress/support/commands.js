@@ -14,7 +14,7 @@ import '@4tw/cypress-drag-drop'
 
 function preventClickTimeoutFail() {
     //Needed to prevent tests from failing on expected timeout due to
-    //side effect of clicking on a download link
+    //side effect of clicking on a download link that doesn't load a new page
     cy.window().document().then(function (doc) {
         doc.addEventListener('click', () => {
             setTimeout(function () {
@@ -23,6 +23,29 @@ function preventClickTimeoutFail() {
         })
     })
 }
+
+//Useful for clicking buttons located within a stacked dialog box (i.e. a dialog box that is displayed ontop of
+//another dialog box, based on z-index). Clicks the last visible button within the frontmost dialog box containing `label`
+Cypress.Commands.add('click_top_dialog_button', (label) => {
+    cy.get('div[role=dialog][style*="z-index"]:visible').then($divs => {
+        //sort dialog boxes based on z-index, ascending order
+        let sorted = $divs.sort((cur, prev) => {
+            let zp = Cypress.dom.wrap(prev).css('z-index')
+            let zc = Cypress.dom.wrap(cur).css('z-index')
+            return zc - zp
+        })
+        //assign highest z-index div to $div
+        // let $div = Cypress.dom.wrap(sorted).last() //Cypress last()
+        let $div = Cypress.dom.wrap(sorted.last()) //jQuery last()
+        //TODO: either works, revisit later to pick best optino
+
+        //wrap div and look within to click matching button
+        cy.wrap($div).within(($div) => {
+            cy.get(`button:contains("${label}"):visible`).last().click()
+        })
+        
+    })
+})
 
 Cypress.Commands.add('login', (options) => {
     cy.logout()
@@ -249,23 +272,23 @@ Cypress.Commands.add('select_checkbox_by_label', ($name, $value) => {
 })
 
 //Opens the "Edit Field" modal window. If `options` argument is passed, subfields are then edited accordingly.
-Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000, options) => {
+Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000, options = {}) => {
     cy.find_online_designer_field(name).parent().parentsUntil('tr').find('img[title=Edit]').parent().click().then(() => {
         if ('label' in options) {
             //Edit field label -- NOT variable name
-            cy.log("Editing field label not yet implemented")
+            cy.log("Editing field label not yet implemented, try using edit_subfield")
         }
         if ('validation' in options) {
             //Edit validation type
-            cy.log("Editing field validation type not yet implemented")
+            cy.log("Editing field validation type not yet implemented, try using edit_subfield")
         }
         if ("is_required" in options) {
             //Edit whether field is required
-            cy.log("Editing \"Required?\" not yet implemented")
+            cy.log("Editing \"Required?\" not yet implemented, try using edit_subfield")
         }
         if ("is_identifier" in options) {
             //Edit whether field is an identifier
-            cy.log("Editing whether field is an identifier not yet implemented")
+            cy.log("Editing whether field is an identifier not yet implemented, try using edit_subfield")
         }
     })
 })
@@ -273,41 +296,60 @@ Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000, options) => 
 //Edit field metadata (subfields) for the field associated with the open "Add New Field"
 //or "Edit Field" modal, without saving
 Cypress.Commands.add('edit_subfield', (subfield, value) => {
-    //allows for more readable and compact selector mapping with multiple keys to the same value
-    function expand(obj) {
-        var keys = Object.keys(obj);
-        for (var i = 0; i < keys.length; ++i) {
-            var key = keys[i],
-                subkeys = key.split(/\s*,\s*/),
-                target = obj[key];
-            delete obj[key];
-            subkeys.forEach(function(key) { obj[key] = target; })
-        }
-        return obj;
+
+    function buildMap(aliases, selector) {
+        return Object.fromEntries(aliases.map(x => [x, selector]))
     }
-    cy.log(typeof(subfield), subfield)
+
+    //CONFIG: aliases
+    let type_aliases = ['field type', 'variable type', 'type']
+    let label_aliases = ['field label', 'label']
+    let name_aliases = ['field name', 'variable name', 'name']
+    let validation_aliases = ['validation?', 'validation', 'validation type']
+    let calculation_aliases = ['calculated field', 'calculation equation', 'calculation', 'calculations']
+    let choices_aliases = ['choices', 'multiple choices']
+    let required_aliases = ['is required', 'required', 'required?']
+
+    //CONFIG: selector mappings
+    let selMap = buildMap(type_aliases, 'select#field_type')
+    selMap = {...selMap, ...buildMap(label_aliases, 'textarea[name=field_label]')}
+    selMap = {...selMap, ...buildMap(name_aliases, 'input#field_name')}
+    selMap = {...selMap, ...buildMap(validation_aliases, 'select#val_type')}
+    selMap = {...selMap, ...buildMap(calculation_aliases, 'textarea#element_enum')}
+    selMap = {...selMap, ...buildMap(choices_aliases, 'textarea#element_enum')}
 
     //sanitize `subfield` by converting to lowercase and trimming whitespace
     subfield = subfield.toLowerCase().trim()
-    //declare selectors corresponding to subfields for easier code maintenance
-    const selectors = {
-        'field type, variable type, type' : 'select#field_type',
-        'field label, label' : 'textarea[name="field_label"]',
-        'field name, variable name, name' : 'input#field_name',
-        'validation?, validation, validation type': 'select#val_type',
-    }
-
-    cy.log(selectors[subfield])
-    cy.log(subfield).then(() => {
-        //get selector corresponding to `subfield`
-        let sel = selectors[subfield]
-        
-        //edit the appropriate subfield
-        if (['field type', 'type'].includes(subfield)) {
-            cy.get(sel).select(value)
-        }
-    })
+    //get selector corresponding to `subfield`
+    let sel = selMap[subfield]
     
+    //edit the appropriate subfield - redundant structure is for readability and maintainability 
+    if (type_aliases.includes(subfield)) { //Field Type
+        // cy.get(sel).select(value).should('have.value', value)
+        cy.get(sel).select(value)
+    } else if (label_aliases.includes(subfield)) { //Field Label
+        cy.get(sel).clear().type(value)
+    } else if (name_aliases.includes(subfield)) { //Variable Name
+        cy.get(sel).clear().type(value)
+    } else if (validation_aliases.includes(subfield)) { //Field Validation Type
+        cy.get(sel).select(value)
+    } else if (calculation_aliases.includes(subfield)) { //Calculated Fields
+        //click into textarea, then a dialog window should appear with "Logic Editor" at the top
+        cy.get(sel).click().then(() => {
+            cy.get('div[role=dialog]:last').within(($div) => {
+                cy.get('.ace_text-input').clear({force:true}).type(value, {force:true}).then(() => {
+                    cy.get('button:contains(Update & Close Editor)').click()
+                })
+            })
+        })
+    } else if (choices_aliases.includes(subfield)) {
+        cy.get(sel).clear().type(value).then(() => cy.get('#div_add_field').click())
+        //click out of textarea to trigger update & popup
+    } else if (subfield == 'is_identifier') { //not yet implemented
+        // if (value) {
+        //     cy.get()
+        // }
+    } //implement other subfields, as needed
 
 })
 
