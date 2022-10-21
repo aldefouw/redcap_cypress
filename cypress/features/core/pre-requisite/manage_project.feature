@@ -22,44 +22,53 @@ Feature: Manage Project
         And I click on the input element labeled "Allow this user to create or copy projects?"
         And I click on the input button labeled "Save"
 
+    Scenario: 1- Visit Control Center Page
+        Given I am an "admin" user who logs into REDCap
+        And I visit the "Control Center" page
+        Then I should see "Control Center Home"
+
     Scenario: 2- User Settings Configuration - Create Projects
         When I click on the link labeled "User Settings"
         Then I should see "Yes, normal users can create new projects"
-        #And I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
-        And I select "No, only Administrators can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
+        And I should see "No, only Administrators can create new projects"
+        When I select "No, only Administrators can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 3- User Settings Configuration - Move Projects to Production
-        And I select "Yes, normal users can move projects to production" from the dropdown identified by "select[name=superusers_only_move_to_prod]"
-        And I select "No, only Administrators can move projects to production" from the dropdown identified by "select[name=superusers_only_move_to_prod]"
+        Given I should see "Yes, normal users can move projects to production"
+        And I should see "No, only Administrators can move projects to production"
+        When I select "No, only Administrators can move projects to production" from the dropdown identified by "select[name=superusers_only_move_to_prod]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 4- User Settings Configuration - Edit Survey Responses
-        And I select "Enabled" from the dropdown identified by "select[name=enable_edit_survey_response]"
+        Given I select "Enabled" from the dropdown identified by "select[name=enable_edit_survey_response]"
         And I select "Disabled" from the dropdown identified by "select[name=enable_edit_survey_response]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 5- User Settings Configuration - Allow Production Draft Mode Changes
-        And I select "Yes, if no existing fields were modified" from the dropdown identified by "select[name=auto_prod_changes]"
-        And I select "Yes, if project has no records OR if has records and no existing fields were modified" from the dropdown identified by "select[name=auto_prod_changes]"
-        And I select "Yes, if no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
-        And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
-        And I select "Never (always require an admin to approve changes)" from the dropdown identified by "select[name=auto_prod_changes]"
+        Given I should see "Never (always require an admin to approve changes)"
+        And I should see "Yes, if no existing fields were modified"
+        And I should see "Yes, if project has no records OR if has records and no existing fields were modified"
+        And I should see "Yes, if no critical issues exist"
+        And I should see "Yes, if project has no records OR if has records and no critical issues exist"
+        When I select "Never (always require an admin to approve changes)" from the dropdown identified by "select[name=auto_prod_changes]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 6- User Settings Configuration - Modify Repeatable Instruments & Events
-        And I select "Yes, normal users can modify the repeatable instance setup in production" from the dropdown identified by "select[name=enable_edit_prod_repeating_setup]"
-        And I select "No, only Administrators can modify the repeatable instance setup in production" from the dropdown identified by "select[name=enable_edit_prod_repeating_setup]"
+        Given I should see "Yes, normal users can modify the repeatable instance setup in production"
+        And I should see "No, only Administrators can modify the repeatable instance setup in production"
+        When I select "No, only Administrators can modify the repeatable instance setup in production" from the dropdown identified by "select[name=enable_edit_prod_repeating_setup]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 7- User Settings Configuration - Modify Events and Arms in Production Status
-        And I select "Yes, normal users can add/modify events in production" from the dropdown identified by "select[name=enable_edit_prod_events]"
-        And I select "No, only Administrators can add/modify events in production" from the dropdown identified by "select[name=enable_edit_prod_events]"
+        Given I should see "Yes, normal users can add/modify events in production"
+        And I should see "No, only Administrators can add/modify events in production"
+        When I select "No, only Administrators can add/modify events in production" from the dropdown identified by "select[name=enable_edit_prod_events]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
@@ -67,8 +76,9 @@ Feature: Manage Project
         When I click on the link labeled "Browse Users"
         And I enter "test_user2" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
         And I click on the button labeled "Search"
-        Then I should see "(NOTE: Currently normal users CANNOT create or copy projects. See the User Settings page in the Control Center to change this setting.)"
-      #I dont think this detects
+        Then I should see "User information for"
+        And I should see "test_user2"
+        And I should see "(NOTE: Currently normal users CANNOT create or copy projects. See the User Settings page in the Control Center to change this setting.)"
 
     Scenario: 9- Login with test_user2
         Given I logout
@@ -78,7 +88,6 @@ Feature: Manage Project
     Scenario: 10- Login with test_user
         Given I logout
         And I am an "standard" user who logs into REDCap
-        Then I should see "New Project"
         Then I should see a link labeled "New Project"
 
     Scenario: 11- Cancel Create Project Request
@@ -89,32 +98,28 @@ Feature: Manage Project
 
     Scenario: 12- Logout as test_user
         Given I logout
+        And I am an "admin" user who logs into REDCap
 
     Scenario: 13- Allow Normal Users to Create New Projects
-        Given I am an "admin" user who logs into REDCap
-        And I visit the "Control Center" page
-        When I click on the link labeled "User Settings"
+        Given I visit the "Control Center" page
+        And I click on the link labeled "User Settings"
         Then I should see "Settings related to Project Creation and Project Status Changes"
-        And I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
+        When I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
-
     
     Scenario: 14- Login with test_user
         Given I logout
         And I am an "standard" user who logs into REDCap
-
     
     Scenario: 15- Create Project and add test_admin to Project
-        And I click on the link labeled "New Project"
-        And I enter "FirstProject_1115" into the field identified by "[name=app_title]"
+        Given I click on the link labeled "New Project"
+        Then I should see "Create Project"
+        When I enter "FirstProject_1115" into the field identified by "[name=app_title]"
         And I select "Operational Support" from the dropdown identified by "[name=purpose]"
         And I click on the button labeled "Create Project"
         Then I should see "Your new REDCap project has been created and is ready to be accessed."
-        When I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I should see "User Rights"
-        And I click on the link labeled "User Rights"
+        When I click on the link labeled "User Rights"
         And I enter "test_admin" into the field identified by "[id=new_username]"
         And I click on the button labeled "Add with custom rights"
         Then I should see "Adding new user"
@@ -122,21 +127,20 @@ Feature: Manage Project
         Then I should see "test_admin"
 
     Scenario: 16- Change Project to Just for Fun
-        And I click on the link labeled "Project Setup"
+        Given I click on the link labeled "Project Setup"
         And I click on the button labeled "Modify project title, purpose, etc."
         Then I should see "Modify Project Settings"
         When I select "Practice / Just for fun" from the dropdown identified by "[name=purpose]"
-        Then I should see "Modify Project Settings"
         When I click on the button labeled "Save"
         Then I should see "Success! Your changes have been saved."
 
     Scenario: 17- Open and Add First Instrument
-        And I click on the link labeled "Designer"
+        Given I click on the link labeled "Designer"
         Then I should see "Data Collection Instruments"
         When I click on the link labeled "Form 1"
         #my first instrument?
         Then I should see "Record ID"
-        And I click on the element identified by "input[id=btn-last]"
+        When I click on the element identified by "input[id=btn-last]"
         And I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[name=field_type]"
         And I enter "Name" into the field identified by "[id=field_label]"
         And I enter "ptname" into the field identified by "[id=field_name]"
@@ -144,19 +148,19 @@ Feature: Manage Project
         Then I should see "Variable: ptname"
 
     Scenario: 18- Copy Instrument
-       When I click on the link labeled "Designer"
-       Then I should see "Data Collection Instruments"
+        Given I click on the button labeled "Return to list of instruments"
+        Then I should see "Data Collection Instruments"
         When I click on the button labeled "Choose action"
         And I click on the link labeled "Copy"
-    #And I enter "My First Instrument 2" into the field labeled "New instrument name:"
-        #this should actually be a "I should see"
-        #name is off
+            #Then I should see "My First Instrument 2"
         And I click on the button labeled "Copy instrument"
         Then I should see "Form 1 2"
+            #Then I should see "My First Instrument 2"
         And I should see "SUCCESS! The instrument was successfully copied. The page will now reload to reflect the changes."
 
     Scenario: 19- Add Email Field to My First Instrument 2
-        And I click on the link labeled "Form 1 2"
+        Given I click on the link labeled "Form 1 2"
+            #Given I click on the link labeled "My First Instrument 2" 
         Then I should see "Current instrument:"
         When I click on the element identified by "input[id=btn-last]"
         And I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[name=field_type]"
@@ -167,15 +171,15 @@ Feature: Manage Project
         Then I should see "Variable: email"
 
     Scenario: 20- Verify Project Home and Other Functionality Pages
-        And I click on the link labeled "Project Home"
+        Given I click on the link labeled "Project Home"
         Then I should see "The tables below provide general dashboard information"
         When I click on the link labeled "Other Functionality"
         Then I should see "Project Status Management"
 
     Scenario: 21- Copy Project
-        And I click on the button labeled "Copy the project"
+        Given I click on the button labeled "Copy the project"
         Then I should see "Make a Copy of the Project"
-        And I enter "ProjectCopy_1115" into the field identified by "[name=app_title]"
+        When I enter "ProjectCopy_1115" into the field identified by "[name=app_title]"
         And I click on the link labeled "Select All"
         And I click on the button labeled "Copy project"
         Then I should see "COPY SUCCESSFUL!"
@@ -189,7 +193,7 @@ Feature: Manage Project
         And I should see "Erase all data"
 
     Scenario: 22 - Cancel Move Project to Production
-        And I click on the link labeled "Project Setup"
+        Given I click on the link labeled "Project Setup"
         And I click on the button labeled "Move project to production"
         And I click on the element identified by "[id=keep_data]"
         Then I should see "Yes, Request Admin to Move to Production Status"
@@ -212,7 +216,7 @@ Feature: Manage Project
         And I am an "standard" user who logs into REDCap
 
     Scenario: 26 - Move ProjectCopy_1115 to Production
-        And I click on the link labeled "My Projects"
+        Given I click on the link labeled "My Projects"
         And I click on the link labeled "ProjectCopy_1115"
         And I click on the link labeled "Project Setup"
         And I click on the button labeled "Move project to production"
@@ -222,7 +226,7 @@ Feature: Manage Project
         Then I should see "Success! The project is now in production."
 
     Scenario: 27 - Other Functionality Tab Options Visibility
-        And I click on the link labeled "Other Functionality"
+        Given I click on the link labeled "Other Functionality"
         Then I should NOT see "Delete the project"
         And I should see "Request delete project"
         And I should NOT see "Erase all data"
@@ -232,7 +236,7 @@ Feature: Manage Project
         And I am an "admin" user who logs into REDCap
 
     Scenario: 29 - Admin Other Functionality Tab Options Visibility
-        When I click on the link labeled "My Projects"
+        Given I click on the link labeled "My Projects"
         And I click on the link labeled "ProjectCopy_1115"
         And I click on the link labeled "Other Functionality"
         Then I should see "Delete the project"
@@ -242,8 +246,10 @@ Feature: Manage Project
         When I click on the button labeled "Cancel"
         Then I should see "Delete the project"
 
+#This step frequently becomes detached from DOM
     Scenario: 30 - Delete Project ProjectCopy_1115
-        When I click on the button labeled "Delete the project"
+        Given I click on the button labeled "Delete the project"
+        Then I should see "Permanently delete this project?"
         And I enter "DELETE" into the field identified by "[id=delete_project_confirm]"
         Then I should see "Deleting the project named"
         When I click on the element identified by "button:contains('Delete the project'):last"
@@ -253,16 +259,15 @@ Feature: Manage Project
     Scenario: 31 - Login with test_user
         Given I logout
         And I am an "standard" user who logs into REDCap
-
     
     Scenario: 32 - Diasble / Inable Longitudinal Data Collection
-        And I click on the link labeled "My Projects"
+        Given I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
         Then I should see that longitudinal mode is "Enable"
         When I click on the element identified by "[id=setupLongiBtn]"
         Then I should see that longitudinal mode is "Disable"
-    
+
     Scenario: 33 - Add Event 2 in Arm 1
         Given the AJAX "GET" request at "Design/define_events_ajax.php?*" tagged by "events" is being monitored
         And I should see "Define My Events"
@@ -271,7 +276,6 @@ Feature: Manage Project
         When I enter "Event 2" into the field identified by "[id=descrip]"
         And I click on the input button labeled "Add new event"
         And the AJAX request tagged by "events" has completed
-
     
     Scenario: 34 - Add Event 1 in Arm 2
         Given I visit the version URL "Design/define_events.php?pid=14&arm=2"
@@ -282,16 +286,14 @@ Feature: Manage Project
         When I enter "Event 1" into the field identified by "[id=descrip]"
         And I click on the input button labeled "Add new event"
         Then I should see "Event 1"
-
     
     Scenario: 35 - Edit Designate Instruments for Arm 1
         Given I visit the version URL "Design/designate_forms.php?pid=14&arm=1"
-        Given I should see "Arm name:"
+        Then I should see "Arm name:"
         And I should see "Arm 1"
         When I click on the button labeled "Begin Editing"
         And I click on the element identified by "[id=form_1--41]"
         And I click on the button labeled "Save"
-
     
     Scenario: 36 - Edit Designate Instruments for Arm 2
         Given I visit the version URL "Design/designate_forms.php?pid=14&arm=2"
@@ -301,70 +303,79 @@ Feature: Manage Project
         And I click on the element identified by "[id=form_1--44]"
         And I click on the button labeled "Save"
 
-    
     Scenario: 37 - Enable Repeatable Instruments and Events
-        And I click on the link labeled "Project Setup"
+        Given I click on the link labeled "Project Setup"
         Then I should see that repeatable instruments are disabled 
         When I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
-        When I select "Repeat Instruments (repeat independently of each other)" from the dropdown identified by "[name=repeat_whole_event-41]"
-        And I click on the checkbox labeled "Form 1"
+        And I select "Repeat Instruments (repeat independently of each other)" from the dropdown identified by "[name=repeat_whole_event-41]"
+        And I click on the checkbox labeled "Form 1 2"
         And I select "Repeat Entire Event (repeat all instruments together)" from the dropdown identified by "[name=repeat_whole_event-43]"
         And I click on the button labeled "Save"
         Then I should see "Your settings for repeating instruments and/or events have been successfully saved. (The page will now reload.)"
         Then I should see that repeatable instruments are modifiable
-
     
     Scenario: 38 - Disable / Enable Surveys
-        Then I should see that surveys are disabled
+        Given I should see that surveys are disabled
         When I click on the element identified by "[id=setupEnableSurveysBtn]"
         Then I should see that surveys are enabled
         When I click on the element identified by "[id=setupEnableSurveysBtn]"
         Then I should see that surveys are disabled
         When I click on the element identified by "[id=setupEnableSurveysBtn]"
         Then I should see that surveys are enabled
-
     
+#the following # out lines are looking for enabled/disabled surveys for specific instruments. W edo not currently have a step definition for individual instrument surveys, only to check if surveys are enabled within the entire project
     Scenario: 39 - Enable Survey for My First Instrument
-        And I click on the button labeled "Online Designer"
+        Given I click on the button labeled "Online Designer"
         Then I should see "The Online Designer will allow you to make project modifications"
-        #And I should see that surveys are enabled
-        #The Enable button appears in the Enabled a survey column for all instruments.
-        #And I should see that surveys are enabled
-        #The Enable button appears in the Enabled a survey column for all instruments.
+        #And I should see that surveys are enable
+            #Survevs are enable for Form 1
+        #And I should see that surveys are enable
+            #Surveys are enable for Form 1 2
         When I click on the element identified by "button:contains('Enable'):first"
         Then I should see "Set up my survey for data collection instrument"
         When I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
-        #And I should NOT see "input"
-        #Survey symbol replaces Enable button.
+            #Survey symbol replaces Enable button. 
+                #for Form 1
 
     Scenario: 40 - Delete Survey
-        And I click on the button labeled "Survey settings"
+        Given I click on the button labeled "Survey settings"
         Then I should see "Modify survey settings for data collection instrument"
         When I click on the button labeled "Delete Survey Settings"
         Then I should see "Delete this instrument's survey settings"
         And I click on the element identified by "button:contains('Delete Survey Settings'):last"
         Then I should see "Survey successfully deleted!"
-        #When I click on the button labeled "Close"
+        #When I click on the button labeled "-- Cancel--"
+            #when run, this gives and odd error
         #Then I should see that surveys are disabled
-        #The Enable button appears in the Enabled a survey column for all instruments.
-
+            #Surveys are disabled for Form 1
+            #Surveys are disabled for Form 1 2 
 
     Scenario: 41 - Enable Survey for My First Instrument
-        And I click on the link labeled "Online Designer"
+        Given I click on the link labeled "Online Designer"
+            #wont need ^ this line once "--Cancel--" error is resolved
         When I click on the element identified by "button:contains('Enable'):first"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
-        #And I should NOT see "input"
-        #Survey symbol replaces Enable button.
+            #Surveys are enabled for Form 1
+            #Survey symbol replaces Enable button.
 
     Scenario: 42 - Change Survey Status to Offline
-        And I click on the button labeled "Survey settings"
+        Given I click on the button labeled "Survey settings"
         And I select "Survey Offline" from the dropdown identified by "[name=survey_enabled]"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
-        #And I should NOT see "input"
-        #Survey symbol replaces Enable button.
+            #Survey symbol replaces Enable button.
+
+
+
+
+#continue down 
+
+
+
+
+
 
     Scenario: 43 - Change Survey Status to Active
         And I click on the button labeled "Survey settings"
