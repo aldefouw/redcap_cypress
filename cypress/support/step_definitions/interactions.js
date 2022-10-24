@@ -320,14 +320,15 @@ Given('after the next step, I will {confirmation} a confirmation window containi
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I click on the dropdown identified by {string} and select value {string} labelled by {string}
- * @param {string} text - select
+ * @param {string} sel - select
  * @param {string} label - the label of the select
  * @param {string} value - the value to expect
  * @description Selects the option via a specific string.
- */
- Given('I click on the dropdown identified by {string} and select record labelled by {string}', (text, record) => {
-    cy.get(text).select(label).should('have.value', label)
+ 
+ Given('I click on the dropdown identified by {string} and select value {string} labelled by {string}', (sel, label, value) => {
+    cy.get(sel).select(label).should('have.value', value)
 })
+*/
 
 /**
  * @module Interactions
