@@ -323,7 +323,7 @@ Feature: Manage Project
         When I click on the element identified by "[id=setupEnableSurveysBtn]"
         Then I should see that surveys are enabled
     
-#the following # out lines are looking for enabled/disabled surveys for specific instruments. W edo not currently have a step definition for individual instrument surveys, only to check if surveys are enabled within the entire project
+#the following # out lines are looking for enabled/disabled surveys for specific instruments. We do not currently have a step definition for individual instrument surveys, only to check if surveys are enabled within the entire project
     Scenario: 39 - Enable Survey for My First Instrument
         Given I click on the button labeled "Online Designer"
         Then I should see "The Online Designer will allow you to make project modifications"
@@ -367,24 +367,14 @@ Feature: Manage Project
         Then I should see "Your survey settings were successfully saved!"
             #Survey symbol replaces Enable button.
 
-
-
-
-#continue down 
-
-
-
-
-
-
     Scenario: 43 - Change Survey Status to Active
-        And I click on the button labeled "Survey settings"
+        Given I click on the button labeled "Survey settings"
         And I select "Survey Active" from the dropdown identified by "[name=survey_enabled]"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
 
     Scenario: 44 - Open and Submit Public Survey
-        And I click on the link labeled "Survey Distribution Tools"
+        Given I click on the link labeled "Survey Distribution Tools"
         Then I should see "Using a public survey link is the simplest and fastest way to collect responses for your survey"
         When I visit the public survey URL for Project ID 14
         And I click on the element identified by "[name=submit-btn-saverecord]"
@@ -418,9 +408,7 @@ Feature: Manage Project
         Given I change survey edit rights for "test_user" user on the form called "Form 1" on project ID 14
 
     Scenario: 50 - Verify Survey Responses are Visible and Editable
-        And I click on the link labeled "My Projects"
-        And I click on the link labeled "FirstProject_1115"
-        And I click on the link labeled "Add / Edit Records"
+        Given I click on the link labeled "Add / Edit Records"
         And I select "1" from the dropdown identified by "[id=record]"
         Then I should see "Record Home Page"
         When I click on the element identified by ".odd > .nowrap > a > img"
@@ -428,7 +416,7 @@ Feature: Manage Project
         And I should see "Edit response"
 
     Scenario: 51 - Enable the Designate an email field…
-        And I click on the link labeled "Project Setup"
+        Given I click on the link labeled "Project Setup"
         Then I should see that the designate an email field for communications setting is "Enable"
         When I click on the element identified by "[id=enableSurveyPartEmailFieldBtn]"
         Then I should see "Choose an email field to use for invitations to survey participants:"
@@ -437,14 +425,14 @@ Feature: Manage Project
         Then I should see that the designate an email field for communications setting is "Disable"
 
     Scenario: 52 - Move FirstProject_1115 to Production
-        And I click on the button labeled "Move project to production"
+        Given I click on the button labeled "Move project to production"
         Then I should see "Move Project To Production Status?"
         When I click on the element identified by "[id=keep_data]"
         And I click on the button labeled "YES, Move to Production Status"
         Then I should see "Success! The project is now in production."
 
     Scenario: 53 - Enter Draft Mode and Verify Can Not Delete an Event
-        And I click on the button labeled "Online Designer"
+        Given I click on the button labeled "Online Designer"
         Then I should see "Enter Draft Mode"
         When I click on the input button labeled "Enter Draft Mode"
         Then I should see "Data Collection Instruments"
@@ -455,7 +443,7 @@ Feature: Manage Project
         Then I should NOT see "[title=Delete]"
 
     Scenario: 54 - Add New Field and Submit Changes for Review
-        And I click on the link labeled "Designer"
+        Given I click on the link labeled "Designer"
         Then I should see "Since this project is currently in PRODUCTION"
         When I click on the link labeled "Form 1"
         And I click on the element identified by "input[id=btn-last]"
@@ -468,13 +456,14 @@ Feature: Manage Project
         Then I should see "SUBMIT CHANGES FOR REVIEW?"
         When I click on the button labeled "Submit"
         #Then I should see "Awaiting review of project changes"
+            #should see if email sends
 
     Scenario: 55 - Login as admin1115
         Given I logout
         And I am an "admin" user who logs into REDCap
 
     Scenario: 56 - Remove Drafted Changes
-        When I click on the link labeled "My Projects"
+        Given I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
         And I click on the button labeled "Project Modification Module"
@@ -496,7 +485,7 @@ Feature: Manage Project
         And I am an "standard" user who logs into REDCap
 
     Scenario: 59 - Add New Field and Submit Changes
-        And I click on the link labeled "My Projects"
+        Given I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Designer"
         Then I should see "The project is currently in PRODUCTION status"
@@ -514,7 +503,7 @@ Feature: Manage Project
         When I click on the button labeled "Close"
 
     Scenario: 60 - Verify Can Not Edit Define My Events in Production
-        And I click on the input button labeled "Enter Draft Mode"
+        Given I click on the input button labeled "Enter Draft Mode"
         Then I should see "Since this project is currently in PRODUCTION"
         When I click on the link labeled "Project Setup"
         #Then I should see that repeatable instruments are enabled
@@ -524,7 +513,7 @@ Feature: Manage Project
         Then I should see "Events cannot be modified in production status"
 
     Scenario: 61 - Verify Can Not Edit Designate Instruments Tab in Production
-        And I click on the link labeled "Designate Instruments for My Events"
+        Given I click on the link labeled "Designate Instruments for My Events"
         Then I should see "Events cannot be modified in production status except by a REDCap administrator"
 
     Scenario: 62 - Login as admin1115
@@ -532,7 +521,7 @@ Feature: Manage Project
         And I am an "admin" user who logs into REDCap
 
     Scenario: 63 - Allow Normal Users to Modify the Repeatable Instruments & Events
-        When I click on the link labeled "Control Center"
+        Given I click on the link labeled "Control Center"
         And I click on the link labeled "User Settings"
         And I select "Yes, normal users can modify the repeatable instance setup in production" from the dropdown identified by "select[name=enable_edit_prod_repeating_setup]"
         And I select "Yes, normal users can add/modify events in production" from the dropdown identified by "select[name=enable_edit_prod_events]"
@@ -544,32 +533,33 @@ Feature: Manage Project
         And I am an "standard" user who logs into REDCap
 
     Scenario: 65 - Verify Changing Repeating Forms 
-        And I click on the link labeled "My Projects"
+        Given I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
         And I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
+            #This doesnt actually open so It cant find the close button however it is open at the beginning of 65
         Then I should see "Please be aware that if you uncheck any of the instruments or events that have currently been set as a repeating instrument or repeating event"
         When I click on the button labeled "Close"
         And I click on the button labeled "Cancel"
 
     Scenario: 66 - Add Event 3 to Arm 1
-        And I click on the button labeled "Define My Events"
+        Given I click on the button labeled "Define My Events"
         Then I should see "Arm 1"
         When I enter "Event 3" into the field identified by "[id=descrip]"
         And I click on the input button labeled "Add new event"
         Then I should see "Event 3"
 
     Scenario: 67 - Add Arm 3 
-        Then I should see a link labeled "Add New Arm"
+        Given I should see a link labeled "Add New Arm"
         When I click on the link labeled "Add New Arm"
         And I enter "Arm 3" into the field identified by "[id=arm_name]"
         And I click on the input button labeled "Save"
         Then I should see "Arm 3"
 
     Scenario: 68 - Verify Can Not Edit Event 3
+        Given I click on the link labeled "Arm 1"
         Then I should see "Arm 1"
         When I click on the element identified by "#row_a43 > a > img"
-            #can not edit event, message pops up immediately
         Then I should see "Sorry, but events can only be renamed by REDCap administrators when a project is in production status"
         When I click on the button labeled "Close"
         Then I should see "Event 3"
@@ -582,21 +572,34 @@ Feature: Manage Project
         And I click on the link labeled "Project Setup"
         And I click on the button labeled "Define My Events"
         Then I should see "Arm 1"
-        #When I click on the element identified by "#row_a43 > a > img"
         When I click on the element identified by "img[title=Edit]:last"
+        And I enter "Event Three" into the field identified by "[descrip_edit]"
+            #not sure why this fails 
+        And I click on the input button labeled "Save"
+        Then I should see "Event Three"
 
     Scenario: 70 - Attempt to Remane Arm 2
-        Given I visit the version URL "Design/define_events.php?arm=2&pid=14"
+        Given I logout
+        And I am a "standard" user who logs into REDCap
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Define My Events"
+        And I click on the link labeled "Arm 2"
         Then I should see "Arm 2"
         When I click on the link labeled "Rename Arm 2"
-            #doesnt let you attempt name change 
         Then I should see "Sorry, but arms can only be renamed by REDCap administrators when a project is in production status"
         When I click on the button labeled "Close"
         Then I should see a link labeled "Rename Arm 2"
 
-
     Scenario: 71 - Rename Arm 2
-        Given I visit the version URL "Design/define_events.php?arm=2&pid=14"
+        Given I logout
+        And I am an "admin" user who logs into REDCap
+        And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
+        And I click on the link labeled "Project Setup"
+        And I click on the button labeled "Define My Events"
+        And I click on the link labeled "Arm 2"
         Then I should see "Arm 2"
         When I click on the link labeled "Rename Arm 2"
         Then I should see "Arm name:"
@@ -612,28 +615,28 @@ Feature: Manage Project
         And I click on the link labeled "Project Setup"
         And I click on the button labeled "Designate Instruments for My Events"
         Then I should see "Data Collection Instrument"
-        When I click on the button labeled "Begin Editing"
+        When I click on the link labeled "Arm 2"
+        And I click on the button labeled "Begin Editing"
         Then I should see "Since this project is in production, only REDCap administrators are allowed to uncheck any instruments that are already designated"
-        When I click on the checkbox identified by "[id=form_1--43]"
+        When I click on the checkbox identified by "[id=form_1_2--44]"
         And I click on the button labeled "Save"
-        Then I should see "[id=img--form_1--43]"
         When I click on the button labeled "Begin Editing"
         Then I should see "Since this project is in production, only REDCap administrators are allowed to uncheck any instruments that are already designated"
         And I should see "[id=form_1--41] checked='disabled']"
+            #'Designation is grayed out and undesignation not possible.'
 
     Scenario: 73 - Uncheck Instrument Designation
         Given I logout
         And I am a "admin" user who logs into REDCap
         And I click on the link labeled "My Projects"
         Given I visit the version URL "Design/designate_forms.php?pid=14&arm=2"
-        Then I should see "[img--form_1--43]"
         When I click on the button labeled "Begin Editing"
-        And I click on the checkbox labeled "[id=form_1--43]"
+        And I click on the checkbox labeled "[id=form_1_2--44]"
         And I click on the input button labeled "Save"
         Then I should NOT see "[id=img--form_1--43]"
 
     Scenario: 74 - Submit Automatic Changes
-        And I click on the link labeled "Designer"
+        Given I click on the link labeled "Designer"
         Then I should see "Since this project is currently in PRODUCTION, changes will not be made in real time"
         When I click on the input button labeled "Submit Changes for Review"
         Then I should see "SUBMIT CHANGES FOR REVIEW?"
@@ -641,7 +644,7 @@ Feature: Manage Project
         Then I should see "SUCCESS! The changes you just submitted were made AUTOMATICALLY."
 
     Scenario: 75 - Confirm One Record and Two Instruments 
-        And I click on the link labeled "Record Status Dashboard"
+        Given I click on the link labeled "Record Status Dashboard"
         Then I should see a link labeled "1"
         And I should see a link labeled "Arm 1"
         And I should see a link labeled "Arm 2"
