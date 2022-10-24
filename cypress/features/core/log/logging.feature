@@ -48,12 +48,12 @@ Feature: Logging
     And I click on the button labeled "Move project to production"
     Then I move the project to production by selection option 'input#keep_data'
 
-  # Scenario: 1 - Login as test_user
-  #   When I am a "test_user" user who logs into REDCap
+  Scenario: 1 - Login as test_user
+    When I am a "test_user" user who logs into REDCap
 
   Scenario: 2 - Go to my projects and open 23_Logging_v1115
     When I visit Project ID 14
-    Then I should see "23_Logging_v1115"
+    Then I should see "Logging_v1115"
 
   Scenario: 3 - Add new record
     When I visit Project ID 14
@@ -300,106 +300,121 @@ Feature: Logging
   Scenario: 30 - Download All logging and open file to verify
     When I visit Project ID 14
     Then I click on the link labeled "Logging"
-    And I export the logging page and open file to verify
+    # And I export the logging page and open file to verify
 
-  Scenario: 31 - Login as admin
+  # Scenario: 31 - Login as admin
 
 Scenario: 32 - Delete a record’s logging activity when deleting the records
-    Given I visit Project ID 14
+    When I visit Project ID 14
     Then I visit the "Control Center" page
     And I click on the link labeled "Edit a Project's Settings"
-    And I click on the dropdown identified by 'select' and select value '14' labelled by 'Logging_v1115'
+    And I select 'Logging_v1115' from the dropdown identified by 'select'
+    #And I click on the dropdown identified by 'select' and select value '14' labelled by 
     Then I should see "project settings"
-    And I click on the dropdown identified by 'select[name="allow_delete_record_from_log"]' and select value '1' labelled by 'Yes, delete the record\'s logged events when deleting the record'
+    And I select 'Yes, delete the record\'s logged events when deleting the record' from the dropdown identified by 'select[name="allow_delete_record_from_log"]'
     And I click the input element identified by 'input[type=submit]'
     And I click on the link labeled "Logging" 
   
   Scenario: 33 - Login as testuser
 
-  # Scenario: 34 - Delete Record
-  #   When I login as "test_user"
-  #   And I click on the link labelled "Add/Edit Records"
-  #   And I select record "2" from the "Choose an existing Record ID" dropdown field
-  #   And click on the dropdown field labelled "Choose aciton for record" And I select "Delete Record"
-  #   Then I should see a popup "DELETE RECORD '2'"
-  #   And I select the checkbox "Also remove the logged data values for this record (not common)"
-  #   Then I should see a popup "Confirmation: Type 'DELETE'"
-  #   And I write "DELETE" and click on the button labelled "Confirm"
-  #   And I click on the button labelled "Delete Record"
-  #   Then I should see a popup that says "Record deleted!"
-  #   And I click on the button labelled "Close"
+  Scenario: 34 - Delete Record
+    When I visit Project ID 14
+    Then I click on the link labeled "Record Status Dashboard"
+    And I click on the link labeled "2"
+    And I click on the button labeled "Choose action for record"
+    And I select the option labeled "Delete record (all forms)"
+    # And I check the checkbox identified by 'input[id="allow_delete_record_from_log"]' 
+    # Then I should see "Confirmation: Type 'DELETE'"
+    # And I enter 'DELETE' into the field identified by 'input[type=text]'
+    # And I click on the button labeled 'Confirm'
+    And I click on the button labeled "DELETE RECORD"
+    Then I close popup
 
-  # Scenario: 35 - Logging: filter by event - Record created-updated-deleted
-  #   When I am on the Logging page
-  #   And I select the "Record created-updated-deleted" option from the "Filter by event" dropdown field
-  #   Then I should see "Updated Record", "Deleted Record", "Created Record" under the "Action" column
-  #   And I should see "DATA REMOVED" under the "List of Data Changes or Fields Exported" column
-  #   And I should see "All data values were removed.." under the "List of Data Changes or Fields Exported" column
- 
+  Scenario: 35 - Logging: filter by event - Record created-updated-deleted
+    When I visit Project ID 14
+    Then I click on the link labeled "Logging"
+    And I select the "Record created-updated-deleted" option identified by "record" from the Filter by event dropdown field
+    Then I should see 'Updated Record' in the logging table
+    And I should see 'Created Record' in the logging table
+    And I should see 'Deleted Record' in the logging table
+    #And I should see '[*DATA REMOVED*]' in the logging table
+    #And I should see '[All data values were removed from this record\'s logging activity.]' in the logging table
+
   Scenario: 36 - Login as admin
 
-  # Scenario: 37 - Enter Draft Move and Enable Longitudinal Data Collection
-  #   When I login as "admin"
-  #   And I click on the link labelled "Designer"
-  #   And I click on the button labelled "Enter Draft Mode"
-  #   Then I should see a message that says "Success!"
-  #   And I click on the tab labelled "Project Setup"
-  #   And I click on the button labelled "Enable" for "Use longitudinal data collection with defined events?"
-  #   Then I should see a green checkmark beside "Use longitudinal data collection with defined events?"
-
-  # Scenario: 37 - Submit changes for review
-  #   When I click on the link labelled "Designer"
-  #   And I click on the button labelled "Submit Changes for Review"
-  #   Then I should see a popup asking "SUBMIT CHANGES FOR REVIEW?"
-  #   And I click on the button labelled "Submit"
-  #   Then I should see a popup message "SUCCESS! The changes you just submitted were made AUTOMATICALLY."
-  #   And I click on the button labelled "Close"
+  Scenario: 37 - Enter Draft Move and Enable Longitudinal Data Collection
+    When I visit Project ID 14
+    Then I click on the link labeled "Designer"
+    And I enter draft mode
+    And I click on the link labeled "Project Setup"
+    And I click the input element identified by 'button[id="setupLongiBtn"]'
+    Then I should see that longitudinal mode is "Enable"
   
+  Scenario: 37 - Submit changes for review
+    When I visit Project ID 14
+    Then I click on the link labeled "Designer"
+    And I submit draft changes for review
+    
+  Scenario: 37 - Add Arm 
+    When I visit Project ID 14
+    Then I click on the link labeled 'Project Setup'
+    And I click on the button labeled "Define My Events"
+    And I click on the link labeled "+Add New Arm"
+    And I enter "Arm 2" into the field identified by "[id=arm_name]"
+    And I click on the input button labeled "Save"
+    Then I should see "No events have been defined for this Arm"
+    When I enter "Event 1" into the field identified by "[id=descrip]"
+    And I click on the input button labeled "Add new event"
+    Then I should see "Event 1"
   
-  # Scenario: 37 - Designate Instruments
-  #   When I login as "admin"
-  #   And I click on the button labelled "Designate Instruments for My Events"
-  #   And I click on the tab labelled "Arm 2"
-  #   And I click on the button labelled "Begin Editing"
-  #   And I select Text Validation checkbox under "Event 1"
-  #   And I click on the button labelled "Save"
-  #   Then I shoudl see a green checkmark under "Event 1" for Text Validation survey
+  Scenario: 37 - Designate Instrument
+    When I visit Project ID 14
+    Then I click on the link labeled 'Project Setup'
+    And I click on the button labeled "Designate Instruments for My Events"
+    And I visit the version URL "Design/designate_forms.php?pid=14&arm=2"
+    Then I should see "Arm 2"
+    And I click on the button labeled "Begin Editing"
+    And I click on the element identified by "[id=text_validation--42]"
+    And I click on the button labeled "Save"
 
   Scenario: 38 - Login as testuser
 
-  # Scenario: 39 - Add new record to an Arm 
-  #   When I login as "test_user"
-  #   And I click on the link labelled "Record Status Dashboard"
-  #   And I click on the tab labelled "Arm 2"
-  #   And I click on the button labelled "Add new record for this arm"
-  #   And I fill in Name with "Arm2"
-  #   Then I click on the button labeled "Save & Exit"
+  Scenario: 39 - Add new record to an Arm 
+    When I visit Project ID 14
+    And I click on the link labeled "Record Status Dashboard"
+    And I click on the link labeled "Arm 2"
+    And I click on the button labeled "Add new record for this arm"
+    And I enter "Arm2" into the "ptname" text input field
+    Then I click on the button labeled "Save & Exit"
   
-  # Scenario: 40 - Logging: filter by event - Record created-updated-deleted
-  #   When I am on the Logging page
-  #   And I select the "Record created-updated-deleted" option from the "Filter by event" dropdown field
-  #   Then I should see "Updated Record", "Deleted Record", "Created Record" under the "Action" column
-  #   And I should see the Action column include the Arm name after the record number
-  #   And I should see the data values for "Arm2" under the "List of Data Changes or Fields Exported" column
+  Scenario: 40 - Logging: filter by event - Record created-updated-deleted
+    When I visit Project ID 14
+    Then I click on the link labeled "Logging"
+    And I select the "Record created-updated-deleted" option identified by "record" from the Filter by event dropdown field
+    #Then I should see '(Event 1 - (Arm 2: Arm 2))' in the logging table
+    And I should see 'ptname = \'Arm2\', text_validation_complete = \'0\', record_id = \'2\'' in the logging table
 
-  # Scenario: 41 - Delete Record
-  #   And I click on the link labelled "Add/Edit Records"
-  #   And I select "Arm 2" And record "2" from the "Choose an existing Record ID" dropdown field
-  #   And click on the dropdown field labelled "Choose aciton for record" And I select "Delete Record"
-  #   Then I should see a popup "DELETE RECORD '2'"
-  #   And I select the checkbox "Also remove the logged data values for this record (not common)"
-  #   Then I should see a popup "Confirmation: Type 'DELETE'"
-  #   And I write "DELETE" and click on the button labelled "Confirm"
-  #   And I click on the button labelled "Delete Record"
-  #   Then I should see a popup that says "Record deleted!"
-  #   And I click on the button labelled "Close"
+  Scenario: 41 - Delete Record
+    When I visit Project ID 14
+    Then I click on the link labeled "Record Status Dashboard"
+    And I click on the link labeled "Arm 2"
+    And I click on the link labeled "2"
+    And I click on the button labeled "Choose action for record"
+    And I select the option labeled "Delete record (all forms)"
+    Then I should see "DELETE RECORD"
+    # And I check the checkbox identified by 'input[id="allow_delete_record_from_log"]' 
+    # Then I should see "Confirmation: Type 'DELETE'"
+    # And I enter 'DELETE' into the field identified by 'input[type=text]'
+    # And I click on the button labeled 'Confirm'
+    And I click on the button labeled "DELETE RECORD"
+    Then I close popup
   
-  # Scenario: 42 - Logging: filter by event - Record created-updated-deleted
-  #   When I am on the Logging page
-  #   And I select the "Record created-updated-deleted" option from the "Filter by event" dropdown field
-  #   Then I should see "Updated Record", "Deleted Record", "Created Record" under the "Action" column
-  #   And I should see "DATA REMOVED" under the "List of Data Changes or Fields Exported" column
-  #   And I should see "All data values were removed.." under the "List of Data Changes or Fields Exported" column
-  
+  Scenario: 42 - Logging: filter by event - Record created-updated-deleted
+    When I visit Project ID 14
+    Then I click on the link labeled "Logging"
+    And I select the "Record created-updated-deleted" option identified by "record" from the Filter by event dropdown field
+    #Then I should see '[*DATA REMOVED*]' in the logging table
+    #And I should see '[All data values were removed from this record\'s logging activity.]' in the logging table
+
   Scenario: 43 - Logout
   Given I logout
