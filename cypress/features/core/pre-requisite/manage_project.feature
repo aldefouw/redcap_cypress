@@ -429,6 +429,7 @@ Feature: Manage Project
         Then I should see "Move Project To Production Status?"
         When I click on the element identified by "[id=keep_data]"
         And I click on the button labeled "YES, Move to Production Status"
+            #detaches
         Then I should see "Success! The project is now in production."
 
     Scenario: 53 - Enter Draft Mode and Verify Can Not Delete an Event
@@ -506,8 +507,8 @@ Feature: Manage Project
         Given I click on the input button labeled "Enter Draft Mode"
         Then I should see "Since this project is currently in PRODUCTION"
         When I click on the link labeled "Project Setup"
-        #Then I should see that repeatable instruments are enabled
-        #Then I should see "[id=enableRepeatingFormsEventsBtn disabled='disabled'"
+        #Then I should see that repeatable instruments are Disable
+            #'Verify the Repeatable instruments and events “Modify” button is disabled.' not verify that repeatable instruments are "Enable". button should still say "modify" but be greyed out.  
         When I click on the button labeled "Define My Events"
         #And I click on the element identified by "[title=Edit]"
         Then I should see "Events cannot be modified in production status"
@@ -536,11 +537,12 @@ Feature: Manage Project
         Given I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
-        And I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
-            #This doesnt actually open so It cant find the close button however it is open at the beginning of 65
-        Then I should see "Please be aware that if you uncheck any of the instruments or events that have currently been set as a repeating instrument or repeating event"
-        When I click on the button labeled "Close"
-        And I click on the button labeled "Cancel"
+#when run this next section  makes everything following fail 
+        #And I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
+            #This doesnt actually open so it cant find the close button however it is open at the beginning of 66
+        #Then I should see "Please be aware that if you uncheck any of the instruments or events that have currently been set as a repeating instrument or repeating event"
+        #When I click on the button labeled "Close"
+        #And I click on the button labeled "Cancel"
 
     Scenario: 66 - Add Event 3 to Arm 1
         Given I click on the button labeled "Define My Events"
@@ -573,8 +575,7 @@ Feature: Manage Project
         And I click on the button labeled "Define My Events"
         Then I should see "Arm 1"
         When I click on the element identified by "img[title=Edit]:last"
-        And I enter "Event Three" into the field identified by "[descrip_edit]"
-            #not sure why this fails 
+        And I enter "Event Three" into the field identified by "[id=descrip_edit]"
         And I click on the input button labeled "Save"
         Then I should see "Event Three"
 
@@ -603,7 +604,7 @@ Feature: Manage Project
         Then I should see "Arm 2"
         When I click on the link labeled "Rename Arm 2"
         Then I should see "Arm name:"
-        And I enter "Arm Two" into the field labeled "Arm name:"
+        And I enter "Arm Two" into the field identified by "[id=arm_name]"
         And I click on the input button labeled "Save"
         Then I should see "Arm Two"
 
@@ -621,6 +622,7 @@ Feature: Manage Project
         When I click on the checkbox identified by "[id=form_1_2--44]"
         And I click on the button labeled "Save"
         When I click on the button labeled "Begin Editing"
+            #detaches 
         Then I should see "Since this project is in production, only REDCap administrators are allowed to uncheck any instruments that are already designated"
         And I should see "[id=form_1--41] checked='disabled']"
             #'Designation is grayed out and undesignation not possible.'
@@ -631,9 +633,9 @@ Feature: Manage Project
         And I click on the link labeled "My Projects"
         Given I visit the version URL "Design/designate_forms.php?pid=14&arm=2"
         When I click on the button labeled "Begin Editing"
-        And I click on the checkbox labeled "[id=form_1_2--44]"
+        And I click on the checkbox identified by "[id=form_1_2--44]"
         And I click on the input button labeled "Save"
-        Then I should NOT see "[id=img--form_1--43]"
+        Then I should NOT see "[id=img--form_1--44]"
 
     Scenario: 74 - Submit Automatic Changes
         Given I click on the link labeled "Designer"
