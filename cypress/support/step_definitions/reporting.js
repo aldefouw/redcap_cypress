@@ -33,7 +33,7 @@ Given("I should see the report with {int} rows", (number) => {
  * @param {int} count - the number of different records seen in a report
  * @description Visibility - Visually verifies that the report has the correct number of distinct records
  */
- Given("I should see the report with {int} distinct records", (count) => {
+Given("I should see the report with {int} distinct records", (count) => {
 
     let records = []
     cy.wrap(records).as("records")
@@ -59,7 +59,7 @@ Given("I should see the report with {int} rows", (number) => {
  * @param {int} count - the number of repeating instrument rows seen in a report
  * @description Visibility - Visually verifies that the report has the correct number of repeating instrument rows
  */
- Given("I should see the report with {int} repeating instrument rows", (count) => {
+Given("I should see the report with {int} repeating instrument rows", (count) => {
 
     let rCount = 0
     cy.wrap(rCount).as("rCount")
@@ -86,12 +86,12 @@ Given("I should see the report with {int} rows", (number) => {
  * @param {string} order the order of the record IDs.
  * @description Visibility - Visually verifies that the report has record IDs in correct order
  */
- defineParameterType({
+defineParameterType({
     name: 'ordering',
     regexp: /ascending|descending/
 })
 
- Given("I should see the report with the column named {string} {ordering}", (name, order) => {
+Given("I should see the report with the column named {string} {ordering}", (name, order) => {
 
     let column = null
     cy.get('table[id="report_table"]').children('thead').children('tr').find('th').each( (th, index) => {
@@ -167,7 +167,7 @@ Given("I should see the dropdown identified by {string} labeled {string} with th
  * @param {int} count the label of the row the selector belongs to
  * @description Visibility - Verifies the length of the report fields array to be count length
  */
- Given("I should see the element identified by {string} have length {int}", (selector, count) => {
+Given("I should see the element identified by {string} have length {int}", (selector, count) => {
     //Really only added this to delay cypress cause sometimes it was moving forward without being checked
     cy.get(selector).should("have.length", count)
 })
@@ -337,7 +337,7 @@ Given("I should receive a download to a {string} file", (format) => {
 /**
  * @module Reporting
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
- * @example I should have a {string} file that contains {int} rows
+ * @example I should have a {string} file that contains the headings below
  * @param {string} format the text format of the data export you are looking to receive
  * @param {DataTable} headings the DataTable of headings this file should have
  * @description Interactions - Checks the number of rows (excluding header) the file should have
@@ -381,7 +381,7 @@ Given("I should have a {string} file that contains {int} rows", (format, count) 
  * @param {int} count the number of distinct records of data this file should have
  * @description Interactions - Checks the number of distinct records the file should have
  */
- Given("I should have a {string} file that contains {int} distinct records", (format, count) => {
+Given("I should have a {string} file that contains {int} distinct records", (format, count) => {
 
     cy.readFile("cypress/downloads" + '/test_file.' + format).then( ($text) => {
         let lines = $text.trim().split('\n')
@@ -408,7 +408,7 @@ Given("I should have a {string} file that contains {int} rows", (format, count) 
  * @param {int} count the number of repeating instrument rows
  * @description Interactions - Checks the number of repeating instrument rows the file should have
  */
- Given("I should have a {string} file that contains {int} repeating instrument rows", (format, count) => {
+Given("I should have a {string} file that contains {int} repeating instrument rows", (format, count) => {
 
     cy.readFile("cypress/downloads" + '/test_file.' + format).then( ($text) => {
         let lines = $text.trim().split('\n')
