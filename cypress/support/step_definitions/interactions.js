@@ -47,10 +47,19 @@ Given("I click on the button labeled {string} for the row labeled {string}", (te
  * @description Clicks on a button element with a specific text label in a dialog box.
  */
 Given("I click on the button labeled {string} in the dialog box", (text) => {
-    cy.get('div[role="dialog"]').within(() => {
-        cy.get('button').contains(text).click()
+    cy.get('div[role="dialog"]').then((divs) => {
+        // can be multiple layers of dialogs, find the top most - tintin edit
+        let topDiv = null
+        for(let i = 0; i < divs.length; i++){
+            // ignore invisible dialogs
+            if(divs[i].style.display == 'none') {continue}
+
+            if(topDiv == null || divs[i].style.zIndex > topDiv.style.zIndex){
+                topDiv = divs[i]
+            }
+        }
+        cy.wrap(topDiv).find('button').contains(text).click()
     })
-    
 })
 
 /**
@@ -137,6 +146,17 @@ Given('I clear the field labeled {string}', (label) => {
 
 /**
  * @module Interactions
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I clear the field identified by {string}
+ * @param {string} selector - the selector of the field to select
+ * @description Clears the text from an input field based upon its selector
+ */
+Given('I clear the field identified by {string}', (selector) => {
+    cy.get(selector).clear()
+})
+
+/**
+ * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the table cell containing a link labeled {string}
  * @param {string} text - the text in the table cell
@@ -207,6 +227,18 @@ Given("I enter {string} into the field identified by {string}", (text, sel) => {
 
 /**
  * @module Interactions
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I enter {string} into the hidden field identified by {string}
+ * @param {string} text - the text to enter into the field
+ * @param {string} selector - the selector of the element to enter the text into
+ * @description Enter text into a specific field that is hidden (Specifically for Logic Editor)
+ */
+Given("I enter {string} into the hidden field identified by {string}", (text, sel) => {
+    cy.get(sel).type(text, {force: true})
+})
+
+/**
+ * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the checkbox labeled {string}
  * @param {string} label - the label associated with the checkbox field
@@ -228,6 +260,20 @@ Given("I click on the checkbox labeled {string}", (label) => {
 Given("I click on the input element labeled {string}", (label) => {
     cy.contains(label).then(($label) => {
         cy.wrap($label).parent().find('input').click()
+    })
+})
+
+/**
+ * @module Interactions
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I set the input file field named {string} to the file at path {string}
+ * @param {string} name - the name attribute of the input file field
+ * @param {string} path - the path of the file to upload
+ * @description Selects a file path to upload into input named name
+ */
+Given("I set the input file field named {string} to the file at path {string}", (name, path) => {
+    cy.get('input[name=' + name + ']').then(($field) => {
+        cy.wrap($field).selectFile(path)
     })
 })
 
@@ -267,3 +313,5 @@ Given('after the next step, I will {confirmation} a confirmation window containi
         action === "accept"
     })
 })
+
+
