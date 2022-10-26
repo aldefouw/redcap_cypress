@@ -48,8 +48,8 @@ Feature: Logging
     And I click on the button labeled "Move project to production"
     Then I move the project to production by selection option 'input#keep_data'
 
-  Scenario: 1 - Login as test_user
-    When I am a "test_user" user who logs into REDCap
+  # Scenario: 1 - Login as test_user
+  #   When I am a "test_user" user who logs into REDCap
 
   Scenario: 2 - Go to my projects and open 23_Logging_v1115
     When I visit Project ID 14
@@ -168,13 +168,13 @@ Feature: Logging
     And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "1"
     And I check the checkbox identified by 'input[id="__LOCKRECORD__"]'
     Then I click on the button labeled "Save & Stay"
-  # Scenario: 17 - Edit record (E-signature)
-  #   And I check the checkbox identified by 'input[id="__ESIGNATURE__"]'
-  #   Then I click on the button labeled "Save & Stay"
-  #   Then I should see "Username/password verification"
-  #   And I enter the Username: "test_admin" and password "Testing123" for e-signature
-  #   And I click on the button labeled "Save"
-  #   Then I should see that the checkbox identified by 'input[id="__ESIGNATURE__"]' should be checked
+  # scenario: 17 - Edit record (E-signature)
+    And I check the checkbox identified by 'input[id="__ESIGNATURE__"]'
+    Then I click on the button labeled "Save & Exit"
+    Then I should see "Username/password verification"
+    And I enter the Username: "test_admin" and password "Testing123" for e-signature
+    And I click on the button labeled "Save"
+    #Then I should see that the checkbox identified by 'input[id="__ESIGNATURE__"]' should be checked
   
   Scenario: 18 - Unlock form
     When I visit Project ID 14 
@@ -300,7 +300,7 @@ Feature: Logging
   Scenario: 30 - Download All logging and open file to verify
     When I visit Project ID 14
     Then I click on the link labeled "Logging"
-    # And I export the logging page and open file to verify
+    And I export the logging page and open file to verify
 
   # Scenario: 31 - Login as admin
 
@@ -320,7 +320,7 @@ Scenario: 32 - Delete a record’s logging activity when deleting the records
   Scenario: 34 - Delete Record
     When I visit Project ID 14
     Then I click on the link labeled "Record Status Dashboard"
-    And I click on the link labeled "2"
+    And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
     # And I check the checkbox identified by 'input[id="allow_delete_record_from_log"]' 
@@ -398,7 +398,7 @@ Scenario: 32 - Delete a record’s logging activity when deleting the records
     When I visit Project ID 14
     Then I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 2"
-    And I click on the link labeled "2"
+    And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
     Then I should see "DELETE RECORD"
