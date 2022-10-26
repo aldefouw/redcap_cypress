@@ -170,11 +170,11 @@ Feature: Logging
     Then I click on the button labeled "Save & Stay"
   # scenario: 17 - Edit record (E-signature)
     And I check the checkbox identified by 'input[id="__ESIGNATURE__"]'
-    Then I click on the button labeled "Save & Exit"
+    Then I click on the button labeled "Save & Stay"
     Then I should see "Username/password verification"
     And I enter the Username: "test_admin" and password "Testing123" for e-signature
     And I click on the button labeled "Save"
-    #Then I should see that the checkbox identified by 'input[id="__ESIGNATURE__"]' should be checked
+    Then I should see that the checkbox identified by 'input[id="__ESIGNATURE__"]' should be checked
   
   Scenario: 18 - Unlock form
     When I visit Project ID 14 
