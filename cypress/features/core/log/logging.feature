@@ -49,7 +49,7 @@ Feature: Logging
     Then I move the project to production by selection option 'input#keep_data'
 
   # Scenario: 1 - Login as test_user
-  #   When I am a "test_user" user who logs into REDCap
+    When I am a "standard" user who logs into REDCap
 
   Scenario: 2 - Go to my projects and open 23_Logging_v1115
     When I visit Project ID 14
@@ -113,7 +113,7 @@ Feature: Logging
 
   Scenario: 11 - edit user (completed in project setup)
 
-  Scenario: 12 - Remove user
+  Scenario: 12 - Remove user & Add user
     When I visit Project ID 14
     Then I click on the link labeled "User Rights"
     And I click to edit username "test_user2 (Test User)"
@@ -121,7 +121,7 @@ Feature: Logging
     Then I click on the button labeled Remove User
 
   #Add testuser2 again since we only have 2 standard users
-  Scenario: Add user
+  #Scenario: Add user
     When I visit Project ID 14
     Then I click on the link labeled "User Rights"
     And I enter "test_user2" into the username input field
@@ -139,7 +139,7 @@ Feature: Logging
     And I add user|save changes
 
   # Scenario: 13 - Login as test_user2
-  #   When I am a "test_user2" user who logs into REDCap
+    When I am a "standard2" user who logs into REDCap
 
   Scenario: 14 - Data Exports, Reports, and Stats
     When I visit Project ID 14
@@ -167,19 +167,19 @@ Feature: Logging
     Then I click on the link labeled "Record Status Dashboard"
     And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "1"
     And I check the checkbox identified by 'input[id="__LOCKRECORD__"]'
-    Then I click on the button labeled "Save & Stay"
-  # scenario: 17 - Edit record (E-signature)
     And I check the checkbox identified by 'input[id="__ESIGNATURE__"]'
-    Then I click on the button labeled "Save & Stay"
+    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
+    And I should see "Save & Stay"
+    And I click on the link labeled "Save & Stay"
+
+  Scenario: 17 - Edit record (E-signature)
     Then I should see "Username/password verification"
-    And I enter the Username: "test_admin" and password "Testing123" for e-signature
-    And I click on the button labeled "Save"
+    And I enter the Username: "test_user2" and password "Testing123" for e-signature
+    And I click on the element identified by ".ui-dialog-buttonset > .ui-button"
     Then I should see that the checkbox identified by 'input[id="__ESIGNATURE__"]' should be checked
 
   Scenario: 18 - Unlock form
-    When I visit Project ID 14
-    Then I click on the link labeled "Record Status Dashboard"
-    And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "1"
+    Given I see "Instrument locked by test_user2"
     And I click on the input button labeled "Unlock form"
     Then I should see "UNLOCK FORM?"
     And I click on the button labeled "Unlock"
