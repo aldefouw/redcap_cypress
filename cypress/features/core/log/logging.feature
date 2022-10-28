@@ -319,6 +319,7 @@ Feature: Logging
     When I visit Project ID 14
     Then I click on the link labeled "Record Status Dashboard"
     And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    And I click on the link labeled "Record ID 2"
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
     # And I check the checkbox identified by 'input[id="allow_delete_record_from_log"]'
@@ -392,15 +393,16 @@ Feature: Logging
     Then I click on the link labeled "Logging"
     And I select the "Record created-updated-deleted" option identified by "record" from the Filter by event dropdown field
     #Then I should see '(Event 1 - (Arm 2: Arm 2))' in the logging table
-    And I should see 'ptname = \'Arm2\', text_validation_complete = \'0\', record_id = \'2\'' in the logging table
+    And I should see "ptname = 'Arm2', text_validation_complete = '0', record_id = '2'" in the logging table
 
   Scenario: 41 - Delete Record
     When I visit Project ID 14
     Then I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 2"
-    And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    And I click on the element identified by 'tr.odd > td > a:contains("2")'
+    #And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
     And I click on the button labeled "Choose action for record"
-    And I select the option labeled "Delete record (all forms)"
+    And I click on the link labeled "Delete record (all forms/events)"
     Then I should see "DELETE RECORD"
     # And I check the checkbox identified by 'input[id="allow_delete_record_from_log"]'
     # Then I should see "Confirmation: Type 'DELETE'"
