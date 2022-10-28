@@ -273,11 +273,11 @@ Feature: Logging
     Then I click on the link labeled "Logging"
     And I select the "Record locking & e-signatures" option identified by "lock_record" from the Filter by event dropdown field
     Then I should see 'Lock/Unlock Record' in the logging table
-    #And I should see 'E-signature' in the logging table
+    And I should see 'E-signature' in the logging table
     And I should see 'Action: Lock instrument' in the logging table
     And I should see 'Action: Unlock instrument' in the logging table
-    #And I should see 'Action: Save e-signature' in the logging table
-    #And I should see 'Action: Negate e-signature' in the logging table
+    And I should see 'Action: Save e-signature' in the logging table
+    And I should see 'Action: Negate e-signature' in the logging table
 
   Scenario: 27 - Logging: filter by event - Page Views
     When I visit Project ID 14
@@ -300,10 +300,10 @@ Feature: Logging
     Then I should see 'Created Record' in the logging table
     And I should see 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'' in the logging table
   
-  # Scenario: 30 - Download All logging and open file to verify
-  #   When I visit Project ID 14
-  #   Then I click on the link labeled "Logging"
-  #   And I export the logging page and open file to verify
+  Scenario: 30 - Download All logging and open file to verify
+    When I visit Project ID 14
+    Then I click on the link labeled "Logging"
+    And I export the logging page and open file to verify
 
   Scenario: 31 - Login as admin
     When I am a "admin" user who logs into REDCap
@@ -324,7 +324,8 @@ Scenario: 32 - Delete a record’s logging activity when deleting the records
   Scenario: 34 - Delete Record
     When I visit Project ID 14
     Then I click on the link labeled "Record Status Dashboard"
-    And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    #And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    And I click on the link labeled "2"
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
     # And I check the checkbox identified by 'input[id="allow_delete_record_from_log"]' 
@@ -404,7 +405,8 @@ Scenario: 32 - Delete a record’s logging activity when deleting the records
     When I visit Project ID 14
     Then I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 2"
-    And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    #And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    And I click on the link labeled "2"
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
     Then I should see "DELETE RECORD"
