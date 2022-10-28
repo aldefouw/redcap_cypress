@@ -109,7 +109,7 @@ defineParameterType({
     name: 'check',
     regexp: /checked|unchecked/
 })
-Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
+ Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
     //Really only added this to delay cypress cause sometimes it was moving forward without being checked
     //ATTN: Function no longer needed, can probably delete if no one needs it
     check == 'checked' ? cy.get(sel).should('be.checked') : cy.get(sel).should('not.be.checked')

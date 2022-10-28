@@ -113,3 +113,17 @@ Given("I should see that the designate an email field for communications setting
         cy.get('button').should('contain.text', expected_text);
     })
 })
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I move the project to production by selection option {string}
+ * @param {string} text - option - keep all data or delete all data
+ * @description Move project to production
+ *
+ */
+ Given("I move the project to production by selection option {string}", (text) => {
+    cy.get(text).click()
+    cy.get('button').contains('YES, Move to Production Status').click()
+    cy.get('div#actionMsg').should('be.visible')
+})

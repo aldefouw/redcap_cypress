@@ -46,6 +46,43 @@ Given("I enter {string} into the {string} survey text input field", (text, field
 
 /**
  * @module Survey
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I enter {string} into the {string} text input field
+ * @param {string} text - the text you want to input into the survey field
+ * @param {string} variable - variable of the survey field you want to input text into
+ * @description Enters text into a survey field specified by a particular label.
+ */
+ Given("I enter {string} into the {string} text input field", (text, variable) => {
+    cy.get('input[name='+variable+']').type(text)
+})
+
+/**
+ * @module Survey
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I enter {string} into the {string} text input field
+ * @param {string} text - the text you want to input into the survey field
+ * @param {string} variable - variable of the survey field you want to input text into
+ * @description Clear text from field and enter new text into a survey field.
+ */
+ Given("I clear the field and enter {string} into the {string} text input field", (text, variable) => {
+    cy.get('input[name='+variable+']').clear().type(text)
+})
+
+/**
+ * @module Survey
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I enter the Username: {string} and password {string} for e-signature
+ * @param {string} username - username
+ * @param {string} password - password
+ * @description Enters credentials when enabling e-signature on survey
+ */
+ Given("I enter the Username: {string} and password {string} for e-signature", (username, password) => {
+    cy.get('input[id="esign_username"]').type(username)
+    cy.get('input[id="esign_password"').type(password)
+})
+
+/**
+ * @module Survey
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I disable surveys for Project ID {int}
  * @param {string} pid - the text you want to enter into the survey field
@@ -146,4 +183,71 @@ Given(/^I click on the survey option label containing "(.*)" label(?: and want t
 Then("I should see the survey open exactly once by watching the tag of {string}", (tag) => {
     //Check to see if the window would have opened
     cy.get('@' + tag).should('have.been.calledOnceWithExactly', window.redcap_survey_link, 0)
+})
+
+/**
+ * @module Survey
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I enter name {string} and create instrument
+ * @param {string} formname - name of instrument
+ * @description Enters instrument name and creates it
+ */
+ Given("I enter name {string} and create instrument", (formname) => {
+    cy.get('td').contains('New instrument name').parent().within(($td) => {
+        cy.get('input[type=text]', {force: true}).type(formname)
+        cy.get('input[value=Create]', {force: true}).click()
+    })
+})
+
+/**
+ * @module Survey
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I enter draft mode
+ * @description Enters draft mode
+ */
+ Given("I enter draft mode", () => {
+    cy.get('input[value="Enter Draft Mode"]').click()
+    //Check to see that REDCap indicates we're in DRAFT mode
+    cy.get('div#actionMsg').should(($alert) => {
+        expect($alert).to.contain('The project is now in Draft Mode.')
+    })
+})
+
+/**
+ * @module Survey
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I submit draft changes for review
+ * @description Submits drafted changes for review
+ */
+ Given("I submit draft changes for review", () => {
+    cy.get('input[value="Submit Changes for Review"]').should(($i) => {
+        $i.first().click()
+    })
+
+    //Submit for Appproval
+    cy.get('button').contains('Submit').click()
+    cy.get('.ui-dialog-buttonset').contains('Close').click()
+})
+
+/**
+ * @module Survey
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I enter draft mode
+ * @param {string} field_type - type of field (for ex. textbox, radio, checkbox, etc.)
+ * @param {string} field_text - text you want to enter in the field
+ * @param {string} field_name - variable name
+ * @description Enters draft mode
+ */
+ Given("I add a new field of type {string} and enter {string} into the field labeled {string}", (field_type,field_text,field_name) => {
+    cy.get('input#btn-last').click().then(() => {
+        cy.get('select#field_type').select(field_type)
+        cy.get('input#field_name').type(field_name)
+        cy.get('input#field_label_rich_text_checkbox').uncheck()
+        cy.get('textarea#field_label').type(field_text)
+        cy.get('button').contains('Save').click().then(() => {
+            cy.get('table#draggable').should(($t) => {
+                expect($t).to.contain('Variable: '+ field_name)
+            })
+        })
+    })
 })
