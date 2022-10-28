@@ -167,7 +167,6 @@ Feature: Logging
     Then I click on the link labeled "Record Status Dashboard"
     And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "1"
     And I check the checkbox identified by 'input[id="__LOCKRECORD__"]'
-
     And I check the checkbox identified by 'input[id="__ESIGNATURE__"]'
     And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
     And I should see "Save & Stay"
@@ -208,7 +207,6 @@ Feature: Logging
     And I click on the button labeled "Add instrument here" 
     And I enter name "Form 2" and create instrument
     Then I should see "Form 2"
-    #And I click on the button labeled "Close"
   
   Scenario: 20 - Submit changes for review
     When I visit Project ID 14
@@ -324,7 +322,6 @@ Scenario: 32 - Delete a record’s logging activity when deleting the records
   Scenario: 34 - Delete Record
     When I visit Project ID 14
     Then I click on the link labeled "Record Status Dashboard"
-    #And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
     And I click on the link labeled "2"
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
