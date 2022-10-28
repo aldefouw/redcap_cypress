@@ -12,6 +12,8 @@ module.exports = defineConfig({
   numTestsKeptInMemory: 0,
   nonGlobalStepDefinitions: false,
   step_definitions: 'cypress/support/step_definitions/',
+  viewportWidth: 1600,
+  viewportHeight: 1200,
   watchForFileChanges: false,
   e2e: {
     // We've imported your old cypress plugins here.
