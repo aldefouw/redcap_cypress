@@ -9,14 +9,16 @@ Feature: Reporting
 
   Scenario: Project Setup - 2
     Given I visit Project ID 14
-    And I click on the link labeled "Project Setup"
-    And I click on the button labeled "Data Dictionary"
-    And I set the input file field named "uploadedfile" to the file at path "cypress/fixtures/dictionaries/core/22_Reporting_DD.csv"
-    # wait for csrf token to show up
-    And the form should have a redcap_csrf_token
-    Then I click on the button labeled "Upload File"
-    # wait for csrf token to show up
-    Then the form should have a redcap_csrf_token
+    And I upload a data dictionary located at "cypress/fixtures/dictionaries/core/22_Reporting_DD.csv" to project ID 14
+      #And I click on the link labeled "Project Setup"
+    #And I click on the button labeled "Data Dictionary"
+
+
+#    # wait for csrf token to show up
+#    And the form should have a redcap_csrf_token
+#    Then I click on the button labeled "Upload File"
+#    # wait for csrf token to show up
+#    Then the form should have a redcap_csrf_token
     And I click on the button labeled "Commit Changes"
     Then I should see "Changes Made Successfully!"
 

@@ -3,11 +3,8 @@ Feature: Logging
   As a REDCap end user
   I want to see that Logging is functioning as expected
 
-  # Background:
-  #   Given I am a "admin" user who logs into REDCap
-
   Scenario: 0 - Project Setup
-    When I am a "admin" user who logs into REDCap
+    When I am an "admin" user who logs into REDCap
     Then I create a project named "Logging_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/logging.xml"
     And I click on the link labeled "User Rights"
     And I click to edit username "test_admin (Test User)"
@@ -300,13 +297,13 @@ Feature: Logging
   Scenario: 30 - Download All logging and open file to verify
     When I visit Project ID 14
     Then I click on the link labeled "Logging"
-    And I export the logging page and open file to verify
+    And I export all logging from the project and verify the result against expected logging results in the file named "23Logging1115_ExpectedLogs.csv"
 
-  # Scenario: 31 - Login as admin
+  Scenario: 31 - Login as admin
+    Given I am an "admin" user who logs into REDCap
 
   Scenario: 32 - Delete a record’s logging activity when deleting the records
-    When I visit Project ID 14
-    Then I visit the "Control Center" page
+    When I visit the "Control Center" page
     And I click on the link labeled "Edit a Project's Settings"
     And I select 'Logging_v1115' from the dropdown identified by 'select'
     #And I click on the dropdown identified by 'select' and select value '14' labelled by
@@ -315,7 +312,8 @@ Feature: Logging
     And I click the input element identified by 'input[type=submit]'
     And I click on the link labeled "Logging"
 
-  Scenario: 33 - Login as testuser
+  Scenario: 33 - Login as test_user
+    Given I am a "standard" user who logs into REDCap
 
   Scenario: 34 - Delete Record
     When I visit Project ID 14
@@ -341,6 +339,7 @@ Feature: Logging
     #And I should see '[All data values were removed from this record\'s logging activity.]' in the logging table
 
   Scenario: 36 - Login as admin
+    Given I am an "admin" user who logs into REDCap
 
   Scenario: 37 - Enter Draft Move and Enable Longitudinal Data Collection
     When I visit Project ID 14
@@ -377,7 +376,8 @@ Feature: Logging
     And I click on the element identified by "[id=text_validation--42]"
     And I click on the button labeled "Save"
 
-  Scenario: 38 - Login as testuser
+  Scenario: 38 - Login as test_user
+    Given I am a "standard" user who logs into REDCap
 
   Scenario: 39 - Add new record to an Arm
     When I visit Project ID 14
