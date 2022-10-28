@@ -16,7 +16,8 @@ Feature: Logging
     And I click the user right identified by 'input[name="lock_record"][value="2"]'
     Then I should see "NOTICE"
     And I close popup
-    And I add user|save changes
+    And I save changes within the context of User Rights
+    And I want to pause
 
     #Add user 1
     And I click on the link labeled "User Rights"
@@ -30,13 +31,13 @@ Feature: Logging
     And the user right identified by 'input[name="lock_record_customize"]' should not be checked
     And the user right identified by 'input[name="lock_record"][value="2"]' should not be checked
     And the user right identified by 'input[name="record_create"]' should be checked
-    And I add user|save changes
+    And I save changes within the context of User Rights
     #Add user 2
     And I click on the link labeled "User Rights"
     And I enter "test_user2" into the username input field
     Then I click on the button labeled "Add with custom rights"
     And I check the user right identified by 'input[name="design"]'
-    Then I add user|save changes
+    Then I save changes within the context of User Rights
     #enable e-sig
     And I click on the link labeled "Customize & Manage Locking/E-signatures"
     Then I select the option to display E-signature option for the instrument identified by '#savedEsign-text_validation'
@@ -133,7 +134,7 @@ Feature: Logging
     Then I should see "NOTICE"
     And I close popup
     And I click the user right identified by 'input[name="record_create"]'
-    And I add user|save changes
+    And I save changes within the context of User Rights
 
   # Scenario: 13 - Login as test_user2
     When I am a "standard2" user who logs into REDCap
@@ -154,7 +155,7 @@ Feature: Logging
     And I click the user right identified by 'input[name="lock_record"][value="2"]'
     Then I should see "NOTICE"
     And I close popup
-    And I add user|save changes
+    And I save changes within the context of User Rights
 
   Scenario: 16 - Edit record (Lock Record & E-Signature)
     When I visit Project ID 14
