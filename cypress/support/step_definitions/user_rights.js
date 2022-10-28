@@ -242,18 +242,18 @@ Given("I change survey edit rights for {string} user on the form called {string}
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I add user|save changes
+ * @example I save changes within the context of User Rights
  * @description Click on the create add user button and add user
  *
  */
- Given("I add user|save changes", () => {
+ Given("I save changes within the context of User Rights", () => {
     cy.get('.ui-button').contains(/add user|save changes/i).click()
 })
 
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I select the Also display E-signature option on instrument? for the instrument identified by {string}
+ * @example I select the option to display E-signature option for the instrument identified by {string}
  * @param {string} text - Instrument name
  * @description Enable E-Signature option on instrument
  *

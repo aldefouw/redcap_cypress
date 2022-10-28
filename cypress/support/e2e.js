@@ -127,7 +127,7 @@ before(() => {
 })
 
 beforeEach(() => {
-    Cypress.Cookies.debug()
+    //Cypress.Cookies.debug()
 })
 
 Cypress.on("uncaught:exception", (err, runnable) => {

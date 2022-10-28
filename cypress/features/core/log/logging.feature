@@ -3,23 +3,19 @@ Feature: Logging
   As a REDCap end user
   I want to see that Logging is functioning as expected
 
-  # Background: 
-  #   Given I am a "admin" user who logs into REDCap
-    
   Scenario: 0 - Project Setup
-    When I am a "admin" user who logs into REDCap
+    When I am an "admin" user who logs into REDCap
     Then I create a project named "Logging_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/logging.xml"
     And I click on the link labeled "User Rights"
     And I click to edit username "test_admin (Test User)"
-
-    #test as admin until, login is fixed for testuser 1 and 2
     And I click on the button labeled "Edit user privileges"
-    And I scroll the user rights page to the bottom 
+    And I scroll the user rights page to the bottom
     And I check the user right identified by 'input[name="lock_record_customize"]'
     And I click the user right identified by 'input[name="lock_record"][value="2"]'
     Then I should see "NOTICE"
     And I close popup
-    And I add user|save changes
+    And I save changes within the context of User Rights
+    #And I want to pause
 
     #Add user 1
     And I click on the link labeled "User Rights"
@@ -33,13 +29,13 @@ Feature: Logging
     And the user right identified by 'input[name="lock_record_customize"]' should not be checked
     And the user right identified by 'input[name="lock_record"][value="2"]' should not be checked
     And the user right identified by 'input[name="record_create"]' should be checked
-    And I add user|save changes
+    And I save changes within the context of User Rights
     #Add user 2
-    And I click on the link labeled "User Rights"   
+    And I click on the link labeled "User Rights"
     And I enter "test_user2" into the username input field
     Then I click on the button labeled "Add with custom rights"
     And I check the user right identified by 'input[name="design"]'
-    Then I add user|save changes
+    Then I save changes within the context of User Rights
     #enable e-sig
     And I click on the link labeled "Customize & Manage Locking/E-signatures"
     Then I select the option to display E-signature option for the instrument identified by '#savedEsign-text_validation'
@@ -48,7 +44,7 @@ Feature: Logging
     And I click on the button labeled "Move project to production"
     Then I move the project to production by selection option 'input#keep_data'
 
-  Scenario: 1 - Login as test_user
+  # Scenario: 1 - Login as test_user
     When I am a "standard" user who logs into REDCap
 
   Scenario: 2 - Go to my projects and open 23_Logging_v1115
@@ -64,7 +60,7 @@ Feature: Logging
     Then I click on the dropdown and select the button identified by 'a#submit-btn-savecontinue'
     And I clear the field and enter "Testing" into the "ptname" text input field
     Then I click on the button labeled "Save & Exit"
-   
+
   Scenario: 4 - Add new record
     When I visit Project ID 14
     Then I click on the link labeled "Add / Edit Records"
@@ -88,10 +84,10 @@ Feature: Logging
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
     And I click on the button labeled "DELETE RECORD"
-   Then I close popup
+    Then I close popup
 
   Scenario: 7 - Add new role
-    When I visit Project ID 14 
+    When I visit Project ID 14
     Then I click on the link labeled "User Rights"
     And I enter "Data" into the rolename input field
     And I click on the button labeled "Create role" and I create role
@@ -99,18 +95,18 @@ Feature: Logging
 
   Scenario: 8 - Edit role
     When I visit Project ID 14
-    Then I click on the link labeled "User Rights" 
+    Then I click on the link labeled "User Rights"
     And I click to edit role name "Data"
     And I check the user right identified by 'input[name="design"]'
     Then I click on the button labeled "Save Changes"
 
   Scenario: 9 - Delete role
-    When I visit Project ID 14 
-    Then I click on the link labeled "User Rights" 
+    When I visit Project ID 14
+    Then I click on the link labeled "User Rights"
     And I delete role name "Data"
-  
+
   Scenario: 10 - add user (completed in project setup)
-  
+
   Scenario: 11 - edit user (completed in project setup)
 
   Scenario: 12 - Remove user & Add user
@@ -136,9 +132,9 @@ Feature: Logging
     Then I should see "NOTICE"
     And I close popup
     And I click the user right identified by 'input[name="record_create"]'
-    And I add user|save changes
-  
-  Scenario: 13 - Login as test_user2
+    And I save changes within the context of User Rights
+
+  # Scenario: 13 - Login as test_user2
     When I am a "standard2" user who logs into REDCap
 
   Scenario: 14 - Data Exports, Reports, and Stats
@@ -147,20 +143,20 @@ Feature: Logging
     And I export all data in "csvraw" format and expect 2 record
 
   Scenario: 15 - Edit user privileges for test_user
-    When I visit Project ID 14 
+    When I visit Project ID 14
     Then I click on the link labeled "User Rights"
     And I click to edit username "test_user (Test User)"
     And I click on the button labeled "Edit user privileges"
     #need a better solution to scroll page to bottom
-    And I scroll the user rights page to the bottom 
+    And I scroll the user rights page to the bottom
     And I check the user right identified by 'input[name="lock_record_customize"]'
     And I click the user right identified by 'input[name="lock_record"][value="2"]'
-    Then I should see "NOTICE" 
+    Then I should see "NOTICE"
     And I close popup
-    And I add user|save changes
+    And I save changes within the context of User Rights
 
   Scenario: 16 - Edit record (Lock Record & E-Signature)
-    When I visit Project ID 14 
+    When I visit Project ID 14
     #Then I click on the link labeled "Add / Edit Records"
     #And I click on the dropdown identified by 'select[id="record"]' and select value '1' labelled by '1'
     #And I click on the bubble for the instrument identified by 'text_validation'
@@ -177,11 +173,9 @@ Feature: Logging
     And I enter the Username: "test_user2" and password "Testing123" for e-signature
     And I click on the element identified by ".ui-dialog-buttonset > .ui-button"
     Then I should see that the checkbox identified by 'input[id="__ESIGNATURE__"]' should be checked
-  
+
   Scenario: 18 - Unlock form
-    When I visit Project ID 14 
-    Then I click on the link labeled "Record Status Dashboard"
-    And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "1"
+    Given I see "Instrument locked by test_user2"
     And I click on the input button labeled "Unlock form"
     Then I should see "UNLOCK FORM?"
     And I click on the button labeled "Unlock"
@@ -189,7 +183,7 @@ Feature: Logging
     And I click on the button labeled "Close"
     And I click on the button labeled "Save & Exit Form"
     Then I should see "Record Home Page"
-  
+
   Scenario: 19 - Enter draft mode and edit instrument
     When I visit Project ID 14
     Then I click on the link labeled "Designer"
@@ -199,15 +193,16 @@ Feature: Logging
     Then I should see "textbox"
     And I click on the link labeled "Designer"
     Then I should see "Data Collection Instruments"
-  
+
   Scenario: 20 - Create a new instrument
     When I visit Project ID 14
     Then I click on the link labeled "Designer"
     And I create a new instrument from scratch
-    And I click on the button labeled "Add instrument here" 
+    And I click on the button labeled "Add instrument here"
     And I enter name "Form 2" and create instrument
     Then I should see "Form 2"
-  
+    #And I click on the button labeled "Close"
+
   Scenario: 20 - Submit changes for review
     When I visit Project ID 14
     Then I click on the link labeled "Designer"
@@ -220,7 +215,7 @@ Feature: Logging
     And I should see "Filter by user name:"
     And I should see "Filter by record:"
     And I should see "Filter by time range from"
-    And I should see "Displaying events (by most recent):" 
+    And I should see "Displaying events (by most recent):"
     And I should see "Time / Date"
     And I should see "Username"
     And I should see "Action"
@@ -241,7 +236,7 @@ Feature: Logging
     And I should see 'Create data collection instrument' in the logging table
     And I should see 'Create project field' in the logging table
     And I should see 'Enter draft mode' in the logging table
-  
+
   Scenario: 24 - Logging: filter by event - User or role
     When I visit Project ID 14
     Then I click on the link labeled "Logging"
@@ -297,35 +292,36 @@ Feature: Logging
     And I select the '2' option from the Filter by record dropdown field
     Then I should see 'Created Record' in the logging table
     And I should see 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'' in the logging table
-  
+
   Scenario: 30 - Download All logging and open file to verify
     When I visit Project ID 14
     Then I click on the link labeled "Logging"
-    And I export the logging page and open file to verify
+    And I export all logging from the project and verify the result against expected logging results in the file named "23Logging1115_ExpectedLogs.csv"
 
   Scenario: 31 - Login as admin
-    When I am a "admin" user who logs into REDCap
+    Given I am an "admin" user who logs into REDCap
 
-Scenario: 32 - Delete a record’s logging activity when deleting the records
-    When I visit Project ID 14
-    Then I visit the "Control Center" page
+  Scenario: 32 - Delete a record’s logging activity when deleting the records
+    When I visit the "Control Center" page
     And I click on the link labeled "Edit a Project's Settings"
     And I select 'Logging_v1115' from the dropdown identified by 'select'
+    #And I click on the dropdown identified by 'select' and select value '14' labelled by
     Then I should see "project settings"
     And I select 'Yes, delete the record\'s logged events when deleting the record' from the dropdown identified by 'select[name="allow_delete_record_from_log"]'
     And I click the input element identified by 'input[type=submit]'
-    And I click on the link labeled "Logging" 
-  
-  Scenario: 33 - Login as testuser
-    When I am a "standard" user who logs into REDCap
+    And I click on the link labeled "Logging"
+
+  Scenario: 33 - Login as test_user
+    Given I am a "standard" user who logs into REDCap
 
   Scenario: 34 - Delete Record
     When I visit Project ID 14
     Then I click on the link labeled "Record Status Dashboard"
-    And I click on the link labeled "2"
+    And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    And I click on the link labeled "Record ID 2"
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
-    # And I check the checkbox identified by 'input[id="allow_delete_record_from_log"]' 
+    # And I check the checkbox identified by 'input[id="allow_delete_record_from_log"]'
     # Then I should see "Confirmation: Type 'DELETE'"
     # And I enter 'DELETE' into the field identified by 'input[type=text]'
     # And I click on the button labeled 'Confirm'
@@ -343,7 +339,7 @@ Scenario: 32 - Delete a record’s logging activity when deleting the records
     #And I should see '[All data values were removed from this record\'s logging activity.]' in the logging table
 
   Scenario: 36 - Login as admin
-    When I am a "admin" user who logs into REDCap
+    Given I am an "admin" user who logs into REDCap
 
   Scenario: 37 - Enter Draft Move and Enable Longitudinal Data Collection
     When I visit Project ID 14
@@ -352,13 +348,13 @@ Scenario: 32 - Delete a record’s logging activity when deleting the records
     And I click on the link labeled "Project Setup"
     And I click the input element identified by 'button[id="setupLongiBtn"]'
     Then I should see that longitudinal mode is "Enable"
-  
+
   Scenario: 37 - Submit changes for review
     When I visit Project ID 14
     Then I click on the link labeled "Designer"
     And I submit draft changes for review
-    
-  Scenario: 37 - Add Arm 
+
+  Scenario: 37 - Add Arm
     When I visit Project ID 14
     Then I click on the link labeled 'Project Setup'
     And I click on the button labeled "Define My Events"
@@ -369,7 +365,7 @@ Scenario: 32 - Delete a record’s logging activity when deleting the records
     When I enter "Event 1" into the field identified by "[id=descrip]"
     And I click on the input button labeled "Add new event"
     Then I should see "Event 1"
-  
+
   Scenario: 37 - Designate Instrument
     When I visit Project ID 14
     Then I click on the link labeled 'Project Setup'
@@ -380,40 +376,40 @@ Scenario: 32 - Delete a record’s logging activity when deleting the records
     And I click on the element identified by "[id=text_validation--42]"
     And I click on the button labeled "Save"
 
-  Scenario: 38 - Login as testuser
-    When I am a "standard" user who logs into REDCap
+  Scenario: 38 - Login as test_user
+    Given I am a "standard" user who logs into REDCap
 
-  Scenario: 39 - Add new record to an Arm 
+  Scenario: 39 - Add new record to an Arm
     When I visit Project ID 14
     And I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 2"
     And I click on the button labeled "Add new record for this arm"
     And I enter "Arm2" into the "ptname" text input field
     Then I click on the button labeled "Save & Exit"
-  
+
   Scenario: 40 - Logging: filter by event - Record created-updated-deleted
     When I visit Project ID 14
     Then I click on the link labeled "Logging"
     And I select the "Record created-updated-deleted" option identified by "record" from the Filter by event dropdown field
     #Then I should see '(Event 1 - (Arm 2: Arm 2))' in the logging table
-    And I should see 'ptname = \'Arm2\', text_validation_complete = \'0\', record_id = \'2\'' in the logging table
+    And I should see "ptname = 'Arm2', text_validation_complete = '0', record_id = '2'" in the logging table
 
   Scenario: 41 - Delete Record
     When I visit Project ID 14
     Then I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 2"
+    And I click on the element identified by 'tr.odd > td > a:contains("2")'
     #And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
-    And I click on the link labeled "2"
     And I click on the button labeled "Choose action for record"
-    And I select the option labeled "Delete record (all forms)"
+    And I click on the link labeled "Delete record (all forms/events)"
     Then I should see "DELETE RECORD"
-    # And I check the checkbox identified by 'input[id="allow_delete_record_from_log"]' 
+    # And I check the checkbox identified by 'input[id="allow_delete_record_from_log"]'
     # Then I should see "Confirmation: Type 'DELETE'"
     # And I enter 'DELETE' into the field identified by 'input[type=text]'
     # And I click on the button labeled 'Confirm'
     And I click on the button labeled "DELETE RECORD"
     Then I close popup
-  
+
   Scenario: 42 - Logging: filter by event - Record created-updated-deleted
     When I visit Project ID 14
     Then I click on the link labeled "Logging"

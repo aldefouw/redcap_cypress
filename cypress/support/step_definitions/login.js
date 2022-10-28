@@ -7,7 +7,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @param {string} user_type - the type of user we are (e.g. 'standard' or 'admin' as specified in the cypress.env.json file)
  * @description Logs in to REDCap using a seeded user type.  Built-in options are 'admin', 'standard', and 'standard2'.
  */
-Given("I am a {string} user who logs into REDCap", (user_type) => {
+Given("I am a(n) {string} user who logs into REDCap", (user_type) => {
     cy.logout()
     cy.set_user_type(user_type)
     cy.fetch_login()
