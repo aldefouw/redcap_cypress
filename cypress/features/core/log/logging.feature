@@ -48,8 +48,8 @@ Feature: Logging
     And I click on the button labeled "Move project to production"
     Then I move the project to production by selection option 'input#keep_data'
 
-  # Scenario: 1 - Login as test_user
-  #   When I am a "test_user" user who logs into REDCap
+  Scenario: 1 - Login as test_user
+    When I am a "standard" user who logs into REDCap
 
   Scenario: 2 - Go to my projects and open 23_Logging_v1115
     When I visit Project ID 14
@@ -113,7 +113,7 @@ Feature: Logging
   
   Scenario: 11 - edit user (completed in project setup)
 
-  Scenario: 12 - Remove user
+  Scenario: 12 - Remove user & Add user
     When I visit Project ID 14
     Then I click on the link labeled "User Rights"
     And I click to edit username "test_user2 (Test User)"
@@ -121,7 +121,7 @@ Feature: Logging
     Then I click on the button labeled Remove User
 
   #Add testuser2 again since we only have 2 standard users
-  Scenario: Add user
+  #Scenario: Add user
     When I visit Project ID 14
     Then I click on the link labeled "User Rights"
     And I enter "test_user2" into the username input field
@@ -138,8 +138,8 @@ Feature: Logging
     And I click the user right identified by 'input[name="record_create"]'
     And I add user|save changes
   
-  # Scenario: 13 - Login as test_user2
-  #   When I am a "test_user2" user who logs into REDCap
+  Scenario: 13 - Login as test_user2
+    When I am a "standard2" user who logs into REDCap
 
   Scenario: 14 - Data Exports, Reports, and Stats
     When I visit Project ID 14
@@ -167,13 +167,16 @@ Feature: Logging
     Then I click on the link labeled "Record Status Dashboard"
     And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "1"
     And I check the checkbox identified by 'input[id="__LOCKRECORD__"]'
-    Then I click on the button labeled "Save & Stay"
-  # scenario: 17 - Edit record (E-signature)
+
     And I check the checkbox identified by 'input[id="__ESIGNATURE__"]'
-    Then I click on the button labeled "Save & Stay"
+    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
+    And I should see "Save & Stay"
+    And I click on the link labeled "Save & Stay"
+
+  Scenario: 17 - Edit record (E-signature)
     Then I should see "Username/password verification"
-    And I enter the Username: "test_admin" and password "Testing123" for e-signature
-    And I click on the button labeled "Save"
+    And I enter the Username: "test_user2" and password "Testing123" for e-signature
+    And I click on the element identified by ".ui-dialog-buttonset > .ui-button"
     Then I should see that the checkbox identified by 'input[id="__ESIGNATURE__"]' should be checked
   
   Scenario: 18 - Unlock form
@@ -248,8 +251,8 @@ Feature: Logging
     Then I should see 'Updated User' in the logging table
     And I should see 'Created User' in the logging table
     And I should see 'Deleted User' in the logging table
-    #And I should see 'user = \'test_user\'' in the logging table
-    #And I should see 'user = \'test_user2\'' in the logging table
+    And I should see 'user = \'test_user\'' in the logging table
+    And I should see 'user = \'test_user2\'' in the logging table
     And I should see 'role = \'Data\'' in the logging table
 
   Scenario: 25 - Logging: filter by event - Record created-updated-deleted
@@ -287,8 +290,8 @@ Feature: Logging
     When I visit Project ID 14
     Then I click on the link labeled "Logging"
     And I select the "test_admin" option from the Filter by username dropdown field
-    #And I select the "test_user" option from the Filter by username dropdown field
-    #And I select the "test_user2" option from the Filter by username dropdown field
+    And I select the "test_user" option from the Filter by username dropdown field
+    And I select the "test_user2" option from the Filter by username dropdown field
     
   Scenario: 29 - Logging: filter by event - All event types (record) - by specific record
     When I visit Project ID 14
@@ -297,25 +300,26 @@ Feature: Logging
     Then I should see 'Created Record' in the logging table
     And I should see 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'' in the logging table
   
-  Scenario: 30 - Download All logging and open file to verify
-    When I visit Project ID 14
-    Then I click on the link labeled "Logging"
-    And I export the logging page and open file to verify
+  # Scenario: 30 - Download All logging and open file to verify
+  #   When I visit Project ID 14
+  #   Then I click on the link labeled "Logging"
+  #   And I export the logging page and open file to verify
 
-  # Scenario: 31 - Login as admin
+  Scenario: 31 - Login as admin
+    When I am a "admin" user who logs into REDCap
 
 Scenario: 32 - Delete a record’s logging activity when deleting the records
     When I visit Project ID 14
     Then I visit the "Control Center" page
     And I click on the link labeled "Edit a Project's Settings"
     And I select 'Logging_v1115' from the dropdown identified by 'select'
-    #And I click on the dropdown identified by 'select' and select value '14' labelled by 
     Then I should see "project settings"
     And I select 'Yes, delete the record\'s logged events when deleting the record' from the dropdown identified by 'select[name="allow_delete_record_from_log"]'
     And I click the input element identified by 'input[type=submit]'
     And I click on the link labeled "Logging" 
   
   Scenario: 33 - Login as testuser
+    When I am a "standard" user who logs into REDCap
 
   Scenario: 34 - Delete Record
     When I visit Project ID 14
@@ -341,6 +345,7 @@ Scenario: 32 - Delete a record’s logging activity when deleting the records
     #And I should see '[All data values were removed from this record\'s logging activity.]' in the logging table
 
   Scenario: 36 - Login as admin
+    When I am a "admin" user who logs into REDCap
 
   Scenario: 37 - Enter Draft Move and Enable Longitudinal Data Collection
     When I visit Project ID 14
@@ -378,6 +383,7 @@ Scenario: 32 - Delete a record’s logging activity when deleting the records
     And I click on the button labeled "Save"
 
   Scenario: 38 - Login as testuser
+    When I am a "standard" user who logs into REDCap
 
   Scenario: 39 - Add new record to an Arm 
     When I visit Project ID 14
@@ -417,4 +423,4 @@ Scenario: 32 - Delete a record’s logging activity when deleting the records
     #And I should see '[All data values were removed from this record\'s logging activity.]' in the logging table
 
   Scenario: 43 - Logout
-  Given I logout
+    Given I logout
