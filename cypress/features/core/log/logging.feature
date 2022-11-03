@@ -321,11 +321,9 @@ Feature: Logging
     And I click on the link labeled "Record ID 2"
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
-    # And I check the checkbox identified by 'input[id="allow_delete_record_from_log"]'
-    # Then I should see "Confirmation: Type 'DELETE'"
-    # And I enter 'DELETE' into the field identified by 'input[type=text]'
-    # And I click on the button labeled 'Confirm'
+    Then I should see 'DELETE RECORD "2"'
     And I click on the button labeled "DELETE RECORD"
+    And I should see 'Record ID "2" was successfully deleted'
     Then I close popup
 
   Scenario: 35 - Logging: filter by event - Record created-updated-deleted
