@@ -8,8 +8,6 @@ Feature: Logging
     Then I create a project named "Logging_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/logging.xml"
     And I click on the link labeled "User Rights"
     And I click to edit username "test_admin (Test User)"
-
-    #test as admin until, login is fixed for testuser 1 and 2
     And I click on the button labeled "Edit user privileges"
     And I scroll the user rights page to the bottom
     And I check the user right identified by 'input[name="lock_record_customize"]'
@@ -17,6 +15,7 @@ Feature: Logging
     Then I should see "NOTICE"
     And I close popup
     And I save changes within the context of User Rights
+    #And I want to pause
 
     #Add user 1
     And I click on the link labeled "User Rights"
@@ -245,8 +244,8 @@ Feature: Logging
     Then I should see 'Updated User' in the logging table
     And I should see 'Created User' in the logging table
     And I should see 'Deleted User' in the logging table
-    #And I should see 'user = \'test_user\'' in the logging table
-    #And I should see 'user = \'test_user2\'' in the logging table
+    And I should see 'user = \'test_user\'' in the logging table
+    And I should see 'user = \'test_user2\'' in the logging table
     And I should see 'role = \'Data\'' in the logging table
 
   Scenario: 25 - Logging: filter by event - Record created-updated-deleted
@@ -267,11 +266,11 @@ Feature: Logging
     Then I click on the link labeled "Logging"
     And I select the "Record locking & e-signatures" option identified by "lock_record" from the Filter by event dropdown field
     Then I should see 'Lock/Unlock Record' in the logging table
-    #And I should see 'E-signature' in the logging table
+    And I should see 'E-signature' in the logging table
     And I should see 'Action: Lock instrument' in the logging table
     And I should see 'Action: Unlock instrument' in the logging table
-    #And I should see 'Action: Save e-signature' in the logging table
-    #And I should see 'Action: Negate e-signature' in the logging table
+    And I should see 'Action: Save e-signature' in the logging table
+    And I should see 'Action: Negate e-signature' in the logging table
 
   Scenario: 27 - Logging: filter by event - Page Views
     When I visit Project ID 14
@@ -284,9 +283,9 @@ Feature: Logging
     When I visit Project ID 14
     Then I click on the link labeled "Logging"
     And I select the "test_admin" option from the Filter by username dropdown field
-    #And I select the "test_user" option from the Filter by username dropdown field
-    #And I select the "test_user2" option from the Filter by username dropdown field
-
+    And I select the "test_user" option from the Filter by username dropdown field
+    And I select the "test_user2" option from the Filter by username dropdown field
+    
   Scenario: 29 - Logging: filter by event - All event types (record) - by specific record
     When I visit Project ID 14
     Then I click on the link labeled "Logging"
