@@ -21,9 +21,12 @@ Feature: Reporting
 #    Then the form should have a redcap_csrf_token
     And I click on the button labeled "Commit Changes"
     Then I should see "Changes Made Successfully!"
+    And I click on the link labeled "Project Setup"
+    And I upload a data dictionary located at "core/22_Reporting_DD.csv" to project ID 14
 
 Scenario: Project Setup - 3
-    Given I click on the link labeled "Project Setup"
+    Given I visit Project ID 14
+    And I click on the link labeled "Project Setup"
     And the AJAX "POST" request at "ProjectSetup/modify_project_setting_ajax.php*" tagged by "modify" is being monitored
     And I click on the element identified by "button[id=setupEnableSurveysBtn]"
     And the AJAX request tagged by "modify" has completed
@@ -38,6 +41,7 @@ Scenario: Project Setup - 3
     And I click on the button labeled "Designate Instruments for My Events"
     And I click on the button labeled "Begin Editing"
     And I add an instrument named "Export" to the event named "Event 1"
+    And I remove an instrument named "Export" to the event named "Event 2"
     And I add an instrument named "Repeating" to the event named "Event 1"
     And I add an instrument named "Repeating" to the event named "Event 2"
     And the AJAX "POST" request at "Design/designate_forms_ajax*" tagged by "designate" is being monitored
@@ -57,14 +61,7 @@ Scenario: Project Setup - 3
     
 
   Scenario: Project Setup - 4
-    Given I visit the version URL "index.php?pid=14&route=DataImportController:index"
-    And I set the input file field named "uploadedfile" to the file at path "cypress/fixtures/import_files/core/22_Reporting_IMP.csv"
-    # wait for csrf token to show up
-    And the form should have a redcap_csrf_token
-    Then I click on the button labeled "Upload File"
-    # wait for csrf token to show up
-    And the form should have a redcap_csrf_token
-    And I click on the button labeled "Import Data"
+    Given I upload import data from the data import file located at "core/22_Reporting_IMP.csv" to project ID 14
 
   Scenario: 1 - Navigate to the validation website's REDCap login page; Login as test_user
     Given I am a "standard" user who logs into REDCap
