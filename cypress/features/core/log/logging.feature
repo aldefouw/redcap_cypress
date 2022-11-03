@@ -17,7 +17,6 @@ Feature: Logging
     Then I should see "NOTICE"
     And I close popup
     And I save changes within the context of User Rights
-    And I want to pause
 
     #Add user 1
     And I click on the link labeled "User Rights"

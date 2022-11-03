@@ -54,8 +54,8 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  */
  Given('I export all logging from the project and verify the result against expected logging results in the file named {string}', (fixture_file) => {
     var today = new Date();
-    var day = today.getDate();
-    var month = today.getMonth()+1;
+    var day =("0"+today.getDate()).slice(-2); //Make sure we zero pad
+    var month = ("0"+(today.getMonth() + 1)).slice(-2); //Make sure we zero pad
     var year = today.getFullYear();
 
      cy.fixture(`logs/${fixture_file}`).then(fixture_data => {
