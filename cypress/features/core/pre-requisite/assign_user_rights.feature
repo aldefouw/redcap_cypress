@@ -177,6 +177,7 @@ Feature: Assign User Rights
   Scenario: 19 - Assign Record Locking Customization to test_user
     Given I want to assign the "Record Locking Customization" user right to the user named "Test User" with the username of "test_user" on project ID 14
     #Verify in the main User Rights page, the ‘Record Locking Customization’ box contains a green check for user user1115_1.
+    When I click on the link labeled "User Rights"
     Then I should see a link labeled "Customize & Manage Locking/E-signatures"
 
   Scenario: 20 - Assign Locking / Unlocking with E-signature authority to test_user
@@ -190,14 +191,16 @@ Feature: Assign User Rights
     Given I want to assign the "Locking / Unlocking" user right to the user named "Test User" with the username of "test_user" on project ID 14
     #The main User Rights page the ‘Lock/Unlock Records’ box contains a green check for user user1115_1.
 
-  Scenario: 22 - Assign Lock/unlock *Entire* Records (record level) to test_user
-    Given I want to assign the "Lock/unlock *Entire* Records (record level)" user right to the user named "Test User" with the username of "test_user" on project ID 14
+  Scenario: 22 - Assign Lock/Unlock *Entire* Records (record level) to test_user
+    Given I want to assign the "Lock/Unlock *Entire* Records (record level)" user right to the user named "Test User" with the username of "test_user" on project ID 14
     #Verify in the main User Rights page, the ‘Record Locking Customization’ box still contains a green check for user user1115_1.
 
   Scenario: 23 - Assign No Access to test_user
-    Given I want to assign the "No Access" user right to the user named "Test User" with the username of "test_user" on project ID 14
-    And I click on the link labeled "View / Edit Records"
+   #Given I want to assign the "No Access" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    #And I click on the link labeled "View / Edit Records"
 
+  Scenario: 24 - Assign Read Only to test_user
+    #Given I want to assign the "Read Only" user right to the user named "Test User" with the username of "test_user" on project ID 14
 
 
 
@@ -214,16 +217,17 @@ Feature: Assign User Rights
     And I click on the button labeled "Create role"
     Then I should see "Creating new role"
     And I click on the element identified by "button:contains('Create role'):last"
-    Then I should see "Role successfully added!"
-    And I should see a link labeled "Data Entry"
+    Then I should see a link labeled "Data Entry"
 
   Scenario: 28 - Copy Data Entry Role
-    Given I click on the link labeled "Data Entry"
+    Given I click on the element identified by "[id=rightsTableUserLinkId_1]"
     Then I should see "Editing existing user role"
-    When I click on the button labeled "Copy Role"
+    When I click on the button labeled "Copy role"
+    And I clear the field labeled "New role name:"
     And I enter "Reviewer" into the field identified by "[id=role_name_copy]"
     And I click on the element identified by "button:contains('Copy role'):last"
-    Then I should see "was succesfully added"
+    Then I should see "was successfully added"
+    When I click on the button labeled "Save Changes"
     And I should see a link labeled "Data Entry"
     And I should see a link labeled "Reviewer"
 
@@ -232,6 +236,7 @@ Feature: Assign User Rights
     Then I should see "Editing existing user role"
     When I click on the button labeled "Delete role"
     Then I should see "Delete role?"
+    #When I click on the element identified by "button:contains('Cancel'):first"
     When I click on the button labeled "Cancel"
     And I click on the button labeled "Close"
       #Might not work - is the x button 
@@ -242,11 +247,46 @@ Feature: Assign User Rights
     Then I should see "Editing existing user role"
     When I click on the button labeled "Delete role"
     Then I should see "Delete role?"
-    When I click on the element identified by "button:contains('Delete role'):last"
+    When I click on the element identified by "button:contains('Delete role'):first"
     Then I should see "was successfully deleted"
     And I should NOT see "Reviewer"
 
-    
+  Scenario: 31 - Assign test_user to Data Entry
+    When I click on the link labeled "test_user"
+    And I click on the button labeled "Assign to role"
+    And I select "Data Entry" from the dropdown identified by "[id=user_role]"
+    And I click on the button labeled "Assign"
+    Then I should see "NOTICE: User Rights mismatch"
+    When I click on the button labeled "Close"
+    And I logout
+
+  Scenario: 32 - Assign test_user to Data Entry 
+    Given I am an "admin" user who logs into REDCap
+    And I am an "standard" user who logs into REDCap
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "SecondProject_1115"
+    And I click on the link labeled "User Rights"
+    And I click on the link labeled "test_user"
+    And I click on the button labeled "Assign to role"
+    And I select "Data Entry" from the dropdown identified by "[id=user_role]"
+    And I click on the button labeled "Assign"
+    Then I should see "successfully assigned to role"
+    #Verify the user is now in the same row as the Data Entry role.
+
+  Scenario: 33 - Remove test_user from Data Entry Role 
+    When I click on the link labeled "test_user"  
+    And I click on the button labeled "Remove from role"
+    Then I should see "successfully REMOVED from role"
+    And I should see "NOTICE: User's privileges will remain the same"
+    When I click on the button labeled "Close"
+    #The user is no longer on the same row as the Data Entry role.
+
+
+
+
+
+
+
 
 
 
