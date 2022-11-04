@@ -232,11 +232,11 @@ Then("I should see the survey open exactly once by watching the tag of {string}"
 /**
  * @module Survey
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I enter draft mode
+ * @example I add a new field of type {string} and enter {string} into the field labeled {string}
  * @param {string} field_type - type of field (for ex. textbox, radio, checkbox, etc.)
  * @param {string} field_text - text you want to enter in the field
  * @param {string} field_name - variable name
- * @description Enters draft mode
+ * @description Add a new field in form
  */
  Given("I add a new field of type {string} and enter {string} into the field labeled {string}", (field_type,field_text,field_name) => {
     cy.get('input#btn-last').click().then(() => {
