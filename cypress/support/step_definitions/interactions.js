@@ -350,9 +350,9 @@ Given('after the next step, I will {confirmation} a confirmation window containi
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I export all data in {string} format and expect {int} record
- * @param {string} value - the option to select from the dropdown
+ * @param {string} value - type of export
  * @param {int} num - expect this many records
- * @description Selects the option via a specific string.
+ * @description Exports all data in selected export type
  */
  Given('I export all data in {string} format and expect {int} record', (value, num) => {
     cy.get('tr#reprow_ALL').find('button.data_export_btn').should('be.visible').contains('Export Data').click()
@@ -380,8 +380,8 @@ Given('after the next step, I will {confirmation} a confirmation window containi
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I check the checkbox identified by {string}
- * @param {string} value - the option to select from the dropdown
- * @description Selects the option via a specific string.
+ * @param {string} value - input element
+ * @description Checks the checkbox identified by its element 
  */
  Given('I check the checkbox identified by {string}', (value) => {
     cy.get(value).check()
@@ -428,7 +428,7 @@ Given('after the next step, I will {confirmation} a confirmation window containi
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I click the input element identified by {string}
- * @param {string} value - input element
+ * @param {string} value - input element that you want to click
  * @description Clicks the input field
  */
  Given('I click the input element identified by {string}', (value) => {
