@@ -4,7 +4,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
 ///////////////
 
 /**
- * @module Design Form
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I add an instrument named {string} the event named {string}
  * @param {string} instrument - the name of the instrument you are adding to an event
@@ -23,7 +23,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
 })
 
 /**
- * @module Design Form
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I remove an instrument named {string} the event named {string}
  * @param {string} instrument - the name of the instrument you are adding to an event
@@ -42,7 +42,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
 })
 
 /**
- * @module Design Form
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I add an instrument below the instrument named {string}
  * @param {string} instrument - the name of the instrument you are adding an instrument below
@@ -58,7 +58,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
 })
 
 /**
- * @module Design Form
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I add an instrument below the instrument named {string}
  * @param {string} action - the action label of the link that should be clicked
@@ -75,7 +75,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
 })
 
 /**
- * @module Design Form
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I drag on the instrument named {string} to the position {int}
  * @param {string} instrument - the naame of the instrument being drag-n-dropped
@@ -96,7 +96,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
 ///////////
 
 /**
- * @module Design Form
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I click on the {addField} input button below the field named {string}
  * @param {addField} type - the type of addField action you want to perform
@@ -115,7 +115,7 @@ defineParameterType({
 })
 
 /**
- * @module Design Form
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I click on the {editField} image for the field named {string}
  * @param {string} type - the type of edit action you want to perform on a field
@@ -131,7 +131,7 @@ defineParameterType({
 })
 
 /**
- * @module Design Forms
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I drag on the field named {string} to the position {int}
  * @param {string} field - the name of the field being drag-n-dropped
@@ -148,7 +148,7 @@ defineParameterType({
  })
 
  /**
- * @module Design Forms
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I should see a the field named {string} before field named {string}
  * @param {string} fieldBefore the field name that comes before
@@ -165,7 +165,7 @@ defineParameterType({
 ///////////////////
 
 /**
- * @module Design Forms
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I add a new variable named {string} in the form named {string} with the field type {string} and the label {string} into the Data Dictionary file at {string}
  * @param {string} variable - the variable name being added to the data dictionary
@@ -185,7 +185,7 @@ defineParameterType({
 })
 
 /**
- * @module Design Forms
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I download the data dictionary and save the file as {string}
  * @param {string} name - name to save the data dictionary file
@@ -222,7 +222,7 @@ defineParameterType({
 
 
 /**
- * @module Design Form
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example the form should have a redcap_csrf_token
  * @description Checks to verify that a redcap_csrf_token is a field on the page's form
