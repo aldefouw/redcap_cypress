@@ -1,15 +1,14 @@
 import {Given} from "cypress-cucumber-preprocessor/steps";
-
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example 
-  I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}
+ * @example I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}
  * @param {string} rights - the specific user right desired (e.g. Stats & Charts)
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
  * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
  * @description Assigns a specific user right to a given user when provided a valid Project ID.
+ *
  */
 Given("I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}", (rights_to_assign, proper_name, username, project_id) => {
     cy.assign_basic_user_right(username, proper_name, rights_to_assign, project_id)
@@ -263,7 +262,7 @@ Given("I change survey edit rights for {string} user on the form called {string}
 })
 
 /**
- * @module User Rights
+ * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I scroll the user rights page to the bottom
  * @description scroll user rights pop up page to the bottom
