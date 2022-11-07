@@ -46,7 +46,7 @@ Given("I should see the element identified by {string}", (selector) => {
  * @description Visually verifies that element exists and is not visible OR does not exist
  */
 Given("I should no longer see the element identified by {string}", (selector) => {
-    if($(selector).length)
+    if(Cypress.$(selector).length)
         cy.get(selector).should('not.be.visible')
     else
         cy.get(selector).should('not.exist')
