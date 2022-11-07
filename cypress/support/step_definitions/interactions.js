@@ -46,6 +46,7 @@ Given("I click on the button labeled {string}", (text) => {
  })
 
  /**
+ * @module Interactions
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I click on the button labeled {string} for the row labeled {string}
  * @param {string} text - the text on the button element you want to click
