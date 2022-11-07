@@ -30,3 +30,4 @@ cypress.env.json
 mysql-cli.zip
 
 /.vscode
+*.code-workspace

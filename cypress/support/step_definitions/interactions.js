@@ -15,6 +15,18 @@ Given("I click on the button labeled exactly {string}", (text) => {
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click on the dropdown and select the button identified by 'a#submit-btn-savecontinue'
+ * @param {string} text - button id
+ * @description Clicks on the button in the dropdown of the survey
+ */
+ Given("I click on the dropdown and select the button identified by {string}", (text) => {
+    cy.get('button#submit-btn-dropdown').first().click()
+    .closest('div').find(text).should('be.visible').click()
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the button labeled {string}
  * @param {string} text - the text on the button element you want to click
  * @description Clicks on a button element with a specific text label.
@@ -25,6 +37,15 @@ Given("I click on the button labeled {string}", (text) => {
 
 /**
  * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I close popup
+ * @description Closes popup with button labeled "Close"
+ */
+ Given("I close popup", (text) => {
+    cy.focused().should('have.text', 'Close').click()
+ })
+
+ /**
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I click on the button labeled {string} for the row labeled {string}
  * @param {string} text - the text on the button element you want to click
@@ -127,7 +148,7 @@ Given('I enter {string} into the field labeled {string}', (text, label) => {
     //We locate the label element first.  This isn't always a label which is unfortunate, but this approach seems to work so far.
     cy.contains(label).then(($label) => {
         //We are finding the parent of the label element and then looking for nearest input
-        cy.wrap($label).parent().parent().find('input').type(text)
+        cy.wrap($label).parent().find('input').type(text)
     })
 })
 
@@ -314,4 +335,102 @@ Given('after the next step, I will {confirmation} a confirmation window containi
     })
 })
 
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I select the option labelled {string}
+ * @param {string} value - the option to select from the dropdown
+ * @description Selects the option via a specific string.
+ */
+ Given('I select the option labeled {string}', (text) => {
+    cy.get('a').contains(text).should('be.visible').click()
+})
 
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I export all data in {string} format and expect {int} record
+ * @param {string} value - the option to select from the dropdown
+ * @param {int} num - expect this many records
+ * @description Selects the option via a specific string.
+ */
+ Given('I export all data in {string} format and expect {int} record', (value, num) => {
+    cy.get('tr#reprow_ALL').find('button.data_export_btn').should('be.visible').contains('Export Data').click()
+    cy.get('input[value='+value+']').click()
+    cy.export_csv_report().should((csv) => {
+        expect([...new Set(csv.map((row) => row[0]).slice(1))]).to.have.lengthOf(num)                     // 2 records
+    })
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I click on the dropdown identified by {string} and select value {string} labelled by {string}
+ * @param {string} sel - select
+ * @param {string} label - the label of the select
+ * @param {string} value - the value to expect
+ * @description Selects the option via a specific string.
+ 
+ Given('I click on the dropdown identified by {string} and select value {string} labelled by {string}', (sel, label, value) => {
+    cy.get(sel).select(label).should('have.value', value)
+})
+*/
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I check the checkbox identified by {string}
+ * @param {string} value - the option to select from the dropdown
+ * @description Selects the option via a specific string.
+ */
+ Given('I check the checkbox identified by {string}', (value) => {
+    cy.get(value).check()
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I should see that the checkbox identified by {string} should be checked
+ * @param {string} value - input id of the checkbox
+ * @description Ensure checkbox is checked
+ */
+ Given('I should see that the checkbox identified by {string} should be checked', (value) => {
+    cy.get(value).should('be.checked')
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I create a new instrument from scratch
+ * @description Clicks the button to create new instrument and prompts the user to add instrument
+ */
+ Given('I create a new instrument from scratch', () => {
+    cy.get('div').
+    contains('a new instrument from scratch').
+    parent().
+    within(($div) => {
+        cy.get('button').contains('Create').click()
+    })
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I click on the button labeled Remove User
+ * @description Clicks the button to remove user from the User Rights page
+ */
+ Given('I click on the button labeled Remove User', () => {
+    cy.get('div#editUserPopup').should('be.visible').parent().find('button').contains("Remove user").should('be.visible').click()
+    cy.get('span').contains("Remove user?").should('be.visible').closest('div[role="dialog"]').find('button').contains("Remove user").click()
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I click the input element identified by {string}
+ * @param {string} value - input element
+ * @description Clicks the input field
+ */
+ Given('I click the input element identified by {string}', (value) => {
+    cy.get(value).click()
+})

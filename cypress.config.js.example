@@ -9,10 +9,12 @@ module.exports = defineConfig({
   requestTimeout: 10000,
   chromeWebSecurity: true,
   retries: 0,
+  numTestsKeptInMemory: 0,
   nonGlobalStepDefinitions: false,
   step_definitions: 'cypress/support/step_definitions/',
-  viewportWidth: 1400,
-  viewportHeight: 1000,
+  viewportWidth: 1600,
+  viewportHeight: 1200,
+  watchForFileChanges: false,
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
