@@ -15,13 +15,12 @@ Given("I click on the button labeled exactly {string}", (text) => {
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the dropdown and select the button identified by 'a#submit-btn-savecontinue'
+ * @example I click on the dropdown and select the button identified by {string}
  * @param {string} text - button id
  * @description Clicks on the button in the dropdown of the survey
  */
  Given("I click on the dropdown and select the button identified by {string}", (text) => {
-    cy.get('button#submit-btn-dropdown').first().click()
-    .closest('div').find(text).should('be.visible').click()
+    cy.get('button#submit-btn-dropdown').first().click().closest('div').find(text).should('be.visible').click()
 })
 
 /**
