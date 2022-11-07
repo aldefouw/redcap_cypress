@@ -227,7 +227,8 @@ Feature: Assign User Rights
     And I enter "Reviewer" into the field identified by "[id=role_name_copy]"
     And I click on the element identified by "button:contains('Copy role'):last"
     Then I should see "was successfully added"
-    When I click on the button labeled "Save Changes"
+    #When I click on the button labeled "Save Changes"
+    When I click on the link labeled "User Rights"
     And I should see a link labeled "Data Entry"
     And I should see a link labeled "Reviewer"
 
@@ -236,8 +237,8 @@ Feature: Assign User Rights
     Then I should see "Editing existing user role"
     When I click on the button labeled "Delete role"
     Then I should see "Delete role?"
-    #When I click on the element identified by "button:contains('Cancel'):first"
-    When I click on the button labeled "Cancel"
+    When I click on the element identified by "button:contains('Cancel'):last"
+    #When I click on the button labeled "Cancel"
     And I click on the button labeled "Close"
       #Might not work - is the x button 
     Then I should see a link labeled "Reviewer"
@@ -247,34 +248,41 @@ Feature: Assign User Rights
     Then I should see "Editing existing user role"
     When I click on the button labeled "Delete role"
     Then I should see "Delete role?"
-    When I click on the element identified by "button:contains('Delete role'):first"
+    When I click on the element identified by "button:contains('Delete role'):last"
     Then I should see "was successfully deleted"
     And I should NOT see "Reviewer"
 
   Scenario: 31 - Assign test_user to Data Entry
-    When I click on the link labeled "test_user"
+    When I enter "test_user" into the field identified by "[id=new_username_assign]"
     And I click on the button labeled "Assign to role"
     And I select "Data Entry" from the dropdown identified by "[id=user_role]"
-    And I click on the button labeled "Assign"
+    And I click on the element identified by "[id=assignDagRoleBtn]"
     Then I should see "NOTICE: User Rights mismatch"
-    When I click on the button labeled "Close"
-    And I logout
+    Given I logout
+    
+    #When I click on the link labeled "test_user"
+    #And I click on the button labeled "Assign to role"
+    #And I select "Data Entry" from the dropdown identified by "[id=user_role]"
+    #And I click on the button labeled "Assign"
+    #Then I should see "NOTICE: User Rights mismatch"
+    #When I click on the button labeled "Close"
+    #And I logout
 
   Scenario: 32 - Assign test_user to Data Entry 
     Given I am an "admin" user who logs into REDCap
-    And I am an "standard" user who logs into REDCap
     And I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
-    And I click on the link labeled "test_user"
+    When I enter "test_user" into the field identified by "[id=new_username_assign]"
     And I click on the button labeled "Assign to role"
     And I select "Data Entry" from the dropdown identified by "[id=user_role]"
-    And I click on the button labeled "Assign"
+    And I click on the element identified by "[id=assignDagRoleBtn]"
     Then I should see "successfully assigned to role"
     #Verify the user is now in the same row as the Data Entry role.
 
   Scenario: 33 - Remove test_user from Data Entry Role 
     When I click on the link labeled "test_user"  
+    And I click on the element identified by "[id=tooltipBtnSetCustom]"
     And I click on the button labeled "Remove from role"
     Then I should see "successfully REMOVED from role"
     And I should see "NOTICE: User's privileges will remain the same"
