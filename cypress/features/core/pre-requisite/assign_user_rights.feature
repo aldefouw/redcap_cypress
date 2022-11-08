@@ -21,7 +21,8 @@ Feature: Assign User Rights
     When I click on the element identified by "[id=setupEnableSurveysBtn]"
     And I click on the element identified by "[id=setupLongiBtn]"
     And I click on the element identified by ".ui-dialog-buttonset > :nth-child(2)"
-    And I click on the button labeled "Additional customizations"
+    #And I click on the button labeled "Additional customizations"
+    When I click on the element identified by "#setupChklist-modules > table > tbody > tr > [style='padding-left:30px;'] > .chklisttext > .fs13"
     Then I should see "You may use the options below to make customizations to the project"
     And I click on the checkbox identified by "[id=data_resolution_enabled_chkbx]"
     And I click on the button labeled "Save"
@@ -63,7 +64,8 @@ Feature: Assign User Rights
     And I want to assign an expiration date to user "Test User" with username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     Then I should see "User actions:"
-    When I click on the button labeled "Edit user privileges"
+    #When I click on the button labeled "Edit user privileges"
+    When I click on the element identified by "[id=tooltipBtnSetCustom]"
     And I enter "10/27/2022" into the field identified by "[name=expiration]"
     And I click on the button labeled "Save Changes"
     Then I should see a link labeled "10/27/2022"
@@ -82,6 +84,7 @@ Feature: Assign User Rights
     Then I should NOT see "10/31/2022"
       #figute out date thing 
     Given I want to assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    And I want to verify user rights are available for "standard" user type on the path "ProjectSetup" on project ID 14
     #Verify in the main User Rights page, the Project Design and Setup contains a green check for user user1115_1.
 
   Scenario: 4 - Assign User Rights to test_user 
@@ -195,7 +198,21 @@ Feature: Assign User Rights
     Given I want to assign the "Lock/Unlock *Entire* Records (record level)" user right to the user named "Test User" with the username of "test_user" on project ID 14
     #Verify in the main User Rights page, the ‘Record Locking Customization’ box still contains a green check for user user1115_1.
 
+
+
+
+
+
+#trying to see if this runs 
   Scenario: 23 - Assign No Access to test_user
+    Given I click on the link labeled "test_user"  
+    And I should see "Edit user privileges"
+    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    #And I click on the button labeled "Edit user privileges"
+    And I click on the element identified by ':nth-child(3) > .nobr > [value="3"]'
+    #When I click the input element identified by 'input[name="form-text_validation"] input[value="0"]'
+    And I want to pause
+
    #Given I want to assign the "No Access" user right to the user named "Test User" with the username of "test_user" on project ID 14
     #And I click on the link labeled "View / Edit Records"
 
@@ -203,6 +220,13 @@ Feature: Assign User Rights
     #Given I want to assign the "Read Only" user right to the user named "Test User" with the username of "test_user" on project ID 14
 
 
+
+
+
+  Scenario: before step 26 
+    When I click on the link labeled "Designer"
+    And I click on the element identified by "button:contains('Enable'):first"
+    And I click on the button labeled "Save Changes"
 
 
 
@@ -282,7 +306,7 @@ Feature: Assign User Rights
 
   Scenario: 33 - Remove test_user from Data Entry Role 
     When I click on the link labeled "test_user"  
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    #And I click on the element identified by "[id=tooltipBtnSetCustom]"
     And I click on the button labeled "Remove from role"
     Then I should see "successfully REMOVED from role"
     And I should see "NOTICE: User's privileges will remain the same"
