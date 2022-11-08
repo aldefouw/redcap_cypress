@@ -392,7 +392,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I should see "(0.01 MB)"
 
   Scenario: 37 - Review image upload
-    Given I click on the link labeled "7_image_v913.jpg"
+    Given I download a file by clicking on the link labeled "7_image_v913.jpg"
     #Open image?
     #Verify image contents
     Then I click on the button labeled "Save & Exit Form"
