@@ -135,14 +135,14 @@ Feature: Assign User Rights
     Then I should see a link labeled "Data Comparison Tool"
 
   Scenario: 12 - Remove Data Exports, Data Import, and Data Comparison User Rights 
-    #Given I want to remove the "" user right to the user named {string} with the username of {string} on project ID {int}
+    Given I want to assign the "No Access" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I want to remove the "Data Import Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I want to remove the "Data Comparison Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I want to assign the "Logging" user right to the user named "Test User" with the username of "test_user" on project ID 14
     #The user1115_1 no longer has access to the ‘Data Export’, ‘Data Import’ and ‘Data Comparison Tools’ indicated by a red X.
     #Verify in the main User Rights page the ‘Logging’ box contains a green check for user user1115_1 
     When I click on the link labeled "User Rights"
-    #Then I should NOT see "Data Exports, Reports, and Stats" 
+    Then I should NOT see "Data Exports, Reports, and Stats" 
     And I should NOT see "Data Import Tool"
     And I should NOT see "Data Comparison Tool"
     And I should see link labeled "Logging"
@@ -208,19 +208,29 @@ Feature: Assign User Rights
     Given I click on the link labeled "test_user"  
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    Then I should see "Editing existing user"
     #And I click on the button labeled "Edit user privileges"
-    And I click on the element identified by ':nth-child(3) > .nobr > [value="3"]'
+    And I click on the element identified by ":nth-child(3) > .nobr > [onclick='$(this).parent().find('input[type=checkbox]').prop('checked',false);']"
     #When I click the input element identified by 'input[name="form-text_validation"] input[value="0"]'
     And I want to pause
 
-   #Given I want to assign the "No Access" user right to the user named "Test User" with the username of "test_user" on project ID 14
     #And I click on the link labeled "View / Edit Records"
 
   Scenario: 24 - Assign Read Only to test_user
-    #Given I want to assign the "Read Only" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I click on the link labeled "test_user"  
+    And I should see "Edit user privileges"
+    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    Then I should see "Editing existing user"
+    And I click on the element identified by ':nth-child(3) > .nobr > [value="2"]'
+    And I click on the element identified by ':nth-child(4) > .nobr > [value="2"]'
 
-
-
+  Scenario: 25 - Assign View and Edit to test_user
+    Given I click on the link labeled "test_user"  
+    And I should see "Edit user privileges"
+    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    Then I should see "Editing existing user"
+    And I click on the element identified by ':nth-child(3) > .nobr > [value="1"]'
+    And I click on the element identified by ':nth-child(4) > .nobr > [value="1"]'
 
 
   Scenario: before step 26 
@@ -228,12 +238,12 @@ Feature: Assign User Rights
     And I click on the element identified by "button:contains('Enable'):first"
     And I click on the button labeled "Save Changes"
 
-
-
-
-
-
-
+  Scenario: 26 - Assign Edit Survey Responses to test_user
+    Given I click on the link labeled "test_user"  
+    And I should see "Edit user privileges"
+    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    Then I should see "Editing existing user"
+    And I click on the checkbox identified by "[id=form-editresp-text_validation]"
 
   Scenario: 27 - Create Data Entry Role 
     When I click on the link labeled "User Rights"
