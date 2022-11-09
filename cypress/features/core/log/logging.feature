@@ -322,7 +322,7 @@ Feature: Logging
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
     
-    #Unable to see checkbox error fixed in v11.1.11
+    #Cannot complete the commented steps below. This is a known error in 11.1.5 and fixed in v11.1.11
 
     # And I check the checkbox identified by 'input[id="allow_delete_record_from_log"]'
     # Then I should see "Confirmation: Type 'DELETE'"
