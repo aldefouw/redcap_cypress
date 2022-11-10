@@ -10,11 +10,11 @@
     "cypress": "^10.11.0",
     "cypress-cucumber-preprocessor": "^4.3.1",
     "cypress-iframe": "1.0.1",
-    "sed-lite": "0.8.2",
+    "sed-lite": "0.8.4",
     "shelljs": "0.8.5"
   },
   "devDependencies": {
-    "documentation": "^14.0.0",
+    "documentation": "git://github.com/documentationjs/documentation#97e9361",
     "redcap_cypress_doc_theme": "github:aldefouw/redcap_cypress_doc_theme"
   },
   "scripts": {
