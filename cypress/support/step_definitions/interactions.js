@@ -8,8 +8,14 @@ import { defineParameterType } from "cypress-cucumber-preprocessor/steps";
  * @param {string} text - the text on the button element you want to click
  * @description Clicks on a button element with a specific text label.
  */
-Given("I click on the button labeled {string}", (text) => {
-    cy.get(`:button:contains(${text}),:button[value="${text}"]`).click()
+Given(/^I click on the(?: (first|second|third|fourth|fifth|sixth|seventh|eighth))? button labeled "(.*)"/, (n, text) => {
+    let dict = {first:1, second:2, third:3, fourth:4, fifth:5, sixth:6, seventh:7, eighth:8, undefined:1}
+    n = dict[n]
+    let sel = `:button:contains("${text}"),:button[value*="${text}"]` //for assertion
+    cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)}) //assertion could be improved, ugly logs
+        .within(() => {
+            cy.get(`:button:contains("${text}"):nth(${n - 1}),:button[value="${text}"]:nth(${n - 1})`).click()
+        })
 })
 
 /**
@@ -36,11 +42,7 @@ Given("I click on the button titled {string} for the {string} category", (text, 
  * @description Clicks on a button element with a specific text label in a dialog box.
  */
 Given("I click on the button labeled {string} in the dialog box", (text) => {
-    // cy.get('div[role="dialog"]:visible').last().within(() => {
-    //     cy.get('button').contains(text).click()
-    // })
     cy.click_top_dialog_button(text)
-
 })
 
 /**
@@ -168,19 +170,14 @@ Given("I select {string} from the dropdown identified by {string} for the {strin
     })
 })
 
-defineParameterType({
-    name: 'element_type',
-    regexp: /element|checkbox/
-})
 /**
  * @module Interactions
  * @author Corey Debacker <debacker@wisc.edu>
- * @example When I click on the < element | checkbox > identified by {string}
- * @param {string} element_type - valid choices are 'element' OR 'checkbox'
+ * @example When I click on the element identified by {string}
  * @param {string} selector - the selector of the element to click on
- * @description Clicks on an element identified by specific selector
+ * @description Clicks on an element identified by specific selector. 
  */
-Given("I click on the {element_type} identified by {string}", (selector) => {
+Given("I click on the element identified by {string}", (selector) => {
     cy.get(selector).click()
 })
 
