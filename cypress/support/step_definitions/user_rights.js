@@ -86,9 +86,9 @@ Given("I want to verify user rights are unavailable for {string} user type on th
 })
 
 /**
+ * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example
- I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}
+ * @example I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}
  * @param {string} rights - the specific user right desired (e.g. Stats & Charts)
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
