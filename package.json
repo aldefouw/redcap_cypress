@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "documentation": "git://github.com/documentationjs/documentation#97e9361",
-    "redcap_cypress_doc_theme": "git://github.com/aldefouw/redcap_cypress_doc_theme#d4cb591"
+    "redcap_cypress_doc_theme": "git://github.com/aldefouw/redcap_cypress_doc_theme#fc9bd6334284e78ace7bf011e064ed88cde49e34"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
