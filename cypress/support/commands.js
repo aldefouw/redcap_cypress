@@ -37,7 +37,7 @@ Cypress.Commands.add('click_top_dialog_button', (label) => {
         //assign highest z-index div to $div
         // let $div = Cypress.dom.wrap(sorted).last() //Cypress last()
         let $div = Cypress.dom.wrap(sorted.last()) //jQuery last()
-        //TODO: either works, revisit later to pick best optino
+        //TODO: either works, revisit later to pick best option
 
         //wrap div and look within to click matching button
         cy.wrap($div).within(($div) => {
@@ -952,6 +952,7 @@ Cypress.Commands.add('create_instrument', (instr_name) => {
 })
 
 //TODO: consider refactoring to avoid get()'ing the row twice, reuse a reference instead
+//TODO: wrap async commands in then() blocks
 Cypress.Commands.add('rename_instrument', (from, to) => {
     //get row, click actions dropdown
     cy.get(`div.projtitle:contains("${from}")`).parentsUntil('tr').last().parent().within(($tr) => {
@@ -968,6 +969,7 @@ Cypress.Commands.add('rename_instrument', (from, to) => {
     })
 })
 
+//TODO: wrap async commands in then() blocks
 Cypress.Commands.add('copy_instrument', (from, to, suffix) => {
     //get row, click actions dropdown
     cy.get(`div.projtitle:contains("${from}")`).parentsUntil('tr').last().parent().within(($tr) => {
@@ -1005,6 +1007,27 @@ Cypress.Commands.add('read_directory', (dir) => {
     cy.task('readDirectory', (dir)).then((files) => {
         return files
     })
+})
+
+//yields the visible div with the highest z-index, or the <html> if none are found
+Cypress.Commands.add('get_top_layer', (retryUntil) => {
+    let top_layer
+    cy.get('div[role=dialog][style*=z-index]:visible,html').should($els => {
+        //if more than body found, find element with highest z-index
+        if ($els.length > 1) {
+            //remove html from $els so only elements with z-index remain
+            $els = $els.filter(':not(html)')
+            //sort by z-index (ascending)
+            $els.sort((cur, prev) => {
+                let zp = Cypress.dom.wrap(prev).css('z-index')
+                let zc = Cypress.dom.wrap(cur).css('z-index')
+                // return zc - zp
+                return zp - zc
+            })
+        }
+        top_layer = $els.last()
+        retryUntil(top_layer) //run assertions, so get can retry on failure
+    }).then(() => cy.wrap(top_layer)) //yield top_layer to any further chained commands
 })
 
 //TODO: ask Adam if these comments are still needed
