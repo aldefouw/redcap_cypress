@@ -135,20 +135,34 @@ Feature: Assign User Rights
     Then I should see a link labeled "Data Comparison Tool"
 
   Scenario: 12 - Remove Data Exports, Data Import, and Data Comparison User Rights 
-    Given I want to assign the "No Access" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    When I click on the link labeled "test_user"  
+    And I should see "Edit user privileges"
+    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    Then I should see "Editing existing user"
+    When I click on the element identified by ':nth-child(7) > [style="padding-top:2px;"] > :nth-child(1) > input'
+    And I click on the button labeled "Save Changes"
     And I want to remove the "Data Import Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I want to remove the "Data Comparison Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I want to assign the "Logging" user right to the user named "Test User" with the username of "test_user" on project ID 14
     #The user1115_1 no longer has access to the ‘Data Export’, ‘Data Import’ and ‘Data Comparison Tools’ indicated by a red X.
     #Verify in the main User Rights page the ‘Logging’ box contains a green check for user user1115_1 
     When I click on the link labeled "User Rights"
-    Then I should NOT see "Data Exports, Reports, and Stats" 
-    And I should NOT see "Data Import Tool"
+    Then I should see "Data Exports, Reports, and Stats" 
+    When I click on the link labeled "Data Exports, Reports, and Stats"
+    Then I should NOT see "Other Export Options"
+    When I click on the link labeled "User Rights"
+    Then I should NOT see "Data Import Tool"
+      #Fails here - link is not visible but still says found 
     And I should NOT see "Data Comparison Tool"
     And I should see link labeled "Logging"
 
   Scenario: 13 - Assign Data Quality - create/edit rules to test_user
-    Given I want to assign the "Create & edit rules" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    When I click on the link labeled "test_user"  
+    And I should see "Edit user privileges"
+    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    Then I should see "Editing existing user"
+    When I click on the element identified by '[name="data_quality_design"]'
+    And I click on the button labeled "Save Changes"
     #Verify in the main User Rights page the ‘Data Quality’ (create/edit rules) box contains a green check for user user1115_1.
     When I click on the link labeled "User Rights"
     Then I should see a link labeled "Data Quality"
@@ -210,7 +224,7 @@ Feature: Assign User Rights
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
     Then I should see "Editing existing user"
     #And I click on the button labeled "Edit user privileges"
-    And I click on the element identified by ":nth-child(3) > .nobr > [onclick='$(this).parent().find('input[type=checkbox]').prop('checked',false);']"
+    And I click on the element identified by ":nth-child(3) > .nobr > [onclick="$(this).parent().find('input[type=checkbox]').prop('checked',false);"]"
     #When I click the input element identified by 'input[name="form-text_validation"] input[value="0"]'
     And I want to pause
 
@@ -223,6 +237,10 @@ Feature: Assign User Rights
     Then I should see "Editing existing user"
     And I click on the element identified by ':nth-child(3) > .nobr > [value="2"]'
     And I click on the element identified by ':nth-child(4) > .nobr > [value="2"]'
+    And I click on the button labeled "Save Changes"
+    When I click on the button labeled "View / Edit Records"
+    And I select "1" from the dropdown identified by "[id=record]"
+    Then I should see "Record Home Page"
 
   Scenario: 25 - Assign View and Edit to test_user
     Given I click on the link labeled "test_user"  
