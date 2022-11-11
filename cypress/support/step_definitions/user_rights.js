@@ -1,4 +1,4 @@
-import {Given} from "cypress-cucumber-preprocessor/steps";
+import {Given, defineParameterType} from "cypress-cucumber-preprocessor/steps";
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -107,7 +107,7 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @description Enters a rolename
  *
  */
- Given("I enter {string} into the rolename input field", (text) => {
+Given("I enter {string} into the rolename input field", (text) => {
     cy.get('input#new_rolename').should('be.visible').type(text)
 })
 
@@ -119,7 +119,7 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @description Click on the create role button and create role
  *
  */
- Given("I click on the button labeled {string} and I create role", (text) => {
+Given("I click on the button labeled {string} and I create role", (text) => {
     cy.get('button').contains(text).click()
     cy.get('div#editUserPopup').should('be.visible').parent().find('button').contains("Create role").should('be.visible').click()
     cy.get('div.userSaveMsg').should('not.be.visible')
@@ -133,7 +133,7 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @description Edit role
  *
  */
- Given("I click to edit role name {string}", (text) => {
+Given("I click to edit role name {string}", (text) => {
     cy.get('a[title="Edit role privileges"]').contains(text).should('be.visible').click()
 })
 
@@ -145,7 +145,7 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @description Edit username
  *
  */
- Given("I click to edit username {string}", (text) => {
+Given("I click to edit username {string}", (text) => {
     cy.get('a[title="Edit user privileges or assign to role"]').contains(text).should('be.visible').click()
 })
 
@@ -157,7 +157,7 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @description Assign user right to role/user
  *
  */
- Given("I check the user right identified by {string}", (text) => {
+Given("I check the user right identified by {string}", (text) => {
     cy.get(text).should('be.visible').check()
 })
 
@@ -169,7 +169,7 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @description Assign user right to role/user
  *
  */
- Given("I check the user right identified by {string} and select option {string}", (text, option) => {
+Given("I check the user right identified by {string} and select option {string}", (text, option) => {
     cy.get(text).check(option)
 })
 
@@ -181,7 +181,7 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @description select user right for role/user
  *
  */
- Given("I click the user right identified by {string}", (text) => {
+Given("I click the user right identified by {string}", (text) => {
     cy.get(text).click()
 })
 
@@ -193,7 +193,7 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @description User right should be checked
  *
  */
- Given("the user right identified by {string} should be checked", (text) => {
+Given("the user right identified by {string} should be checked", (text) => {
     cy.get(text).should('be.checked')
 })
 
@@ -205,7 +205,7 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @description User right should not be checked
  *
  */
- Given("the user right identified by {string} should not be checked", (text) => {
+Given("the user right identified by {string} should not be checked", (text) => {
     cy.get(text).should('not.be.checked')
 })
 
@@ -217,7 +217,7 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @description Delete role
  *
  */
- Given("I delete role name {string}", (text) => {
+Given("I delete role name {string}", (text) => {
     cy.get('a[title="Edit role privileges"]').contains(text).should('be.visible').click().then(() => {
         cy.get('button').should(($button) => {
             expect($button).to.contain('Delete role')
@@ -234,9 +234,9 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @param {string} text - username of user to be added to the project
  * @description Add new user in the User Rights page
  */
- Given("I enter {string} into the username input field", (text) => {
+Given("I enter {string} into the username input field", (text) => {
     cy.get('input#new_username').should('be.visible').type(text)
- })
+})
 
 /**
  * @module UserRights
@@ -245,7 +245,7 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @description Click on the create add user button and add user
  *
  */
- Given("I save changes within the context of User Rights", () => {
+Given("I save changes within the context of User Rights", () => {
     cy.get('.ui-button').contains(/add user|save changes/i).click()
 })
 
@@ -257,7 +257,7 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @description Enable E-Signature option on instrument
  *
  */
- Given("I select the option to display E-signature option for the instrument identified by {string}", (text) => {
+Given("I select the option to display E-signature option for the instrument identified by {string}", (text) => {
     cy.get(text).closest('td').find('input').check()
 })
 
@@ -267,6 +267,24 @@ Given("I change survey edit rights for {string} user on the form called {string}
  * @example I scroll the user rights page to the bottom
  * @description scroll user rights pop up page to the bottom
  */
- Given('I scroll the user rights page to the bottom', () => {
+Given('I scroll the user rights page to the bottom', () => {
     cy.get('input[name="api_import"]').scrollIntoView()
+})
+
+defineParameterType({
+    name: 'data_viewing_rights',
+    regexp: /No Access|Read Only|View & Edit/
+})
+
+/**
+ * @module UserRights
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I grant <No Access|Read Only|View & Edit> level of Data Entry Rights on the {string} instrument for the username {string}
+ * @param {string} rights_level - the level of user rights to grant for the selected instrument
+ * @param {string} username - username
+ * @param {string} instrument - name of instrument to apply the rights to
+ * @description Applies a given level of user rights to a specific instrument.  Note: Step assumes a user is not part of a Role.
+ */
+Given("I grant {data_viewing_rights} level of Data Entry Rights on the {string} instrument for the username {string} for project ID {int}", (rights_level, instrument, username, project_id) => {
+    cy.assign_form_rights(project_id, username, instrument, rights_level)
 })
