@@ -279,7 +279,7 @@ defineParameterType({
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I grant <No Access|Read Only|View & Edit> level of Data Entry Rights on the {string} instrument for the username {string}
+ * @example I grant < No Access | Read Only | View & Edit > level of Data Entry Rights on the {string} instrument for the username {string}
  * @param {string} rights_level - the level of user rights to grant for the selected instrument
  * @param {string} username - username
  * @param {string} instrument - name of instrument to apply the rights to
