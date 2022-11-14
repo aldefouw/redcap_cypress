@@ -219,37 +219,20 @@ Feature: Assign User Rights
 
 #trying to see if this runs 
   Scenario: 23 - Assign No Access to test_user
-    Given I click on the link labeled "test_user"  
-    And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
-    Then I should see "Editing existing user"
-    #And I click on the button labeled "Edit user privileges"
-    And I click on the element identified by ":nth-child(3) > .nobr > [onclick="$(this).parent().find('input[type=checkbox]').prop('checked',false);"]"
-    #When I click the input element identified by 'input[name="form-text_validation"] input[value="0"]'
-    And I want to pause
-
-    #And I click on the link labeled "View / Edit Records"
+    Given I grant No Access level of Data Entry Rights on the "Text Validation" instrument for the username "test_user" for project ID 14
+    And I grant No Access level of Data Entry Rights on the "Data Types" instrument for the username "test_user" for project ID 14
+    And I click on the link labeled "View / Edit Records"
 
   Scenario: 24 - Assign Read Only to test_user
-    Given I click on the link labeled "test_user"  
-    And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
-    Then I should see "Editing existing user"
-    And I click on the element identified by ':nth-child(3) > .nobr > [value="2"]'
-    And I click on the element identified by ':nth-child(4) > .nobr > [value="2"]'
-    And I click on the button labeled "Save Changes"
+    Given I grant Read Only level of Data Entry Rights on the "Text Validation" instrument for the username "test_user" for project ID 14
+    And I grant Read Only level of Data Entry Rights on the "Data Types" instrument for the username "test_user" for project ID 14
     When I click on the button labeled "View / Edit Records"
     And I select "1" from the dropdown identified by "[id=record]"
     Then I should see "Record Home Page"
 
   Scenario: 25 - Assign View and Edit to test_user
-    Given I click on the link labeled "test_user"  
-    And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
-    Then I should see "Editing existing user"
-    And I click on the element identified by ':nth-child(3) > .nobr > [value="1"]'
-    And I click on the element identified by ':nth-child(4) > .nobr > [value="1"]'
-
+    Given I grant View & Edit level of Data Entry Rights on the "Text Validation" instrument for the username "test_user" for project ID 14
+    And I grant View & Edit level of Data Entry Rights on the "Data Types" instrument for the username "test_user" for project ID 14
 
   Scenario: before step 26 
     When I click on the link labeled "Designer"
