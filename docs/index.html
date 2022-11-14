@@ -537,6 +537,10 @@
                     
               
                     
+                    <li><a href='#i-grant--no-access--read-only--view--edit--level-of-data-entry-rights-on-the-string-instrument-for-the-username-string-for-project-id-int'>I grant &lt; No Access | Read Only | View &amp; Edit &gt; level of Data Entry Rights on the {string} instrument for the username {string} for project ID {int}</a></li>
+                    
+              
+                    
                     <li><a href='#i-enter-string-into-the-rolename-input-field'>I enter {string} into the rolename input field</a></li>
                     
               
@@ -590,10 +594,6 @@
               
                     
                     <li><a href='#i-scroll-the-user-rights-page-to-the-bottom'>I scroll the user rights page to the bottom</a></li>
-                    
-              
-                    
-                    <li><a href='#i-grant--no-access--read-only--view--edit--level-of-data-entry-rights-on-the-string-instrument-for-the-username-string'>I grant &lt; No Access | Read Only | View &amp; Edit &gt; level of Data Entry Rights on the {string} instrument for the username {string}</a></li>
                     
               
                     
@@ -9538,6 +9538,104 @@ cy.get(sel).select(label).should('have.value', value)
       
         
           
+          <h2 class='fl mb0 mt0' id='i-grant--no-access--read-only--view--edit--level-of-data-entry-rights-on-the-string-instrument-for-the-username-string-for-project-id-int'>
+          I grant &lt; <span class="hljs-title class_">No</span> <span class="hljs-title class_">Access</span> | <span class="hljs-title class_">Read</span> <span class="hljs-title class_">Only</span> | <span class="hljs-title class_">View</span> &amp; <span class="hljs-title class_">Edit</span> &gt; level <span class="hljs-keyword">of</span> <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Entry</span> <span class="hljs-title class_">Rights</span> on the {string} instrument <span class="hljs-keyword">for</span> the username {string} <span class="hljs-keyword">for</span> project <span class="hljs-variable constant_">ID</span> {int}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>rights_level</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the level of user rights to grant for the selected instrument
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>username</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    username
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>instrument</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    name of instrument to apply the rights to
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>pid</span> <code class='quiet'>(int)</code>
+  	    the project ID where the user rights should be assigned (e.g. 13)
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Applies a given level of user rights to a specific instrument.  Note: Step assumes a user is not part of a Role.</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
           <h2 class='fl mb0 mt0' id='i-enter-string-into-the-rolename-input-field'>
           I enter {string} into the rolename input field
           </h2>
@@ -10471,95 +10569,6 @@ cy.get(sel).select(label).should('have.value', value)
   
   
   <p class='mb0'><strong>Author:</strong> <a href="mailto:rushi.patel@uhnresearch.ca">Rushi Patel</a></p>
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-            
-        
-            
-            
-<section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-
-      
-        
-          
-          <h2 class='fl mb0 mt0' id='i-grant--no-access--read-only--view--edit--level-of-data-entry-rights-on-the-string-instrument-for-the-username-string'>
-          I grant &lt; <span class="hljs-title class_">No</span> <span class="hljs-title class_">Access</span> | <span class="hljs-title class_">Read</span> <span class="hljs-title class_">Only</span> | <span class="hljs-title class_">View</span> &amp; <span class="hljs-title class_">Edit</span> &gt; level <span class="hljs-keyword">of</span> <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Entry</span> <span class="hljs-title class_">Rights</span> on the {string} instrument <span class="hljs-keyword">for</span> the username {string}
-          </h2>
-        
-      
-
-    
-    
-  </div>
-  
-
-  
-      <div class='py1 quiet mt1 prose-big'>Parameters</div>
-      <div class='prose'>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>rights_level</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the level of user rights to grant for the selected instrument
-
-            </div>
-            
-          </div>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>username</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    username
-
-            </div>
-            
-          </div>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>instrument</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    name of instrument to apply the rights to
-
-            </div>
-            
-          </div>
-        
-      </div>
-    
-
-
-  <p>Applies a given level of user rights to a specific instrument.  Note: Step assumes a user is not part of a Role.</p>
-
-
-  
-  
-
-  
-  
-  
-  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
   
   
 

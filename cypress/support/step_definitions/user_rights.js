@@ -99,6 +99,25 @@ Given("I change survey edit rights for {string} user on the form called {string}
     cy.change_survey_edit_rights(pid, user, form)
 })
 
+defineParameterType({
+    name: 'data_viewing_rights',
+    regexp: /No Access|Read Only|View & Edit/
+})
+
+/**
+ * @module UserRights
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I grant < No Access | Read Only | View & Edit > level of Data Entry Rights on the {string} instrument for the username {string} for project ID {int}
+ * @param {string} rights_level - the level of user rights to grant for the selected instrument
+ * @param {string} username - username
+ * @param {string} instrument - name of instrument to apply the rights to
+ * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
+ * @description Applies a given level of user rights to a specific instrument.  Note: Step assumes a user is not part of a Role.
+ */
+Given("I grant {data_viewing_rights} level of Data Entry Rights on the {string} instrument for the username {string} for project ID {int}", (rights_level, instrument, username, project_id) => {
+    cy.assign_form_rights(project_id, username, instrument, rights_level)
+})
+
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
@@ -271,20 +290,4 @@ Given('I scroll the user rights page to the bottom', () => {
     cy.get('input[name="api_import"]').scrollIntoView()
 })
 
-defineParameterType({
-    name: 'data_viewing_rights',
-    regexp: /No Access|Read Only|View & Edit/
-})
 
-/**
- * @module UserRights
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I grant < No Access | Read Only | View & Edit > level of Data Entry Rights on the {string} instrument for the username {string}
- * @param {string} rights_level - the level of user rights to grant for the selected instrument
- * @param {string} username - username
- * @param {string} instrument - name of instrument to apply the rights to
- * @description Applies a given level of user rights to a specific instrument.  Note: Step assumes a user is not part of a Role.
- */
-Given("I grant {data_viewing_rights} level of Data Entry Rights on the {string} instrument for the username {string} for project ID {int}", (rights_level, instrument, username, project_id) => {
-    cy.assign_form_rights(project_id, username, instrument, rights_level)
-})
