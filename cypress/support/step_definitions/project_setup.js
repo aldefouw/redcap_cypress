@@ -36,11 +36,13 @@ defineParameterType({
 
 /**
  * @module ProjectSetup
- * @author Corey Debacker <debacker@wisc.edu> * @example I should see that repeatable instruments are <enabled/disabled/modifiable> * @param {string} state the state of the button
+ * @author Corey Debacker <debacker@wisc.edu>
+ * @example I should see that repeatable instruments are <enabled/disabled/modifiable>
+ * @param {string} state the state of the button
  * @description Visually verifies Repeatable Instrument functionality is enabled or disabled in the project.
  */
 Given("I should see that repeatable instruments are {repeatability}", (state) => {
-   let expected_text = ''
+    let expected_text = ''
     switch (state.toLowerCase()) {
         case 'enabled':
             expected_text = "Disable"
@@ -110,4 +112,18 @@ Given("I should see that the designate an email field for communications setting
     cy.contains('Designate an email field for communications').within($div => {
         cy.get('button').should('contain.text', expected_text);
     })
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I move the project to production by selection option {string}
+ * @param {string} text - option - keep all data or delete all data
+ * @description Move project to production
+ *
+ */
+ Given("I move the project to production by selection option {string}", (text) => {
+    cy.get(text).click()
+    cy.get('button').contains('YES, Move to Production Status').click()
+    cy.get('div#actionMsg').should('be.visible')
 })

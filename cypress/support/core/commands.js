@@ -357,3 +357,18 @@ Cypress.Commands.add('move_project_to_production', (project_id, keep_data = true
   cy.get(`input#${keep_data ? "keep_data" : "delete_data"}`).check()
   cy.get('button').contains('YES, Move to Production Status').should('be.visible').click()
 })
+
+Cypress.Commands.add('export_logging_csv_report', () => {
+  cy.get('button').should('be.visible').and('be.enabled').contains('All logging').then((b) => {
+    cy.window().then((win) => {
+      let url = win.eval(b[0].getAttribute('onclick').split('window.location.href=')[1]);
+      cy.log(url);
+      cy.request(url).then(({ body, headers }) => {
+        expect(headers).to.have.property('content-type', 'application/csv')
+        return body;
+      }).then((body) => {
+        return cy.task('parseCsv', {csv_string: body});
+      });
+    });
+  });
+})

@@ -4,7 +4,7 @@ jobs:
   build:
     machine:
       image: ubuntu-2004:202201-02
-    parallelism: 2
+    parallelism: 6
     steps:
       - checkout
       - run:
@@ -46,7 +46,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests
+            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
 workflows:
   version: 2
   workflow:

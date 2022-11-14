@@ -225,7 +225,7 @@ defineParameterType({
 /**
  * @module Interactions
  * @author Corey Debacker <debacker@wisc.edu>
- * @example When I click on the < element | checkbox > identified by {string}
+ * @example I click on the < element | checkbox > identified by {string}
  * @param {string} element_type - valid choices are 'element' OR 'checkbox'
  * @param {string} selector - the selector of the element to click on
  * @description Clicks on an element identified by specific selector
@@ -434,3 +434,4 @@ Given('after the next step, I will {confirmation} a confirmation window containi
  Given('I click the input element identified by {string}', (value) => {
     cy.get(value).click()
 })
+

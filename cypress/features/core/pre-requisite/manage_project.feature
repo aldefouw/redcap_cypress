@@ -248,8 +248,10 @@ Feature: Manage Project
 
 #This step frequently becomes detached from DOM
     Scenario: 30 - Delete Project ProjectCopy_1115
-        Given I click on the button labeled "Delete the project"
-        Then I should see "Permanently delete this project?"
+        Given the AJAX "POST" request at "ProjectGeneral/delete_project.php?*" tagged by "delete_project" is being monitored
+        And I click on the button labeled "Delete the project"
+        And the AJAX request tagged by "delete_project" has completed
+        Then I should see 'Deleting the project named "FirstProject_1115ProjectCopy_1115'
         And I enter "DELETE" into the field identified by "[id=delete_project_confirm]"
         Then I should see "Deleting the project named"
         When I click on the element identified by "button:contains('Delete the project'):last"

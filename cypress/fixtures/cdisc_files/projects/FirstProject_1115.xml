@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redcap="https://projectredcap.org" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.3 schema/odm/ODM1-3-1.xsd" ODMVersion="1.3.1" FileOID="000-00-0000" FileType="Snapshot" Description="FirstProject_1115" AsOfDateTime="2022-10-20T17:31:24" CreationDateTime="2022-10-20T17:31:24" SourceSystem="REDCap" SourceSystemVersion="11.1.5">
+<Study OID="Project.FirstProject1115">
+<GlobalVariables>
+	<StudyName>FirstProject_1115</StudyName>
+	<StudyDescription>This file contains the metadata, events, and data for REDCap project "FirstProject_1115".</StudyDescription>
+	<ProtocolName>FirstProject_1115</ProtocolName>
+	<redcap:RecordAutonumberingEnabled>1</redcap:RecordAutonumberingEnabled>
+	<redcap:CustomRecordLabel></redcap:CustomRecordLabel>
+	<redcap:SecondaryUniqueField></redcap:SecondaryUniqueField>
+	<redcap:SchedulingEnabled>0</redcap:SchedulingEnabled>
+	<redcap:SurveysEnabled>1</redcap:SurveysEnabled>
+	<redcap:SurveyInvitationEmailField>email</redcap:SurveyInvitationEmailField>
+	<redcap:Purpose>4</redcap:Purpose>
+	<redcap:PurposeOther></redcap:PurposeOther>
+	<redcap:ProjectNotes></redcap:ProjectNotes>
+	<redcap:SurveyQueueCustomText></redcap:SurveyQueueCustomText>
+	<redcap:DataMartProjectEnabled>0</redcap:DataMartProjectEnabled>
+	<redcap:DatamartAllowRepeatRevision>0</redcap:DatamartAllowRepeatRevision>
+	<redcap:DatamartAllowCreateRevision>0</redcap:DatamartAllowCreateRevision>
+	<redcap:DatamartCronEnabled>0</redcap:DatamartCronEnabled>
+	<redcap:MissingDataCodes></redcap:MissingDataCodes>
+	<redcap:RepeatingInstrumentsAndEvents>
+		<redcap:RepeatingEvent redcap:UniqueEventName="event_2_arm_1"/>
+		<redcap:RepeatingInstruments>
+			<redcap:RepeatingInstrument redcap:UniqueEventName="event_1_arm_1" redcap:RepeatInstrument="my_first_instrument" redcap:CustomLabel=""/>
+		</redcap:RepeatingInstruments>
+	</redcap:RepeatingInstrumentsAndEvents>
+	<redcap:SurveysGroup>
+		<redcap:Surveys form_name="my_first_instrument" title="My First Instrument" instructions="Please complete the survey below.
+Thank you!" offline_instructions="" acknowledgement="Thank you for taking the survey.
+Have a nice day!" stop_action_acknowledgement="" stop_action_delete_response="0" question_by_section="0" display_page_number="0" question_auto_numbering="1" survey_enabled="1" save_and_return="0" save_and_return_code_bypass="0" logo="" hide_title="0" view_results="0" min_responses_view_results="10" check_diversity_view_results="0" end_survey_redirect_url="" survey_expiration="" promis_skip_question="0" survey_auth_enabled_single="0" edit_completed_response="0" hide_back_button="0" show_required_field_text="1" confirmation_email_subject="" confirmation_email_content="" confirmation_email_from="" confirmation_email_from_display="" confirmation_email_attach_pdf="0" confirmation_email_attachment="" text_to_speech="0" text_to_speech_language="en" end_survey_redirect_next_survey="0" theme="" text_size="1" font_family="16" theme_text_buttons="" theme_bg_page="" theme_text_title="" theme_bg_title="" theme_text_sectionheader="" theme_bg_sectionheader="" theme_text_question="" theme_bg_question="" enhanced_choices="0" repeat_survey_enabled="0" repeat_survey_btn_text="" repeat_survey_btn_location="BEFORE_SUBMIT" response_limit="" response_limit_include_partials="1" response_limit_custom_text="Thank you for your interest; however, the survey is closed because the maximum number of responses has been reached." survey_time_limit_days="" survey_time_limit_hours="" survey_time_limit_minutes="" email_participant_field="" end_of_survey_pdf_download="0" pdf_save_to_field="" pdf_save_to_event_id="" pdf_auto_archive="0" pdf_econsent_version="" pdf_econsent_type="" pdf_econsent_firstname_field="" pdf_econsent_firstname_event_id="" pdf_econsent_lastname_field="" pdf_econsent_lastname_event_id="" pdf_econsent_dob_field="" pdf_econsent_dob_event_id="" pdf_econsent_allow_edit="1" pdf_econsent_signature_field1="" pdf_econsent_signature_field2="" pdf_econsent_signature_field3="" pdf_econsent_signature_field4="" pdf_econsent_signature_field5=""/>
+	</redcap:SurveysGroup>
+</GlobalVariables>
+<MetaDataVersion OID="Metadata.FirstProject1115_2022-10-20_1731" Name="FirstProject_1115" redcap:RecordIdField="record_id">
+	<Protocol>
+		<StudyEventRef StudyEventOID="Event.event_1_arm_1" OrderNumber="1" Mandatory="No"/>
+		<StudyEventRef StudyEventOID="Event.event_2_arm_1" OrderNumber="2" Mandatory="No"/>
+		<StudyEventRef StudyEventOID="Event.event_three_arm_1" OrderNumber="3" Mandatory="No"/>
+		<StudyEventRef StudyEventOID="Event.event_1_arm_2" OrderNumber="4" Mandatory="No"/>
+	</Protocol>
+	<StudyEventDef OID="Event.event_1_arm_1" Name="Event 1 (Arm 1: Arm 1)" Type="Common" Repeating="No" redcap:EventName="Event 1" redcap:CustomEventLabel="" redcap:UniqueEventName="event_1_arm_1" redcap:ArmNum="1" redcap:ArmName="Arm 1" redcap:DayOffset="1" redcap:OffsetMin="0" redcap:OffsetMax="0">
+		<FormRef FormOID="Form.my_first_instrument" OrderNumber="1" Mandatory="No" redcap:FormName="my_first_instrument"/>
+		<FormRef FormOID="Form.my_first_instrument_2" OrderNumber="2" Mandatory="No" redcap:FormName="my_first_instrument_2"/>
+	</StudyEventDef>
+	<StudyEventDef OID="Event.event_2_arm_1" Name="Event 2 (Arm 1: Arm 1)" Type="Common" Repeating="No" redcap:EventName="Event 2" redcap:CustomEventLabel="" redcap:UniqueEventName="event_2_arm_1" redcap:ArmNum="1" redcap:ArmName="Arm 1" redcap:DayOffset="2" redcap:OffsetMin="0" redcap:OffsetMax="0">
+	</StudyEventDef>
+	<StudyEventDef OID="Event.event_three_arm_1" Name="Event Three (Arm 1: Arm 1)" Type="Common" Repeating="No" redcap:EventName="Event Three" redcap:CustomEventLabel="" redcap:UniqueEventName="event_three_arm_1" redcap:ArmNum="1" redcap:ArmName="Arm 1" redcap:DayOffset="3" redcap:OffsetMin="0" redcap:OffsetMax="0">
+	</StudyEventDef>
+	<StudyEventDef OID="Event.event_1_arm_2" Name="Event 1 (Arm 2: Arm Two)" Type="Common" Repeating="No" redcap:EventName="Event 1" redcap:CustomEventLabel="" redcap:UniqueEventName="event_1_arm_2" redcap:ArmNum="2" redcap:ArmName="Arm Two" redcap:DayOffset="1" redcap:OffsetMin="0" redcap:OffsetMax="0">
+		<FormRef FormOID="Form.my_first_instrument" OrderNumber="1" Mandatory="No" redcap:FormName="my_first_instrument"/>
+	</StudyEventDef>
+	<FormDef OID="Form.my_first_instrument" Name="My First Instrument" Repeating="No" redcap:FormName="my_first_instrument">
+		<ItemGroupRef ItemGroupOID="my_first_instrument.record_id" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="my_first_instrument.my_first_instrument_timestamp" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="my_first_instrument.my_first_instrument_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.my_first_instrument_2" Name="My First Instrument 2" Repeating="No" redcap:FormName="my_first_instrument_2">
+		<ItemGroupRef ItemGroupOID="my_first_instrument_2.ptname_v2" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="my_first_instrument_2.my_first_instrument_2_complete" Mandatory="No"/>
+	</FormDef>
+	<ItemGroupDef OID="my_first_instrument.record_id" Name="My First Instrument" Repeating="No">
+		<ItemRef ItemOID="record_id" Mandatory="No" redcap:Variable="record_id"/>
+		<ItemRef ItemOID="redcap_survey_identifier" Mandatory="No" redcap:Variable="redcap_survey_identifier"/>
+		<ItemRef ItemOID="my_first_instrument_timestamp" Mandatory="No" redcap:Variable="my_first_instrument_timestamp"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="my_first_instrument.my_first_instrument_timestamp" Name="My First Instrument" Repeating="No">
+		<ItemRef ItemOID="my_first_instrument_timestamp" Mandatory="No" redcap:Variable="my_first_instrument_timestamp"/>
+		<ItemRef ItemOID="ptname" Mandatory="No" redcap:Variable="ptname"/>
+		<ItemRef ItemOID="text2" Mandatory="No" redcap:Variable="text2"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="my_first_instrument.my_first_instrument_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="my_first_instrument_complete" Mandatory="No" redcap:Variable="my_first_instrument_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="my_first_instrument_2.ptname_v2" Name="My First Instrument 2" Repeating="No">
+		<ItemRef ItemOID="ptname_v2" Mandatory="No" redcap:Variable="ptname_v2"/>
+		<ItemRef ItemOID="email" Mandatory="No" redcap:Variable="email"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="my_first_instrument_2.my_first_instrument_2_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="my_first_instrument_2_complete" Mandatory="No" redcap:Variable="my_first_instrument_2_complete"/>
+	</ItemGroupDef>
+	<ItemDef OID="record_id" Name="record_id" DataType="text" Length="999" redcap:Variable="record_id" redcap:FieldType="text">
+		<Question><TranslatedText>Record ID</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="redcap_survey_identifier" Name="redcap_survey_identifier" DataType="text" Length="999" redcap:Variable="redcap_survey_identifier">
+		<Question><TranslatedText>Survey Identifier</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="my_first_instrument_timestamp" Name="my_first_instrument_timestamp" DataType="datetime" Length="999" redcap:Variable="my_first_instrument_timestamp">
+		<Question><TranslatedText>Survey Timestamp</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="my_first_instrument_timestamp" Name="my_first_instrument_timestamp" DataType="datetime" Length="999" redcap:Variable="my_first_instrument_timestamp">
+		<Question><TranslatedText>Survey Timestamp</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="ptname" Name="ptname" DataType="text" Length="999" redcap:Variable="ptname" redcap:FieldType="text">
+		<Question><TranslatedText>Name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="text2" Name="text2" DataType="text" Length="999" redcap:Variable="text2" redcap:FieldType="text">
+		<Question><TranslatedText>Text2</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="my_first_instrument_complete" Name="my_first_instrument_complete" DataType="text" Length="1" redcap:Variable="my_first_instrument_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="my_first_instrument_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="ptname_v2" Name="ptname_v2" DataType="text" Length="999" redcap:Variable="ptname_v2" redcap:FieldType="text">
+		<Question><TranslatedText>Name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="email" Name="email" DataType="text" Length="999" redcap:Variable="email" redcap:FieldType="text" redcap:TextValidationType="email">
+		<Question><TranslatedText>Email</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="my_first_instrument_2_complete" Name="my_first_instrument_2_complete" DataType="text" Length="1" redcap:Variable="my_first_instrument_2_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="my_first_instrument_2_complete.choices"/>
+	</ItemDef>
+	<CodeList OID="my_first_instrument_complete.choices" Name="my_first_instrument_complete" DataType="text" redcap:Variable="my_first_instrument_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="my_first_instrument_2_complete.choices" Name="my_first_instrument_2_complete" DataType="text" redcap:Variable="my_first_instrument_2_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+</MetaDataVersion>
+</Study>
+<ClinicalData StudyOID="Project.FirstProject1115" MetaDataVersionOID="Metadata.FirstProject1115_2022-10-20_1731">
+	<SubjectData SubjectKey="1" redcap:RecordIdField="record_id">
+		<StudyEventData StudyEventOID="Event.event_1_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_1_arm_1">
+			<FormData FormOID="Form.my_first_instrument" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="my_first_instrument.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="1"/>
+					<ItemData ItemOID="my_first_instrument_timestamp" Value="2022-10-20 17:30:28"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="my_first_instrument.my_first_instrument_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="my_first_instrument_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+	</SubjectData>
+</ClinicalData>
+</ODM>
