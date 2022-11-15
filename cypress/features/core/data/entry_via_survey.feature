@@ -92,6 +92,6 @@ Feature: Data Entry through the Survey
     And I click on the button labeled "Close"
 
 #    When I click on the link labeled "Record Status Dashboard"
-#    And I click on the bubble for the "Pre-Screening Survey" data collection instrument instrument for record ID "1"
+#    And I click on the bubble for the "Pre-Screening Survey" data collection instrument for record ID "1"
 #
 #

@@ -3,12 +3,12 @@ import {Given} from "cypress-cucumber-preprocessor/steps";
 /**
  * @module RecordStatusDashboard
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the bubble for the {string} data collection instrument instrument for record ID {string}
+ * @example I click on the bubble for the {string} data collection instrument for record ID {string}
  * @param {string} text - the text value of data collection instrument you want to target
  * @param {string} record_id - the value of the record_id you want to target
  * @description Clicks on a bubble within the Record Status Dashbaord based upon record ID and the data instrument specified.
  */
-Given("I click on the bubble for the {string} data collection instrument instrument for record ID {string}", (text, record_id) => {
+Given("I click on the bubble for the {string} data collection instrument for record ID {string}", (text, record_id) => {
     let link_location = null
 
     cy.get('table#record_status_table').within(() => {
