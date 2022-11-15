@@ -6,7 +6,7 @@ import {Given} from "cypress-cucumber-preprocessor/steps";
  * @example I click on the bubble for the {string} data collection instrument for record ID {string}
  * @param {string} text - the text value of data collection instrument you want to target
  * @param {string} record_id - the value of the record_id you want to target
- * @description Clicks on a bubble within the Record Status Dashbaord based upon record ID and the data instrument specified.
+ * @description Clicks on a bubble within the Record Status Dashboard based upon record ID and the data instrument specified.
  */
 Given("I click on the bubble for the {string} data collection instrument for record ID {string}", (text, record_id) => {
     let link_location = null
