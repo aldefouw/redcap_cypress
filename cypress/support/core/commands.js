@@ -7,6 +7,12 @@
 //   /suport/modules/commands.js
 //   /support/plugins/commands.js
 
+//Supports first-eighth, returns 1 if ord is undefined, returns 1-indexed values
+export function ordinal_to_int(ord) {
+  let dict = {first:1, second:2, third:3, fourth:4, fifth:5, sixth:6, seventh:7, eighth:8, undefined:1}
+  return dict[ord]
+}
+
 function test_link (link, title, try_again = true) {
   cy.get('div#control_center_menu a').
   contains(link).
