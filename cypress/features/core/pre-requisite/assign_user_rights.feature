@@ -212,14 +212,25 @@ Feature: Assign User Rights
     Given I want to assign the "Lock/Unlock *Entire* Records (record level)" user right to the user named "Test User" with the username of "test_user" on project ID 14
     #Verify in the main User Rights page, the ‘Record Locking Customization’ box still contains a green check for user user1115_1.
 
-
-
 Scenario: before step 26 
+    Given I logout
+    And I am an "admin" user who logs into REDCap
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "SecondProject_1115"
     When I click on the link labeled "Designer"
     And I click on the element identified by "button:contains('Enable'):last"
     And I click on the button labeled "Save Changes"
     Then I should see "Your survey settings were successfully saved!"
-    When I click on the link labeled "User Rights"
+   #When I click on the link labeled "Add / Edit Records"
+    #And I click on the button labeled "Add new record"
+    #And I click on the bubble for the "("|')[^\1]*\1" data collection instrument instrument for record ID ("|')[^\1]*\1
+    Given I visit the version URL "DataEntry/index.php?pid=14&id=2&event_id=41&page=data_types&auto=1"
+    #And I enter "Testing" into the "Required" survey text input field
+    #And I enter "Testing" into the field identified by "[name=required]"
+    And I click on the button labeled "Save & Exit Form"
+    #And I click on the button labeled "Ignore and leave record"
+    Given I logout
+    And I am a "standard" user who logs into REDCap
 
 #trying to see if this runs 
   Scenario: 23 - Assign No Access to test_user
@@ -249,7 +260,7 @@ Scenario: before step 26
     And I should see a button labeled "Save & Exit Form"
     When I click on the link labeled "Record Status Dashboard"
     #Given I am a "standard" user who logs into REDCap
-    And I click on the bubble for the "Data Types" data collection instrument instrument for record ID "1"
+    And I click on the bubble for the "Data Types" data collection instrument instrument for record ID "2"
     Then I should see "Data Types"
     #read only^ - this is the survey an you can still edit it 
 
