@@ -8,7 +8,13 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @description Visually verifies that text exists within the HTML object.
  */
 Given("I should see {string}", (text) => {
-    cy.get('html').should(($html) => { expect($html).to.contain(text) })
+    let sel = `:contains("${text}"):not(:has(:contains("${text}"))):visible`
+    cy.get_top_layer(($el) => expect($el.find(sel)).length.to.be.above(0))
+})
+
+// For comparing results of tests before z-index & n'th selector changes
+Given("Old I should see {string}", (text) => {
+    cy.get('html').should(($html) => {expect($html).to.contain(text)})
 })
 
 /**
@@ -41,6 +47,12 @@ Given("I should see {string} in the title", (title) => {
  * @description Visually verifies that there is a link with a specific label.
  */
 Given("I should see a link labeled {string}", (label) => {
+    // cy.get('a').contains(label)
+    cy.get_top_layer(($el) => expect($el.find(`a:contains("${label}"):visible`)).length.to.be.above(0))
+})
+
+// For comparing results of tests before z-index & n'th selector changes
+Given("Old I should see a link labeled {string}", (label) => {
     cy.get('a').contains(label)
 })
 
@@ -69,7 +81,7 @@ defineParameterType({
     regexp: /checked|unchecked/
 })
 Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
-    //Really only added this to delay cypress cause sometimes it was moving forward without being checked
+    // Really only added this to delay cypress cause sometimes it was moving forward without being checked
     check == 'checked' ? cy.get(sel).should('be.checked') : cy.get(sel).should('not.be.checked')
 })
 

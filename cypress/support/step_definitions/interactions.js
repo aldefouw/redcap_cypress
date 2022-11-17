@@ -1,21 +1,29 @@
 import { Given } from "cypress-cucumber-preprocessor/steps";
 import { defineParameterType } from "cypress-cucumber-preprocessor/steps";
+import { ordinal_to_int } from '../core/commands'
 
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the button labeled {string}
+ * @example I click on the( {string}) button labeled {string}
+ * @param {string} n - (optional) The ordinal specifying which matching button to click
+ *      Valid options are "first", "second", "third", "fourth", "fifth", "sixth", "seventh", or "eighth".
  * @param {string} text - the text on the button element you want to click
- * @description Clicks on a button element with a specific text label.
+ * @description Clicks on a button element with a specific text label. If `n` is not specified, the first matching
+ *      button is clicked.
  */
 Given(/^I click on the(?: (first|second|third|fourth|fifth|sixth|seventh|eighth))? button labeled "(.*)"/, (n, text) => {
-    let dict = {first:1, second:2, third:3, fourth:4, fifth:5, sixth:6, seventh:7, eighth:8, undefined:1}
-    n = dict[n]
-    let sel = `:button:contains("${text}"),:button[value*="${text}"]` //for assertion
+    n = ordinal_to_int(n) - 1
+    let sel = `:button:contains("${text}"):visible:nth(${n}),:button[value*="${text}"]:visible:nth(${n})` //for assertion
     cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)}) //assertion could be improved, ugly logs
         .within(() => {
-            cy.get(`:button:contains("${text}"):nth(${n - 1}),:button[value="${text}"]:nth(${n - 1})`).click()
+            cy.get(sel).click()
         })
+})
+
+//For comparing results of tests before z-index & n'th selector changes
+Given("Old I click on the button labeled {string}", (text) => {
+    cy.get('button').contains(text).click()
 })
 
 /**
@@ -52,9 +60,18 @@ Given("I click on the button labeled {string} in the dialog box", (text) => {
  * @param {string} text - the text on the anchor element you want to click
  * @description Clicks on an anchor element with a specific text label.
  */
-Given("I click on the link labeled {string}", (text) => {
-    cy.get(`a:contains("${text}")`).filter(':visible').first().click()
-    //cy.get('a').contains(text).should('be.visible').click({force:true})
+Given(/^I click on the(?: (first|second|third|fourth|fifth|sixth|seventh|eighth))? link labeled "(.*)"/, (n, text) => {
+    n = ordinal_to_int(n) - 1
+    let sel = `a:contains("${text}"):visible:nth(${n})`
+    cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)})
+        .within(() => cy.get(sel).click())
+    // cy.get(`a:contains("${text}")`).filter(':visible').first().click()
+    // cy.get('a').contains(text).should('be.visible').click({force:true})
+})
+
+//For comparing results of tests before z-index & n'th selector changes
+Given("Old I click on the link labeled {string}", (text) => {
+    cy.get('a').contains(text).should('be.visible').click({force:true})
 })
 
 /**
