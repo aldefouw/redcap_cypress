@@ -69,7 +69,8 @@ Given(/^I mark the field as (not )?required/, (not) => {
  * @module OnlineDesigner
  * @author Corey Debacker <debacker@wisc.edu>
  * @example I set the {string} subfield to {string}
- * @param {string} subfield the field's metadata to edit (e.g. "validation type")
+ * @param {string} subfield the field's metadata to edit -- Valid inputs are Type, Label, Variable Name,
+ *  Validation Type, Calculation, and Choices
  * @param {string} value the value to update the subfield to
  * @description Requires the field editing modal window be open (after clicking "Add Field" or edit field button).
  * Sets the value of a specified subfield, without saving and exiting the field editing window.
@@ -81,10 +82,12 @@ Given("I set the {string} subfield to {string}", (subfield, value) => {
 /**
  * @module OnlineDesigner
  * @author Corey Debacker <debacker@wisc.edu>
- * @example I add a new field at position {int}
- * @param {int} position The position to add the field at (e.g. 2 to click the second "Add Field" button)
+ * @example I add a new field( at position {int})
+ * @param {int} position - (optional) The position to add the field at (e.g. 2 to click the second "Add Field" button)
  * @description Clicks the n'th "Add Field" button where n = `position`.
+ *      If `position` is not specified, the last button will be clicked.
  */
-Given("I add a new field at position {int}", (position) => {
+Given(/^I add a new field(?: at position (\d*))?/, (position) => {
+    if (position === undefined) position = 0 // get last with eq(-1)
     cy.get(':button[value="Add Field"]').eq(position - 1).click();
 })
