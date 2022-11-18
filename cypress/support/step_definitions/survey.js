@@ -251,3 +251,29 @@ Then("I should see the survey open exactly once by watching the tag of {string}"
         })
     })
 })
+
+/**
+ * @module Survey
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I add a new field of type {string} and enter {string} into the field labeled {string}
+ * @param {string} field_type - type of field (for ex. textbox, radio, checkbox, etc.)
+ * @param {string} field_text - text you want to enter in the field
+ * @param {string} field_name - variable name
+ * @param {string} label - validation label
+ * @param {string} value - validation type
+ * @description Add a new field in form
+ */
+ Given("I add a new field of type {string} and enter {string} into the field labeled {string}, validated by label {string} identified by {string}", (field_type,field_text,field_name,label,value) => {
+    cy.get('input#btn-last').click().then(() => {
+        cy.get('select#field_type').select(field_type)
+        cy.get('input#field_name').type(field_name)
+        cy.get('input#field_label_rich_text_checkbox').uncheck()
+        cy.get('textarea#field_label').type(field_text)
+        cy.get(label).select(value, { force: true })
+        cy.get('button').contains('Save').click().then(() => {
+            cy.get('table#draggable').should(($t) => {
+                expect($t).to.contain('Variable: '+ field_name)
+            })
+        })
+    })
+})
