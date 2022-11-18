@@ -221,14 +221,12 @@ Scenario: before step 26
     And I click on the element identified by "button:contains('Enable'):last"
     And I click on the button labeled "Save Changes"
     Then I should see "Your survey settings were successfully saved!"
-   #When I click on the link labeled "Add / Edit Records"
-    #And I click on the button labeled "Add new record"
-    #And I click on the bubble for the "("|')[^\1]*\1" data collection instrument instrument for record ID ("|')[^\1]*\1
+
+#new record - didnt fix issue 
     Given I visit the version URL "DataEntry/index.php?pid=14&id=2&event_id=41&page=data_types&auto=1"
-    #And I enter "Testing" into the "Required" survey text input field
-    #And I enter "Testing" into the field identified by "[name=required]"
     And I click on the button labeled "Save & Exit Form"
-    #And I click on the button labeled "Ignore and leave record"
+   
+   
     Given I logout
     And I am a "standard" user who logs into REDCap
 
@@ -265,12 +263,11 @@ Scenario: before step 26
     #read only^ - this is the survey an you can still edit it 
 
 
-    And I want to pause
 
   Scenario: 26 - Assign Edit Survey Responses to test_user
     Given I click on the link labeled "User Rights"
     And I click on the link labeled "test_user"  
-    And I should see "Edit user privileges"
+    #And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
     Then I should see "Editing existing user"
     And I click on the checkbox identified by "[id=form-editresp-text_validation]"
@@ -314,14 +311,17 @@ Scenario: before step 26
     Then I should see a link labeled "Reviewer"
 
   Scenario: 30 - Delete Reviewer Role 
-    #Given I click on the link labeled "Reviewer"
-    #Given I click on the element identified by "[id=rightsTableUserLinkId_2]"
-    #Then I should see "Editing existing user role"
-    #When I click on the button labeled "Delete role"
-    #Then I should see "Delete role?"
-    #When I click on the element identified by "button:contains('Delete role'):last"
-    #Then I should see "was successfully deleted"
-    Given I delete role name "Reviewer"
+    Given I click on the link labeled "Reviewer"
+    Given I click on the element identified by "[id=rightsTableUserLinkId_2]"
+    Then I should see "Editing existing user role"
+    When I click on the button labeled "Delete role"
+    Then I should see "Delete role?"
+    When I click on the element identified by "button:contains('Delete role'):last"
+    Then I should see "was successfully deleted"
+    #Given I delete role name "Reviewer"
+    
+    And I want to pause
+
     And I click on the link labeled "User Rights"
     And I should NOT see "Reviewer"
 
@@ -332,14 +332,6 @@ Scenario: before step 26
     And I click on the element identified by "[id=assignDagRoleBtn]"
     Then I should see "NOTICE: User Rights mismatch"
     Given I logout
-    
-    #When I click on the link labeled "test_user"
-    #And I click on the button labeled "Assign to role"
-    #And I select "Data Entry" from the dropdown identified by "[id=user_role]"
-    #And I click on the button labeled "Assign"
-    #Then I should see "NOTICE: User Rights mismatch"
-    #When I click on the button labeled "Close"
-    #And I logout
 
   Scenario: 32 - Assign test_user to Data Entry 
     Given I am an "admin" user who logs into REDCap
@@ -350,14 +342,12 @@ Scenario: before step 26
     And I click on the button labeled "Assign to role"
     And I select "Data Entry" from the dropdown identified by "[id=user_role]"
     And I click on the element identified by "[id=assignDagRoleBtn]"
-    Then I should see "successfully assigned to role"
+    Then I should see "has been successfully ASSIGNED to the user role"
     #Verify the user is now in the same row as the Data Entry role.
 
   Scenario: 33 - Remove test_user from Data Entry Role 
     When I click on the link labeled "test_user"  
-    #And I click on the element identified by "[id=tooltipBtnSetCustom]"
     And I click on the button labeled "Remove from role"
-    Then I should see "successfully REMOVED from role"
     And I should see "NOTICE: User's privileges will remain the same"
     When I click on the button labeled "Close"
     #The user is no longer on the same row as the Data Entry role.
