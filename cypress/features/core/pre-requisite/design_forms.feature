@@ -2,299 +2,500 @@ Feature: Design Forms using Data Dictionary & Online Designer
 
   As a REDCap end user
   I want to see that Design Forms using Data Dictionary & Online Designer are functioning as expected
-# ~ Indicates the step makes an assertion that relies on some assumption
-#   - e.g. assume that a user has design rights if and only if a link labeled "Designer" is visible
 
-# ^ Indicates the step is prone to breaking if seed data or fixture files change
-#   - e.g. seeded project settings change, and test verifies and/or modifies settings (see Step 2)
-
-# * Indicates the step is not completed exactly according to the manual script.
-#   - e.g. manual script says to delete an instrument that does not exist due to different seed state
-
-  Scenario: Create a form
-
-    #Setup
-    # Given I am a "admin" user who logs into REDCap
-    # And I create a project named "FirstProject_1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
-
-    # Step 1
+  Scenario: 0 - Load FirstProject_1115.xml
     Given I am a "standard" user who logs into REDCap
-    # ^ Uncomment when project setup allows for standard user to access project
-    Then I should seee "Welcome to REDCap!"
-    When I visit Project ID 13
-    Then I should seee "PID 13"
-    # When I visit Project ID 14
-    # Then I should seee "PID 14"
-    And I should see a link labeled "Designer"
+    And I create a project named "FirstProject_1115" with project purpose Operational Support via CDISC XML import from fixture location "cdisc_files/projects/FirstProject_1115.xml"
+    And I visit Project ID 14
+    Then I should see "Development"
+    And I click on the link labeled "Project Setup"
+    And I click on the element identified by "button[id=setupEnableSurveysBtn]"
+    And I click on the button labeled "Disable" in the dialog box
+    Then I should see that surveys are disabled
+    Then I logout
 
-    # #TODO: replace steps using selectors with steps not using selectors
-    # Step 2^
-    When I click on the link labeled "Project Setup"
-    And I click on the element identified by "#setupEnableSurveysBtn"
-    Then I should see an element identified by "#setupEnableSurveysBtn" containing the text "Enable"
-    And I should see an element identified by "#setupLongiBtn" containing the text "Disable"
-    And I should see an element identified by "[onclick='btnMoveToProd();']" containing the text "Move project to production"
+  Scenario: 1 - Navigate, Login to REDCap, Verify User Rights
+    Given I am a "standard" user who logs into REDCap
+    Then I want to verify user rights are available for "standard" user type on the path "ProjectSetup" on project ID 14
+  
+  Scenario: 2 - Verify Project Settings
+    Given I visit Project ID 14
+    And I click on the link labeled "Project Setup"
+    Then I should see that surveys are disabled
+    And I should see "Development"
 
-    # Step 3*
-    And I should seee "Online Designer"
-    And I should seee "Data Dictionary"
-    And I should seee "REDCap Instrument Library"
-    And I should seee "Download PDF of all instruments"
-    And I should seee "Download the current Data Dictionary"
-    And I should seee "Check For Identifiers"
+  Scenario: 3 - Verify "Design your data collection instruments" Section
+    Given I visit Project ID 14
+    And I click on the link labeled "Project Setup"
+    Then I should see a button labeled "Online Designer"
+    And I should see a button labeled "Data Dictionary"
+    And I should see a button labeled "REDCap Instrument Library"
+    And I should see a link labeled "Download PDF of all instruments"
+    And I should see a link labeled "Download the current Data Dictionary"
+    And I should see a link labeled "Check For Identifiers"
 
-    # Steps 4-10* - data dictionary upload step definition does not upload via GUI, and no prompts are displayed. 
-    Given I am a "admin" user who logs into REDCap
+  Scenario: 4 - Download and Verify Data Dictionary
+    Given I download the data dictionary and save the file as "FirstProject_1115.csv"
+    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has the headings below
+    | "Variable / Field Name" | "Form Name" | "Section Header" | "Field Type" | "Field Label" | "Choices, Calculations, OR Slider Labels" | "Field Note" | "Text Validation Type OR Show Slider Number" | "Text Validation Min" | "Text Validation Max" |  Identifier? | "Branching Logic (Show field only if...)" | "Required Field?" | "Custom Alignment" |  "Question Number (surveys only)" | "Matrix Group Name" | "Matrix Ranking?" | "Field Annotation" |
+    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value "record_id" for column "\"Variable / Field Name\""
+    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value 'ptname' for column "\"Variable / Field Name\""
+    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value 'text2' for column "\"Variable / Field Name\""
+    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value 'ptname_v2' for column "\"Variable / Field Name\""
+    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value 'email' for column "\"Variable / Field Name\""
 
-    When I upload a data dictionary located at "core/07_DesignForms_v1115_DataDictionary_1.csv" to project ID 13
-    # Then I should seee "Changes Made Successfully"
+  Scenario: 5 - Add new field to data dictionary
+    Given I add a new variable named "dd_form" in the form named "data_dictionary_form" with the field type "text" and the label "Testing data dictionary upload" into the Data Dictionary file at "cypress/downloads/FirstProject_1115.csv"
+    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value 'email' for column "\"Variable / Field Name\""
 
-    # When I upload a data dictionary located at "core/07_DesignForms_v1115_DataDictionary_2.csv" to project ID 13
-    # Then I should seee "The following variable/field names were duplicated...dd_form"
+  Scenario: 6 - Upload Data Dictionary
+    Given I visit Project ID 14
+    And I click on the link labeled "Project Setup"
+    And I click on the button labeled "Data Dictionary"
+    And I set the input file field named "uploadedfile" to the file at path "cypress/downloads/FirstProject_1115.csv"
+    # wait for csrf token to show up
+    Then the form should have a redcap_csrf_token
+    And I click on the button labeled "Upload File"
+    Then I should see "Your document was uploaded successfully and awaits your confirmation below."
+    # wait for csrf token to show up
+    Then the form should have a redcap_csrf_token
+    And I click on the button labeled "Commit Changes"
+    Then I should see "Changes Made Successfully!"
 
-    And I upload a data dictionary located at "core/07_DesignForms_v1115_DataDictionary_3.csv" to project ID 13
-    # Then I should seee "Changes Made Successfully"
+  Scenario: 7 - Add new field to data dictionary
+    Given I add a new variable named "dd_form" in the form named "field_validation_form" with the field type "text" and the label "Testing data dictionary upload" into the Data Dictionary file at "cypress/downloads/FirstProject_1115.csv"
+    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value 'field_validation_form' for column "\"Form Name\""
+  
+  Scenario: 8 - Upload Data Dictionary
+    Given I visit Project ID 14
+    And I click on the link labeled "Project Setup"
+    And I click on the button labeled "Data Dictionary"
+    And I set the input file field named "uploadedfile" to the file at path "cypress/downloads/FirstProject_1115.csv"
+    # wait for csrf token to show up
+    Then the form should have a redcap_csrf_token
+    And I click on the button labeled "Upload File"
+    Then I should see "Errors found in your Data Dictionary:"
+    And I should see "dd_form"
 
-    Then I am a "standard" user who logs into REDCap
-    And I visit Project ID 13
+  Scenario: 9 - Replace bad field in data dictionary
+    Given I remove line 8 from a CSV file at path "cypress/downloads/FirstProject_1115.csv"
+    Then I add a new variable named "dd_test" in the form named "data_dictionary_form" with the field type "text" and the label "Testing data dictionary upload" into the Data Dictionary file at "cypress/downloads/FirstProject_1115.csv"
 
-    # Step 11^*
-    When I click on the link labeled "Designer"
+  Scenario: 10 - Upload Data Dictionary
+    Given I visit Project ID 14
+    And I click on the link labeled "Project Setup"
+    And I click on the button labeled "Data Dictionary"
+    And I set the input file field named "uploadedfile" to the file at path "cypress/downloads/FirstProject_1115.csv"
+    # wait for csrf token to show up
+    Then the form should have a redcap_csrf_token
+    And I click on the button labeled "Upload File"
+    Then I should see "Your document was uploaded successfully and awaits your confirmation below."
+    Then the form should have a redcap_csrf_token
+    And I click on the button labeled "Commit Changes"
+    Then I should see "Changes Made Successfully!"
+
+  Scenario: 11 - Verify Fields Exist
+    Given I visit Project ID 14
+    And I click on the link labeled "Project Setup"
+    And I click on the button labeled "Online Designer"
+    Then I should see "Data Dictionary Form"
     And I click on the link labeled "Data Dictionary Form"
-    Then I should seee "Testing data dictionary upload"
-    When I click on the button labeled "Return to list of instruments"
-    Then I should seee "Data Collection Instruments"
+    Then I should see "dd_form"
+    And I should see "dd_test"
 
-    # Step 12*
-    When I create a new instrument named "Demo Branching"
-    Then I should seee "Demo Branching"
+  Scenario: 12 - Create new instrument
+    Given I visit Project ID 14
+    And I click on the link labeled "Project Setup"
+    And I click on the button labeled "Online Designer"
+    And I click on the element identified by "button[onclick='showAddForm();']"
+    Then I should see a button labeled "Add instrument here"
+    And I add an instrument below the instrument named "Data Dictionary Form"
+    And I enter "Demo Branching" into the field identified by "input[id=new_form-data_dictionary_form]"
+    And I click on the element identified by "input[value=Create]"
+    Then I should see "Demo Branching"
 
-    # Step 13*
-    When I rename the instrument labeled "Demo Branching" to "Data Types"
-    Then I should seee "Data Types"
+  Scenario: 13 - Rename My First Instrument
+    Given I click on the Instrument Action "Rename" for the instrument named "My First Instrument"
+    And I clear the field identified by "input[value='My First Instrument']"
+    And I enter "Data Types" into the field identified by "input[value='My First Instrument']"
+    And I click on the element identified by "input[id=form_menu_save_btn-my_first_instrument]"
+    Then I should see "Data Types"
 
-    # Step 14
-    When I copy the instrument labeled "Data Dictionary Form" as "Text Validation" with variable suffix "_v2"
-    Then I should seee "SUCCESS! The instrument was successfully copied."
+  Scenario: 14 - Copy My First Instrument 2
+    Given I click on the Instrument Action "Copy" for the instrument named "My First Instrument 2"
+    And I clear the field labeled "New instrument name:"
+    And I enter "Text Validation" into the field labeled "New instrument name:"
+    And I click on the button labeled "Copy instrument" in the dialog box
+    Then I should see "Text Validation"
 
-    # Step 15^
-    When I click on the link labeled "Text Validation"
-    Then I should seee "dd_test_v2"
-    When I click on the button labeled "Return to list of instruments"
+  Scenario: 15 - Verify Text Validation Copied
+    Given I click on the link labeled "Text Validation"
+    Then I should see "ptname_v2_v2"
+    Then I should see "email_v2"
 
-    # Step 16
-    #Script step involves deleting an instrument that doesn't exist, presumably due to differing initial project state
+  Scenario: 16 - Delete My First Instrument 2
+    Given I visit Project ID 14
+    And I click on the link labeled "Project Setup"
+    And I click on the button labeled "Online Designer"
+    And I click on the Instrument Action "Delete" for the instrument named "My First Instrument 2"
+    And the AJAX "GET" request at "/Design/delete_form.php*" tagged by "Delete" is being monitored
+    And I click on the button labeled "Yes, delete it"
+    And the AJAX request tagged by "Delete" has completed
+    Then I should see "Deleted!"
+    And I should see "The data collection instrument and all its fields have been successfully deleted!"
+    And I should no longer see the element identified by "tr[id=row_2]"
 
-    # Step 17
-    # When I reorder the instrument at position 3 to position 1
-    # Then I should see an instrument labeled "Text Validation" in row 1 of the instruments table
+  Scenario: 17 - Drag Text Validation to the Top of the List
+    Given I drag on the instrument named "Text Validation" to position 0
+    #The item below always passes when Saved! is hidden
+    Then I should see "Saved!"
+    #Verify "Text Validation" is at the top
+  
+  Scenario: 18 - Add all instruments to Event 1
+    Given I click on the link labeled "Project Setup"
+    And I click on the button labeled "Designate Instruments for My Events"
+    And I click on the button labeled "Begin Editing"
+    And I add an instrument named "Text Validation" to the event named "Event 1"
+    And I add an instrument named "Data Dictionary Form" to the event named "Event 1"
+    And I add an instrument named "Demo Branching" to the event named "Event 1"
+    And the AJAX "POST" request at "Design/designate_forms_ajax*" tagged by "designate" is being monitored
+    Then I click on the button labeled "Save"
+    And the AJAX request tagged by "designate" has completed
 
-    # Step 18
-    # When I click on the link labeled "Project Setup"
-    #--Initial project state doesn't allow for designating instruments to events, since only 1 is defined
-    #--so I am skipping the step to designate instruments
 
-    # Step 19*
-    When I click on the link labeled "Data Types"
-    # Then I should seee "Current instrument: Data Types" --phrase is split across two spans, so isn't found
-
-    # Step 20
-    When I add a new field at position 1
-    Then The field types specified in step 20 of script 07 should be available
-
-    # Step 21* - Does not verify subfields have default values, just that they appear
-    When I set the "field type" subfield to "Text Box (Short Text, Number, Date/Time, ...)"
-    Then I should seee "Field Label"
-    And I should seee "Variable Name"
-    And I should seee "Validation?"
-    And I should seee "Required?"
-    And I should seee "Identifier?"
-    And I should seee "Custom Alignment"
-    And I should seee "Field Note"
-
-    # Step 22  
-    When I set the "field label" subfield to "Text Box"
-    And I set the "VARIABLE name " subfield to "textbox"
-    And I click on the button labeled "Save"
-    Then I should seee "Text Box"
-    And I should seee "Variable: textbox"
-
-    # Step 23
-    When I edit the field labeled "Text Box"
-    And I set the "variable name" subfield to "2"
-    And I click on the button labeled "Save"
-    Then I should seee "Please enter a value for the variable name."
-    Then I should seee "Please enter a value for the variable name."
-    
-    When I click on the button labeled "Close"
-    And I set the "variable name" subfield to "2ABC"
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: abc"
-
-    When I edit the field labeled "Text Box"
-    And I set the "variable name" subfield to "ABC#2"
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: abc_2"
-
-    When I edit the field labeled "Text Box"
-    And I set the "variable name" subfield to "A2bc"
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: a2bc"
-
-    When I edit the field labeled "Text Box"
-    And I set the "variable name" subfield to "textbox"
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: textbox"
-
-    # Step 24
-    When I add a new field at position 2
-    And I set the "field type" subfield to "Notes Box (Paragraph Text)"
-    And I set the "field label" subfield to "Notes Box"
-    And I set the "variable name" subfield to "notesbox"
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: notesbox"
-
-    # Step 25
-    When I add a new field at position 3
-    And I set the "field type" subfield to "Calculated Field"
-    And I set the "field label" subfield to "Calculated Field"
-    And I set the "variable name" subfield to "calculated_field"
-    And I set the "calculated field" subfield to "3 * 2"
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: calculated_field"
-    And I should seee "View equation"
-
-    # Step 26* - does not verify "the three choices exist", i.e. that the new field has expected options after save
-    When I add a new field at position 4
-    And I set the "field type" subfield to "Multiple Choice - Drop-down List (Single Answer)"
-    And I set the "field label" subfield to "Multiple Choice Dropdown Auto"
-    And I set the "choices" subfield to "DDChoice1{enter}DDChoice2{enter}DDChoice3"
-    Then I should seee "Raw values for choices were added automatically"
-    And I should seee "1 was set as the raw value for DDChoice1"
-
-    When I click on the button labeled "Close" in the dialog box
-    And I set the "variable name" subfield to "multiple_dropdown_auto"
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: multiple_dropdown_auto"
-
-    # Step 27
-    When I add a new field at position 5
-    And I set the "field type" subfield to "Multiple Choice - Drop-down List (Single Answer)"
-    And I set the "field label" subfield to "Multiple Choice Dropdown Manual"
-    And I set the "choices" subfield to "5, DDChoice5{enter}7, DDChoice6{enter}6, DDChoice7"
-    And I set the "variable name" subfield to "multiple_dropdown_manual"
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: multiple_dropdown_manual"
-
-    # Step 28
-    When I add a new field at position 6
-    And I set the "field type" subfield to "Multiple Choice - Radio Buttons (Single Answer)"
-    And I set the "field label" subfield to "Radio Button Auto"
-    And I set the "choices" subfield to "Choice1{enter}Choice2{enter}Choice.3{enter}"
-    Then I should seee "3 was set as the raw value for Choice.3"
-
-    When I click on the button labeled "Close" in the dialog box
-    And I set the "variable name" subfield to "multiple_radio_auto"
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: multiple_radio_auto"
-
-    # Step 29
-    When I add a new field at position 7
-    And I set the "field type" subfield to "Multiple Choice - Radio Buttons (Single Answer)"
-    And I set the "field label" subfield to "Radio Button Manual"
-    And I set the "choices" subfield to "9..9, Choice99{enter}100, Choice100{enter}101, Choice101"
-    And I set the "variable name" subfield to "radio_button_manual"
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: radio_button_manual"
-
-    # Step 30* - Looks for choices on the edit instrument page instead of inside of the field editing modal
-    Then I should see that the choice "Choice99" for the field "radio_button_manual" is coded as "9..9"
-    And I should see that the choice "Choice100" for the field "radio_button_manual" is coded as "100"
-    And I should see that the choice "Choice101" for the field "radio_button_manual" is coded as "101"
-
-    # Step 31
-    #pos 2/8
-    When I add a new field at position 8
-    And I set the "field type" subfield to "Checkboxes (Multiple Answers)"
-    And I set the "field label" subfield to "Checkbox"
-    And I set the "choices" subfield to "1, Checkbox1{enter}2, Checkbox2{enter}3, Checkbox3"
-    And I set the "variable name" subfield to "checkbox"
-    And I click on the button labeled "Save"
-    Then I should see that the choice "Checkbox1" for the field "checkbox" is coded as "1"
-    And I should see that the choice "Checkbox2" for the field "checkbox" is coded as "2"
-    And I should see that the choice "Checkbox3" for the field "checkbox" is coded as "3"
-
-    # Step 32
-    #pos 3/9
-    When I add a new field at position 9
-    And I set the "field type" subfield to "Signature (draw signature with mouse or finger)"
-    And I set the "field label" subfield to "Signature"
-    And I set the "variable name" subfield to "signature"
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: signature"
-    And I should see a link labeled "Add signature"
-
-    # Step 33
-    #pos 4/10
-    When I add a new field at position 10
-    And I set the "field type" subfield to "File Upload (for users to upload files)"
-    And I set the "field label" subfield to "File Upload"
-    And I set the "variable name" subfield to "file_upload"
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: file_upload"
-    And I should see a link labeled "Upload file"
-
-    # Step 34
-    #pos 5/11
-    When I add a new field at position 11
-    And I set the "field type" subfield to "Descriptive Text (with optional Image/Video/Audio/File Attachment)"
-    And I set the "field label" subfield to "Descriptive Text with File"
-    And I set the "variable name" subfield to "descriptive_text_file"
-    Then I should see a link labeled "Upload file"
-    # ^ false positive prone, since it matches a different link underneath dialog box
-
-    When I click on the link labeled "Upload file"
-    # When I click on the element identified by "#div_attach_upload_link > a"
-    # ^ delete after z-index fix
-    And I upload a "image/jpeg" format file located at "import_files/core/7_image_v1115.jpeg", by clicking "#myfile" to select the file, and clicking "button:contains(Upload file)" to upload the file
-    # ^ uses selectors, not user-friendly for non-technical gherkin writers
-    Then I should seee "Document was successfully uploaded!"
-
-    When I click on the button labeled "Close" in the dialog box
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: descriptive_text_file"
-    And I should seee "7_image_v1115.jpeg"
-
-    # Step 35
-    #pos 6/12
-    When I add a new field at position 12
-    And I set the "field type" subfield to "Descriptive Text (with optional Image/Video/Audio/File Attachment)"
-    And I set the "field label" subfield to "Descriptive Text"
-    And I set the "variable name" subfield to "descriptive_text"
-    And I click on the button labeled "Save"
-    Then I should seee "Variable: descriptive_text"
-
-    # Step 36
-    # Step requires that a record already exists, so I have to create one
-    When I click on the link labeled "Record Status Dashboard"
-    And I click on the button labeled "Add new record"
-    # And I click on the element identified by "a[href*=data_types]:visible"
-    # Need step to choose instrument when creating new record when multiple instruments exist
-    And I click on the button labeled "Save & Exit Form"
-    And I click on the link labeled "Record Status Dashboard"
-    And I click on the bubble for the "Data Types" data collection instrument instrument for record ID "1"
-    Then I should see a link labeled "7_image_v1115.jpeg"
-    #Script says to view the image, skipping
-
-    # Step 37
-    When I click on the button labeled "Save & Exit Form"
-    Then I should seee "Record Home Page"
-
-    # Step 38
-    When I click on the link labeled "Designer"
+  Scenario: 19 - Open Data Types Form
+    Given I visit Project ID 14
+    And I click on the link labeled "Project Setup"
+    And I click on the button labeled "Online Designer"
     And I click on the link labeled "Data Types"
-    And I add a new field at position 13
-    And I set the "field type" subfield to "Begin New Section (with optional text)"
-    And I set the "field label" subfield to "Section Break"
+  
+  Scenario: 20 - Verify Add Field Types
+    Given I click on the Add Field input button below the field named "Text2"
+    Then I should see "Add New Field"
+    Then I should see the dropdown identified by "select[name=field_type]" with the options below
+    | Text Box | Notes Box | Calculated Field | Multiple Choice - Drop-down List | Multiple Choice - Radio Buttons | Checkboxes | Signature | File Upload | Descriptive Text | Begin New Section |
+
+  Scenario: 21 - Verify Metadata Field Types
+    Given I select "text" from the dropdown identified by "select[name=field_type]"
+    Then I should see the element identified by "textarea[name=field_label]"
+    And I should see the element identified by "input[name=field_name]"
+    And I should see the element identified by "select[name=val_type]"
+    And I should see the element identified by "input[id=field_req0]"
+    And I should see the element identified by "input[id=field_req1]"
+    And I should see the element identified by "input[id=field_phi0]" 
+    And I should see the element identified by "input[id=field_phi1]" 
+    And I should see the element identified by "input[id=field_phi0]" 
+    And I should see the element identified by "select[name=custom_alignment]" 
+    And I should see the element identified by "input[name=field_note]" 
+  
+  Scenario: 22 - Add Text Box
+    Given I enter "Text Box" into the field identified by "textarea[name=field_label]"
+    And I enter "textbox" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
     And I click on the button labeled "Save"
-    # Then I should see alert with text
+	  And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "textbox"
+
+  Scenario: 23 - Test illegal variables
+    Given the AJAX "GET" request at "Design/edit_field_prefill.php*" tagged by "edit" is being monitored
+    And I click on the Edit image for the field named "Text Box"
+    And the AJAX request tagged by "edit" has completed
+    And I clear the field identified by "input[name=field_name]"
+    And I enter "2" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I should see the input field identified by "input[name=field_name]" with the value ""
+    And I clear the field identified by "input[name=field_name]"
+    And I enter "2ABC" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I should see the input field identified by "input[name=field_name]" with the value "abc"
+    And I clear the field identified by "input[name=field_name]"
+    And I enter "ABC#2" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I should see the input field identified by "input[name=field_name]" with the value "abc_2"
+    And I clear the field identified by "input[name=field_name]"
+    And I enter "A2bc" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I should see the input field identified by "input[name=field_name]" with the value "a2bc"
+    And I clear the field identified by "input[name=field_name]"
+    And I enter "textbox" into the field identified by "input[name=field_name]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "textbox"    
+  
+  Scenario: 24 - Add Notes Box
+    Given I click on the Add Field input button below the field named "Text Box"
+    And I select "textarea" from the dropdown identified by "select[name=field_type]"
+    And I enter "Notes Box" into the field identified by "textarea[name=field_label]"
+    And I enter "notesbox" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "notesbox"
+    And I should see the element identified by "textarea[id=notesbox]"
+
+  Scenario: 25 - Add Calculated Field
+    Given I click on the Add Field input button below the field named "Notes Box"
+    And I select "calc" from the dropdown identified by "select[name=field_type]"
+    Then I should see "Calculation Equation"
+    And I enter "Caculated Field" into the field identified by "textarea[name=field_label]"
+    And I enter "calculated_field" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=element_enum]"
+    And I enter "3*2" into the hidden field identified by "textarea[class=ace_text-input]"
+    And I click on the button labeled "Update & Close Editor" in the dialog box
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "calculated_field"
+
+  Scenario: 26 - Add Multiple Choice - Drop-down Auto
+    Given I click on the Add Field input button below the field named "Caculated Field"
+    And I select "select" from the dropdown identified by "select[name=field_type]"
+    Then I should see "Choices (one choice per line)"
+    And I enter "Multiple Choice Dropdown Auto" into the field identified by "textarea[name=field_label]"
+    And I enter "DDChoice1{enter}DDChoice2{enter}DDChoice3" into the field identified by "textarea[name=element_enum]"
+    And I click on the element identified by "input[name=field_name]"
+    Then I should see "Raw values for choices were added automatically"
+    And I click on the button labeled "Close" in the dialog box
+    Then I should see the input field identified by "textarea[name=element_enum]" with the value "1, DDChoice1\n2, DDChoice2\n3, DDChoice3"
+    And I enter "multiple_dropdown_auto" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "multiple_dropdown_auto"
+
+  Scenario: 27 - Add Multiple Choice - Drop-down Manual
+    Given I click on the Add Field input button below the field named "Multiple Choice Dropdown Auto"
+    And I select "select" from the dropdown identified by "select[name=field_type]"
+    Then I should see "Choices (one choice per line)"
+    And I enter "Multiple Choice Dropdown Manual" into the field identified by "textarea[name=field_label]"
+    And I enter "5, DDChoice5{enter}7, DDChoice6{enter}6, DDChoice7" into the field identified by "textarea[name=element_enum]"
+    And I enter "multiple_dropdown_manual" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "multiple_dropdown_manual"
+
+  Scenario: 28 - Add Multiple Choice - Radio Auto
+    Given I click on the Add Field input button below the field named "Multiple Choice Dropdown Manual"
+    And I select "radio" from the dropdown identified by "select[name=field_type]"
+    Then I should see "Choices (one choice per line)"
+    And I enter "Radio Button Auto" into the field identified by "textarea[name=field_label]"
+    And I enter "Choice1{enter}Choice2{enter}Choice.3" into the field identified by "textarea[name=element_enum]"
+    And I click on the element identified by "input[name=field_name]"
+    Then I should see "Raw values for choices were added automatically"
+    And I click on the button labeled "Close" in the dialog box
+    Then I should see the input field identified by "textarea[name=element_enum]" with the value "1, Choice1\n2, Choice2\n3, Choice.3"
+    And I enter "radio_button_auto" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "radio_button_auto"
+
+  Scenario: 29 - Add Multiple Choice Radio Manual
+    Given I click on the Add Field input button below the field named "Radio Button Auto"
+    And I select "radio" from the dropdown identified by "select[name=field_type]"
+    Then I should see "Choices (one choice per line)"
+    And I enter "Radio Button Manual" into the field identified by "textarea[name=field_label]"
+    And I enter "9..9, Choice99{enter}100, Choice100{enter}101, Choice101" into the field identified by "textarea[name=element_enum]"
+    And I click on the element identified by "input[name=field_name]"
+    And I enter "radio_button_manual" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "radio_button_manual"
+
+  Scenario: 30 - Edit Radio Button
+    Given the AJAX "GET" request at "Design/edit_field_prefill.php*" tagged by "edit" is being monitored
+    And I click on the Edit image for the field named "Radio Button Manual"
+    And the AJAX request tagged by "edit" has completed
+    Then I should see the input field identified by "textarea[name=element_enum]" with the value "9..9, Choice99\n100, Choice100\n101, Choice101"
+    Then I click on the button labeled "Cancel"
+
+  Scenario: 31 - Add Checkbox
+    Given I click on the Add Field input button below the field named "Radio Button Manual"
+    And I select "checkbox" from the dropdown identified by "select[name=field_type]"
+    And I enter "Checkbox" into the field identified by "textarea[name=field_label]"
+    And I enter "1, Checkbox{enter}2, Checkbox2{enter}3, Checkbox3" into the field identified by "textarea[name=element_enum]"
+    And I enter "checkbox" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "checkbox"
+    
+  Scenario: 32 - Add Signature
+    Given I click on the Add Field input button below the field named "Checkbox"
+    And I select "Signature (draw signature with mouse or finger)" from the dropdown identified by "select[name=field_type]"
+    And I enter "Signature" into the field identified by "textarea[name=field_label]"
+    And I enter "signature" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see a link labeled "Add signature"
+    Then I should see "signature"
+
+  Scenario: 33 - Add File Upload
+    Given I click on the Add Field input button below the field named "Signature"
+    And I select "File Upload (for users to upload files)" from the dropdown identified by "select[name=field_type]"
+    And I enter "File Upload" into the field identified by "textarea[name=field_label]"
+    And I enter "file_upload" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see a link labeled "Upload file"
+    Then I should see "file_upload"
+
+  Scenario: 34 - Add Descriptive Text With File
+    Given I click on the Add Field input button below the field named "File Upload"
+    And I select "descriptive" from the dropdown identified by "select[name=field_type]"
+    And I enter "Descriptive Text with File" into the field identified by "textarea[name=field_label]"
+    And I enter "descriptive_file_text" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I click on the element identified by "a[onclick='openAttachPopup();']"
+    And I set the input file field named "myfile" to the file at path "cypress/fixtures/import_files/core/7_image_v913.jpg"
+    And I click on the button labeled "Upload file" in the dialog box
+    And I should see "Upload in progress..."
+    And I should see "Document was successfully uploaded"
+    And I click on the button labeled "Close" in the dialog box
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "descriptive_file_text"
+
+  Scenario: 35 - Add Descriptive Text
+    Given I click on the Add Field input button below the field named "Descriptive Text with File"
+    And I select "descriptive" from the dropdown identified by "select[name=field_type]"
+    And I enter "Descriptive Text" into the field identified by "textarea[name=field_label]"
+    And I enter "descriptive_text" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "textarea[name=field_label]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "descriptive_text"
+
+  Scenario: 36 - Confirm Descriptive Text exists
+    Given I click on the link labeled "Add / Edit Records"
+    And I select "1" from the dropdown identified by "select[id=record]"
+    And I click on the element identified by "a[style='text-decoration:none;'][href*='DataEntry/index.php?']"
+    And I should see "Descriptive Text with File"
+    And I should see "Attachment:"
+    And I should see "7_image_v913.jpg"
+    And I should see "(0.01 MB)"
+
+  Scenario: 37 - Review image upload
+    Given I download a file by clicking on the link labeled "7_image_v913.jpg"
+    #Open image?
+    #Verify image contents
+    Then I click on the button labeled "Save & Exit Form"
+
+  Scenario: 38 - Add New Section
+    Given I click on the link labeled "Designer"
+    And I click on the link labeled "Data Types"
+    And I click on the Add Field input button below the field named "Descriptive Text"
+    And I select "section_header" from the dropdown identified by "select[name=field_type]"
+    And I enter "Section Break" into the field identified by "textarea[name=field_label]"
+    And I click on the button labeled "Save"
+    Then I should see "Sorry, but Section Headers cannot be the last field on a data entry form." in an alert box
+    And I should NOT see "Section Break"
+
+  Scenario: 39 - Add New Section
+    Given I click on the Add Field input button below the field named "File Upload"
+    And I select "section_header" from the dropdown identified by "select[name=field_type]"
+    And I enter "Section Break" into the field identified by "textarea[name=field_label]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see ""
+
+  Scenario: 40 - Add Identifier
+    Given I click on the Add Field input button below the field named "Descriptive Text"
+    And I select "text" from the dropdown identified by "select[name=field_type]"
+    And I enter "Identifier" into the field identified by "textarea[name=field_label]"
+    And I enter "identifier" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "input[id=field_phi1]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "identifier"
+
+  Scenario: 41 - Add Required Field
+    Given I click on the Add Field input button below the field named "Identifier"
+    And I select "text" from the dropdown identified by "select[name=field_type]"
+    And I enter "Required" into the field identified by "textarea[name=field_label]"
+    And I enter "required" into the field identified by "input[name=field_name]"
+    And I click on the element identified by "input[id=field_req1]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "required"
+    Then I should see "must provide value"
+
+  Scenario: 42 - Drag and drop required field to indentifier field
+    Given the AJAX "POST" request at "Design/update_field_order.php*" tagged by "update" is being monitored
+    And I drag on the field named "required" to position 14
+    And the AJAX request tagged by "update" has completed
+    Then I should see a the field named "Required" before field named "Identifier"
+
+  Scenario: 43 - Delete field
+    Given I click on the button labeled "Return to list of instruments"
+    And I click on the link labeled "Data Dictionary Form"
+    And I click on the Delete Field image for the field named "dd_test"
+    And the AJAX "GET" request at "Design/delete_field.php?*" tagged by "delete" is being monitored
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And I click on the button labeled "Delete" in the dialog box
+    And the AJAX request tagged by "delete" has completed
+    And the AJAX request tagged by "render" has completed
+    Then I should NOT see "dd_test"
+    #Then I should no longer see the element identified by "tr[id=dd_test-tr]"
+
+  Scenario: 44 - Move Field to Other Instrument
+    Given I click on the Move image for the field named "dd_form"
+    Then I should see "Move field to another location"
+    And I select "identifier" from the dropdown identified by "select[id=move_after_field]"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And I click on the button labeled "Move field" in the dialog box
+    Then I should see "Successfully moved"
+    And I should see "dd_form: "
+    And I click on the button labeled "Close" in the dialog box
+    And the AJAX request tagged by "render" has completed
+    Then I should no longer see the element identified by "tr[id=dd_form-tr]"
+
+  Scenario: 45 - Edit moved field
+    Given I click on the button labeled "Return to list of instruments"
+    And I click on the link labeled "Data Types"
+    Given the AJAX "GET" request at "Design/edit_field_prefill.php*" tagged by "edit" is being monitored
+    And I click on the Edit image for the field named "Testing data dictionary upload"
+    And the AJAX request tagged by "edit" has completed
+    And I select "text" from the dropdown identified by "select[name=field_type]"
+    And I clear the field identified by "textarea[name=field_label]"
+    And I clear the field identified by "input[name=field_name]"
+    And I enter "Edit Field" into the field identified by "textarea[name=field_label]"
+    And I enter "edit_field" into the field identified by "input[name=field_name]"
+    And I click on the button labeled "Save"
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "edit_field"
+
+  Scenario: 46 - Copy Field, Cancel
+    Given I click on the Copy image for the field named "Identifier"
+    And I click on the button labeled "Cancel" in the dialog box
+    Then I should NOT see "identifier_2"
+ 
+  Scenario: 47 - Copy Field, Confirm
+    Given I click on the Copy image for the field named "Identifier"
+    And I click on the button labeled "Copy field" in the dialog box
+    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And the AJAX request tagged by "render" has completed
+    Then I should see "identifier_2"
+
+  Scenario: 48 - Logout
+    Given I logout

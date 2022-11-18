@@ -9,6 +9,10 @@ test_db/initial_db_seed.lock
 /redcap_docker
 /cypress/downloads
 
+/cypress/downloads
+
+/cypress/downloads
+
 cypress.config.js
 
 cypress.json
@@ -29,4 +33,4 @@ cypress.env.json
 mysql-cli.zip
 
 /.vscode
-cypress/support/step_definitions/corey/old_code.txt
+*.code-workspace

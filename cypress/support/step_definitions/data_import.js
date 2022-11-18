@@ -49,7 +49,7 @@ defineParameterType({
 /**
  * @module DataImport
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I create a project named {string} with project purpose <Practice | Just for fun | Operational Support | Research | Quality Improvement | Other> via CDISC XML import from fixture location {string}
+ * @example I create a project named {string} with project purpose <Practice / Just for fun | Operational Support | Research | Quality Improvement | Other> via CDISC XML import from fixture location {string}
  * @param {string} project_name - the desired name for the project
  * @param {string} project_type - the project purpose specified when the project is created
  * @param {string} cdisc_file - the fixture path to the CDISC XML file (relative path; fixtures are located in /cypress/fixtures/)

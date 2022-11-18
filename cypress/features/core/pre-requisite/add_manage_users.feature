@@ -7,6 +7,7 @@ Scenario: 1- Login as admin1115
     Given I am an "admin" user who logs into REDCap
 
 Scenario: 2- Visible Pages
+    Given I visit the "Control Center" page
     When I click on the link labeled "User Settings"
     Then I should see "System-level User Settings" 
 
@@ -92,13 +93,14 @@ Scenario: 15- Login with Suspended User Account
     Then I should see "The following REDCap user account has been suspended:"
 
 Scenario: 16- View test_user in Suspended Users List
+    Given I am an "admin" user who logs into REDCap
+    And I visit the "Control Center" page
     When I click on the link labeled "Browse Users"
     Then I should see "User Search: Search for user by username, first name, last name, or primary email"
     When I click on the link labeled "View User List By Criteria"
     And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
     And I click on the button labeled "Display User List"
-    And I want to pause
-    Then I should see a link labeled "test_user"       
+    Then I should see a link labeled "test_user"
 
 Scenario: 17- Cancel Unsuspend test_user Account
     When I click on the link labeled "Browse Users"
@@ -116,7 +118,6 @@ Scenario: 18- Unsuspend test_user Account
     And I click on the link labeled "View User List By Criteria"
     And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
     And I click on the button labeled "Display User List"
-    And I want to pause
     And I click on the link labeled "test_user"
     And I click on the link labeled "unsuspend user"
     Then I should see "Success! The user has now been unsuspended and will now be able to access REDCap again." 

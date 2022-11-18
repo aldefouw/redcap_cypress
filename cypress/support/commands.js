@@ -435,6 +435,12 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
     let admin_user = Cypress.env('users')['admin']['user']
     let current_token = null;
 
+    let current_user_type = window.user_info.get_previous_user_type()
+    if(current_user_type != 'admin'){
+        cy.set_user_type('admin')
+        cy.fetch_login()
+    }
+
      cy.add_api_user_to_project(admin_user, pid).then(($response) => {
 
         if($response.hasOwnProperty('token')){
@@ -517,6 +523,11 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
                     })
                 })
             })
+        }
+
+        if(current_user_type != 'admin'){
+            cy.set_user_type(current_user_type)
+            cy.fetch_login()
         }
 
     })
@@ -640,6 +651,12 @@ Cypress.Commands.add('import_data_file', (fixture_file,pid) => {
     let admin_user = Cypress.env('users')['admin']['user']
     let current_token = null;
 
+    let current_user_type = window.user_info.get_previous_user_type()
+    if(current_user_type != 'admin'){
+        cy.set_user_type('admin')
+        cy.fetch_login()
+    } 
+
     cy.add_api_user_to_project(admin_user, pid).then(($response) => {
 
         if($response.hasOwnProperty('token')){
@@ -661,6 +678,7 @@ Cypress.Commands.add('import_data_file', (fixture_file,pid) => {
                         format: 'csv',
                         type: 'flat',
                         data: import_data,
+                        dateFormat: 'MDY',
                         returnFormat: 'json'
                     },
                     timeout: 50000
@@ -704,6 +722,7 @@ Cypress.Commands.add('import_data_file', (fixture_file,pid) => {
                                 format: 'csv',
                                 type: 'flat',
                                 data: import_data,
+                                dateFormat: 'MDY',
                                 returnFormat: 'json'
                             },
                             timeout: 50000
@@ -715,6 +734,11 @@ Cypress.Commands.add('import_data_file', (fixture_file,pid) => {
                 })
             })
 
+        }
+
+        if(current_user_type != 'admin'){
+            cy.set_user_type(current_user_type)
+            cy.fetch_login()
         }
 
     })
@@ -1009,6 +1033,23 @@ Cypress.Commands.add('read_directory', (dir) => {
         return files
     })
 })
+
+Cypress.Commands.add("dragTo", { prevSubject: 'element'}, (subject, target) => { 
+    let rect = cy.get(target).then((element) => {
+        let rect = element[0].getBoundingClientRect()
+        return rect
+    })
+    //click on element
+    cy.wrap(subject).trigger('mousedown')
+    
+    //move mouse to new position
+    cy.get(target).trigger('mousemove', 'bottom')
+        .trigger('mousemove', 'center')
+    
+    // target position changed, mouseup on original element
+    cy.wrap(subject).trigger('mouseup')
+    
+ })
 
 //yields the visible div with the highest z-index, or the <html> if none are found
 Cypress.Commands.add('get_top_layer', (retryUntil) => {
