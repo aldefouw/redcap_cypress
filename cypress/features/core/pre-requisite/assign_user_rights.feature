@@ -176,22 +176,26 @@ Feature: Assign User Rights
     And I should see link labeled "Logging"
 
   Scenario: 13 - Assign Data Quality - create/edit rules to test_user
-    When I click on the link labeled "test_user"  
+    Given I click on the link labeled "test_user"  
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
     Then I should see "Editing existing user"
-    When I click on the element identified by '[name="data_quality_design"]'
+    When I check the user right identified by "[name=data_quality_design]"
     And I click on the button labeled "Save Changes"
-      # ^ can this not be a "assign the "" user right like 14?"
     And I click on the link labeled "test_user"
-    And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    Then I should see "Edit user privileges"
+    When I click on the element identified by "[id=tooltipBtnSetCustom]"
     Then the user right identified by "[name=data_quality_design]" should be checked
     When I click on the link labeled "User Rights"
     Then I should see a link labeled "Data Quality"
 
   Scenario: 14 - Assign Data Quality - Execute rules to test_user
-    Given I want to assign the "Execute rules" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I click on the link labeled "test_user"  
+    And I should see "Edit user privileges"
+    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    Then I should see "Editing existing user"
+    When I check the user right identified by "[name=data_quality_execute]"
+    And I click on the button labeled "Save Changes"
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
@@ -262,24 +266,22 @@ Scenario: before step 26
     And I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     When I click on the link labeled "Designer"
-    And I click on the element identified by "button:contains('Enable'):last"
+    And I click on the element identified by "button:contains('Enable'):first"
     And I click on the button labeled "Save Changes"
     Then I should see "Your survey settings were successfully saved!"
 
-#new record - didnt fix issue 
-    Given I visit the version URL "DataEntry/index.php?pid=14&id=2&event_id=41&page=data_types&auto=1"
-    And I click on the button labeled "Save & Exit Form"
-   
-   
+    When I visit the public survey URL for Project ID 14
+    And I enter "name" into the "Name" survey text input field
+    And I click on the button labeled "Submit"
     Given I logout
     And I am a "standard" user who logs into REDCap
 
-#trying to see if this runs 
+#trying to see if this runs - recheck all after last > first instrument switch
   Scenario: 23 - Assign No Access to test_user
     Given I grant No Access level of Data Entry Rights on the "Text Validation" instrument for the username "test_user" for project ID 14
     And I grant No Access level of Data Entry Rights on the "Data Types" instrument for the username "test_user" for project ID 14
     And I click on the link labeled "View / Edit Records"
-    And I select "1" from the dropdown identified by "[id=record]"
+    And I select "2" from the dropdown identified by "[id=record]"
     Then I should see "Record Home Page"
     And I should NOT see "Text Validation"
 
@@ -288,39 +290,30 @@ Scenario: before step 26
     And I grant Read Only level of Data Entry Rights on the "Data Types" instrument for the username "test_user" for project ID 14
     And I click on the link labeled "User Rights"
     When I click on the link labeled "Record Status Dashboard"
-    When I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "1"
+    When I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
     Then I should see "Text Validation"
-    And I should NOT see "Save & Exit Form"
+    And I should NOT see "Edit response"
 
   Scenario: 25 - Assign View and Edit to test_user
     Given I grant View & Edit level of Data Entry Rights on the "Text Validation" instrument for the username "test_user" for project ID 14
     And I grant View & Edit level of Data Entry Rights on the "Data Types" instrument for the username "test_user" for project ID 14
     And I click on the link labeled "User Rights"
     When I click on the link labeled "Record Status Dashboard"
-    When I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "1"
-    Then I should see "Text Validation"
-    And I should see a button labeled "Save & Exit Form"
-    When I click on the link labeled "Record Status Dashboard"
-    #Given I am a "standard" user who logs into REDCap
-    And I click on the bubble for the "Data Types" data collection instrument instrument for record ID "2"
-    Then I should see "Data Types"
-    #read only^ - this is the survey an you can still edit it 
-
-
-
-  Scenario: 26 - Assign Edit Survey Responses to test_user
-    Given I click on the link labeled "User Rights"
-    And I click on the link labeled "test_user"  
-    #And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
-    Then I should see "Editing existing user"
-    And I click on the checkbox identified by "[id=form-editresp-text_validation]"
-    And I click on the button labeled "Save Changes"
-    And I click on the link labeled "User Rights"
-    When I click on the link labeled "Record Status Dashboard"
     When I click on the bubble for the "Data Types" data collection instrument instrument for record ID "1"
     Then I should see "Data Types"
     And I should see a button labeled "Save & Exit Form"
+    When I click on the link labeled "Record Status Dashboard"
+    And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    Then I should see "Text Validation"
+    And I should NOT see "Edit response"
+
+  Scenario: 26 - Assign Edit Survey Responses to test_user
+    Given I change survey edit rights for "test_user" user on the form called "Text Validation" on project ID 14
+    And I click on the link labeled "User Rights"
+    When I click on the link labeled "Record Status Dashboard"
+    When I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    Then I should see "Data Types"
+    And I should see a button labeled "Edit response"
 
   Scenario: 27 - Create Data Entry Role 
     When I click on the link labeled "User Rights"
@@ -338,7 +331,6 @@ Scenario: before step 26
     And I enter "Reviewer" into the field identified by "[id=role_name_copy]"
     And I click on the element identified by "button:contains('Copy role'):last"
     Then I should see "was successfully added"
-    #When I click on the button labeled "Save Changes"
     When I click on the link labeled "User Rights"
     And I should see a link labeled "Data Entry"
     And I should see a link labeled "Reviewer"
@@ -349,22 +341,21 @@ Scenario: before step 26
     When I click on the button labeled "Delete role"
     Then I should see "Delete role?"
     When I click on the element identified by "button:contains('Cancel'):last"
-    #When I click on the button labeled "Cancel"
     And I click on the button labeled "Close"
-      #Might not work - is the x button 
     Then I should see a link labeled "Reviewer"
 
   Scenario: 30 - Delete Reviewer Role 
-    Given I click on the link labeled "Reviewer"
-    Given I click on the element identified by "[id=rightsTableUserLinkId_2]"
-    Then I should see "Editing existing user role"
-    When I click on the button labeled "Delete role"
-    Then I should see "Delete role?"
-    When I click on the element identified by "button:contains('Delete role'):last"
-    Then I should see "was successfully deleted"
-    #Given I delete role name "Reviewer"
-    
-    And I want to pause
+    Given I delete role name "Reviewer"
+    And I click on the button labeled "Delete role"
+And I want to pause
+
+    #Given I click on the link labeled "Reviewer"
+    #Given I click on the element identified by "[id=rightsTableUserLinkId_2]"
+    #Then I should see "Editing existing user role"
+    #When I click on the button labeled "Delete role"
+    #Then I should see "Delete role?"
+    #When I click on the element identified by "button:contains('Delete role'):last"
+    #Then I should see "was successfully deleted"
 
     And I click on the link labeled "User Rights"
     And I should NOT see "Reviewer"
