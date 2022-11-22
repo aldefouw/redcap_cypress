@@ -434,3 +434,4 @@ Given('after the next step, I will {confirmation} a confirmation window containi
  Given('I click the input element identified by {string}', (value) => {
     cy.get(value).click()
 })
+
