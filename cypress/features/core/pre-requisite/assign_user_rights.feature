@@ -26,11 +26,11 @@ Feature: Assign User Rights
     And I enter "test_user" into the field identified by "[id=new_username]"
     And I click on the button labeled "Add with custom rights"
     And I click on the checkbox identified by "[name=reports]"
-    And I click on the checkbox identified by "[name=graphical]" 
-    And I click on the checkbox identified by "[name=participants]" 
-    And I click on the checkbox identified by "[name=calendar]" 
-    And I click on the checkbox identified by "[name=file_repository]" 
-    #And I click on the input element labeled " No Access" 
+    And I click on the checkbox identified by "[name=graphical]"
+    And I click on the checkbox identified by "[name=participants]"
+    And I click on the checkbox identified by "[name=calendar]"
+    And I click on the checkbox identified by "[name=file_repository]"
+    #And I click on the input element labeled " No Access"
     #And I click on the input element labeled " Disabled"
     And I click on the button labeled "Add user"
     Then I should see "was successfully added"
@@ -52,20 +52,15 @@ Feature: Assign User Rights
     And I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
-    And I want to assign an expiration date to user "Test User" with username of "test_user" on project ID 14
-    And I click on the link labeled "test_user"
-    Then I should see "Edit user privileges"
-    #When I click on the button labeled "Edit user privileges"
-    #When I click on the element identified by "[id=tooltipBtnSetCustom]"
-    When I click on the element identified by "#tooltipBtnSetCustom > .jqbuttonmed"
-      #^ all 3 detach so bottom half of scenario 2 may or may not work
-    And I enter "10/27/2022" into the field identified by "[id=expiration]"
-    And I click on the button labeled "Save Changes"
-    Then I should see a link labeled "10/27/2022"
+    And I assign an expired expiration date to user "Test User" with username of "test_user" on project ID 14
+
     Given I logout
     And I am a "standard" user who logs into REDCap
-    Then I should see "Your access to this particular REDCap project has expired."
+
     When I click on the link labeled "My Projects"
+    And I click on the link labeled "SecondProject_1115"
+    Then I should see "Your access to this particular REDCap project has expired."
+
     Given I logout
 
   Scenario: 3 - Assign Project Design and Setup to test_user 
@@ -73,18 +68,18 @@ Feature: Assign User Rights
     And I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
-    And I want to remove the expiration date to user "Test User" with username of "test_user" on project ID 14
+    And I remove the expiration date to user "Test User" with username of "test_user" on project ID 14
     Then I should NOT see "10/31/2022"
       #figute out date thing 
-    Given I want to assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
     Then the user right identified by "[name=design]" should be checked
-    And I want to verify user rights are available for "standard" user type on the path "ProjectSetup" on project ID 14
+    And I verify user rights are available for "standard" user type on the path "ProjectSetup" on project ID 14
 
   Scenario: 4 - Assign User Rights to test_user 
-    Given I want to assign the "User Rights" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "User Rights" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
@@ -101,7 +96,7 @@ Feature: Assign User Rights
     And I should see a link labeled "User Rights"
 
   Scenario: 6 - Assign Data Access Groups to test_user
-    Given I want to assign the "Data Access Groups" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Data Access Groups" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
@@ -110,19 +105,19 @@ Feature: Assign User Rights
     Then I should see a link labeled "DAGs"
 
   Scenario: 7 - Assign Data Exports - De-identified to test_user
-    Given I want to assign the "De-Identified*" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "De-Identified*" user right to the user named "Test User" with the username of "test_user" on project ID 14
     #Verify in the main User Rights page the ‘Data Export Tool’ box says De-identified for user user1115_1.
     Then I should see a link labeled "Data Exports, Reports, and Stats"
 
   Scenario: 8 - Assign Add/Edit/Organize Reports to test_user
-    Given I want to assign the "Add/Edit/Organize Reports" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Add/Edit/Organize Reports" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
     Then the user right identified by "[name=reports]" should be checked
 
   Scenario: 9 - Assign Survey Distribution Tools to test_user
-    Given I want to assign the "Survey Distribution Tools" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Survey Distribution Tools" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
@@ -131,7 +126,7 @@ Feature: Assign User Rights
     Then I should see a link labeled "Survey Distribution Tools"
 
   Scenario: 10 - Assign Data Import Tool to test_user
-    Given I want to assign the "Data Import Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Data Import Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
@@ -140,7 +135,7 @@ Feature: Assign User Rights
     Then I should see a link labeled "Data Import Tool"
 
   Scenario: 11 - Assign Data Comparison Tool to test_user
-    Given I want to assign the "Data Comparison Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Data Comparison Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
@@ -155,9 +150,9 @@ Feature: Assign User Rights
     Then I should see "Editing existing user"
     When I click on the element identified by ':nth-child(7) > [style="padding-top:2px;"] > :nth-child(1) > input'
     And I click on the button labeled "Save Changes"
-    And I want to remove the "Data Import Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
-    And I want to remove the "Data Comparison Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
-    And I want to assign the "Logging" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    And I remove the "Data Import Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    And I remove the "Data Comparison Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    And I assign the "Logging" user right to the user named "Test User" with the username of "test_user" on project ID 14
     When I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
@@ -191,14 +186,14 @@ Feature: Assign User Rights
     Then I should see a link labeled "Data Quality"
 
   Scenario: 14 - Assign Data Quality - Execute rules to test_user
-    Given I want to assign the "Execute rules" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Execute rules" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
     Then the user right identified by "[name=data_quality_execute]" should be checked
 
   Scenario: 15 - Assign Create Records to test_user
-    Given I want to assign the "Create Records" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Create Records" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
@@ -207,7 +202,7 @@ Feature: Assign User Rights
     Then I should see "Add new record"
 
   Scenario: 16 - Remove Create records 
-    Given I want to remove the "Create Records" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I remove the "Create Records" user right to the user named "Test User" with the username of "test_user" on project ID 14
     When I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
@@ -216,21 +211,21 @@ Feature: Assign User Rights
     Then I should NOT see "Add new record"
 
   Scenario: 17 - Assign Rename Records to test_user 
-    Given I want to assign the "Rename Records" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Rename Records" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
     Then the user right identified by "[name=record_rename]" should be checked
 
   Scenario: 18 - Assign Delete Records to test_user
-    Given I want to assign the "Delete Records" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Delete Records" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
     Then the user right identified by "[name=record_delete]" should be checked
 
   Scenario: 19 - Assign Record Locking Customization to test_user
-    Given I want to assign the "Record Locking Customization" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Record Locking Customization" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
@@ -239,18 +234,18 @@ Feature: Assign User Rights
     Then I should see a link labeled "Customize & Manage Locking/E-signatures"
 
   Scenario: 20 - Assign Locking / Unlocking with E-signature authority to test_user
-    Given I want to assign the "Locking / Unlocking with E-signature authority" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Locking / Unlocking with E-signature authority" user right to the user named "Test User" with the username of "test_user" on project ID 14
       
       #should see notice????
 
     #Verify in the main User Rights page the ‘Lock/Unlock Records’ box contains a green shield with a check for user user1115_1.
 
   Scenario: 21 - Assign Locking / Unlocking to test_user
-    Given I want to assign the "Locking / Unlocking" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Locking / Unlocking" user right to the user named "Test User" with the username of "test_user" on project ID 14
     #The main User Rights page the ‘Lock/Unlock Records’ box contains a green check for user user1115_1.
 
   Scenario: 22 - Assign Lock/Unlock *Entire* Records (record level) to test_user
-    Given I want to assign the "Lock/Unlock *Entire* Records (record level)" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I assign the "Lock/Unlock *Entire* Records (record level)" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"

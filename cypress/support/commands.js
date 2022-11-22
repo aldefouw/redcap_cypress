@@ -627,14 +627,27 @@ Cypress.Commands.add('import_data_file', (fixture_file,pid) => {
 })
 
 Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_to_assign, project_id, assign_right = true, user_type = 'admin', selector = 'input', value = null) => {
-    //Now login as admin and add Project Design and Setup Rights to Test User
-    cy.set_user_type(user_type)
-
     cy.visit_version({page:'index.php', params: 'pid='+project_id})
     cy.get('html').should('contain', 'User Rights')
 
     cy.get('a').contains('User Rights').click()
+
+    let user_has_rights_assigned = Cypress.$("a:contains(" + JSON.stringify(username + ' (' + proper_name + ')') + ")");
+
+    if (!user_has_rights_assigned.length){
+        cy.get('input#new_username', {force: true}).clear({force: true}).type(username, {force: true}).then((element) => {
+            cy.get('button', {force: true}).contains('Add with custom rights').click({force: true}).then(() => {
+                cy.get('div[role="dialog"]', {force: true}).find('button').contains(/add user|save changes/i).click().then(() => {
+                    cy.get('table#table-user_rights_roles_table').should(($e) => {
+                        expect($e[0].innerText).to.contain(username)
+                    })
+                })
+            })
+        })
+    }
+
     cy.get('a').contains(username + ' (' + proper_name + ')').click()
+
     cy.get('button').contains('Edit user privileges').click()
 
     cy.get('div').should(($div) => { expect($div).to.contain('Editing existing user') })
@@ -643,17 +656,51 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
 
         if(assign_right){
             cy.get('input.hasDatepicker').click()
+            cy.get('table.ui-datepicker-calendar').should('be.visible')
             cy.get('a.ui-state-highlight').click()
 
-            cy.get('input#expiration').should(($expiration) => {
-                let date = new Date()
-                let day = String(date.getDate()).padStart(2, "0");
-                let month = String(date.getMonth()+1).padStart(2, "0");
-                let year = date.getFullYear();
-                let fullDate = `${month}/${day}/${year}`;
+            let date = new Date()
+            let day = String(date.getDate()).padStart(2, "0"); //We are subtracting one so we know it's expired
+            let month = String(date.getMonth()+1).padStart(2, "0");
+            let year = date.getFullYear();
+            let fullDate = `${month}/${day}/${year}`;
 
+            //Validate that we set today's date by clicking on highlight in datepicker
+            cy.get('input#expiration').should(($expiration) => {
                 expect($expiration).to.have.value(fullDate)
             })
+
+            cy.get('table.ui-datepicker-calendar').should('not.be.visible')
+
+            cy.get('input.hasDatepicker').click()
+
+            cy.get('table.ui-datepicker-calendar').should('be.visible')
+
+            cy.get('.ui-datepicker-year').select('2021')
+
+            //Select the first date from the month we are on
+            cy.get('.ui-state-default').first().click()
+
+            let expiredDate = `${month}/01/${year - 1}`;
+
+            //Validate that we set an expired date
+            cy.get('input#expiration').should(($expiration) => {
+                expect($expiration).to.have.value(expiredDate)
+            })
+
+            cy.get('button').contains(/add user|save changes/i).click()
+
+            cy.get('body').should(($body) => {
+                expect($body).to.contain('User "' + username + '" was successfully edited')
+            })
+
+            //Should not be visible before we start our next test
+            cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
+
+            cy.get('body').should(($body) => {
+                expect($body).to.contain(expiredDate)
+            })
+
         } else {
             cy.get('input.hasDatepicker').click().clear()
 
@@ -700,14 +747,16 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
         })
     }
 
-    cy.get('button').contains('Save Changes').click()
+    if(rights_to_assign !== "Expiration Date") {
+        cy.get('button').contains(/add user|save changes/i).click()
 
-    cy.get('body').should(($body) => {
-        expect($body).to.contain('User "' + username + '" was successfully edited')
-    })
+        cy.get('body').should(($body) => {
+            expect($body).to.contain('User "' + username + '" was successfully edited')
+        })
 
-    //Should not be visible before we start our next test
-    cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
+        //Should not be visible before we start our next test
+        cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
+    }
 })
 
 Cypress.Commands.add('remove_basic_user_right', (username, proper_name, rights_to_assign, project_id, user_type = 'admin', selector = 'input', value = null) => {
