@@ -29,11 +29,10 @@ Feature: Assign User Rights
     And I click on the checkbox identified by "[name=graphical]" 
     And I click on the checkbox identified by "[name=participants]" 
     And I click on the checkbox identified by "[name=calendar]" 
-    And I click on the checkbox identified by "[name=file_repository]" 
-    #And I click on the input element labeled " No Access" 
-    #And I click on the input element labeled " Disabled"
+    And I click on the checkbox identified by "[name=file_repository]"  
     And I click on the button labeled "Add user"
     Then I should see "was successfully added"
+    And I want to assign the "No Access" user right to the user named "Test User" with the username of "test_user" on project ID 14
     When I click on the link labeled "My Projects"
     Then I should see "Listed below are the REDCap projects"
     Given I logout
@@ -52,16 +51,9 @@ Feature: Assign User Rights
     And I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
-    And I want to assign an expiration date to user "Test User" with username of "test_user" on project ID 14
-    And I click on the link labeled "test_user"
-    Then I should see "Edit user privileges"
-    #When I click on the button labeled "Edit user privileges"
-    #When I click on the element identified by "[id=tooltipBtnSetCustom]"
-    When I click on the element identified by "#tooltipBtnSetCustom > .jqbuttonmed"
-      #^ all 3 detach so bottom half of scenario 2 may or may not work
-    And I enter "10/27/2022" into the field identified by "[id=expiration]"
-    And I click on the button labeled "Save Changes"
-    Then I should see a link labeled "10/27/2022"
+    And I assign an expired expiration date to user "Test User" with username of "test_user" on project ID 14
+    And I want to pause
+    #Then I should see a link labeled "10/27/2022"
     Given I logout
     And I am a "standard" user who logs into REDCap
     Then I should see "Your access to this particular REDCap project has expired."
@@ -346,7 +338,9 @@ Scenario: before step 26
 
   Scenario: 30 - Delete Reviewer Role 
     Given I delete role name "Reviewer"
+And I want to pause 
     And I click on the button labeled "Delete role"
+    And I click on the button labeled "button:contains('Delete role'):last"
 And I want to pause
 
     #Given I click on the link labeled "Reviewer"
