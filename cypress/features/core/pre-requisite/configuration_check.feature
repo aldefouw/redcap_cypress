@@ -1,7 +1,7 @@
-Feature: Configuration Checklist
+Feature: Configuration Check
 
   As a REDCap end user
-  I want to see that Configuration Checklist is functioning as expected
+  I want to see that Configuration Check is functioning as expected
 
   Scenario: Visible Tabs
     Given I am an "admin" user who logs into REDCap

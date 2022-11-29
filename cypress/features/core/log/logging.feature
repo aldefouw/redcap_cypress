@@ -161,7 +161,7 @@ Feature: Logging
     #And I click on the dropdown identified by 'select[id="record"]' and select value '1' labelled by '1'
     #And I click on the bubble for the instrument identified by 'text_validation'
     Then I click on the link labeled "Record Status Dashboard"
-    And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "1"
+    And I click on the bubble for the "Text Validation" data collection instrument for record ID "1"
     And I check the checkbox identified by 'input[id="__LOCKRECORD__"]'
     And I check the checkbox identified by 'input[id="__ESIGNATURE__"]'
     And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
@@ -317,7 +317,7 @@ Feature: Logging
   Scenario: 34 - Delete Record
     When I visit Project ID 14
     Then I click on the link labeled "Record Status Dashboard"
-    And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    And I click on the bubble for the "Text Validation" data collection instrument for record ID "2"
     And I click on the link labeled "Record ID 2"
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
@@ -397,7 +397,7 @@ Feature: Logging
     Then I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 2"
     And I click on the element identified by 'tr.odd > td > a:contains("2")'
-    #And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    #And I click on the bubble for the "Text Validation" data collection instrument for record ID "2"
     And I click on the button labeled "Choose action for record"
     And I click on the link labeled "Delete record (all forms/events)"
     Then I should see "DELETE RECORD"
