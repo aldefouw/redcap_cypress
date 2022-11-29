@@ -707,6 +707,15 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
             cy.get('input#expiration').should(($expiration) => {
                 expect($expiration).to.have.value("")
             })
+
+            cy.get('button').contains(/add user|save changes/i).click()
+
+            cy.get('body').should(($body) => {
+                expect($body).to.contain('User "' + username + '" was successfully edited')
+            })
+
+            //Should not be visible before we start our next test
+            cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
         }
 
     } else {
