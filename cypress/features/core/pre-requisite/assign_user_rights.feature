@@ -52,7 +52,7 @@ Feature: Assign User Rights
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
     And I assign an expired expiration date to user "Test User" with username of "test_user" on project ID 14
-    And I want to pause
+And I want to pause
     #Then I should see a link labeled "10/27/2022"
     Given I logout
     And I am a "standard" user who logs into REDCap
@@ -66,8 +66,7 @@ Feature: Assign User Rights
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
     And I want to remove the expiration date to user "Test User" with username of "test_user" on project ID 14
-    Then I should NOT see "10/31/2022"
-      #figute out date thing 
+#And I want to pause
     Given I want to assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
@@ -236,9 +235,6 @@ Feature: Assign User Rights
 
   Scenario: 20 - Assign Locking / Unlocking with E-signature authority to test_user
     Given I want to assign the "Locking / Unlocking with E-signature authority" user right to the user named "Test User" with the username of "test_user" on project ID 14
-      
-      #should see notice????
-
     #Verify in the main User Rights page the ‘Lock/Unlock Records’ box contains a green shield with a check for user user1115_1.
 
   Scenario: 21 - Assign Locking / Unlocking to test_user
@@ -268,7 +264,6 @@ Scenario: before step 26
     Given I logout
     And I am a "standard" user who logs into REDCap
 
-#trying to see if this runs - recheck all after last > first instrument switch
   Scenario: 23 - Assign No Access to test_user
     Given I grant No Access level of Data Entry Rights on the "Text Validation" instrument for the username "test_user" for project ID 14
     And I grant No Access level of Data Entry Rights on the "Data Types" instrument for the username "test_user" for project ID 14
@@ -338,10 +333,8 @@ Scenario: before step 26
 
   Scenario: 30 - Delete Reviewer Role 
     Given I delete role name "Reviewer"
-And I want to pause 
-    And I click on the button labeled "Delete role"
-    And I click on the button labeled "button:contains('Delete role'):last"
-And I want to pause
+    #And I click on the button labeled "Delete role"
+    #And I click on the button labeled "button:contains('Delete role'):first"
 
     #Given I click on the link labeled "Reviewer"
     #Given I click on the element identified by "[id=rightsTableUserLinkId_2]"
@@ -352,6 +345,7 @@ And I want to pause
     #Then I should see "was successfully deleted"
 
     And I click on the link labeled "User Rights"
+And I want to pause
     And I should NOT see "Reviewer"
 
   Scenario: 31 - Assign test_user to Data Entry

@@ -32,14 +32,14 @@ Given("I want to remove the {string} user right to the user named {string} with 
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I want to assign an expiration date to user {string} with username of {string} on project ID {int}
+ * @example I assign an expiration date to user {string} with username of {string} on project ID {int}
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
  * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
  * @description Assigns 'Expiration Date' user right to a given user when provided a valid Project ID.
  *
  */
-Given("I want to assign an expiration date to user {string} with username of {string} on project ID {int}", (proper_name, username, project_id) => {
+Given("I assign an expired expiration date to user {string} with username of {string} on project ID {int}", (proper_name, username, project_id) => {
     cy.assign_expiration_date_to_user(username, proper_name, project_id)
 })
 
