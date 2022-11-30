@@ -9,6 +9,8 @@ Feature: Assign User Rights
     And I create a project named "SecondProject_1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
 
   Scenario: Project Setup - 2
+    Given I enable surveys for Project ID 14
+
     When I click on the element identified by "[id=setupEnableSurveysBtn]"
     And I click on the element identified by "[id=setupLongiBtn]"
     And I click on the element identified by ".ui-dialog-buttonset > :nth-child(2)"
@@ -26,15 +28,13 @@ Feature: Assign User Rights
     And I enter "test_user" into the field identified by "[id=new_username]"
     And I click on the button labeled "Add with custom rights"
     And I click on the checkbox identified by "[name=reports]"
-    And I click on the checkbox identified by "[name=graphical]"
-    And I click on the checkbox identified by "[name=participants]"
-    And I click on the checkbox identified by "[name=calendar]"
-    And I click on the checkbox identified by "[name=file_repository]"
-    #And I click on the input element labeled " No Access"
-    #And I click on the input element labeled " Disabled"
+    And I click on the checkbox identified by "[name=graphical]" 
+    And I click on the checkbox identified by "[name=participants]" 
+    And I click on the checkbox identified by "[name=calendar]" 
+    And I click on the checkbox identified by "[name=file_repository]"  
     And I click on the button labeled "Add user"
     Then I should see "was successfully added"
-    And I want to assign the "No Access" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    And I assign the "No Access" user right to the user named "Test User" with the username of "test_user" on project ID 14
     When I click on the link labeled "My Projects"
     Then I should see "Listed below are the REDCap projects"
     Given I logout
@@ -54,16 +54,11 @@ Feature: Assign User Rights
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
     And I assign an expired expiration date to user "Test User" with username of "test_user" on project ID 14
-
-    #Then I should see a link labeled "10/27/2022"
-
     Given I logout
     And I am a "standard" user who logs into REDCap
-
     When I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     Then I should see "Your access to this particular REDCap project has expired."
-
     Given I logout
 
   Scenario: 3 - Assign Project Design and Setup to test_user 
@@ -71,10 +66,10 @@ Feature: Assign User Rights
     And I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
-    And I want to remove the expiration date to user "Test User" with username of "test_user" on project ID 14
-#And I want to pause
-    Given I want to assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user" on project ID 14
-
+    And I remove the expiration date to user "Test User" with username of "test_user" on project ID 14
+    Then I should NOT see "10/31/2022"
+    And I want to pause
+    Given I assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
@@ -188,7 +183,12 @@ Feature: Assign User Rights
     Then I should see a link labeled "Data Quality"
 
   Scenario: 14 - Assign Data Quality - Execute rules to test_user
-    Given I assign the "Execute rules" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I click on the link labeled "test_user"  
+    And I should see "Edit user privileges"
+    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    Then I should see "Editing existing user"
+    When I check the user right identified by "[name=data_quality_execute]"
+    And I click on the button labeled "Save Changes"
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
     And I click on the element identified by "[id=tooltipBtnSetCustom]"
@@ -236,11 +236,7 @@ Feature: Assign User Rights
     Then I should see a link labeled "Customize & Manage Locking/E-signatures"
 
   Scenario: 20 - Assign Locking / Unlocking with E-signature authority to test_user
-
     Given I assign the "Locking / Unlocking with E-signature authority" user right to the user named "Test User" with the username of "test_user" on project ID 14
-      
-      #should see notice????
-
     #Verify in the main User Rights page the ‘Lock/Unlock Records’ box contains a green shield with a check for user user1115_1.
 
   Scenario: 21 - Assign Locking / Unlocking to test_user

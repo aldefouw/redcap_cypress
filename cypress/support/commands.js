@@ -633,7 +633,7 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
     cy.get('a').contains('User Rights').click()
 
     let user_has_rights_assigned = Cypress.$("a:contains(" + JSON.stringify(username + ' (' + proper_name + ')') + ")");
-
+    
     if (!user_has_rights_assigned.length){
         cy.get('input#new_username', {force: true}).clear({force: true}).type(username, {force: true}).then((element) => {
             cy.get('button', {force: true}).contains('Add with custom rights').click({force: true}).then(() => {
@@ -645,7 +645,7 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
             })
         })
     }
-
+    
     cy.get('a').contains(username + ' (' + proper_name + ')').click()
 
     cy.get('button').contains('Edit user privileges').click()
@@ -654,7 +654,9 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
 
     if(rights_to_assign === "Expiration Date"){
 
-        if(assign_right){
+        console.log("VALUE: " + assign_right)
+
+        if(assign_right === true){
             cy.get('input.hasDatepicker').click()
             cy.get('table.ui-datepicker-calendar').should('be.visible')
             cy.get('a.ui-state-highlight').click()
@@ -702,11 +704,19 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
             })
 
         } else {
-            cy.get('input.hasDatepicker').click().clear()
 
-            cy.get('input#expiration').should(($expiration) => {
-                expect($expiration).to.have.value("")
-            })
+           console.log('Remove expiration date')
+
+           cy.get('input.hasDatepicker').click().clear()
+           cy.get('input#expiration').should(($expiration) => {
+               expect($expiration).to.have.value("")
+           })
+           cy.get('button').contains(/add user|save changes/i).click()
+           cy.get('body').should(($body) => {
+               expect($body).to.contain('User "' + username + '" was successfully edited')
+           })
+           //Should not be visible before we start our next test
+           cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')     
         }
 
     } else {
@@ -748,6 +758,9 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
     }
 
     if(rights_to_assign !== "Expiration Date") {
+
+        console.log('Save changes non expiration date')
+
         cy.get('button').contains(/add user|save changes/i).click()
 
         cy.get('body').should(($body) => {
