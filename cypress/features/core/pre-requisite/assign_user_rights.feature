@@ -11,7 +11,6 @@ Feature: Assign User Rights
   Scenario: Project Setup - 2
     Given I enable surveys for Project ID 14
 
-    When I click on the element identified by "[id=setupEnableSurveysBtn]"
     And I click on the element identified by "[id=setupLongiBtn]"
     And I click on the element identified by ".ui-dialog-buttonset > :nth-child(2)"
     #And I click on the button labeled "Additional customizations"
