@@ -16,7 +16,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
 
   Scenario: 1 - Navigate, Login to REDCap, Verify User Rights
     Given I am a "standard" user who logs into REDCap
-    Then I want to verify user rights are available for "standard" user type on the path "ProjectSetup" on project ID 14
+    Then I verify user rights are available for "standard" user type on the path "ProjectSetup" on project ID 14
   
   Scenario: 2 - Verify Project Settings
     Given I visit Project ID 14
@@ -449,11 +449,6 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Given I click on the button labeled "Return to list of instruments"
     And I click on the link labeled "Data Dictionary Form"
     And I click on the Delete Field image for the field named "dd_test"
-    And the AJAX "GET" request at "Design/delete_field.php?*" tagged by "delete" is being monitored
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And I click on the button labeled "Delete" in the dialog box
-    And the AJAX request tagged by "delete" has completed
-    And the AJAX request tagged by "render" has completed
     Then I should NOT see "dd_test"
     #Then I should no longer see the element identified by "tr[id=dd_test-tr]"
 

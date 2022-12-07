@@ -41,9 +41,7 @@ Scenario: 5 - Enter Draft Mode
 Scenario: 6 - Draft Changes
     When I click on the link labeled "Text Validation"
     And I click on the Delete Field image for the field named "Name"
-    And I click on the button labeled "Delete"
-
-        #When I add a new field of type "Text Box (Short Text, Number, Date/Time, ...)" and enter "First Name" into the field labeled "Field Label"
+    When I add a new field of type "Text Box (Short Text, Number, Date/Time, ...)" and enter "First Name" into the field labeled "Field Label"
 
     #And I click on the Add Field input button below the field named "Email"
     #Then I should see "Add New Field"

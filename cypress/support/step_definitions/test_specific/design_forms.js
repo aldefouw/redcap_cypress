@@ -128,6 +128,25 @@ defineParameterType({
 })
  Given("I click on the {editField} image for the field named {string}", (type, field) => {
     cy.get('td[class=frmedit_row]').contains(field).parents('tr').find('img[title="' + type + '"]').click()
+
+     //There is some secondary stuff we do for Delete Field case
+     if(type === "Delete Field") {
+         cy.intercept({
+             method: 'GET',
+             url: '/redcap_v' + Cypress.env('redcap_version') + "Design/delete_field.php?*"
+         }).as('delete_field')
+
+         cy.intercept({
+             method: 'GET',
+             url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/online_designer_render_fields.php?*"
+         }).as('render_fields')
+
+         //We click on the "Delete" button, too!
+         cy.get('button').contains('Delete').click()
+
+         cy.wait('@delete_field')
+         cy.wait('@render_field')
+     }
 })
 
 /**
