@@ -97,7 +97,7 @@ Scenario: 7 - Submit changes
     Then I should see the element identified by "[value=Enter Draft Mode]"
         #an input button
 
-Scenario: 8 - Draft Changes as 
+Scenario: 8 - Draft Changes 
     Given I logout
     And I am an "admin" user who logs into REDCap
     Given I click on the link labeled "Control Center"
@@ -122,7 +122,44 @@ Scenario: 8 - Draft Changes as
     When I click on the button labeled "RETURN TO PREVIOUS PAGE"
     And I click on the input button labeled "Submit Changes for Review"
     And I click on the button labeled "Submit"
-    Then I should see "awaiting review"
-    And I should see "Your assistance is required to review the drafted changes for the production project titled '20_DraftMode_v1115'"
+    #Then I should see "awaiting review"
+    #And I should see "Your assistance is required to review the drafted changes for the production project titled '20_DraftMode_v1115'"
     Then I logout
+
+Scenario: 9 - Reject changes
+    Given I am an "admin" user who logs into REDCap
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "20_DraftMode_v1115"
+    And I click on the link labeled "Designer"
+    And I click on the button labeled "Project Modification Module"
+    Then I should see "Details regarding all changes made in Draft Mode"
+    And I should see "ADMINISTRATOR ACTIONS:" 
+    And I should see a button labeled "Compose confirmation email"
+    And I should see a button labeled "COMMIT CHANGES"
+    And I should see a button labeled "Reject Changes"
+    And I should see a button labeled "Remove All Drafted Changes"
+    When I click on the button labeled "Reject Changes"
+    And I click on the element identified by "button:contains('Reject Changes'):last"
+    Given I click on the link labeled "20_DraftMode_v1115"
+    And I click on the link labeled "Control Center"
+    And I click on the link labeled "User Settings"
+    And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
+    And I click on the input button labeled "Save Changes"
+    Given I logout
+
+Scenario: 10 - 
+    Given I am a "standard" user who logs into REDCap
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "20_DraftMode_v1115"
+    And I click on the link labeled "Add / Edit Records"
+    And I click on the button labeled "Add new record for the arm selected above"
+    When I click on the bubble for the "Text Validation" data collection instrument for record ID "2"
+    #And I enter "first name" into the field labeled "First Name"
+    #And I enter "last name" into the field labeled "Last Name"
+    And I enter "email" into the field labeled "Email"
+
+
+
+
+
 
