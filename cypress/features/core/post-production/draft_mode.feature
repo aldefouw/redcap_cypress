@@ -41,7 +41,9 @@ Scenario: 5 - Enter Draft Mode
 Scenario: 6 - Draft Changes
     When I click on the link labeled "Text Validation"
     And I click on the Delete Field image for the field named "Name"
-    When I add a new field of type "Text Box (Short Text, Number, Date/Time, ...)" and enter "First Name" into the field labeled "Field Label"
+    
+    When I add a new field of type "Text Box (Short Text, Number, Date/Time, ...)" and enter "First Name" into the field labeled "first_name"
+    When I add a new field of type "Text Box (Short Text, Number, Date/Time, ...)" and enter "Last Name" into the field labeled "last_name"
 
     #And I click on the Add Field input button below the field named "Email"
     #Then I should see "Add New Field"
@@ -70,10 +72,7 @@ Scenario: 6 - Draft Changes
     And I click on the link labeled "Data Types"
     And I click on the Edit image for the field named "Radio Button Manual"
     Given I clear the field identified by "[id=element_enum]"
-    And I enter "1, Choice99" into the field identified by "[id=element_enum]"
-        #And I enter "100, Choice100" into the field identified by "[id=element_enum]"
-        #And I enter "101, Choice101" into the field identified by "[id=element_enum]"
-    #no way to add these on individual lines
+    And I enter "1, Choice99{enter}100, Choice100{enter}101, Choice101" into the field identified by "[id=element_enum]"
     And I click on the button labeled "Save"
 
     Then I should see "Since this project is currently in PRODUCTION, changes will not be made in real time."
