@@ -249,3 +249,38 @@ defineParameterType({
  Given("the form should have a redcap_csrf_token", () => {
     cy.get('input[name=redcap_csrf_token]')
 })
+
+defineParameterType({
+    name: 'fieldType',
+    regexp: /(Text Box|Notes Box|Drop-down List|Radio Buttons|Checkboxes|Yes - No|True - False|Signature|File Upload|Slider|Descriptive Text|Begin New Section)/
+})
+
+/**
+ * @module DesignForms
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @author Madilynn Peterson <mmpeterson24@wisc.edu>
+ * @example I add a new {fieldType} field labeled {string} with variable name {string}
+ * @param {string} field_type - <Text Box|Notes Box|Drop-down List|Radio Buttons|Checkboxes|Yes - No|True - False|Signature|File Upload|Slider|Descriptive Text|Begin New Section>
+ * @param {string} field_label - label for the field
+ * @param {string} variable_name - variable name
+ * @description Creates a new field in the Online Designer
+ */
+Given("I add a new {fieldType} field labeled {string} with variable name {string}", (field_type, field_text, variable_name) => {
+    cy.get('input#btn-last').click().then(() => {
+        cy.get('select#field_type')
+            .find('option')
+            .contains(field_type)
+            .then( ($option) => {
+                cy.get('select#field_type').select($option[0].innerText)
+            })
+
+        cy.get('input#field_name').type(variable_name)
+        cy.get('input#field_label_rich_text_checkbox').uncheck()
+        cy.get('textarea#field_label').type(field_text)
+        cy.get('button').contains('Save').click().then(() => {
+            cy.get('table#draggable').should(($t) => {
+                expect($t).to.contain('Variable: '+ variable_name)
+            })
+        })
+    })
+})
