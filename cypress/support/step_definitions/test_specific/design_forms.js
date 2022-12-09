@@ -133,7 +133,7 @@ defineParameterType({
      if(type === "Delete Field") {
          cy.intercept({
              method: 'GET',
-             url: '/redcap_v' + Cypress.env('redcap_version') + "Design/delete_field.php?*"
+             url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/delete_field.php?*"
          }).as('delete_field')
 
          cy.intercept({
@@ -145,7 +145,7 @@ defineParameterType({
          cy.get('button').contains('Delete').click()
 
          cy.wait('@delete_field')
-         cy.wait('@render_field')
+         cy.wait('@render_fields')
      }
 })
 
