@@ -86,8 +86,8 @@ Feature: Data Entry through the Data Collection Instrument
     And I add a new field of type "text" and enter "Value" into the field labeled "value", validated by label "Integer"
     And I add a new field of type "text" and enter "Date Picker" into the field labeled "date_picker", validated by label "Date (M-D-Y)"
     And I add a new field of type "text" and enter "Date Picker - Now" into the field labeled "date_picker_now", validated by label "Datetime (M-D-Y H:M)"
-  #   #And I edit the field labeled "Calculated Field"
-  #   #add value*2 calculated equation
+    #And I edit the field labeled "Calculated Field"
+    #add value*2 calculated equation
   
   Scenario: 1 to 4 - Add/Edit Records
     Given I am a "standard" user who logs into REDCap
@@ -100,7 +100,7 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
     And I should see "Save & Stay"
     And I click on the link labeled "Save & Stay"
-    And I click on the button labeled "Ignore and leave record"
+    And I click on the button labeled "Ignore and leave record" in the dialog box
 
   Scenario: 5 - Edit field
     When I visit Project ID 14
@@ -115,5 +115,5 @@ Feature: Data Entry through the Data Collection Instrument
     Then I click on the link labeled "Record Status Dashboard"
     #And I click on the bubble for the "Data Types" data collection instrument for record ID "1"
     And I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&auto=1"
-    And I enter "This is a notes box" into the "notesbox" text input field
-    #And I enter "5" into the "value" text input field
+    And I enter "This is a notes box." into the "notesbox" text input field
+    And I enter "5" into the "value" text input field
