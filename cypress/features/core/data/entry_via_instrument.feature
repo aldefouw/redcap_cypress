@@ -28,7 +28,7 @@ Feature: Data Entry through the Data Collection Instrument
     And I enter name "Data Dictionary" and create instrument
     Then I click on the link labeled "Designer"
     And I click on the link labeled "Data Dictionary"
-    And I add a new field of type "yesno" and enter "test" into the field labeled "test"
+    And I add a new field of type "yesno" and enter "Yes - No" into the field labeled "yesno"
     Then I should see "test"
     And I click on the link labeled "Designer"
     Then I should see "Data Collection Instruments"
@@ -72,43 +72,48 @@ Feature: Data Entry through the Data Collection Instrument
     And I select '-- not repeating --' from the dropdown identified by 'select[name="repeat_whole_event-42"]'
     And I select 'Repeat Entire Event (repeat all instruments together)' from the dropdown identified by 'select[name="repeat_whole_event-44"]'
     And I click on the button labeled "Save"
-    #And I click on the checkbox labeled "Data Dictionary"
 
-  # Scenario: 0 - Project modifications to the Data Types form
-  #   When I visit Project ID 14
-  #   Then I click on the link labeled 'Designer'
-  #   And I click on the link labeled 'Data Types'
-  #   And I add a new field of type "text" and enter "Value" into the field labeled "Value", validated by label "Integer"
-  #   And I edit the field labeled "Calculated Field"
+  Scenario: 0 - Erase data
+    When I visit Project ID 14
+    Then I click on the link labeled 'Other Functionality'
+    And I click on the button labeled "Erase all data"
+    And I click on the button labeled "Erase all data" in the dialog box
+
+  Scenario: 0 - Project modifications to the Data Types form
+    When I visit Project ID 14
+    Then I click on the link labeled 'Designer'
+    And I click on the link labeled 'Data Types'
+    And I add a new field of type "text" and enter "Value" into the field labeled "value", validated by label "Integer"
+    And I add a new field of type "text" and enter "Date Picker" into the field labeled "date_picker", validated by label "Date (M-D-Y)"
+    And I add a new field of type "text" and enter "Date Picker - Now" into the field labeled "date_picker_now", validated by label "Datetime (M-D-Y H:M)"
+  #   #And I edit the field labeled "Calculated Field"
   #   #add value*2 calculated equation
-  #   And I add a new field of type "text" and enter "Date Picker" into the field labeled "Date Picker", validated by label "M-D-Y"
-  #   And I add a new field of type "text" and enter "Date Picker - Now" into the field labeled "Date Picker - Now", validated by label "M-D-Y H:M"
   
-  # Scenario: 1 - Login as test_user
-  #   Given I am a "standard" user who logs into REDCap
-  #   And I visit Project ID 14
+  Scenario: 1 to 4 - Add/Edit Records
+    Given I am a "standard" user who logs into REDCap
+    And I visit Project ID 14
+    Then I click on the link labeled "Add / Edit Records"
+    And I click on the button labeled "Add new record"
+    #And I click on the bubble for the "Data Types" data collection instrument for record ID "1"
+    And I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&auto=1"
+    And I enter "John" into the "ptname" text input field
+    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
+    And I should see "Save & Stay"
+    And I click on the link labeled "Save & Stay"
+    And I click on the button labeled "Ignore and leave record"
 
-  # Scenario: 2 to 4 - Add/Edit Records
-  #   When I visit Project ID 14
-  #   Then I click on the link labeled "Add / Edit Records"
-  #   And I click on the button labeled "Add new record"
-  #   And I click on the bubble for the "Data Types" data collection instrument for record ID "1"
-  #   And I enter "John" into the "ptname" text input field
-  #   And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
-  #   And I should see "Save & Stay"
-  #   And I click on the link labeled "Save & Stay"
-  #   And I click on the button labeled "Ignore and leave record"
+  Scenario: 5 - Edit field
+    When I visit Project ID 14
+    Then I click on the link labeled "Designer"
+    And I click on the link labeled "Data Types"
+    And I edit the field labeled "Required"
+    And I click the input element identified by 'input#field_req0'
+    And I click on the button labeled "Save"
 
-  # Scenario: 5 - Edit field
-  #   When I visit Project ID 14
-  #   Then I click on the link labeled "Designer"
-  #   And I edit the field labeled "Required"
-  #   And I click the input element identified by 'input#field_req0'
-  #   And I click on the button labeled "Save"
-
-  # Scenario: 6 - Edit record
-  #   When I visit Project ID 14
-  #   Then I click on the link labeled "Record Status Dashboard"
-  #   And I click on the bubble for the "Data Types" data collection instrument for record ID "1"
-  #   And I enter "This is a notes box" into the "notebox" text input field
-  #   And I enter "5" into the "value" text input field
+  Scenario: 6 - Edit record
+    When I visit Project ID 14
+    Then I click on the link labeled "Record Status Dashboard"
+    #And I click on the bubble for the "Data Types" data collection instrument for record ID "1"
+    And I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&auto=1"
+    And I enter "This is a notes box" into the "notesbox" text input field
+    #And I enter "5" into the "value" text input field
