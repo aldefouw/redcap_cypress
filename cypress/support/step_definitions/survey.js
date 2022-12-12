@@ -59,7 +59,7 @@ Given("I enter {string} into the {string} survey text input field", (text, field
 /**
  * @module Survey
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I enter {string} into the {string} text input field
+ * @example I clear the field and enter {string} into the {string} text input field
  * @param {string} text - the text you want to input into the survey field
  * @param {string} variable - variable of the survey field you want to input text into
  * @description Clear text from field and enter new text into a survey field.

@@ -11,7 +11,6 @@ Feature: Draft Mode
     And I click on the button labeled exactly "YES, Move to Production Status"
     And I assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user" on project ID 14
 
-
 Scenario: 2 - Control Center 
     Given I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
@@ -30,7 +29,7 @@ Scenario: 4 - Verify Project is in Production
     And I see "20_DraftMode_v1115"
     And I click on the link labeled "20_DraftMode_v1115"
     And I click on the link labeled "Designer"
-    And I click on the element identified by ":nth-child(1) > :nth-child(2) > [style='width:510px;'] > div"
+    And I click the element containing the following text: "Text Validation"
     Then I should see "Can only modify instrument in Draft Mode"
 
 Scenario: 5 - Enter Draft Mode 
@@ -44,28 +43,6 @@ Scenario: 6 - Draft Changes
     When I add a new Text Box field labeled "First Name" with variable name "first_name"
     When I add a new Text Box field labeled "Last Name" with variable name "last_name"
 
-    #And I click on the Add Field input button below the field named "Email"
-    #Then I should see "Add New Field"
-    #When I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[id=field_type]"
-            #Then I should see "Field Label"
-        #When I enter "First Name" into the field identified by "[id=field_label]"
-        #And I enter "first_name" into the field identified by "[id=field_name]"
-            #When I enter "First Name" into the hidden field identified by "[id=field_label]"
-            #And I enter "first_name" into the hidden field identified by "[id=field_name]"
-        #And I click on the button labeled "Save"
-        #And I click on the Add Field input button below the field named "First Name"
-        #And I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[id=field_type]"
-        #And I enter "Last Name" into the field labeled "Field Label"
-        #And I enter "last_name" into the field labeled "Variable Name"
-
-    #runs in manage project feature ? 
-        #When I click on the element identified by "input[id=btn-last]"
-        #And I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[name=field_type]"
-        #And I enter "Email" into the field identified by "[id=field_label]"
-        #And I enter "email" into the field identified by "[id=field_name]"
-        #And I select "Email" from the dropdown identified by "[id=val_type]"
-        #And I click on the button labeled "Save"
-        #Then I should see "Variable: email"
 
     When I click on the button labeled "Return to list of instruments"
     And I click on the link labeled "Data Types"
@@ -149,8 +126,15 @@ Scenario: 10 - Draft Changes
     And I click on the link labeled "20_DraftMode_v1115"
     And I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record for the arm selected above"
-    And I click on the element identified by ".odd > :nth-child(2) > a > img"
-        #When I click on the bubble for the "Text Validation" data collection instrument 
+
+    And I click the bubble to add a record for the "Text Validation" longitudinal instrument on event "Event 1"
+
+
+    And I enter "testemail@example.com" into the field labeled "Email"
+
+
+    And I want to pause
+
     And I enter "testemail@example.com" into the field identified by "[name=email_v2]"
     And I enter "firstname" into the field identified by "[name=first_name]"
     And I enter "lastname" into the field identified by "[name=last_name]"

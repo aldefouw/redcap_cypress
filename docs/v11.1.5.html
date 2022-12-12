@@ -371,7 +371,7 @@
                     
               
                     
-                    <li><a href='#i-enter-string-into-the-string-text-input-field'>I enter {string} into the {string} text input field</a></li>
+                    <li><a href='#i-clear-the-field-and-enter-string-into-the-string-text-input-field'>I clear the field and enter {string} into the {string} text input field</a></li>
                     
               
                     
@@ -482,6 +482,10 @@
               
                     
                     <li><a href='#the-form-should-have-a-redcap_csrf_token'>the form should have a redcap_csrf_token</a></li>
+                    
+              
+                    
+                    <li><a href='#i-add-a-new-fieldtype-field-labeled-string-with-variable-name-string'>I add a new {fieldType} field labeled {string} with variable name {string}</a></li>
                     
               
                     
@@ -6482,8 +6486,8 @@ cy.get(sel).select(label).should('have.value', value)
       
         
           
-          <h2 class='fl mb0 mt0' id='i-enter-string-into-the-string-text-input-field'>
-          I enter {string} into the {string} text input field
+          <h2 class='fl mb0 mt0' id='i-clear-the-field-and-enter-string-into-the-string-text-input-field'>
+          I clear the field and enter {string} into the {string} text input field
           </h2>
         
       
@@ -8501,6 +8505,95 @@ cy.get(sel).select(label).should('have.value', value)
   
   
   <p class='mb0'><strong>Author:</strong> <a href="mailto:tin-tin.nguyen@nih.gov">Tintin Nguyen</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-add-a-new-fieldtype-field-labeled-string-with-variable-name-string'>
+          I add a <span class="hljs-keyword">new</span> {fieldType} field labeled {string} <span class="hljs-keyword">with</span> variable name {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>field_type</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    &#x3C;Text Box|Notes Box|Drop-down List|Radio Buttons|Checkboxes|Yes - No|True - False|Signature|File Upload|Slider|Descriptive Text|Begin New Section>
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>field_label</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    label for the field
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>variable_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    variable name
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Creates a new field in the Online Designer</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:mmpeterson24@wisc.edu">Madilynn Peterson</a></p>
   
   
 

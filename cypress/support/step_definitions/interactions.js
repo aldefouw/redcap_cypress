@@ -147,8 +147,13 @@ Given("I save the field", () => {
 Given('I enter {string} into the field labeled {string}', (text, label) => {
     //We locate the label element first.  This isn't always a label which is unfortunate, but this approach seems to work so far.
     cy.contains(label).then(($label) => {
-        //We are finding the parent of the label element and then looking for nearest input
-        cy.wrap($label).parent().find('input').type(text)
+
+        if( cy.wrap($label).parent().find('input').length ){
+            cy.wrap($label).parent().find('input').type(text)
+        } else {
+            cy.wrap($label).parent().parent().find('input')
+        }
+
     })
 })
 
@@ -433,5 +438,16 @@ Given('after the next step, I will {confirmation} a confirmation window containi
  */
  Given('I click the input element identified by {string}', (value) => {
     cy.get(value).click()
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click the element containing the following text: {string}
+ * @param {string} value - text that is inside the element
+ * @description Clicks the element that contains the text specified
+ */
+Given('I click the element containing the following text: {string}', (value) => {
+    cy.get(':contains(' + value + '):last').click()
 })
 

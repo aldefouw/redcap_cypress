@@ -43,3 +43,48 @@ Given("I click on the bubble for the {string} data collection instrument for rec
         cy.wrap(link_location).click()
     })
 })
+
+/**
+ * @module RecordStatusDashboard
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click the bubble to add a record for the {string} longitudinal instrument on event {string}
+ * @param {string} instrument - the name of the instrument you want to add a record to
+ * @param {string} event - the name of the event you want to add a record to
+ * @description Clicks on an instrument / event pairing to add a record on the Record Home Page
+ */
+
+Given("I click the bubble to add a record for the {string} longitudinal instrument on event {string}", (instrument, event) => {
+    let link_location = null
+
+    cy.get('table#event_grid_table').within(() => {
+        cy.get('th').then(($th) => {
+            Cypress.$.each($th, (index, th) => {
+                if(th.innerText === event){
+                    cy.get('tr').then(($tr) => {
+                        Cypress.$.each($tr, (tri, tr) => {
+                            if(tri > 0) {
+                                cy.wrap(tr).within(() => {
+                                    cy.get('td').then((td) => {
+                                        if(td[0].innerText === instrument){
+                                            Cypress.$.each(td, (tdi, $td) => {
+                                                if(tdi === index){
+                                                    cy.wrap($td).within(() => {
+                                                        cy.get('a').then(($a) => {
+                                                            link_location = $a
+                                                        })
+                                                    })
+                                                }
+                                            })
+                                        }
+                                    })
+                                })
+                            }
+                        })
+                    })
+                }
+            })
+        })
+    }).then(() => {
+        cy.wrap(link_location).click()
+    })
+})
