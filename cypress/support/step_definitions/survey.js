@@ -255,7 +255,7 @@ Then("I should see the survey open exactly once by watching the tag of {string}"
 /**
  * @module Survey
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I add a new field of type {string} and enter {string} into the field labeled {string}
+ * @example I add a new field of type {string} and enter {string} into the field labeled {string}, validated by label {string}
  * @param {string} field_type - type of field (for ex. textbox, radio, checkbox, etc.)
  * @param {string} field_text - text you want to enter in the field
  * @param {string} field_name - variable name
