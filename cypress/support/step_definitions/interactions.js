@@ -390,6 +390,17 @@ Given('after the next step, I will {confirmation} a confirmation window containi
 /**
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I uncheck the checkbox identified by {string}
+ * @param {string} value - input element
+ * @description Unchecks the checkbox identified by its element 
+ */
+ Given('I uncheck the checkbox identified by {string}', (value) => {
+    cy.get(value).uncheck()
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I should see that the checkbox identified by {string} should be checked
  * @param {string} value - input id of the checkbox
  * @description Ensure checkbox is checked
