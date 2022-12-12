@@ -42,6 +42,7 @@ Scenario: 6 - Draft Changes
     When I click on the link labeled "Text Validation"
     And I click on the Delete Field image for the field named "Name"
     When I add a new Text Box field labeled "First Name" with variable name "first_name"
+    When I add a new Text Box field labeled "Last Name" with variable name "last_name"
 
     #And I click on the Add Field input button below the field named "Email"
     #Then I should see "Add New Field"
@@ -70,10 +71,7 @@ Scenario: 6 - Draft Changes
     And I click on the link labeled "Data Types"
     And I click on the Edit image for the field named "Radio Button Manual"
     Given I clear the field identified by "[id=element_enum]"
-    And I enter "1, Choice99" into the field identified by "[id=element_enum]"
-        #And I enter "100, Choice100" into the field identified by "[id=element_enum]"
-        #And I enter "101, Choice101" into the field identified by "[id=element_enum]"
-    #no way to add these on individual lines
+    And I enter "1, Choice99{enter}100, Choice100{enter}101, Choice101" into the field identified by "[id=element_enum]"
     And I click on the button labeled "Save"
 
     Then I should see "Since this project is currently in PRODUCTION, changes will not be made in real time."
@@ -92,8 +90,8 @@ Scenario: 7 - Submit changes
     When I click on the link labeled "Why were my changes made automatically?"
     Then I should see "Your changes were made automatically either because your project currently contains no records OR because it was found that the"
     When I click on the button labeled "Close"
-    Then I should see the element identified by "[value=Enter Draft Mode]"
-        #an input button
+    Then I should see "Would you like to enter DRAFT MODE to begin drafting changes to the project?"
+        #asks to check for an input button
 
 Scenario: 8 - Draft Changes 
     Given I logout
@@ -145,19 +143,52 @@ Scenario: 9 - Reject changes
     And I click on the input button labeled "Save Changes"
     Given I logout
 
-Scenario: 10 - 
+Scenario: 10 - Draft Changes
     Given I am a "standard" user who logs into REDCap
     And I click on the link labeled "My Projects"
     And I click on the link labeled "20_DraftMode_v1115"
     And I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record for the arm selected above"
-    When I click on the bubble for the "Text Validation" data collection instrument for record ID "2"
-    #And I enter "first name" into the field labeled "First Name"
-    #And I enter "last name" into the field labeled "Last Name"
-    And I enter "email" into the field labeled "Email"
+    And I click on the element identified by ".odd > :nth-child(2) > a > img"
+        #When I click on the bubble for the "Text Validation" data collection instrument 
+    And I enter "testemail@example.com" into the field identified by "[name=email_v2]"
+    And I enter "firstname" into the field identified by "[name=first_name]"
+    And I enter "lastname" into the field identified by "[name=last_name]"
+    And I click on the dropdown and select the button identified by "[id=submit-btn-savenextform]"
+    
+    And I select "DDChoice1" from the dropdown identified by "[name=multiple_dropdown_auto]"
+    And I click on the element identified by "[id=opt-radio_button_auto_1]"
+    And I click on the element identified by "[id=opt-radio_button_manual_1]"
+    And I click on the checkbox identified by "[id=id-__chk__checkbox_RC_1]"
+    And I click on the button labeled "Save & Exit Form"
 
+    When I click on the link labeled "Designer"
+    And I click on the link labeled "Remove all drafted changes"
+    And I click on the button labeled "Remove all drafted changes"
+    And I click on the input button labeled "Enter Draft Mode"
+    And I click on the link labeled "Text Validation"
 
+    And I click on the Edit image for the field named "Email"
+    And I clear the field identified by "[id=field_label]"
+    And I enter "Primary Contact Email" into the field identified by "[id=field_label]"
+    And I click on the button labeled "Save"
 
+    And I click on the button labeled "Return to list of instruments"
+    And I click on the link labeled "Data Types"
+    And I click on the Delete Field image for the field named "Multiple Choice Dropdown Auto"
+    And I click on the Edit image for the field named "Radio Button Manual"
+    Given I clear the field identified by "[id=element_enum]"
+    And I enter "99, Choice99{enter}100, Choice100{enter}101, Choice101" into the field identified by "[id=element_enum]"
+    And I click on the button labeled "Save"
 
+    And I click on the Edit image for the field named "Radio Button Auto"
+    Given I clear the field identified by "[id=element_enum]"
+    And I enter "1, Choice 10{enter}2, Choice 2{enter}3, Choice 3" into the field identified by "[id=element_enum]"
+    And I click on the button labeled "Save"
 
+    And I click on the Edit image for the field named "Checkbox"
+    And I select "Multiple Choice - Drop-down List (Single Answer)" from the dropdown identified by "[id=field_type]"
+    Then I should see "Edit Field"
+    And I click on the button labeled "Save"
 
+    Given I click on the link labeled "View detailed summary of all drafted changes"
