@@ -39,7 +39,7 @@ Scenario: 5 - Enter Draft Mode
 
 Scenario: 6 - Draft Changes
     When I click on the link labeled "Text Validation"
-    And I click on the Delete Field image for the field named "Name"
+    Given I delete the field named "Name"
     When I add a new Text Box field labeled "First Name" with variable name "first_name"
     When I add a new Text Box field labeled "Last Name" with variable name "last_name"
 

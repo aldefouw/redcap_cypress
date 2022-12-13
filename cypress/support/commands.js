@@ -921,6 +921,14 @@ Cypress.Commands.add("dragTo", { prevSubject: 'element'}, (subject, target) => {
     
  })
 
+Cypress.Commands.add('click_on_design_field_function', (type, field) => {
+    cy.get('td[class=frmedit_row]').
+    contains(field).
+    parents('tr').
+    find('img[title="' + type + '"]').
+    click()
+})
+
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })

@@ -9,7 +9,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @example I add an instrument named {string} the event named {string}
  * @param {string} instrument - the name of the instrument you are adding to an event
  * @param {string} event - the name of the event you are adding an instrument to
- * @description Interacations - Checks a specfic checkbox for an  instrument and event name
+ * @description Interactions - Checks a specfic checkbox for an  instrument and event name
  */
  Given("I add an instrument named {string} to the event named {string}", (instrument, event) => {
     
@@ -28,7 +28,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @example I remove an instrument named {string} the event named {string}
  * @param {string} instrument - the name of the instrument you are adding to an event
  * @param {string} event - the name of the event you are adding an instrument to
- * @description Interacations - Unchecks a specfic checkbox for an  instrument and event name
+ * @description Interactions - Unchecks a specfic checkbox for an  instrument and event name
  */
  Given("I remove an instrument named {string} to the event named {string}", (instrument, event) => {
     
@@ -46,7 +46,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I add an instrument below the instrument named {string}
  * @param {string} instrument - the name of the instrument you are adding an instrument below
- * @description Interacations - Clicks the Add Instrument Here button below a specific Instrument name
+ * @description Interactions - Clicks the Add Instrument Here button below a specific Instrument name
  */
  Given("I add an instrument below the instrument named {string}", (instrument) => {
 
@@ -63,7 +63,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @example I add an instrument below the instrument named {string}
  * @param {string} action - the action label of the link that should be clicked
  * @param {string} instrument - the name of the instrument that a form should be added below
- * @description Interacations - Clicks the "choose action" button and clicks an anchor link
+ * @description Interactions - Clicks the "choose action" button and clicks an anchor link
  */
  Given("I click on the Instrument Action {string} for the instrument named {string}", (action, instrument) => {
 
@@ -80,7 +80,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @example I drag on the instrument named {string} to the position {int}
  * @param {string} instrument - the naame of the instrument being drag-n-dropped
  * @param {int} position - the position (index starting from 0) where the instrument should be placed
- * @description Interacations - Drag and drop the instrument to the int position
+ * @description Interactions - Drag and drop the instrument to the int position
  */
  Given("I drag on the instrument named {string} to position {int}", (instrument, position) => {
 
@@ -101,7 +101,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @example I click on the {addField} input button below the field named {string}
  * @param {addField} type - the type of addField action you want to perform
  * @param {string} target - the name of the field you want to add a field below
- * @description Interacations - Clicks on one of the add field options below a specified field name
+ * @description Clicks on one of the add field options below a specified field name
  */
 defineParameterType({
     name: 'addField',
@@ -120,33 +120,63 @@ defineParameterType({
  * @example I click on the {editField} image for the field named {string}
  * @param {string} type - the type of edit action you want to perform on a field
  * @param {string} field - the name of the field you want to edit
- * @description Interacations - Clicks on the image link of the action you want to perform on a field
+ * @description Clicks on the image link of the action you want to perform on a field
  */
  defineParameterType({
     name: 'editField',
-    regexp: /(Edit|Branching Logic|Copy|Move|Delete Field)/
+    regexp: /(Edit|Branching Logic|Copy)/
 })
- Given("I click on the {editField} image for the field named {string}", (type, field) => {
-    cy.get('td[class=frmedit_row]').contains(field).parents('tr').find('img[title="' + type + '"]').click()
+ Given("I click on the {editField} image for the field named {string}", (type, field_name) => {
+    cy.click_on_design_field_function(type, field_name)
+})
 
-     //There is some secondary stuff we do for Delete Field case
-     if(type === "Delete Field") {
-         cy.intercept({
-             method: 'GET',
-             url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/delete_field.php?*"
-         }).as('delete_field')
+/**
+ * @module DesignForms
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I delete the field named {string}
+ * @param {string} type - the type of edit action you want to perform on a field
+ * @description Interactions - Clicks on the image link of the action you want to perform on a field
+ */
+Given("I delete the field named {string}", (field_name) => {
+    cy.click_on_design_field_function("Delete Field", field_name)
 
-         cy.intercept({
-             method: 'GET',
-             url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/online_designer_render_fields.php?*"
-         }).as('render_fields')
+    cy.intercept({
+        method: 'GET',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/delete_field.php?*"
+    }).as('delete_field')
 
-         //We click on the "Delete" button, too!
-         cy.get('button').contains('Delete').click()
+    cy.intercept({
+        method: 'GET',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/online_designer_render_fields.php?*"
+    }).as('render_fields')
 
-         cy.wait('@delete_field')
-         cy.wait('@render_fields')
-     }
+    cy.get('button').contains('Delete').click()
+
+    cy.wait('@delete_field')
+    cy.wait('@render_fields')
+})
+
+/**
+ * @module DesignForms
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I move the field named {string} after the field named {string}
+ * @param {string} field_name - name of field you want to move
+ * @param {string} after_field - name of field you want to move AFTER
+ * @description Moves a field AFTER the field specified
+ */
+Given("I move the field named {string} after the field named {string}", (field_name, after_field) => {
+    cy.click_on_design_field_function("Move", field_name)
+
+    cy.get('#move_after_field').select(after_field)
+
+    cy.intercept({
+        method: 'GET',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/move_field.php?*"
+    }).as('move_field')
+
+    cy.get('button').contains('Move field').click()
+
+    cy.wait('@move_field')
 })
 
 /**
@@ -155,7 +185,7 @@ defineParameterType({
  * @example I drag on the field named {string} to the position {int}
  * @param {string} field - the name of the field being drag-n-dropped
  * @param {int} position - the position (index starting from 0) where the instrument should be placed
- * @description Interacations - Drag and drop the field to the int position
+ * @description Interactions - Drag and drop the field to the int position
  */
  Given("I drag on the field named {string} to position {int}", (field, position) => {
 
