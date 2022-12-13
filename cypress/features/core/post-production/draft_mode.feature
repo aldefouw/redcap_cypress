@@ -3,6 +3,7 @@ Feature: Draft Mode
   As a REDCap end user
   I want to see that Draft Mode is functioning as expected
 
+@focus
  Scenario: Add from Email Address
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center" page
@@ -10,7 +11,8 @@ Feature: Draft Mode
     And I enter "no-reply@test.com" into the field identified by "[name=from_email]"
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
- 
+
+@focus
  Scenario: Project Setup - 1 
     Given I am an "admin" user who logs into REDCap
     And I create a project named "20_DraftMode_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
@@ -250,7 +252,9 @@ Scenario: 14 - Download and Edit Data Dictionary
     And I click on the button labeled "Data Dictionary"
     Then I should see "The project must first be in Draft Mode before you can upload your Data Dictionary."
 
+@focus
 Scenario: 15 - Upload Revised Data Dictionary
+    When I click on the link labeled "Designer"
     When I click on the input button labeled "Enter Draft Mode"
     And I upload a data dictionary located at "core/20_DraftMode_DD_Modified.csv" to project ID 14
 
