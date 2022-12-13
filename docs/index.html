@@ -137,6 +137,10 @@
                     
               
                     
+                    <li><a href='#i-enter-string-into-the-data-entry-form-field-labeled-string'>I enter {string} into the data entry form field labeled {string}</a></li>
+                    
+              
+                    
                     <li><a href='#i-clear-the-field-labeled-string'>I clear the field labeled {string}</a></li>
                     
               
@@ -221,6 +225,10 @@
                     
               
                     
+                    <li><a href='#i-click-the-element-containing-the-following-text-string'>I click the element containing the following text: {string}</a></li>
+                    
+              
+                    
                     <li><a href='#i-move-the-project-to-production-by-selection-option-string'>I move the project to production by selection option {string}</a></li>
                     
               
@@ -268,6 +276,10 @@
                       <h2 class="mt1 mb1">Record Status Dashboard</h2>
                     
                     <li><a href='#i-click-on-the-bubble-for-the-string-data-collection-instrument-for-record-id-string'>I click on the bubble for the {string} data collection instrument for record ID {string}</a></li>
+                    
+              
+                    
+                    <li><a href='#i-click-the-bubble-to-add-a-record-for-the-string-longitudinal-instrument-on-event-string'>I click the bubble to add a record for the {string} longitudinal instrument on event {string}</a></li>
                     
               
                     
@@ -462,6 +474,14 @@
               
                     
                     <li><a href='#i-click-on-the-editfield-image-for-the-field-named-string'>I click on the {editField} image for the field named {string}</a></li>
+                    
+              
+                    
+                    <li><a href='#i-delete-the-field-named-string'>I delete the field named {string}</a></li>
+                    
+              
+                    
+                    <li><a href='#i-move-the-field-named-string-after-the-field-named-string'>I move the field named {string} after the field named {string}</a></li>
                     
               
                     
@@ -2341,6 +2361,86 @@
       
         
           
+          <h2 class='fl mb0 mt0' id='i-enter-string-into-the-data-entry-form-field-labeled-string'>
+          I enter {string} into the data entry form field labeled {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the text to enter into the field
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>label</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the label of the field
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
           <h2 class='fl mb0 mt0' id='i-clear-the-field-labeled-string'>
           I clear the field labeled {string}
           </h2>
@@ -3924,6 +4024,77 @@ cy.get(sel).select(label).should('have.value', value)
       
         
           
+          <h2 class='fl mb0 mt0' id='i-click-the-element-containing-the-following-text-string'>
+          I click the element containing the following <span class="hljs-attr">text</span>: {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>value</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    text that is inside the element
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Clicks the element that contains the text specified</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
           <h2 class='fl mb0 mt0' id='i-move-the-project-to-production-by-selection-option-string'>
           I move the project to production by selection option {string}
           </h2>
@@ -4664,6 +4835,86 @@ cy.get(sel).select(label).should('have.value', value)
 
 
   <p>Clicks on a bubble within the Record Status Dashboard based upon record ID and the data instrument specified.</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-click-the-bubble-to-add-a-record-for-the-string-longitudinal-instrument-on-event-string'>
+          I click the bubble to add a record <span class="hljs-keyword">for</span> the {string} longitudinal instrument on event {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>instrument</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the instrument you want to add a record to
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>event</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the event you want to add a record to
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Clicks on an instrument / event pairing to add a record on the Record Home Page</p>
 
 
   
@@ -7629,7 +7880,7 @@ cy.get(sel).select(label).should('have.value', value)
     
 
 
-  <p>Interacations - Checks a specfic checkbox for an  instrument and event name</p>
+  <p>Interactions - Checks a specfic checkbox for an  instrument and event name</p>
 
 
   
@@ -7709,7 +7960,7 @@ cy.get(sel).select(label).should('have.value', value)
     
 
 
-  <p>Interacations - Unchecks a specfic checkbox for an  instrument and event name</p>
+  <p>Interactions - Unchecks a specfic checkbox for an  instrument and event name</p>
 
 
   
@@ -7780,7 +8031,7 @@ cy.get(sel).select(label).should('have.value', value)
     
 
 
-  <p>Interacations - Clicks the Add Instrument Here button below a specific Instrument name</p>
+  <p>Interactions - Clicks the Add Instrument Here button below a specific Instrument name</p>
 
 
   
@@ -7860,7 +8111,7 @@ cy.get(sel).select(label).should('have.value', value)
     
 
 
-  <p>Interacations - Clicks the "choose action" button and clicks an anchor link</p>
+  <p>Interactions - Clicks the "choose action" button and clicks an anchor link</p>
 
 
   
@@ -7940,7 +8191,7 @@ cy.get(sel).select(label).should('have.value', value)
     
 
 
-  <p>Interacations - Drag and drop the instrument to the int position</p>
+  <p>Interactions - Drag and drop the instrument to the int position</p>
 
 
   
@@ -8020,7 +8271,7 @@ cy.get(sel).select(label).should('have.value', value)
     
 
 
-  <p>Interacations - Clicks on one of the add field options below a specified field name</p>
+  <p>Clicks on one of the add field options below a specified field name</p>
 
 
   
@@ -8100,7 +8351,7 @@ cy.get(sel).select(label).should('have.value', value)
     
 
 
-  <p>Interacations - Clicks on the image link of the action you want to perform on a field</p>
+  <p>Clicks on the image link of the action you want to perform on a field</p>
 
 
   
@@ -8110,6 +8361,157 @@ cy.get(sel).select(label).should('have.value', value)
   
   
   <p class='mb0'><strong>Author:</strong> <a href="mailto:tin-tin.nguyen@nih.gov">Tintin Nguyen</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-delete-the-field-named-string'>
+          I <span class="hljs-keyword">delete</span> the field named {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>type</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the type of edit action you want to perform on a field
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Interactions - Clicks on the image link of the action you want to perform on a field</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-move-the-field-named-string-after-the-field-named-string'>
+          I move the field named {string} after the field named {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>field_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    name of field you want to move
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>after_field</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    name of field you want to move AFTER
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Moves a field AFTER the field specified</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
   
   
 
@@ -8180,7 +8582,7 @@ cy.get(sel).select(label).should('have.value', value)
     
 
 
-  <p>Interacations - Drag and drop the field to the int position</p>
+  <p>Interactions - Drag and drop the field to the int position</p>
 
 
   
