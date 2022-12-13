@@ -929,6 +929,22 @@ Cypress.Commands.add('click_on_design_field_function', (type, field) => {
     click()
 })
 
+Cypress.Commands.add("click_on_dialog_button", (text) => {
+    cy.get('div[role="dialog"]').then((divs) => {
+        // can be multiple layers of dialogs, find the top most - tintin edit
+        let topDiv = null
+        for(let i = 0; i < divs.length; i++){
+            // ignore invisible dialogs
+            if(divs[i].style.display === 'none') {continue}
+
+            if(topDiv == null || divs[i].style.zIndex > topDiv.style.zIndex){
+                topDiv = divs[i]
+            }
+        }
+        cy.wrap(topDiv).find('button').contains(text).click()
+    })
+})
+
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })

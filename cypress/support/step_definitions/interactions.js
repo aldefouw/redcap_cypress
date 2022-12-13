@@ -68,19 +68,7 @@ Given("I click on the button labeled {string} for the row labeled {string}", (te
  * @description Clicks on a button element with a specific text label in a dialog box.
  */
 Given("I click on the button labeled {string} in the dialog box", (text) => {
-    cy.get('div[role="dialog"]').then((divs) => {
-        // can be multiple layers of dialogs, find the top most - tintin edit
-        let topDiv = null
-        for(let i = 0; i < divs.length; i++){
-            // ignore invisible dialogs
-            if(divs[i].style.display == 'none') {continue}
-
-            if(topDiv == null || divs[i].style.zIndex > topDiv.style.zIndex){
-                topDiv = divs[i]
-            }
-        }
-        cy.wrap(topDiv).find('button').contains(text).click()
-    })
+    cy.click_on_dialog_button(text)
 })
 
 /**
@@ -147,15 +135,27 @@ Given("I save the field", () => {
 Given('I enter {string} into the field labeled {string}', (text, label) => {
     //We locate the label element first.  This isn't always a label which is unfortunate, but this approach seems to work so far.
     cy.contains(label).then(($label) => {
-
-        if( cy.wrap($label).parent().find('input').length ){
-            cy.wrap($label).parent().find('input').type(text)
-        } else {
-            cy.wrap($label).parent().parent().find('input')
-        }
-
+        cy.wrap($label).parent().find('input').type(text)
     })
 })
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I enter {string} into the data entry form field labeled {string}
+ * @param {string} text - the text to enter into the field
+ * @param {string} label - the label of the field
+ * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
+ */
+Given('I enter {string} into the data entry form field labeled {string}', (text, label) => {
+    cy.contains('label', label)
+        .invoke('attr', 'id')
+        .then(($id) => {
+            cy.get('[name="' + $id.split('label-')[1] + '"]')
+        })
+        .type(text)
+})
+
 
 /**
  * @module Interactions

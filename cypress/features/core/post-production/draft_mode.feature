@@ -39,9 +39,10 @@ Scenario: 5 - Enter Draft Mode
 
 Scenario: 6 - Draft Changes
     When I click on the link labeled "Text Validation"
-    Given I delete the field named "Name"
-    When I add a new Text Box field labeled "First Name" with variable name "first_name"
+    And I delete the field named "Name"
     When I add a new Text Box field labeled "Last Name" with variable name "last_name"
+    When I add a new Text Box field labeled "First Name" with variable name "first_name"
+    And I move the field named "Last Name" after the field named "First Name"
 
 
     When I click on the button labeled "Return to list of instruments"
@@ -49,7 +50,7 @@ Scenario: 6 - Draft Changes
     And I click on the Edit image for the field named "Radio Button Manual"
     Given I clear the field identified by "[id=element_enum]"
     And I enter "1, Choice99{enter}100, Choice100{enter}101, Choice101" into the field identified by "[id=element_enum]"
-    And I click on the button labeled "Save"
+    And I click on the button labeled "Save" in the dialog box
 
     Then I should see "Since this project is currently in PRODUCTION, changes will not be made in real time."
     When I click on the link labeled "View detailed summary of all drafted changes"
@@ -128,16 +129,11 @@ Scenario: 10 - Draft Changes
     And I click on the button labeled "Add new record for the arm selected above"
 
     And I click the bubble to add a record for the "Text Validation" longitudinal instrument on event "Event 1"
+    
+    And I enter "testemail@example.com" into the data entry form field labeled "Email"
+    And I enter "firstname" into the data entry form field labeled "First Name"
+    And I enter "lastname" into the data entry form field labeled "Last Name"
 
-
-    And I enter "testemail@example.com" into the field labeled "Email"
-
-
-    And I want to pause
-
-    And I enter "testemail@example.com" into the field identified by "[name=email_v2]"
-    And I enter "firstname" into the field identified by "[name=first_name]"
-    And I enter "lastname" into the field identified by "[name=last_name]"
     And I click on the dropdown and select the button identified by "[id=submit-btn-savenextform]"
     
     And I select "DDChoice1" from the dropdown identified by "[name=multiple_dropdown_auto]"
@@ -155,24 +151,25 @@ Scenario: 10 - Draft Changes
     And I click on the Edit image for the field named "Email"
     And I clear the field identified by "[id=field_label]"
     And I enter "Primary Contact Email" into the field identified by "[id=field_label]"
-    And I click on the button labeled "Save"
+    And I click on the button labeled "Save" in the dialog box
 
     And I click on the button labeled "Return to list of instruments"
     And I click on the link labeled "Data Types"
-    And I click on the Delete Field image for the field named "Multiple Choice Dropdown Auto"
+    And I delete the field named "Multiple Choice Dropdown Auto"
     And I click on the Edit image for the field named "Radio Button Manual"
     Given I clear the field identified by "[id=element_enum]"
     And I enter "99, Choice99{enter}100, Choice100{enter}101, Choice101" into the field identified by "[id=element_enum]"
-    And I click on the button labeled "Save"
+    And I click on the button labeled "Save" in the dialog box
 
     And I click on the Edit image for the field named "Radio Button Auto"
     Given I clear the field identified by "[id=element_enum]"
     And I enter "1, Choice 10{enter}2, Choice 2{enter}3, Choice 3" into the field identified by "[id=element_enum]"
-    And I click on the button labeled "Save"
+    
+    And I click on the button labeled "Save" in the dialog box
 
     And I click on the Edit image for the field named "Checkbox"
     And I select "Multiple Choice - Drop-down List (Single Answer)" from the dropdown identified by "[id=field_type]"
     Then I should see "Edit Field"
-    And I click on the button labeled "Save"
+    And I click on the button labeled "Save" in the dialog box
 
     Given I click on the link labeled "View detailed summary of all drafted changes"

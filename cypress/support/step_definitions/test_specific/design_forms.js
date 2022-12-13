@@ -167,16 +167,22 @@ Given("I delete the field named {string}", (field_name) => {
 Given("I move the field named {string} after the field named {string}", (field_name, after_field) => {
     cy.click_on_design_field_function("Move", field_name)
 
-    cy.get('#move_after_field').select(after_field)
+    //Get the variable name of the field to move "after"
+    cy.get('label').contains(after_field).then(($label) => {
+        const after_field_var_name = $label[0]['id'].split('label-')[1]
+        cy.get('#move_after_field').select(after_field_var_name).should('have.value', after_field_var_name)
+    })
 
     cy.intercept({
-        method: 'GET',
+        method: 'POST',
         url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/move_field.php?*"
     }).as('move_field')
 
     cy.get('button').contains('Move field').click()
 
     cy.wait('@move_field')
+
+    cy.click_on_dialog_button("Close")
 })
 
 /**
