@@ -252,7 +252,7 @@ Scenario: 14 - Download and Edit Data Dictionary
 
 Scenario: 15 - Upload Revised Data Dictionary
     When I click on the input button labeled "Enter Draft Mode"
-    And I upload a data dictionary located at {string} to project ID 14
+    And I upload a data dictionary located at "core/20_DraftMode_DD_Modified.csv" to project ID 14
 
 Scenario: 16 - Send Confirmation Email 
     When I click on the input button labeled "Submit Changes for Review"
