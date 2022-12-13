@@ -52,7 +52,6 @@ Scenario: 6 - Draft Changes
     When I add a new Text Box field labeled "First Name" with variable name "first_name"
     And I move the field named "Last Name" after the field named "First Name"
 
-
     When I click on the button labeled "Return to list of instruments"
     And I click on the link labeled "Data Types"
     And I click on the Edit image for the field named "Radio Button Manual"
@@ -125,7 +124,7 @@ Scenario: 9 - Reject changes
     And I should see a button labeled "Reject Changes"
     And I should see a button labeled "Remove All Drafted Changes"
     When I click on the button labeled "Reject Changes"
-    And I click on the element identified by "button:contains('Reject Changes'):last"
+    And I click on the button labeled "Reject Changes" in the dialog box
     Then I should see "Project Changes Rejected / User Notified"
 
     When I click on the link labeled "Control Center"
@@ -170,6 +169,7 @@ Scenario: 10 - Draft Changes
     And I click on the link labeled "Data Types"
     And I delete the field named "Multiple Choice Dropdown Auto"
     And I click on the Edit image for the field named "Radio Button Manual"
+
     Given I clear the field identified by "[id=element_enum]"
     And I enter "99, Choice99{enter}100, Choice100{enter}101, Choice101" into the field identified by "[id=element_enum]"
     And I click on the button labeled "Save" in the dialog box
@@ -182,7 +182,6 @@ Scenario: 10 - Draft Changes
 
     And I click on the Edit image for the field named "Checkbox"
     And I select "Multiple Choice - Drop-down List (Single Answer)" from the dropdown identified by "[id=field_type]"
-    Then I should see "Edit Field"
     And I click on the button labeled "Save" in the dialog box
 
     Given I click on the link labeled "View detailed summary of all drafted changes"
@@ -239,3 +238,41 @@ Scenario: 13 - Create Record
     
     And I click on the element identified by "[id=opt-radio_button_manual_1]"
     And I click on the button labeled "Save & Exit Form"
+
+Scenario: 14 - Download and Edit Data Dictionary 
+    When I click on the link labeled "Project Home"
+    And I click on the link labeled "Project Revision History"
+    #Note date and time of most recent data dictionary
+    And I download a file by clicking on the link labeled "Download data dictionary"
+    #edit data dictionary 
+
+    When I click on the link labeled "Project Setup"
+    And I click on the button labeled "Data Dictionary"
+    Then I should see "The project must first be in Draft Mode before you can upload your Data Dictionary."
+
+Scenario: 15 - Upload Revised Data Dictionary
+    When I click on the input button labeled "Enter Draft Mode"
+    And I upload a data dictionary located at {string} to project ID 14
+
+Scenario: 16 - Send Confirmation Email 
+    When I click on the input button labeled "Submit Changes for Review"
+    And I click on the button labeled "Submit"
+
+    Given I logout
+    And I am an "admin" user who logs into REDCap
+
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "20_DraftMode_v1115"
+    And I click on the link labeled "Designer"
+    And I click on the button labeled "Project Modification Module"
+    
+Scenario: 17 - Commit Changes
+
+Scenario: 18 - 
+
+
+
+
+
+
+
