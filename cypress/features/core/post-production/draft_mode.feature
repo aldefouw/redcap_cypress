@@ -3,6 +3,14 @@ Feature: Draft Mode
   As a REDCap end user
   I want to see that Draft Mode is functioning as expected
 
+ Scenario: Add from Email Address
+    Given I am an "admin" user who logs into REDCap
+    And I visit the "Control Center" page
+    And I click on the link labeled "General Configuration"
+    And I enter "no-reply@test.com" into the field identified by "[name=from_email]"
+    And I click on the input button labeled "Save Changes"
+    Then I should see "Your system configuration values have now been changed!"
+ 
  Scenario: Project Setup - 1 
     Given I am an "admin" user who logs into REDCap
     And I create a project named "20_DraftMode_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
@@ -96,8 +104,12 @@ Scenario: 8 - Draft Changes
     When I click on the button labeled "RETURN TO PREVIOUS PAGE"
     And I click on the input button labeled "Submit Changes for Review"
     And I click on the button labeled "Submit"
-    #Then I should see "awaiting review"
-    #And I should see "Your assistance is required to review the drafted changes for the production project titled '20_DraftMode_v1115'"
+
+    Then I should see "Your assistance is required to review the drafted changes for the production project"
+    When I click on the link labeled 'Review & approve changes for "20_DraftMode_v1115"'
+    And I click on the link labeled "Designer"
+    Then I should see "Awaiting review of project changes"
+
     Then I logout
 
 Scenario: 9 - Reject changes
@@ -114,8 +126,9 @@ Scenario: 9 - Reject changes
     And I should see a button labeled "Remove All Drafted Changes"
     When I click on the button labeled "Reject Changes"
     And I click on the element identified by "button:contains('Reject Changes'):last"
-    Given I click on the link labeled "20_DraftMode_v1115"
-    And I click on the link labeled "Control Center"
+    Then I should see "Project Changes Rejected / User Notified"
+
+    When I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
     And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
     And I click on the input button labeled "Save Changes"
@@ -173,3 +186,56 @@ Scenario: 10 - Draft Changes
     And I click on the button labeled "Save" in the dialog box
 
     Given I click on the link labeled "View detailed summary of all drafted changes"
+
+    #Then I should see ... 2 records in project 
+    #And I should see ... 4 fields being modified 
+    #And I should see ... 1 field being deleted 
+    And I should see "No, an admin will have to review these changes."
+    #Then I should see ... 1 deleted field with data 
+    #And I should see ... 3 potential critical issues in modified fields with data 
+    #And I should see ... table changes 
+
+Scenario: 11 - Submit Changes 
+    When I click on the button labeled "RETURN TO PREVIOUS PAGE"
+    And I click on the input button labeled "Submit Changes for Review"
+    And I click on the button labeled "Submit"
+    
+    Then I should see "Your assistance is required to review the drafted changes for the production project"
+    When I click on the link labeled 'Review & approve changes for "20_DraftMode_v1115"'
+    And I click on the link labeled "Designer"
+    Then I should see "Awaiting review of project changes"
+    When I click on the link labeled "Why weren't my changes made automatically?"
+    Then I should see "Your changes were not made automatically because your project currently contains one or more records AND"
+
+    Given I logout
+
+Scenario: 12 - Remove Drafted Changes 
+    Given I am an "admin" user who logs into REDCap 
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "20_DraftMode_v1115"
+    And I click on the link labeled "Designer"
+    And I click on the button labeled "Project Modification Module"
+    When I click on the button labeled "Remove All Drafted Changes"
+    And I click on the element identified by "button:contains('Remove All Drafted Changes'):last"
+    Then I should see "Project Changes Removed / User Notified"
+    Given I logout
+
+Scenario: 13 - Create Record
+    Given I am a "standard" user who logs into REDCap 
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "20_DraftMode_v1115"
+    And I click on the link labeled "Designer"
+    Then I should see "Would you like to enter DRAFT MODE to begin drafting changes to the project?"
+    
+    When I click on the link labeled "Add / Edit Records"
+    And I click on the button labeled "Add new record for the arm selected above"
+    And I click the bubble to add a record for the "Text Validation" longitudinal instrument on event "Event 1"
+
+    And I enter "testemail@example.com" into the data entry form field labeled "Email"
+    And I enter "firstname" into the data entry form field labeled "First Name"
+    And I enter "lastname" into the data entry form field labeled "Last Name"
+
+    And I click on the dropdown and select the button identified by "[id=submit-btn-savenextform]"
+    
+    And I click on the element identified by "[id=opt-radio_button_manual_1]"
+    And I click on the button labeled "Save & Exit Form"
