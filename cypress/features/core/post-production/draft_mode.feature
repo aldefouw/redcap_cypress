@@ -215,7 +215,7 @@ Scenario: 12 - Remove Drafted Changes
     And I click on the link labeled "Designer"
     And I click on the button labeled "Project Modification Module"
     When I click on the button labeled "Remove All Drafted Changes"
-    And I click on the element identified by "button:contains('Remove All Drafted Changes'):last"
+    And I click on the button labeled "Remove All Drafted Changes" in the dialog box
     Then I should see "Project Changes Removed / User Notified"
     Given I logout
 
@@ -244,7 +244,6 @@ Scenario: 14 - Download and Edit Data Dictionary
     And I click on the link labeled "Project Revision History"
     #Note date and time of most recent data dictionary
     And I download a file by clicking on the link labeled "Download data dictionary"
-    #edit data dictionary 
 
     When I click on the link labeled "Project Setup"
     And I click on the button labeled "Data Dictionary"
@@ -253,10 +252,16 @@ Scenario: 14 - Download and Edit Data Dictionary
 Scenario: 15 - Upload Revised Data Dictionary
     When I click on the input button labeled "Enter Draft Mode"
     And I upload a data dictionary located at {string} to project ID 14
+    Then I should see "Your document was uploaded successfully and awaits your confirmation below."
+    When I click on the button labeled "Commit Changes"
+    Then I should see "Changes to the DRAFT have been made successfully!"
+    Then I should see "Since the project is still in Draft Mode, these changes will not officially take effect until the drafted changes are submitted for review."
+    And I should see a link labeled "Remove all drafted changes"
+    And I should see a link labeled "view a detailed summary of all drafted changes"
 
 Scenario: 16 - Send Confirmation Email 
     When I click on the input button labeled "Submit Changes for Review"
-    And I click on the button labeled "Submit"
+    And I click on the button labeled "Submit" in the dialog box
 
     Given I logout
     And I am an "admin" user who logs into REDCap
@@ -265,13 +270,48 @@ Scenario: 16 - Send Confirmation Email
     And I click on the link labeled "20_DraftMode_v1115"
     And I click on the link labeled "Designer"
     And I click on the button labeled "Project Modification Module"
+
+    Then I should see "*Data MIGHT be lost due to deleted choice(s)"
+
+    When I click on the button labeled "Compose confirmation email"
+    And I click on the button labeled "Send Email" in the dialog box
+    Then I should see "EMAIL SENT!"
     
 Scenario: 17 - Commit Changes
+    When I click on the button labeled "Commit Changes"
+    Then I should see "Are you sure you wish to commit these changes to the project?"
+    And I should see "These changes will be permanent."
+    When I click on the button labeled "COMMIT CHANGES" in the dialog box
+    Then I should see "Project Changes Committed / User Notified"
 
-Scenario: 18 - 
+    Given I logout
 
+Scenario: 18 - Project Revision History
+    Given I am a "standard" user who logs into REDCap
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "20_DraftMode_v1115"
+    And I click on the link labeled "Project Revision History"
+    Then I should see "Production revision #1"
+    And I should see "Production revision #2"
+    And I should see "Production revision #3 (current)"
+    #with the date and time it was implemented
+    #as well as the person who requested the change(s) and the one who approved the request
 
+Scenario: 19 - Define My Events
+    When I click on the link labeled "Project Setup"
+    And I click on the buitton labeled "Define My Events"
+    Then I should see "Events cannot be modified in production status except by a REDCap administrator."
 
+    Given I logout
+
+Scenario: 20 - 
+    Given I am an "admin" user who logs into REDCap
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "20_DraftMode_v1115"
+    When I click on the link labeled "Project Setup"
+    And I click on the buitton labeled "Define My Events"
+    Then I should see "Deleting any events below will result in data loss. Please proceed with caution."
+    
 
 
 
