@@ -323,7 +323,7 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
     })
 
     cy.wait(500)
-    
+
     cy.get('button').contains('Commit Changes').click()
     cy.get('html').should(($html) => {
         expect($html).to.contain('Changes to the DRAFT have been made successfully!')

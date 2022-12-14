@@ -97,7 +97,7 @@ window.base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace(/\//g, "\\/")
 
 before(() => {
     Cypress.Cookies.defaults({
-        preserve: ['PHPSESSID', 'redcap_external_module_csrf_token', 'redcap_csrf_token']
+        preserve: ['PHPSESSID', 'redcap_external_module_csrf_token']
     })
 
     //Intercept all requests sent to Vanderbilt
@@ -127,7 +127,7 @@ before(() => {
 })
 
 beforeEach(() => {
-    Cypress.Cookies.debug(true, { verbose: false })
+    //Cypress.Cookies.debug()
 })
 
 Cypress.on("uncaught:exception", (err, runnable) => {
