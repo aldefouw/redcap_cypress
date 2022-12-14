@@ -96,6 +96,7 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the button labeled "Add new record"
     #And I click on the bubble for the "Data Types" data collection instrument for record ID "1"
     And I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&auto=1"
+    #And I visit the version URL "DataEntry/index.php?pid=14&id=1&page=data_types&auto=1"
     And I enter "John" into the "ptname" text input field
     And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
     And I should see "Save & Stay"
@@ -110,10 +111,49 @@ Feature: Data Entry through the Data Collection Instrument
     And I click the input element identified by 'input#field_req0'
     And I click on the button labeled "Save"
 
-  Scenario: 6 - Edit record
+  Scenario: 6 to 7 - Edit record
     When I visit Project ID 14
     Then I click on the link labeled "Record Status Dashboard"
     #And I click on the bubble for the "Data Types" data collection instrument for record ID "1"
-    And I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&auto=1"
-    And I enter "This is a notes box." into the "notesbox" text input field
-    And I enter "5" into the "value" text input field
+    And I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
+    #And I visit the version URL "DataEntry/index.php?pid=14&id=1&page=data_types&auto=1"
+    And I enter "This is a notes box." into the field identified by 'textarea[name="notesbox"]'
+    And I enter "5" into the field identified by "input[name='value']"
+    And I select 'DDChoice5' from the dropdown identified by 'select[name="multiple_dropdown_manual"]'
+    And I click the input element identified by 'input#opt-radio_button_manual_100'
+    And I reset the options for field labeled 'Radio Button Manual'
+    And I check the checkbox identified by 'input[id="id-__chk__checkbox_RC_1"]'
+    And I check the checkbox identified by 'input[id="id-__chk__checkbox_RC_2"]'
+    #Add signature
+    #Upload document (word doc) in file upload field
+    #Open image file in descriptive text with file 
+    # And I click the input element identified by "ui-datepicker-trigger"
+    # And I select '2' from the dropdown identified by 'select[data-handler="selectMonth"]'
+    # And I select '2020' from the dropdown identified by 'select[data-handler="selectYear"]'
+    And I click on the button labeled "Today"
+    And I click on the button labeled "Now"
+    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
+    And I should see "Save & Exit Record"
+    And I click on the link labeled "Save & Exit Record"
+  
+  Scenario: 8 - Edit record and Leave without saving changes
+    When I visit Project ID 14
+    Then I click on the link labeled "Record Status Dashboard"
+    And I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
+    And I click the input element identified by 'input#opt-radio_button_manual_100'
+    And I click on the link labeled "Select other record"
+    And I click on the button labeled "Leave without saving changes" in the dialog box
+    Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
+  
+  Scenario: 9 - Edit record and Save changes
+    When I visit Project ID 14
+    Then I click on the link labeled "Record Status Dashboard"
+    And I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
+    And I click the input element identified by 'input#opt-radio_button_manual_100'
+    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
+    And I should see "Save & Stay"
+    And I click on the link labeled "Save & Stay"
+    And I click on the link labeled "Select other record"
+
+
+
