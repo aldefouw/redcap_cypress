@@ -313,30 +313,21 @@ Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector) => {
 
 Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format = "DMY") => {
     cy.visit_version({page: 'Design/data_dictionary_upload.php', params: 'pid=' + pid})
+    cy.upload_file('/dictionaries/' + fixture_file, 'csv', 'input[name="uploadedfile"]')
 
-    cy.get('form[name="form"]').within(($form) => {
-        cy.upload_file('/dictionaries/' + fixture_file, 'csv', 'input[name="uploadedfile"]')
+    cy.wait(500)
 
-        cy.get('input[name="filepath"]').
-            invoke('attr', 'value', "C:/fakepath/20_DraftMode_DD_Modified.csv").
-            should('have.attr', 'value', "C:/fakepath/20_DraftMode_DD_Modified.csv")
-
-        cy.get('button[id=submit]').
-            invoke('attr', 'name', 'fake_submit').
-            should('attr', 'name', 'fake_submit')
-
-        cy.get('button[name=fake_submit]').
-            invoke('attr', 'id', 'fake_submit').
-            should('attr', 'id', 'fake_submit')
-        
-
-        cy.get('input[name=redcap_csrf_token]').should('have.value', 'f6dd09ff60f29af49b2b8331cb6cd894f9afea57')
-
-        //cy.get('button[name=submit]').click()
-
-        cy.root().submit()
+    cy.get('button[name=submit]').click()
+    cy.get('html').should(($html) => {
+        expect($html).to.contain('Commit Changes')
     })
 
+    cy.wait(500)
+    
+    cy.get('button').contains('Commit Changes').click()
+    cy.get('html').should(($html) => {
+        expect($html).to.contain('Changes to the DRAFT have been made successfully!')
+    })
 })
 
 Cypress.Commands.add('create_cdisc_project', (project_name, project_type, cdisc_file) => {
