@@ -59,6 +59,18 @@ Given("I enter {string} into the {string} survey text input field", (text, field
 /**
  * @module Survey
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I enter {string} into the field identified by {string}
+ * @param {string} text - the text you want to input into the survey field
+ * @param {string} variable - variable of the survey field you want to input text into
+ * @description Enters text into a survey field specified by entire selector value
+ */
+ Given("I enter {string} into the field identified by {string}", (text, sel) => {
+    cy.get(sel).type(text)
+})
+
+/**
+ * @module Survey
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I enter {string} into the {string} text input field
  * @param {string} text - the text you want to input into the survey field
  * @param {string} variable - variable of the survey field you want to input text into
@@ -66,6 +78,21 @@ Given("I enter {string} into the {string} survey text input field", (text, field
  */
  Given("I clear the field and enter {string} into the {string} text input field", (text, variable) => {
     cy.get('input[name='+variable+']').clear().type(text)
+})
+
+/**
+ * @module Survey
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I reset the options for field labeled {string}
+ * @param {string} text - Clears options from the labeled field
+ * @description Clear options from field
+ */
+ Given("I reset the options for field labeled {string}", (text) => {
+    cy.select_radio_by_label(text).parent().parent().should(($td) => {
+        let $a = $td.find('> div a')
+        let $reset_exists = expect($a).to.contain('reset')
+        if ($reset_exists) $a.click() 
+    })
 })
 
 /**
