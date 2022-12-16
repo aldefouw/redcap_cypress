@@ -269,14 +269,15 @@ Scenario: 16 - Send Confirmation Email
     And I click on the link labeled "Designer"
     And I click on the button labeled "Project Modification Module"
 
-    Then I should see "*Data MIGHT be lost due to deleted choice(s)"
+    Then I should see "Data MIGHT be lost due to deleted choice(s)"
 
     When I click on the button labeled "Compose confirmation email"
     And I click on the button labeled "Send Email" in the dialog box
     Then I should see "EMAIL SENT!"
+    When I click on the button labeled "Close" in the dialog box
     
 Scenario: 17 - Commit Changes
-    When I click on the button labeled "Commit Changes"
+    When I click on the button labeled "COMMIT CHANGES"
     Then I should see "Are you sure you wish to commit these changes to the project?"
     And I should see "These changes will be permanent."
     When I click on the button labeled "COMMIT CHANGES" in the dialog box
@@ -290,14 +291,13 @@ Scenario: 18 - Project Revision History
     And I click on the link labeled "20_DraftMode_v1115"
     And I click on the link labeled "Project Revision History"
     Then I should see "Production revision #1"
-    And I should see "Production revision #2"
-    And I should see "Production revision #3 (current)"
+    And I should see "Production revision #2 (current)"
     #with the date and time it was implemented
     #as well as the person who requested the change(s) and the one who approved the request
 
 Scenario: 19 - Define My Events
     When I click on the link labeled "Project Setup"
-    And I click on the buitton labeled "Define My Events"
+    And I click on the button labeled "Define My Events"
     Then I should see "Events cannot be modified in production status except by a REDCap administrator."
 
     Given I logout
