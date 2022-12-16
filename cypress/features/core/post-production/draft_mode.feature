@@ -42,7 +42,7 @@ Scenario: 4 - Verify Project is in Production
 
 Scenario: 5 - Enter Draft Mode 
     Given I click on the button labeled "Close"
-    And I click on the input button labeled "Enter Draft Mode"
+    And I enter draft mode
     Then I should see "The project is now in Draft Mode."
 
 Scenario: 6 - Draft Changes
@@ -91,7 +91,7 @@ Scenario: 8 - Draft Changes
     And I see "20_DraftMode_v1115"
     And I click on the link labeled "20_DraftMode_v1115"
     And I click on the link labeled "Designer"
-    And I click on the input button labeled "Enter Draft Mode"
+    And I enter draft mode
     When I click on the link labeled "Text Validation"
     And I click on the Add Field input button below the field named "Email"
     When I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[id=field_type]"
@@ -157,7 +157,7 @@ Scenario: 10 - Draft Changes
     When I click on the link labeled "Designer"
     And I click on the link labeled "Remove all drafted changes"
     And I click on the button labeled "Remove all drafted changes"
-    And I click on the input button labeled "Enter Draft Mode"
+    And I enter draft mode
     And I click on the link labeled "Text Validation"
 
     And I click on the Edit image for the field named "Email"
@@ -250,7 +250,7 @@ Scenario: 14 - Download and Edit Data Dictionary
     Then I should see "The project must first be in Draft Mode before you can upload your Data Dictionary."
 
 Scenario: 15 - Upload Revised Data Dictionary
-    When I click on the input button labeled "Enter Draft Mode"
+    When I enter draft mode
     And I upload a data dictionary located at {string} to project ID 14
     Then I should see "Your document was uploaded successfully and awaits your confirmation below."
     When I click on the button labeled "Commit Changes"
@@ -304,12 +304,12 @@ Scenario: 19 - Define My Events
 
     Given I logout
 
-Scenario: 20 - 
+Scenario: 20 - Draft Changes
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "My Projects"
     And I click on the link labeled "20_DraftMode_v1115"
     When I click on the link labeled "Project Setup"
-    And I click on the buitton labeled "Define My Events"
+    And I click on the button labeled "Define My Events"
     Then I should see "Deleting any events below will result in data loss. Please proceed with caution."
     
 
