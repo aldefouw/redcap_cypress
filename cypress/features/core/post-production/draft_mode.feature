@@ -3,15 +3,15 @@ Feature: Draft Mode
   As a REDCap end user
   I want to see that Draft Mode is functioning as expected
 
- Scenario: Add from Email Address
+Scenario: Add from Email Address
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center" page
     And I click on the link labeled "General Configuration"
     And I enter "no-reply@test.com" into the field identified by "[name=from_email]"
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
- 
- Scenario: Project Setup - 1 
+
+Scenario: Project Setup - 1
     Given I am an "admin" user who logs into REDCap
     And I create a project named "20_DraftMode_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
     And I click on the button labeled exactly "Move project to production"
@@ -250,11 +250,9 @@ Scenario: 14 - Download and Edit Data Dictionary
     Then I should see "The project must first be in Draft Mode before you can upload your Data Dictionary."
 
 Scenario: 15 - Upload Revised Data Dictionary
+    When I click on the link labeled "Designer"
     When I enter draft mode
-    And I upload a data dictionary located at {string} to project ID 14
-    Then I should see "Your document was uploaded successfully and awaits your confirmation below."
-    When I click on the button labeled "Commit Changes"
-    Then I should see "Changes to the DRAFT have been made successfully!"
+    And I upload a data dictionary located at "core/20_DraftMode_DD_Modified.csv" to project ID 14
     Then I should see "Since the project is still in Draft Mode, these changes will not officially take effect until the drafted changes are submitted for review."
     And I should see a link labeled "Remove all drafted changes"
     And I should see a link labeled "view a detailed summary of all drafted changes"
