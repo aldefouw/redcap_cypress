@@ -62,7 +62,7 @@ Scenario: 6 - Draft Changes
     Then I should see "Since this project is currently in PRODUCTION, changes will not be made in real time."
     When I click on the link labeled "View detailed summary of all drafted changes"
     Then I should see "Details regarding all changes made in Draft Mode"
-        #And I should see "Records in project: ..."
+    And I should see "Records in project: 1"
     And I should see "Will these changes be automatically approved?"
     And I should see "Yes"
 
@@ -76,7 +76,7 @@ Scenario: 7 - Submit changes
     Then I should see "Your changes were made automatically either because your project currently contains no records OR because it was found that the"
     When I click on the button labeled "Close"
     Then I should see "Would you like to enter DRAFT MODE to begin drafting changes to the project?"
-        #asks to check for an input button
+    #asks to check for an input button
 
 Scenario: 8 - Draft Changes 
     Given I logout
@@ -186,12 +186,12 @@ Scenario: 10 - Draft Changes
 
     Given I click on the link labeled "View detailed summary of all drafted changes"
 
-    #Then I should see ... 2 records in project 
-    #And I should see ... 4 fields being modified 
-    #And I should see ... 1 field being deleted 
+    Then I should see "Records in project: 2"
+    And I should see "Fields to be modified: 4"
     And I should see "No, an admin will have to review these changes."
-    #Then I should see ... 1 deleted field with data 
-    #And I should see ... 3 potential critical issues in modified fields with data 
+    And I should see "Deleted fields that contain data: 1"
+    And I should see "Potentially critical issues in modified fields that contain data: 3"
+
     #And I should see ... table changes 
 
 Scenario: 11 - Submit Changes 
@@ -306,13 +306,13 @@ Scenario: 20 - Draft Changes
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "My Projects"
     And I click on the link labeled "20_DraftMode_v1115"
+
     When I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
     Then I should see "Deleting any events below will result in data loss. Please proceed with caution."
 
-    #Change ‘Event 2’ to read ‘Event B’ - new step definition for edit event image
-    #And I clear the field and enter "Event B" into the "[id=descrip_edit]" text input field
-    #And I click on the input button labeled "Save"
+    Given I change the current Event Name of "Event 2" to "Event B"
+
     When I click on the link labeled "Designate Instruments for My Events"
     And I click on the button labeled "Begin Editing"
     And I click on the checkbox identified by "[id=text_validation--42]"
@@ -326,11 +326,11 @@ Scenario: 21 - Review Events and Form Designations
     And I click on the link labeled "20_DraftMode_v1115"
     When I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
-    #Then I should see "Event B"
-    #And I should NOT see "Event 2"
+    Then I should see "Event B"
+    And I should NOT see "Event 2"
     When I click on the link labeled "Designate Instruments for My Events"
     #Then I should see "[id=img--text_validation--42]"
-        #this doesnt find the check mark for Event 2 Text Validation - not sure if we have a way to "see" the check mark 
+    #this doesnt find the check mark for Event 2 Text Validation - not sure if we have a way to "see" the check mark
     
     
 

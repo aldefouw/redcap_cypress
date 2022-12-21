@@ -844,6 +844,45 @@ Cypress.Commands.add('click_on_design_field_function', (type, field) => {
     click()
 })
 
+Cypress.Commands.add('change_event_name', (current_name, proposed_name) => {
+    cy.intercept({
+        method: 'GET',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/define_events_ajax.php?*"
+    }).as('define_ajax_events')
+
+    cy.get('td').
+    contains(current_name).
+    parents('tr').within(() => {
+        cy.get('img[title="Edit"]').click()
+    })
+    cy.wait('@define_ajax_events')
+
+    cy.intercept({
+        method: 'POST',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/define_events_ajax.php"
+    }).as('save_events')
+
+    cy.get('input[value="' + current_name +  '"]').clear().type(proposed_name).parents('tr').within(() => {
+        cy.get('input[value=Save]').click()
+    })
+
+    cy.wait('@save_events')
+})
+
+Cypress.Commands.add('delete_event_name', (event_name) => {
+    cy.intercept({
+        method: 'GET',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/define_events_ajax.php?*"
+    }).as('delete_ajax_events')
+
+    cy.get('td').
+    contains(event_name).
+    parents('tr').within(() => {
+        cy.get('img[title="Delete"]').click()
+    })
+    cy.wait('@delete_ajax_events')
+})
+
 Cypress.Commands.add("click_on_dialog_button", (text) => {
     cy.get('div[role="dialog"]').then((divs) => {
         // can be multiple layers of dialogs, find the top most - tintin edit
