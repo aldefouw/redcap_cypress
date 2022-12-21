@@ -144,8 +144,8 @@ Scenario: 10 - Draft Changes
     And I enter "firstname" into the data entry form field labeled "First Name"
     And I enter "lastname" into the data entry form field labeled "Last Name"
 
-    And I click on the dropdown and select the button identified by "[id=submit-btn-savenextform]"
-    
+    And I select the submit option labeled "Save & Go To Next Form" on the Data Collection Instrument
+
     And I select "DDChoice1" from the dropdown identified by "[name=multiple_dropdown_auto]"
     And I click on the element identified by "[id=opt-radio_button_auto_1]"
     And I click on the element identified by "[id=opt-radio_button_manual_1]"
@@ -232,7 +232,7 @@ Scenario: 13 - Create Record
     And I enter "firstname" into the data entry form field labeled "First Name"
     And I enter "lastname" into the data entry form field labeled "Last Name"
 
-    And I click on the dropdown and select the button identified by "[id=submit-btn-savenextform]"
+    And I select the submit option labeled "Save & Go To Next Form" on the Data Collection Instrument
     
     And I click on the element identified by "[id=opt-radio_button_manual_1]"
     And I click on the button labeled "Save & Exit Form"

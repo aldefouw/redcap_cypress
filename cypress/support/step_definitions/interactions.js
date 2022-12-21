@@ -12,16 +12,43 @@ Given("I click on the button labeled exactly {string}", (text) => {
     cy.get('button').contains(new RegExp("^" + text + "$", "g")).click()
 })
 
+defineParameterType({
+    name: 'instrument_save_options',
+    regexp: /Save & Stay|Save & Exit Record|Save & Go To Next Record|Save & Exit Form|Save & Go To Next Form/
+})
+
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the dropdown and select the button identified by {string}
- * @param {string} text - button id
- * @description Clicks on the button in the dropdown of the survey
+ * @param {string} text - the text that appears on the option in the dropdown (options: Save & Stay, Save & Exit Record, Save & Go To Next Record, Save & Exit Form, Save & Go To Next Form)
+ * @description Clicks on a "Save" option on a Data Collection instrument form
  */
- Given("I click on the dropdown and select the button identified by {string}", (text) => {
-    cy.get('button#submit-btn-dropdown').first().click().closest('div').find(text).should('be.visible').click()
-})
+ Given("I select the submit option labeled \"{instrument_save_options}\" on the Data Collection Instrument", (text) => {
+
+     //REDCap does some crazy conditional display of buttons so we try to handle that as we best can
+     cy.get('.btn-group').within(() => {
+         let btn = Cypress.$("button:contains(" + JSON.stringify(text) + ")");
+
+         //If the button shows up on the main section, we can click it like a typical element
+         if(btn.length){
+
+             cy.get('button').contains(text).click()
+
+         //If the button does NOT show up on main section, let's find it in the dropdown section
+         } else {
+
+             cy.get('button#submit-btn-dropdown').
+                first().
+                click().
+                closest('div').
+                find('a').
+                contains(text).
+                should('be.visible').
+                click()
+         }
+     })
+ })
 
 /**
  * @module Interactions
