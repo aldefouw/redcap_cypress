@@ -243,6 +243,16 @@
                     
               
                     
+                      <h2 class="mt1 mb1">Longitudinal Events</h2>
+                    
+                    <li><a href='#i-change-the-current-event-name-from-string-to-string'>I change the current Event Name from {string} to {string}</a></li>
+                    
+              
+                    
+                    <li><a href='#i-delete-the-event-name-of-string'>I delete the Event Name of {string}</a></li>
+                    
+              
+                    
                       <h2 class="mt1 mb1">Project Setup</h2>
                     
                     <li><a href='#i-should-see-that-surveys-are-enableddisabled'>I should see that surveys are &lt;enabled/disabled&gt;</a></li>
@@ -4254,6 +4264,159 @@ cy.get(sel).select(label).should('have.value', value)
 
 
   <p>Logs a given user out of REDCap</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            <h2 class='fl mt3 mb2' id='longitudinalevents'>Longitudinal Events</h3>
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-change-the-current-event-name-from-string-to-string'>
+          I change the current <span class="hljs-title class_">Event</span> <span class="hljs-title class_">Name</span> <span class="hljs-keyword">from</span> {string} to {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>current_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the event when this step is reached
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>proposed_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the event to change the current event name to
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Changes the name of an event on the "Define My Events" page for a Longitudinal Project</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-delete-the-event-name-of-string'>
+          I <span class="hljs-keyword">delete</span> the <span class="hljs-title class_">Event</span> <span class="hljs-title class_">Name</span> <span class="hljs-keyword">of</span> {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>event_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the event to delete
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Deletes a specific named event on the "Define My Events" page for a Longitudinal Project</p>
 
 
   

@@ -311,7 +311,7 @@ Scenario: 20 - Draft Changes
     And I click on the button labeled "Define My Events"
     Then I should see "Deleting any events below will result in data loss. Please proceed with caution."
 
-    Given I change the current Event Name of "Event 2" to "Event B"
+    Given I change the current Event Name from "Event 2" to "Event B"
 
     When I click on the link labeled "Designate Instruments for My Events"
     And I click on the button labeled "Begin Editing"
