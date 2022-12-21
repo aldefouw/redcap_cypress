@@ -20,7 +20,7 @@ defineParameterType({
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the dropdown and select the button identified by {string}
+ * @example I select the submit option labeled {string} on the Data Collection Instrument
  * @param {string} text - the text that appears on the option in the dropdown (options: Save & Stay, Save & Exit Record, Save & Go To Next Record, Save & Exit Form, Save & Go To Next Form)
  * @description Clicks on a "Save" option on a Data Collection instrument form
  */
