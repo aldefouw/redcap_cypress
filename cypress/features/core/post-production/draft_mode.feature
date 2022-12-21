@@ -309,6 +309,29 @@ Scenario: 20 - Draft Changes
     When I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
     Then I should see "Deleting any events below will result in data loss. Please proceed with caution."
+
+    #Change ‘Event 2’ to read ‘Event B’ - new step definition for edit event image
+    #And I clear the field and enter "Event B" into the "[id=descrip_edit]" text input field
+    #And I click on the input button labeled "Save"
+    When I click on the link labeled "Designate Instruments for My Events"
+    And I click on the button labeled "Begin Editing"
+    And I click on the checkbox identified by "[id=text_validation--42]"
+    And I click on the button labeled "Save"
+
+    Given I logout
+
+Scenario: 21 - Review Events and Form Designations
+    Given I am a "standard" user who logs into REDCap
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "20_DraftMode_v1115"
+    When I click on the link labeled "Project Setup"
+    And I click on the button labeled "Define My Events"
+    #Then I should see "Event B"
+    #And I should NOT see "Event 2"
+    When I click on the link labeled "Designate Instruments for My Events"
+    #Then I should see "[id=img--text_validation--42]"
+        #this doesnt find the check mark for Event 2 Text Validation - not sure if we have a way to "see" the check mark 
+    
     
 
 
