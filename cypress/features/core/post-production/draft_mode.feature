@@ -93,11 +93,9 @@ Scenario: 8 - Draft Changes
     And I click on the link labeled "Designer"
     And I enter draft mode
     When I click on the link labeled "Text Validation"
-    And I click on the Add Field input button below the field named "Email"
-    When I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[id=field_type]"
-    When I enter "Parent Contact" into the field identified by "[id=field_label]"
-    And I enter "contact" into the field identified by "[id=field_name]"
-    And I click on the button labeled "Save"
+
+    When I add a new Text Box field labeled "Parent Contact" with variable name "contact"
+
     When I click on the link labeled "View detailed summary of all drafted changes"
     Then I should see "Details regarding all changes made in Draft Mode"
     When I click on the button labeled "RETURN TO PREVIOUS PAGE"
