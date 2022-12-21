@@ -27,7 +27,7 @@ defineParameterType({
  Given("I select the submit option labeled \"{instrument_save_options}\" on the Data Collection Instrument", (text) => {
 
      //REDCap does some crazy conditional display of buttons so we try to handle that as we best can
-     cy.get('.btn-group').within(() => {
+     cy.get('tr#__SUBMITBUTTONS__-tr').within(() => {
          let btn = Cypress.$("button:contains(" + JSON.stringify(text) + ")");
 
          //If the button shows up on the main section, we can click it like a typical element
@@ -478,3 +478,14 @@ Given('I click the element containing the following text: {string}', (value) => 
     cy.get(':contains(' + value + '):last').click()
 })
 
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I select the radio option {string} for the field labeled {string}
+ * @param {string} option - option we want to select from the radio options
+ * @param {string} field_label - the label on the field we want to select
+ * @description Clicks the radio option on the field specified
+ */
+Given('I select the radio option {string} for the field labeled {string}', (radio_option, field_label) => {
+    cy.select_radio_by_label(field_label, radio_option)
+})

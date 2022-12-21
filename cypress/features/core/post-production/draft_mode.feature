@@ -148,7 +148,7 @@ Scenario: 10 - Draft Changes
 
     And I select "DDChoice1" from the dropdown identified by "[name=multiple_dropdown_auto]"
     And I click on the element identified by "[id=opt-radio_button_auto_1]"
-    And I click on the element identified by "[id=opt-radio_button_manual_1]"
+    And I select the radio option "Choice99" for the field labeled "Radio Button Manual"
     And I click on the checkbox identified by "[id=id-__chk__checkbox_RC_1]"
     And I click on the button labeled "Save & Exit Form"
 
@@ -233,9 +233,9 @@ Scenario: 13 - Create Record
     And I enter "lastname" into the data entry form field labeled "Last Name"
 
     And I select the submit option labeled "Save & Go To Next Form" on the Data Collection Instrument
-    
-    And I click on the element identified by "[id=opt-radio_button_manual_1]"
-    And I click on the button labeled "Save & Exit Form"
+
+    And I select the radio option "Choice99" for the field labeled "Radio Button Manual"
+    And I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
 
 Scenario: 14 - Download and Edit Data Dictionary 
     When I click on the link labeled "Project Home"

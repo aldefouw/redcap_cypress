@@ -208,7 +208,6 @@ Cypress.Commands.add('set_field_value_by_label', ($name, $value, $type, $prefix 
       last().
       parent().
       then(($tr) => {
-
         let selector = $type + '[name="' + $prefix + $tr[0]['attributes']['sq_id']['value'] + $suffix + '"]'
         cy.get(selector, { force: true}).then(($a) => {
             return $a[0]
@@ -225,7 +224,11 @@ Cypress.Commands.add('select_textarea_by_label', ($name, $value) => {
 })
 
 Cypress.Commands.add('select_radio_by_label', ($name, $value) => {
-    cy.set_field_value_by_label($name, $value, 'input', '', '___radio')
+    const radio_labels = cy.set_field_value_by_label($name, $value, 'input', '', '___radio')
+
+    radio_labels.first().parents('tr').first().within(() => {
+        cy.get('label').contains($value).click()
+    })
 })
 
 Cypress.Commands.add('select_value_by_label', ($name, $value) => {
