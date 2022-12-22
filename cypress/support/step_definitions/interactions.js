@@ -219,17 +219,7 @@ Given('I click on the table cell containing a link labeled {string}', (text) => 
     cy.get('td').contains(text).parent().find('a').click()
 })
 
-/**
- * @module Interactions
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I select {string} from the dropdown identified by {string}
- * @param {string} value - the option to select from the dropdown
- * @param {string} label - the label of the dropdown to choose an option from
- * @description Selects a dropdown by its label and the option via a specific string.
- */
-Given('I select {string} from the dropdown identified by {string}', (value,label) => {
-    cy.get(label).select(value, { force: true })
-})
+
 
 /**
  * @module Interactions
@@ -488,4 +478,41 @@ Given('I click the element containing the following text: {string}', (value) => 
  */
 Given('I select the radio option {string} for the field labeled {string}', (radio_option, field_label) => {
     cy.select_radio_by_label(field_label, radio_option)
+})
+
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I select the radio option {string} for the field labeled {string}
+ * @param {string} dropdown_option - option we want to select from the dropdown
+ * @param {string} field_label - the label on the field we want to select
+ * @description Clicks the dropdown option on the field specified
+ */
+Given('I select the dropdown option {string} for the field labeled {string}', (dropdown_option, field_label) => {
+    cy.select_field_by_label(field_label).select(dropdown_option)
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I select the checkbox option {string} for the field labeled {string}
+ * @param {string} checkbox_option - option we want to select from the dropdown
+ * @param {string} field_label - the label on the field we want to select
+ * @description Clicks the dropdown option on the field specified
+ */
+Given('I select the checkbox option {string} for the field labeled {string}', (checkbox_option, field_label) => {
+    cy.select_checkbox_by_label(field_label, checkbox_option)
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I select {string} from the dropdown identified by {string}
+ * @param {string} value - the option to select from the dropdown
+ * @param {string} label - the label of the dropdown to choose an option from
+ * @description Selects a dropdown by its label and the option via a specific string.
+ */
+Given('I select {string} from the dropdown identified by {string}', (value,label) => {
+    cy.get(label).select(value, { force: true })
 })

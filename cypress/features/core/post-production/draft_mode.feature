@@ -146,12 +146,13 @@ Scenario: 10 - Draft Changes
 
     And I select the submit option labeled "Save & Go To Next Form" on the Data Collection Instrument
 
-    And I select "DDChoice1" from the dropdown identified by "[name=multiple_dropdown_auto]"
-    And I click on the element identified by "[id=opt-radio_button_auto_1]"
+    And I select the dropdown option "DDChoice1" for the field labeled "Multiple Choice Dropdown Auto"
+    And I select the radio option "Choice1" for the field labeled "Radio Button Auto"
     And I select the radio option "Choice99" for the field labeled "Radio Button Manual"
-    And I click on the checkbox identified by "[id=id-__chk__checkbox_RC_1]"
-    And I click on the button labeled "Save & Exit Form"
+    And I select the checkbox option "Checkbox" for the field labeled "Checkbox"
 
+    And I click on the button labeled "Save & Exit Form"
+    
     When I click on the link labeled "Designer"
     And I click on the link labeled "Remove all drafted changes"
     And I click on the button labeled "Remove all drafted changes"

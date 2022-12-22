@@ -227,7 +227,7 @@ Cypress.Commands.add('select_radio_by_label', ($name, $value) => {
     const radio_labels = cy.set_field_value_by_label($name, $value, 'input', '', '___radio')
 
     radio_labels.first().parents('tr').first().within(() => {
-        cy.get('label').contains($value).click()
+        cy.get('label[class=mc]').contains($value).click()
     })
 })
 
@@ -236,7 +236,11 @@ Cypress.Commands.add('select_value_by_label', ($name, $value) => {
 })
 
 Cypress.Commands.add('select_checkbox_by_label', ($name, $value) => {
-    cy.set_field_value_by_label($name, $value, 'input', '__chkn__', '')
+    const checkbox_labels = cy.set_field_value_by_label($name, $value, 'input', '__chkn__', '')
+
+    checkbox_labels.first().parents('tr').first().within(() => {
+        cy.get('label[class=mc]').contains($value).click()
+    })
 })
 
 Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000) => {
