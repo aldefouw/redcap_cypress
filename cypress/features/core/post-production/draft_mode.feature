@@ -24,7 +24,7 @@ Scenario: 2 - Control Center
     And I click on the link labeled "User Settings"
     # We should check for all options to exist (might not be a step definition yet)
     And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
-    
+
 Scenario: 3- Save settings 
     And I select "No, only Administrators can add/modify events in production" from the dropdown identified by "select[name=enable_edit_prod_events]"
     And I click on the input button labeled "Save Changes"
@@ -54,12 +54,12 @@ Scenario: 6 - Draft Changes
 
     When I click on the button labeled "Return to list of instruments"
     And I click on the link labeled "Data Types"
-    And I click on the Edit image for the field named "Radio Button Manual"
-    Given I clear the field identified by "[id=element_enum]"
-    And I enter "1, Choice99{enter}100, Choice100{enter}101, Choice101" into the field identified by "[id=element_enum]"
-    And I click on the button labeled "Save" in the dialog box
 
+    Given I edit the Data Collection Instrument field labeled "Radio Button Manual"
+    And I enter Choices of "1, Choice99{enter}100, Choice100{enter}101, Choice101" into the open "Edit Field" dialog box
+    And I click on the button labeled "Save" in the dialog box
     Then I should see "Since this project is currently in PRODUCTION, changes will not be made in real time."
+
     When I click on the link labeled "View detailed summary of all drafted changes"
     Then I should see "Details regarding all changes made in Draft Mode"
     And I should see "Records in project: 1"
@@ -152,7 +152,7 @@ Scenario: 10 - Draft Changes
     And I select the checkbox option "Checkbox" for the field labeled "Checkbox"
 
     And I click on the button labeled "Save & Exit Form"
-    
+
     When I click on the link labeled "Designer"
     And I click on the link labeled "Remove all drafted changes"
     And I click on the button labeled "Remove all drafted changes"
@@ -167,19 +167,17 @@ Scenario: 10 - Draft Changes
     And I click on the button labeled "Return to list of instruments"
     And I click on the link labeled "Data Types"
     And I delete the field named "Multiple Choice Dropdown Auto"
-    And I click on the Edit image for the field named "Radio Button Manual"
 
-    Given I clear the field identified by "[id=element_enum]"
-    And I enter "99, Choice99{enter}100, Choice100{enter}101, Choice101" into the field identified by "[id=element_enum]"
+    Given I edit the Data Collection Instrument field labeled "Radio Button Manual"
+    And I enter Choices of "99, Choice99{enter}100, Choice100{enter}101, Choice101" into the open "Edit Field" dialog box
     And I click on the button labeled "Save" in the dialog box
 
-    And I click on the Edit image for the field named "Radio Button Auto"
-    Given I clear the field identified by "[id=element_enum]"
-    And I enter "1, Choice 10{enter}2, Choice 2{enter}3, Choice 3" into the field identified by "[id=element_enum]"
+    And I edit the Data Collection Instrument field labeled "Radio Button Auto"
+    And I enter Choices of "1, Choice 10{enter}2, Choice 2{enter}3, Choice 3" into the open "Edit Field" dialog box
+
+    And I click on the button labeled "Save" in the dialog box
     
-    And I click on the button labeled "Save" in the dialog box
-
-    And I click on the Edit image for the field named "Checkbox"
+    And I edit the Data Collection Instrument field labeled "Checkbox"
     And I select "Multiple Choice - Drop-down List (Single Answer)" from the dropdown identified by "[id=field_type]"
     And I click on the button labeled "Save" in the dialog box
 

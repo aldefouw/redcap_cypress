@@ -516,3 +516,27 @@ Given('I select the checkbox option {string} for the field labeled {string}', (c
 Given('I select {string} from the dropdown identified by {string}', (value,label) => {
     cy.get(label).select(value, { force: true })
 })
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I edit the Data Collection Instrument field labeled {string}
+ * @param {string} label - the label of the field to edit
+ * @description Opens the edit window for the field with the specified label
+ */
+Given('I edit the Data Collection Instrument field labeled {string}', (label) => {
+    cy.edit_field_by_label(label)
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I edit the Data Collection Instrument field labeled {string}
+ * @param {string} label - the label of the field to edit
+ * @description Opens the edit window for the field with the specified label
+ */
+Given('I enter Choices of {string} into the open "Edit Field" dialog box', (choices) => {
+    let field_choices = cy.select_field_choices()
+    field_choices.clear()
+    field_choices.type(choices)
+})
