@@ -167,17 +167,54 @@ Given("I click to edit username {string}", (text) => {
     cy.get('a[title="Edit user privileges or assign to role"]').contains(text).should('be.visible').click()
 })
 
+const user_right_check_mappings = {
+    'Project Setup & Design' : 'design',
+    'User Rights' : 'user_rights',
+    'Data Access Groups' : 'data_access_groups',
+    'Stats & Charts' : 'graphical',
+    'Create Records' : 'record_create',
+    'Rename Records' : 'record_rename',
+    'Delete Records' : 'record_delete',
+    'Calendar' : 'calendar',
+    'Data Import Tool'  : 'data_import_tool',
+    'Data Comparison Tool' : 'data_comparison_tool',
+    'Logging'  : 'data_logging',
+    'File Repository' : 'file_repository',
+    'Record Locking Customization' : 'lock_record_customize',
+    'Lock/Unlock *Entire* Records' : 'lock_record_multiform',
+    'Data Quality - Create & edit rules' : 'data_quality_design',
+    'Data Quality - Execute rules' : 'data_quality_execute',
+}
+
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I select the user right identified by {string}
- * @param {string} text - name of user right
- * @description Assign user right to role/user
+ * @example I check the User Right named {string}
+ * @param {string} text - name of User Right
+ * @description Assign the user right
  *
  */
-Given("I check the user right identified by {string}", (text) => {
-    cy.get(text).should('be.visible').check()
+Given("I check the User Right named {string}", (text) => {
+    cy.get('input[name="' + user_right_check_mappings[text] + '"]').should('be.visible').check()
 })
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I uncheck the User Right named {string}
+ * @param {string} text - name of User Right
+ * @description Unassign the user right
+ *
+ */
+Given("I uncheck the User Right named {string}", (text) => {
+    cy.get('input[name="' + user_right_check_mappings[text] + '"]').uncheck()
+})
+
+const single_choice_mappings = {
+    'Data Exports' : 'data_export_tool',
+    'API' : 'data_access_groups',
+    'Lock/Unlock Records' : 'lock_record'
+}
 
 /**
  * @module UserRights
@@ -187,8 +224,12 @@ Given("I check the user right identified by {string}", (text) => {
  * @description Assign user right to role/user
  *
  */
-Given("I check the user right identified by {string} and select option {string}", (text, option) => {
-    cy.get(text).check(option)
+Given("I select the User Right named {string} and choose {string}", (text, option) => {
+    cy.get('input[name="' + single_choice_mappings[text] + '"]').
+        parent().
+        parent().
+        find(':contains(' + option + ')').
+        within(() => { cy.get('input').click() } )
 })
 
 /**

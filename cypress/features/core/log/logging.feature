@@ -10,8 +10,8 @@ Feature: Logging
     And I click to edit username "test_admin (Test User)"
     And I click on the button labeled "Edit user privileges"
     And I scroll the user rights page to the bottom
-    And I check the user right identified by 'input[name="lock_record_customize"]'
-    And I click the user right identified by 'input[name="lock_record"][value="2"]'
+    And I check the User Right named 'Record Locking Customization'
+    And I select the User Right named "Lock/Unlock Records" and choose "Locking / Unlocking with E-signature authority"
     Then I should see "NOTICE"
     And I close popup
     And I save changes within the context of User Rights
@@ -21,20 +21,20 @@ Feature: Logging
     And I click on the link labeled "User Rights"
     Then I enter "test_user" into the username input field
     And I click on the button labeled "Add with custom rights"
-    And I check the user right identified by 'input[name="design"]'
-    And I check the user right identified by 'input[name="user_rights"]'
-    And I check the user right identified by 'input[name="data_export_tool"]' and select option "1"
-    And I check the user right identified by 'input[name="data_logging"]'
-    And I check the user right identified by 'input[name="record_delete"]'
-    And the user right identified by 'input[name="lock_record_customize"]' should not be checked
-    And the user right identified by 'input[name="lock_record"][value="2"]' should not be checked
-    And the user right identified by 'input[name="record_create"]' should be checked
+    And I check the User Right named 'Project Setup & Design'
+    And I check the User Right named 'User Rights'
+    And I select the User Right named 'Data Exports' and choose "Full Data Set"
+    And I check the User Right named 'Logging'
+    And I check the User Right named 'Delete Records'
+    And I uncheck the User Right named 'Record Locking Customization'
+    And I select the User Right named "Lock/Unlock Records" and choose "Disabled"
+    And I check the User Right named "Create Records"
     And I save changes within the context of User Rights
     #Add user 2
     And I click on the link labeled "User Rights"
     And I enter "test_user2" into the username input field
     Then I click on the button labeled "Add with custom rights"
-    And I check the user right identified by 'input[name="design"]'
+    And I check the User Right named 'User Rights'
     Then I save changes within the context of User Rights
     #enable e-sig
     And I click on the link labeled "Customize & Manage Locking/E-signatures"
@@ -97,7 +97,7 @@ Feature: Logging
     When I visit Project ID 14
     Then I click on the link labeled "User Rights"
     And I click to edit role name "Data"
-    And I check the user right identified by 'input[name="design"]'
+    And I check the User Right named 'Project Setup & Design'
     Then I click on the button labeled "Save Changes"
 
   Scenario: 9 - Delete role
@@ -122,16 +122,16 @@ Feature: Logging
     Then I click on the link labeled "User Rights"
     And I enter "test_user2" into the username input field
     And I click on the button labeled "Add with custom rights"
-    And I check the user right identified by 'input[name="design"]'
-    And I check the user right identified by 'input[name="user_rights"]'
-    And I check the user right identified by 'input[name="data_export_tool"]' and select option "1"
-    And I check the user right identified by 'input[name="data_logging"]'
-    And I check the user right identified by 'input[name="record_delete"]'
-    And I check the user right identified by 'input[name="lock_record_customize"]'
-    And I click the user right identified by 'input[name="lock_record"][value="2"]'
+    And I check the User Right named 'Project Setup & Design'
+    And I check the User Right named 'User Rights'
+    And I select the User Right named 'Data Exports' and choose "Full Data Set"
+    And I check the User Right named 'Logging'
+    And I check the User Right named 'Delete Records'
+    And I check the User Right named 'Record Locking Customization'
+    And I select the User Right named "Lock/Unlock Records" and choose "Locking / Unlocking with E-signature authority"
     Then I should see "NOTICE"
     And I close popup
-    And I click the user right identified by 'input[name="record_create"]'
+    And I check the User Right named "Create Records"
     And I save changes within the context of User Rights
 
   # Scenario: 13 - Login as test_user2
@@ -149,8 +149,8 @@ Feature: Logging
     And I click on the button labeled "Edit user privileges"
     #need a better solution to scroll page to bottom
     And I scroll the user rights page to the bottom
-    And I check the user right identified by 'input[name="lock_record_customize"]'
-    And I click the user right identified by 'input[name="lock_record"][value="2"]'
+    And I check the User Right named 'Record Locking Customization'
+    And I select the User Right named "Lock/Unlock Records" and choose "Disabled"
     Then I should see "NOTICE"
     And I close popup
     And I save changes within the context of User Rights
@@ -164,9 +164,7 @@ Feature: Logging
     And I click on the bubble for the "Text Validation" data collection instrument for record ID "1"
     And I check the checkbox identified by 'input[id="__LOCKRECORD__"]'
     And I check the checkbox identified by 'input[id="__ESIGNATURE__"]'
-    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
-    And I should see "Save & Stay"
-    And I click on the link labeled "Save & Stay"
+    And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
 
   Scenario: 17 - Edit record (E-signature)
     Then I should see "Username/password verification"
