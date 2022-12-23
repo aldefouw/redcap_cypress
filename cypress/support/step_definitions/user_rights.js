@@ -305,7 +305,13 @@ Given("I enter {string} into the username input field", (text) => {
  *
  */
 Given("I save changes within the context of User Rights", () => {
-    cy.get('.ui-button').contains(/add user|save changes/i).click()
+    cy.intercept({  method: 'POST',
+        url: '/redcap_v' + Cypress.env('redcap_version') + '/UserRights/edit_user.php?*'
+    }).as('saved_user')
+
+    cy.get('button').contains(/add user|save changes/i).click()
+
+    cy.wait('@saved_user')
 })
 
 /**
