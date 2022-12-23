@@ -7,7 +7,7 @@ Scenario: Add from Email Address
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center" page
     And I click on the link labeled "General Configuration"
-    And I enter "no-reply@test.com" into the field labeled "Set a Universal FROM Email address"
+    And I enter "no-reply@test.com" into the input field labeled "Set a Universal FROM Email address"
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
@@ -19,7 +19,7 @@ Scenario: Project Setup - 1
     And I click on the button labeled exactly "YES, Move to Production Status"
     And I assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user" on project ID 14
 
-Scenario: 2 - Control Center 
+Scenario: 2 - Control Center
     Given I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
     # We should check for all options to exist (might not be a step definition yet)
@@ -30,7 +30,7 @@ Scenario: 3- Save settings
     And I click on the input button labeled "Save Changes"
     And I should see "Your system configuration values have now been changed!"
 
-Scenario: 4 - Verify Project is in Production 
+Scenario: 4 - Verify Project is in Production
     And I logout
     Given I am a "standard" user who logs into REDCap
     And I click on the link labeled "My Projects"
@@ -40,7 +40,7 @@ Scenario: 4 - Verify Project is in Production
     And I click the element containing the following text: "Text Validation"
     Then I should see "Can only modify instrument in Draft Mode"
 
-Scenario: 5 - Enter Draft Mode 
+Scenario: 5 - Enter Draft Mode
     Given I click on the button labeled "Close"
     And I enter draft mode
     Then I should see "The project is now in Draft Mode."
@@ -78,7 +78,7 @@ Scenario: 7 - Submit changes
     Then I should see "Would you like to enter DRAFT MODE to begin drafting changes to the project?"
     #asks to check for an input button
 
-Scenario: 8 - Draft Changes 
+Scenario: 8 - Draft Changes
     Given I logout
     And I am an "admin" user who logs into REDCap
     Given I click on the link labeled "Control Center"
@@ -116,7 +116,7 @@ Scenario: 9 - Reject changes
     And I click on the link labeled "Designer"
     And I click on the button labeled "Project Modification Module"
     Then I should see "Details regarding all changes made in Draft Mode"
-    And I should see "ADMINISTRATOR ACTIONS:" 
+    And I should see "ADMINISTRATOR ACTIONS:"
     And I should see a button labeled "Compose confirmation email"
     And I should see a button labeled "COMMIT CHANGES"
     And I should see a button labeled "Reject Changes"
@@ -139,7 +139,7 @@ Scenario: 10 - Draft Changes
     And I click on the button labeled "Add new record for the arm selected above"
 
     And I click the bubble to add a record for the "Text Validation" longitudinal instrument on event "Event 1"
-    
+
     And I enter "testemail@example.com" into the data entry form field labeled "Email"
     And I enter "firstname" into the data entry form field labeled "First Name"
     And I enter "lastname" into the data entry form field labeled "Last Name"
@@ -159,9 +159,8 @@ Scenario: 10 - Draft Changes
     And I enter draft mode
     And I click on the link labeled "Text Validation"
 
-    And I click on the Edit image for the field named "Email"
-    And I clear the field identified by "[id=field_label]"
-    And I enter "Primary Contact Email" into the field identified by "[id=field_label]"
+    And I edit the Data Collection Instrument field labeled "Email"
+    And I enter "Primary Contact Email" into the Field Label of the open "Edit Field" dialog box
     And I click on the button labeled "Save" in the dialog box
 
     And I click on the button labeled "Return to list of instruments"
@@ -174,11 +173,10 @@ Scenario: 10 - Draft Changes
 
     And I edit the Data Collection Instrument field labeled "Radio Button Auto"
     And I enter Choices of "1, Choice 10{enter}2, Choice 2{enter}3, Choice 3" into the open "Edit Field" dialog box
-
     And I click on the button labeled "Save" in the dialog box
-    
+
     And I edit the Data Collection Instrument field labeled "Checkbox"
-    And I select "Multiple Choice - Drop-down List (Single Answer)" from the dropdown identified by "[id=field_type]"
+    And I select "Multiple Choice - Drop-down List (Single Answer)" from the Field Type dropdown of the open "Edit Field" dialog box
     And I click on the button labeled "Save" in the dialog box
 
     Given I click on the link labeled "View detailed summary of all drafted changes"

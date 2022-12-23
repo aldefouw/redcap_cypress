@@ -154,15 +154,30 @@ Given("I save the field", () => {
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I enter {string} into the field labeled {string}
+ * @example I enter {string} into the input field labeled {string}
  * @param {string} text - the text to enter into the field
  * @param {string} label - the label of the field
  * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
  */
-Given('I enter {string} into the field labeled {string}', (text, label) => {
+Given('I enter {string} into the input field labeled {string}', (text, label) => {
     //We locate the label element first.  This isn't always a label which is unfortunate, but this approach seems to work so far.
     cy.contains(label).then(($label) => {
         cy.wrap($label).parent().find('input').type(text)
+    })
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I enter {string} into the textarea field labeled {string}
+ * @param {string} text - the text to enter into the field
+ * @param {string} label - the label of the field
+ * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
+ */
+Given('I enter {string} into the textarea field labeled {string}', (text, label) => {
+    //We locate the label element first.  This isn't always a label which is unfortunate, but this approach seems to work so far.
+    cy.contains(label).then(($label) => {
+        cy.wrap($label).parent().find('textarea').type(text)
     })
 })
 
@@ -539,6 +554,29 @@ Given('I enter Choices of {string} into the open "Edit Field" dialog box', (choi
     let field_choices = cy.select_field_choices()
     field_choices.clear()
     field_choices.type(choices)
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I edit the Data Collection Instrument field labeled {string}
+ * @param {string} label - the label of the field to edit
+ * @description Opens the edit window for the field with the specified label
+ */
+Given('I enter {string} into the Field Label of the open "Edit Field" dialog box', (field_label) => {
+    cy.get('textarea#field_label').clear().type(field_label)
+})
+
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I edit the Data Collection Instrument field labeled {string}
+ * @param {string} label - the label of the field to edit
+ * @description Opens the edit window for the field with the specified label
+ */
+Given('I select {string} from the Field Type dropdown of the open "Edit Field" dialog box', (dropdown_option) => {
+    cy.get('select#field_type').select(dropdown_option)
 })
 
 /**
