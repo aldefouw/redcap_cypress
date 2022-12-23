@@ -15,7 +15,7 @@ Scenario: Project Setup - 1
     Given I am an "admin" user who logs into REDCap
     And I create a project named "20_DraftMode_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
     And I click on the button labeled exactly "Move project to production"
-    And I click the input element identified by "[id=keep_data]"
+    And I click on the input element labeled "Keep ALL data saved so far"
     And I click on the button labeled exactly "YES, Move to Production Status"
     And I assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user" on project ID 14
 
