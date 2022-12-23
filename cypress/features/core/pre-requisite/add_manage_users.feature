@@ -13,9 +13,9 @@ Scenario: 2- Visible Pages
 
 Scenario: 3- Save User Settings System Configurations 
     When I click on the link labeled "User Settings"
-    Then I should see "System-level User Settings" 
-    When I select "No, only Administrators can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
-    And I select "No" from the dropdown identified by "select[name=allow_create_db_default]"
+    Then I should see "System-level User Settings"
+    When I select "No, only Administrators can create new projects" on the dropdown field labeled "Allow normal users to create new projects?"
+    And I select "No" on the dropdown field labeled "By default, allow new users to create projects"
     When I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
@@ -25,11 +25,11 @@ Scenario: 4- Display User Management for Table-based Authentication Page
 
 Scenario: 5- Create a user 
     When I click on the link labeled "Add Users (Table-based Only)" 
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "User1" into the field labeled "First name:"
-    And I enter "1115_1" into the field labeled "Last name:"
-    And I enter "user1115@redcap.edu" into the field labeled "Primary email:"
-    And I click on the element identified by "[name=allow_create_db]"
+    And I enter "user1115_1" into the input field labeled "Username:"
+    And I enter "User1" into the input field labeled "First name:"
+    And I enter "1115_1" into the input field labeled "Last name:"
+    And I enter "user1115@redcap.edu" into the input field labeled "Primary email:"
+    And I click on the input element labeled "Allow this user to request that projects be created for them by a REDCap administrator?"
     And I click on the input button labeled "Save"
     Then I should see "User has been successfully saved."
     And I should see "An email with login information was sent to: user1115@redcap.edu"
@@ -56,23 +56,23 @@ Scenario: 10- Display Create Single User Page
 
 Scenario: 11- Prevent a Second User with the Same Username
     When I click on the link labeled "Add Users (Table-based Only)" 
-    And I enter "user1115_1" into the field labeled "Username:"
-    And I enter "User12" into the field labeled "First name:"
-    And I enter "1115_12" into the field labeled "Last name:"
-    And I enter "user11115@redcap.edu" into the field labeled "Primary email:"
+    And I enter "user1115_1" into the input field labeled "Username:"
+    And I enter "User12" into the input field labeled "First name:"
+    And I enter "1115_12" into the input field labeled "Last name:"
+    And I enter "user11115@redcap.edu" into the input field labeled "Primary email:"
     And I click on the input button labeled "Save"
     Then I should see "ERROR: The user could not be added! A user already exists named" 
 
 Scenario: 12- Find user1115_1 Under Browse Users Page 
     When I click on the link labeled "Browse Users"
     Then I should see "User Search: Search for user by username, first name, last name, or primary email"
-    When I enter "user1115_1" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    When I enter "user1115_1" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     Then I should see "User1"
 
 Scenario: 13 & 14 - Cancel and Suspend test_user Account
     When I click on the link labeled "Browse Users"
-    And I enter "test_user" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I enter "test_user" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     And I should see "User information for"
     And after the next step, I will cancel a confirmation window containing the text "Do you wish to suspend this user's REDCap account?"
@@ -87,8 +87,8 @@ Scenario: 13 & 14 - Cancel and Suspend test_user Account
 
 Scenario: 15- Login with Suspended User Account
     When I click on the link labeled "Log out"
-    And I enter "test_user" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:"
+    And I enter "test_user" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "The following REDCap user account has been suspended:"
 
@@ -98,14 +98,14 @@ Scenario: 16- View test_user in Suspended Users List
     When I click on the link labeled "Browse Users"
     Then I should see "User Search: Search for user by username, first name, last name, or primary email"
     When I click on the link labeled "View User List By Criteria"
-    And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
+    And I select "Suspended users" on the dropdown field labeled "Display only:"
     And I click on the button labeled "Display User List"
     Then I should see a link labeled "test_user"
 
 Scenario: 17- Cancel Unsuspend test_user Account
     When I click on the link labeled "Browse Users"
     And I click on the link labeled "View User List By Criteria"
-    And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
+    And I select "Suspend users" on the dropdown field labeled "Display only:"
     And I click on the button labeled "Display User List"
     And I click on the element identified by "[name=uiid_2]"
     And I click on the button labeled "Unsuspend user"
@@ -116,7 +116,7 @@ Scenario: 17- Cancel Unsuspend test_user Account
 Scenario: 18- Unsuspend test_user Account
     When I click on the link labeled "Browse Users"
     And I click on the link labeled "View User List By Criteria"
-    And I select "Suspended users" from the dropdown identified by "select[name=activity_level]"
+    And I select "Suspended users" on the dropdown field labeled "Display only:"
     And I click on the button labeled "Display User List"
     And I click on the link labeled "test_user"
     And I click on the link labeled "unsuspend user"
@@ -126,8 +126,8 @@ Scenario: 19- Log out as admin1115
 
 Scenario: 20- Confirm test_user can log in 
     When I click on the link labeled "Log out"
-    And I enter "test_user" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:"
+    And I enter "test_user" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see a link labeled "My Projects"
     When I click on the link labeled "Log out"
@@ -135,19 +135,19 @@ Scenario: 20- Confirm test_user can log in
 
 Scenario: 21- Find test_user2 Under Browse Users Page 
     When I click on the link labeled "Browse Users"
-    And I enter "test_user2" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     Then I should see "test_user2"
 
 Scenario: 22- Find test_user2 Under Browse Users Page by email
     When I click on the link labeled "Browse Users"
-    And I enter "test_user2@example.com" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I enter "test_user2@example.com" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     Then I should see a link labeled "test_user2"
 
 Scenario: 23 & 24 - Find test_user2 Under Browse Users Page by Last name and Cancel Delete User from System
     When I click on the link labeled "Browse Users"
-    And I enter "User" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I enter "User" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     And I should see "User information for"
     Then I should see "test_user2"
@@ -161,14 +161,14 @@ Scenario: 23 & 24 - Find test_user2 Under Browse Users Page by Last name and Can
 
 Scenario: 25- Confirm test_user2 Does Not Exist 
     When I click on the link labeled "Browse Users"
-    And I enter "test_user2" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     Then I should see "User does not exist!"
 
 Scenario: 26- Login with Deleted User Account
     When I click on the link labeled "Log out"
-    And I enter "test_user2" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:"
+    And I enter "test_user2" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "ERROR: You entered an invalid user name or password!"
 
@@ -177,8 +177,8 @@ Scenario: 26- Login with Deleted User Account
 
 Scenario: 28- Confirm test_user Does Not Have Access to Control Center or Create a Project
     When I click on the link labeled "Log out"
-    And I enter "test_user" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:"
+    And I enter "test_user" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "Welcome to REDCap!"
     And I should NOT see "Control Center"
@@ -216,29 +216,29 @@ Scenario: 30- Change password for user1115_4 through Browse Users
 
 Scenario: 33- Change primary Email for user1115_4 
     When I click on the link labeled "Browse Users"
-    And I enter "user1115_4" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I enter "user1115_4" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     Then I should see "User information for"
     When I click on the button labeled "Edit user info"
-    And I enter "tester@test.edu" into the field labeled "Primary email:"
+    And I enter "tester@test.edu" into the input field labeled "Primary email:"
     And I click on the input button labeled "Save"
     Then I should see "The user's primary email was changed, and the user was notified about this change."
     And I should see "tester@test.edu" 
 
 Scenario: 34- Update User Settings 
     When I click on the link labeled "User Settings"
-    And I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
-    And I select "Yes" from the dropdown identified by "select[name=allow_create_db_default]"
+    And I select "Yes, normal users can create new projects" on the dropdown field labeled "Allow normal users to create new projects?"
+    And I select "Yes" on the dropdown field labeled "By default, allow new users to create projects or request that projects be created for them?"
     When I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
 Scenario: 35- Add user1115_5
     When I click on the link labeled "Add Users (Table-based Only)" 
-    And I enter "user1115_5" into the field labeled "Username:"
-    And I enter "User5" into the field labeled "First name:"
-    And I enter "1115_5" into the field labeled "Last name:"
-    And I enter "user1115.5@redcap.edu" into the field labeled "Primary email:"
-    And I click on the element identified by "[name=allow_create_db]"
+    And I enter "user1115_5" into the input field labeled "Username:"
+    And I enter "User5" into the input field labeled "First name:"
+    And I enter "1115_5" into the input field labeled "Last name:"
+    And I enter "user1115.5@redcap.edu" into the input field labeled "Primary email:"
+    And I click on the input element labeled "Allow this user to request that projects be created for them by a REDCap administrator?"
     And I click on the input button labeled "Save"
     Then I should see "User has been successfully saved."
     And I should see "An email with login information was sent to: user1115.5@redcap.edu"
@@ -250,24 +250,24 @@ Scenario: 37- Edit Security & Authentication settings
     When I click on the link labeled "Security & Authentication"
     Then I should see "Security & Authentication Configuration"
     When I clear the field labeled "Number of failed login attempts before user is locked out for a specified amount of time, which is set below."
-    And I enter "1" into the field labeled "Number of failed login attempts before user is locked out for a specified amount of time, which is set below."
+    And I enter "1" into the input field labeled "Number of failed login attempts before user is locked out for a specified amount of time, which is set below."
     And I clear the field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
-    And I enter "1" into the field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
+    And I enter "1" into the input field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
 Scenario: 38- Log in test_user with Old Password
         #here so that 39 will pass
     When I click on the link labeled "Log out"
-    And I enter "test_user" into the field labeled "Username:"
-    And I enter "test" into the field labeled "Password:" 
+    And I enter "test_user" into the input field labeled "Username:"
+    And I enter "test" into the input field labeled "Password:" 
     And I click on the button labeled "Log In"
     Then I should see "ACCESS DENIED!"
 
 Scenario: 39- Log in test_user with Too Many Attempts
     When I click on the link labeled "Log out"
-    And I enter "test_user" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:" 
+    And I enter "test_user" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:" 
     And I click on the button labeled "Log In"
     Then I should see "ACCESS DENIED!"
 
@@ -275,8 +275,8 @@ Scenario: 40- Log in test_user with Correct Password after Buffer Period
     When I click on the link labeled "Log out"
     And I want to pause
         #pause for at lease one minute 
-    And I enter "test_user" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:" 
+    And I enter "test_user" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:" 
     And I click on the button labeled "Log In"
     Then I should see a link labeled "My Projects"
     When I click on the link labeled "Log out"
