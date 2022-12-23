@@ -23,10 +23,10 @@ Scenario: 2 - Control Center
     Given I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
     # We should check for all options to exist (might not be a step definition yet)
-    And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
+    And I select "Yes, if project has no records OR if has records and no critical issues exist" on the dropdown field labeled "Allow production Draft Mode changes to be approved automatically"
 
-Scenario: 3- Save settings 
-    And I select "No, only Administrators can add/modify events in production" from the dropdown identified by "select[name=enable_edit_prod_events]"
+Scenario: 3- Save settings
+    And I select "No, only Administrators can add/modify events in production" on the dropdown field labeled "Allow normal users to add or modify events and arms on the Define My Events page"
     And I click on the input button labeled "Save Changes"
     And I should see "Your system configuration values have now been changed!"
 
@@ -83,7 +83,7 @@ Scenario: 8 - Draft Changes
     And I am an "admin" user who logs into REDCap
     Given I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
-    And I select "Never (always require an admin to approve changes)" from the dropdown identified by "select[name=auto_prod_changes]"
+    And I select "Never (always require an admin to approve changes)" on the dropdown field labeled "Allow production Draft Mode changes to be approved automatically"
     And I click on the input button labeled "Save Changes"
     Given I logout
     And I am a "standard" user who logs into REDCap
@@ -127,7 +127,7 @@ Scenario: 9 - Reject changes
 
     When I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
-    And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
+    And I select "Yes, if project has no records OR if has records and no critical issues exist" on the dropdown field labeled "Allow production Draft Mode changes to be approved automatically"
     And I click on the input button labeled "Save Changes"
     Given I logout
 
@@ -146,7 +146,7 @@ Scenario: 10 - Draft Changes
 
     And I select the submit option labeled "Save & Go To Next Form" on the Data Collection Instrument
 
-    And I select the dropdown option "DDChoice1" for the field labeled "Multiple Choice Dropdown Auto"
+    And I select the dropdown option "DDChoice1" for the Data Collection Instrument field labeled "Multiple Choice Dropdown Auto"
     And I select the radio option "Choice1" for the field labeled "Radio Button Auto"
     And I select the radio option "Choice99" for the field labeled "Radio Button Manual"
     And I select the checkbox option "Checkbox" for the field labeled "Checkbox"

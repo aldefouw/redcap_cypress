@@ -484,12 +484,12 @@ Given('I select the radio option {string} for the field labeled {string}', (radi
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I select the radio option {string} for the field labeled {string}
+ * @example I select the dropdown option {string} for the Data Collection Instrument field labeled {string}
  * @param {string} dropdown_option - option we want to select from the dropdown
  * @param {string} field_label - the label on the field we want to select
  * @description Clicks the dropdown option on the field specified
  */
-Given('I select the dropdown option {string} for the field labeled {string}', (dropdown_option, field_label) => {
+Given('I select the dropdown option {string} for the Data Collection Instrument field labeled {string}', (dropdown_option, field_label) => {
     cy.select_field_by_label(field_label).select(dropdown_option)
 })
 
@@ -539,4 +539,18 @@ Given('I enter Choices of {string} into the open "Edit Field" dialog box', (choi
     let field_choices = cy.select_field_choices()
     field_choices.clear()
     field_choices.type(choices)
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I enter {string} into the field labeled {string}
+ * @param {string} text - the text to enter into the field
+ * @param {string} label - the label of the field
+ * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
+ */
+Given('I select {string} on the dropdown field labeled {string}', (text, label) => {
+    cy.contains(label).then(($label) => {
+        cy.wrap($label).parent().find('select').select(text)
+    })
 })
