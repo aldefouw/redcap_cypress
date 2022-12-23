@@ -7,7 +7,7 @@ Scenario: Add from Email Address
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center" page
     And I click on the link labeled "General Configuration"
-    And I enter "no-reply@test.com" into the field identified by "[name=from_email]"
+    And I enter "no-reply@test.com" into the field labeled "Set a Universal FROM Email address"
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
