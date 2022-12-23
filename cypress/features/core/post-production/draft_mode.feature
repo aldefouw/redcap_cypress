@@ -7,7 +7,7 @@ Scenario: Add from Email Address
     Given I am an "admin" user who logs into REDCap
     And I visit the "Control Center" page
     And I click on the link labeled "General Configuration"
-    And I enter "no-reply@test.com" into the field identified by "[name=from_email]"
+    And I enter "no-reply@test.com" into the input field labeled "Set a Universal FROM Email address"
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
@@ -15,22 +15,22 @@ Scenario: Project Setup - 1
     Given I am an "admin" user who logs into REDCap
     And I create a project named "20_DraftMode_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
     And I click on the button labeled exactly "Move project to production"
-    And I click the input element identified by "[id=keep_data]"
+    And I click on the input element labeled "Keep ALL data saved so far"
     And I click on the button labeled exactly "YES, Move to Production Status"
     And I assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user" on project ID 14
 
-Scenario: 2 - Control Center 
+Scenario: 2 - Control Center
     Given I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
     # We should check for all options to exist (might not be a step definition yet)
-    And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
-    
-Scenario: 3- Save settings 
-    And I select "No, only Administrators can add/modify events in production" from the dropdown identified by "select[name=enable_edit_prod_events]"
+    And I select "Yes, if project has no records OR if has records and no critical issues exist" on the dropdown field labeled "Allow production Draft Mode changes to be approved automatically"
+
+Scenario: 3- Save settings
+    And I select "No, only Administrators can add/modify events in production" on the dropdown field labeled "Allow normal users to add or modify events and arms on the Define My Events page"
     And I click on the input button labeled "Save Changes"
     And I should see "Your system configuration values have now been changed!"
 
-Scenario: 4 - Verify Project is in Production 
+Scenario: 4 - Verify Project is in Production
     And I logout
     Given I am a "standard" user who logs into REDCap
     And I click on the link labeled "My Projects"
@@ -40,7 +40,7 @@ Scenario: 4 - Verify Project is in Production
     And I click the element containing the following text: "Text Validation"
     Then I should see "Can only modify instrument in Draft Mode"
 
-Scenario: 5 - Enter Draft Mode 
+Scenario: 5 - Enter Draft Mode
     Given I click on the button labeled "Close"
     And I enter draft mode
     Then I should see "The project is now in Draft Mode."
@@ -54,15 +54,15 @@ Scenario: 6 - Draft Changes
 
     When I click on the button labeled "Return to list of instruments"
     And I click on the link labeled "Data Types"
-    And I click on the Edit image for the field named "Radio Button Manual"
-    Given I clear the field identified by "[id=element_enum]"
-    And I enter "1, Choice99{enter}100, Choice100{enter}101, Choice101" into the field identified by "[id=element_enum]"
-    And I click on the button labeled "Save" in the dialog box
 
+    Given I edit the Data Collection Instrument field labeled "Radio Button Manual"
+    And I enter Choices of "1, Choice99{enter}100, Choice100{enter}101, Choice101" into the open "Edit Field" dialog box
+    And I click on the button labeled "Save" in the dialog box
     Then I should see "Since this project is currently in PRODUCTION, changes will not be made in real time."
+
     When I click on the link labeled "View detailed summary of all drafted changes"
     Then I should see "Details regarding all changes made in Draft Mode"
-        #And I should see "Records in project: ..."
+    And I should see "Records in project: 1"
     And I should see "Will these changes be automatically approved?"
     And I should see "Yes"
 
@@ -76,14 +76,14 @@ Scenario: 7 - Submit changes
     Then I should see "Your changes were made automatically either because your project currently contains no records OR because it was found that the"
     When I click on the button labeled "Close"
     Then I should see "Would you like to enter DRAFT MODE to begin drafting changes to the project?"
-        #asks to check for an input button
+    #asks to check for an input button
 
-Scenario: 8 - Draft Changes 
+Scenario: 8 - Draft Changes
     Given I logout
     And I am an "admin" user who logs into REDCap
     Given I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
-    And I select "Never (always require an admin to approve changes)" from the dropdown identified by "select[name=auto_prod_changes]"
+    And I select "Never (always require an admin to approve changes)" on the dropdown field labeled "Allow production Draft Mode changes to be approved automatically"
     And I click on the input button labeled "Save Changes"
     Given I logout
     And I am a "standard" user who logs into REDCap
@@ -93,11 +93,9 @@ Scenario: 8 - Draft Changes
     And I click on the link labeled "Designer"
     And I enter draft mode
     When I click on the link labeled "Text Validation"
-    And I click on the Add Field input button below the field named "Email"
-    When I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[id=field_type]"
-    When I enter "Parent Contact" into the field identified by "[id=field_label]"
-    And I enter "contact" into the field identified by "[id=field_name]"
-    And I click on the button labeled "Save"
+
+    When I add a new Text Box field labeled "Parent Contact" with variable name "contact"
+
     When I click on the link labeled "View detailed summary of all drafted changes"
     Then I should see "Details regarding all changes made in Draft Mode"
     When I click on the button labeled "RETURN TO PREVIOUS PAGE"
@@ -118,7 +116,7 @@ Scenario: 9 - Reject changes
     And I click on the link labeled "Designer"
     And I click on the button labeled "Project Modification Module"
     Then I should see "Details regarding all changes made in Draft Mode"
-    And I should see "ADMINISTRATOR ACTIONS:" 
+    And I should see "ADMINISTRATOR ACTIONS:"
     And I should see a button labeled "Compose confirmation email"
     And I should see a button labeled "COMMIT CHANGES"
     And I should see a button labeled "Reject Changes"
@@ -129,7 +127,7 @@ Scenario: 9 - Reject changes
 
     When I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
-    And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "select[name=auto_prod_changes]"
+    And I select "Yes, if project has no records OR if has records and no critical issues exist" on the dropdown field labeled "Allow production Draft Mode changes to be approved automatically"
     And I click on the input button labeled "Save Changes"
     Given I logout
 
@@ -141,17 +139,18 @@ Scenario: 10 - Draft Changes
     And I click on the button labeled "Add new record for the arm selected above"
 
     And I click the bubble to add a record for the "Text Validation" longitudinal instrument on event "Event 1"
-    
+
     And I enter "testemail@example.com" into the data entry form field labeled "Email"
     And I enter "firstname" into the data entry form field labeled "First Name"
     And I enter "lastname" into the data entry form field labeled "Last Name"
 
-    And I click on the dropdown and select the button identified by "[id=submit-btn-savenextform]"
-    
-    And I select "DDChoice1" from the dropdown identified by "[name=multiple_dropdown_auto]"
-    And I click on the element identified by "[id=opt-radio_button_auto_1]"
-    And I click on the element identified by "[id=opt-radio_button_manual_1]"
-    And I click on the checkbox identified by "[id=id-__chk__checkbox_RC_1]"
+    And I select the submit option labeled "Save & Go To Next Form" on the Data Collection Instrument
+
+    And I select the dropdown option "DDChoice1" for the Data Collection Instrument field labeled "Multiple Choice Dropdown Auto"
+    And I select the radio option "Choice1" for the field labeled "Radio Button Auto"
+    And I select the radio option "Choice99" for the field labeled "Radio Button Manual"
+    And I select the checkbox option "Checkbox" for the field labeled "Checkbox"
+
     And I click on the button labeled "Save & Exit Form"
 
     When I click on the link labeled "Designer"
@@ -160,38 +159,34 @@ Scenario: 10 - Draft Changes
     And I enter draft mode
     And I click on the link labeled "Text Validation"
 
-    And I click on the Edit image for the field named "Email"
-    And I clear the field identified by "[id=field_label]"
-    And I enter "Primary Contact Email" into the field identified by "[id=field_label]"
+    And I edit the Data Collection Instrument field labeled "Email"
+    And I enter "Primary Contact Email" into the Field Label of the open "Edit Field" dialog box
     And I click on the button labeled "Save" in the dialog box
 
     And I click on the button labeled "Return to list of instruments"
     And I click on the link labeled "Data Types"
     And I delete the field named "Multiple Choice Dropdown Auto"
-    And I click on the Edit image for the field named "Radio Button Manual"
 
-    Given I clear the field identified by "[id=element_enum]"
-    And I enter "99, Choice99{enter}100, Choice100{enter}101, Choice101" into the field identified by "[id=element_enum]"
+    Given I edit the Data Collection Instrument field labeled "Radio Button Manual"
+    And I enter Choices of "99, Choice99{enter}100, Choice100{enter}101, Choice101" into the open "Edit Field" dialog box
     And I click on the button labeled "Save" in the dialog box
 
-    And I click on the Edit image for the field named "Radio Button Auto"
-    Given I clear the field identified by "[id=element_enum]"
-    And I enter "1, Choice 10{enter}2, Choice 2{enter}3, Choice 3" into the field identified by "[id=element_enum]"
-    
+    And I edit the Data Collection Instrument field labeled "Radio Button Auto"
+    And I enter Choices of "1, Choice 10{enter}2, Choice 2{enter}3, Choice 3" into the open "Edit Field" dialog box
     And I click on the button labeled "Save" in the dialog box
 
-    And I click on the Edit image for the field named "Checkbox"
-    And I select "Multiple Choice - Drop-down List (Single Answer)" from the dropdown identified by "[id=field_type]"
+    And I edit the Data Collection Instrument field labeled "Checkbox"
+    And I select "Multiple Choice - Drop-down List (Single Answer)" from the Field Type dropdown of the open "Edit Field" dialog box
     And I click on the button labeled "Save" in the dialog box
 
     Given I click on the link labeled "View detailed summary of all drafted changes"
 
-    #Then I should see ... 2 records in project 
-    #And I should see ... 4 fields being modified 
-    #And I should see ... 1 field being deleted 
+    Then I should see "Records in project: 2"
+    And I should see "Fields to be modified: 4"
     And I should see "No, an admin will have to review these changes."
-    #Then I should see ... 1 deleted field with data 
-    #And I should see ... 3 potential critical issues in modified fields with data 
+    And I should see "Deleted fields that contain data: 1"
+    And I should see "Potentially critical issues in modified fields that contain data: 3"
+
     #And I should see ... table changes 
 
 Scenario: 11 - Submit Changes 
@@ -234,10 +229,10 @@ Scenario: 13 - Create Record
     And I enter "firstname" into the data entry form field labeled "First Name"
     And I enter "lastname" into the data entry form field labeled "Last Name"
 
-    And I click on the dropdown and select the button identified by "[id=submit-btn-savenextform]"
-    
-    And I click on the element identified by "[id=opt-radio_button_manual_1]"
-    And I click on the button labeled "Save & Exit Form"
+    And I select the submit option labeled "Save & Go To Next Form" on the Data Collection Instrument
+
+    And I select the radio option "Choice99" for the field labeled "Radio Button Manual"
+    And I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
 
 Scenario: 14 - Download and Edit Data Dictionary 
     When I click on the link labeled "Project Home"
@@ -306,13 +301,13 @@ Scenario: 20 - Draft Changes
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "My Projects"
     And I click on the link labeled "20_DraftMode_v1115"
+
     When I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
     Then I should see "Deleting any events below will result in data loss. Please proceed with caution."
 
-    #Change ‘Event 2’ to read ‘Event B’ - new step definition for edit event image
-    #And I clear the field and enter "Event B" into the "[id=descrip_edit]" text input field
-    #And I click on the input button labeled "Save"
+    Given I change the current Event Name from "Event 2" to "Event B"
+
     When I click on the link labeled "Designate Instruments for My Events"
     And I click on the button labeled "Begin Editing"
     And I click on the checkbox identified by "[id=text_validation--42]"
@@ -326,11 +321,11 @@ Scenario: 21 - Review Events and Form Designations
     And I click on the link labeled "20_DraftMode_v1115"
     When I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
-    #Then I should see "Event B"
-    #And I should NOT see "Event 2"
+    Then I should see "Event B"
+    And I should NOT see "Event 2"
     When I click on the link labeled "Designate Instruments for My Events"
     #Then I should see "[id=img--text_validation--42]"
-        #this doesnt find the check mark for Event 2 Text Validation - not sure if we have a way to "see" the check mark 
+    #this doesnt find the check mark for Event 2 Text Validation - not sure if we have a way to "see" the check mark
     
     
 

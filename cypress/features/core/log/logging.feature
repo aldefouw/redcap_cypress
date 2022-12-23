@@ -57,7 +57,7 @@ Feature: Logging
     And I click on the button labeled "Add new record"
     And I enter "Test" into the "ptname" text input field
     And I enter "test@test.com" into the "email" text input field
-    Then I click on the dropdown and select the button identified by 'a#submit-btn-savecontinue'
+    Then I select the submit option labeled "Save & Stay" on the Data Collection Instrument
     And I clear the field and enter "Testing" into the "ptname" text input field
     Then I click on the button labeled "Save & Exit"
 
