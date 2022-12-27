@@ -76,7 +76,6 @@ Scenario: 7 - Submit changes
     Then I should see "Your changes were made automatically either because your project currently contains no records OR because it was found that the"
     When I click on the button labeled "Close"
     Then I should see "Would you like to enter DRAFT MODE to begin drafting changes to the project?"
-    #asks to check for an input button
 
 Scenario: 8 - Draft Changes
     Given I logout
@@ -187,7 +186,9 @@ Scenario: 10 - Draft Changes
     And I should see "Deleted fields that contain data: 1"
     And I should see "Potentially critical issues in modified fields that contain data: 3"
 
-    #And I should see ... table changes 
+    And I should see "*Possible label mismatch because of label changes. Check if okay."
+    And I should see "*Data MIGHT be lost due to deleted choice(s)"
+    And I should see "*Possible data loss if field type changes. Check if okay."
 
 Scenario: 11 - Submit Changes 
     When I click on the button labeled "RETURN TO PREVIOUS PAGE"
