@@ -14,9 +14,9 @@ Feature: Field Validation
     And I click on the element identified by "#datetime_mdy > :nth-child(3) > button"
     And I click on the element identified by "#datetime_seconds_ymd > :nth-child(3) > button"
 And I want to pause
+    # pauses are there to prevent detaching
     And I click on the element identified by "#email > :nth-child(3) > button"
-    And I click on the element identified by "#integer > :nth-child(3) > button"
-  #this one detaches 
+    And I click on the element identified by "#integer > :nth-child(3) > button" 
     And I click on the element identified by "#number > :nth-child(3) > button"
   #this is already disabled
     #And I click on the element identified by "#number_1dp_comma_decimal > :nth-child(3) > button"
@@ -56,6 +56,7 @@ And I want to pause
 
   Scenario: 3 - Upload Data Dictionary
     Given I upload a data dictionary located at "core/08_FieldValidation_v1115_DataDictionary.csv" to project ID 14
+    #fails because project is not in production (and not in draft mode) so box reads "Changes Made Successfully!" and not "Changes to the DRAFT have been made successfully!"
     Then I should see "Changes Made Successfully!"
     
   Scenario: 4 - Open Text Validation Instrument 
@@ -68,7 +69,7 @@ And I want to pause
     And I select "Text Box (Short Text, Number, Date/Time, ...)" from the Field Type dropdown of the open "Edit Field" dialog box
     Then I should see the dropdown identified by "[id=val_type]" with the options below
     | Date (M-D-Y) | Date (Y-M-D) | Datetime (D-M-Y H:M) | Datetime (Y-M-D H:M) | Datetime w/ seconds (D-M-Y H:M:S) | Datetime w/ seconds (M-D-Y H:M:S) | Phone (North America) | Zipcode (U.S.) |
-    #this might not be what we want, this is checking for these options and not that the options specified in the script are not there
+    # ^ this might not be what we want, this is checking for these options and not that the options specified in the script are not there
     When I click on the button labeled "Cancel"
 
   Scenario: 6 - Enable Field Validation Types
@@ -77,7 +78,7 @@ And I want to pause
     And I click on the element identified by "#date_dmy > :nth-child(3) > button"
     And I click on the element identified by "#datetime_mdy > :nth-child(3) > button"
     And I click on the element identified by "#datetime_seconds_ymd > :nth-child(3) > button"
-  And I want to pause
+  And I want to pause 
     And I click on the element identified by "#email > :nth-child(3) > button"
     And I click on the element identified by "#integer > :nth-child(3) > button"
   And I want to pause
@@ -103,7 +104,6 @@ And I want to pause
     And I click on the button labeled "Add new record"
     Then I should see "Record Home Page"
     When I click on the element identified by ".odd > .nowrap > a > img"
-    #An empty Text Validation instrument appears for Record ID 1
 
   Scenario: 9 - Date (D-M-Y) Field
     When I enter "01-31-2022" into the data entry form field labeled "Date (D-M-Y)"
