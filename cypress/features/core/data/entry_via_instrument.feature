@@ -187,10 +187,108 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the link labeled "Save & Go To Next Instance"
     And I click the input element identified by 'input#opt-yesno_0'
     Then I click on the button labeled "Save & Exit Form"
+  
+  Scenario: 14 to 16 - Change form status
+    When I visit Project ID 14
+    And I click on the link labeled "Designer"
+    Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_dictionary&instance=1"
+    And I select 'Unverified' from the dropdown identified by 'select[name="data_dictionary_complete"]'
+    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
+    And I should see "Save & Stay"
+    And I click on the link labeled "Save & Stay"
+    And I select 'Complete' from the dropdown identified by 'select[name="data_dictionary_complete"]'
+    Then I click on the button labeled "Save & Stay"
+    Then I click on the button labeled "Save & Exit Form"
+  
+  Scenario: 17 - Add new record to Arm 1
+    When I visit Project ID 14
+    And I click on the link labeled "Add / Edit Records"
+    Then I click on the button labeled "Add new record"
+    And I visit the version URL "DataEntry/index.php?pid=14&id=2&event_id=41&page=data_types&auto=1"
+    And I enter "Jane" into the "ptname" text input field
+    Then I click on the button labeled "Save & Exit Form"
+    And I click on the link labeled "Record Status Dashboard"
+    Then I should see "Arm 1:"
+  
+  Scenario: 18 to 20 - Rename record
+    When I visit Project ID 14
+    And I click on the link labeled "Record Status Dashboard"
+    #Then I click on the element identified by 'tr.odd > td > a:contains("2")'
+    Then I visit the version URL "DataEntry/record_home.php?pid=14&arm=1&id=2"
+    And I click on the button labeled "Choose action for record"
+    And I select the option labeled "Rename record"
+    And I clear the field identified by 'input[id="new-record-name"]'
+    And I enter "3" into the field identified by 'input[id="new-record-name"]'
+    And I click on the button labeled "Rename record" in the dialog box
+    And I click on the link labeled "Record Status Dashboard"
+    Then I should see a link labeled "3"
+  
+  Scenario: 21 to 22 - Delete data for form only
+    When I visit Project ID 14
+    And I click on the link labeled "Record Status Dashboard"
+    Then I visit the version URL "DataEntry/index.php?pid=14&id=3&page=data_types&event_id=41&instance=1"
+    And I click on the button labeled "Delete data for THIS FORM only"
+    Then I should see 'DELETE ALL DATA ON THIS FORM FOR RECORD "3"?'
+    And I click on the button labeled "Cancel" in the dialog box
+    And I click on the button labeled "Delete data for THIS FORM only"
+    And I click on the button labeled "Delete data for THIS FORM only" in the dialog box
+  
+  # Scenario: 23 to 24 - Delete record
+  #   When I visit Project ID 14
+  #   And I click on the link labeled "Record Status Dashboard"
+  #   Then I click on the link labeled "3"
+  #   And I click on the button labeled "Choose action for record"
+  #   And I select the option labeled "Delete record (all forms)"
+  #   And I click on the button labeled "Cancel" in the dialog box
+  #   Then I click on the button labeled "Choose action for record"
+  #   And I select the option labeled "Delete record (all forms)"
+  #   And I click on the button labeled "DELETE RECORD" in the dialog box
+  #   Then I close popup
+  #   And I click on the link labeled "Record Status Dashboard"
+  #   Then I should see "Arm 1:"
+  
+  # Scenario: 25 to 26 - Add new record for Arm 2
+  #   When I visit Project ID 14
+  #   And I click on the link labeled "Add / Edit Records"
+  #   And I select 'Arm 2: Arm Two' from the dropdown identified by 'select[name="arm_name"]'
+  #   Then I click on the button labeled "Add new record"
+  #   And I visit the version URL "DataEntry/index.php?pid=14&id=2&event_id=44&page=text_validation&auto=1"
+  #   And I enter "Mary" into the "ptname_v2_v2" text input field
+  #   And I select 'Unverified' from the dropdown identified by 'select[name="text_validation_complete"]'
+  #   Then I click on the button labeled "Save & Exit Form"
 
+  # Scenario: 27 - Add new event 
+  #   When I visit Project ID 14
+  #   And I click on the link labeled "Record Status Dashboard"
+  #   #Then I click on the element identified by 'tr.odd > td > a:contains("2")'
+  #   Then I visit the version URL "DataEntry/record_home.php?pid=14&arm=1&id=2"
+  #   And I click on the button labeled "Add new"
+  #   And I visit the version URL "DataEntry/index.php?pid=14&id=2&event_id=44&page=text_validation&instance=2"
+  #   And I enter "Josh" into the "ptname_v2_v2" text input field
+  #   And I enter "josh@noreply.com" into the "email_v2" text input field
+  #   And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
+  #   And I should see "Save & Go To Next Form"
+  #   Then I click on the link labeled "Save & Go To Next Form"
+  #   And I enter "June" into the "ptname" text input field
+  #   Then I click on the button labeled "Save & Exit Form"
 
-
-    
-
-
-
+  # Scenario: 28 - Edit record
+  #   When I visit Project ID 14
+  #   And I click on the link labeled "Record Status Dashboard"
+  #   #Then I click on the element identified by 'tr.odd > td > a:contains("2")'
+  #   Then I visit the version URL "DataEntry/record_home.php?pid=14&arm=1&id=2"
+  #   And I visit the version URL "DataEntry/index.php?pid=14&id=2&event_id=44&page=data_types"
+  #   And I enter "Mary" into the "ptname" text input field
+  #   And I select 'Complete' from the dropdown identified by 'select[name="data_types_complete"]'
+  #   Then I click on the button labeled "Save & Exit Form"
+  #   And I click on the version URL "DataEntry/index.php?pid=14&id=2&event_id=45&page=data_types"
+  #   And I enter "Mary" into the "ptname" text input field
+  #   And I select 'Incomplete' from the dropdown identified by 'select[name="data_types_complete"]'
+  #   Then I click on the button labeled "Save & Exit Form"
+  #   And I click on the link labeled "Record Status Dashboard"
+  #   Then I should see "Arm 2:"
+  
+  # Scenario: 29 to 31 - Delete Event
+  #   When I visit Project ID 14
+  #   And I click on the link labeled "Record Status Dashboard"
+  #   Then I visit the version URL "DataEntry/record_home.php?pid=14&arm=1&id=3"
