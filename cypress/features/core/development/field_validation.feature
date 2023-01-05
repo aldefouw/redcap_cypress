@@ -11,15 +11,16 @@ Feature: Field Validation
     When I click on the link labeled "Control Center"
     And I click on the link labeled "Field Validation Types"
     And I click on the element identified by "#date_dmy > :nth-child(3) > button"
+      #these are all enable/disable buttons - need a step definition
     And I click on the element identified by "#datetime_mdy > :nth-child(3) > button"
     And I click on the element identified by "#datetime_seconds_ymd > :nth-child(3) > button"
 And I want to pause
-    # pauses are there to prevent detaching
+    # pauses are to prevent detaching
     And I click on the element identified by "#email > :nth-child(3) > button"
     And I click on the element identified by "#integer > :nth-child(3) > button" 
     And I click on the element identified by "#number > :nth-child(3) > button"
-  #this is already disabled
     #And I click on the element identified by "#number_1dp_comma_decimal > :nth-child(3) > button"
+      #this is already disabled. this could use a "I should see that (validation type) is enabled/disabled" step definition
 And I want to pause
    And I click on the element identified by "#time > :nth-child(3) > button"
     When I click on the link labeled "My Projects"
@@ -27,6 +28,8 @@ And I want to pause
 
     And I click on the link labeled "Add / Edit Records"
     And I select "1" from the dropdown identified by "[id=record]"
+    #And I select "1" on the dropdown field labeled "-- select record --"
+      #this fails ?
     When I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms/events)"
     And I click on the button labeled "DELETE RECORD" in the dialog box
@@ -35,17 +38,20 @@ And I want to pause
     And I click on the link labeled "Project Setup"
     And I should see that surveys are disabled
     When I click on the element identified by "[id=setupLongiBtn]"
+      #we have a "I enable surveys for Project ID" and a "I should see that longitudinal mode is enable/disable" but not a "I enable longitudinal mode ..."
+
     And I click on the button labeled "Disable" in the dialog box
     Then I should see that longitudinal mode is "disabled"
     When I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
+      #we have a "I enable surveys for Project ID" and a "I should see that repeatable instruments are enable/disable/modify" but not a "I modify repeatable instruments ..."
     And I click on the checkbox identified by "[name=repeat_form-41-data_types]"
+      #doesnt have a label to identify 
     And I click on the button labeled "Save" in the dialog box
     And I should see that repeatable instruments are disabled
     And I should see that auto-numbering is "enabled"
     And I should see that the scheduling module is "disabled"
     And I should see that the randomization module is "disabled"
     And I should see that the designate an email field for communications setting is "disabled"
-
 
   Scenario: 1 - Login as Admin
     Given I am an "admin" user who logs into REDCap
@@ -104,11 +110,15 @@ And I want to pause
     And I click on the button labeled "Add new record"
     Then I should see "Record Home Page"
     When I click on the element identified by ".odd > .nowrap > a > img"
+    #the step definition "When I click on the bubble for the "Text Validation" data collection instrument for record ID "1"" fails
 
   Scenario: 9 - Date (D-M-Y) Field
     When I enter "01-31-2022" into the data entry form field labeled "Date (D-M-Y)"
     Then I should see "The value you provided could not be validated because it does not follow the expected format. Please try again." 
     Given I clear the field and enter "31-01-2022" into the "val_date_dmy" text input field
+    #Given I clear the field labeled "Date (D-M-Y)"
+    #And I enter "31-01-2022" into the input field labeled "Date (D-M-Y)"
+      #I think these two should work if we wanted to avoid the "val_date_dmy" but the individual clear the field step def doesnt recognize field label
     And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
 
   Scenario: 10 - DateTime (M-D-Y H:M) Field
