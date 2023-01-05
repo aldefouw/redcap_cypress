@@ -3,21 +3,27 @@ Feature: Draft Mode
   As a REDCap end user
   I want to see that Draft Mode is functioning as expected
 
-Scenario: Add from Email Address
+Scenario: Project Setup - 1
     Given I am an "admin" user who logs into REDCap
+    And I create a project named "20_DraftMode_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
+    
+Scenario: Project Setup - 2, 3
+    And I click on the button labeled exactly "Move project to production"
+    And I click on the input element labeled "Keep ALL data saved so far"
+    And I click on the button labeled exactly "YES, Move to Production Status"
+    And I assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user" on project ID 14
+
+Scenario: Project Setup - 4
     And I visit the "Control Center" page
     And I click on the link labeled "General Configuration"
     And I enter "no-reply@test.com" into the input field labeled "Set a Universal FROM Email address"
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
-Scenario: Project Setup - 1
+Scenario: 1 - Log into Project
     Given I am an "admin" user who logs into REDCap
-    And I create a project named "20_DraftMode_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
-    And I click on the button labeled exactly "Move project to production"
-    And I click on the input element labeled "Keep ALL data saved so far"
-    And I click on the button labeled exactly "YES, Move to Production Status"
-    And I assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "20_DraftMode_v1115"
 
 Scenario: 2 - Control Center
     Given I click on the link labeled "Control Center"
