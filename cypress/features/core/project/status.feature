@@ -35,7 +35,6 @@ Feature: Project Status
   Scenario: 5 - Allow Normal Users to Move Project to Production
     When I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
-    #And I select "Yes, normal users can move projects to production" from the dropdown identified by "[name=superusers_only_move_to_prod]"
     And I select "Yes, normal users can move projects to production" on the dropdown field labeled "Allow normal users to move projects to production?"
     And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
