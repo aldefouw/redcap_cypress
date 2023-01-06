@@ -33,12 +33,10 @@ Feature: Field Validation
     And I close popup
 
     And I click on the link labeled "Project Setup"
-    And I should see that surveys are disabled
-    When I click on the element identified by "[id=setupLongiBtn]"
-      #we have a "I enable surveys for Project ID" and a "I should see that longitudinal mode is enable/disable" but not a "I enable longitudinal mode ..."
 
-    And I click on the button labeled "Disable" in the dialog box
-    Then I should see that longitudinal mode is "disabled"
+    And I disable surveys
+    And I disable longitudinal mode
+
     When I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
       #we have a "I enable surveys for Project ID" and a "I should see that repeatable instruments are enable/disable/modify" but not a "I modify repeatable instruments ..."
     And I click on the checkbox identified by "[name=repeat_form-41-data_types]"
