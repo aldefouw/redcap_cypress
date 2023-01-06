@@ -10,23 +10,20 @@ Feature: Field Validation
   Scenario: Project Setup - 2
     When I click on the link labeled "Control Center"
     And I click on the link labeled "Field Validation Types"
-    And I click on the element identified by "#date_dmy > :nth-child(3) > button"
-      #these are all enable/disable buttons - need a step definition
-    And I click on the element identified by "#datetime_mdy > :nth-child(3) > button"
-    And I click on the element identified by "#datetime_seconds_ymd > :nth-child(3) > button"
-And I want to pause
-    # pauses are to prevent detaching
-    And I click on the element identified by "#email > :nth-child(3) > button"
-    And I click on the element identified by "#integer > :nth-child(3) > button" 
-    And I click on the element identified by "#number > :nth-child(3) > button"
-    #And I click on the element identified by "#number_1dp_comma_decimal > :nth-child(3) > button"
-      #this is already disabled. this could use a "I should see that (validation type) is enabled/disabled" step definition
-And I want to pause
-   And I click on the element identified by "#time > :nth-child(3) > button"
+
+    And I disable the Field Validation Type named "Date (M-D-Y)" within the Control Center
+    And I disable the Field Validation Type named "Datetime (D-M-Y H:M)" within the Control Center
+    And I disable the Field Validation Type named "Datetime w/ seconds (Y-M-D H:M:S)" within the Control Center
+    And I disable the Field Validation Type named "Email" within the Control Center
+    And I disable the Field Validation Type named "Integer" within the Control Center
+    And I disable the Field Validation Type named "Number" within the Control Center
+    And I disable the Field Validation Type named "Time" within the Control Center
+
     When I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
 
     And I click on the link labeled "Add / Edit Records"
+
     And I select "1" from the dropdown identified by "[id=record]"
     #And I select "1" on the dropdown field labeled "-- select record --"
       #this fails ?
@@ -81,17 +78,13 @@ And I want to pause
   Scenario: 6 - Enable Field Validation Types
     When I click on the link labeled "Control Center"
     And I click on the link labeled "Field Validation Types"
-    And I click on the element identified by "#date_dmy > :nth-child(3) > button"
-    And I click on the element identified by "#datetime_mdy > :nth-child(3) > button"
-    And I click on the element identified by "#datetime_seconds_ymd > :nth-child(3) > button"
-  And I want to pause 
-    And I click on the element identified by "#email > :nth-child(3) > button"
-    And I click on the element identified by "#integer > :nth-child(3) > button"
-  And I want to pause
-    And I click on the element identified by "#number > :nth-child(3) > button"
-  And I want to pause
-    And I click on the element identified by "#number_1dp_comma_decimal > :nth-child(3) > button"
-    And I click on the element identified by "#time > :nth-child(3) > button"
+    And I enable the Field Validation Type named "Date (M-D-Y)" within the Control Center
+    And I enable the Field Validation Type named "Datetime (D-M-Y H:M)" within the Control Center
+    And I enable the Field Validation Type named "Datetime w/ seconds (Y-M-D H:M:S)" within the Control Center
+    And I enable the Field Validation Type named "Email" within the Control Center
+    And I enable the Field Validation Type named "Integer" within the Control Center
+    And I enable the Field Validation Type named "Number" within the Control Center
+    And I enable the Field Validation Type named "Time" within the Control Center
 
   Scenario: 7 - Open Text Validation Instrument 
     Given I click on the link labeled "My Projects"

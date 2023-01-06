@@ -333,7 +333,8 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
 
     cy.get('button').contains('Commit Changes').click()
     cy.get('html').should(($html) => {
-        expect($html).to.contain('Changes to the DRAFT have been made successfully!')
+        expect($html).to.contain('Changes')
+        expect($html).to.contain('Successfully')
     })
 })
 
@@ -954,6 +955,25 @@ Cypress.Commands.add("adjust_or_verify_instrument_event", (instrument_name, even
         cy.get('button').contains('Save').click()
         cy.wait('@designate_forms')
     }
+})
+
+Cypress.Commands.add("toggle_field_validation_type", (field_validation_type, button_text = 'Enable') => {
+    cy.intercept({
+        method: 'POST',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/ControlCenter/validation_type_setup.php"
+    }).as('validation_type_setup')
+
+    cy.get('td').contains(field_validation_type).parents('tr').children('td').each((td, i) => {
+        //Get to third column
+        if(i === 2 && td.length){
+            if(td[0].innerText.includes(button_text)){
+                td.find('button')[0].click()
+                cy.wait('@validation_type_setup')
+            } else {
+                //Do nothing if we do not find the "button text" - it means we're already in the state we want to be!
+            }
+        }
+    })
 })
 
 //
