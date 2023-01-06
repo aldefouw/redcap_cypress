@@ -308,19 +308,19 @@ Scenario: 20 - Draft Changes
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "My Projects"
     And I click on the link labeled "20_DraftMode_v1115"
-
     When I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
     Then I should see "Deleting any events below will result in data loss. Please proceed with caution."
 
     Given I change the current Event Name from "Event 2" to "Event B"
+    And I click on the link labeled "Designate Instruments for My Events"
+    And I enable the Data Collection Instrument named "Text Validation" for the Event named "Event B"
+    And I verify the Data Collection Instrument named "Text Validation" is enabled for the Event named "Event B"
+    And I verify the Data Collection Instrument named "Data Types" is enabled for the Event named "Event 1"
+    And I verify the Data Collection Instrument named "Data Types" is disabled for the Event named "Event B"
 
-    When I click on the link labeled "Designate Instruments for My Events"
-    And I click on the button labeled "Begin Editing"
-    And I click on the checkbox identified by "[id=text_validation--42]"
-    And I click on the button labeled "Save"
+    Then I logout
 
-    Given I logout
 
 Scenario: 21 - Review Events and Form Designations
     Given I am a "standard" user who logs into REDCap
@@ -331,8 +331,11 @@ Scenario: 21 - Review Events and Form Designations
     Then I should see "Event B"
     And I should NOT see "Event 2"
     When I click on the link labeled "Designate Instruments for My Events"
-    #Then I should see "[id=img--text_validation--42]"
-    #this doesnt find the check mark for Event 2 Text Validation - not sure if we have a way to "see" the check mark
+
+    Then I verify the Data Collection Instrument named "Text Validation" is enabled for the Event named "Event 1"
+    And I verify the Data Collection Instrument named "Text Validation" is enabled for the Event named "Event B"
+    And I verify the Data Collection Instrument named "Data Types" is enabled for the Event named "Event 1"
+    And I verify the Data Collection Instrument named "Data Types" is disabled for the Event named "Event B"
     
     
 
