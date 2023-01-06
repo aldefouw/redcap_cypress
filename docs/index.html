@@ -289,6 +289,22 @@
                     
               
                     
+                    <li><a href='#i-enable-the-data-collection-instrument-named-string-for-the-event-named-string'>I enable the Data Collection Instrument named {string} for the Event named {string}</a></li>
+                    
+              
+                    
+                    <li><a href='#i-disable-the-data-collection-instrument-named-string-for-the-event-named-string'>I disable the Data Collection Instrument named {string} for the Event named {string}</a></li>
+                    
+              
+                    
+                    <li><a href='#i-verify-the-data-collection-instrument-named-string-is-enabled-for-the-event-named-string'>I verify the Data Collection Instrument named {string} is enabled for the Event named {string}</a></li>
+                    
+              
+                    
+                    <li><a href='#i-verify-the-data-collection-instrument-named-string-is-disabled-for-the-event-named-string'>I verify the Data Collection Instrument named {string} is disabled for the Event named {string}</a></li>
+                    
+              
+                    
                       <h2 class="mt1 mb1">Project Setup</h2>
                     
                     <li><a href='#i-should-see-that-surveys-are-enableddisabled'>I should see that surveys are &lt;enabled/disabled&gt;</a></li>
@@ -5141,6 +5157,326 @@ cy.get(sel).select(label).should('have.value', value)
 
 
   <p>Deletes a specific named event on the "Define My Events" page for a Longitudinal Project</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-enable-the-data-collection-instrument-named-string-for-the-event-named-string'>
+          I enable the <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Collection</span> <span class="hljs-title class_">Instrument</span> named {string} <span class="hljs-keyword">for</span> the <span class="hljs-title class_">Event</span> named {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>instrument_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the Data Collection Instrument we are enabling for a specific event
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>event_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the event to enable the Data Collection Instrument for
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Enables a Data Collection Instrument for a specific Event within a Longitudinal Project.  (Assumption: User is on "Designate Instruments for My Events" page.)</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-disable-the-data-collection-instrument-named-string-for-the-event-named-string'>
+          I disable the <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Collection</span> <span class="hljs-title class_">Instrument</span> named {string} <span class="hljs-keyword">for</span> the <span class="hljs-title class_">Event</span> named {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>instrument_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the Data Collection Instrument we are disabling for a specific event
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>event_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the event to disable the Data Collection Instrument for
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Disables a Data Collection Instrument for a specific Event within a Longitudinal Project. (Assumption: User is on "Designate Instruments for My Events" page.)</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-verify-the-data-collection-instrument-named-string-is-enabled-for-the-event-named-string'>
+          I verify the <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Collection</span> <span class="hljs-title class_">Instrument</span> named {string} is enabled <span class="hljs-keyword">for</span> the <span class="hljs-title class_">Event</span> named {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>instrument_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the Data Collection Instrument we are disabling for a specific event
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>event_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the event to disable the Data Collection Instrument for
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Verifies a Data Collection Instrument is enabled for a specific Event within a Longitudinal Project. (Assumption: User is on "Designate Instruments for My Events" page.)</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-verify-the-data-collection-instrument-named-string-is-disabled-for-the-event-named-string'>
+          I verify the <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Collection</span> <span class="hljs-title class_">Instrument</span> named {string} is disabled <span class="hljs-keyword">for</span> the <span class="hljs-title class_">Event</span> named {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>instrument_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the Data Collection Instrument we are disabling for a specific event
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>event_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the event to disable the Data Collection Instrument for
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Verifies a Data Collection Instrument is disabled for a specific Event within a Longitudinal Project. (Assumption: User is on "Designate Instruments for My Events" page.)</p>
 
 
   
