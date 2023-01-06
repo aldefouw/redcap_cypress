@@ -101,9 +101,7 @@ Feature: Field Validation
   Scenario: 8 - Add A New Record
     When I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
-    Then I should see "Record Home Page"
-    When I click on the element identified by ".odd > .nowrap > a > img"
-    #the step definition "When I click on the bubble for the "Text Validation" data collection instrument for record ID "1"" fails
+    And I click the bubble to add a record for the "Text Validation" longitudinal instrument on event "Status"
 
   Scenario: 9 - Date (D-M-Y) Field
     When I enter "01-31-2022" into the data entry form field labeled "Date (D-M-Y)"
