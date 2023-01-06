@@ -17,7 +17,7 @@ Feature: Field Validation
     And I disable the Field Validation Type named "Email" within the Control Center
     And I disable the Field Validation Type named "Integer" within the Control Center
     And I disable the Field Validation Type named "Number" within the Control Center
-    And I disable the Field Validation Type named "Time" within the Control Center
+    And I disable the Field Validation Type named "Time (HH:MM)" within the Control Center
 
     When I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
@@ -68,8 +68,9 @@ Feature: Field Validation
   Scenario: 5 - Check Validation Options
     Given I click on the Add Field input button below the field named "Record ID"
     And I select "Text Box (Short Text, Number, Date/Time, ...)" from the Field Type dropdown of the open "Edit Field" dialog box
-    Then I should see the dropdown identified by "[id=val_type]" with the options below
-    | Date (M-D-Y) | Date (Y-M-D) | Datetime (D-M-Y H:M) | Datetime (Y-M-D H:M) | Datetime w/ seconds (D-M-Y H:M:S) | Datetime w/ seconds (M-D-Y H:M:S) | Phone (North America) | Zipcode (U.S.) |
+    Then I should see the dropdown identified by "[name=val_type]" with the options below
+    | Date (D-M-Y) | Date (Y-M-D) | Datetime (M-D-Y H:M) | Datetime (Y-M-D H:M) | Datetime w/ seconds (D-M-Y H:M:S) | Datetime w/ seconds (M-D-Y H:M:S) | Phone (North America) | Zipcode (U.S.) |
+
     # ^ this might not be what we want, this is checking for these options and not that the options specified in the script are not there
     When I click on the button labeled "Cancel"
 
@@ -82,7 +83,8 @@ Feature: Field Validation
     And I enable the Field Validation Type named "Email" within the Control Center
     And I enable the Field Validation Type named "Integer" within the Control Center
     And I enable the Field Validation Type named "Number" within the Control Center
-    And I enable the Field Validation Type named "Time" within the Control Center
+    And I enable the Field Validation Type named "Number (1 decimal place - comma as decimal)" within the Control Center
+    And I enable the Field Validation Type named "Time (HH:MM)" within the Control Center
 
   Scenario: 7 - Open Text Validation Instrument 
     Given I click on the link labeled "My Projects"
@@ -92,7 +94,7 @@ Feature: Field Validation
     Then I should see a button labeled "Return to list of instruments"
     Given I click on the Add Field input button below the field named "Record ID"
     And I select "Text Box (Short Text, Number, Date/Time, ...)" from the Field Type dropdown of the open "Edit Field" dialog box
-    Then I should see the dropdown identified by "[id=val_type]" with the options below
+    Then I should see the dropdown identified by "select[id=val_type]" with the options below
     | Date (D-M-Y) | Datetime (M-D-Y H:M) | Datetime w/ seconds (Y-M-D H:M:S) | Email | Integer | Number | Number (1 decimal place - comma as decimal) | Time (HH:MM) |
     When I click on the button labeled "Cancel"
 

@@ -571,12 +571,23 @@ Given('I enter {string} into the Field Label of the open "Edit Field" dialog box
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I edit the Data Collection Instrument field labeled {string}
+ * @example I select {string} from the Field Type dropdown of the open "Edit Field" dialog box
  * @param {string} label - the label of the field to edit
- * @description Opens the edit window for the field with the specified label
+ * @description Selects option from the Field Type dropdown in open "Edit Field" dialog box
  */
 Given('I select {string} from the Field Type dropdown of the open "Edit Field" dialog box', (dropdown_option) => {
     cy.get('select#field_type').select(dropdown_option)
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I select {string} from the Validation dropdown of the open "Edit Field" dialog box
+ * @param {string} label - the label of the field to edit
+ * @description Selects option from the Validation dropdown in open "Edit Field" dialog box
+ */
+Given('I select {string} from the Validation dropdown of the open "Edit Field" dialog box', (dropdown_option) => {
+    cy.get('select#val_type').select(dropdown_option)
 })
 
 /**
