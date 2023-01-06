@@ -39,6 +39,16 @@
             <ul class='list-reset h5 py1-ul'>
               
                     
+                      <h2 class="mt1 mb1">Control Center</h2>
+                    
+                    <li><a href='#i-enable-the-field-validation-type-named-string-within-the-control-center'>I enable the Field Validation Type named {string} within the Control Center</a></li>
+                    
+              
+                    
+                    <li><a href='#i-disable-the-field-validation-type-named-string-within-the-control-center'>I disable the Field Validation Type named {string} within the Control Center</a></li>
+                    
+              
+                    
                       <h2 class="mt1 mb1">Data Import</h2>
                     
                     <li><a href='#i-upload-a-data-dictionary-located-at-string-to-project-id-int'>I upload a data dictionary located at {string} to project ID {int}</a></li>
@@ -306,6 +316,14 @@
               
                     
                       <h2 class="mt1 mb1">Project Setup</h2>
+                    
+                    <li><a href='#i-disableenable-surveys'>I &lt;disable/enable&gt; surveys</a></li>
+                    
+              
+                    
+                    <li><a href='#i-disableenable-logitudinal-mode'>I &lt;disable/enable&gt; logitudinal mode</a></li>
+                    
+              
                     
                     <li><a href='#i-should-see-that-surveys-are-enableddisabled'>I should see that surveys are &lt;enabled/disabled&gt;</a></li>
                     
@@ -764,6 +782,150 @@
       <div id='split-right' class='relative overflow-auto height-viewport-100'>
         
 
+        
+            
+            <h2 class='fl mt3 mb2' id='controlcenter'>Control Center</h3>
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-enable-the-field-validation-type-named-string-within-the-control-center'>
+          I enable the <span class="hljs-title class_">Field</span> <span class="hljs-title class_">Validation</span> <span class="hljs-title class_">Type</span> named {string} within the <span class="hljs-title class_">Control</span> <span class="hljs-title class_">Center</span>
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>field_validation_type</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the label of the Field Validation type
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Enables a specific Field Validation Type (for all projects) within the Control Center</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-disable-the-field-validation-type-named-string-within-the-control-center'>
+          I disable the <span class="hljs-title class_">Field</span> <span class="hljs-title class_">Validation</span> <span class="hljs-title class_">Type</span> named {string} within the <span class="hljs-title class_">Control</span> <span class="hljs-title class_">Center</span>
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>field_validation_type</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the label of the Field Validation type
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Disables a specific Field Validation Type (for all projects) within the Control Center</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
         
             
             <h2 class='fl mt3 mb2' id='dataimport'>Data Import</h3>
@@ -5510,6 +5672,148 @@ cy.get(sel).select(label).should('have.value', value)
         
             
             <h2 class='fl mt3 mb2' id='projectsetup'>Project Setup</h3>
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-disableenable-surveys'>
+          I &lt;disable/enable&gt; surveys
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>toggleAction</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    disable or enable
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Disables or enables surveys for the project in view.</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:debacker@wisc.edu">Corey Debacker</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-disableenable-logitudinal-mode'>
+          I &lt;disable/enable&gt; logitudinal mode
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>toggleAction</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    disable or enable
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Disables or enables longitudinal mode for the project in view.</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:debacker@wisc.edu">Corey Debacker</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
             
             
 <section class='p2 mb2 clearfix bg-white minishadow'>
