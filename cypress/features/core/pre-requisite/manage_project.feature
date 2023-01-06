@@ -15,7 +15,7 @@ Feature: Manage Project
         Given I am an "admin" user who logs into REDCap
         And I visit the "Control Center" page
         When I click on the link labeled "Browse Users"
-        And I enter "test_user2" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+        And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
         And I click on the button labeled "Search"
         Then I should see "User information for"
         When I click on the button labeled "Edit user info"
@@ -74,7 +74,7 @@ Feature: Manage Project
 
     Scenario: 8- Verify test_user2 can not Create or Copy Projects
         When I click on the link labeled "Browse Users"
-        And I enter "test_user2" into the field labeled "User Search: Search for user by username, first name, last name, or primary email"
+        And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
         And I click on the button labeled "Search"
         Then I should see "User information for"
         And I should see "test_user2"
