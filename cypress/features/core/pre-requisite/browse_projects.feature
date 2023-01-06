@@ -11,7 +11,7 @@ Feature: Browse Projects
     Then I should see 13 rows displayed in the projects table
 
   Scenario: Search for a project by "Project Title"
-    When I enter "Piping Example" into the field labeled "Search project title by keyword(s):"
+    When I enter "Piping Example" into the input field labeled "Search project title by keyword(s):"
     And I click on the button labeled "Search project title"
     Then I should see "Piping Example Project"
     And I should see 1 row displayed in the projects table
@@ -41,12 +41,12 @@ Feature: Browse Projects
     Then I should see projects sorted correctly when I click on "Status" to sort in either direction
 
   Scenario: View all projects with user rights assigned to a user with a specific username
-    When I enter "test_user" into the field labeled "Viewing projects accessible by user:"
+    When I enter "test_user" into the input field labeled "Viewing projects accessible by user:"
     And I click on the button labeled "View"
     Then I should see 1 rows displayed in the projects table
 
   Scenario: View no projects when a user has no user rights assigned to any projects
     Given I clear the field labeled "Viewing projects accessible by user:"
-    And I enter "test_user2" into the field labeled "Viewing projects accessible by user:"
+    And I enter "test_user2" into the input field labeled "Viewing projects accessible by user:"
     And I click on the button labeled exactly "View"
     Then I should see "There are no projects to display"

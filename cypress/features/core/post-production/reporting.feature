@@ -64,7 +64,7 @@ Scenario: Project Setup - 3
     Given I visit Project ID 14
     And I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Create New Report"
-    And I enter "Report 1" into the field labeled "Name of Report"
+    And I enter "Report 1" into the input field labeled "Name of Report"
     And I click on the button labeled "Quick Add"
     And I click on the checkbox identified by "input[name=fname]"
     And I click on the checkbox identified by "input[name=lname]"
@@ -185,7 +185,7 @@ Scenario: Project Setup - 3
     Then I should see the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1" with the options below
     | = | not = | <  | < = | > | > = |
     And I select ">" from the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1"
-    And I enter "6/20/19" into the field labeled "M-D-Y"
+    And I enter "6/20/19" into the input field labeled "M-D-Y"
     And I click on the button labeled "Save Report"
     Then I should see a new dialog box named "report_saved_success_dialog"
 
@@ -282,7 +282,7 @@ Scenario: Project Setup - 3
 
   Scenario: 19 - Edit User Privileges
     Given I visit Project ID 14
-    And I want to remove the "Add/Edit/Organize Reports" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    And I remove the "Add/Edit/Organize Reports" user right to the user named "Test User" with the username of "test_user" on project ID 14
     Then I should see "User \"test_user\" was successfully edited"
 
   Scenario: 20 - Verify Privileges

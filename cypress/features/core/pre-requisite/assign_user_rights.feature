@@ -278,7 +278,7 @@ Scenario: before step 26
     And I grant Read Only level of Data Entry Rights on the "Data Types" instrument for the username "test_user" for project ID 14
     And I click on the link labeled "User Rights"
     When I click on the link labeled "Record Status Dashboard"
-    When I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    When I click on the bubble for the "Text Validation" data collection instrument for record ID "2"
     Then I should see "Text Validation"
     And I should NOT see "Edit response"
 
@@ -287,11 +287,11 @@ Scenario: before step 26
     And I grant View & Edit level of Data Entry Rights on the "Data Types" instrument for the username "test_user" for project ID 14
     And I click on the link labeled "User Rights"
     When I click on the link labeled "Record Status Dashboard"
-    When I click on the bubble for the "Data Types" data collection instrument instrument for record ID "1"
+    When I click on the bubble for the "Data Types" data collection instrument for record ID "1"
     Then I should see "Data Types"
     And I should see a button labeled "Save & Exit Form"
     When I click on the link labeled "Record Status Dashboard"
-    And I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    And I click on the bubble for the "Text Validation" data collection instrument for record ID "2"
     Then I should see "Text Validation"
     And I should NOT see "Edit response"
 
@@ -299,7 +299,7 @@ Scenario: before step 26
     Given I change survey edit rights for "test_user" user on the form called "Text Validation" on project ID 14
     And I click on the link labeled "User Rights"
     When I click on the link labeled "Record Status Dashboard"
-    When I click on the bubble for the "Text Validation" data collection instrument instrument for record ID "2"
+    When I click on the bubble for the "Text Validation" data collection instrument for record ID "2"
     Then I should see "Data Types"
     And I should see a button labeled "Edit response"
 

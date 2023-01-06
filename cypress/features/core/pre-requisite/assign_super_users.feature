@@ -36,8 +36,8 @@ Scenario: 5- View test_user in Admin List
 
 Scenario: 6- Verify test_user Administrator Priveledges 
     When I click on the link labeled "Log out"
-    And I enter "test_user" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:"
+    And I enter "test_user" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "Control Center"
     And I should see "Users"
@@ -58,8 +58,8 @@ Scenario: 9- View test_user2 in Admin List
 
 Scenario: 10- Verify test_user2 Account Manager Priveledges 
     When I click on the link labeled "Log out"
-    And I enter "test_user2" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:"
+    And I enter "test_user2" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "Control Center Home"
     And I should see a link labeled "Browse Users"
@@ -76,8 +76,8 @@ Scenario: 11- Switch test_user2 to Maximum User Privileges
 
 Scenario: 12- Verify test_user2 Maximum User Privileges Priveledges 
     When I click on the link labeled "Log out"
-    And I enter "test_user2" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:"
+    And I enter "test_user2" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "Control Center Home"
     And I should see a link labeled "Browse Projects"
@@ -90,8 +90,8 @@ Scenario: 12- Verify test_user2 Maximum User Privileges Priveledges
 
 Scenario: 13- View All Projects Page
     When I click on the link labeled "Log out"
-    And I enter "test_user2" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:"
+    And I enter "test_user2" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     And I click on the link labeled "Browse Projects"
     Then I should see "Viewing projects accessible by user:"
@@ -100,8 +100,8 @@ Scenario: 13- View All Projects Page
 
 Scenario: 14 - View and Edit Project Settings Page 
     When I click on the link labeled "Log out"
-    And I enter "test_user2" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:"
+    And I enter "test_user2" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     When I click on the link labeled "Edit a Project's Settings"
     Then I should see "You may modify the governing settings for any REDCap project on this page."
@@ -115,8 +115,8 @@ Scenario: 15- Switch test_user2 to System Configuration Modifier
     
 Scenario: 16- Verify test_user2 System Configuration Access 
     When I click on the link labeled "Log out"
-    And I enter "test_user2" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:"
+    And I enter "test_user2" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "Control Center Home"
     And I should see a link labeled "Configuration Check"
@@ -144,8 +144,8 @@ Scenario: 17- Switch test_user2 to have access to Control Center Dashboards
 
 Scenario: 18- Verify test_user2 Maximum User Privileges Priveledges 
     When I click on the link labeled "Log out"
-    And I enter "test_user2" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:"
+    And I enter "test_user2" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "Control Center Home"
     And I should see "Dashboard" 
@@ -163,8 +163,8 @@ Scenario: 19- Switch test_user and test_user2 to no admin privileges
     And I click on the element identified by "[id=4-access_admin_dashboards]"
     And I click on the element identified by "[id=2-admin_rights]"
     And I click on the link labeled "Log out"
-    Then I enter "test_admin" into the field labeled "Username:"
-    And I enter "Testing123" into the field labeled "Password:" 
+    Then I enter "test_admin" into the input field labeled "Username:"
+    And I enter "Testing123" into the input field labeled "Password:" 
     And I click on the button labeled "Log In"
     And I click on the link labeled "Administrator Privileges"
     Then I should NOT see "user1115_1"
@@ -180,15 +180,15 @@ Scenario: 20- Check Audit Log of User Actions
 
 Scenario: 21- Confirm test_user does not have Admin Rights 
     When I click on the link labeled "Log out"
-    And I enter "test_user" into the field labeled "Username:"
-    And I enter "PASSWORD HERE" into the field labeled "Password:" 
+    And I enter "test_user" into the input field labeled "Username:"
+    And I enter "PASSWORD HERE" into the input field labeled "Password:" 
     And I click on the button labeled "Log In"
     #And I should not have access to Control Center
 
 Scenario: 22- Confirm test_user2 does not have Admin Rights 
      When I click on the link labeled "Log out"
-    And I enter "test_user2" into the field labeled "Username:"
-    And I enter "PASSWORD HERE" into the field labeled "Password:" 
+    And I enter "test_user2" into the input field labeled "Username:"
+    And I enter "PASSWORD HERE" into the input field labeled "Password:" 
     And I click on the button labeled "Log In"
     #And I should not have access to Control Center
 

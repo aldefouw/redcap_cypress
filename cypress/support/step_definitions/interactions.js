@@ -593,7 +593,7 @@ Given('I select {string} from the Validation dropdown of the open "Edit Field" d
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I enter {string} into the field labeled {string}
+ * @example I select {string} on the dropdown field labeled {string}
  * @param {string} text - the text to enter into the field
  * @param {string} label - the label of the field
  * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
