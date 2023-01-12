@@ -7,9 +7,9 @@
 //   /suport/modules/commands.js
 //   /support/plugins/commands.js
 
-//Supports first-eighth, returns 1 if ord is undefined, returns 1-indexed values
+//Supports first-eighth, returns 0 if ord is undefined, returns 0-indexed values
 export function ordinal_to_int(ord) {
-  let dict = {first:1, second:2, third:3, fourth:4, fifth:5, sixth:6, seventh:7, eighth:8, undefined:1}
+  let dict = {first:0, second:1, third:2, fourth:3, fifth:4, sixth:5, seventh:6, eighth:7, last:-1, undefined:0}
   return dict[ord]
 }
 

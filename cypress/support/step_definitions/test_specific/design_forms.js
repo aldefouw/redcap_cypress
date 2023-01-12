@@ -1,4 +1,5 @@
 import { Given } from "cypress-cucumber-preprocessor/steps";
+
 ///////////////
 //Instruments//
 ///////////////
@@ -103,10 +104,6 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @param {string} target - the name of the field you want to add a field below
  * @description Interacations - Clicks on one of the add field options below a specified field name
  */
-defineParameterType({
-    name: 'addField',
-    regexp: /(Add Field|Add Matrix of Fields|Import from Field Bank)/
-})
  Given("I click on the {addField} input button below the field named {string}", (type, target) => {
     cy.get('tbody[class=formtbody]').children('tr').contains(target)
         .parents('tr').next().within(() => {
@@ -122,10 +119,6 @@ defineParameterType({
  * @param {string} field - the name of the field you want to edit
  * @description Interacations - Clicks on the image link of the action you want to perform on a field
  */
- defineParameterType({
-    name: 'editField',
-    regexp: /(Edit|Branching Logic|Copy|Move|Delete Field)/
-})
  Given("I click on the {editField} image for the field named {string}", (type, field) => {
     cy.get('td[class=frmedit_row]').contains(field).parents('tr').find('img[title="' + type + '"]').click()
 })
@@ -219,7 +212,6 @@ defineParameterType({
     })
 
 })
-
 
 /**
  * @module DesignForms

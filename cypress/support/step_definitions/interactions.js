@@ -1,5 +1,4 @@
 import { Given } from "cypress-cucumber-preprocessor/steps";
-import { defineParameterType } from "cypress-cucumber-preprocessor/steps";
 import { ordinal_to_int } from '../core/commands'
 
 /**
@@ -34,8 +33,8 @@ Given("I click on the button labeled exactly {string}", (text) => {
  * @description Clicks on a button element with a specific text label. If `n` is not specified, the first matching
  *      button is clicked.
  */
-Given(/^I click on the(?: (first|second|third|fourth|fifth|sixth|seventh|eighth))? button labeled "(.*)"/, (n, text) => {
-    n = ordinal_to_int(n) - 1
+Given(/^I click on the(?: (first|second|third|fourth|fifth|sixth|seventh|eighth|last))? button labeled "(.*)"$/, (n, text) => {
+    n = ordinal_to_int(n)
     let sel = `:button:contains("${text}"):visible:nth(${n}),:button[value*="${text}"]:visible:nth(${n})` //for assertion
     cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)}) //assertion could be improved, ugly logs
         .within(() => {
@@ -105,7 +104,7 @@ Given("I click on the button labeled {string} in the dialog box", (text) => {
  * @description Clicks on an anchor element with a specific text label.
  */
 Given(/^I click on the(?: (first|second|third|fourth|fifth|sixth|seventh|eighth))? link labeled "(.*)"/, (n, text) => {
-    n = ordinal_to_int(n) - 1
+    n = ordinal_to_int(n)
     let sel = `a:contains("${text}"):visible:nth(${n})`
     cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)})
         .within(() => cy.get(sel).click())
@@ -245,7 +244,7 @@ Given("I select {string} from the dropdown identified by {string} labeled {strin
 /**
  * @module Interactions
  * @author Corey Debacker <debacker@wisc.edu>
- * @example When I click on the element identified by {string}
+ * @example I click on the element identified by {string}
  * @param {string} selector - the selector of the element to click on
  * @description Clicks on an element identified by specific selector. 
  */
@@ -334,11 +333,6 @@ Given('I enter {string} into the field identified by {string} labeled {string}',
     })
 })
 
-
-defineParameterType({
-    name: 'confirmation',
-    regexp: /accept|cancel/
-})
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>

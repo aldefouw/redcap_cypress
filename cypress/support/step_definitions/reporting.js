@@ -86,11 +86,6 @@ Given("I should see the report with {int} repeating instrument rows", (count) =>
  * @param {string} order the order of the record IDs.
  * @description Visibility - Visually verifies that the report has record IDs in correct order
  */
-defineParameterType({
-    name: 'ordering',
-    regexp: /ascending|descending/
-})
-
 Given("I should see the report with the column named {string} {ordering}", (name, order) => {
 
     let column = null

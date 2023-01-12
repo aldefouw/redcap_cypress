@@ -1,10 +1,5 @@
 import { Given } from "cypress-cucumber-preprocessor/steps";
 
-defineParameterType({
-    name: 'see',
-    regexp: /should see|see/
-})
-
 /**
  * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -117,10 +112,6 @@ Given("I should see a new dialog box named {string}", (text) => {
  * @param {string} check - valid choices are 'checked' OR 'unchecked'
  * @description Visually verifies that a specified checkbox is checked or uncheck
  */
-defineParameterType({
-    name: 'check',
-    regexp: /checked|unchecked/
-})
  Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
     //Really only added this to delay cypress cause sometimes it was moving forward without being checked
     //ATTN: Function no longer needed, can probably delete if no one needs it

@@ -41,11 +41,6 @@ Given("I upload a {string} format file located at {string}, by clicking {string}
     })
 })
 
-defineParameterType({
-    name: 'project_type',
-    regexp: /Practice \/ Just for fun|Operational Support|Research|Quality Improvement|Other/
-})
-
 /**
  * @module DataImport
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>

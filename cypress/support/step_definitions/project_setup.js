@@ -1,14 +1,4 @@
-import { defineParameterType, Given } from "cypress-cucumber-preprocessor/steps";
-
-defineParameterType({
-    name: 'toggleAction',
-    regexp: /enable|disable/
-})
-
-defineParameterType({
-    name: 'status',
-    regexp: /enabled|disabled/
-})
+import { Given } from "cypress-cucumber-preprocessor/steps";
 
 /**
  * @module ProjectSetup
@@ -80,11 +70,6 @@ Given("I should see that surveys are {status}", (state) => {
 Given("I should see that longitudinal mode is {string}", (state) => {
     let expected_text = ((state.toLowerCase() === 'enabled') ? 'Disable' : 'Enable');
     cy.get('#setupLongiBtn').should('contain.text', expected_text);
-})
-
-defineParameterType({
-    name: 'repeatability',
-    regexp: /enabled|disabled|modifiable/
 })
 
 /**
