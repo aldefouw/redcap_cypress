@@ -8,9 +8,12 @@ require("./parameter_types.js")
  * @param {string} text the text visually seen on screen
  * @description Visually verifies that text exists within the HTML object. NOTE: "should" is optional for readability.
  */
-Given("I should see {string}", (text) => {
+Given("I (should) see {string}", (text) => {
     let sel = `:contains("${text}"):not(:has(:contains("${text}"))):visible`
-    cy.get_top_layer(($el) => expect($el.find(sel)).length.to.be.above(0))
+        + `,select:visible option:selected:contains("${text}")`
+    cy.get_top_layer(($el) => {
+        expect($el.find(sel)).length.to.be.above(0)
+    })
 })
 
 // For comparing results of tests before z-index & n'th selector changes
