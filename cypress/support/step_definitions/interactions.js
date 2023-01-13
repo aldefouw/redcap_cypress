@@ -1,4 +1,5 @@
 import { Given } from "cypress-cucumber-preprocessor/steps";
+require("./parameter_types.js")
 import { ordinal_to_int } from '../core/commands'
 
 /**

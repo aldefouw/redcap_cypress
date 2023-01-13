@@ -1,4 +1,5 @@
-import {defineParameterType, Given} from "cypress-cucumber-preprocessor/steps";
+import {Given} from "cypress-cucumber-preprocessor/steps";
+require("./parameter_types.js")
 
 /**
  * @module DataImport

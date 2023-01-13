@@ -1,4 +1,6 @@
 import { Given } from "cypress-cucumber-preprocessor/steps";
+require("./parameter_types.js")
+
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
