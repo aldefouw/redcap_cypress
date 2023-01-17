@@ -12,12 +12,12 @@ Feature: Data Entry through the Data Collection Instrument
     Then I click on the link labeled "User Rights"
     And I enter "test_user" into the username input field
     And I click on the button labeled "Add with custom rights"
-    And I check the user right identified by 'input[name="design"]'
-    And I check the user right identified by 'input[name="data_export_tool"]' and select option "1"
-    And I check the user right identified by 'input[name="data_logging"]'
-    And I check the user right identified by 'input[name="record_delete"]'
-    And I check the user right identified by 'input[name="record_create"]'
-    And I click the user right identified by 'input[name="record_rename"]'
+    And I check the User Right named 'Project Setup & Design'
+    And I select the User Right named 'Data Exports' and choose "Full Data Set"
+    And I check the User Right named 'Logging'
+    And I check the User Right named 'Delete Records'
+    And I check the User Right named "Create Records"
+    And I check the User Right named "Rename Records"
     And I save changes within the context of User Rights
 
   Scenario: 0 - Instrument setup
@@ -38,10 +38,10 @@ Feature: Data Entry through the Data Collection Instrument
     Then I click on the link labeled 'Project Setup'
     And I click on the button labeled 'Define My Events'
     And I click on the link labeled "Arm 2:"
-    And I enter "Event 2" into the field identified by "[id=descrip]"
+    And I enter "Event 2" into the input field labeled "Descriptive name for this event"
     And I click on the input button labeled "Add new event"
     Then I should see "Event 2"
-    And I enter "Event 3" into the field identified by "[id=descrip]"
+    And I enter "Event 3" into the input field labeled "Descriptive name for this event"
     And I click on the input button labeled "Add new event"
     Then I should see "Event 3"
   
@@ -49,18 +49,25 @@ Feature: Data Entry through the Data Collection Instrument
     When I visit Project ID 14
     Then I click on the link labeled 'Project Setup'
     And I click on the button labeled "Designate Instruments for My Events"
-    And I visit the version URL "Design/designate_forms.php?pid=14&arm=1"
-    Then I should see "Arm 1"
-    And I click on the button labeled "Begin Editing"
-    And I click on the element identified by "[id=data_dictionary--41]"
-    And I click on the button labeled "Save"
-    And I visit the version URL "Design/designate_forms.php?pid=14&arm=2"
-    Then I should see "Arm 2"
-    And I click on the button labeled "Begin Editing"
-    And I click on the element identified by "[id=text_validation--44]"
-    And I click on the element identified by "[id=data_types--45]"
-    And I click on the element identified by "[id=data_types--46]"
-    And I click on the button labeled "Save"
+
+    Then I should see "Arm name: "
+
+    And I verify the Data Collection Instrument named "Text Validation" is enabled for the Event named "Event 1"
+    And I enable the Data Collection Instrument named "Data Dictionary" for the Event named "Event 1"
+    And I verify the Data Collection Instrument named "Data Types" is enabled for the Event named "Event 1"
+
+    And I click on the link labeled "Arm Two"
+    Then I should see "Arm name: "
+
+    And I enable the Data Collection Instrument named "Text Validation" for the Event named "Event 1"
+
+    And I enable the Data Collection Instrument named "Data Dictionary" for the Event named "Event 1"
+    And I enable the Data Collection Instrument named "Data Dictionary" for the Event named "Event 2"
+    And I enable the Data Collection Instrument named "Data Dictionary" for the Event named "Event 3"
+
+    And I enable the Data Collection Instrument named "Data Types" for the Event named "Event 1"
+    And I enable the Data Collection Instrument named "Data Types" for the Event named "Event 2"
+    And I enable the Data Collection Instrument named "Data Types" for the Event named "Event 3"
 
   Scenario: 0 - Project Setup - Enable repeatable instruments and events
     When I visit Project ID 14

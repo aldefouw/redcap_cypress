@@ -910,6 +910,8 @@ Cypress.Commands.add("click_on_dialog_button", (text) => {
 Cypress.Commands.add("adjust_or_verify_instrument_event", (instrument_name, event_name, checked= false, click = true) => {
 
     if(click) {
+        cy.wait(1000)
+
         cy.get('button').contains('Begin Editing').click()
 
         cy.intercept({
@@ -933,9 +935,9 @@ Cypress.Commands.add("adjust_or_verify_instrument_event", (instrument_name, even
 
                                     if(click && element[0]['checked'] === checked){
                                         element[0].click()
-                                    } else if (checked) {
+                                    } else if (checked && !click) {
                                         expect(element.length).to.eq(1)
-                                    } else if (!checked) {
+                                    } else if (!checked && !click) {
                                         expect(element.length).to.eq(0)
                                     }
 
