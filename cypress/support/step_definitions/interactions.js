@@ -578,6 +578,30 @@ Given('I enter {string} into the Field Label of the open "Edit Field" dialog box
     cy.get('textarea#field_label').clear().type(field_label)
 })
 
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I edit the Data Collection Instrument field labeled {string}
+ * @param {string} label - the label of the field to edit
+ * @description Opens the edit window for the field with the specified label
+ */
+Given('I enter {string} into the Field Label of the open "Edit Field" dialog box', (field_label) => {
+    cy.get('textarea#field_label').clear().type(field_label)
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I enter the equation {string} into Calculation Equation of the open "Edit Field" dialog box
+ * @param {string} equation - the equation to enter
+ * @description Enters specified equation into a Calculated Field within an open "Edit Field" dialog box
+ */
+Given('I enter the equation {string} into Calculation Equation of the open "Edit Field" dialog box', (equation) => {
+    cy.get('textarea#element_enum').click()
+    cy.get('div.ace_content').type("{shift}{home}{del}" + equation)
+    cy.get('button').contains('Update & Close Editor').click()
+})
+
 
 /**
  * @module Interactions

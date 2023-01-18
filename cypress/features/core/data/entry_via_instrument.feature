@@ -3,10 +3,12 @@ Feature: Data Entry through the Data Collection Instrument
   As a REDCap end user
   I want to see that Data Entry through the Data Collection Instruments is functioning as expected
 
+  @focus
   Scenario: 0 - Create the Project
     Given I am an "admin" user who logs into REDCap
     And I create a project named "14_DirectDataEntrywithDataCollectionInstrument_v1115" with project purpose Operational Support via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
-  
+
+  @focus
   Scenario: 0 -  Add user
     When I visit Project ID 14
     Then I click on the link labeled "User Rights"
@@ -20,6 +22,7 @@ Feature: Data Entry through the Data Collection Instrument
     And I check the User Right named "Rename Records"
     And I save changes within the context of User Rights
 
+  @focus
   Scenario: 0 - Instrument setup
     When I visit Project ID 14
     Then I click on the link labeled "Designer"
@@ -33,6 +36,7 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the link labeled "Designer"
     Then I should see "Data Collection Instruments"
 
+  @focus
   Scenario: 0 - Project Setup - Define Events
     When I visit Project ID 14
     Then I click on the link labeled 'Project Setup'
@@ -44,31 +48,35 @@ Feature: Data Entry through the Data Collection Instrument
     And I enter "Event 3" into the input field labeled "Descriptive name for this event"
     And I click on the input button labeled "Add new event"
     Then I should see "Event 3"
-  
+
+  @focus
   Scenario: 0 - Project Setup - Designate Instruments to Events
     When I visit Project ID 14
     Then I click on the link labeled 'Project Setup'
     And I click on the button labeled "Designate Instruments for My Events"
 
+    #Arm 1
     Then I should see "Arm name: "
-
     And I verify the Data Collection Instrument named "Text Validation" is enabled for the Event named "Event 1"
     And I enable the Data Collection Instrument named "Data Dictionary" for the Event named "Event 1"
     And I verify the Data Collection Instrument named "Data Types" is enabled for the Event named "Event 1"
 
+    And I enable the Data Collection Instrument named "Text Validation" for the Event named "Event 2"
+    And I enable the Data Collection Instrument named "Data Dictionary" for the Event named "Event 2"
+    And I enable the Data Collection Instrument named "Data Types" for the Event named "Event 2"
+
+    #Arm 2
     And I click on the link labeled "Arm Two"
     Then I should see "Arm name: "
-
     And I enable the Data Collection Instrument named "Text Validation" for the Event named "Event 1"
-
     And I enable the Data Collection Instrument named "Data Dictionary" for the Event named "Event 1"
     And I enable the Data Collection Instrument named "Data Dictionary" for the Event named "Event 2"
     And I enable the Data Collection Instrument named "Data Dictionary" for the Event named "Event 3"
-
     And I enable the Data Collection Instrument named "Data Types" for the Event named "Event 1"
     And I enable the Data Collection Instrument named "Data Types" for the Event named "Event 2"
     And I enable the Data Collection Instrument named "Data Types" for the Event named "Event 3"
 
+  @focus
   Scenario: 0 - Project Setup - Enable repeatable instruments and events
     When I visit Project ID 14
     Then I click on the link labeled 'Project Setup'
@@ -93,9 +101,10 @@ Feature: Data Entry through the Data Collection Instrument
     And I add a new field of type "text" and enter "Value" into the field labeled "value", validated by label "Integer"
     And I add a new field of type "text" and enter "Date Picker" into the field labeled "date_picker", validated by label "Date (M-D-Y)"
     And I add a new field of type "text" and enter "Date Picker - Now" into the field labeled "date_picker_now", validated by label "Datetime (M-D-Y H:M)"
-    #And I edit the field labeled "Calculated Field"
-    #add value*2 calculated equation
-  
+    And I edit the field labeled "Calculated Field"
+    And I enter the equation "[value]*2" into Calculation Equation of the open "Edit Field" dialog box
+    And I save the field
+
   Scenario: 1 to 4 - Add/Edit Records
     Given I am a "standard" user who logs into REDCap
     And I visit Project ID 14
@@ -115,11 +124,11 @@ Feature: Data Entry through the Data Collection Instrument
     And I mark the field required
     And I save the field
 
+  @focus
   Scenario: 6 to 7 - Edit record
     When I visit Project ID 14
     And I click on the link labeled "Record Status Dashboard"
-    #And I click on the bubble for the "Data Types" data collection instrument for record ID "1"
-    Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
+    And I click on the bubble for the "Data Types" longitudinal data collection instrument on event "Event 1" for record ID "1"
     #And I visit the version URL "DataEntry/index.php?pid=14&id=1&page=data_types&auto=1"
     #not puting text in the notes box, instead edits the ptname field??
     And I enter "This is a notes box." into the field identified by 'textarea[name="notesbox"]' 
