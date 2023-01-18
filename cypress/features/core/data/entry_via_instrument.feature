@@ -101,22 +101,19 @@ Feature: Data Entry through the Data Collection Instrument
     And I visit Project ID 14
     Then I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
-    #And I click on the bubble for the "Data Types" data collection instrument for record ID "1"
-    And I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&auto=1"
-    #And I visit the version URL "DataEntry/index.php?pid=14&id=1&page=data_types&auto=1"
-    And I enter "John" into the "ptname" text input field
-    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
-    And I should see "Save & Stay"
-    And I click on the link labeled "Save & Stay"
+    And I click the bubble to add a record for the "Data Types" longitudinal instrument on event "Event 1"
+    And I enter "John" into the data entry form field labeled "Name"
+    And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
     And I click on the button labeled "Ignore and leave record" in the dialog box
+    Then I should see "Record Home Page"
 
   Scenario: 5 - Edit field
     When I visit Project ID 14
     Then I click on the link labeled "Designer"
     And I click on the link labeled "Data Types"
     And I edit the field labeled "Required"
-    And I click the input element identified by 'input#field_req0'
-    And I click on the button labeled "Save"
+    And I mark the field required
+    And I save the field
 
   Scenario: 6 to 7 - Edit record
     When I visit Project ID 14
