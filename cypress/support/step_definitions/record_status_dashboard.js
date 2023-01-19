@@ -1,4 +1,4 @@
-import {Given} from "cypress-cucumber-preprocessor/steps";
+import {defineParameterType, Given} from "cypress-cucumber-preprocessor/steps";
 
 /**
  * @module RecordStatusDashboard
@@ -128,16 +128,21 @@ Given("I click on the bubble for the {string} longitudinal data collection instr
     })
 })
 
+defineParameterType({
+    name: 'add_or_select',
+    regexp: /add|select/
+})
+
 /**
  * @module RecordStatusDashboard
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click the bubble to add a record for the {string} longitudinal instrument on event {string}
+ * @example I click the bubble to <add|select> a record for the {string} longitudinal instrument on event {string}
  * @param {string} instrument - the name of the instrument you want to add a record to
  * @param {string} event - the name of the event you want to add a record to
  * @description Clicks on an instrument / event pairing to add a record on the Record Home Page
  */
 
-Given("I click the bubble to add a record for the {string} longitudinal instrument on event {string}", (instrument, event) => {
+Given("I click the bubble to {add_or_select} a record for the {string} longitudinal instrument on event {string}", (verb, instrument, event) => {
     let link_location = null
 
     cy.get('table#event_grid_table').within(() => {
@@ -172,3 +177,19 @@ Given("I click the bubble to add a record for the {string} longitudinal instrume
         cy.wrap(link_location).click()
     })
 })
+
+/**
+ * @module RecordStatusDashboard
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I select record ID {string} from arm name {string} on the Add / Edit record page
+ * @param {string} record_id - the name of the record ID
+ * @param {string} arm_name - name of the arm as displayed in the dropdown menu (e.g. Arm 1: Arm 1)
+ * @description Selects a specific record from the Add / Edit record page
+ */
+
+Given("I select record ID {string} from arm name {string} on the Add / Edit record page", (record_id, arm_name) => {
+    cy.get('select#arm_name').select(arm_name)
+    cy.get('select#record').select(record_id)
+})
+
+
