@@ -106,7 +106,7 @@ Given("I click on the button labeled {string} in the dialog box", (text) => {
  * @description Clicks on an anchor element with a specific text label.
  */
 Given("I click on the link labeled {string}", (text) => {
-    cy.get('a').contains(text).should('be.visible').click({force:true})
+    cy.get('a').contains(text).should('be.visible').click()
 })
 
 /**
@@ -139,6 +139,16 @@ Given("I edit the field labeled {string}", (text) => {
  */
 Given("I mark the field required", () => {
     cy.get('input#field_req1').click()
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I mark the field as not required
+ * @description Marks a field as NOT required within the Online Designer.
+ */
+Given("I mark the field as not required", () => {
+    cy.get('input#field_req0').click()
 })
 
 /**
@@ -451,15 +461,25 @@ Given('after the next step, I will {confirmation} a confirmation window containi
 /**
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I create a new instrument from scratch
- * @description Clicks the button to create new instrument and prompts the user to add instrument
+ * @example I create a new data collection instrument called {string}
+ * @param {string} instrument_name - the name of the instrument to create
+ * @description Clicks the button to create new instrument and enters the instrument name into the text box
  */
- Given('I create a new instrument from scratch', () => {
+ Given('I create a new data collection instrument called {string}', (instrument_name) => {
     cy.get('div').
     contains('a new instrument from scratch').
     parent().
     within(($div) => {
         cy.get('button').contains('Create').click()
+    })
+
+    cy.get('body').contains('Add instrument here')
+    cy.get('button').contains("Add instrument here").click()
+    cy.get('span').contains('New instrument name') //Make sure this exists first
+
+    cy.get('td').contains('New instrument name').parent().within(($td) => {
+        cy.get('input[type=text]').type(instrument_name)
+        cy.get('input[value=Create]').click()
     })
 })
 

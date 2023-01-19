@@ -172,3 +172,21 @@ Given("I should see {string} in an alert box", (text) => {
     cy.on('window:confirm', () => true)
 
 })
+
+defineParameterType({
+    name: 'select',
+    regexp: /selected|unselected/
+})
+
+/**
+ * @module Visibility
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I should see the radio labeled {string} <checked|unchecked>
+ * @param {string} label - the text that should be displayed in an alert box
+ * @param {string} text - the text that should be displayed in an alert box
+ * @description Visually verifies that the alert box contains text
+ */
+Given("I should see the radio labeled {string} with option {string} {select}", (label, option, selected) => {
+    cy.select_radio_by_label(label, option, false, selected === 'selected' ? true: false)
+})
+

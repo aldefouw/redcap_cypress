@@ -223,11 +223,16 @@ Cypress.Commands.add('select_textarea_by_label', ($name, $value) => {
     cy.set_field_value_by_label($name, $value, 'textarea')
 })
 
-Cypress.Commands.add('select_radio_by_label', ($name, $value) => {
+Cypress.Commands.add('select_radio_by_label', ($name, $value, $click = true, $selected = true ) => {
     const radio_labels = cy.set_field_value_by_label($name, $value, 'input', '', '___radio')
 
     radio_labels.first().parents('tr').first().within(() => {
-        cy.get('label[class=mc]').contains($value).click()
+
+        if($click){
+            cy.get('label[class=mc]').contains($value).click()
+        } else {
+            cy.get('label[class=mc]').contains($value).parent().find('input').should('have.attr', $selected ? "checked": "unchecked")
+        }
     })
 })
 

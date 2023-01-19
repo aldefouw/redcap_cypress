@@ -220,6 +220,8 @@ Then("I should see the survey open exactly once by watching the tag of {string}"
  * @description Enters instrument name and creates it
  */
  Given("I enter name {string} and create instrument", (formname) => {
+    cy.get('span').contains('New instrument name') //Make sure this exists first
+
     cy.get('td').contains('New instrument name').parent().within(($td) => {
         cy.get('input[type=text]', {force: true}).type(formname)
         cy.get('input[value=Create]', {force: true}).click()

@@ -23,9 +23,7 @@ Feature: Data Entry through the Data Collection Instrument
   Scenario: 0 - Instrument setup
     When I visit Project ID 14
     Then I click on the link labeled "Designer"
-    And I create a new instrument from scratch
-    And I click on the button labeled "Add instrument here"
-    And I enter name "Data Dictionary" and create instrument
+    And I create a new data collection instrument called "Data Dictionary"
     Then I click on the link labeled "Designer"
     And I click on the link labeled "Data Dictionary"
     And I add a new field of type "yesno" and enter "Yes - No" into the field labeled "yesno"
@@ -111,15 +109,13 @@ Feature: Data Entry through the Data Collection Instrument
     Then I should see "Record Home Page"
 
   Scenario: 5 - Edit field
-    When I visit Project ID 14
     Then I click on the link labeled "Designer"
     And I click on the link labeled "Data Types"
     And I edit the field labeled "Required"
-    And I mark the field required
+    And I mark the field as not required
     And I save the field
 
   Scenario: 6 to 7 - Edit record
-    When I visit Project ID 14
     And I click on the link labeled "Record Status Dashboard"
     And I click on the bubble for the "Data Types" longitudinal data collection instrument on event "Event 1" for record ID "1"
     And I should see "Editing existing Record ID 1"
@@ -149,56 +145,70 @@ Feature: Data Entry through the Data Collection Instrument
   Scenario: 8 - Edit record & Leave without saving changes
     And I click on the link labeled "Record Status Dashboard"
     And I click on the bubble for the "Data Types" longitudinal data collection instrument on event "Event 1" for record ID "1"
-    And I click on the link labeled "Select other record"
-    And I select record ID "1" from arm name "Arm 1: Arm 1" on the Add / Edit record page
 
+    And I select the radio option "Choice99" for the field labeled "Radio Button Manual"
+    #Cypress moves too fast for REDCap ... the pop up alert does not have a chance to trigger, let's give it a chance!
+    And I enter "Another changed value" into the data entry form field labeled "Text2"
+
+    When I click on the link labeled "Select other record"
+
+    #Pop up dialog triggered by clicking on any link that would navigate us away
+    Then I should see "Leave without saving changes"
+
+    When I click on the button labeled "Leave without saving changes" in the dialog box
+    Then I should see "Add / Edit Records"
+
+    Given I select record ID "1" from arm name "Arm 1: Arm 1" on the Add / Edit record page
+    And I click the bubble to select a record for the "Data Types" longitudinal instrument on event "Event 1"
+    Then I should see the radio labeled "Radio Button Manual" with option "Choice100" selected
+
+  Scenario: 9 to 10 - Edit record & Save and Stay
+    And I click on the link labeled "Record Status Dashboard"
+    And I click on the bubble for the "Data Types" longitudinal data collection instrument on event "Event 1" for record ID "1"
+
+    And I select the radio option "Choice99" for the field labeled "Radio Button Manual"
+    And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
+
+    And I click on the link labeled "Select other record"
+    Then I should see "Add / Edit Records"
+
+    Given I select record ID "1" from arm name "Arm 1: Arm 1" on the Add / Edit record page
     And I click the bubble to select a record for the "Data Types" longitudinal instrument on event "Event 1"
 
-    And I click the input element identified by 'input#opt-radio_button_manual_100'
+    And I select the radio option "Choice100" for the field labeled "Radio Button Manual"
     And I click on the link labeled "Select other record"
-    And I click on the button labeled "Leave without saving changes" in the dialog box
-    Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
-  
-  Scenario: 9 to 10 - Edit record & Save and Stay
-    When I visit Project ID 14
-    And I click on the link labeled "Record Status Dashboard"
-    Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
-    And I click the input element identified by 'input#opt-radio_button_manual_100'
-    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
-    And I should see "Save & Stay"
-    And I click on the link labeled "Save & Stay"
-    And I click on the link labeled "Select other record"
-    And I select '1' from the dropdown identified by 'select[id="record"]'
-    And I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
-    And I select 'DDChoice1' from the dropdown identified by 'select[name="multiple_dropdown_auto"]'
-    And I click on the link labeled "Select other record"
+
+    #Pop up dialog triggered by clicking on any link that would navigate us away
+    Then I should see "Save your changes?"
+    And I should see "Stay on page"
+    When I click on the button labeled "Stay on page" in the dialog box
+
+    Then I should see "Record ID 1"
+
     And I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
-  
-  Scenario: 11 - Edit record
-    When I visit Project ID 14
     And I click on the link labeled "Record Status Dashboard"
-    Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
-    And I clear the field and enter "John Smith" into the "ptname" text input field
+    And I click on the bubble for the "Data Types" longitudinal data collection instrument on event "Event 1" for record ID "1"
+
+  Scenario: 11 - Edit record
+    And I click on the link labeled "Record Status Dashboard"
+    And I click on the bubble for the "Data Types" longitudinal data collection instrument on event "Event 1" for record ID "1"
+    And I enter "John Smith" into the data entry form field labeled "Name"
     And I select the submit option labeled "Save & Go To Next Record" on the Data Collection Instrument
-    Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
-    #unable to find field "Name" that contains John Smith 
+    #unable to find field "Name" that contains John Smith
     #And I should see that the "Name" field contains the value of "John Smith"
   
   Scenario: 12 to 13 - Add data to the data dictionary instrument
-    When I visit Project ID 14
     And I click on the link labeled "Record Status Dashboard"
-    Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_dictionary&instance=1"
-    And I click the input element identified by 'input#opt-yesno_1'
+    And I click on the bubble for the "Data Dictionary" longitudinal data collection instrument on event "Event 1" for record ID "1"
+    And I select the radio option "Yes" for the field labeled "Yes-No"
     And I click on the button labeled "Cancel"
-    Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_dictionary&instance=1"
-    And I click the input element identified by 'input#opt-yesno_1'
-
+    And I click on the bubble for the "Data Dictionary" longitudinal data collection instrument on event "Event 1" for record ID "1"
+    And I select the radio option "Yes" for the field labeled "Yes-No"
     And I select the submit option labeled "Save & Go To Next Instance" on the Data Collection Instrument
-    And I click the input element identified by 'input#opt-yesno_0'
+    And I select the radio option "Yes" for the field labeled "Yes-No"
     And I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
   
   Scenario: 14 to 16 - Change form status
-    When I visit Project ID 14
     And I click on the link labeled "Designer"
     Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_dictionary&instance=1"
     And I select 'Unverified' from the dropdown identified by 'select[name="data_dictionary_complete"]'
@@ -212,20 +222,17 @@ Feature: Data Entry through the Data Collection Instrument
     And I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
   
   Scenario: 17 - Add new record to Arm 1
-    When I visit Project ID 14
     And I click on the link labeled "Add / Edit Records"
     Then I click on the button labeled "Add new record"
-    And I visit the version URL "DataEntry/index.php?pid=14&id=2&event_id=41&page=data_types&auto=1"
-    And I enter "Jane" into the "ptname" text input field
+    And I click the bubble to add a record for the "Data Types" longitudinal instrument on event "Event 1"
+    And I enter "Jane" into the data entry form field labeled "Name"
     And I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
     And I click on the link labeled "Record Status Dashboard"
     Then I should see "Arm 1:"
   
   Scenario: 18 to 20 - Rename record
-    When I visit Project ID 14
-    And I click on the link labeled "Record Status Dashboard"
-    #Then I click on the element identified by 'tr.odd > td > a:contains("2")'
-    Then I visit the version URL "DataEntry/record_home.php?pid=14&arm=1&id=2"
+    And I click on the link labeled "Add / Edit Records"
+    Given I select record ID "2" from arm name "Arm 1: Arm 1" on the Add / Edit record page
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Rename record"
     And I clear the field identified by 'input[id="new-record-name"]'
@@ -235,9 +242,8 @@ Feature: Data Entry through the Data Collection Instrument
     Then I should see a link labeled "3"
   
   Scenario: 21 to 22 - Delete data for form only
-    When I visit Project ID 14
     And I click on the link labeled "Record Status Dashboard"
-    Then I visit the version URL "DataEntry/index.php?pid=14&id=3&page=data_types&event_id=41&instance=1"
+    And I click on the bubble for the "Data Types" longitudinal data collection instrument on event "Event 1" for record ID "3"
     And I click on the button labeled "Delete data for THIS FORM only"
     Then I should see 'DELETE ALL DATA ON THIS FORM FOR RECORD "3"?'
     And I click on the button labeled "Cancel" in the dialog box
@@ -245,7 +251,6 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the button labeled "Delete data for THIS FORM only" in the dialog box
   
   Scenario: 23 to 24 - Delete record
-    When I visit Project ID 14
     And I click on the link labeled "Record Status Dashboard"
     Then I click on the link labeled "3"
     And I click on the button labeled "Choose action for record"
@@ -259,8 +264,7 @@ Feature: Data Entry through the Data Collection Instrument
     Then I should see "Arm 1:"
   
   Scenario: 25 to 26 - Add new record for Arm 2
-    When I visit Project ID 14
-    # And I click on the link labeled "Add / Edit Records"
+    And I click on the link labeled "Add / Edit Records"
     # And I select 'Arm 2: Arm Two' from the dropdown identified by 'select[id="arm_name"]'
     # Then I click on the button labeled "Add new record for the arm selected above"
     And I click on the link labeled "Record Status Dashboard"
@@ -272,11 +276,9 @@ Feature: Data Entry through the Data Collection Instrument
     Then I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
 
   Scenario: 27 - Add new event 
-    When I visit Project ID 14
-    And I click on the link labeled "Record Status Dashboard"
-    #Then I click on the element identified by 'tr.odd > td > a:contains("2")'
-    Then I visit the version URL "DataEntry/record_home.php?pid=14&arm=2&id=3"
+    And I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new"
+
     And I visit the version URL "DataEntry/index.php?pid=14&id=3&event_id=44&page=text_validation&instance=2"
 
     And I enter "Josh" into the data entry form field labeled "Name"
@@ -287,23 +289,20 @@ Feature: Data Entry through the Data Collection Instrument
     Then I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
 
   Scenario: 28 - Edit record
-    When I visit Project ID 14
     And I click on the link labeled "Record Status Dashboard"
     #Then I click on the element identified by 'tr.odd > td > a:contains("2")'
-    Then I visit the version URL "DataEntry/record_home.php?pid=14&arm=2&id=3"
-    And I visit the version URL "DataEntry/index.php?pid=14&id=3&event_id=44&page=data_types"
+    And I click on the bubble for the "Data Types" longitudinal data collection instrument on event "Event 1" for record ID "3"
     And I enter "Mary" into the data entry form field labeled "Name"
-    And I select 'Complete' from the dropdown identified by 'select[name="data_types_complete"]'
+    And I select the dropdown option "Complete" for the Data Collection Instrument field labeled "Complete?"
     Then I click on the button labeled "Save & Exit Form"
-    And I visit the version URL "DataEntry/index.php?pid=14&id=3&event_id=45&page=data_types"
+    And I click on the bubble for the "Data Types" longitudinal data collection instrument on event "Event 2" for record ID "3"
     And I enter "Mary" into the data entry form field labeled "Name"
-    And I select 'Incomplete' from the dropdown identified by 'select[name="data_types_complete"]'
+    And I select the dropdown option "Incomplete" for the Data Collection Instrument field labeled "Complete?"
     Then I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
     And I click on the link labeled "Record Status Dashboard"
     Then I should see "Arm 2:"
   
   Scenario: 29 to 31 - Delete Event
-    When I visit Project ID 14
     And I click on the link labeled "Record Status Dashboard"
     Then I visit the version URL "DataEntry/record_home.php?pid=14&arm=2&id=3"
     And I click on the element identified by ':nth-child(3) > :nth-child(4) > a > .fas'
