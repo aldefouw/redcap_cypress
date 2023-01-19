@@ -3,12 +3,10 @@ Feature: Data Entry through the Data Collection Instrument
   As a REDCap end user
   I want to see that Data Entry through the Data Collection Instruments is functioning as expected
 
-  @focus
   Scenario: 0 - Create the Project
     Given I am an "admin" user who logs into REDCap
     And I create a project named "14_DirectDataEntrywithDataCollectionInstrument_v1115" with project purpose Operational Support via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
 
-  @focus
   Scenario: 0 -  Add user
     When I visit Project ID 14
     Then I click on the link labeled "User Rights"
@@ -22,7 +20,6 @@ Feature: Data Entry through the Data Collection Instrument
     And I check the User Right named "Rename Records"
     And I save changes within the context of User Rights
 
-  @focus
   Scenario: 0 - Instrument setup
     When I visit Project ID 14
     Then I click on the link labeled "Designer"
@@ -36,7 +33,6 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the link labeled "Designer"
     Then I should see "Data Collection Instruments"
 
-  @focus
   Scenario: 0 - Project Setup - Define Events
     When I visit Project ID 14
     Then I click on the link labeled 'Project Setup'
@@ -49,7 +45,6 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the input button labeled "Add new event"
     Then I should see "Event 3"
 
-  @focus
   Scenario: 0 - Project Setup - Designate Instruments to Events
     When I visit Project ID 14
     Then I click on the link labeled 'Project Setup'
@@ -76,7 +71,6 @@ Feature: Data Entry through the Data Collection Instrument
     And I enable the Data Collection Instrument named "Data Types" for the Event named "Event 2"
     And I enable the Data Collection Instrument named "Data Types" for the Event named "Event 3"
 
-  @focus
   Scenario: 0 - Project Setup - Enable repeatable instruments and events
     When I visit Project ID 14
     Then I click on the link labeled 'Project Setup'
@@ -124,20 +118,27 @@ Feature: Data Entry through the Data Collection Instrument
     And I mark the field required
     And I save the field
 
-  @focus
   Scenario: 6 to 7 - Edit record
     When I visit Project ID 14
     And I click on the link labeled "Record Status Dashboard"
     And I click on the bubble for the "Data Types" longitudinal data collection instrument on event "Event 1" for record ID "1"
-    #And I visit the version URL "DataEntry/index.php?pid=14&id=1&page=data_types&auto=1"
-    #not puting text in the notes box, instead edits the ptname field??
-    And I enter "This is a notes box." into the field identified by 'textarea[name="notesbox"]' 
-    And I enter "5" into the field identified by "input[name='value']"
-    And I select 'DDChoice5' from the dropdown identified by 'select[name="multiple_dropdown_manual"]'
-    And I click the input element identified by 'input#opt-radio_button_manual_100'
-    And I reset the options for field labeled 'Radio Button Manual'
-    And I check the checkbox identified by 'input[id="id-__chk__checkbox_RC_1"]'
-    And I check the checkbox identified by 'input[id="id-__chk__checkbox_RC_2"]'
+    And I should see "Editing existing Record ID 1"
+
+    And I enter "This is a notes box.{enter}This is a notes box." into the data entry form field labeled "Notes"
+
+    And I enter "5" into the data entry form field labeled "Value"
+
+    #Need to Verify that Calculated Field displays accurate result (5 * 2)
+
+    And I select the dropdown option "DDChoice1" for the Data Collection Instrument field labeled "Multiple Choice Dropdown Auto"
+    And I select the radio option "Choice100" for the field labeled "Radio Button Manual"
+    And I reset the options for field labeled "Radio Button Manual"
+
+    And I select the checkbox option "Checkbox" for the field labeled "Checkbox"
+    And I select the checkbox option "Checkbox2" for the field labeled "Checkbox"
+
+    And I want to pause
+
     #Add signature
     #Upload document (word doc) in file upload field
     #Open image file in descriptive text with file 
@@ -146,9 +147,8 @@ Feature: Data Entry through the Data Collection Instrument
     # And I select '2020' from the dropdown identified by 'select[data-handler="selectYear"]'
     And I click on the button labeled "Today"
     And I click on the button labeled "Now"
-    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
-    And I should see "Save & Exit Record"
-    And I click on the link labeled "Save & Exit Record"
+    And I select the submit option labeled "Save & Exit Record" on the Data Collection Instrument
+
   
   Scenario: 8 - Edit record & Leave without saving changes
     When I visit Project ID 14
