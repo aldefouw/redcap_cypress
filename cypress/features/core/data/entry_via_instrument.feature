@@ -123,21 +123,18 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the link labeled "Record Status Dashboard"
     And I click on the bubble for the "Data Types" longitudinal data collection instrument on event "Event 1" for record ID "1"
     And I should see "Editing existing Record ID 1"
-
     And I enter "This is a notes box.{enter}This is a notes box." into the data entry form field labeled "Notes"
-
     And I enter "5" into the data entry form field labeled "Value"
 
     #Need to Verify that Calculated Field displays accurate result (5 * 2)
 
     And I select the dropdown option "DDChoice1" for the Data Collection Instrument field labeled "Multiple Choice Dropdown Auto"
     And I select the radio option "Choice100" for the field labeled "Radio Button Manual"
-    And I reset the options for field labeled "Radio Button Manual"
+
+    #And I reset the options for field labeled "Radio Button Manual"
 
     And I select the checkbox option "Checkbox" for the field labeled "Checkbox"
     And I select the checkbox option "Checkbox2" for the field labeled "Checkbox"
-
-    And I want to pause
 
     #Add signature
     #Upload document (word doc) in file upload field
@@ -149,7 +146,6 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the button labeled "Now"
     And I select the submit option labeled "Save & Exit Record" on the Data Collection Instrument
 
-  
   Scenario: 8 - Edit record & Leave without saving changes
     When I visit Project ID 14
     And I click on the link labeled "Record Status Dashboard"
@@ -172,17 +168,14 @@ Feature: Data Entry through the Data Collection Instrument
     And I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
     And I select 'DDChoice1' from the dropdown identified by 'select[name="multiple_dropdown_auto"]'
     And I click on the link labeled "Select other record"
-    And I click on the button labeled "Stay on page" in the dialog box
-    And I click on the button labeled "Save & Exit Form"
+    And I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
   
   Scenario: 11 - Edit record
     When I visit Project ID 14
     And I click on the link labeled "Record Status Dashboard"
     Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
     And I clear the field and enter "John Smith" into the "ptname" text input field
-    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
-    And I should see "Save & Go To Next Record"
-    And I click on the link labeled "Save & Go To Next Record"
+    And I select the submit option labeled "Save & Go To Next Record" on the Data Collection Instrument
     Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
     #unable to find field "Name" that contains John Smith 
     #And I should see that the "Name" field contains the value of "John Smith"
@@ -195,23 +188,23 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the button labeled "Cancel"
     Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_dictionary&instance=1"
     And I click the input element identified by 'input#opt-yesno_1'
-    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
-    And I should see "Save & Go To Next Instance"
-    And I click on the link labeled "Save & Go To Next Instance"
+
+    And I select the submit option labeled "Save & Go To Next Instance" on the Data Collection Instrument
     And I click the input element identified by 'input#opt-yesno_0'
-    Then I click on the button labeled "Save & Exit Form"
+    And I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
   
   Scenario: 14 to 16 - Change form status
     When I visit Project ID 14
     And I click on the link labeled "Designer"
     Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_dictionary&instance=1"
     And I select 'Unverified' from the dropdown identified by 'select[name="data_dictionary_complete"]'
-    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
-    And I should see "Save & Stay"
-    And I click on the link labeled "Save & Stay"
+
+    And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
+
     And I select 'Complete' from the dropdown identified by 'select[name="data_dictionary_complete"]'
-    Then I click on the button labeled "Save & Stay"
-    Then I click on the button labeled "Save & Exit Form"
+
+    And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
+    And I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
   
   Scenario: 17 - Add new record to Arm 1
     When I visit Project ID 14
@@ -219,7 +212,7 @@ Feature: Data Entry through the Data Collection Instrument
     Then I click on the button labeled "Add new record"
     And I visit the version URL "DataEntry/index.php?pid=14&id=2&event_id=41&page=data_types&auto=1"
     And I enter "Jane" into the "ptname" text input field
-    Then I click on the button labeled "Save & Exit Form"
+    And I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
     And I click on the link labeled "Record Status Dashboard"
     Then I should see "Arm 1:"
   
@@ -271,7 +264,7 @@ Feature: Data Entry through the Data Collection Instrument
     And I visit the version URL "DataEntry/index.php?pid=14&id=3&event_id=44&page=text_validation"
     And I enter "Mary" into the "ptname_v2_v2" text input field
     And I select 'Unverified' from the dropdown identified by 'select[name="text_validation_complete"]'
-    Then I click on the button labeled "Save & Exit Form"
+    Then I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
 
   Scenario: 27 - Add new event 
     When I visit Project ID 14
@@ -286,7 +279,7 @@ Feature: Data Entry through the Data Collection Instrument
     And I should see "Save & Go To Next Form"
     Then I click on the link labeled "Save & Go To Next Form"
     And I enter "June" into the "ptname" text input field
-    Then I click on the button labeled "Save & Exit Form"
+    Then I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
 
   Scenario: 28 - Edit record
     When I visit Project ID 14
@@ -300,7 +293,7 @@ Feature: Data Entry through the Data Collection Instrument
     And I visit the version URL "DataEntry/index.php?pid=14&id=3&event_id=45&page=data_types"
     And I enter "Mary" into the "ptname" text input field
     And I select 'Incomplete' from the dropdown identified by 'select[name="data_types_complete"]'
-    Then I click on the button labeled "Save & Exit Form"
+    Then I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
     And I click on the link labeled "Record Status Dashboard"
     Then I should see "Arm 2:"
   

@@ -14,7 +14,7 @@ Given("I click on the button labeled exactly {string}", (text) => {
 
 defineParameterType({
     name: 'instrument_save_options',
-    regexp: /Save & Stay|Save & Exit Record|Save & Go To Next Record|Save & Exit Form|Save & Go To Next Form/
+    regexp: /Save & Stay|Save & Exit Record|Save & Go To Next Record|Save & Exit Form|Save & Go To Next Form|Save & Go To Next Instance/
 })
 
 /**
