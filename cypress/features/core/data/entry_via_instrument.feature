@@ -262,8 +262,8 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the link labeled "Arm 2"
     And I click on the button labeled "Add new record for this arm"
     And I visit the version URL "DataEntry/index.php?pid=14&id=3&event_id=44&page=text_validation"
-    And I enter "Mary" into the "ptname_v2_v2" text input field
-    And I select 'Unverified' from the dropdown identified by 'select[name="text_validation_complete"]'
+    And I enter "Mary" into the data entry form field labeled "Name"
+    And I select the dropdown option "Unverified" for the Data Collection Instrument field labeled "Complete?"
     Then I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
 
   Scenario: 27 - Add new event 
@@ -273,12 +273,12 @@ Feature: Data Entry through the Data Collection Instrument
     Then I visit the version URL "DataEntry/record_home.php?pid=14&arm=2&id=3"
     And I click on the button labeled "Add new"
     And I visit the version URL "DataEntry/index.php?pid=14&id=3&event_id=44&page=text_validation&instance=2"
-    And I enter "Josh" into the "ptname_v2_v2" text input field
-    And I enter "josh@noreply.com" into the "email_v2" text input field
-    And I click on the element identified by 'button[id="submit-btn-dropdown"]:first'
-    And I should see "Save & Go To Next Form"
-    Then I click on the link labeled "Save & Go To Next Form"
-    And I enter "June" into the "ptname" text input field
+
+    And I enter "Josh" into the data entry form field labeled "Name"
+    And I enter "josh@noreply.com" into the data entry form field labeled "Email"
+    Then I select the submit option labeled "Save & Go To Next Form" on the Data Collection Instrument
+
+    And I enter "June" into the data entry form field labeled "Name"
     Then I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
 
   Scenario: 28 - Edit record
@@ -287,11 +287,11 @@ Feature: Data Entry through the Data Collection Instrument
     #Then I click on the element identified by 'tr.odd > td > a:contains("2")'
     Then I visit the version URL "DataEntry/record_home.php?pid=14&arm=2&id=3"
     And I visit the version URL "DataEntry/index.php?pid=14&id=3&event_id=44&page=data_types"
-    And I enter "Mary" into the "ptname" text input field
+    And I enter "Mary" into the data entry form field labeled "Name"
     And I select 'Complete' from the dropdown identified by 'select[name="data_types_complete"]'
     Then I click on the button labeled "Save & Exit Form"
     And I visit the version URL "DataEntry/index.php?pid=14&id=3&event_id=45&page=data_types"
-    And I enter "Mary" into the "ptname" text input field
+    And I enter "Mary" into the data entry form field labeled "Name"
     And I select 'Incomplete' from the dropdown identified by 'select[name="data_types_complete"]'
     Then I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
     And I click on the link labeled "Record Status Dashboard"
