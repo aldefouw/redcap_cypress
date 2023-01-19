@@ -147,9 +147,13 @@ Feature: Data Entry through the Data Collection Instrument
     And I select the submit option labeled "Save & Exit Record" on the Data Collection Instrument
 
   Scenario: 8 - Edit record & Leave without saving changes
-    When I visit Project ID 14
     And I click on the link labeled "Record Status Dashboard"
-    Then I visit the version URL "DataEntry/index.php?pid=14&id=1&event_id=41&page=data_types&instance=1"
+    And I click on the bubble for the "Data Types" longitudinal data collection instrument on event "Event 1" for record ID "1"
+    And I click on the link labeled "Select other record"
+    And I select record ID "1" from arm name "Arm 1: Arm 1" on the Add / Edit record page
+
+    And I click the bubble to select a record for the "Data Types" longitudinal instrument on event "Event 1"
+
     And I click the input element identified by 'input#opt-radio_button_manual_100'
     And I click on the link labeled "Select other record"
     And I click on the button labeled "Leave without saving changes" in the dialog box
@@ -201,7 +205,8 @@ Feature: Data Entry through the Data Collection Instrument
 
     And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
 
-    And I select 'Complete' from the dropdown identified by 'select[name="data_dictionary_complete"]'
+    And I select the dropdown option "Complete" for the Data Collection Instrument field labeled "Complete?"
+    #And I select 'Complete' from the dropdown identified by 'select[name="data_dictionary_complete"]'
 
     And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
     And I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
