@@ -190,11 +190,13 @@ Given('I enter {string} into the textarea field labeled {string}', (text, label)
  * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
  */
 Given('I enter {string} into the data entry form field labeled {string}', (text, label) => {
+    //Note that we CLICK on the field (to select it) BEFORE we type in it - otherwise the text ends up somewhere else!
     cy.contains('label', label)
         .invoke('attr', 'id')
         .then(($id) => {
             cy.get('[name="' + $id.split('label-')[1] + '"]')
         })
+        .click()
         .type(text)
 })
 
