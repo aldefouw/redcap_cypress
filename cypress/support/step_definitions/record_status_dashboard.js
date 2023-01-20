@@ -44,6 +44,12 @@ Given("I click on the bubble for the {string} data collection instrument for rec
     })
 })
 
+
+defineParameterType({
+    name: 'cell_action',
+    regexp: /and click the new instance link|and click on the bubble|and click the repeating instrument bubble for the first instance|and click the repeating instrument bubble for the second instance|and click the repeating instrument bubble for the third instance/
+})
+
 /**
  * @module RecordStatusDashboard
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -53,11 +59,19 @@ Given("I click on the bubble for the {string} data collection instrument for rec
  * @param {string} record_id - the value of the record_id you want to target
  * @description Clicks on a bubble within the Record Status Dashboard based upon record ID and the longitudinal data instrument specified within an event.
  */
-Given("I click on the bubble for the {string} longitudinal data collection instrument on event {string} for record ID {string}", (instrument, event, record_id) => {
+
+Given("I locate the bubble for the {string} instrument on event {string} for record ID {string} {cell_action}", (instrument, event, record_id, cell_action) => {
     let link_location = null
     let instrument_location = null
     let event_sections = []
     let event_counter = 0
+    let repeating = false
+
+    if(cell_action === "and click the repeating instrument bubble for the first instance" ||
+        cell_action === "and click the repeating instrument bubble for the second instance" ||
+        cell_action === "and click the repeating instrument bubble for the third instance"){
+        repeating = true
+    }
 
     cy.get('table#record_status_table').within(() => {
         cy.get('thead').within(() => {
@@ -108,9 +122,17 @@ Given("I click on the bubble for the {string} longitudinal data collection instr
 
                                                 if (tdi === instrument_location + 1) {
                                                     cy.wrap($td).within(() => {
-                                                        cy.get('a').then(($a) => {
-                                                            link_location = $a
-                                                        })
+
+                                                        if(cell_action === "and click on the bubble" || repeating){
+                                                            cy.get('a').then(($a) => {
+                                                                link_location = $a
+                                                            })
+                                                        } else if (cell_action === "and click the new instance link") {
+                                                            cy.get('button').then(($button) => {
+                                                                link_location = $button
+                                                            })
+                                                        }
+
                                                     })
                                                 }
                                             })
@@ -124,7 +146,32 @@ Given("I click on the bubble for the {string} longitudinal data collection instr
             })
         })
     }).then(() => {
+        cy.intercept({
+            method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/index.php?*'
+        }).as('instance_table')
+
         cy.wrap(link_location).click()
+
+        if(repeating){
+            cy.wait('@instance_table')
+
+            cy.get('#instancesTablePopup').within(() => {
+                let instance = null
+
+                if(cell_action === "and click the repeating instrument bubble for the first instance"){
+                    instance = 1
+                } else if (cell_action === "and click the repeating instrument bubble for the second instance"){
+                    instance = 2
+                } else if (cell_action === "and click the repeating instrument bubble for the third instance"){
+                    instance = 3
+                }
+
+                cy.get('td').contains(instance).parent('tr').within(() => {
+                    cy.get('a').click()
+                })
+            })
+        }
     })
 })
 
@@ -148,7 +195,7 @@ Given("I click the bubble to {add_or_select} a record for the {string} longitudi
     cy.get('table#event_grid_table').within(() => {
         cy.get('th').then(($th) => {
             Cypress.$.each($th, (index, th) => {
-                if(th.innerText === event){
+                if(th.innerText.includes(event)){
                     cy.get('tr').then(($tr) => {
                         Cypress.$.each($tr, (tri, tr) => {
                             if(tri > 0) {
@@ -190,6 +237,51 @@ Given("I click the bubble to {add_or_select} a record for the {string} longitudi
 Given("I select record ID {string} from arm name {string} on the Add / Edit record page", (record_id, arm_name) => {
     cy.get('select#arm_name').select(arm_name)
     cy.get('select#record').select(record_id)
+})
+
+
+/**
+ * @module RecordStatusDashboard
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click the X to delete all data related to the event named {string}
+ * @param {string} event - name of the event displayed on the Record Home Page
+ * @description Activates a pop-up confirming that user wants to delete all data on a specific even within a record
+ */
+
+Given("I click the X to delete all data related to the event named {string}", (event) => {
+    let link_location = null
+
+    cy.get('table#event_grid_table').within(() => {
+        cy.get('th').then(($th) => {
+            Cypress.$.each($th, (index, th) => {
+                if(th.innerText.includes(event)){
+                    const th_index = index
+                    cy.get('tr').then(($tr) => {
+                        Cypress.$.each($tr, (tri, tr) => {
+                            if(tri + 1 === $tr.length) { //last row of table
+                                cy.wrap(tr).within(() => {
+                                    cy.get('td').then((td) => {
+                                        Cypress.$.each(td, (tdi, $td) => {
+                                            if(th_index === tdi) {
+                                                cy.wrap($td).within(() => {
+                                                    cy.get('a').then(($a) => {
+                                                        link_location = $a
+                                                    })
+                                                })
+                                            }
+                                        })
+                                    })
+                                })
+                            }
+                        })
+                    })
+                }
+            })
+        })
+    }).then(() => {
+        cy.wrap(link_location).click()
+        cy.get('.ui-dialog').should('contain.text', 'DELETE ALL DATA ON THIS EVENT INSTANCE')
+    })
 })
 
 
