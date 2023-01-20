@@ -135,7 +135,7 @@
 		<Question><TranslatedText>Notes Box</TranslatedText></Question>
 	</ItemDef>
 	<ItemDef OID="calculated_field" Name="calculated_field" DataType="float" Length="999" redcap:Variable="calculated_field" redcap:FieldType="calc" redcap:Calculation="3*2">
-		<Question><TranslatedText>Caculated Field</TranslatedText></Question>
+		<Question><TranslatedText>Calculated Field</TranslatedText></Question>
 	</ItemDef>
 	<ItemDef OID="multiple_dropdown_auto" Name="multiple_dropdown_auto" DataType="text" Length="1" redcap:Variable="multiple_dropdown_auto" redcap:FieldType="select">
 		<Question><TranslatedText>Multiple Choice Dropdown Auto</TranslatedText></Question>

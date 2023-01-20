@@ -223,11 +223,16 @@ Cypress.Commands.add('select_textarea_by_label', ($name, $value) => {
     cy.set_field_value_by_label($name, $value, 'textarea')
 })
 
-Cypress.Commands.add('select_radio_by_label', ($name, $value) => {
+Cypress.Commands.add('select_radio_by_label', ($name, $value, $click = true, $selected = true ) => {
     const radio_labels = cy.set_field_value_by_label($name, $value, 'input', '', '___radio')
 
     radio_labels.first().parents('tr').first().within(() => {
-        cy.get('label[class=mc]').contains($value).click()
+
+        if($click){
+            cy.get('label[class=mc]').contains($value).click()
+        } else {
+            cy.get('label[class=mc]').contains($value).parent().find('input').should('have.attr', $selected ? "checked": "unchecked")
+        }
     })
 })
 
@@ -245,6 +250,7 @@ Cypress.Commands.add('select_checkbox_by_label', ($name, $value) => {
 
 Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000) => {
     cy.find_online_designer_field(name).parent().parentsUntil('tr').find('img[title=Edit]').parent().click()
+    cy.get('div').contains('Edit Field').should('be.visible')
 })
 
 Cypress.Commands.add('select_field_choices', (timeout = 10000) => {
@@ -272,10 +278,16 @@ Cypress.Commands.add('initial_save_field', () => {
 })
 
 Cypress.Commands.add('save_field', () => {
+    cy.intercept({
+        method: 'GET',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/online_designer_render_fields.php?*"
+    }).as('save_field')
+
     cy.get('input#field_name').then(($f) => {
         cy.contains('button', 'Save').click()
     })
 
+    cy.wait('@save_field')
 })
 
 Cypress.Commands.add('add_field', (field_name, type) => {
@@ -910,6 +922,8 @@ Cypress.Commands.add("click_on_dialog_button", (text) => {
 Cypress.Commands.add("adjust_or_verify_instrument_event", (instrument_name, event_name, checked= false, click = true) => {
 
     if(click) {
+        cy.wait(1000)
+
         cy.get('button').contains('Begin Editing').click()
 
         cy.intercept({
@@ -933,9 +947,9 @@ Cypress.Commands.add("adjust_or_verify_instrument_event", (instrument_name, even
 
                                     if(click && element[0]['checked'] === checked){
                                         element[0].click()
-                                    } else if (checked) {
+                                    } else if (checked && !click) {
                                         expect(element.length).to.eq(1)
-                                    } else if (!checked) {
+                                    } else if (!checked && !click) {
                                         expect(element.length).to.eq(0)
                                     }
 

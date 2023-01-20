@@ -14,7 +14,7 @@ Given("I click on the button labeled exactly {string}", (text) => {
 
 defineParameterType({
     name: 'instrument_save_options',
-    regexp: /Save & Stay|Save & Exit Record|Save & Go To Next Record|Save & Exit Form|Save & Go To Next Form/
+    regexp: /Save & Stay|Save & Exit Record|Save & Go To Next Record|Save & Exit Form|Save & Go To Next Form|Save & Go To Next Instance/
 })
 
 /**
@@ -106,7 +106,7 @@ Given("I click on the button labeled {string} in the dialog box", (text) => {
  * @description Clicks on an anchor element with a specific text label.
  */
 Given("I click on the link labeled {string}", (text) => {
-    cy.get('a').contains(text).should('be.visible').click({force:true})
+    cy.get('a').contains(text).should('be.visible').click()
 })
 
 /**
@@ -139,6 +139,16 @@ Given("I edit the field labeled {string}", (text) => {
  */
 Given("I mark the field required", () => {
     cy.get('input#field_req1').click()
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I mark the field as not required
+ * @description Marks a field as NOT required within the Online Designer.
+ */
+Given("I mark the field as not required", () => {
+    cy.get('input#field_req0').click()
 })
 
 /**
@@ -190,11 +200,13 @@ Given('I enter {string} into the textarea field labeled {string}', (text, label)
  * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
  */
 Given('I enter {string} into the data entry form field labeled {string}', (text, label) => {
+    //Note that we CLICK on the field (to select it) BEFORE we type in it - otherwise the text ends up somewhere else!
     cy.contains('label', label)
         .invoke('attr', 'id')
         .then(($id) => {
             cy.get('[name="' + $id.split('label-')[1] + '"]')
         })
+        .click()
         .type(text)
 })
 
@@ -387,9 +399,9 @@ Given('after the next step, I will {confirmation} a confirmation window containi
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I export all data in {string} format and expect {int} record
- * @param {string} value - the option to select from the dropdown
+ * @param {string} value - type of export
  * @param {int} num - expect this many records
- * @description Selects the option via a specific string.
+ * @description Exports all data in selected export type
  */
  Given('I export all data in {string} format and expect {int} record', (value, num) => {
     cy.get('tr#reprow_ALL').find('button.data_export_btn').should('be.visible').contains('Export Data').click()
@@ -417,11 +429,22 @@ Given('after the next step, I will {confirmation} a confirmation window containi
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I check the checkbox identified by {string}
- * @param {string} value - the option to select from the dropdown
- * @description Selects the option via a specific string.
+ * @param {string} value - input element
+ * @description Checks the checkbox identified by its element 
  */
  Given('I check the checkbox identified by {string}', (value) => {
     cy.get(value).check()
+})
+
+/**
+ * @module Interactions
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I uncheck the checkbox identified by {string}
+ * @param {string} value - input element
+ * @description Unchecks the checkbox identified by its element 
+ */
+ Given('I uncheck the checkbox identified by {string}', (value) => {
+    cy.get(value).uncheck()
 })
 
 /**
@@ -438,15 +461,25 @@ Given('after the next step, I will {confirmation} a confirmation window containi
 /**
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I create a new instrument from scratch
- * @description Clicks the button to create new instrument and prompts the user to add instrument
+ * @example I create a new data collection instrument called {string}
+ * @param {string} instrument_name - the name of the instrument to create
+ * @description Clicks the button to create new instrument and enters the instrument name into the text box
  */
- Given('I create a new instrument from scratch', () => {
+ Given('I create a new data collection instrument called {string}', (instrument_name) => {
     cy.get('div').
     contains('a new instrument from scratch').
     parent().
     within(($div) => {
         cy.get('button').contains('Create').click()
+    })
+
+    cy.get('body').contains('Add instrument here')
+    cy.get('button').contains("Add instrument here").click()
+    cy.get('span').contains('New instrument name') //Make sure this exists first
+
+    cy.get('td').contains('New instrument name').parent().within(($td) => {
+        cy.get('input[type=text]').type(instrument_name)
+        cy.get('input[value=Create]').click()
     })
 })
 
@@ -465,7 +498,7 @@ Given('after the next step, I will {confirmation} a confirmation window containi
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I click the input element identified by {string}
- * @param {string} value - input element
+ * @param {string} value - input element that you want to click
  * @description Clicks the input field
  */
  Given('I click the input element identified by {string}', (value) => {
@@ -565,6 +598,30 @@ Given('I enter Choices of {string} into the open "Edit Field" dialog box', (choi
  */
 Given('I enter {string} into the Field Label of the open "Edit Field" dialog box', (field_label) => {
     cy.get('textarea#field_label').clear().type(field_label)
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I edit the Data Collection Instrument field labeled {string}
+ * @param {string} label - the label of the field to edit
+ * @description Opens the edit window for the field with the specified label
+ */
+Given('I enter {string} into the Field Label of the open "Edit Field" dialog box', (field_label) => {
+    cy.get('textarea#field_label').clear().type(field_label)
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I enter the equation {string} into Calculation Equation of the open "Edit Field" dialog box
+ * @param {string} equation - the equation to enter
+ * @description Enters specified equation into a Calculated Field within an open "Edit Field" dialog box
+ */
+Given('I enter the equation {string} into Calculation Equation of the open "Edit Field" dialog box', (equation) => {
+    cy.get('textarea#element_enum').click()
+    cy.get('div.ace_content').type("{shift}{home}{del}" + equation)
+    cy.get('button').contains('Update & Close Editor').click()
 })
 
 

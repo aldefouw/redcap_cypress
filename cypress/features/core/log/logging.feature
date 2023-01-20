@@ -320,6 +320,14 @@ Feature: Logging
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
     Then I should see 'DELETE RECORD "2"'
+
+    #Cannot complete the commented steps below. This is a known error in 11.1.5 and fixed in v11.1.11
+
+    # And I check the checkbox identified by 'input[id="allow_delete_record_from_log"]'
+    # Then I should see "Confirmation: Type 'DELETE'"
+    # And I enter 'DELETE' into the field identified by 'input[type=text]'
+    # And I click on the button labeled 'Confirm'
+
     And I click on the button labeled "DELETE RECORD"
     And I should see 'Record ID "2" was successfully deleted'
     Then I close popup
