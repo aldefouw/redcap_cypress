@@ -53,7 +53,7 @@ defineParameterType({
 /**
  * @module RecordStatusDashboard
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the bubble for the {string} longitudinal data collection instrument on event {string} for record ID {string}
+ * @example I locate the bubble for the {string} instrument on event {string} for record ID {string} <and click the new instance link | and click on the bubble|and click the repeating instrument bubble for the (first | second | third) instance>
  * @param {string} instrument - the data collection instrument you want to target
  * @param {string} event - the event name you want to target
  * @param {string} record_id - the value of the record_id you want to target
