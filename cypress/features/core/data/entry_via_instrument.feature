@@ -7,7 +7,7 @@ Feature: Data Entry through the Data Collection Instrument
     Given I am an "admin" user who logs into REDCap
     And I create a project named "14_DirectDataEntrywithDataCollectionInstrument_v1115" with project purpose Operational Support via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
 
-  Scenario: 0 -  Add user
+  Scenario: 0 - Add user
     Given I visit Project ID 14
     And I click on the link labeled "User Rights"
     And I enter "test_user" into the username input field
@@ -70,11 +70,11 @@ Feature: Data Entry through the Data Collection Instrument
     Given I click on the link labeled 'Project Setup'
     And I should see that repeatable instruments are modifiable
     And I open the dialog box for the Repeatable Instruments and Events module
-    And I select "Repeat Instruments (repeat independently of each other)" on the dropdown field labeled "Event 1 (Arm 1: Arm 1)"
+    And I select "Repeat Instruments (repeat independently of each other)" on the dropdown table field labeled "Event 1 (Arm 1: Arm 1)"
     And I check the checkbox labeled "Data Dictionary"
     And I uncheck the checkbox labeled "Data Types"
-    And I select "-- not repeating --" on the dropdown field labeled "Event 2 (Arm 1: Arm 1)"
-    And I select "Repeat Entire Event (repeat all instruments together)" on the dropdown field labeled "Event 1 (Arm 2: Arm Two)"
+    And I select "-- not repeating --" on the dropdown table field labeled "Event 2 (Arm 1: Arm 1)"
+    And I select "Repeat Entire Event (repeat all instruments together)" on the dropdown table field labeled "Event 1 (Arm 2: Arm Two)"
     And I click on the button labeled "Save"
 
   Scenario: 0 - Erase data
@@ -235,11 +235,10 @@ Feature: Data Entry through the Data Collection Instrument
     And I select record ID "2" from arm name "Arm 1: Arm 1" on the Add / Edit record page
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Rename record"
-    And I clear the field identified by 'input[id="new-record-name"]'
-    And I enter "3" into the field identified by 'input[id="new-record-name"]'
+    And I should see 'Rename record "2"'
+    And I clear field and enter "3" into the input field labeled 'to the following record name'
     And I click on the button labeled "Rename record" in the dialog box
     Then I should see "Record ID 3 was successfully renamed!"
-
     When I click on the link labeled "Record Status Dashboard"
     Then I should see a link labeled "3"
 

@@ -161,6 +161,11 @@ Given("I save the field", () => {
     cy.save_field()
 })
 
+defineParameterType({
+    name: 'enter_type',
+    regexp: /enter|clear field and enter/
+})
+
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -169,10 +174,17 @@ Given("I save the field", () => {
  * @param {string} label - the label of the field
  * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
  */
-Given('I enter {string} into the input field labeled {string}', (text, label) => {
-    //We locate the label element first.  This isn't always a label which is unfortunate, but this approach seems to work so far.
-    cy.contains(label).then(($label) => {
-        cy.wrap($label).parent().find('input').type(text)
+Given('I {enter_type} {string} into the input field labeled {string}', (enter_type, text, label) => {
+    let sel = `:contains("${label}")`
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+        cy.contains(label).then(($label) => {
+            if(enter_type === "enter"){
+                cy.wrap($label).parent().find('input').type(text)
+            } else if (enter_type === "clear field and enter") {
+                cy.wrap($label).parent().find('input').clear().type(text)
+            }
+        })
     })
 })
 
@@ -662,26 +674,34 @@ Given('I select {string} from the Validation dropdown of the open "Edit Field" d
     cy.get('select#val_type').select(dropdown_option)
 })
 
+
+defineParameterType({
+    name: 'dropdown_type',
+    regexp: /field|table field/
+})
+
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I select {string} on the dropdown field labeled {string}
  * @param {string} text - the text to enter into the field
  * @param {string} label - the label of the field
- * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
+ * @description Selects a specific item from a dropdown
  */
-Given('I select {string} on the dropdown field labeled {string}', (text, label) => {
+Given('I select {string} on the dropdown {dropdown_type} labeled {string}', (text, type, label) => {
     let sel = `:contains("${label}"):visible`
 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
-        cy.contains(label).then(($label) => {
-            cy.wrap($label).parentsUntil(':has(:has(:has(:has(select))))').first().parent().parent().within(($elm) => {
-                const select_elm = cy.wrap($elm).find('select')
-
-                select_elm.length ?
-                    select_elm.select(text) :
-                    cy.wrap($label).parent().find('select').select(text)
+        if(type === "table field") {
+            cy.contains(label).then(($label) => {
+                cy.wrap($label).parentsUntil(':has(:has(:has(:has(select))))').first().parent().parent().within(($elm) => {
+                    cy.wrap($elm).find('select').select(text)
+                })
             })
-        })
+        } else if (type === "field"){
+            cy.contains(label).then(($label) => {
+                cy.wrap($label).parent().find('select').select(text)
+            })
+        }
     })
 })
