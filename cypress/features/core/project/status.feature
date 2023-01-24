@@ -107,9 +107,8 @@ Feature: Project Status
     And I click on the link labeled "Other Functionality"
     When I click on the button labeled "Mark project as Completed"
     And I click on the button labeled "Mark project as Completed" in the dialog box
-  And I want to pause
-      #there is a popup but not a "close" button. it closes on its own but takes too long which causes a timing issue
-    Then I should NOT see "11_ProjectStatus_v1115"
+    Then I should see 1 row displayed in the projects table
+    #there is a popup but not a "close" button. it closes on its own but takes too long which causes a timing issue
 
   Scenario: 18 - Show Completed Projects
     When I click on the link labeled "Show Completed Projects"
@@ -128,7 +127,7 @@ Feature: Project Status
   Scenario: 21 - Restore Project
     Given I click on the link labeled "My Projects"
     And I click on the link labeled "Show Completed Projects"
-    And I click on the link labeled "11_ProjectStatus_v1115" 
+    And I click on the link labeled "11_ProjectStatus_v1115"
     Then I should see "NOTICE: Project was marked as Completed"
     When I click on the button labeled "Restore Project"
     Then I should see "PROJECT RESTORED!"
@@ -140,7 +139,7 @@ Feature: Project Status
 
   Scenario: 23 - Move Project to Production
     Given I click on the link labeled "My Projects"
-    And I click on the link labeled "11_ProjectStatus_v1115" 
+    And I click on the link labeled "11_ProjectStatus_v1115"
     When I click on the button labeled "Move project to production"
     And I move the project to production by selection option "input#keep_data"
 
@@ -151,17 +150,16 @@ Feature: Project Status
     Then I should see "This project is currently in Analysis/Cleanup status"
 
   Scenario: 25 - Lock Entire Record
-    When I click on the button labeled "Modify"
+    When I click on the link labeled "Other Functionality"
+    And I click on the button labeled "Modify"
     And I click on the button labeled "Set all project data as Read-only / Locked" in the dialog box
-  And I want to pause
-      #for whatever reason the status isnt updated without this pause
+    Then I should see "The data in this project is currently:"
     Then I should see "Read-only / Locked"
 
   Scenario: 26 - Set to Editable
-    When I click on the button labeled "Modify"
+    When I click on the link labeled "Other Functionality"
+    And I click on the button labeled "Modify"
     And I click on the button labeled "Set to Editable (existing records only)" in the dialog box
-  And I want to pause
-      #for whatever reason the status isnt updated without this pause
     Then I should see "Editable (existing records only)"
 
   Scenario: 27 - Move Back to Production Status
@@ -182,18 +180,19 @@ Feature: Project Status
     Then I should see "This project is currently in Analysis/Cleanup status"
 
   Scenario: 30 - Move Project to Production
+    Given I click on the link labeled "Other Functionality"
     When I click on the button labeled "Move back to Production status"
     And I click on the button labeled "YES, Move to Production Status" in the dialog box
-      #this is different that the script but difference is also noted in script  - 30 is marked as "fail"
-  And I want to pause
-      #this pause keeps scenario 31 from detaching 
+    Then I should see "Project Status Management"
+    When I click on the link labeled "Project Home"
+    Then I should see "Project status:"
+    And I should see "Production"
 
   Scenario: 31 -  Mark Project as Completed
+    Given I click on the link labeled "Other Functionality"
     When I click on the button labeled "Mark project as Completed"
     And I click on the button labeled "Mark project as Completed" in the dialog box
-  And I want to pause
-      #there is a popup but not a "close" button. it closes on its own but takes too long which causes a timing issue
-    Then I should NOT see "11_ProjectStatus_v1115"
+    Then I should see 0 rows displayed in the projects table
 
   Scenario: 32 - Show Completed Projects
     When I click on the link labeled "Show Completed Projects"
@@ -203,9 +202,5 @@ Feature: Project Status
     When I click on the button labeled "Restore Project"
     Then I should see "PROJECT RESTORED!"
     And I close popup
-
-  Scenario: 33 - Logout
-    Given I logout
-
 
 
