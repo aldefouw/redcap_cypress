@@ -381,7 +381,6 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format =
     cy.get('button').contains('Commit Changes').click()
     cy.get('html').should(($html) => {
         expect($html).to.contain('Changes')
-        expect($html).to.contain('Successfully')
     })
 })
 

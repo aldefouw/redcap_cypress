@@ -194,7 +194,7 @@ Scenario: 28- Confirm test_user Does Not Have Access to Control Center or Create
     And I should NOT see "Control Center"
     And I should NOT see "Create New Project"
 
-Scenario: 29- Cancel Change password for user1115_4 through Browse Users 
+Scenario: 29- Cancel Change password for user1115_4 through Browse Users
     When I click on the link labeled "Browse Users"
     And I click on the link labeled "View User List By Criteria"
     And I click on the button labeled "Display User List"
