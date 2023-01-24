@@ -347,6 +347,11 @@ Given("I {click_type} the checkbox labeled {string}", (check, label) => {
     })
 })
 
+defineParameterType({
+    name: 'elm_type',
+    regexp: /input|list item/
+})
+
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -354,9 +359,13 @@ Given("I {click_type} the checkbox labeled {string}", (check, label) => {
  * @param {string} label - the label associated with the checkbox field
  * @description Selects a checkbox field by its label
  */
-Given("I click on the input element labeled {string}", (label) => {
+Given("I click on the {elm_type} element labeled {string}", (element_type, label) => {
     cy.contains(label).then(($label) => {
-        cy.wrap($label).parent().find('input').click()
+        if(element_type === 'input'){
+            cy.wrap($label).parent().find('input').click()
+        } else if (element_type === "list item"){
+            cy.get('li').contains(label).click()
+        }
     })
 })
 

@@ -147,19 +147,29 @@ Scenario: 21- Find test_user2 Under Browse Users Page
     And I click on the link labeled "Browse Users"
     And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
-    Then I should see "test_user2"
+    Then I should see "Editable user attributes"
+    And I should see a link labeled "test_user2"
+    And I should see "Test User"
+    And I should see "test_user2@example.com"
 
 Scenario: 22- Find test_user2 Under Browse Users Page by email
-    When I click on the link labeled "Browse Users"
+    And I visit the "Control Center" page
+    And I click on the link labeled "Browse Users"
     And I enter "test_user2@example.com" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I click on the input element labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I click on the list item element labeled "test_user2@example.com"
     And I click on the button labeled "Search"
-    Then I should see a link labeled "test_user2"
+    Then I should see "Editable user attributes"
+    And I should see a link labeled "test_user2"
+    And I should see "Test User"
+    And I should see "test_user2@example.com"
 
 Scenario: 23 & 24 - Find test_user2 Under Browse Users Page by Last name and Cancel Delete User from System
-    When I click on the link labeled "Browse Users"
-    And I enter "User" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I visit the "Control Center" page
+    And I click on the link labeled "Browse Users"
+    And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
-    And I should see "User information for"
+    Then I should see "Editable user attributes"
     Then I should see "test_user2"
     But after the next step, I will cancel a confirmation window containing the text "Are you sure you wish to delete the user from REDCap?"
     When I click on the button labeled "Delete user from system"
@@ -169,8 +179,9 @@ Scenario: 23 & 24 - Find test_user2 Under Browse Users Page by Last name and Can
     And I click on the button labeled "Delete user from system"
     Then I should see "The user 'test_user2' has now been removed and deleted from all REDCap projects"
 
-Scenario: 25- Confirm test_user2 Does Not Exist 
-    When I click on the link labeled "Browse Users"
+Scenario: 25- Confirm test_user2 Does Not Exist
+    And I visit the "Control Center" page
+    And I click on the link labeled "Browse Users"
     And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     Then I should see "User does not exist!"
