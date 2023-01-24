@@ -100,14 +100,18 @@ Scenario: 16- View test_user in Suspended Users List
     When I click on the link labeled "View User List By Criteria"
     And I select "Suspended users" on the dropdown field labeled "Display only:"
     And I click on the button labeled "Display User List"
-    Then I should see a link labeled "test_user"
+    Then I should see "Loading..."
+    And I should see "User List (1)"
+    And I should see a link labeled "test_user"
 
 Scenario: 17- Cancel Unsuspend test_user Account
     When I click on the link labeled "Browse Users"
     And I click on the link labeled "View User List By Criteria"
-    And I select "Suspend users" on the dropdown field labeled "Display only:"
+    And I select "Suspended users" on the dropdown field labeled "Display only:"
     And I click on the button labeled "Display User List"
-    And I click on the element identified by "[name=uiid_2]"
+    Then I should see "Loading..."
+    And I should see "User List (1)"
+    And I check the checkbox labeled "test_user"
     And I click on the button labeled "Unsuspend user"
     Then I should see "Process sponsor request: Unsuspend user"
     When I click on the button labeled "Cancel"
@@ -118,9 +122,13 @@ Scenario: 18- Unsuspend test_user Account
     And I click on the link labeled "View User List By Criteria"
     And I select "Suspended users" on the dropdown field labeled "Display only:"
     And I click on the button labeled "Display User List"
-    And I click on the link labeled "test_user"
-    And I click on the link labeled "unsuspend user"
-    Then I should see "Success! The user has now been unsuspended and will now be able to access REDCap again." 
+    Then I should see "Loading..."
+    And I should see "User List (1)"
+    And I check the checkbox labeled "test_user"
+    And I click on the button labeled "Unsuspend user"
+    Then I should see "Process sponsor request: Unsuspend user"
+    And I click on the button labeled "Unsuspend user" in the dialog box
+    Then I should see "The changes have been made successfully to the selected users!"
 
 Scenario: 19- Log out as admin1115
 

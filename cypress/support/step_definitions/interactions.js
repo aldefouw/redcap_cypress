@@ -676,7 +676,11 @@ Given('I select {string} on the dropdown field labeled {string}', (text, label) 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
         cy.contains(label).then(($label) => {
             cy.wrap($label).parentsUntil(':has(:has(:has(:has(select))))').first().parent().parent().within(($elm) => {
-                cy.wrap($elm).find('select').select(text)
+                const select_elm = cy.wrap($elm).find('select')
+
+                select_elm.length ?
+                    select_elm.select(text) :
+                    cy.wrap($label).parent().find('select').select(text)
             })
         })
     })
