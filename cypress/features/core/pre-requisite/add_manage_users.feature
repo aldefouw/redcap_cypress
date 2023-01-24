@@ -141,8 +141,10 @@ Scenario: 20- Confirm test_user can log in
     When I click on the link labeled "Log out"
     Then I should see "Please log in with your user name and password"
 
-Scenario: 21- Find test_user2 Under Browse Users Page 
-    When I click on the link labeled "Browse Users"
+Scenario: 21- Find test_user2 Under Browse Users Page
+    Given I am an "admin" user who logs into REDCap
+    And I visit the "Control Center" page
+    And I click on the link labeled "Browse Users"
     And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     Then I should see "test_user2"
