@@ -101,6 +101,17 @@ Given("I click on the button labeled {string} in the dialog box", (text) => {
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click on the radio labeled {string} in the dialog box
+ * @param {string} text - the text on the button element you want to click
+ * @description Clicks on a radio element with a specific text label in a dialog box.
+ */
+Given("I click on the radio labeled {string} in the dialog box", (text) => {
+    cy.click_on_dialog_button(text, 'span')
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the link labeled {string}
  * @param {string} text - the text on the anchor element you want to click
  * @description Clicks on an anchor element with a specific text label.
@@ -211,17 +222,27 @@ Given('I enter {string} into the textarea field labeled {string}', (text, label)
  * @param {string} label - the label of the field
  * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
  */
-Given('I enter {string} into the data entry form field labeled {string}', (text, label) => {
+Given('I {enter_type} {string} into the data entry form field labeled {string}', (enter_type, text, label) => {
     //Note that we CLICK on the field (to select it) BEFORE we type in it - otherwise the text ends up somewhere else!
-    cy.contains('label', label)
-        .invoke('attr', 'id')
-        .then(($id) => {
-            cy.get('[name="' + $id.split('label-')[1] + '"]')
-        })
-        .click()
-        .type(text)
+    if(enter_type === "clear field and enter"){
+        cy.contains('label', label)
+            .invoke('attr', 'id')
+            .then(($id) => {
+                cy.get('[name="' + $id.split('label-')[1] + '"]')
+            })
+            .click()
+            .clear()
+            .type(text)
+    } else {
+        cy.contains('label', label)
+            .invoke('attr', 'id')
+            .then(($id) => {
+                cy.get('[name="' + $id.split('label-')[1] + '"]')
+            })
+            .click()
+            .type(text)
+    }
 })
-
 
 /**
  * @module Interactions
@@ -349,7 +370,7 @@ Given("I {click_type} the checkbox labeled {string}", (check, label) => {
 
 defineParameterType({
     name: 'elm_type',
-    regexp: /input|list item/
+    regexp: /input|list item|checkbox/
 })
 
 /**
@@ -363,6 +384,8 @@ Given("I click on the {elm_type} element labeled {string}", (element_type, label
     cy.contains(label).then(($label) => {
         if(element_type === 'input'){
             cy.wrap($label).parent().find('input').click()
+        } else if(element_type === 'checkbox'){
+            cy.wrap($label).parent().find('input[type=checkbox]').click()
         } else if (element_type === "list item"){
             cy.get('li').contains(label).click()
         }
@@ -439,7 +462,7 @@ Given('after the next step, I will {confirmation} a confirmation window containi
  * @param {int} num - expect this many records
  * @description Exports all data in selected export type
  */
- Given('I export all data in {string} format and expect {int} record', (value, num) => {
+ Given('I export all data in {string} format and expect {int} record(s)', (value, num) => {
     cy.get('tr#reprow_ALL').find('button.data_export_btn').should('be.visible').contains('Export Data').click()
     cy.get('input[value='+value+']').click()
     cy.export_csv_report().should((csv) => {

@@ -1011,7 +1011,7 @@ Cypress.Commands.add('delete_event_name', (event_name) => {
     cy.wait('@delete_ajax_events')
 })
 
-Cypress.Commands.add("click_on_dialog_button", (text) => {
+Cypress.Commands.add("click_on_dialog_button", (text, selector = 'button') => {
     cy.get('div[role="dialog"]').then((divs) => {
         // can be multiple layers of dialogs, find the top most - tintin edit
         let topDiv = null
@@ -1023,7 +1023,7 @@ Cypress.Commands.add("click_on_dialog_button", (text) => {
                 topDiv = divs[i]
             }
         }
-        cy.wrap(topDiv).find('button').contains(text).click()
+        cy.wrap(topDiv).find(selector).contains(text).click()
     })
 })
 

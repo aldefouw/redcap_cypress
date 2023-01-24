@@ -5,7 +5,7 @@ Feature: Logging
 
   Scenario: 0 - Project Setup
     When I am an "admin" user who logs into REDCap
-    Then I create a project named "Logging_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/logging.xml"
+    Then I create a project named "Logging_Feature" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/logging.xml"
     And I click on the link labeled "User Rights"
     And I click to edit username "test_admin (Test User)"
     And I click on the button labeled "Edit user privileges"
@@ -15,7 +15,6 @@ Feature: Logging
     Then I should see "NOTICE"
     And I close popup
     And I save changes within the context of User Rights
-    #And I want to pause
 
     #Add user 1
     And I click on the link labeled "User Rights"
@@ -30,56 +29,61 @@ Feature: Logging
     And I select the User Right named "Lock/Unlock Records" and choose "Disabled"
     And I check the User Right named "Create Records"
     And I save changes within the context of User Rights
+
     #Add user 2
     And I click on the link labeled "User Rights"
     And I enter "test_user2" into the username input field
     Then I click on the button labeled "Add with custom rights"
     And I check the User Right named 'User Rights'
     Then I save changes within the context of User Rights
+
     #enable e-sig
     And I click on the link labeled "Customize & Manage Locking/E-signatures"
     Then I select the option to display E-signature option for the instrument identified by '#savedEsign-text_validation'
+
     #move to prod
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Move project to production"
-    Then I move the project to production by selection option 'input#keep_data'
+    And I click on the radio labeled "Keep ALL data saved so far." in the dialog box
+    And I click on the button labeled "YES, Move to Production Status" in the dialog box
 
-  # Scenario: 1 - Login as test_user
+    Then I should see "The project is now in production."
+
+  Scenario: 1 - Login as test_user
     When I am a "standard" user who logs into REDCap
 
-  Scenario: 2 - Go to my projects and open 23_Logging_v1115
-    When I visit Project ID 14
-    Then I should see "Logging_v1115"
+  Scenario: 2 - Go to my projects and open Logging_Feature
+    Then I should see "My Projects"
+    When I click on the link labeled "My Projects"
+    Then I should see "Logging_Feature"
+    When I click on the link labeled "Logging_Feature"
+    Then I should see "Logging_Feature" in the title
 
   Scenario: 3 - Add new record
-    When I visit Project ID 14
-    Then I click on the link labeled "Add / Edit Records"
+    When I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
-    And I enter "Test" into the "ptname" text input field
-    And I enter "test@test.com" into the "email" text input field
+    And I enter "Test" into the data entry form field labeled "Name"
+    And I enter "test@test.com" into the data entry form field labeled "Email"
     Then I select the submit option labeled "Save & Stay" on the Data Collection Instrument
-    And I clear the field and enter "Testing" into the "ptname" text input field
-    Then I click on the button labeled "Save & Exit"
+    And I clear field and enter "Testing" into the data entry form field labeled "Name"
+    Then I select the submit option labeled "Save & Exit Record" on the Data Collection Instrument
 
   Scenario: 4 - Add new record
-    When I visit Project ID 14
-    Then I click on the link labeled "Add / Edit Records"
+    When I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
-    And I enter "Test2" into the "ptname" text input field
-    And I enter "test2@test.com" into the "email" text input field
-    Then I click on the button labeled "Save & Exit"
+    And I enter "Test2" into the data entry form field labeled "Name"
+    And I enter "test2@test.com" into the data entry form field labeled "Email"
+    Then I select the submit option labeled "Save & Exit Record" on the Data Collection Instrument
 
   Scenario: 5 - Add new record
-    When I visit Project ID 14
-    Then I click on the link labeled "Add / Edit Records"
+    Given I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
-    And I enter "Delete" into the "ptname" text input field
-    And I enter "delete@test.com" into the "email" text input field
-    Then I click on the button labeled "Save & Exit"
+    And I enter "Delete" into the data entry form field labeled "Name"
+    And I enter "delete@test.com" into the data entry form field labeled "Email"
+    Then I select the submit option labeled "Save & Exit Record" on the Data Collection Instrument
 
   Scenario: 6 - Delete record
-    When I visit Project ID 14
-    Then I click on the link labeled "Record Status Dashboard"
+    Given I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "3"
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
@@ -87,22 +91,19 @@ Feature: Logging
     Then I close popup
 
   Scenario: 7 - Add new role
-    When I visit Project ID 14
-    Then I click on the link labeled "User Rights"
+    Given I click on the link labeled "User Rights"
     And I enter "Data" into the rolename input field
     And I click on the button labeled "Create role" and I create role
     Then I should see a link labeled "Data"
 
   Scenario: 8 - Edit role
-    When I visit Project ID 14
-    Then I click on the link labeled "User Rights"
+    Given I click on the link labeled "User Rights"
     And I click to edit role name "Data"
     And I check the User Right named 'Project Setup & Design'
     Then I click on the button labeled "Save Changes"
 
   Scenario: 9 - Delete role
-    When I visit Project ID 14
-    Then I click on the link labeled "User Rights"
+    Given I click on the link labeled "User Rights"
     And I delete role name "Data"
 
   Scenario: 10 - add user (completed in project setup)
@@ -110,17 +111,17 @@ Feature: Logging
   Scenario: 11 - edit user (completed in project setup)
 
   Scenario: 12 - Remove user & Add user
-    When I visit Project ID 14
-    Then I click on the link labeled "User Rights"
+    Given I click on the link labeled "User Rights"
     And I click to edit username "test_user2 (Test User)"
     And I click on the button labeled "Edit user privileges"
-    Then I click on the button labeled Remove User
+    And I click on the button labeled "Remove user" in the dialog box
+    And I should see "Remove user?"
+    And I click on the button labeled "Remove user" in the dialog box
+    Then I should see 'User "test_user2" was successfully deleted'
 
   #Add testuser2 again since we only have 2 standard users
   #Scenario: Add user
-    When I visit Project ID 14
-    Then I click on the link labeled "User Rights"
-    And I enter "test_user2" into the username input field
+    Given I enter "test_user2" into the username input field
     And I click on the button labeled "Add with custom rights"
     And I check the User Right named 'Project Setup & Design'
     And I check the User Right named 'User Rights'
@@ -134,13 +135,13 @@ Feature: Logging
     And I check the User Right named "Create Records"
     And I save changes within the context of User Rights
 
-  # Scenario: 13 - Login as test_user2
+  Scenario: 13 - Login as test_user2
     When I am a "standard2" user who logs into REDCap
 
   Scenario: 14 - Data Exports, Reports, and Stats
     When I visit Project ID 14
     Then I click on the link labeled "Data Exports, Reports, and Stats"
-    And I export all data in "csvraw" format and expect 2 record
+    And I export all data in "csvraw" format and expect 2 records
 
   Scenario: 15 - Edit user privileges for test_user
     When I visit Project ID 14
@@ -151,26 +152,27 @@ Feature: Logging
     And I scroll the user rights page to the bottom
     And I check the User Right named 'Record Locking Customization'
     And I select the User Right named "Lock/Unlock Records" and choose "Disabled"
-    Then I should see "NOTICE"
-    And I close popup
     And I save changes within the context of User Rights
 
-  Scenario: 16 - Edit record (Lock Record & E-Signature)
+  Scenario: 16 - Edit record (Lock Record)
     When I visit Project ID 14
-    #Then I click on the link labeled "Add / Edit Records"
-    #And I click on the dropdown identified by 'select[id="record"]' and select value '1' labelled by '1'
-    #And I click on the bubble for the instrument identified by 'text_validation'
     Then I click on the link labeled "Record Status Dashboard"
     And I click on the bubble for the "Text Validation" data collection instrument for record ID "1"
-    And I check the checkbox identified by 'input[id="__LOCKRECORD__"]'
-    And I check the checkbox identified by 'input[id="__ESIGNATURE__"]'
+    And I click the element containing the following text: " Lock"
     And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
+    Then I should see "Instrument locked by test_user2"
 
   Scenario: 17 - Edit record (E-signature)
+    When I visit Project ID 14
+    When I click on the link labeled "Record Status Dashboard"
+    And I click on the bubble for the "Text Validation" data collection instrument for record ID "1"
+    And I check the checkbox identified by 'input[id="__ESIGNATURE__"]'
+    And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
     Then I should see "Username/password verification"
-    And I enter the Username: "test_user2" and password "Testing123" for e-signature
-    And I click on the element identified by ".ui-dialog-buttonset > .ui-button"
-    Then I should see that the checkbox identified by 'input[id="__ESIGNATURE__"]' should be checked
+
+    Given I enter the Username: "test_user2" and password "Testing123" for e-signature
+    And I click on the button labeled "Save" in the dialog box
+    Then I should see "E-signed by test_user2"
 
   Scenario: 18 - Unlock form
     Given I see "Instrument locked by test_user2"
@@ -195,9 +197,7 @@ Feature: Logging
   Scenario: 20 - Create a new instrument
     When I visit Project ID 14
     Then I click on the link labeled "Designer"
-    And I create a new instrument from scratch
-    And I click on the button labeled "Add instrument here"
-    And I enter name "Form 2" and create instrument
+    And I create a new data collection instrument called "Form 2"
     Then I should see "Form 2"
     #And I click on the button labeled "Close"
 
@@ -227,7 +227,6 @@ Feature: Logging
     And I should see 'report_id: ALL, export_format: CSV, rawOrLabel: raw, fields: "record_id, ptname, email, text_validation_complete"' in the logging table
 
   Scenario: 23 - Logging: filter by event - Manage/Design
-    When I visit Project ID 14
     Then I click on the link labeled "Logging"
     And I select the "Manage/Design" option identified by "manage" from the Filter by event dropdown field
     Then I should see 'Approve production project modifications (automatic)' in the logging table
@@ -236,7 +235,6 @@ Feature: Logging
     And I should see 'Enter draft mode' in the logging table
 
   Scenario: 24 - Logging: filter by event - User or role
-    When I visit Project ID 14
     Then I click on the link labeled "Logging"
     And I select the "User or role created-updated-deleted" option identified by "user" from the Filter by event dropdown field
     Then I should see 'Updated User' in the logging table
@@ -247,7 +245,6 @@ Feature: Logging
     And I should see 'role = \'Data\'' in the logging table
 
   Scenario: 25 - Logging: filter by event - Record created-updated-deleted
-    When I visit Project ID 14
     Then I click on the link labeled "Logging"
     And I select the "Record created-updated-deleted" option identified by "record" from the Filter by event dropdown field
     Then I should see 'Updated Record' in the logging table
@@ -260,7 +257,6 @@ Feature: Logging
     And I should see 'ptname = \'Test\', email = \'test@test.com\', text_validation_complete = \'0\', record_id = \'1\'' in the logging table
 
   Scenario: 26 - Logging: filter by event - Record locking & e-signatures
-    When I visit Project ID 14
     Then I click on the link labeled "Logging"
     And I select the "Record locking & e-signatures" option identified by "lock_record" from the Filter by event dropdown field
     Then I should see 'Lock/Unlock Record' in the logging table
@@ -271,21 +267,18 @@ Feature: Logging
     And I should see 'Action: Negate e-signature' in the logging table
 
   Scenario: 27 - Logging: filter by event - Page Views
-    When I visit Project ID 14
     Then I click on the link labeled "Logging"
     And I select the "Page Views" option identified by "page_view" from the Filter by event dropdown field
     Then I should see 'Page View' in the logging table
     And I should see '/redcap_v11.1.5/Logging/index.php?pid=14' in the logging table
 
   Scenario: 28 - Logging: filter by event - All event types (username) - by specific username
-    When I visit Project ID 14
     Then I click on the link labeled "Logging"
     And I select the "test_admin" option from the Filter by username dropdown field
     And I select the "test_user" option from the Filter by username dropdown field
     And I select the "test_user2" option from the Filter by username dropdown field
     
   Scenario: 29 - Logging: filter by event - All event types (record) - by specific record
-    When I visit Project ID 14
     Then I click on the link labeled "Logging"
     And I select the '2' option from the Filter by record dropdown field
     Then I should see 'Created Record' in the logging table
@@ -302,7 +295,7 @@ Feature: Logging
   Scenario: 32 - Delete a record’s logging activity when deleting the records
     When I visit the "Control Center" page
     And I click on the link labeled "Edit a Project's Settings"
-    And I select 'Logging_v1115' from the dropdown identified by 'select'
+    And I select 'Logging_Feature' from the dropdown identified by 'select'
     #And I click on the dropdown identified by 'select' and select value '14' labelled by
     Then I should see "project settings"
     And I select 'Yes, delete the record\'s logged events when deleting the record' from the dropdown identified by 'select[name="allow_delete_record_from_log"]'
@@ -389,7 +382,7 @@ Feature: Logging
     And I click on the link labeled "Arm 2"
     And I click on the button labeled "Add new record for this arm"
     And I enter "Arm2" into the "ptname" text input field
-    Then I click on the button labeled "Save & Exit"
+    Then I select the submit option labeled "Save & Exit Record" on the Data Collection Instrument
 
   Scenario: 40 - Logging: filter by event - Record created-updated-deleted
     When I visit Project ID 14
