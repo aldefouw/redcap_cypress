@@ -307,6 +307,11 @@ Given("I enter {string} into the hidden field identified by {string}", (text, se
     cy.get(sel).type(text, {force: true})
 })
 
+defineParameterType({
+    name: 'click_type',
+    regexp: /click on|check|uncheck/
+})
+
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -314,9 +319,19 @@ Given("I enter {string} into the hidden field identified by {string}", (text, se
  * @param {string} label - the label associated with the checkbox field
  * @description Selects a checkbox field by its label
  */
-Given("I click on the checkbox labeled {string}", (label) => {
-    cy.contains(label).then(($label) => {
-        cy.wrap($label).parent().find('input').click()
+Given("I {click_type} the checkbox labeled {string}", (check, label) => {
+    let sel = `:contains("${label}"):visible`
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+        cy.contains(label).then(($label) => {
+            if(check === "click on"){
+                cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]').click()
+            } else if (check === "check"){
+                cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]').check()
+            } else if (check === "uncheck"){
+                cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]').uncheck()
+            }
+        })
     })
 })
 
@@ -656,7 +671,13 @@ Given('I select {string} from the Validation dropdown of the open "Edit Field" d
  * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
  */
 Given('I select {string} on the dropdown field labeled {string}', (text, label) => {
-    cy.contains(label).then(($label) => {
-        cy.wrap($label).parent().find('select').select(text)
+    let sel = `:contains("${label}"):visible`
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+        cy.contains(label).then(($label) => {
+            cy.wrap($label).parentsUntil(':has(:has(:has(:has(select))))').first().parent().parent().within(($elm) => {
+                cy.wrap($elm).find('select').select(text)
+            })
+        })
     })
 })

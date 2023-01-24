@@ -111,6 +111,21 @@ Given("I should see that repeatable instruments are {repeatability}", (state) =>
     cy.get('#enableRepeatingFormsEventsBtn').should('contain.text', expected_text);
 })
 
+defineParameterType({
+    name: 'repeatability_click',
+    regexp: /enable|disable|modify/
+})
+
+/**
+ * @module ProjectSetup
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I open the dialog box for the Repeatable Instruments and Events module
+ * @description Opens the dialog box for the Repeatable Instruments and Events module on the Project Setup page.
+ */
+Given("I open the dialog box for the Repeatable Instruments and Events module", () => {
+    cy.get('#enableRepeatingFormsEventsBtn').click();
+})
+
 /**
  * @module ProjectSetup
  * @author Corey Debacker <debacker@wisc.edu>

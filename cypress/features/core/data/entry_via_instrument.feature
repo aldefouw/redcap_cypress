@@ -68,12 +68,13 @@ Feature: Data Entry through the Data Collection Instrument
 
   Scenario: 0 - Project Setup - Enable repeatable instruments and events
     Given I click on the link labeled 'Project Setup'
-    And I click the input element identified by '[id=enableRepeatingFormsEventsBtn]'
-    And I select 'Repeat Instruments (repeat independently of each other)' from the dropdown identified by 'select[name="repeat_whole_event-41"]'
-    And I uncheck the checkbox identified by 'input[name="repeat_form-41-data_types"]'
-    And I check the checkbox identified by 'input[name="repeat_form-41-data_dictionary"]'
-    And I select '-- not repeating --' from the dropdown identified by 'select[name="repeat_whole_event-42"]'
-    And I select 'Repeat Entire Event (repeat all instruments together)' from the dropdown identified by 'select[name="repeat_whole_event-44"]'
+    And I should see that repeatable instruments are modifiable
+    And I open the dialog box for the Repeatable Instruments and Events module
+    And I select "Repeat Instruments (repeat independently of each other)" on the dropdown field labeled "Event 1 (Arm 1: Arm 1)"
+    And I check the checkbox labeled "Data Dictionary"
+    And I uncheck the checkbox labeled "Data Types"
+    And I select "-- not repeating --" on the dropdown field labeled "Event 2 (Arm 1: Arm 1)"
+    And I select "Repeat Entire Event (repeat all instruments together)" on the dropdown field labeled "Event 1 (Arm 2: Arm Two)"
     And I click on the button labeled "Save"
 
   Scenario: 0 - Erase data
@@ -283,7 +284,8 @@ Feature: Data Entry through the Data Collection Instrument
     When I click the bubble to add a record for the "Text Validation" longitudinal instrument on event "(#2)"
     Then I should see "Instance #2"
 
-    Given I enter "josh@noreply.com" into the data entry form field labeled "Email"
+    Given I enter "Josh" into the data entry form field labeled "Name"
+    And I enter "josh@noreply.com" into the data entry form field labeled "Email"
     And I select the submit option labeled "Save & Go To Next Form" on the Data Collection Instrument
     And I select the radio option "Yes" for the field labeled "Yes - No"
     And I select the submit option labeled "Save & Go To Next Form" on the Data Collection Instrument
