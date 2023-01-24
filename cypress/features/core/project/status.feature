@@ -9,10 +9,9 @@ Feature: Project Status
     When I click on the link labeled "User Rights"
     And I enter "test_user" into the username input field
     And I click on the button labeled "Add with custom rights"
-      #no label for following checkboxes
-    And I click on the checkbox identified by "[name=design]"
-    And I click on the checkbox identified by "[name=user_rights]"
-    And I click on the checkbox identified by "[name=data_access_groups]"
+    And I check the User Right named 'Project Setup & Design'
+    And I check the User Right named 'User Rights'
+    And I check the User Right named 'Data Access Groups'
     And I click on the button labeled "Add user"
 
   Scenario: 1 -  Login as test user
