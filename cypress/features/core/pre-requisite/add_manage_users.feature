@@ -197,37 +197,49 @@ Scenario: 26- Login with Deleted User Account
         #aldefouw will handle 
 
 Scenario: 28- Confirm test_user Does Not Have Access to Control Center or Create a Project
-    When I click on the link labeled "Log out"
-    And I enter "test_user" into the input field labeled "Username:"
+    When I enter "test_user" into the input field labeled "Username:"
     And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "Welcome to REDCap!"
     And I should NOT see "Control Center"
     And I should NOT see "Create New Project"
+    Then I logout
 
 Scenario: 29- Cancel Change password for user1115_4 through Browse Users
+    Given I am an "admin" user who logs into REDCap
+    And I visit the "Control Center" page
     When I click on the link labeled "Browse Users"
     And I click on the link labeled "View User List By Criteria"
     And I click on the button labeled "Display User List"
-    Then I should see "user1115_1" 
-    Then I should see "user1115_2" 
-    Then I should see "user1115_3"
-    Then I should see "user1115_4"
-    When I click on the element identified by "[name=uiid_10]"
+
+    Then I should see "user1115_1"
+    And I should see "user1115_2"
+    And I should see "user1115_3"
+    And I should see "user1115_4"
+
+    When I check the checkbox labeled "user1115_4"
     And I click on the button labeled "Reset password"
-    Then I should see "Process sponsor request:"
-    When I click on the button labeled "Cancel"
-    Then I should NOT see "An email has been sent to user1115.4@redcap.edu with a new temporary password"
+    Then I should see "Process sponsor request"
+
+    When I click on the button labeled "Cancel" in the dialog box
+    Then I should NOT see "The changes have been made successfully to the selected users!"
 
 Scenario: 30- Change password for user1115_4 through Browse Users
     When I click on the link labeled "Browse Users"
     And I click on the link labeled "View User List By Criteria"
     And I click on the button labeled "Display User List"
-    And I click on the element identified by "[name=uiid_10]"
+
+    Then I should see "user1115_1"
+    And I should see "user1115_2"
+    And I should see "user1115_3"
+    And I should see "user1115_4"
+
+    When I check the checkbox labeled "user1115_4"
     And I click on the button labeled "Reset password"
     Then I should see "Process sponsor request:"
-    When I click on the button labeled "Reset password"
-    Then I should see "An email has been sent to user1115.4@redcap.edu with a new temporary password"
+
+    When I click on the button labeled "Reset password" in the dialog box
+    Then I should see "The changes have been made successfully to the selected users!"
 
 #Scenario: 31- Log Into user1115_4 with Old Password
         #aldefouw will handle 
@@ -259,7 +271,7 @@ Scenario: 35- Add user1115_5
     And I enter "User5" into the input field labeled "First name:"
     And I enter "1115_5" into the input field labeled "Last name:"
     And I enter "user1115.5@redcap.edu" into the input field labeled "Primary email:"
-    And I click on the input element labeled "Allow this user to request that projects be created for them by a REDCap administrator?"
+    And I check the checkbox labeled "Allow this user to create or copy projects?"
     And I click on the input button labeled "Save"
     Then I should see "User has been successfully saved."
     And I should see "An email with login information was sent to: user1115.5@redcap.edu"
@@ -278,31 +290,28 @@ Scenario: 37- Edit Security & Authentication settings
     Then I should see "Your system configuration values have now been changed!"
 
 Scenario: 38- Log in test_user with Old Password
-        #here so that 39 will pass
-    When I click on the link labeled "Log out"
+    #This scenario exists so that 39 is one too many attempts at logging in
+    Given I logout
     And I enter "test_user" into the input field labeled "Username:"
     And I enter "test" into the input field labeled "Password:" 
     And I click on the button labeled "Log In"
-    Then I should see "ACCESS DENIED!"
+    Then I should see "ERROR: You entered an invalid user name or password!"
 
 Scenario: 39- Log in test_user with Too Many Attempts
-    When I click on the link labeled "Log out"
+    Given I logout
     And I enter "test_user" into the input field labeled "Username:"
     And I enter "Testing123" into the input field labeled "Password:" 
     And I click on the button labeled "Log In"
     Then I should see "ACCESS DENIED!"
+    And I should see "exceeded the maximum amount of failed login attempts"
 
-Scenario: 40- Log in test_user with Correct Password after Buffer Period
-    When I click on the link labeled "Log out"
-    And I want to pause
-        #pause for at lease one minute 
+    Scenario: 40- Log in test_user with Correct Password after Buffer Period
+    Given I wait for one minute
+    And I visit the version URL "/"    
     And I enter "test_user" into the input field labeled "Username:"
     And I enter "Testing123" into the input field labeled "Password:" 
     And I click on the button labeled "Log In"
     Then I should see a link labeled "My Projects"
-    When I click on the link labeled "Log out"
-    Then I should see "Please log in with your user name and password"
-
 
 
 
