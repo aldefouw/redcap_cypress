@@ -117,7 +117,7 @@ Given("I click on the link labeled {string}", (text) => {
  * @description Clicks on an input element with a specific text label.
  */
 Given("I click on the input button labeled {string}", (text) => {
-    cy.get('input[value="' + text + '"]').click()
+    cy.get('input[value="' + text + '"]').click({force: true})
 })
 
 /**
