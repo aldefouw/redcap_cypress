@@ -105,7 +105,7 @@ Scenario: 14 - View and Edit Project Settings Page
     And I click on the button labeled "Log In"
     When I click on the link labeled "Edit a Project's Settings"
     Then I should see "You may modify the governing settings for any REDCap project on this page."
-    And I select "Test Project" from the dropdown identified by "Choose an existing project to edit its settings:"
+    And I select "Classic Database" on the dropdown field labeled "Choose an existing project to edit its settings:"
     Then I should see "Navigate to project Classic Database"
 
 Scenario: 15- Switch test_user2 to System Configuration Modifier
