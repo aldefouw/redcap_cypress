@@ -3,16 +3,24 @@ require("./parameter_types.js")
 
 /**
  * @module Visibility
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @author Corey DeBacker <debacker@wisc.edu>
  * @example I (should) see {string}
  * @param {string} text the text visually seen on screen
- * @description Visually verifies that text exists within the HTML object. NOTE: "should" is optional for readability.
+ * @description Verifies that the text is visible. If a dialog box is open, only content contained within it is considered visible.
+ *     NOTE: "should" is optional for readability.
  */
 Given("I (should) see {string}", (text) => {
+    // Allows for steps like: I should see "Adding new user \"test_user\""
+    text = text.replaceAll('\"', '\\\"')
+    // Now, the text can be safely inserted between more double quotes - :contains("${text}")
+
+    // Match visible elements containing the text, discarding those that contain another matched element to get the deepest.
+    // Ensures that the deepest element containing the text is visible, otherwise test fails. This is relevant when text is
+    // invisible due to being contained in an invisible element with a visible ascendant.
     let sel = `:contains("${text}"):not(:has(:contains("${text}"))):visible`
         + `,select:visible option:selected:contains("${text}")`
     cy.get_top_layer(($el) => {
-        expect($el.find(sel)).length.to.be.above(0)
+        expect($el.find(sel)).length.to.be.above(0) //TODO: rework assertion to improve logging output
     })
 })
 
