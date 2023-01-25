@@ -7,44 +7,45 @@ Feature: Manage Project
         Given I am an "admin" user who logs into REDCap
         And I visit the "Control Center" page
         And I click on the link labeled "General Configuration"
-        And I enter "no-reply@test.com" into the field identified by "[name=from_email]"
+        And I enter "no-reply@test.com" into the input field labeled "Set a Universal FROM Email address"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: Edit test_user2 to not Create or Copy Projects
-        Given I am an "admin" user who logs into REDCap
-        And I visit the "Control Center" page
+        Given I visit the "Control Center" page
         When I click on the link labeled "Browse Users"
         And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
         And I click on the button labeled "Search"
         Then I should see "User information for"
         When I click on the button labeled "Edit user info"
-        And I click on the input element labeled "Allow this user to create or copy projects?"
+        And I uncheck the checkbox element labeled "Allow this user to create or copy projects?"
+        And I should see "Allow this user to create or copy projects?"
+        # Waiting is sub-ideal but it is seemingly the only way to avoid CSRF errors about multiple tabs!  This seems to be REDCap's fault rather than Cypress.
+        And I wait for 0.5 seconds
         And I click on the input button labeled "Save"
+        Then I should see "User has been successfully saved."
 
     Scenario: 1- Visit Control Center Page
-        Given I am an "admin" user who logs into REDCap
-        And I visit the "Control Center" page
+        Given I visit the "Control Center" page
         Then I should see "Control Center Home"
 
     Scenario: 2- User Settings Configuration - Create Projects
         When I click on the link labeled "User Settings"
         Then I should see "Yes, normal users can create new projects"
         And I should see "No, only Administrators can create new projects"
-        When I select "No, only Administrators can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
+        When I select "No, only Administrators can create new projects" on the dropdown field labeled "Allow normal users to create new projects?"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 3- User Settings Configuration - Move Projects to Production
         Given I should see "Yes, normal users can move projects to production"
         And I should see "No, only Administrators can move projects to production"
-        When I select "No, only Administrators can move projects to production" from the dropdown identified by "select[name=superusers_only_move_to_prod]"
+        And I select "No, only Administrators can move projects to production" on the dropdown field labeled "Allow normal users to move projects to production?"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 4- User Settings Configuration - Edit Survey Responses
-        Given I select "Enabled" from the dropdown identified by "select[name=enable_edit_survey_response]"
-        And I select "Disabled" from the dropdown identified by "select[name=enable_edit_survey_response]"
+        Given I select "Disabled" on the dropdown field labeled "Allow users to edit survey responses?"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
@@ -54,21 +55,21 @@ Feature: Manage Project
         And I should see "Yes, if project has no records OR if has records and no existing fields were modified"
         And I should see "Yes, if no critical issues exist"
         And I should see "Yes, if project has no records OR if has records and no critical issues exist"
-        When I select "Never (always require an admin to approve changes)" from the dropdown identified by "select[name=auto_prod_changes]"
+        When I select "Never (always require an admin to approve changes)" on the dropdown field labeled "Allow production Draft Mode changes to be approved automatically under certain conditions?"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 6- User Settings Configuration - Modify Repeatable Instruments & Events
         Given I should see "Yes, normal users can modify the repeatable instance setup in production"
         And I should see "No, only Administrators can modify the repeatable instance setup in production"
-        When I select "No, only Administrators can modify the repeatable instance setup in production" from the dropdown identified by "select[name=enable_edit_prod_repeating_setup]"
+        When I select "No, only Administrators can modify the repeatable instance setup in production" on the dropdown field labeled "Allow normal users to modify the 'Repeatable Instruments & Events' settings for projects while in production status?"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 7- User Settings Configuration - Modify Events and Arms in Production Status
         Given I should see "Yes, normal users can add/modify events in production"
         And I should see "No, only Administrators can add/modify events in production"
-        When I select "No, only Administrators can add/modify events in production" from the dropdown identified by "select[name=enable_edit_prod_events]"
+        When I select "No, only Administrators can add/modify events in production" on the dropdown field labeled "Allow normal users to add or modify events and arms on the Define My Events page for longitudinal projects while in production status?"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
@@ -78,16 +79,20 @@ Feature: Manage Project
         And I click on the button labeled "Search"
         Then I should see "User information for"
         And I should see "test_user2"
-        And I should see "(NOTE: Currently normal users CANNOT create or copy projects. See the User Settings page in the Control Center to change this setting.)"
+        When I click on the button labeled "Edit user info"
+        And I should see "Edit user info"
+        And I uncheck the checkbox element labeled "Allow this user to request that projects be created for them by a REDCap administrator?"
+        # Waiting is sub-ideal but it is seemingly the only way to avoid CSRF errors about multiple tabs!  This seems to be REDCap's fault rather than Cypress.
+        And I wait for 0.5 seconds
+        And I click on the input button labeled "Save"
+        Then I should see "User has been successfully saved."
 
     Scenario: 9- Login with test_user2
-        Given I logout
-        And I am an "standard2" user who logs into REDCap
+        Given I am a "standard2" user who logs into REDCap
         Then I should NOT see "New Project"
 
     Scenario: 10- Login with test_user
-        Given I logout
-        And I am an "standard" user who logs into REDCap
+        Given I am a "standard" user who logs into REDCap
         Then I should see a link labeled "New Project"
 
     Scenario: 11- Cancel Create Project Request
@@ -97,33 +102,32 @@ Feature: Manage Project
         Then I should see "Welcome to REDCap!"
 
     Scenario: 12- Logout as test_user
-        Given I logout
-        And I am an "admin" user who logs into REDCap
+        Given I am an "admin" user who logs into REDCap
 
     Scenario: 13- Allow Normal Users to Create New Projects
         Given I visit the "Control Center" page
         And I click on the link labeled "User Settings"
         Then I should see "Settings related to Project Creation and Project Status Changes"
-        When I select "Yes, normal users can create new projects" from the dropdown identified by "select[name=superusers_only_create_project]"
+        When I select "Yes, normal users can create new projects" on the dropdown field labeled "Allow normal users to create new projects?"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
     
     Scenario: 14- Login with test_user
-        Given I logout
-        And I am an "standard" user who logs into REDCap
+        Given I am an "standard" user who logs into REDCap
     
     Scenario: 15- Create Project and add test_admin to Project
         Given I click on the link labeled "New Project"
         Then I should see "Create Project"
-        When I enter "FirstProject_1115" into the field identified by "[name=app_title]"
-        And I select "Operational Support" from the dropdown identified by "[name=purpose]"
+        And I enter "FirstProject_1115" into the field identified by "input" labeled "Project title:"
+        And I select "Operational Support" on the dropdown table field labeled "Project's purpose:"
         And I click on the button labeled "Create Project"
         Then I should see "Your new REDCap project has been created and is ready to be accessed."
+
         When I click on the link labeled "User Rights"
-        And I enter "test_admin" into the field identified by "[id=new_username]"
+        And I enter "test_admin" into the username input field
         And I click on the button labeled "Add with custom rights"
         Then I should see "Adding new user"
-        When I click on the button labeled "Add user"
+        Given I save changes within the context of User Rights
         Then I should see "test_admin"
 
     Scenario: 16- Change Project to Just for Fun
@@ -138,37 +142,30 @@ Feature: Manage Project
         Given I click on the link labeled "Designer"
         Then I should see "Data Collection Instruments"
         When I click on the link labeled "Form 1"
-        #my first instrument?
         Then I should see "Record ID"
-        When I click on the element identified by "input[id=btn-last]"
-        And I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[name=field_type]"
-        And I enter "Name" into the field identified by "[id=field_label]"
-        And I enter "ptname" into the field identified by "[id=field_name]"
-        And I click on the button labeled "Save"
-        Then I should see "Variable: ptname"
+        Given I add a new Text Box field labeled "Name" with variable name "ptname"
+        Then I should see "Name"
+        And I should see "Variable: ptname"
 
     Scenario: 18- Copy Instrument
         Given I click on the button labeled "Return to list of instruments"
         Then I should see "Data Collection Instruments"
         When I click on the button labeled "Choose action"
         And I click on the link labeled "Copy"
-            #Then I should see "My First Instrument 2"
         And I click on the button labeled "Copy instrument"
         Then I should see "Form 1 2"
-            #Then I should see "My First Instrument 2"
         And I should see "SUCCESS! The instrument was successfully copied. The page will now reload to reflect the changes."
 
     Scenario: 19- Add Email Field to My First Instrument 2
         Given I click on the link labeled "Form 1 2"
-            #Given I click on the link labeled "My First Instrument 2" 
         Then I should see "Current instrument:"
-        When I click on the element identified by "input[id=btn-last]"
-        And I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[name=field_type]"
-        And I enter "Email" into the field identified by "[id=field_label]"
-        And I enter "email" into the field identified by "[id=field_name]"
-        And I select "Email" from the dropdown identified by "[id=val_type]"
-        And I click on the button labeled "Save"
-        Then I should see "Variable: email"
+
+        Given I add a new Text Box field labeled "Email" with variable name "email"
+        And I edit the Data Collection Instrument field labeled "Email"
+        And I select "Email" from the Validation dropdown of the open "Edit Field" dialog box
+        And I save the field
+        Then I should see "Email"
+        And I should see "Variable: email"
 
     Scenario: 20- Verify Project Home and Other Functionality Pages
         Given I click on the link labeled "Project Home"
@@ -179,7 +176,7 @@ Feature: Manage Project
     Scenario: 21- Copy Project
         Given I click on the button labeled "Copy the project"
         Then I should see "Make a Copy of the Project"
-        When I enter "ProjectCopy_1115" into the field identified by "[name=app_title]"
+        And I enter "ProjectCopy_1115" into the field identified by "input" labeled "Project title:"
         And I click on the link labeled "Select All"
         And I click on the button labeled "Copy project"
         Then I should see "COPY SUCCESSFUL!"
@@ -201,8 +198,7 @@ Feature: Manage Project
         Then I should see "Move project to production"
 
     Scenario: 23 - Login as admin1115
-        Given I logout
-        And I am an "admin" user who logs into REDCap
+        Given I am an "admin" user who logs into REDCap
 
     Scenario: 24 - Allow Normal Users to Move to Production
         Given I visit the "Control Center" page
@@ -212,8 +208,7 @@ Feature: Manage Project
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 25 - Login with test_user
-        Given I logout
-        And I am an "standard" user who logs into REDCap
+        Given I am a "standard" user who logs into REDCap
 
     Scenario: 26 - Move ProjectCopy_1115 to Production
         Given I click on the link labeled "My Projects"
@@ -259,16 +254,14 @@ Feature: Manage Project
         Then I should see "Project successfully deleted!"
 
     Scenario: 31 - Login with test_user
-        Given I logout
-        And I am an "standard" user who logs into REDCap
+        Given I am an "standard" user who logs into REDCap
     
-    Scenario: 32 - Diasble / Inable Longitudinal Data Collection
+    Scenario: 32 - Disable / Enable Longitudinal Data Collection
         Given I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
-        Then I should see that longitudinal mode is "Enable"
-        When I click on the element identified by "[id=setupLongiBtn]"
-        Then I should see that longitudinal mode is "Disable"
+        And I enable longitudinal mode
+        Then I should see that longitudinal mode is "enabled"
 
     Scenario: 33 - Add Event 2 in Arm 1
         Given the AJAX "GET" request at "Design/define_events_ajax.php?*" tagged by "events" is being monitored
@@ -280,30 +273,27 @@ Feature: Manage Project
         And the AJAX request tagged by "events" has completed
     
     Scenario: 34 - Add Event 1 in Arm 2
-        Given I visit the version URL "Design/define_events.php?pid=14&arm=2"
+        Given I click on the link labeled "Project Setup"
         And I click on the link labeled "+Add New Arm"
         And I enter "Arm 2" into the field identified by "[id=arm_name]"
         And I click on the input button labeled "Save"
         Then I should see "No events have been defined for this Arm"
-        When I enter "Event 1" into the field identified by "[id=descrip]"
+        And I enter "Event 1" into the input field labeled "Descriptive name for this event"
         And I click on the input button labeled "Add new event"
         Then I should see "Event 1"
     
     Scenario: 35 - Edit Designate Instruments for Arm 1
-        Given I visit the version URL "Design/designate_forms.php?pid=14&arm=1"
+        Given I click on the link labeled "Designate Instruments for My Events"
         Then I should see "Arm name:"
         And I should see "Arm 1"
-        When I click on the button labeled "Begin Editing"
-        And I click on the element identified by "[id=form_1--41]"
-        And I click on the button labeled "Save"
-    
+        And I enable the Data Collection Instrument named "Form 1" for the Event named "Event 1"
+        And I enable the Data Collection Instrument named "Form 1 2" for the Event named "Event 1"
+
     Scenario: 36 - Edit Designate Instruments for Arm 2
-        Given I visit the version URL "Design/designate_forms.php?pid=14&arm=2"
-        Given I should see "Arm name:"
+        Given I click on the link labeled "Arm 2"
+        Then I should see "Arm name:"
         And I should see "Arm 2"
-        When I click on the button labeled "Begin Editing"
-        And I click on the element identified by "[id=form_1--44]"
-        And I click on the button labeled "Save"
+        And I enable the Data Collection Instrument named "Form 1" for the Event named "Event 1"
 
     Scenario: 37 - Enable Repeatable Instruments and Events
         Given I click on the link labeled "Project Setup"

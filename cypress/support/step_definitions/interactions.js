@@ -58,7 +58,7 @@ defineParameterType({
  * @description Clicks on a button element with a specific text label.
  */
 Given("I click on the button labeled {string}", (text) => {
-    cy.get('button').contains(text).click({ force: true })
+    cy.get('button').contains(text).click()
 })
 
 /**
@@ -128,7 +128,7 @@ Given("I click on the link labeled {string}", (text) => {
  * @description Clicks on an input element with a specific text label.
  */
 Given("I click on the input button labeled {string}", (text) => {
-    cy.get('input[value="' + text + '"]').click({force: true})
+    cy.get('input[value="' + text + '"]').click()
 })
 
 /**
@@ -370,7 +370,7 @@ Given("I {click_type} the checkbox labeled {string}", (check, label) => {
 
 defineParameterType({
     name: 'elm_type',
-    regexp: /input|list item|checkbox/
+    regexp: /input|list item|checkbox|span/
 })
 
 /**
@@ -380,14 +380,22 @@ defineParameterType({
  * @param {string} label - the label associated with the checkbox field
  * @description Selects a checkbox field by its label
  */
-Given("I click on the {elm_type} element labeled {string}", (element_type, label) => {
+Given("I {click_type} the {elm_type} element labeled {string}", (click_type, element_type, label) => {
     cy.contains(label).then(($label) => {
         if(element_type === 'input'){
             cy.wrap($label).parent().find('input').click()
         } else if(element_type === 'checkbox'){
-            cy.wrap($label).parent().find('input[type=checkbox]').click()
+            if(click_type === "click on"){
+                cy.wrap($label).parent().find('input[type=checkbox]').click()
+            } else if (click_type === "check"){
+                cy.wrap($label).parent().find('input[type=checkbox]').check()
+            } else if (click_type === "uncheck"){
+                cy.wrap($label).parent().find('input[type=checkbox]').uncheck()
+            }
         } else if (element_type === "list item"){
             cy.get('li').contains(label).click()
+        } else if (element_type === "span"){
+            cy.get('span').contains(label).click()
         }
     })
 })
@@ -736,4 +744,15 @@ Given('I select {string} on the dropdown {dropdown_type} labeled {string}', (tex
             })
         }
     })
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I wait for {decimal} seconds
+ * @param {string} seconds - the number of seconds to wait - can be an integer or decimal
+ * @description Waits for a specific amount of time before moving on
+ */
+Given(/^I wait for (\d+(?:\.\d+)?) seconds$/, (seconds) => {
+    cy.wait(seconds * 1000)
 })
