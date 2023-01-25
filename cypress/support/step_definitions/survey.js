@@ -126,10 +126,6 @@ Given("I disable surveys for Project ID {int}", (pid) => {
 
     cy.get('div').contains('Use surveys in this project?').parent().within(($div) => {
         cy.get('button').contains('Disable').click()
-    }).then(() => {
-        cy.get('div').contains('Disable the usage of surveys in this project?').should('be.visible').parent().parent().within(() => {
-            cy.get('button').contains('Disable').click()
-        })
     })
 
     //Wait to make sure that the AJAX request has completed before we move onto checking data

@@ -268,13 +268,14 @@ Feature: Manage Project
         And I should see "Define My Events"
         And I click on the button labeled "Define My Events"
         Then I should see "Event 1"
-        When I enter "Event 2" into the field identified by "[id=descrip]"
+        When I enter "Event 2" into the input field labeled "Descriptive name for this event"
         And I click on the input button labeled "Add new event"
         And the AJAX request tagged by "events" has completed
     
     Scenario: 34 - Add Event 1 in Arm 2
         Given I click on the link labeled "Project Setup"
-        And I click on the link labeled "+Add New Arm"
+        Then I should see "Arm 1:"
+        And I click on the link labeled "Add New Arm"
         And I enter "Arm 2" into the field identified by "[id=arm_name]"
         And I click on the input button labeled "Save"
         Then I should see "No events have been defined for this Arm"
@@ -284,8 +285,9 @@ Feature: Manage Project
     
     Scenario: 35 - Edit Designate Instruments for Arm 1
         Given I click on the link labeled "Designate Instruments for My Events"
-        Then I should see "Arm name:"
-        And I should see "Arm 1"
+        And I click on the link labeled "Arm 1"
+        Then I should see "Event 1"
+        And I should see "Event 2"
         And I enable the Data Collection Instrument named "Form 1" for the Event named "Event 1"
         And I enable the Data Collection Instrument named "Form 1 2" for the Event named "Event 1"
 
@@ -296,23 +298,23 @@ Feature: Manage Project
         And I enable the Data Collection Instrument named "Form 1" for the Event named "Event 1"
 
     Scenario: 37 - Enable Repeatable Instruments and Events
-        Given I click on the link labeled "Project Setup"
-        Then I should see that repeatable instruments are disabled 
-        When I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
-        And I select "Repeat Instruments (repeat independently of each other)" from the dropdown identified by "[name=repeat_whole_event-41]"
-        And I click on the checkbox labeled "Form 1 2"
-        And I select "Repeat Entire Event (repeat all instruments together)" from the dropdown identified by "[name=repeat_whole_event-43]"
+        Given I click on the link labeled 'Project Setup'
+        And I should see that repeatable instruments are disabled
+        And I open the dialog box for the Repeatable Instruments and Events module
+        And I select "Repeat Instruments (repeat independently of each other)" on the dropdown table field labeled "Event 1 (Arm 1: Arm 1)"
+        And I check the checkbox labeled "Form 1 2"
+        And I select "Repeat Entire Event (repeat all instruments together)" on the dropdown table field labeled "Event 1 (Arm 2: Arm 2)"
         And I click on the button labeled "Save"
         Then I should see "Your settings for repeating instruments and/or events have been successfully saved. (The page will now reload.)"
         Then I should see that repeatable instruments are modifiable
     
     Scenario: 38 - Disable / Enable Surveys
         Given I should see that surveys are disabled
-        When I click on the element identified by "[id=setupEnableSurveysBtn]"
+        When I enable surveys for Project ID 14
         Then I should see that surveys are enabled
-        When I click on the element identified by "[id=setupEnableSurveysBtn]"
+        When I disable surveys for Project ID 14
         Then I should see that surveys are disabled
-        When I click on the element identified by "[id=setupEnableSurveysBtn]"
+        When I enable surveys for Project ID 14
         Then I should see that surveys are enabled
     
 #the following # out lines are looking for enabled/disabled surveys for specific instruments. We do not currently have a step definition for individual instrument surveys, only to check if surveys are enabled within the entire project
@@ -320,15 +322,15 @@ Feature: Manage Project
         Given I click on the button labeled "Online Designer"
         Then I should see "The Online Designer will allow you to make project modifications"
         #And I should see that surveys are enable
-            #Survevs are enable for Form 1
+        #Survevs are enable for Form 1
         #And I should see that surveys are enable
-            #Surveys are enable for Form 1 2
+        #Surveys are enable for Form 1 2
         When I click on the element identified by "button:contains('Enable'):first"
         Then I should see "Set up my survey for data collection instrument"
         When I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
-            #Survey symbol replaces Enable button. 
-                #for Form 1
+        #Survey symbol replaces Enable button.
+        #for Form 1
 
     Scenario: 40 - Delete Survey
         Given I click on the button labeled "Survey settings"
@@ -338,19 +340,19 @@ Feature: Manage Project
         And I click on the element identified by "button:contains('Delete Survey Settings'):last"
         Then I should see "Survey successfully deleted!"
         #When I click on the button labeled "-- Cancel--"
-            #when run, this gives and odd error
+        #when run, this gives and odd error
         #Then I should see that surveys are disabled
-            #Surveys are disabled for Form 1
-            #Surveys are disabled for Form 1 2 
+        #Surveys are disabled for Form 1
+        #Surveys are disabled for Form 1 2
 
     Scenario: 41 - Enable Survey for My First Instrument
         Given I click on the link labeled "Online Designer"
-            #wont need ^ this line once "--Cancel--" error is resolved
+        #wont need ^ this line once "--Cancel--" error is resolved
         When I click on the element identified by "button:contains('Enable'):first"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
-            #Surveys are enabled for Form 1
-            #Survey symbol replaces Enable button.
+        #Surveys are enabled for Form 1
+        #Survey symbol replaces Enable button.
 
     Scenario: 42 - Change Survey Status to Offline
         Given I click on the button labeled "Survey settings"
@@ -367,8 +369,12 @@ Feature: Manage Project
 
     Scenario: 44 - Open and Submit Public Survey
         Given I click on the link labeled "Survey Distribution Tools"
+        And I click on the link labeled "Public Survey Link"
         Then I should see "Using a public survey link is the simplest and fastest way to collect responses for your survey"
-        When I visit the public survey URL for Project ID 14
+
+        #This needs to be redirected somehow because it uses a window redirect which won't work in Cypress
+        When I click on the button labeled "Enable public survey"
+        And I visit the public survey URL for Project ID 14
         And I click on the element identified by "[name=submit-btn-saverecord]"
 
     Scenario: 45 - Verify Survey Responses are Read Only
@@ -539,7 +545,7 @@ Feature: Manage Project
     Scenario: 66 - Add Event 3 to Arm 1
         Given I click on the button labeled "Define My Events"
         Then I should see "Arm 1"
-        When I enter "Event 3" into the field identified by "[id=descrip]"
+        When I enter "Event 3" into the input field labeled "Descriptive name for this event"
         And I click on the input button labeled "Add new event"
         Then I should see "Event 3"
 
@@ -567,7 +573,7 @@ Feature: Manage Project
         And I click on the button labeled "Define My Events"
         Then I should see "Arm 1"
         When I click on the element identified by "img[title=Edit]:last"
-        And I enter "Event Three" into the field identified by "[id=descrip_edit]"
+        When I enter "Event Three" into the input field labeled "Descriptive name for this event"
         And I click on the input button labeled "Save"
         Then I should see "Event Three"
 
@@ -624,10 +630,8 @@ Feature: Manage Project
         And I am a "admin" user who logs into REDCap
         And I click on the link labeled "My Projects"
         Given I visit the version URL "Design/designate_forms.php?pid=14&arm=2"
-        When I click on the button labeled "Begin Editing"
-        And I click on the checkbox identified by "[id=form_1_2--44]"
-        And I click on the input button labeled "Save"
-        Then I should NOT see "[id=img--form_1--44]"
+        And I disable the Data Collection Instrument named "Form 1 2" for the Event named "Event 1"
+        And I verify the Data Collection Instrument named "Form 1 2" is disabled for the Event named "Event 1"
 
     Scenario: 74 - Submit Automatic Changes
         Given I click on the link labeled "Designer"
