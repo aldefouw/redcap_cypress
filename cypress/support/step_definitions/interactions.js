@@ -191,9 +191,9 @@ Given('I {enter_type} {string} into the input field labeled {string}', (enter_ty
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
         cy.contains(label).then(($label) => {
             if(enter_type === "enter"){
-                cy.wrap($label).parent().find('input').type(text)
+                cy.wrap($label).parent().find('input[type=text]').type(text)
             } else if (enter_type === "clear field and enter") {
-                cy.wrap($label).parent().find('input').clear().type(text)
+                cy.wrap($label).parent().find('input[type=text]').clear().type(text)
             }
         })
     })

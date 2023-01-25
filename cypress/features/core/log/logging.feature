@@ -13,7 +13,7 @@ Feature: Logging
     And I check the User Right named 'Record Locking Customization'
     And I select the User Right named "Lock/Unlock Records" and choose "Locking / Unlocking with E-signature authority"
     Then I should see "NOTICE"
-    And I close popup
+    And I click on the button labeled "Close" in the dialog box
     And I save changes within the context of User Rights
 
     #Add user 1
@@ -359,7 +359,7 @@ Feature: Logging
     And I enter "Arm 2" into the field identified by "[id=arm_name]"
     And I click on the input button labeled "Save"
     Then I should see "No events have been defined for this Arm"
-    When I enter "Event 1" into the field identified by "[id=descrip]"
+    And I enter "Event 1" into the input field labeled "Descriptive name for this event"
     And I click on the input button labeled "Add new event"
     Then I should see "Event 1"
 
@@ -367,11 +367,14 @@ Feature: Logging
     When I visit Project ID 14
     Then I click on the link labeled 'Project Setup'
     And I click on the button labeled "Designate Instruments for My Events"
-    And I visit the version URL "Design/designate_forms.php?pid=14&arm=2"
-    Then I should see "Arm 2"
-    And I click on the button labeled "Begin Editing"
-    And I click on the element identified by "[id=text_validation--42]"
-    And I click on the button labeled "Save"
+
+    #Arm 1
+    Then I should see "Arm name: "
+    And I click on the link labeled "Arm 2"
+
+    #Arm 2
+    Then I should see "Arm name: "
+    Given I enable the Data Collection Instrument named "Text Validation" for the Event named "Event 1"
 
   Scenario: 38 - Login as test_user
     Given I am a "standard" user who logs into REDCap
@@ -381,7 +384,7 @@ Feature: Logging
     And I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 2"
     And I click on the button labeled "Add new record for this arm"
-    And I enter "Arm2" into the "ptname" text input field
+    And I enter "Arm2" into the data entry form field labeled "Name"
     Then I select the submit option labeled "Save & Exit Record" on the Data Collection Instrument
 
   Scenario: 40 - Logging: filter by event - Record created-updated-deleted
@@ -414,5 +417,5 @@ Feature: Logging
     #Then I should see '[*DATA REMOVED*]' in the logging table
     #And I should see '[All data values were removed from this record\'s logging activity.]' in the logging table
 
-  Scenario: 43 - Logout
-    Given I logout
+#  Scenario: 43 - Logout
+#    Given I logout
