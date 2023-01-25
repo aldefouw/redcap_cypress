@@ -66,8 +66,7 @@ Feature: Project Status
     Given I click on the link labeled "My Projects"
     And I click on the link labeled "11_ProjectStatus_v1115" 
     And I click on the link labeled "Other Functionality"
-    When I click on the button labeled "Move back to Development status"
-      #does not ask for confirmation like in script
+    And I move the project back to development mode via the Other Functionality page
     Then I should see "The project is now back in development status."
 
   Scenario: 12 - Login as test user
@@ -93,8 +92,7 @@ Feature: Project Status
     Given I click on the link labeled "My Projects"
     And I click on the link labeled "11_ProjectStatus_v1115" 
     And I click on the link labeled "Other Functionality"
-    When I click on the button labeled "Move back to Development status"
-      #does not ask for confirmation like in script
+    And I move the project back to development mode via the Other Functionality page
     Then I should see "The project is now back in development status."
 
   Scenario: 16 - Login as test user
