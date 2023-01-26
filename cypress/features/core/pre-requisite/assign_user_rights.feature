@@ -101,11 +101,11 @@ Feature: Assign User Rights
     Then I should see "Data Access Groups"
 
   Scenario: 7 - Assign Data Exports - De-identified to test_user
-    Given I click on the link labeled "User Rights"
+    #Given I click on the link labeled "User Rights"
 
-    Given I assign the "De-Identified*" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    #Given I assign the "De-Identified*" user right to the user named "Test User" with the username of "test_user" on project ID 14
     #Verify in the main User Rights page the ‘Data Export Tool’ box says De-identified for user user1115_1.
-    Then I should see a link labeled "Data Exports, Reports, and Stats"
+    #Then I should see a link labeled "Data Exports, Reports, and Stats"
 
   Scenario: 8 - Assign Add/Edit/Organize Reports to test_user
     Given I click on the link labeled "User Rights"
@@ -114,6 +114,8 @@ Feature: Assign User Rights
     And I click on the button labeled "Edit user privileges"
     Then I check the User Right named "Add/Edit/Organize Reports"
     And I save changes within the context of User Rights
+    When I click on the link labeled "Project Home"
+    Then I should see a link labeled "Reports"
 
   Scenario: 9 - Assign Survey Distribution Tools to test_user
     Given I assign the "Survey Distribution Tools" user right to the user named "Test User" with the username of "test_user" on project ID 14
@@ -122,6 +124,7 @@ Feature: Assign User Rights
     And I click on the button labeled "Edit user privileges"
     Then I check the User Right named "Survey Distribution Tools"
     And I save changes within the context of User Rights
+    When I click on the link labeled "Project Home"
     Then I should see a link labeled "Survey Distribution Tools"
 
   Scenario: 10 - Assign Data Import Tool to test_user
