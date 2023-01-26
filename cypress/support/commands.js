@@ -634,6 +634,7 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
             let day = String(date.getDate()).padStart(2, "0"); //We are subtracting one so we know it's expired
             let month = String(date.getMonth()+1).padStart(2, "0");
             let year = date.getFullYear();
+            let expired_year = String(year - 1);
             let fullDate = `${month}/${day}/${year}`;
 
             //Validate that we set today's date by clicking on highlight in datepicker
@@ -647,12 +648,12 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
 
             cy.get('table.ui-datepicker-calendar').should('be.visible')
 
-            cy.get('.ui-datepicker-year').select('2021')
+            cy.get('select.ui-datepicker-year').scrollIntoView().should('be.visible').select(expired_year)
 
             //Select the first date from the month we are on
             cy.get('.ui-state-default').first().click()
 
-            let expiredDate = `${month}/01/${year - 1}`;
+            let expiredDate = `${month}/01/${expired_year}`;
 
             //Validate that we set an expired date
             cy.get('input#expiration').should(($expiration) => {
