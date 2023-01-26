@@ -173,6 +173,8 @@ const user_right_check_mappings = {
     'Data Access Groups' : 'data_access_groups',
     'Stats & Charts' : 'graphical',
     'Create Records' : 'record_create',
+    'Survey Distribution Tools' : 'participants',
+    'Add/Edit/Organize Reports': 'reports',
     'Rename Records' : 'record_rename',
     'Delete Records' : 'record_delete',
     'Calendar' : 'calendar',
@@ -334,6 +336,39 @@ Given("I select the option to display E-signature option for the instrument iden
  */
 Given('I scroll the user rights page to the bottom', () => {
     cy.get('input[name="api_import"]').scrollIntoView()
+})
+
+defineParameterType({
+    name: 'user_right_action',
+    regexp: /add|remove/
+})
+
+/**
+ * @module UserRights
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I (add|remove) all basic user rights for the open User Rights dialog box
+ * @description Checks or Unchecks all Basic Rights within the User Rights dialog box.
+ */
+Given('I {user_right_action} all Basic Rights within the open User Rights dialog box', (action) => {
+    //"Full Access" to Data Export Tool
+    if(action === "add"){
+        cy.get('input[name=data_export_tool]').should('be.visible').check('1')
+
+        //"No Access" to Data Export Tool
+    } else if (action === "remove"){
+        cy.get('input[name=data_export_tool]').should('be.visible').check('0')
+    }
+
+    for(var key in user_right_check_mappings) {
+        const input = cy.get('input[name="' + user_right_check_mappings[key] + '"]').scrollIntoView().should('be.visible')
+
+        if(action === "add"){
+            input.check()
+        } else if (action === "remove"){
+            input.uncheck()
+        }
+    }
+
 })
 
 
