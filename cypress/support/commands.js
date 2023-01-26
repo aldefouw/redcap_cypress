@@ -631,10 +631,10 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
             cy.get('a.ui-state-highlight').click()
 
             let date = new Date()
-            let day = String(date.getDate()).padStart(2, "0"); //We are subtracting one so we know it's expired
+            let day = String(date.getDate()).padStart(2, "0");
             let month = String(date.getMonth()+1).padStart(2, "0");
             let year = date.getFullYear();
-            let expired_year = String(year - 1);
+            let expired_year = String(year - 1); //We are subtracting one year, so we know it's expired
             let fullDate = `${month}/${day}/${year}`;
 
             //Validate that we set today's date by clicking on highlight in datepicker

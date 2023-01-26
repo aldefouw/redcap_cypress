@@ -117,7 +117,7 @@ Given("I click on the radio labeled {string} in the dialog box", (text) => {
  * @description Clicks on an anchor element with a specific text label.
  */
 Given("I click on the link labeled {string}", (text) => {
-    cy.get('a').contains(text).should('be.visible').click({force:true})
+    cy.get('a').contains(text).should('be.visible').click()
 })
 
 /**

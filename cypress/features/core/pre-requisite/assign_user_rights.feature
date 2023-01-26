@@ -10,32 +10,27 @@ Feature: Assign User Rights
 
   Scenario: Project Setup - 2
     Given I enable surveys for Project ID 14
-
-    And I click on the element identified by "[id=setupLongiBtn]"
-    And I click on the element identified by ".ui-dialog-buttonset > :nth-child(2)"
-    #And I click on the button labeled "Additional customizations"
-    When I click on the element identified by "#setupChklist-modules > table > tbody > tr > [style='padding-left:30px;'] > .chklisttext > .fs13"
-    Then I should see "You may use the options below to make customizations to the project"
-    And I click on the checkbox identified by "[id=data_resolution_enabled_chkbx]"
-    And I click on the button labeled "Save"
+    And I disable longitudinal mode
+    And I click on the button labeled "Additional customizations"
+    And I should see "You may use the options below to make customizations to the project."
+    And I check the checkbox labeled "Enable the Field Comment Log or Data Resolution Workflow (Data Queries)?"
+    And I click on the button labeled "Save" in the dialog box
+    Then I should see "Success! Your changes have been saved."
 
   Scenario: 1 - Add test_user to SecondProject_1115
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
-    And I enter "test_user" into the field identified by "[id=new_username]"
+
+    And I enter "test_user" into the username input field
     And I click on the button labeled "Add with custom rights"
-    And I click on the checkbox identified by "[name=reports]"
-    And I click on the checkbox identified by "[name=graphical]" 
-    And I click on the checkbox identified by "[name=participants]" 
-    And I click on the checkbox identified by "[name=calendar]" 
-    And I click on the checkbox identified by "[name=file_repository]"  
-    And I click on the button labeled "Add user"
-    Then I should see "was successfully added"
-    And I assign the "No Access" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    And I remove all Basic Rights within the open User Rights dialog box
+    And I save changes within the context of User Rights
+
     When I click on the link labeled "My Projects"
     Then I should see "Listed below are the REDCap projects"
+
     Given I logout
     And I am a "standard" user who logs into REDCap
     And I click on the link labeled "My Projects"
@@ -43,9 +38,7 @@ Feature: Assign User Rights
     Then I should see a link labeled "Project Home"
     And I should see a link labeled "Codebook"
     And I should see a link labeled "Record Status Dashboard"
-    And I should see a link labeled "Add / Edit Records"
-    And I should see a link labeled "Data Exports, Reports, and Stats"
-    Given I logout
+    And I should see a link labeled "View / Edit Records"
 
   Scenario: 2 - Add expiration data for test_user
     Given I am an "admin" user who logs into REDCap
@@ -60,29 +53,23 @@ Feature: Assign User Rights
     Then I should see "Your access to this particular REDCap project has expired."
     Given I logout
 
-  Scenario: 3 - Assign Project Design and Setup to test_user 
+  Scenario: 3-4 - Assign Project Design and Setup & User Rights to test_user
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
     And I remove the expiration date to user "Test User" with username of "test_user" on project ID 14
     Then I should NOT see "10/31/2022"
-    And I want to pause
-    Given I assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user" on project ID 14
-    And I click on the link labeled "test_user"
-    And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
-    Then the user right identified by "[name=design]" should be checked
-    And I verify user rights are available for "standard" user type on the path "ProjectSetup" on project ID 14
 
-  Scenario: 4 - Assign User Rights to test_user 
-    Given I assign the "User Rights" user right to the user named "Test User" with the username of "test_user" on project ID 14
-    And I click on the link labeled "test_user"
+    When I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
-    Then the user right identified by "[name=user_rights]" should be checked
+    And I click on the button labeled "Edit user privileges"
+    Then I should see 'Editing existing user "test_user"'
+    When I check the User Right named "Project Setup & Design"
+    And I check the User Right named "User Rights"
+    Then I save changes within the context of User Rights
 
-  Scenario: 5 - Verify User Rights Links Visability 
+  Scenario: 5 - Verify User Rights Links Visibility
     Given I logout
     And I am an "standard" user who logs into REDCap
     And I click on the link labeled "My Projects"
@@ -93,57 +80,72 @@ Feature: Assign User Rights
     And I should see a link labeled "User Rights"
 
   Scenario: 6 - Assign Data Access Groups to test_user
-    Given I assign the "Data Access Groups" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    When I click on the link labeled "My Projects"
+    And I click on the link labeled "SecondProject_1115"
+    And I click on the link labeled "User Rights"
+
+    Given I should see a link labeled "test_user"
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
-    Then the user right identified by "[name=data_access_groups]" should be checked
-    When I click on the link labeled "User Rights"
+    And I click on the button labeled "Edit user privileges"
+    Then I should see 'Editing existing user "test_user"'
+
+    When I check the User Right named "Data Access Groups"
+    And I save changes within the context of User Rights
+    Then I should see a link labeled "test_user"
+
+    When I click on the link labeled "Project Home"
     Then I should see a link labeled "DAGs"
 
+    When I click on the link labeled "DAGs"
+    Then I should see "Data Access Groups"
+
   Scenario: 7 - Assign Data Exports - De-identified to test_user
+    Given I click on the link labeled "User Rights"
+
     Given I assign the "De-Identified*" user right to the user named "Test User" with the username of "test_user" on project ID 14
     #Verify in the main User Rights page the ‘Data Export Tool’ box says De-identified for user user1115_1.
     Then I should see a link labeled "Data Exports, Reports, and Stats"
 
   Scenario: 8 - Assign Add/Edit/Organize Reports to test_user
-    Given I assign the "Add/Edit/Organize Reports" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I click on the link labeled "User Rights"
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
-    Then the user right identified by "[name=reports]" should be checked
+    And I click on the button labeled "Edit user privileges"
+    Then I check the User Right named "Add/Edit/Organize Reports"
+    And I save changes within the context of User Rights
 
   Scenario: 9 - Assign Survey Distribution Tools to test_user
     Given I assign the "Survey Distribution Tools" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
-    Then the user right identified by "[name=participants]" should be checked
-    When I click on the link labeled "User Rights"
+    And I click on the button labeled "Edit user privileges"
+    Then I check the User Right named "Survey Distribution Tools"
+    And I save changes within the context of User Rights
     Then I should see a link labeled "Survey Distribution Tools"
 
   Scenario: 10 - Assign Data Import Tool to test_user
     Given I assign the "Data Import Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
-    Then the user right identified by "[name=data_import_tool]" should be checked
-    When I click on the link labeled "User Rights"
+    And I click on the button labeled "Edit user privileges"
+    Then I check the User Right named "Data Import Tool"
+    And I save changes within the context of User Rights
     Then I should see a link labeled "Data Import Tool"
 
   Scenario: 11 - Assign Data Comparison Tool to test_user
     Given I assign the "Data Comparison Tool" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
-    Then the user right identified by "[name=data_comparison_tool]" should be checked
-    When I click on the link labeled "User Rights"
+    And I click on the button labeled "Edit user privileges"
+    Then I check the User Right named "Data Comparison Tool"
+    And I save changes within the context of User Rights
     Then I should see a link labeled "Data Comparison Tool"
 
   Scenario: 12 - Remove Data Exports, Data Import, and Data Comparison User Rights 
     When I click on the link labeled "test_user"  
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    And I click on the button labeled "Edit user privileges"
     Then I should see "Editing existing user"
     When I click on the element identified by ':nth-child(7) > [style="padding-top:2px;"] > :nth-child(1) > input'
     And I click on the button labeled "Save Changes"
@@ -152,7 +154,7 @@ Feature: Assign User Rights
     And I assign the "Logging" user right to the user named "Test User" with the username of "test_user" on project ID 14
     When I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    And I click on the button labeled "Edit user privileges"
     #Verify in the main User Rights page the ‘Data Export Tool’ box says No Access for user user1115_1.
     Then the user right identified by "[name=data_import_tool]" should not be checked
     And the user right identified by "[name=data_comparison_tool]" should not be checked
@@ -168,11 +170,11 @@ Feature: Assign User Rights
     And I should see link labeled "Logging"
 
   Scenario: 13 - Assign Data Quality - create/edit rules to test_user
-    Given I click on the link labeled "test_user"  
+    Given I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    And I click on the button labeled "Edit user privileges"
     Then I should see "Editing existing user"
-    When I check the user right identified by "[name=data_quality_design]"
+    When I check the User Right named "Data Quality - Create & edit rules"
     And I click on the button labeled "Save Changes"
     And I click on the link labeled "test_user"
     Then I should see "Edit user privileges"
@@ -184,20 +186,20 @@ Feature: Assign User Rights
   Scenario: 14 - Assign Data Quality - Execute rules to test_user
     Given I click on the link labeled "test_user"  
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    And I click on the button labeled "Edit user privileges"
     Then I should see "Editing existing user"
     When I check the user right identified by "[name=data_quality_execute]"
     And I click on the button labeled "Save Changes"
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    And I click on the button labeled "Edit user privileges"
     Then the user right identified by "[name=data_quality_execute]" should be checked
 
   Scenario: 15 - Assign Create Records to test_user
     Given I assign the "Create Records" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    And I click on the button labeled "Edit user privileges"
     Then the user right identified by "[name=record_create]" should be checked
     When I click on the link labeled "Add / Edit Records"
     Then I should see "Add new record"
@@ -206,7 +208,7 @@ Feature: Assign User Rights
     Given I remove the "Create Records" user right to the user named "Test User" with the username of "test_user" on project ID 14
     When I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    And I click on the button labeled "Edit user privileges"
     Then the user right identified by "[name=record_create]" should not be checked
     When I click on the link labeled "Add / Edit Records"
     Then I should NOT see "Add new record"
@@ -215,21 +217,21 @@ Feature: Assign User Rights
     Given I assign the "Rename Records" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    And I click on the button labeled "Edit user privileges"
     Then the user right identified by "[name=record_rename]" should be checked
 
   Scenario: 18 - Assign Delete Records to test_user
     Given I assign the "Delete Records" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    And I click on the button labeled "Edit user privileges"
     Then the user right identified by "[name=record_delete]" should be checked
 
   Scenario: 19 - Assign Record Locking Customization to test_user
     Given I assign the "Record Locking Customization" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    And I click on the button labeled "Edit user privileges"
     Then the user right identified by "[name=lock_record_customize]" should be checked
     When I click on the link labeled "User Rights"
     Then I should see a link labeled "Customize & Manage Locking/E-signatures"
@@ -246,7 +248,7 @@ Feature: Assign User Rights
     Given I assign the "Lock/Unlock *Entire* Records (record level)" user right to the user named "Test User" with the username of "test_user" on project ID 14
     And I click on the link labeled "test_user"
     And I should see "Edit user privileges"
-    And I click on the element identified by "[id=tooltipBtnSetCustom]"
+    And I click on the button labeled "Edit user privileges"
     Then the user right identified by "[name=lock_record_multiform]" should be checked
 
 Scenario: before step 26 
