@@ -354,7 +354,7 @@ Given('I {user_right_action} all Basic Rights within the open User Rights dialog
     if(action === "add"){
         cy.get('input[name=data_export_tool]').should('be.visible').check('1')
 
-        //"No Access" to Data Export Tool
+    //"No Access" to Data Export Tool
     } else if (action === "remove"){
         cy.get('input[name=data_export_tool]').should('be.visible').check('0')
     }

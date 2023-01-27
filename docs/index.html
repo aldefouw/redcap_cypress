@@ -123,6 +123,10 @@
                     
               
                     
+                    <li><a href='#i-click-on-the-radio-labeled-string-in-the-dialog-box'>I click on the radio labeled {string} in the dialog box</a></li>
+                    
+              
+                    
                     <li><a href='#i-click-on-the-link-labeled-string'>I click on the link labeled {string}</a></li>
                     
               
@@ -295,6 +299,10 @@
                     
               
                     
+                    <li><a href='#i-wait-for-decimal-seconds'>I wait for {decimal} seconds</a></li>
+                    
+              
+                    
                     <li><a href='#i-move-the-project-to-production-by-selection-option-string'>I move the project to production by selection option {string}</a></li>
                     
               
@@ -332,6 +340,12 @@
               
                     
                     <li><a href='#i-verify-the-data-collection-instrument-named-string-is-disabled-for-the-event-named-string'>I verify the Data Collection Instrument named {string} is disabled for the Event named {string}</a></li>
+                    
+              
+                    
+                      <h2 class="mt1 mb1">Other Functionality</h2>
+                    
+                    <li><a href='#i-move-the-project-back-to-development-mode'>I move the project back to development mode</a></li>
                     
               
                     
@@ -555,6 +569,12 @@
                     
               
                     
+                      <h2 class="mt1 mb1">Add Manage Users</h2>
+                    
+                    <li><a href='#i-wait-for-one-minute'>I wait for one minute</a></li>
+                    
+              
+                    
                       <h2 class="mt1 mb1">Test Specific/Browse Projects</h2>
                     
                     <li><a href='#i-should-see-int-rows-displayed-in-the-projects-table'>I should see {int} row(s) displayed in the projects table</a></li>
@@ -750,6 +770,10 @@
               
                     
                     <li><a href='#i-scroll-the-user-rights-page-to-the-bottom'>I scroll the user rights page to the bottom</a></li>
+                    
+              
+                    
+                    <li><a href='#i-addremove-all-basic-user-rights-for-the-open-user-rights-dialog-box'>I (add|remove) all basic user rights for the open User Rights dialog box</a></li>
                     
               
                     
@@ -2192,6 +2216,77 @@
 
 
   <p>Clicks on a button element with a specific text label in a dialog box.</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-click-on-the-radio-labeled-string-in-the-dialog-box'>
+          I click on the radio labeled {string} <span class="hljs-keyword">in</span> the dialog box
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the text on the button element you want to click
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Clicks on a radio element with a specific text label in a dialog box.</p>
 
 
   
@@ -5414,6 +5509,77 @@ cy.get(sel).select(label).should('have.value', value)
       
         
           
+          <h2 class='fl mb0 mt0' id='i-wait-for-decimal-seconds'>
+          I wait <span class="hljs-keyword">for</span> {decimal} seconds
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>seconds</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the number of seconds to wait - can be an integer or decimal
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Waits for a specific amount of time before moving on</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
           <h2 class='fl mb0 mt0' id='i-move-the-project-to-production-by-selection-option-string'>
           I move the project to production by selection option {string}
           </h2>
@@ -6046,6 +6212,65 @@ cy.get(sel).select(label).should('have.value', value)
 
 
   <p>Verifies a Data Collection Instrument is disabled for a specific Event within a Longitudinal Project. (Assumption: User is on "Designate Instruments for My Events" page.)</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            <h2 class='fl mt3 mb2' id='otherfunctionality'>Other Functionality</h3>
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-move-the-project-back-to-development-mode'>
+          I move the project back to development mode
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+
+
+  <p>Move project back to development mode</p>
 
 
   
@@ -10014,6 +10239,65 @@ cy.get(sel).select(label).should('have.value', value)
             
         
             
+            <h2 class='fl mt3 mb2' id='addmanageusers'>Add Manage Users</h3>
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-wait-for-one-minute'>
+          I wait <span class="hljs-keyword">for</span> one minute
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+
+
+  <p>Waits for a minute before allowing anything else to happen</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
             <h2 class='fl mt3 mb2' id='testspecificbrowseprojects'>Test Specific/Browse Projects</h3>
             
             
@@ -13606,6 +13890,63 @@ cy.get(sel).select(label).should('have.value', value)
   
   
   <p class='mb0'><strong>Author:</strong> <a href="mailto:rushi.patel@uhnresearch.ca">Rushi Patel</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-addremove-all-basic-user-rights-for-the-open-user-rights-dialog-box'>
+          I (add|remove) all basic user rights <span class="hljs-keyword">for</span> the open <span class="hljs-title class_">User</span> <span class="hljs-title class_">Rights</span> dialog box
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+
+
+  <p>Checks or Unchecks all Basic Rights within the User Rights dialog box.</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
   
   
 
