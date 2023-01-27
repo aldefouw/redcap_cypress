@@ -346,7 +346,7 @@ defineParameterType({
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I (add|remove) all basic user rights for the open User Rights dialog box
+ * @example I (add | remove) all basic user rights for the open User Rights dialog box
  * @description Checks or Unchecks all Basic Rights within the User Rights dialog box.
  */
 Given('I {user_right_action} all Basic Rights within the open User Rights dialog box', (action) => {
