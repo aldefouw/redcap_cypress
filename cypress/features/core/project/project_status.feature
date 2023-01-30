@@ -3,7 +3,7 @@ Feature: Project Status
   As a REDCap end user
   I want to see that Project Status is functioning as expected
 
-  Scenario: Project Setup - 1
+  Scenario: 0 - Project Setup
     Given I am an "admin" user who logs into REDCap
     And I create a project named "11_ProjectStatus_v1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
     When I click on the link labeled "User Rights"
@@ -12,7 +12,7 @@ Feature: Project Status
     And I check the User Right named 'Project Setup & Design'
     And I check the User Right named 'User Rights'
     And I check the User Right named 'Data Access Groups'
-    And I click on the button labeled "Add user"
+    And I save changes within the context of User Rights
 
   Scenario: 1 -  Login as test user
     Given I am an "standard" user who logs into REDCap
@@ -104,13 +104,15 @@ Feature: Project Status
     And I click on the link labeled "11_ProjectStatus_v1115" 
     And I click on the link labeled "Other Functionality"
     When I click on the button labeled "Mark project as Completed"
-    And I click on the button labeled "Mark project as Completed" in the dialog box
-    Then I should see 1 row displayed in the projects table
-    #there is a popup but not a "close" button. it closes on its own but takes too long which causes a timing issue
+    When I click on the button labeled "Mark project as Completed" in the dialog box
+    Then I should see "My Projects"
+    Then I should see 0 rows displayed in the projects table
 
   Scenario: 18 - Show Completed Projects
     When I click on the link labeled "Show Completed Projects"
-    Then I should see a link labeled "11_ProjectStatus_v1115"
+    Then I should see 1 row displayed in the projects table
+    And I should see a link labeled "11_ProjectStatus_v1115"
+
     When I click on the link labeled "11_ProjectStatus_v1115"
     Then I should see "NOTICE: Project was marked as Completed" 
     Then I should NOT see "Restore Project"
@@ -181,13 +183,10 @@ Feature: Project Status
     Given I click on the link labeled "Other Functionality"
     When I click on the button labeled "Move back to Production status"
     And I click on the button labeled "YES, Move to Production Status" in the dialog box
-    Then I should see "Project Status Management"
-    When I click on the link labeled "Project Home"
-    Then I should see "Project status:"
-    And I should see "Production"
+    Then I should see "Project status:  Production"
 
   Scenario: 31 -  Mark Project as Completed
-    Given I click on the link labeled "Other Functionality"
+    Given I should see a button labeled "Mark project as Completed"
     When I click on the button labeled "Mark project as Completed"
     And I click on the button labeled "Mark project as Completed" in the dialog box
     Then I should see 0 rows displayed in the projects table
