@@ -42,3 +42,14 @@ Given('I should see a row labeled {string} in the projects table', (project_name
 Given('I should see projects sorted correctly when I click on {string} to sort in either direction', (column_name) => {
     cy.check_column_sort_classes(column_name, 'td', 'span')
 })
+
+/**
+ * @module TestSpecific/BrowseProjects
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I enter {string} into the filter projects field
+ * @param {string} filter_string - string that we enter into the filter field
+ * @description Enters a string into the filter field on the Browse Projects page
+ */
+Given('I enter {string} into the filter projects field', (filter_string) => {
+    cy.get('#proj_search').clear().type(filter_string)
+})
