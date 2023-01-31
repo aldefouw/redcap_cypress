@@ -190,8 +190,8 @@ Given("I should see that the designate an email field for communications setting
  * @param {string} text - option - keep all data or delete all data
  * @description Move project to production
  */
- Given("I move the project to production by selection option {string}", (text) => {
-    cy.get(text).click()
-    cy.get('button').contains('YES, Move to Production Status').click()
+Given("I move the project to production by selection option {string}", (text) => {
+    cy.get('span').contains(text).click()
+    cy.get('button').contains('Production Status').click()
     cy.get('div#actionMsg').should('be.visible')
 })

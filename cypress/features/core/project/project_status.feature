@@ -48,7 +48,7 @@ Feature: Project Status
 
   Scenario: 8 - Move Project to Production
     When I click on the button labeled "Move project to production"
-    And I move the project to production by selection option "input#keep_data"
+    And I move the project to production by selection option "Keep ALL data saved so far"
     When I click on the link labeled "Add / Edit Records"
     Then I should see the dropdown identified by "[id=record]" labeled "-- select record --" with the options below
     | 1 |
@@ -77,7 +77,7 @@ Feature: Project Status
     Given I click on the link labeled "My Projects"
     And I click on the link labeled "11_ProjectStatus_v1115"
     When I click on the button labeled "Move project to production"
-    And I move the project to production by selection option "input#delete_data"
+    And I move the project to production by selection option "Delete ALL data"
     When I click on the link labeled "Add / Edit Records"
     Then I should see the dropdown identified by "[id=record]" labeled "-- select record --" with the options below
     | |
@@ -141,25 +141,25 @@ Feature: Project Status
     Given I click on the link labeled "My Projects"
     And I click on the link labeled "11_ProjectStatus_v1115"
     When I click on the button labeled "Move project to production"
-    And I move the project to production by selection option "input#keep_data"
+    And I move the project to production by selection option "Keep ALL data saved so far"
 
   Scenario: 24 - Move Project to Analysis/Cleanup Status
     When I click on the link labeled "Other Functionality"
     And I click on the button labeled "Move to Analysis/Cleanup status"
-    And I click on the button labeled "YES, Move to Analysis/Cleanup Status" in the dialog box
-    Then I should see "This project is currently in Analysis/Cleanup status"
+    And I click on the button labeled "YES, Move to Analysis/Cleanup Status" in the project status dialog box
+    Then I should see "Project status:  Analysis/Cleanup"
 
   Scenario: 25 - Lock Entire Record
     When I click on the link labeled "Other Functionality"
     And I click on the button labeled "Modify"
-    And I click on the button labeled "Set all project data as Read-only / Locked" in the dialog box
+    And I click on the button labeled "Set all project data as Read-only / Locked" in the project status dialog box
     Then I should see "The data in this project is currently:"
-    Then I should see "Read-only / Locked"
+    And I should see "Read-only / Locked"
 
   Scenario: 26 - Set to Editable
-    When I click on the link labeled "Other Functionality"
+    Given I should see a button labeled "Modify"
     And I click on the button labeled "Modify"
-    And I click on the button labeled "Set to Editable (existing records only)" in the dialog box
+    And I click on the button labeled "Set to Editable (existing records only)" in the project status dialog box
     Then I should see "Editable (existing records only)"
 
   Scenario: 27 - Move Back to Production Status
