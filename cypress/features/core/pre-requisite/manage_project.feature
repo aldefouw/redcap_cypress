@@ -305,44 +305,32 @@ Feature: Manage Project
     
     Scenario: 38 - Disable / Enable Surveys
         Given I should see that surveys are disabled
-        When I enable surveys for Project ID 13
+        When I enable surveys for the project
         Then I should see that surveys are enabled
-        When I disable surveys for Project ID 13
+        When I disable surveys for the project
         Then I should see that surveys are disabled
-        When I enable surveys for Project ID 13
+        When I enable surveys for the project
         Then I should see that surveys are enabled
     
     #the following # out lines are looking for enabled/disabled surveys for specific instruments. We do not currently have a step definition for individual instrument surveys, only to check if surveys are enabled within the entire project
     Scenario: 39 - Enable Survey for My First Instrument
         Given I click on the button labeled "Online Designer"
         Then I should see "The Online Designer will allow you to make project modifications"
-        #And I should see that surveys are enable
-        #Survevs are enable for Form 1
-        #And I should see that surveys are enable
-        #Surveys are enable for Form 1 2
         When I click on the element identified by "button:contains('Enable'):first"
         Then I should see "Set up my survey for data collection instrument"
         When I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
-        #Survey symbol replaces Enable button.
-        #for Form 1
 
     Scenario: 40 - Delete Survey
         Given I click on the button labeled "Survey settings"
         Then I should see "Modify survey settings for data collection instrument"
         When I click on the button labeled "Delete Survey Settings"
         Then I should see "Delete this instrument's survey settings"
-        And I click on the element identified by "button:contains('Delete Survey Settings'):last"
+        And I click on the button labeled "Delete Survey Settings" in the dialog box
         Then I should see "Survey successfully deleted!"
-        #When I click on the button labeled "-- Cancel--"
-        #when run, this gives and odd error
-        #Then I should see that surveys are disabled
-        #Surveys are disabled for Form 1
-        #Surveys are disabled for Form 1 2
 
     Scenario: 41 - Enable Survey for My First Instrument
         Given I click on the link labeled "Online Designer"
-        #wont need ^ this line once "--Cancel--" error is resolved
         When I click on the element identified by "button:contains('Enable'):first"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
@@ -351,14 +339,13 @@ Feature: Manage Project
 
     Scenario: 42 - Change Survey Status to Offline
         Given I click on the button labeled "Survey settings"
-        And I select "Survey Offline" from the dropdown identified by "[name=survey_enabled]"
+        And I select "Survey Offline" on the dropdown table field labeled "Survey Status"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
-        #Survey symbol replaces Enable button.
 
     Scenario: 43 - Change Survey Status to Active
         Given I click on the button labeled "Survey settings"
-        And I select "Survey Active" from the dropdown identified by "[name=survey_enabled]"
+        And I select "Survey Active" on the dropdown table field labeled "Survey Status"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
 
@@ -366,14 +353,14 @@ Feature: Manage Project
         Given I click on the link labeled "Survey Distribution Tools"
         And I click on the link labeled "Public Survey Link"
         Then I should see "Using a public survey link is the simplest and fastest way to collect responses for your survey"
-
-        #This needs to be redirected somehow because it uses a window redirect which won't work in Cypress
-        When I click on the button labeled "Enable public survey"
-        And I visit the public survey URL for Project ID 13
-        And I click on the element identified by "[name=submit-btn-saverecord]"
+        And I visit the public survey URL for this project
+        And I enter "User Name Here" into the "Name" survey text input field
+        And I click on the button labeled "Submit"
+        Then I should see "Thank you"
 
     Scenario: 45 - Verify Survey Responses are Read Only
         Given I am an "standard" user who logs into REDCap
+        Then I should see a link labeled "My Projects"
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Add / Edit Records"
@@ -421,8 +408,6 @@ Feature: Manage Project
         Given I click on the button labeled "Move project to production"
         Then I should see "Move Project To Production Status?"
         When I move the project to production by selection option "Keep ALL data saved so far"
-        And I click on the button labeled "YES, Move to Production Status"
-            #detaches
         Then I should see "Success! The project is now in production."
 
     Scenario: 53 - Enter Draft Mode and Verify Can Not Delete an Event
@@ -530,12 +515,16 @@ Feature: Manage Project
         Given I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
-        #when run this next section  makes everything following fail
-        #And I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
-        #This doesnt actually open so it cant find the close button however it is open at the beginning of 66
-        #Then I should see "Please be aware that if you uncheck any of the instruments or events that have currently been set as a repeating instrument or repeating event"
-        #When I click on the button labeled "Close"
-        #And I click on the button labeled "Cancel"
+
+        And I open the dialog box for the Repeatable Instruments and Events module
+        And I select "Repeat Instruments (repeat independently of each other)" on the dropdown table field labeled "Event 1 (Arm 1: Arm 1)"
+
+        Then I should see "Please be aware that if you uncheck any of the instruments or events that have currently been set as a repeating instrument or repeating event"
+
+        Given I close popup
+
+        Then I should see "Cancel"
+        And I click on the button labeled "Cancel" in the dialog box
 
     Scenario: 66 - Add Event 3 to Arm 1
         Given I click on the button labeled "Define My Events"
@@ -553,10 +542,9 @@ Feature: Manage Project
 
     Scenario: 68 - Verify Can Not Edit Event 3
         Given I click on the link labeled "Arm 1"
-        Then I should see "Arm 1"
-        When I click on the element identified by "#row_a43 > a > img"
-        Then I should see "Sorry, but events can only be renamed by REDCap administrators when a project is in production status"
-        When I click on the button labeled "Close"
+        And I verify I cannot change the Event Name of "Event 3" while in production
+        And I should see "events can only be renamed by REDCap administrators"
+        And I click on the button labeled "Close" in the dialog box
         Then I should see "Event 3"
  
     Scenario: 69 - Edit Event 3 
@@ -567,9 +555,7 @@ Feature: Manage Project
         And I click on the link labeled "Project Setup"
         And I click on the button labeled "Define My Events"
         Then I should see "Arm 1"
-        When I click on the element identified by "img[title=Edit]:last"
-        When I enter "Event Three" into the input field labeled "Descriptive name for this event"
-        And I click on the input button labeled "Save"
+        And I change the current Event Name from "Event 3" to "Event Three"
         Then I should see "Event Three"
 
     Scenario: 70 - Attempt to Remane Arm 2
@@ -610,20 +596,15 @@ Feature: Manage Project
         And I click on the button labeled "Designate Instruments for My Events"
         Then I should see "Data Collection Instrument"
         When I click on the link labeled "Arm 2"
-        And I click on the button labeled "Begin Editing"
         Then I should see "Since this project is in production, only REDCap administrators are allowed to uncheck any instruments that are already designated"
-        When I click on the checkbox identified by "[id=form_1_2--44]"
-        And I click on the button labeled "Save"
-        When I click on the button labeled "Begin Editing"
-            #detaches 
-        Then I should see "Since this project is in production, only REDCap administrators are allowed to uncheck any instruments that are already designated"
-        And I should see "[id=form_1--41] checked='disabled']"
-            #'Designation is grayed out and undesignation not possible.'
+        When I enable the Data Collection Instrument named "Form 1 2" for the Event named "Event 1"
+        And I verify the Data Collection Instrument named "Form 1 2" is enabled for the Event named "Event 1"
 
     Scenario: 73 - Uncheck Instrument Designation
         Given I logout
         And I am a "admin" user who logs into REDCap
         And I click on the link labeled "My Projects"
+        And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
         And I click on the link labeled "Designate Instruments for My Events"
         And I click on the link labeled "Arm 2"
