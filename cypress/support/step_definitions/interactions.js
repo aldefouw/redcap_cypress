@@ -345,6 +345,11 @@ defineParameterType({
     regexp: /click on|check|uncheck/
 })
 
+defineParameterType({
+    name: 'checkbox_field_type',
+    regexp: /checkbox|checkbox in table/
+})
+
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -352,17 +357,26 @@ defineParameterType({
  * @param {string} label - the label associated with the checkbox field
  * @description Selects a checkbox field by its label
  */
-Given("I {click_type} the checkbox labeled {string}", (check, label) => {
+Given("I {click_type} the {checkbox_field_type} labeled {string}", (check, field_type, label) => {
     let sel = `:contains("${label}"):visible`
 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+
+        let selector = null
+
         cy.contains(label).then(($label) => {
+            if(field_type === "checkbox in table"){
+                selector = cy.wrap($label).parentsUntil('tr').parent().first().find('input[type=checkbox]')
+            } else {
+                selector = cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]')
+            }
+
             if(check === "click on"){
-                cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]').click()
+                selector.click()
             } else if (check === "check"){
-                cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]').check()
+                selector.check()
             } else if (check === "uncheck"){
-                cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]').uncheck()
+                selector.uncheck()
             }
         })
     })

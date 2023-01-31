@@ -365,8 +365,7 @@ Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector) => {
 })
 
 
-Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format = "DMY") => {
-    cy.visit_version({page: 'Design/data_dictionary_upload.php', params: 'pid=' + pid})
+Cypress.Commands.add('upload_data_dictionary', (fixture_file, date_format = "DMY") => {
     cy.upload_file('/dictionaries/' + fixture_file, 'csv', 'input[name="uploadedfile"]')
 
     cy.wait(500)

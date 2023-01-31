@@ -124,6 +124,7 @@ defineParameterType({
  */
 Given("I open the dialog box for the Repeatable Instruments and Events module", () => {
     cy.get('#enableRepeatingFormsEventsBtn').click();
+    cy.get('div.ui-dialog').contains('Repeatable instruments')
 })
 
 /**

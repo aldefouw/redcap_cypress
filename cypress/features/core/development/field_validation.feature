@@ -24,9 +24,8 @@ Feature: Field Validation
 
     And I click on the link labeled "Add / Edit Records"
 
-    And I select "1" from the dropdown identified by "[id=record]"
-    #And I select "1" on the dropdown field labeled "-- select record --"
-      #this fails ?
+    And I select record ID "1" from arm name "Arm 1: Arm 1" on the Add / Edit record page
+
     When I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms/events)"
     And I click on the button labeled "DELETE RECORD" in the dialog box
@@ -37,12 +36,11 @@ Feature: Field Validation
     And I disable surveys
     And I disable longitudinal mode
 
-    When I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
-      #we have a "I enable surveys for Project ID" and a "I should see that repeatable instruments are enable/disable/modify" but not a "I modify repeatable instruments ..."
-    And I click on the checkbox identified by "[name=repeat_form-41-data_types]"
-      #doesnt have a label to identify 
+    And I open the dialog box for the Repeatable Instruments and Events module
+    And I check the checkbox in table labeled "Text Validation"
     And I click on the button labeled "Save" in the dialog box
-    And I should see that repeatable instruments are disabled
+
+    And I should see that repeatable instruments are modifiable
     And I should see that auto-numbering is "enabled"
     And I should see that the scheduling module is "disabled"
     And I should see that the randomization module is "disabled"
@@ -56,8 +54,8 @@ Feature: Field Validation
     And I click on the link labeled "FirstProject_1115"
 
   Scenario: 3 - Upload Data Dictionary
-    Given I upload a data dictionary located at "core/08_FieldValidation_v1115_DataDictionary.csv" to project ID 14
-    #fails because project is not in production (and not in draft mode) so box reads "Changes Made Successfully!" and not "Changes to the DRAFT have been made successfully!"
+    When I click on the button labeled "Data Dictionary"
+    And I upload the data dictionary located at "core/08_FieldValidation_v1115_DataDictionary.csv"
     Then I should see "Changes Made Successfully!"
     
   Scenario: 4 - Open Text Validation Instrument 
@@ -107,10 +105,8 @@ Feature: Field Validation
     When I enter "01-31-2022" into the data entry form field labeled "Date (D-M-Y)"
     Then I should see "The value you provided could not be validated because it does not follow the expected format. Please try again." 
     Given I clear the field and enter "31-01-2022" into the "val_date_dmy" text input field
-    #Given I clear the field labeled "Date (D-M-Y)"
-    #And I enter "31-01-2022" into the input field labeled "Date (D-M-Y)"
-      #I think these two should work if we wanted to avoid the "val_date_dmy" but the individual clear the field step def doesnt recognize field label
     And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
+    Then I should see "Record ID 1 successfully edited"
 
   Scenario: 10 - DateTime (M-D-Y H:M) Field
     When I enter "01-31-2022" into the data entry form field labeled "DateTime (M-D-Y H:M)"
