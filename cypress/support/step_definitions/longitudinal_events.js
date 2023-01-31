@@ -26,6 +26,47 @@ Given("I delete the Event Name of {string}", (event_name) => {
 /**
  * @module LongitudinalEvents
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I add an event named {string} into the currently selected arm
+ * @param {string} event_name - the name of the event
+ * @description Adds an event via the "Define My Events" page for a Longitudinal Project
+ */
+Given("I add an event named {string} into the currently selected arm", (event_name) => {
+   cy.intercept({
+      method: 'GET',
+      url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/define_events_ajax.php?*"
+   }).as("add_event")
+
+   let sel = `:contains(Descriptive name for this event)`
+
+   cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+      cy.contains('Descriptive name for this event').then(($label) => {
+         cy.wrap($label).parent().find('input').type(event_name)
+      })
+   })
+
+   //Tried doing this with the Cypress recommended way but it failed because behvaior is inconsistent!
+   //See example: https://glebbahmutov.com/blog/detect-page-reload/
+   //cy.window().then(w => w.beforeReload = true)
+   //cy.window().should('have.prop', 'beforeReload', true)
+
+   cy.get("#addbutton").click()
+
+   cy.wait("@add_event")
+   cy.get('#progress').should('not.be', 'visible')
+   cy.get('div#working').should('not.be', 'visible')
+
+   // The behavior is not consistent from one load to the next ...
+   // So we get stuck with fixed wait rather than doing something in Cypress recommended fashion.
+   // The code with cy.window() worked intermittently, so I guess we are better off waiting
+   cy.wait(3000)
+
+   //Make sure that we've reloaded (we will know if the variable is no longer there!)
+   //cy.window().should('not.have.prop', 'beforeReload')
+})
+
+/**
+ * @module LongitudinalEvents
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I enable the Data Collection Instrument named {string} for the Event named {string}
  * @param {string} instrument_name - the name of the Data Collection Instrument we are enabling for a specific event
  * @param {string} event_name - the name of the event to enable the Data Collection Instrument for

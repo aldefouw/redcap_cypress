@@ -118,6 +118,22 @@ Given("I click on the radio labeled {string} in the dialog box", (text) => {
  */
 Given("I click on the link labeled {string}", (text) => {
     cy.get('a').contains(text).should('be.visible').click()
+
+    // cy.location().then((loc) => {
+    //     const current_url = loc.href
+    //
+    //     cy.get('a').contains(text).then(($text) => {
+    //         //If we are staying on the same page, we need to force the click since element is guaranteed to detach
+    //         if(current_url === $text[0]['href']){
+    //             $text[0].click({ force: true })
+    //
+    //         //In all other cases, let's do a standard click
+    //         } else {
+    //             $text[0].click()
+    //         }
+    //     })
+    //
+    // })
 })
 
 /**

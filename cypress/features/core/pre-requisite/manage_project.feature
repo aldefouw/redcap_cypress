@@ -190,11 +190,13 @@ Feature: Manage Project
         And I should see "Erase all data"
 
     Scenario: 22 - Cancel Move Project to Production
-        Given I click on the link labeled "Project Setup"
-        And I click on the button labeled "Move project to production"
-        And I click on the element identified by "[id=keep_data]"
+        Given I should see a link labeled "Project Setup"
+        And I click on the link labeled "Project Setup"
+
+        When I click on the button labeled "Move project to production"
         Then I should see "Yes, Request Admin to Move to Production Status"
-        When I click on the button labeled "Cancel"
+
+        When I click on the button labeled "Cancel" in the dialog box
         Then I should see "Move project to production"
 
     Scenario: 23 - Login as admin1115
@@ -213,11 +215,10 @@ Feature: Manage Project
     Scenario: 26 - Move ProjectCopy_1115 to Production
         Given I click on the link labeled "My Projects"
         And I click on the link labeled "ProjectCopy_1115"
-        And I click on the link labeled "Project Setup"
+        Then I should see "Project Setup"
+        When I click on the link labeled "Project Setup"
         And I click on the button labeled "Move project to production"
-        Then I should see "YES, Move to Production Status"
-        When I click on the element identified by "[id=keep_data]"
-        And I click on the button labeled "YES, Move to Production Status"
+        When I move the project to production by selection option "Keep ALL data saved so far"
         Then I should see "Success! The project is now in production."
 
     Scenario: 27 - Other Functionality Tab Options Visibility
@@ -264,23 +265,17 @@ Feature: Manage Project
         Then I should see that longitudinal mode is "enabled"
 
     Scenario: 33 - Add Event 2 in Arm 1
-        Given the AJAX "GET" request at "Design/define_events_ajax.php?*" tagged by "events" is being monitored
-        And I should see "Define My Events"
+        Given I see "Define My Events"
         And I click on the button labeled "Define My Events"
         Then I should see "Event 1"
-        When I enter "Event 2" into the input field labeled "Descriptive name for this event"
-        And I click on the input button labeled "Add new event"
-        And the AJAX request tagged by "events" has completed
+        Given I add an event named "Event 2" into the currently selected arm
     
     Scenario: 34 - Add Event 1 in Arm 2
-        Given I click on the link labeled "Project Setup"
-        Then I should see "Arm 1:"
-        And I click on the link labeled "Add New Arm"
+        When I click on the link labeled "Add New Arm"
         And I enter "Arm 2" into the field identified by "[id=arm_name]"
         And I click on the input button labeled "Save"
         Then I should see "No events have been defined for this Arm"
-        And I enter "Event 1" into the input field labeled "Descriptive name for this event"
-        And I click on the input button labeled "Add new event"
+        Given I add an event named "Event 1" into the currently selected arm
         Then I should see "Event 1"
     
     Scenario: 35 - Edit Designate Instruments for Arm 1
@@ -310,14 +305,14 @@ Feature: Manage Project
     
     Scenario: 38 - Disable / Enable Surveys
         Given I should see that surveys are disabled
-        When I enable surveys for Project ID 14
+        When I enable surveys for Project ID 13
         Then I should see that surveys are enabled
-        When I disable surveys for Project ID 14
+        When I disable surveys for Project ID 13
         Then I should see that surveys are disabled
-        When I enable surveys for Project ID 14
+        When I enable surveys for Project ID 13
         Then I should see that surveys are enabled
     
-#the following # out lines are looking for enabled/disabled surveys for specific instruments. We do not currently have a step definition for individual instrument surveys, only to check if surveys are enabled within the entire project
+    #the following # out lines are looking for enabled/disabled surveys for specific instruments. We do not currently have a step definition for individual instrument surveys, only to check if surveys are enabled within the entire project
     Scenario: 39 - Enable Survey for My First Instrument
         Given I click on the button labeled "Online Designer"
         Then I should see "The Online Designer will allow you to make project modifications"
@@ -359,7 +354,7 @@ Feature: Manage Project
         And I select "Survey Offline" from the dropdown identified by "[name=survey_enabled]"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
-            #Survey symbol replaces Enable button.
+        #Survey symbol replaces Enable button.
 
     Scenario: 43 - Change Survey Status to Active
         Given I click on the button labeled "Survey settings"
@@ -374,7 +369,7 @@ Feature: Manage Project
 
         #This needs to be redirected somehow because it uses a window redirect which won't work in Cypress
         When I click on the button labeled "Enable public survey"
-        And I visit the public survey URL for Project ID 14
+        And I visit the public survey URL for Project ID 13
         And I click on the element identified by "[name=submit-btn-saverecord]"
 
     Scenario: 45 - Verify Survey Responses are Read Only
@@ -403,7 +398,7 @@ Feature: Manage Project
         And I am an "standard" user who logs into REDCap
 
     Scenario: 49 - Edit User Rights for test_user
-        Given I change survey edit rights for "test_user" user on the form called "Form 1" on project ID 14
+        Given I change survey edit rights for "test_user" user on the form called "Form 1" on project ID 13
 
     Scenario: 50 - Verify Survey Responses are Visible and Editable
         Given I click on the link labeled "Add / Edit Records"
@@ -425,7 +420,7 @@ Feature: Manage Project
     Scenario: 52 - Move FirstProject_1115 to Production
         Given I click on the button labeled "Move project to production"
         Then I should see "Move Project To Production Status?"
-        When I click on the element identified by "[id=keep_data]"
+        When I move the project to production by selection option "Keep ALL data saved so far"
         And I click on the button labeled "YES, Move to Production Status"
             #detaches
         Then I should see "Success! The project is now in production."
@@ -506,7 +501,7 @@ Feature: Manage Project
         Then I should see "Since this project is currently in PRODUCTION"
         When I click on the link labeled "Project Setup"
         #Then I should see that repeatable instruments are Disable
-            #'Verify the Repeatable instruments and events “Modify” button is disabled.' not verify that repeatable instruments are "Enable". button should still say "modify" but be greyed out.  
+        #'Verify the Repeatable instruments and events “Modify” button is disabled.' not verify that repeatable instruments are "Enable". button should still say "modify" but be greyed out.
         When I click on the button labeled "Define My Events"
         #And I click on the element identified by "[title=Edit]"
         Then I should see "Events cannot be modified in production status"
@@ -535,9 +530,9 @@ Feature: Manage Project
         Given I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
-#when run this next section  makes everything following fail 
+        #when run this next section  makes everything following fail
         #And I click on the element identified by "[id=enableRepeatingFormsEventsBtn]"
-            #This doesnt actually open so it cant find the close button however it is open at the beginning of 66
+        #This doesnt actually open so it cant find the close button however it is open at the beginning of 66
         #Then I should see "Please be aware that if you uncheck any of the instruments or events that have currently been set as a repeating instrument or repeating event"
         #When I click on the button labeled "Close"
         #And I click on the button labeled "Cancel"
@@ -629,7 +624,9 @@ Feature: Manage Project
         Given I logout
         And I am a "admin" user who logs into REDCap
         And I click on the link labeled "My Projects"
-        Given I visit the version URL "Design/designate_forms.php?pid=14&arm=2"
+        And I click on the link labeled "Project Setup"
+        And I click on the link labeled "Designate Instruments for My Events"
+        And I click on the link labeled "Arm 2"
         And I disable the Data Collection Instrument named "Form 1 2" for the Event named "Event 1"
         And I verify the Data Collection Instrument named "Form 1 2" is disabled for the Event named "Event 1"
 
