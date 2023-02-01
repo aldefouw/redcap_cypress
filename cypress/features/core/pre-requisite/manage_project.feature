@@ -134,7 +134,7 @@ Feature: Manage Project
         Given I click on the link labeled "Project Setup"
         And I click on the button labeled "Modify project title, purpose, etc."
         Then I should see "Modify Project Settings"
-        When I select "Practice / Just for fun" from the dropdown identified by "[name=purpose]"
+        And I select "Practice / Just for fun" on the dropdown table field labeled "Project's purpose:"
         When I click on the button labeled "Save"
         Then I should see "Success! Your changes have been saved."
 
@@ -205,7 +205,7 @@ Feature: Manage Project
     Scenario: 24 - Allow Normal Users to Move to Production
         Given I visit the "Control Center" page
         When I click on the link labeled "User Settings"
-        And I select "Yes, normal users can move projects to production" from the dropdown identified by "select[name=superusers_only_move_to_prod]"
+        And I select "Yes, normal users can move projects to production" on the dropdown field labeled "Allow normal users to move projects to production?"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
@@ -242,15 +242,17 @@ Feature: Manage Project
         When I click on the button labeled "Cancel"
         Then I should see "Delete the project"
 
-#This step frequently becomes detached from DOM
+    #This step frequently becomes detached from DOM
     Scenario: 30 - Delete Project ProjectCopy_1115
         Given the AJAX "POST" request at "ProjectGeneral/delete_project.php?*" tagged by "delete_project" is being monitored
         And I click on the button labeled "Delete the project"
         And the AJAX request tagged by "delete_project" has completed
         Then I should see 'Deleting the project named "FirstProject_1115ProjectCopy_1115'
+        #And I enter "DELETE" into the input field labeled 'TYPE "DELETE" BELOW'
         And I enter "DELETE" into the field identified by "[id=delete_project_confirm]"
         Then I should see "Deleting the project named"
-        When I click on the element identified by "button:contains('Delete the project'):last"
+        When I click on the button labeled "Delete the project" in the dialog box
+        #When I click on the element identified by "button:contains('Delete the project'):last"
         And I click on the button labeled "Yes, delete the project"
         Then I should see "Project successfully deleted!"
 
@@ -328,9 +330,10 @@ Feature: Manage Project
         Then I should see "Delete this instrument's survey settings"
         And I click on the button labeled "Delete Survey Settings" in the dialog box
         Then I should see "Survey successfully deleted!"
+        And I close popup
+        Then I should see "Data Collection Instruments"
 
     Scenario: 41 - Enable Survey for My First Instrument
-        Given I click on the link labeled "Online Designer"
         When I click on the element identified by "button:contains('Enable'):first"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
@@ -364,9 +367,9 @@ Feature: Manage Project
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Add / Edit Records"
-        And I select "1" from the dropdown identified by "[id=record]"
+        And I select record ID "1" from arm name "Arm 1: Arm 1" on the Add / Edit record page
         Then I should see "Record Home Page"
-        When I click on the element identified by ".odd > .nowrap > a > img"
+        When I click the bubble to select a record for the "Form 1(survey)" longitudinal instrument on event "Event 1"
         Then I should see "Survey response is read-only"
 
     Scenario: 46 - Login as admin1115
@@ -376,7 +379,7 @@ Feature: Manage Project
     Scenario: 47 - Allow Users to Edit Survey Responses
         Given I visit the "Control Center" page
         When I click on the link labeled "User Settings"
-        And I select "Enabled" from the dropdown identified by "select[name=enable_edit_survey_response]"
+        And I select "Enabled" on the dropdown field labeled "Allow users to edit survey responses?"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
@@ -389,9 +392,9 @@ Feature: Manage Project
 
     Scenario: 50 - Verify Survey Responses are Visible and Editable
         Given I click on the link labeled "Add / Edit Records"
-        And I select "1" from the dropdown identified by "[id=record]"
+        And I select record ID "1" from arm name "Arm 1: Arm 1" on the Add / Edit record page
         Then I should see "Record Home Page"
-        When I click on the element identified by ".odd > .nowrap > a > img"
+        When I click the bubble to select a record for the "Form 1(survey)" longitudinal instrument on event "Event 1"
         And I should see "Survey response is editable"
         And I should see "Edit response"
 
@@ -400,7 +403,7 @@ Feature: Manage Project
         Then I should see that the designate an email field for communications setting is "Enable"
         When I click on the element identified by "[id=enableSurveyPartEmailFieldBtn]"
         Then I should see "Choose an email field to use for invitations to survey participants:"
-        When I select "email" from the dropdown identified by "[id=surveyPartEmailFieldName]"
+        When I select "email" on the dropdown field labeled "Choose an email field to use for invitations to survey participants:"
         And I click on the button labeled "Save"
         Then I should see that the designate an email field for communications setting is "Disable"
 
@@ -425,17 +428,13 @@ Feature: Manage Project
         Given I click on the link labeled "Designer"
         Then I should see "Since this project is currently in PRODUCTION"
         When I click on the link labeled "Form 1"
-        And I click on the element identified by "input[id=btn-last]"
-        And I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[name=field_type]"
-        And I enter "Text2" into the field identified by "[id=field_label]"
-        And I enter "text2" into the field identified by "[id=field_name]"
-        And I click on the button labeled "Save"
+        When I add a new Text Box field labeled "Text2" with variable name "text2"
         Then I should see "Variable: text2"
         When I click on the input button labeled "Submit Changes for Review"
         Then I should see "SUBMIT CHANGES FOR REVIEW?"
         When I click on the button labeled "Submit"
         #Then I should see "Awaiting review of project changes"
-            #should see if email sends
+        #should see if email sends
 
     Scenario: 55 - Login as admin1115
         Given I logout
@@ -455,7 +454,7 @@ Feature: Manage Project
     Scenario: 57 - Allow Users to Make Draft Mode Changes
         Given I visit the "Control Center" page
         When I click on the link labeled "User Settings"
-        And I select "Yes, if project has no records OR if has records and no critical issues exist" from the dropdown identified by "[name=auto_prod_changes]"
+        And I select "Yes, if project has no records OR if has records and no critical issues exist" on the dropdown field labeled "Allow production Draft Mode changes to be approved automatically under certain conditions?"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
@@ -470,11 +469,7 @@ Feature: Manage Project
         Then I should see "The project is currently in PRODUCTION status"
         And I click on the input button labeled "Enter Draft Mode"
         And I click on the link labeled "Form 1"
-        And I click on the element identified by "input[id=btn-last]"
-        And I select "Text Box (Short Text, Number, Date/Time, ...)" from the dropdown identified by "[name=field_type]"
-        And I enter "Text2" into the field identified by "[id=field_label]"
-        And I enter "text2" into the field identified by "[id=field_name]"
-        And I click on the button labeled "Save"
+        When I add a new Text Box field labeled "Text2" with variable name "text2"
         Then I should see "Variable: text2"
         When I click on the input button labeled "Submit Changes for Review"
         And I click on the button labeled "Submit"
@@ -502,8 +497,8 @@ Feature: Manage Project
     Scenario: 63 - Allow Normal Users to Modify the Repeatable Instruments & Events
         Given I click on the link labeled "Control Center"
         And I click on the link labeled "User Settings"
-        And I select "Yes, normal users can modify the repeatable instance setup in production" from the dropdown identified by "select[name=enable_edit_prod_repeating_setup]"
-        And I select "Yes, normal users can add/modify events in production" from the dropdown identified by "select[name=enable_edit_prod_events]"
+        And I select "Yes, normal users can modify the repeatable instance setup in production" on the dropdown field labeled "Allow normal users to modify the 'Repeatable Instruments & Events' settings for projects while in production status?"
+        And I select "Yes, normal users can add/modify events in production" on the dropdown field labeled "Allow normal users to add or modify events and arms on the Define My Events page for longitudinal projects while in production status?"
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
@@ -516,6 +511,7 @@ Feature: Manage Project
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
 
+        And I should see "Enable optional modules and customizations"
         And I open the dialog box for the Repeatable Instruments and Events module
         And I select "Repeat Instruments (repeat independently of each other)" on the dropdown table field labeled "Event 1 (Arm 1: Arm 1)"
 
@@ -606,7 +602,8 @@ Feature: Manage Project
         And I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
-        And I click on the link labeled "Designate Instruments for My Events"
+        And I should see "Designate Instruments for My Events"
+        And I click on the button labeled "Designate Instruments for My Events"
         And I click on the link labeled "Arm 2"
         And I disable the Data Collection Instrument named "Form 1 2" for the Event named "Event 1"
         And I verify the Data Collection Instrument named "Form 1 2" is disabled for the Event named "Event 1"
@@ -618,9 +615,14 @@ Feature: Manage Project
         Then I should see "SUBMIT CHANGES FOR REVIEW?"
         When I click on the button labeled "Submit"
         Then I should see "SUCCESS! The changes you just submitted were made AUTOMATICALLY."
+        And I click on the button labeled "Close" in the dialog box
 
     Scenario: 75 - Confirm One Record and Two Instruments 
         Given I click on the link labeled "Record Status Dashboard"
         Then I should see a link labeled "1"
         And I should see a link labeled "Arm 1"
         And I should see a link labeled "Arm 2"
+        #Looks silly to look for "1records" - but in this case there is no space in the actual HTML!  (Spacing is handled by margin on the span!)
+        And I should see "1records"
+        And I should see "Form 1"
+        And I should see "Form 1 2"
