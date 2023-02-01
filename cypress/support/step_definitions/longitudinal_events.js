@@ -137,3 +137,16 @@ Given("I {enter_type} {string} into the Arm name field", (enter_type, arm_name) 
       cy.get('input[id=arm_name]').type(arm_name)
    }
 })
+
+/**
+ * @module LongitudinalEvents
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I should NOT see options to Edit or Delete events
+ * @description Verifies that user cannot see options to Edit or Delete events
+ */
+Given("I should NOT see options to Edit or Delete events", () => {
+   cy.get('table[id="event_table"]').within(() => {
+      cy.get('img[title=Delete]').should('not.exist')
+      cy.get('img[title=Edit]').should('not.exist')
+   })
+})

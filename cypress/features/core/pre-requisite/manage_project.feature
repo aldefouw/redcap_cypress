@@ -310,7 +310,10 @@ Feature: Manage Project
     Scenario: 39 - Enable Survey for My First Instrument
         Given I click on the button labeled "Online Designer"
         Then I should see "The Online Designer will allow you to make project modifications"
+
+        #TODO: Convert this to an English-friendly step definition for enabling a specific survey instrument
         When I click on the element identified by "button:contains('Enable'):first"
+
         Then I should see "Set up my survey for data collection instrument"
         When I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
@@ -326,7 +329,10 @@ Feature: Manage Project
         Then I should see "Data Collection Instruments"
 
     Scenario: 41 - Enable Survey for My First Instrument
+
+        #TODO: Convert this to an English-friendly step definition for enabling a specific survey instrument
         When I click on the element identified by "button:contains('Enable'):first"
+
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
         #Surveys are enabled for Form 1
@@ -414,9 +420,10 @@ Feature: Manage Project
         And I click on the button labeled "Define My Events"
 
         Then I should see "Record Status Dashboard"
-        And I should see a link labeled "Form 1"
-        And I should see a link labeled "Form 1 2"
-        #Then I should NOT see "[title=Delete]"
+        And I should see "Event 1"
+        And I should see "Event 2"
+        And I should see "Events cannot be modified in production status except by a REDCap administrator."
+        And I should NOT see options to Edit or Delete events
 
     Scenario: 54 - Add New Field and Submit Changes for Review
         Given I click on the link labeled "Designer"
@@ -475,8 +482,6 @@ Feature: Manage Project
         Then I should see "Since this project is currently in PRODUCTION"
         When I click on the link labeled "Project Setup"
         And I should see that repeatable instruments are modifiable
-        #Then I should see that repeatable instruments are Disable
-        #'Verify the Repeatable instruments and events “Modify” button is disabled.' not verify that repeatable instruments are "Enable". button should still say "modify" but be greyed out.
         When I click on the button labeled "Define My Events"
         #And I click on the element identified by "[title=Edit]"
         Then I should see "Events cannot be modified in production status"
