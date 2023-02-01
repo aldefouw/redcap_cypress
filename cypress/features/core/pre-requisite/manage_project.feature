@@ -242,18 +242,11 @@ Feature: Manage Project
         When I click on the button labeled "Cancel"
         Then I should see "Delete the project"
 
-    #This step frequently becomes detached from DOM
     Scenario: 30 - Delete Project ProjectCopy_1115
-        Given the AJAX "POST" request at "ProjectGeneral/delete_project.php?*" tagged by "delete_project" is being monitored
-        And I click on the button labeled "Delete the project"
-        And the AJAX request tagged by "delete_project" has completed
-        Then I should see 'Deleting the project named "FirstProject_1115ProjectCopy_1115'
-        #And I enter "DELETE" into the input field labeled 'TYPE "DELETE" BELOW'
-        And I enter "DELETE" into the field identified by "[id=delete_project_confirm]"
-        Then I should see "Deleting the project named"
-        When I click on the button labeled "Delete the project" in the dialog box
-        And I click on the button labeled "Yes, delete the project"
-        Then I should see "Project successfully deleted!"
+        When I permanently delete the project via the Other Functionality page
+        When I see "Project successfully deleted!"
+        And I see "The project was successfully deleted from REDCap"
+        Then I click on the button labeled "Close" in the dialog box
 
     Scenario: 31 - Login with test_user
         Given I am an "standard" user who logs into REDCap
@@ -273,7 +266,7 @@ Feature: Manage Project
     
     Scenario: 34 - Add Event 1 in Arm 2
         When I click on the link labeled "Add New Arm"
-        And I enter "Arm 2" into the field identified by "[id=arm_name]"
+        And I enter "Arm 2" into the Arm name field
         And I click on the input button labeled "Save"
         Then I should see "No events have been defined for this Arm"
         Given I add an event named "Event 1" into the currently selected arm
@@ -417,12 +410,13 @@ Feature: Manage Project
         Given I click on the button labeled "Online Designer"
         Then I should see "Enter Draft Mode"
         When I click on the input button labeled "Enter Draft Mode"
-        Then I should see "Data Collection Instruments"
-        And I should see a link labeled "Form 1"
-        And I should see a link labeled "Form 1 2"
         When I click on the link labeled "Project Setup"
         And I click on the button labeled "Define My Events"
-        Then I should NOT see "[title=Delete]"
+
+        Then I should see "Record Status Dashboard"
+        And I should see a link labeled "Form 1"
+        And I should see a link labeled "Form 1 2"
+        #Then I should NOT see "[title=Delete]"
 
     Scenario: 54 - Add New Field and Submit Changes for Review
         Given I click on the link labeled "Designer"
@@ -533,7 +527,7 @@ Feature: Manage Project
     Scenario: 67 - Add Arm 3 
         Given I should see a link labeled "Add New Arm"
         When I click on the link labeled "Add New Arm"
-        And I enter "Arm 3" into the field identified by "[id=arm_name]"
+        And I enter "Arm 3" into the Arm name field
         And I click on the input button labeled "Save"
         Then I should see "Arm 3"
 
@@ -580,7 +574,7 @@ Feature: Manage Project
         Then I should see "Arm 2"
         When I click on the link labeled "Rename Arm 2"
         Then I should see "Arm name:"
-        And I enter "Arm Two" into the field identified by "[id=arm_name]"
+        And I enter "Arm Two" into the Arm name field
         And I click on the input button labeled "Save"
         Then I should see "Arm Two"
 

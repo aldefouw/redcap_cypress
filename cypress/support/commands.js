@@ -450,14 +450,17 @@ Cypress.Commands.add('num_projects_excluding_archived', () => {
     return cy.mysql_query("SELECT count(*) FROM redcap_projects WHERE status != 3;")
 })
 
-Cypress.Commands.add('delete_project', (pid) => {
-    cy.visit_version({ page: 'ProjectSetup/other_functionality.php', params: `pid=${pid}`})
+Cypress.Commands.add('delete_project_permanently', () => {
+    cy.intercept({
+        method: 'POST',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/ProjectGeneral/delete_project.php?*"
+    }).as('delete_project')
     cy.get('button').contains('Delete the project').click()
-    cy.get('input#delete_project_confirm').type('DELETE').then((input) => {
+    cy.get('input#delete_project_confirm').should('be.visible').type('DELETE').then((input) => {
         cy.get(input).closest('div[role="dialog"]').find('button').contains('Delete the project').click()
         cy.get('button').contains('Yes, delete the project').click()
-        cy.get('span#ui-id-3').closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
     })
+    cy.wait('@delete_project')
 })
 
 Cypress.Commands.add('delete_project_complete', (pid) => {

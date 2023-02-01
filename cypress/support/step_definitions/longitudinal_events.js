@@ -122,3 +122,18 @@ Given("I verify the Data Collection Instrument named {string} is enabled for the
 Given("I verify the Data Collection Instrument named {string} is disabled for the Event named {string}", (instrument_name, event_name) => {
    cy.adjust_or_verify_instrument_event(instrument_name, event_name, false, false)
 })
+
+/**
+ * @module LongitudinalEvents
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I (enter | clear field and enter) {string} into the Arm name field
+ * @param {string} arm_name - the desired name for the arm
+ * @description Enters text into the Arm name field on the Define My Events page
+ */
+Given("I {enter_type} {string} into the Arm name field", (enter_type, arm_name) => {
+   if(enter_type === 'clear field and enter'){
+      cy.get('input[id=arm_name]').clear().type(arm_name)
+   } else {
+      cy.get('input[id=arm_name]').type(arm_name)
+   }
+})
