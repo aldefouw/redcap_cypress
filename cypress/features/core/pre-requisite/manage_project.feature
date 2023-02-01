@@ -252,7 +252,6 @@ Feature: Manage Project
         And I enter "DELETE" into the field identified by "[id=delete_project_confirm]"
         Then I should see "Deleting the project named"
         When I click on the button labeled "Delete the project" in the dialog box
-        #When I click on the element identified by "button:contains('Delete the project'):last"
         And I click on the button labeled "Yes, delete the project"
         Then I should see "Project successfully deleted!"
 
@@ -400,12 +399,13 @@ Feature: Manage Project
 
     Scenario: 51 - Enable the Designate an email field…
         Given I click on the link labeled "Project Setup"
-        Then I should see that the designate an email field for communications setting is "Enable"
-        When I click on the element identified by "[id=enableSurveyPartEmailFieldBtn]"
+        Then I should see that the designate an email field for communications setting is "disabled"
+        And I enable designation of an email field for communications setting
         Then I should see "Choose an email field to use for invitations to survey participants:"
         When I select "email" on the dropdown field labeled "Choose an email field to use for invitations to survey participants:"
         And I click on the button labeled "Save"
-        Then I should see that the designate an email field for communications setting is "Disable"
+        Then I should see "Field currently designated: email"
+        And I should see that the designate an email field for communications setting is "enabled"
 
     Scenario: 52 - Move FirstProject_1115 to Production
         Given I click on the button labeled "Move project to production"
@@ -448,7 +448,7 @@ Feature: Manage Project
         Then I should see "Below is a listing of the changes to be committed to this project."
         When I click on the button labeled "Remove All Drafted Changes"
         And I should see "DELETE ALL DRAFT MODE CHANGES"
-        And I click on the element identified by ".ui-dialog-buttonset > :nth-child(2)"
+        And I click on the button labeled "Remove All Drafted Changes" in the dialog box
         Then I should see "The changes were NOT committed to the project but were removed"
 
     Scenario: 57 - Allow Users to Make Draft Mode Changes
@@ -480,6 +480,7 @@ Feature: Manage Project
         Given I click on the input button labeled "Enter Draft Mode"
         Then I should see "Since this project is currently in PRODUCTION"
         When I click on the link labeled "Project Setup"
+        And I should see that repeatable instruments are modifiable
         #Then I should see that repeatable instruments are Disable
         #'Verify the Repeatable instruments and events “Modify” button is disabled.' not verify that repeatable instruments are "Enable". button should still say "modify" but be greyed out.
         When I click on the button labeled "Define My Events"
