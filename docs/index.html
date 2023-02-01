@@ -51,7 +51,7 @@
                     
                       <h2 class="mt1 mb1">Data Import</h2>
                     
-                    <li><a href='#i-upload-a-data-dictionary-located-at-string-to-project-id-int'>I upload a data dictionary located at {string} to project ID {int}</a></li>
+                    <li><a href='#i-upload-the-data-dictionary-located-at-string'>I upload the data dictionary located at {string}</a></li>
                     
               
                     
@@ -323,7 +323,15 @@
                     
               
                     
+                    <li><a href='#i-verify-i-cannot-change-the-event-name-of-string-while-in-production'>I verify I cannot change the Event Name of {string} while in production</a></li>
+                    
+              
+                    
                     <li><a href='#i-delete-the-event-name-of-string'>I delete the Event Name of {string}</a></li>
+                    
+              
+                    
+                    <li><a href='#i-add-an-event-named-string-into-the-currently-selected-arm'>I add an event named {string} into the currently selected arm</a></li>
                     
               
                     
@@ -343,9 +351,21 @@
                     
               
                     
+                    <li><a href='#i-enter--clear-field-and-enter-string-into-the-arm-name-field'>I (enter | clear field and enter) {string} into the Arm name field</a></li>
+                    
+              
+                    
+                    <li><a href='#i-should-not-see-options-to-edit-or-delete-events'>I should NOT see options to Edit or Delete events</a></li>
+                    
+              
+                    
                       <h2 class="mt1 mb1">Other Functionality</h2>
                     
                     <li><a href='#i-move-the-project-back-to-development-mode'>I move the project back to development mode</a></li>
+                    
+              
+                    
+                    <li><a href='#i-permanently-delete-the-project-via-the-other-functionality-page'>I permanently delete the project via the Other Functionality page</a></li>
                     
               
                     
@@ -388,6 +408,10 @@
               
                     
                     <li><a href='#i-should-see-that-the-designate-an-email-for-communications-setting-is-enableddisabled'>I should see that the designate an email for communications setting is &lt;enabled/disabled&gt;</a></li>
+                    
+              
+                    
+                    <li><a href='#i-toggleaction-designation-of-an-email-field-for-communications-setting'>I {toggleAction} designation of an email field for communications setting</a></li>
                     
               
                     
@@ -501,6 +525,10 @@
                     
                       <h2 class="mt1 mb1">Survey</h2>
                     
+                    <li><a href='#i-visit-the-public-survey-url-for-this-project'>I visit the public survey URL for this project</a></li>
+                    
+              
+                    
                     <li><a href='#i-visit-the-public-survey-url-for-project-id-int'>I visit the public survey URL for Project ID {int}</a></li>
                     
               
@@ -530,6 +558,14 @@
               
                     
                     <li><a href='#i-disable-surveys-for-project-id-int'>I disable surveys for Project ID {int}</a></li>
+                    
+              
+                    
+                    <li><a href='#i-enable-surveys-for-the-project'>I enable surveys for the project</a></li>
+                    
+              
+                    
+                    <li><a href='#i-disable-surveys-for-the-project'>I disable surveys for the project</a></li>
                     
               
                     
@@ -680,6 +716,12 @@
               
                     
                     <li><a href='#i-export-the-logging-data-and-compare-against-expected-result-in-a-fixture-file-located-within-logs-folder'>I export the logging data and compare against expected result in a fixture file located within /logs/ folder</a></li>
+                    
+              
+                    
+                      <h2 class="mt1 mb1">Test Specific/Project Status</h2>
+                    
+                    <li><a href='#i-click-on-the-button-labeled-string-in-the-project-status-dialog-box'>I click on the button labeled {string} in the project status dialog box</a></li>
                     
               
                     
@@ -1020,8 +1062,8 @@
       
         
           
-          <h2 class='fl mb0 mt0' id='i-upload-a-data-dictionary-located-at-string-to-project-id-int'>
-          I upload a data dictionary located at {string} to project <span class="hljs-variable constant_">ID</span> {int}
+          <h2 class='fl mb0 mt0' id='i-upload-the-data-dictionary-located-at-string'>
+          I upload the data dictionary located at {string}
           </h2>
         
       
@@ -1039,15 +1081,6 @@
             <div>
               <span class='code bold'>data_dictionary</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
   	    the path to the desired data dictionary located within the /fixtures/dictionaries/ folder.
-
-            </div>
-            
-          </div>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>pid</span> <code class='quiet'>(int)</code>
-  	    the Project ID where the data dictionary should be upploaded (e.g. 13)
 
             </div>
             
@@ -5867,6 +5900,77 @@ cy.get(sel).select(label).should('have.value', value)
       
         
           
+          <h2 class='fl mb0 mt0' id='i-verify-i-cannot-change-the-event-name-of-string-while-in-production'>
+          I verify I cannot change the <span class="hljs-title class_">Event</span> <span class="hljs-title class_">Name</span> <span class="hljs-keyword">of</span> {string} <span class="hljs-keyword">while</span> <span class="hljs-keyword">in</span> production
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>current_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the event when this step is reached
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Verifies the event name cannot be changed in production mode</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
           <h2 class='fl mb0 mt0' id='i-delete-the-event-name-of-string'>
           I <span class="hljs-keyword">delete</span> the <span class="hljs-title class_">Event</span> <span class="hljs-title class_">Name</span> <span class="hljs-keyword">of</span> {string}
           </h2>
@@ -5896,6 +6000,77 @@ cy.get(sel).select(label).should('have.value', value)
 
 
   <p>Deletes a specific named event on the "Define My Events" page for a Longitudinal Project</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-add-an-event-named-string-into-the-currently-selected-arm'>
+          I add an event named {string} into the currently selected arm
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>event_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the event
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Adds an event via the "Define My Events" page for a Longitudinal Project</p>
 
 
   
@@ -6248,6 +6423,134 @@ cy.get(sel).select(label).should('have.value', value)
             
         
             
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-enter--clear-field-and-enter-string-into-the-arm-name-field'>
+          I (enter | clear field and enter) {string} into the <span class="hljs-title class_">Arm</span> name field
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>arm_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the desired name for the arm
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Enters text into the Arm name field on the Define My Events page</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-should-not-see-options-to-edit-or-delete-events'>
+          I should <span class="hljs-variable constant_">NOT</span> see options to <span class="hljs-title class_">Edit</span> or <span class="hljs-title class_">Delete</span> events
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+
+
+  <p>Verifies that user cannot see options to Edit or Delete events</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
             <h2 class='fl mt3 mb2' id='otherfunctionality'>Other Functionality</h3>
             
             
@@ -6275,6 +6578,63 @@ cy.get(sel).select(label).should('have.value', value)
 
 
   <p>Move project back to development mode</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-permanently-delete-the-project-via-the-other-functionality-page'>
+          I permanently <span class="hljs-keyword">delete</span> the project via the <span class="hljs-title class_">Other</span> <span class="hljs-title class_">Functionality</span> page
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+
+
+  <p>Deletes project permanently</p>
 
 
   
@@ -6973,6 +7333,77 @@ cy.get(sel).select(label).should('have.value', value)
 
 
   <p>Visually verifies that "Designate an Email" functionality is enabled or disabled in the project.</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:debacker@wisc.edu">Corey Debacker</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-toggleaction-designation-of-an-email-field-for-communications-setting'>
+          I {toggleAction} designation <span class="hljs-keyword">of</span> an email field <span class="hljs-keyword">for</span> communications setting
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>action</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the action desired on this
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Enables or disables the "Designate an Email" functionality in the project.</p>
 
 
   
@@ -8966,6 +9397,63 @@ cy.get(sel).select(label).should('have.value', value)
       
         
           
+          <h2 class='fl mb0 mt0' id='i-visit-the-public-survey-url-for-this-project'>
+          I visit the public survey <span class="hljs-variable constant_">URL</span> <span class="hljs-keyword">for</span> <span class="hljs-variable language_">this</span> project
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+
+
+  <p>Visits the Public Survey URL of a specif project identified by a Project ID.</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
           <h2 class='fl mb0 mt0' id='i-visit-the-public-survey-url-for-project-id-int'>
           I visit the public survey <span class="hljs-variable constant_">URL</span> <span class="hljs-keyword">for</span> <span class="hljs-title class_">Project</span> <span class="hljs-variable constant_">ID</span> {int}
           </h2>
@@ -9537,6 +10025,120 @@ cy.get(sel).select(label).should('have.value', value)
 
 
   <p>Disables surveys on a particular Project ID.</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-enable-surveys-for-the-project'>
+          I enable surveys <span class="hljs-keyword">for</span> the project
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+
+
+  <p>Enables surveys for the current project</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-disable-surveys-for-the-project'>
+          I disable surveys <span class="hljs-keyword">for</span> the project
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+
+
+  <p>Disables surveys for the current project</p>
 
 
   
@@ -12178,6 +12780,79 @@ cy.get(sel).select(label).should('have.value', value)
 
 
   <p>Exports all logging from the Logging page</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            <h2 class='fl mt3 mb2' id='testspecificprojectstatus'>Test Specific/Project Status</h3>
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-click-on-the-button-labeled-string-in-the-project-status-dialog-box'>
+          I click on the button labeled {string} <span class="hljs-keyword">in</span> the project status dialog box
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the text on the button element you want to click
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Clicks on a button element with a specific text label in a dialog box.</p>
 
 
   
