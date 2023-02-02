@@ -12,8 +12,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
 
     Then I should see "Development"
     And I click on the link labeled "Project Setup"
-    And I click on the element identified by "button[id=setupEnableSurveysBtn]"
-    And I click on the button labeled "Disable" in the dialog box
+    And I disable surveys for the project
     Then I should see that surveys are disabled
     Then I logout
 
@@ -117,18 +116,12 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I click on the link labeled "Design Forms Feature"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Online Designer"
-    And I click on the element identified by "button[onclick='showAddForm();']"
-    Then I should see a button labeled "Add instrument here"
-    And I add an instrument below the instrument named "Data Dictionary Form"
-    And I enter "Demo Branching" into the field identified by "input[id=new_form-data_dictionary_form]"
-    And I click on the element identified by "input[value=Create]"
+    And I create a new data collection instrument called "Demo Branching"
     Then I should see "Demo Branching"
 
   Scenario: 13 - Rename My First Instrument
     Given I click on the Instrument Action "Rename" for the instrument named "My First Instrument"
-    And I clear the field identified by "input[value='My First Instrument']"
-    And I enter "Data Types" into the field identified by "input[value='My First Instrument']"
-    And I click on the element identified by "input[id=form_menu_save_btn-my_first_instrument]"
+    And I rename the current data instrument named "My First Instrument" to "Data Types"
     Then I should see "Data Types"
 
   Scenario: 14 - Copy My First Instrument 2
@@ -148,13 +141,9 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I click on the link labeled "Design Forms Feature"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Online Designer"
-    And I click on the Instrument Action "Delete" for the instrument named "My First Instrument 2"
-    And the AJAX "GET" request at "/Design/delete_form.php*" tagged by "Delete" is being monitored
-    And I click on the button labeled "Yes, delete it"
-    And the AJAX request tagged by "Delete" has completed
+    And I delete the data instrument named "My First Instrument 2"
     Then I should see "Deleted!"
     And I should see "The data collection instrument and all its fields have been successfully deleted!"
-    And I should no longer see the element identified by "tr[id=row_2]"
 
   Scenario: 17 - Drag Text Validation to the Top of the List
     Given I drag on the instrument named "Text Validation" to position 0

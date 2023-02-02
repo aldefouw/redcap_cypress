@@ -190,6 +190,10 @@ Given("I disable surveys for the project", () => {
         cy.get('button').contains('Disable').click()
     })
 
+    cy.get('div[role=dialog]').within(() => {
+        cy.get('button').contains('Disable').click()
+    })
+
     //Wait to make sure that the AJAX request has completed before we move onto checking data
     cy.wait('@projectSettings')
 })
@@ -286,6 +290,7 @@ Then("I should see the survey open exactly once by watching the tag of {string}"
         cy.get('input[value=Create]', {force: true}).click()
     })
 })
+
 
 /**
  * @module Survey
