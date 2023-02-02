@@ -574,6 +574,10 @@ Given('for this scenario, I will {confirmation} a confirmation window containing
  * @description Clicks the button to create new instrument and enters the instrument name into the text box
  */
  Given('I create a new data collection instrument called {string}', (instrument_name) => {
+     cy.intercept({  method: 'POST',
+         url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/create_form.php?*'
+     }).as('new_data_instrument')
+
     cy.get('div').
     contains('a new instrument from scratch').
     parent().
@@ -589,6 +593,8 @@ Given('for this scenario, I will {confirmation} a confirmation window containing
         cy.get('input[type=text]').type(instrument_name)
         cy.get('input[value=Create]').click()
     })
+
+     cy.wait('@new_data_instrument')
 })
 
 /**
