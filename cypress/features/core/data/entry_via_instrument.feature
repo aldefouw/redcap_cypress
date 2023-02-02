@@ -5,10 +5,11 @@ Feature: Data Entry through the Data Collection Instrument
 
   Scenario: 0 - Create the Project
     Given I am an "admin" user who logs into REDCap
-    And I create a project named "14_DirectDataEntrywithDataCollectionInstrument_v1115" with project purpose Operational Support via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
+    And I create a project named "Entry Via Instrument" with project purpose Operational Support via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
 
   Scenario: 0 - Add user
-    Given I visit Project ID 14
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Entry Via Instrument"
     And I click on the link labeled "User Rights"
     And I enter "test_user" into the username input field
     And I click on the button labeled "Add with custom rights"
@@ -98,7 +99,8 @@ Feature: Data Entry through the Data Collection Instrument
 
   Scenario: 1 to 4 - Add/Edit Records
     Given I am a "standard" user who logs into REDCap
-    And I visit Project ID 14
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Entry Via Instrument"
     And I click on the link labeled "Add / Edit Records"
     And I click on the button labeled "Add new record"
     And I click the bubble to add a record for the "Data Types" longitudinal instrument on event "Event 1"
