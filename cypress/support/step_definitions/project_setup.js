@@ -213,7 +213,14 @@ Given("I {toggleAction} designation of an email field for communications setting
  * @description Move project to production
  */
 Given("I move the project to production by selection option {string}", (text) => {
+    cy.intercept({
+        method: 'POST',
+        url: '/redcap_v' + Cypress.env('redcap_version') + '/ProjectGeneral/change_project_status.php?*'
+    }).as('production_status')
+
     cy.get('span').contains(text).click()
     cy.get('button').contains('Production Status').click()
     cy.get('div#actionMsg').should('be.visible')
+
+    cy.wait('@production_status')
 })
