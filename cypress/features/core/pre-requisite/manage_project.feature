@@ -3,7 +3,7 @@ Feature: Manage Project
     As a REDCap end user
     I want to see that Manage Project is functioning as expected
 
-    Scenario: Add from Email Address
+    Scenario: 0 - Initial Setup Requirement - Add from Email Address
         Given I am an "admin" user who logs into REDCap
         And I visit the "Control Center" page
         And I click on the link labeled "General Configuration"
@@ -11,7 +11,7 @@ Feature: Manage Project
         And I click on the input button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
-    Scenario: Edit test_user2 to not Create or Copy Projects
+    Scenario: 0 - Initial Setup Requirement - Edit test_user2 to not Create or Copy Projects
         Given I visit the "Control Center" page
         When I click on the link labeled "Browse Users"
         And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
@@ -25,7 +25,7 @@ Feature: Manage Project
         And I click on the input button labeled "Save"
         Then I should see "User has been successfully saved."
 
-    Scenario: 1- Visit Control Center Page
+    Scenario: 1 - Visit Control Center Page
         Given I visit the "Control Center" page
         Then I should see "Control Center Home"
 
