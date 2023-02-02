@@ -12,6 +12,17 @@ Given("I click on the button labeled exactly {string}", (text) => {
     cy.get('button').contains(new RegExp("^" + text + "$", "g")).click()
 })
 
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click on the link labeled exactly {string}
+ * @param {string} text - the EXACT text on the link element you want to click
+ * @description Clicks on a link element with a EXACT text label.
+ */
+Given("I click on the link labeled exactly {string}", (text) => {
+    cy.get('a').contains(new RegExp("^" + text + "$", "g")).click()
+})
+
 defineParameterType({
     name: 'instrument_save_options',
     regexp: /Save & Stay|Save & Exit Record|Save & Go To Next Record|Save & Exit Form|Save & Go To Next Form|Save & Go To Next Instance/

@@ -77,7 +77,7 @@ Given("I should see that surveys are {status}", (state) => {
  * @param {string} state the state of the button
  * @description Visually verifies whether Longitudinal functionality is enabled or disabled in the project.
  */
-Given("I should see that longitudinal mode is {string}", (state) => {
+Given('I should see that longitudinal mode is "{status}"', (state) => {
     let expected_text = ((state.toLowerCase() === 'enabled') ? 'Disable' : 'Enable');
     cy.get('#setupLongiBtn').should('contain.text', expected_text);
 })

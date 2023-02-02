@@ -139,12 +139,14 @@ Feature: Logging
     When I am a "standard2" user who logs into REDCap
 
   Scenario: 14 - Data Exports, Reports, and Stats
-    When I visit Project ID 14
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Logging_Feature"
     Then I click on the link labeled "Data Exports, Reports, and Stats"
     And I export all data in "csvraw" format and expect 2 records
+    And I click on the button labeled "Close" in the dialog box
 
   Scenario: 15 - Edit user privileges for test_user
-    When I visit Project ID 14
+
     Then I click on the link labeled "User Rights"
     And I click to edit username "test_user (Test User)"
     And I click on the button labeled "Edit user privileges"
@@ -155,7 +157,7 @@ Feature: Logging
     And I save changes within the context of User Rights
 
   Scenario: 16 - Edit record (Lock Record)
-    When I visit Project ID 14
+
     Then I click on the link labeled "Record Status Dashboard"
     And I click on the bubble for the "Text Validation" data collection instrument for record ID "1"
     And I click the element containing the following text: " Lock"
@@ -163,7 +165,7 @@ Feature: Logging
     Then I should see "Instrument locked by test_user2"
 
   Scenario: 17 - Edit record (E-signature)
-    When I visit Project ID 14
+
     When I click on the link labeled "Record Status Dashboard"
     And I click on the bubble for the "Text Validation" data collection instrument for record ID "1"
     And I check the checkbox identified by 'input[id="__ESIGNATURE__"]'
@@ -185,7 +187,7 @@ Feature: Logging
     Then I should see "Record Home Page"
 
   Scenario: 19 - Enter draft mode and edit instrument
-    When I visit Project ID 14
+
     Then I click on the link labeled "Designer"
     And I enter draft mode
     And I click on the link labeled "Text Validation"
@@ -195,19 +197,19 @@ Feature: Logging
     Then I should see "Data Collection Instruments"
 
   Scenario: 20 - Create a new instrument
-    When I visit Project ID 14
+
     Then I click on the link labeled "Designer"
     And I create a new data collection instrument called "Form 2"
     Then I should see "Form 2"
     #And I click on the button labeled "Close"
 
   Scenario: 20 - Submit changes for review
-    When I visit Project ID 14
+
     Then I click on the link labeled "Designer"
     And I submit draft changes for review
 
   Scenario: 21 - Logging Page
-    When I visit Project ID 14
+
     And I click on the link labeled "Logging"
     Then I should see "Filter by event:"
     And I should see "Filter by user name:"
@@ -220,7 +222,7 @@ Feature: Logging
     And I should see "List of Data Changes"
 
   Scenario: 22 - Logging: filter by event - Data export
-    When I visit Project ID 14
+
     Then I click on the link labeled "Logging"
     And I select the "Data export" option identified by "export" from the Filter by event dropdown field
     Then I should see 'Download exported data file (CSV raw)' in the logging table
@@ -270,7 +272,7 @@ Feature: Logging
     Then I click on the link labeled "Logging"
     And I select the "Page Views" option identified by "page_view" from the Filter by event dropdown field
     Then I should see 'Page View' in the logging table
-    And I should see '/redcap_v11.1.5/Logging/index.php?pid=14' in the logging table
+    And I should see '/redcap_v11.1.5/Logging/index.php?pid=13' in the logging table
 
   Scenario: 28 - Logging: filter by event - All event types (username) - by specific username
     Then I click on the link labeled "Logging"
@@ -285,7 +287,7 @@ Feature: Logging
     And I should see 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'' in the logging table
 
   Scenario: 30 - Download All logging and open file to verify
-    When I visit Project ID 14
+
     Then I click on the link labeled "Logging"
     And I export all logging from the project and verify the result against expected logging results in the file named "23Logging1115_ExpectedLogs.csv"
 
@@ -298,15 +300,18 @@ Feature: Logging
     And I select 'Logging_Feature' from the dropdown identified by 'select'
     #And I click on the dropdown identified by 'select' and select value '14' labelled by
     Then I should see "project settings"
-    And I select 'Yes, delete the record\'s logged events when deleting the record' from the dropdown identified by 'select[name="allow_delete_record_from_log"]'
-    And I click the input element identified by 'input[type=submit]'
+    And I select "Yes, delete the record's logged events when deleting the record" on the dropdown field labeled "Delete a record's logging activity when deleting the record?"
+    And I click on the input button labeled "Save Changes"
     And I click on the link labeled "Logging"
 
   Scenario: 33 - Login as test_user
     Given I am a "standard" user who logs into REDCap
 
   Scenario: 34 - Delete Record
-    When I visit Project ID 14
+    Then I should see "My Projects"
+    When I click on the link labeled "My Projects"
+    Then I should see "Logging_Feature"
+    When I click on the link labeled "Logging_Feature"
     Then I click on the link labeled "Record Status Dashboard"
     And I click on the bubble for the "Text Validation" data collection instrument for record ID "2"
     And I click on the link labeled "Record ID 2"
@@ -326,7 +331,6 @@ Feature: Logging
     Then I close popup
 
   Scenario: 35 - Logging: filter by event - Record created-updated-deleted
-    When I visit Project ID 14
     Then I click on the link labeled "Logging"
     And I select the "Record created-updated-deleted" option identified by "record" from the Filter by event dropdown field
     Then I should see 'Updated Record' in the logging table
@@ -338,25 +342,29 @@ Feature: Logging
   Scenario: 36 - Login as admin
     Given I am an "admin" user who logs into REDCap
 
-  Scenario: 37 - Enter Draft Move and Enable Longitudinal Data Collection
-    When I visit Project ID 14
+  Scenario: 37 - Enter Draft Mode and Enable Longitudinal Data Collection
+    Then I should see "My Projects"
+    When I click on the link labeled "My Projects"
+    Then I should see "Logging_Feature"
+    When I click on the link labeled "Logging_Feature"
+
     Then I click on the link labeled "Designer"
     And I enter draft mode
     And I click on the link labeled "Project Setup"
-    And I click the input element identified by 'button[id="setupLongiBtn"]'
-    Then I should see that longitudinal mode is "Enable"
+    And I enable longitudinal mode
+    Then I should see that longitudinal mode is "enabled"
 
   Scenario: 37 - Submit changes for review
-    When I visit Project ID 14
+
     Then I click on the link labeled "Designer"
     And I submit draft changes for review
 
   Scenario: 37 - Add Arm
-    When I visit Project ID 14
+
     Then I click on the link labeled 'Project Setup'
     And I click on the button labeled "Define My Events"
     And I click on the link labeled "+Add New Arm"
-    And I enter "Arm 2" into the field identified by "[id=arm_name]"
+    And I enter "Arm 2" into the Arm name field
     And I click on the input button labeled "Save"
     Then I should see "No events have been defined for this Arm"
     And I enter "Event 1" into the input field labeled "Descriptive name for this event"
@@ -364,9 +372,8 @@ Feature: Logging
     Then I should see "Event 1"
 
   Scenario: 37 - Designate Instrument
-    When I visit Project ID 14
-    Then I click on the link labeled 'Project Setup'
-    And I click on the button labeled "Designate Instruments for My Events"
+    Given I wait for 1 seconds
+    When I click on the link labeled "Designate Instruments for My Events"
 
     #Arm 1
     Then I should see "Arm name: "
@@ -380,7 +387,10 @@ Feature: Logging
     Given I am a "standard" user who logs into REDCap
 
   Scenario: 39 - Add new record to an Arm
-    When I visit Project ID 14
+    Then I should see "My Projects"
+    When I click on the link labeled "My Projects"
+    Then I should see "Logging_Feature"
+    When I click on the link labeled "Logging_Feature"
     And I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 2"
     And I click on the button labeled "Add new record for this arm"
@@ -388,18 +398,16 @@ Feature: Logging
     Then I select the submit option labeled "Save & Exit Record" on the Data Collection Instrument
 
   Scenario: 40 - Logging: filter by event - Record created-updated-deleted
-    When I visit Project ID 14
     Then I click on the link labeled "Logging"
     And I select the "Record created-updated-deleted" option identified by "record" from the Filter by event dropdown field
     #Then I should see '(Event 1 - (Arm 2: Arm 2))' in the logging table
     And I should see "ptname = 'Arm2', text_validation_complete = '0', record_id = '2'" in the logging table
 
   Scenario: 41 - Delete Record
-    When I visit Project ID 14
     Then I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 2"
-    And I click on the element identified by 'tr.odd > td > a:contains("2")'
-    #And I click on the bubble for the "Text Validation" data collection instrument for record ID "2"
+    And I click on the link labeled exactly "2"
+    And I should see "Choose action for record"
     And I click on the button labeled "Choose action for record"
     And I click on the link labeled "Delete record (all forms/events)"
     Then I should see "DELETE RECORD"
@@ -411,11 +419,11 @@ Feature: Logging
     Then I close popup
 
   Scenario: 42 - Logging: filter by event - Record created-updated-deleted
-    When I visit Project ID 14
+
     Then I click on the link labeled "Logging"
     And I select the "Record created-updated-deleted" option identified by "record" from the Filter by event dropdown field
     #Then I should see '[*DATA REMOVED*]' in the logging table
     #And I should see '[All data values were removed from this record\'s logging activity.]' in the logging table
 
-#  Scenario: 43 - Logout
-#    Given I logout
+  Scenario: 43 - Logout
+    Given I logout
