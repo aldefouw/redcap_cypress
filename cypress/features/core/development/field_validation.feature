@@ -3,12 +3,11 @@ Feature: Field Validation
   As a REDCap end user
   I want to see that Field Validation is functioning as expected
 
-  Scenario: Project Setup - 1
+  Scenario: 0 - Project Setup
     Given I am an "admin" user who logs into REDCap
     And I create a project named "FirstProject_1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
   
-  Scenario: Project Setup - 2
-    When I click on the link labeled "Control Center"
+    And I click on the link labeled "Control Center"
     And I click on the link labeled "Field Validation Types"
 
     And I disable the Field Validation Type named "Date (M-D-Y)" within the Control Center
