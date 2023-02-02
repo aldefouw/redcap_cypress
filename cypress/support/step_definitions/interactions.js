@@ -480,15 +480,15 @@ defineParameterType({
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example after the next step, I will <accept/cancel> a confirmation window containing the text {string}
+ * @example for this scenario, I will <accept/cancel> a confirmation window containing the text {string}
  * @param {string} action - valid choices are 'accept' OR 'cancel'
  * @param {string} window_text - text that is expected to appear in the confirmation window
  * @description Pre-emptively tell Cypress what to do about a confirmation window.  NOTE: This step must come BEFORE step that clicks button.
  */
-Given('after the next step, I will {confirmation} a confirmation window containing the text {string}', (action, window_text) => {
+Given('for this scenario, I will {confirmation} a confirmation window containing the text {string}', (action, window_text) => {
     cy.on('window:confirm', (str) => {
         expect(str).to.contain(window_text)
-        action === "accept"
+        return action === "accept"
     })
 })
 

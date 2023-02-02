@@ -70,18 +70,24 @@ Scenario: 12- Find user1115_1 Under Browse Users Page
     And I click on the button labeled "Search"
     Then I should see "User1"
 
-Scenario: 13 & 14 - Cancel and Suspend test_user Account
+Scenario: 13 - Cancel Suspend test_user Account
+    Given for this scenario, I will cancel a confirmation window containing the text "Do you wish to suspend this user's REDCap account?"
     When I click on the link labeled "Browse Users"
     And I enter "test_user" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     And I should see "User information for"
-    And after the next step, I will cancel a confirmation window containing the text "Do you wish to suspend this user's REDCap account?"
-    When I click on the input button labeled "Suspend user account"
-    Then I should NOT see "Success! The user has now been suspended from REDCap"
-    And I should NOT see "unsuspend user"  
 
-    But after the next step, I will accept a confirmation window containing the text "Do you wish to suspend this user's REDCap account?"
-    Then I should see a button labeled "Suspend user account"
+    Then I click on the input button labeled "Suspend user account"
+    Then I should NOT see "Success! The user has now been suspended from REDCap"
+    And I should NOT see "unsuspend user"
+
+Scenario: 14 - Suspend test_user Account
+    Given for this scenario, I will accept a confirmation window containing the text "Do you wish to suspend this user's REDCap account?"
+    When I click on the link labeled "Browse Users"
+    And I enter "test_user" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I click on the button labeled "Search"
+    And I should see "User information for"
+
     Then I click on the input button labeled "Suspend user account"
     And I should see "Success! The user has now been suspended from REDCap"
     And I should see "unsuspend user"
@@ -165,18 +171,25 @@ Scenario: 22- Find test_user2 Under Browse Users Page by email
     And I should see "Test User"
     And I should see "test_user2@example.com"
 
-Scenario: 23 & 24 - Find test_user2 Under Browse Users Page by Last name and Cancel Delete User from System
+Scenario: 23 - Find test_user2 Under Browse Users Page by Last name and Cancel Delete User from System
+    Given for this scenario, I will cancel a confirmation window containing the text "Are you sure you wish to delete the user from REDCap?"
     And I visit the "Control Center" page
     And I click on the link labeled "Browse Users"
     And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     Then I should see "Editable user attributes"
     Then I should see "test_user2"
-    But after the next step, I will cancel a confirmation window containing the text "Are you sure you wish to delete the user from REDCap?"
     When I click on the button labeled "Delete user from system"
     Then I should NOT see "The user 'test_user2' has now been removed and deleted from all REDCap projects"
 
-    But after the next step, I will accept a confirmation window containing the text "Are you sure you wish to delete the user from REDCap?"
+Scenario: 24 - Find test_user2 Under Browse Users Page by Last name and Delete User from System
+    Given for this scenario, I will accept a confirmation window containing the text "Are you sure you wish to delete the user from REDCap?"
+    And I visit the "Control Center" page
+    And I click on the link labeled "Browse Users"
+    And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    And I click on the button labeled "Search"
+    Then I should see "Editable user attributes"
+    Then I should see "test_user2"
     And I click on the button labeled "Delete user from system"
     Then I should see "The user 'test_user2' has now been removed and deleted from all REDCap projects"
 
