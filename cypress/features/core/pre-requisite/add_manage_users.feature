@@ -81,6 +81,7 @@ Scenario: 13 & 14 - Cancel and Suspend test_user Account
     And I should NOT see "unsuspend user"  
 
     But after the next step, I will accept a confirmation window containing the text "Do you wish to suspend this user's REDCap account?"
+    Then I should see a button labeled "Suspend user account"
     Then I click on the input button labeled "Suspend user account"
     And I should see "Success! The user has now been suspended from REDCap"
     And I should see "unsuspend user"
@@ -240,6 +241,7 @@ Scenario: 30- Change password for user1115_4 through Browse Users
 
     When I click on the button labeled "Reset password" in the dialog box
     Then I should see "The changes have been made successfully to the selected users!"
+    And I close popup
 
 #Scenario: 31- Log Into user1115_4 with Old Password
         #aldefouw will handle 
@@ -256,7 +258,7 @@ Scenario: 33- Change primary Email for user1115_4
     And I enter "tester@test.edu" into the input field labeled "Primary email:"
     And I click on the input button labeled "Save"
     Then I should see "The user's primary email was changed, and the user was notified about this change."
-    And I should see "tester@test.edu" 
+    And I should see "tester@test.edu"
 
 Scenario: 34- Update User Settings 
     When I click on the link labeled "User Settings"
