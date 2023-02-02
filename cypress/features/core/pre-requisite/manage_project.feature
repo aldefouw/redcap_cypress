@@ -512,13 +512,14 @@ Feature: Manage Project
         And I click on the link labeled "Project Setup"
 
         And I should see "Enable optional modules and customizations"
-        And I open the dialog box for the Repeatable Instruments and Events module
-        And I select "Repeat Instruments (repeat independently of each other)" on the dropdown table field labeled "Event 1 (Arm 1: Arm 1)"
 
+        When I open the dialog box for the Repeatable Instruments and Events module
+        And I wait for 3 seconds
         Then I should see "Please be aware that if you uncheck any of the instruments or events that have currently been set as a repeating instrument or repeating event"
+        Then I should see "Close"
+        And I click on the button labeled "Close" in the dialog box
 
-        Given I close popup
-
+        Given I select "Repeat Instruments (repeat independently of each other)" on the dropdown table field labeled "Event 1 (Arm 1: Arm 1)"
         Then I should see "Cancel"
         And I click on the button labeled "Cancel" in the dialog box
 
