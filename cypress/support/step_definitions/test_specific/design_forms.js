@@ -11,7 +11,7 @@ require("../parameter_types.js")
  * @example I add an instrument named {string} the event named {string}
  * @param {string} instrument - the name of the instrument you are adding to an event
  * @param {string} event - the name of the event you are adding an instrument to
- * @description Interacations - Checks a specfic checkbox for an  instrument and event name
+ * @description Interactions - Checks a specfic checkbox for an  instrument and event name
  */
  Given("I add an instrument named {string} to the event named {string}", (instrument, event) => {
     
@@ -30,7 +30,7 @@ require("../parameter_types.js")
  * @example I remove an instrument named {string} the event named {string}
  * @param {string} instrument - the name of the instrument you are adding to an event
  * @param {string} event - the name of the event you are adding an instrument to
- * @description Interacations - Unchecks a specfic checkbox for an  instrument and event name
+ * @description Interactions - Unchecks a specfic checkbox for an  instrument and event name
  */
  Given("I remove an instrument named {string} to the event named {string}", (instrument, event) => {
     
@@ -48,7 +48,7 @@ require("../parameter_types.js")
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I add an instrument below the instrument named {string}
  * @param {string} instrument - the name of the instrument you are adding an instrument below
- * @description Interacations - Clicks the Add Instrument Here button below a specific Instrument name
+ * @description Interactions - Clicks the Add Instrument Here button below a specific Instrument name
  */
  Given("I add an instrument below the instrument named {string}", (instrument) => {
 
@@ -65,7 +65,7 @@ require("../parameter_types.js")
  * @example I add an instrument below the instrument named {string}
  * @param {string} action - the action label of the link that should be clicked
  * @param {string} instrument - the name of the instrument that a form should be added below
- * @description Interacations - Clicks the "choose action" button and clicks an anchor link
+ * @description Interactions - Clicks the "choose action" button and clicks an anchor link
  */
  Given("I click on the Instrument Action {string} for the instrument named {string}", (action, instrument) => {
 
@@ -82,7 +82,7 @@ require("../parameter_types.js")
  * @example I drag on the instrument named {string} to the position {int}
  * @param {string} instrument - the naame of the instrument being drag-n-dropped
  * @param {int} position - the position (index starting from 0) where the instrument should be placed
- * @description Interacations - Drag and drop the instrument to the int position
+ * @description Interactions - Drag and drop the instrument to the int position
  */
  Given("I drag on the instrument named {string} to position {int}", (instrument, position) => {
 
@@ -103,7 +103,7 @@ require("../parameter_types.js")
  * @example I click on the {addField} input button below the field named {string}
  * @param {addField} type - the type of addField action you want to perform
  * @param {string} target - the name of the field you want to add a field below
- * @description Interacations - Clicks on one of the add field options below a specified field name
+ * @description Clicks on one of the add field options below a specified field name
  */
  Given("I click on the {addField} input button below the field named {string}", (type, target) => {
     cy.get('tbody[class=formtbody]').children('tr').contains(target)
@@ -118,10 +118,69 @@ require("../parameter_types.js")
  * @example I click on the {editField} image for the field named {string}
  * @param {string} type - the type of edit action you want to perform on a field
  * @param {string} field - the name of the field you want to edit
- * @description Interacations - Clicks on the image link of the action you want to perform on a field
+ * @description Clicks on the image link of the action you want to perform on a field
  */
- Given("I click on the {editField} image for the field named {string}", (type, field) => {
-    cy.get('td[class=frmedit_row]').contains(field).parents('tr').find('img[title="' + type + '"]').click()
+ defineParameterType({
+    name: 'editField',
+    regexp: /(Edit|Branching Logic|Copy)/
+})
+ Given("I click on the {editField} image for the field named {string}", (type, field_name) => {
+    cy.click_on_design_field_function(type, field_name)
+})
+
+/**
+ * @module DesignForms
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I delete the field named {string}
+ * @param {string} type - the type of edit action you want to perform on a field
+ * @description Interactions - Clicks on the image link of the action you want to perform on a field
+ */
+Given("I delete the field named {string}", (field_name) => {
+    cy.click_on_design_field_function("Delete Field", field_name)
+
+    cy.intercept({
+        method: 'GET',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/delete_field.php?*"
+    }).as('delete_field')
+
+    cy.intercept({
+        method: 'GET',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/online_designer_render_fields.php?*"
+    }).as('render_fields')
+
+    cy.get('button').contains('Delete').click()
+
+    cy.wait('@delete_field')
+    cy.wait('@render_fields')
+})
+
+/**
+ * @module DesignForms
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I move the field named {string} after the field named {string}
+ * @param {string} field_name - name of field you want to move
+ * @param {string} after_field - name of field you want to move AFTER
+ * @description Moves a field AFTER the field specified
+ */
+Given("I move the field named {string} after the field named {string}", (field_name, after_field) => {
+    cy.click_on_design_field_function("Move", field_name)
+
+    //Get the variable name of the field to move "after"
+    cy.get('label').contains(after_field).then(($label) => {
+        const after_field_var_name = $label[0]['id'].split('label-')[1]
+        cy.get('#move_after_field').select(after_field_var_name).should('have.value', after_field_var_name)
+    })
+
+    cy.intercept({
+        method: 'POST',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/move_field.php?*"
+    }).as('move_field')
+
+    cy.get('button').contains('Move field').click()
+
+    cy.wait('@move_field')
+
+    cy.click_on_dialog_button("Close")
 })
 
 /**
@@ -130,7 +189,7 @@ require("../parameter_types.js")
  * @example I drag on the field named {string} to the position {int}
  * @param {string} field - the name of the field being drag-n-dropped
  * @param {int} position - the position (index starting from 0) where the instrument should be placed
- * @description Interacations - Drag and drop the field to the int position
+ * @description Interactions - Drag and drop the field to the int position
  */
  Given("I drag on the field named {string} to position {int}", (field, position) => {
 
@@ -225,59 +284,31 @@ require("../parameter_types.js")
 })
 
 /**
- * @module DesignFormsTests
- * @author Corey DeBacker <debacker@wisc.edu>
- * @description Asserts that 'Text Box', 'Notes Box', 'Calculated Field', 'Multiple Choice - Drop-down', 
- * 'Multiple Choice - Radio', 'Checkboxes', 'Signature', 'File Upload', 'Descriptive Text', and 'Begin New Section' 
- * are all available choices in the field type dropdown when adding a new field to an instrument.
+ * @module DesignForms
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @author Madilynn Peterson <mmpeterson24@wisc.edu>
+ * @example I add a new {fieldType} field labeled {string} with variable name {string}
+ * @param {string} field_type - <Text Box|Notes Box|Drop-down List|Radio Buttons|Checkboxes|Yes - No|True - False|Signature|File Upload|Slider|Descriptive Text|Begin New Section>
+ * @param {string} field_label - label for the field
+ * @param {string} variable_name - variable name
+ * @description Creates a new field in the Online Designer
  */
-Given('The field types specified in step 20 of script 07 should be available',  () => {
-    let options = [
-        'Text Box', 'Notes Box', 'Calculated Field', 'Multiple Choice - Drop-down', 'Multiple Choice - Radio',
-        'Checkboxes', 'Signature', 'File Upload', 'Descriptive Text', 'Begin New Section'
-    ]
-    cy.get('select#field_type').should(($select) => {
-        options.forEach((option) => {
-            expect($select).to.contain(option)
-        })
-    })
-})
-
-//TODO: refactor to custom cypress command
-//Requires that the current page is the instrument editing page within the online designer
-//Current implementation does not support matrix variables
-Given('I should see that the choice {string} for the field {string} is coded as {string}', (choice_text, field_name, code) => {
-
-    cy.get(`#${field_name}-tr`).within(() => {
-        cy.get(`label:contains(${choice_text}), option:contains(${choice_text})`).then($e => {
-            //filter matches for exact text match, in case one choice is a substring of another
-            $e = $e.filter(function() {
-                return (
-                    cy.$$(this).text() === choice_text
-                    && ! cy.$$(this).hasClass('fl')) //don't include field label
+Given("I add a new {fieldType} field labeled {string} with variable name {string}", (field_type, field_text, variable_name) => {
+    cy.get('input#btn-last').click().then(() => {
+        cy.get('select#field_type')
+            .find('option')
+            .contains(field_type)
+            .then( ($option) => {
+                cy.get('select#field_type').select($option[0].innerText)
             })
 
-            let foundCorrectCode = false
-            
-            if ($e.prop('tagName') === 'OPTION') {
-                if ($e.attr('value') === code) {
-                    foundCorrectCode = true
-                }
-            } else if ($e.prop('tagName') === 'LABEL') {
-                let $i = $e.parent().find('input:visible')
-                let type = $i.attr('type')
-                if (type === 'checkbox') {
-                    if ($i.attr('code') === code) {
-                        foundCorrectCode = true
-                    }
-                } else if (type === 'radio') {
-                    if ($i.attr('value') === code) {
-                        foundCorrectCode = true
-                    }
-                }
-            }
-
-            expect(foundCorrectCode).to.be.true
+        cy.get('input#field_name').type(variable_name)
+        cy.get('input#field_label_rich_text_checkbox').uncheck()
+        cy.get('textarea#field_label').type(field_text)
+        cy.get('button').contains('Save').click().then(() => {
+            cy.get('table#draggable').should(($t) => {
+                expect($t).to.contain('Variable: '+ variable_name)
+            })
         })
     })
 })

@@ -41,7 +41,6 @@ module.exports = (on, config) => {
 		var auth_sql = seeds_location + '/auth.sql';
 		var rights_sql = seeds_location + '/rights.sql';
 		var config_sql = seeds_location + '/config.sql';
-		var projects_sql = seeds_location + '/projects.sql';
 
 		//CREATE STRUCTURE FILE
 		var structure_and_data_file = test_seeds_location + '/structure_and_data.sql';
@@ -65,7 +64,6 @@ module.exports = (on, config) => {
 
 		shell.cat(rights_sql).toEnd(structure_and_data_file);
 
-		shell.cat(projects_sql).toEnd(structure_and_data_file);
 		shell.cat(config_sql).sed('REDCAP_VERSION_MAGIC_STRING', redcap_version).toEnd(structure_and_data_file);
 
 		shell.ShellString('\nCOMMIT;').toEnd(structure_and_data_file);

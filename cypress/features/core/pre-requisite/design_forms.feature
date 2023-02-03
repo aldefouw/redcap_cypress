@@ -3,29 +3,33 @@ Feature: Design Forms using Data Dictionary & Online Designer
   As a REDCap end user
   I want to see that Design Forms using Data Dictionary & Online Designer are functioning as expected
 
-  Scenario: 0 - Load FirstProject_1115.xml
+  Scenario: 0 - Load Design Forms Feature.xml
     Given I am a "standard" user who logs into REDCap
-    And I create a project named "FirstProject_1115" with project purpose Operational Support via CDISC XML import from fixture location "cdisc_files/projects/FirstProject_1115.xml"
-    And I visit Project ID 14
+    And I create a project named "Design Forms Feature" with project purpose Operational Support via CDISC XML import from fixture location "cdisc_files/projects/FirstProject_1115.xml"
+
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Design Forms Feature"
+
     Then I should see "Development"
     And I click on the link labeled "Project Setup"
-    And I click on the element identified by "button[id=setupEnableSurveysBtn]"
-    And I click on the button labeled "Disable" in the dialog box
+    And I disable surveys for the project
     Then I should see that surveys are disabled
     Then I logout
 
   Scenario: 1 - Navigate, Login to REDCap, Verify User Rights
     Given I am a "standard" user who logs into REDCap
-    Then I want to verify user rights are available for "standard" user type on the path "ProjectSetup" on project ID 14
+    #TODO: Remove PID dependency because this is brittle!
+    Then I verify user rights are available for "standard" user type on the path "ProjectSetup" on project ID 13
   
   Scenario: 2 - Verify Project Settings
-    Given I visit Project ID 14
-    And I click on the link labeled "Project Setup"
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Design Forms Feature"
     Then I should see that surveys are disabled
     And I should see "Development"
 
   Scenario: 3 - Verify "Design your data collection instruments" Section
-    Given I visit Project ID 14
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Design Forms Feature"
     And I click on the link labeled "Project Setup"
     Then I should see a button labeled "Online Designer"
     And I should see a button labeled "Data Dictionary"
@@ -35,24 +39,25 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I should see a link labeled "Check For Identifiers"
 
   Scenario: 4 - Download and Verify Data Dictionary
-    Given I download the data dictionary and save the file as "FirstProject_1115.csv"
-    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has the headings below
+    Given I download the data dictionary and save the file as "Design Forms Feature.csv"
+    Then the CSV file at path "cypress/downloads/Design Forms Feature.csv" has the headings below
     | "Variable / Field Name" | "Form Name" | "Section Header" | "Field Type" | "Field Label" | "Choices, Calculations, OR Slider Labels" | "Field Note" | "Text Validation Type OR Show Slider Number" | "Text Validation Min" | "Text Validation Max" |  Identifier? | "Branching Logic (Show field only if...)" | "Required Field?" | "Custom Alignment" |  "Question Number (surveys only)" | "Matrix Group Name" | "Matrix Ranking?" | "Field Annotation" |
-    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value "record_id" for column "\"Variable / Field Name\""
-    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value 'ptname' for column "\"Variable / Field Name\""
-    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value 'text2' for column "\"Variable / Field Name\""
-    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value 'ptname_v2' for column "\"Variable / Field Name\""
-    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value 'email' for column "\"Variable / Field Name\""
+    Then the CSV file at path "cypress/downloads/Design Forms Feature.csv" has a value "record_id" for column "\"Variable / Field Name\""
+    Then the CSV file at path "cypress/downloads/Design Forms Feature.csv" has a value 'ptname' for column "\"Variable / Field Name\""
+    Then the CSV file at path "cypress/downloads/Design Forms Feature.csv" has a value 'text2' for column "\"Variable / Field Name\""
+    Then the CSV file at path "cypress/downloads/Design Forms Feature.csv" has a value 'ptname_v2' for column "\"Variable / Field Name\""
+    Then the CSV file at path "cypress/downloads/Design Forms Feature.csv" has a value 'email' for column "\"Variable / Field Name\""
 
   Scenario: 5 - Add new field to data dictionary
-    Given I add a new variable named "dd_form" in the form named "data_dictionary_form" with the field type "text" and the label "Testing data dictionary upload" into the Data Dictionary file at "cypress/downloads/FirstProject_1115.csv"
-    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value 'email' for column "\"Variable / Field Name\""
+    Given I add a new variable named "dd_form" in the form named "data_dictionary_form" with the field type "text" and the label "Testing data dictionary upload" into the Data Dictionary file at "cypress/downloads/Design Forms Feature.csv"
+    Then the CSV file at path "cypress/downloads/Design Forms Feature.csv" has a value 'email' for column "\"Variable / Field Name\""
 
   Scenario: 6 - Upload Data Dictionary
-    Given I visit Project ID 14
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Design Forms Feature"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Data Dictionary"
-    And I set the input file field named "uploadedfile" to the file at path "cypress/downloads/FirstProject_1115.csv"
+    And I set the input file field named "uploadedfile" to the file at path "cypress/downloads/Design Forms Feature.csv"
     # wait for csrf token to show up
     Then the form should have a redcap_csrf_token
     And I click on the button labeled "Upload File"
@@ -63,14 +68,15 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "Changes Made Successfully!"
 
   Scenario: 7 - Add new field to data dictionary
-    Given I add a new variable named "dd_form" in the form named "field_validation_form" with the field type "text" and the label "Testing data dictionary upload" into the Data Dictionary file at "cypress/downloads/FirstProject_1115.csv"
-    Then the CSV file at path "cypress/downloads/FirstProject_1115.csv" has a value 'field_validation_form' for column "\"Form Name\""
+    Given I add a new variable named "dd_form" in the form named "field_validation_form" with the field type "text" and the label "Testing data dictionary upload" into the Data Dictionary file at "cypress/downloads/Design Forms Feature.csv"
+    Then the CSV file at path "cypress/downloads/Design Forms Feature.csv" has a value 'field_validation_form' for column "\"Form Name\""
   
   Scenario: 8 - Upload Data Dictionary
-    Given I visit Project ID 14
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Design Forms Feature"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Data Dictionary"
-    And I set the input file field named "uploadedfile" to the file at path "cypress/downloads/FirstProject_1115.csv"
+    And I set the input file field named "uploadedfile" to the file at path "cypress/downloads/Design Forms Feature.csv"
     # wait for csrf token to show up
     Then the form should have a redcap_csrf_token
     And I click on the button labeled "Upload File"
@@ -78,14 +84,15 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I should see "dd_form"
 
   Scenario: 9 - Replace bad field in data dictionary
-    Given I remove line 8 from a CSV file at path "cypress/downloads/FirstProject_1115.csv"
-    Then I add a new variable named "dd_test" in the form named "data_dictionary_form" with the field type "text" and the label "Testing data dictionary upload" into the Data Dictionary file at "cypress/downloads/FirstProject_1115.csv"
+    Given I remove line 8 from a CSV file at path "cypress/downloads/Design Forms Feature.csv"
+    Then I add a new variable named "dd_test" in the form named "data_dictionary_form" with the field type "text" and the label "Testing data dictionary upload" into the Data Dictionary file at "cypress/downloads/Design Forms Feature.csv"
 
   Scenario: 10 - Upload Data Dictionary
-    Given I visit Project ID 14
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Design Forms Feature"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Data Dictionary"
-    And I set the input file field named "uploadedfile" to the file at path "cypress/downloads/FirstProject_1115.csv"
+    And I set the input file field named "uploadedfile" to the file at path "cypress/downloads/Design Forms Feature.csv"
     # wait for csrf token to show up
     Then the form should have a redcap_csrf_token
     And I click on the button labeled "Upload File"
@@ -95,7 +102,8 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "Changes Made Successfully!"
 
   Scenario: 11 - Verify Fields Exist
-    Given I visit Project ID 14
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Design Forms Feature"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Online Designer"
     Then I should see "Data Dictionary Form"
@@ -104,27 +112,22 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I should see "dd_test"
 
   Scenario: 12 - Create new instrument
-    Given I visit Project ID 14
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Design Forms Feature"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Online Designer"
-    And I click on the element identified by "button[onclick='showAddForm();']"
-    Then I should see a button labeled "Add instrument here"
-    And I add an instrument below the instrument named "Data Dictionary Form"
-    And I enter "Demo Branching" into the field identified by "input[id=new_form-data_dictionary_form]"
-    And I click on the element identified by "input[value=Create]"
+    And I create a new data collection instrument called "Demo Branching"
     Then I should see "Demo Branching"
 
   Scenario: 13 - Rename My First Instrument
     Given I click on the Instrument Action "Rename" for the instrument named "My First Instrument"
-    And I clear the field identified by "input[value='My First Instrument']"
-    And I enter "Data Types" into the field identified by "input[value='My First Instrument']"
-    And I click on the element identified by "input[id=form_menu_save_btn-my_first_instrument]"
+    And I rename the current data instrument named "My First Instrument" to "Data Types"
     Then I should see "Data Types"
 
   Scenario: 14 - Copy My First Instrument 2
     Given I click on the Instrument Action "Copy" for the instrument named "My First Instrument 2"
     And I clear the field labeled "New instrument name:"
-    And I enter "Text Validation" into the field labeled "New instrument name:"
+    And I enter "Text Validation" into the input field labeled "New instrument name:"
     And I click on the button labeled "Copy instrument" in the dialog box
     Then I should see "Text Validation"
 
@@ -134,16 +137,13 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "email_v2"
 
   Scenario: 16 - Delete My First Instrument 2
-    Given I visit Project ID 14
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Design Forms Feature"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Online Designer"
-    And I click on the Instrument Action "Delete" for the instrument named "My First Instrument 2"
-    And the AJAX "GET" request at "/Design/delete_form.php*" tagged by "Delete" is being monitored
-    And I click on the button labeled "Yes, delete it"
-    And the AJAX request tagged by "Delete" has completed
+    And I delete the data instrument named "My First Instrument 2"
     Then I should see "Deleted!"
     And I should see "The data collection instrument and all its fields have been successfully deleted!"
-    And I should no longer see the element identified by "tr[id=row_2]"
 
   Scenario: 17 - Drag Text Validation to the Top of the List
     Given I drag on the instrument named "Text Validation" to position 0
@@ -164,7 +164,8 @@ Feature: Design Forms using Data Dictionary & Online Designer
 
 
   Scenario: 19 - Open Data Types Form
-    Given I visit Project ID 14
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Design Forms Feature"
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Online Designer"
     And I click on the link labeled "Data Types"
@@ -449,11 +450,6 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Given I click on the button labeled "Return to list of instruments"
     And I click on the link labeled "Data Dictionary Form"
     And I click on the Delete Field image for the field named "dd_test"
-    And the AJAX "GET" request at "Design/delete_field.php?*" tagged by "delete" is being monitored
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And I click on the button labeled "Delete" in the dialog box
-    And the AJAX request tagged by "delete" has completed
-    And the AJAX request tagged by "render" has completed
     Then I should NOT see "dd_test"
     #Then I should no longer see the element identified by "tr[id=dd_test-tr]"
 

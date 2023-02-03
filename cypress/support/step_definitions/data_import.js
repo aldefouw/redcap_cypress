@@ -4,13 +4,12 @@ require("./parameter_types.js")
 /**
  * @module DataImport
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I upload a data dictionary located at {string} to project ID {int}
+ * @example I upload the data dictionary located at {string}
  * @param {string} data_dictionary - the path to the desired data dictionary located within the /fixtures/dictionaries/ folder.
- * @param {int} pid - the Project ID where the data dictionary should be upploaded (e.g. 13)
  * @description Uploads a data dictionary to a specific project given a Project ID.
  */
-Given("I upload a data dictionary located at {string} to project ID {int}", (data_dictionary, pid) => {
-    cy.upload_data_dictionary(data_dictionary, pid, "DMY")
+Given("I upload the data dictionary located at {string}", (data_dictionary) => {
+    cy.upload_data_dictionary(data_dictionary, "DMY")
 })
 
 /**

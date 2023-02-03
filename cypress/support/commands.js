@@ -244,7 +244,6 @@ Cypress.Commands.add('set_field_value_by_label', ($name, $value, $type, $prefix 
       last().
       parent().
       then(($tr) => {
-
         let selector = $type + '[name="' + $prefix + $tr[0]['attributes']['sq_id']['value'] + $suffix + '"]'
         cy.get(selector, { force: true}).then(($a) => {
             return $a[0]
@@ -260,8 +259,17 @@ Cypress.Commands.add('select_textarea_by_label', ($name, $value) => {
     cy.set_field_value_by_label($name, $value, 'textarea')
 })
 
-Cypress.Commands.add('select_radio_by_label', ($name, $value) => {
-    cy.set_field_value_by_label($name, $value, 'input', '', '___radio')
+Cypress.Commands.add('select_radio_by_label', ($name, $value, $click = true, $selected = true ) => {
+    const radio_labels = cy.set_field_value_by_label($name, $value, 'input', '', '___radio')
+
+    radio_labels.first().parents('tr').first().within(() => {
+
+        if($click){
+            cy.get('label[class=mc]').contains($value).click()
+        } else {
+            cy.get('label[class=mc]').contains($value).parent().find('input').should('have.attr', $selected ? "checked": "unchecked")
+        }
+    })
 })
 
 Cypress.Commands.add('select_value_by_label', ($name, $value) => {
@@ -269,89 +277,16 @@ Cypress.Commands.add('select_value_by_label', ($name, $value) => {
 })
 
 Cypress.Commands.add('select_checkbox_by_label', ($name, $value) => {
-    cy.set_field_value_by_label($name, $value, 'input', '__chkn__', '')
-})
+    const checkbox_labels = cy.set_field_value_by_label($name, $value, 'input', '__chkn__', '')
 
-//Opens the "Edit Field" modal window. If `options` argument is passed, subfields are then edited accordingly.
-Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000, options = {}) => {
-    cy.find_online_designer_field(name).parent().parentsUntil('tr').find('img[title=Edit]').parent().click().then(() => {
-        if ('label' in options) {
-            //Edit field label -- NOT variable name
-            cy.log("Editing field label not yet implemented, try using edit_subfield")
-        }
-        if ('validation' in options) {
-            //Edit validation type
-            cy.log("Editing field validation type not yet implemented, try using edit_subfield")
-        }
-        if ("is_required" in options) {
-            //Edit whether field is required
-            cy.log("Editing \"Required?\" not yet implemented, try using edit_subfield")
-        }
-        if ("is_identifier" in options) {
-            //Edit whether field is an identifier
-            cy.log("Editing whether field is an identifier not yet implemented, try using edit_subfield")
-        }
+    checkbox_labels.first().parents('tr').first().within(() => {
+        cy.get('label[class=mc]').contains($value).click()
     })
 })
 
-//Edit field metadata (subfields) for the field associated with the open "Add New Field"
-//or "Edit Field" modal, without saving
-Cypress.Commands.add('edit_subfield', (subfield, value) => {
-
-    function buildMap(aliases, selector) {
-        return Object.fromEntries(aliases.map(x => [x, selector]))
-    }
-
-    //CONFIG: aliases
-    let type_aliases = ['field type', 'variable type', 'type']
-    let label_aliases = ['field label', 'label']
-    let name_aliases = ['field name', 'variable name', 'name']
-    let validation_aliases = ['validation?', 'validation', 'validation type']
-    let calculation_aliases = ['calculated field', 'calculation equation', 'calculation', 'calculations']
-    let choices_aliases = ['choices', 'multiple choices']
-    let required_aliases = ['is required', 'required', 'required?']
-
-    //CONFIG: selector mappings
-    let selMap = buildMap(type_aliases, 'select#field_type')
-    selMap = {...selMap, ...buildMap(label_aliases, 'textarea[name=field_label]')}
-    selMap = {...selMap, ...buildMap(name_aliases, 'input#field_name')}
-    selMap = {...selMap, ...buildMap(validation_aliases, 'select#val_type')}
-    selMap = {...selMap, ...buildMap(calculation_aliases, 'textarea#element_enum')}
-    selMap = {...selMap, ...buildMap(choices_aliases, 'textarea#element_enum')}
-
-    //sanitize `subfield` by converting to lowercase and trimming whitespace
-    subfield = subfield.toLowerCase().trim()
-    //get selector corresponding to `subfield`
-    let sel = selMap[subfield]
-    
-    //edit the appropriate subfield - redundant structure is for readability and maintainability 
-    if (type_aliases.includes(subfield)) { //Field Type
-        // cy.get(sel).select(value).should('have.value', value)
-        cy.get(sel).select(value)
-    } else if (label_aliases.includes(subfield)) { //Field Label
-        cy.get(sel).clear().type(value)
-    } else if (name_aliases.includes(subfield)) { //Variable Name
-        cy.get(sel).clear().type(value)
-    } else if (validation_aliases.includes(subfield)) { //Field Validation Type
-        cy.get(sel).select(value)
-    } else if (calculation_aliases.includes(subfield)) { //Calculated Fields
-        //click into textarea, then a dialog window should appear with "Logic Editor" at the top
-        cy.get(sel).click().then(() => {
-            cy.get('div[role=dialog]:last').within(($div) => {
-                cy.get('.ace_text-input').clear({force:true}).type(value, {force:true}).then(() => {
-                    cy.get('button:contains(Update & Close Editor)').click()
-                })
-            })
-        })
-    } else if (choices_aliases.includes(subfield)) {
-        cy.get(sel).clear().type(value).then(() => cy.get('#div_add_field').click())
-        //click out of textarea to trigger update & popup
-    } else if (subfield == 'is_identifier') { //not yet implemented
-        // if (value) {
-        //     cy.get()
-        // }
-    } //implement other subfields, as needed
-
+Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000) => {
+    cy.find_online_designer_field(name).parent().parentsUntil('tr').find('img[title=Edit]').parent().click()
+    cy.get('div[role=dialog]').contains('Edit Field').should('be.visible')
 })
 
 Cypress.Commands.add('select_field_choices', (timeout = 10000) => {
@@ -379,10 +314,16 @@ Cypress.Commands.add('initial_save_field', () => {
 })
 
 Cypress.Commands.add('save_field', () => {
+    cy.intercept({
+        method: 'GET',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/online_designer_render_fields.php?*"
+    }).as('save_field')
+
     cy.get('input#field_name').then(($f) => {
         cy.contains('button', 'Save').click()
     })
 
+    cy.wait('@save_field')
 })
 
 Cypress.Commands.add('add_field', (field_name, type) => {
@@ -430,108 +371,22 @@ Cypress.Commands.add('download_data_dictionary', () => {
     cy.get('a').contains('Download the current Data Dictionary').click()
 })
 
-Cypress.Commands.add('upload_data_dictionary', (fixture_file, pid, date_format = "DMY") => {
+Cypress.Commands.add('upload_data_dictionary', (fixture_file, date_format = "DMY") => {
+    cy.upload_file('/dictionaries/' + fixture_file, 'csv', 'input[name="uploadedfile"]')
 
-    let admin_user = Cypress.env('users')['admin']['user']
-    let current_token = null;
+    cy.wait(500)
 
-    let current_user_type = window.user_info.get_previous_user_type()
-    if(current_user_type != 'admin'){
-        cy.set_user_type('admin')
-        cy.fetch_login()
-    }
-
-     cy.add_api_user_to_project(admin_user, pid).then(($response) => {
-
-        if($response.hasOwnProperty('token')){
-
-            current_token = $response['token']
-
-            cy.fixture(`dictionaries/${fixture_file}`).then(data_dictionary => {
-
-                cy.request({
-                    method: 'POST',
-                    url: '/api/',
-                    headers: {
-                        "Accept":"application/json",
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: {
-                        token: current_token,
-                        content: 'metadata',
-                        format: 'csv',
-                        data: data_dictionary,
-                        returnFormat: 'json'
-                    },
-                    timeout: 50000
-
-                }).should(($a) => {
-                    expect($a.status).to.equal(200)
-
-                    cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
-                        expect($e.body.includes('List of Data Changes'), 'Body contains "List of Data Changes"').to.be.true
-                        expect($e.body.includes('Manage/Design'), 'Body contains "Manage/Design"').to.be.true
-                    })
-                })
-            })
-
-        } else {
-
-            cy.request({ url: '/redcap_v' +
-                    Cypress.env('redcap_version') +
-                    '/ControlCenter/user_api_ajax.php?action=createToken&api_username=' +
-                    admin_user +
-                    '&api_pid=' +
-                    pid +
-                    '&api_export=1&api_import=1&mobile_app=0&api_send_email=0'}).should(($token) => {
-
-                expect($token.body).to.contain('token has been created')
-                expect($token.body).to.contain(admin_user)
-
-                cy.request({ url: '/redcap_v' +
-                        Cypress.env('redcap_version') +
-                        '/ControlCenter/user_api_ajax.php?action=viewToken&api_username=' + admin_user + '&api_pid=' + pid}).then(($super_token) => {
-
-                    current_token = Cypress.$($super_token.body).children('div')[0].innerText
-
-                    cy.fixture(`dictionaries/${fixture_file}`).then(data_dictionary => {
-
-                        cy.request({
-                            method: 'POST',
-                            url: '/api/',
-                            headers: {
-                                "Accept":"application/json",
-                                "Content-Type": "application/x-www-form-urlencoded"
-                            },
-                            body: {
-                                token: current_token,
-                                content: 'metadata',
-                                format: 'csv',
-                                data: data_dictionary,
-                                returnFormat: 'json'
-                            },
-                            timeout: 50000
-
-                        }).should(($a) => {
-                            expect($a.status).to.equal(200)
-
-                            cy.request('/redcap_v' + Cypress.env('redcap_version') + '/Logging/index.php?pid=' + pid).should(($e) => {
-                                expect($e.body.includes('List of Data Changes'), 'Body contains "List of Data Changes"').to.be.true
-                                expect($e.body.includes('Manage/Design'), 'Body contains "Manage/Design"').to.be.true
-                            })
-                        })
-                    })
-                })
-            })
-        }
-
-        if(current_user_type != 'admin'){
-            cy.set_user_type(current_user_type)
-            cy.fetch_login()
-        }
-
+    cy.get('button[name=submit]').click()
+    cy.get('html').should(($html) => {
+        expect($html).to.contain('Commit Changes')
     })
 
+    cy.wait(500)
+
+    cy.get('button').contains('Commit Changes').click()
+    cy.get('html').should(($html) => {
+        expect($html).to.contain('Changes')
+    })
 })
 
 Cypress.Commands.add('create_cdisc_project', (project_name, project_type, cdisc_file) => {
@@ -601,14 +456,17 @@ Cypress.Commands.add('num_projects_excluding_archived', () => {
     return cy.mysql_query("SELECT count(*) FROM redcap_projects WHERE status != 3;")
 })
 
-Cypress.Commands.add('delete_project', (pid) => {
-    cy.visit_version({ page: 'ProjectSetup/other_functionality.php', params: `pid=${pid}`})
+Cypress.Commands.add('delete_project_permanently', () => {
+    cy.intercept({
+        method: 'POST',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/ProjectGeneral/delete_project.php?*"
+    }).as('delete_project')
     cy.get('button').contains('Delete the project').click()
-    cy.get('input#delete_project_confirm').type('DELETE').then((input) => {
+    cy.get('input#delete_project_confirm').should('be.visible').type('DELETE').then((input) => {
         cy.get(input).closest('div[role="dialog"]').find('button').contains('Delete the project').click()
         cy.get('button').contains('Yes, delete the project').click()
-        cy.get('span#ui-id-3').closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
     })
+    cy.wait('@delete_project')
 })
 
 Cypress.Commands.add('delete_project_complete', (pid) => {
@@ -746,39 +604,97 @@ Cypress.Commands.add('import_data_file', (fixture_file,pid) => {
 })
 
 Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_to_assign, project_id, assign_right = true, user_type = 'admin', selector = 'input', value = null) => {
-    //Now login as admin and add Project Design and Setup Rights to Test User
-    cy.set_user_type(user_type)
-
     cy.visit_version({page:'index.php', params: 'pid='+project_id})
     cy.get('html').should('contain', 'User Rights')
 
     cy.get('a').contains('User Rights').click()
+
+    let user_has_rights_assigned = Cypress.$("a:contains(" + JSON.stringify(username + ' (' + proper_name + ')') + ")");
+    
+    if (!user_has_rights_assigned.length){
+        cy.get('input#new_username', {force: true}).clear({force: true}).type(username, {force: true}).then((element) => {
+            cy.get('button', {force: true}).contains('Add with custom rights').click({force: true}).then(() => {
+                cy.get('div[role="dialog"]', {force: true}).find('button').contains(/add user|save changes/i).click().then(() => {
+                    cy.get('table#table-user_rights_roles_table').should(($e) => {
+                        expect($e[0].innerText).to.contain(username)
+                    })
+                })
+            })
+        })
+    }
+    
     cy.get('a').contains(username + ' (' + proper_name + ')').click()
+
     cy.get('button').contains('Edit user privileges').click()
 
     cy.get('div').should(($div) => { expect($div).to.contain('Editing existing user') })
 
     if(rights_to_assign === "Expiration Date"){
 
-        if(assign_right){
+        console.log("VALUE: " + assign_right)
+
+        if(assign_right === true){
             cy.get('input.hasDatepicker').click()
+            cy.get('table.ui-datepicker-calendar').should('be.visible')
             cy.get('a.ui-state-highlight').click()
 
-            cy.get('input#expiration').should(($expiration) => {
-                let date = new Date()
-                let day = String(date.getDate()).padStart(2, "0");
-                let month = String(date.getMonth()+1).padStart(2, "0");
-                let year = date.getFullYear();
-                let fullDate = `${month}/${day}/${year}`;
+            let date = new Date()
+            let day = String(date.getDate()).padStart(2, "0");
+            let month = String(date.getMonth()+1).padStart(2, "0");
+            let year = date.getFullYear();
+            let expired_year = String(year - 1); //We are subtracting one year, so we know it's expired
+            let fullDate = `${month}/${day}/${year}`;
 
+            //Validate that we set today's date by clicking on highlight in datepicker
+            cy.get('input#expiration').should(($expiration) => {
                 expect($expiration).to.have.value(fullDate)
             })
-        } else {
-            cy.get('input.hasDatepicker').click().clear()
 
+            cy.get('table.ui-datepicker-calendar').should('not.be.visible')
+
+            cy.get('input.hasDatepicker').click()
+
+            cy.get('table.ui-datepicker-calendar').should('be.visible')
+
+            cy.get('select.ui-datepicker-year').scrollIntoView().should('be.visible').select(expired_year)
+
+            //Select the first date from the month we are on
+            cy.get('.ui-state-default').first().click()
+
+            let expiredDate = `${month}/01/${expired_year}`;
+
+            //Validate that we set an expired date
             cy.get('input#expiration').should(($expiration) => {
-                expect($expiration).to.have.value("")
+                expect($expiration).to.have.value(expiredDate)
             })
+
+            cy.get('button').contains(/add user|save changes/i).click()
+
+            cy.get('body').should(($body) => {
+                expect($body).to.contain('User "' + username + '" was successfully edited')
+            })
+
+            //Should not be visible before we start our next test
+            cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
+
+            cy.get('body').should(($body) => {
+                expect($body).to.contain(expiredDate)
+            })
+
+        } else {
+
+           console.log('Remove expiration date')
+
+           cy.get('input.hasDatepicker').click().clear()
+           cy.get('input#expiration').should(($expiration) => {
+               expect($expiration).to.have.value("")
+           })
+           cy.get('button').contains(/add user|save changes/i).click()
+           cy.get('body').should(($body) => {
+               expect($body).to.contain('User "' + username + '" was successfully edited')
+           })
+           //Should not be visible before we start our next test
+           cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')     
         }
 
     } else {
@@ -819,14 +735,19 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
         })
     }
 
-    cy.get('button').contains('Save Changes').click()
+    if(rights_to_assign !== "Expiration Date") {
 
-    cy.get('body').should(($body) => {
-        expect($body).to.contain('User "' + username + '" was successfully edited')
-    })
+        console.log('Save changes non expiration date')
 
-    //Should not be visible before we start our next test
-    cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
+        cy.get('button').contains(/add user|save changes/i).click()
+
+        cy.get('body').should(($body) => {
+            expect($body).to.contain('User "' + username + '" was successfully edited')
+        })
+
+        //Should not be visible before we start our next test
+        cy.get('div').contains('User "' + username + '" was successfully edited').should('not.be.visible')
+    }
 })
 
 Cypress.Commands.add('remove_basic_user_right', (username, proper_name, rights_to_assign, project_id, user_type = 'admin', selector = 'input', value = null) => {
@@ -1028,6 +949,7 @@ Cypress.Commands.add('reorder_instrument', (from, to) => {
     cy.log(cy.wrap(el_from) === cy.get(sel_from))
 })
 
+
 Cypress.Commands.add('read_directory', (dir) => {
     cy.task('readDirectory', (dir)).then((files) => {
         return files
@@ -1051,6 +973,147 @@ Cypress.Commands.add("dragTo", { prevSubject: 'element'}, (subject, target) => {
     
  })
 
+Cypress.Commands.add('click_on_design_field_function', (type, field) => {
+    cy.get('td[class=frmedit_row]').
+    contains(field).
+    parents('tr').
+    find('img[title="' + type + '"]').
+    click()
+})
+
+Cypress.Commands.add('change_event_name', (current_name, proposed_name, production = false) => {
+
+    if(!production){
+        cy.intercept({
+            method: 'GET',
+            url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/define_events_ajax.php?*"
+        }).as('define_ajax_events')
+    }
+
+    cy.get('td').contains(current_name).parents('tr').within(() => {
+        cy.get('img[title="Edit"]').click()
+    })
+
+    if(!production) {
+        cy.wait('@define_ajax_events')
+
+        cy.intercept({
+            method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/define_events_ajax.php"
+        }).as('save_events')
+
+        cy.get('input[value="' + current_name + '"]').clear().type(proposed_name).parents('tr').within(() => {
+            cy.get('input[value=Save]').click()
+        })
+        cy.wait('@save_events')
+    }
+})
+
+
+
+Cypress.Commands.add('delete_event_name', (event_name) => {
+    cy.intercept({
+        method: 'GET',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/define_events_ajax.php?*"
+    }).as('delete_ajax_events')
+
+    cy.get('td').
+    contains(event_name).
+    parents('tr').within(() => {
+        cy.get('img[title="Delete"]').click()
+    })
+    cy.wait('@delete_ajax_events')
+})
+
+Cypress.Commands.add("click_on_dialog_button", (text, selector = 'button') => {
+    cy.get('div[role="dialog"]').then((divs) => {
+        // can be multiple layers of dialogs, find the top most - tintin edit
+        let topDiv = null
+        for(let i = 0; i < divs.length; i++){
+            // ignore invisible dialogs
+            if(divs[i].style.display === 'none') {continue}
+
+            if(topDiv == null || divs[i].style.zIndex > topDiv.style.zIndex){
+                topDiv = divs[i]
+            }
+        }
+        cy.wrap(topDiv).find(selector).contains(text).click()
+    })
+})
+
+Cypress.Commands.add("adjust_or_verify_instrument_event", (instrument_name, event_name, checked= false, click = true) => {
+
+    if(click) {
+        cy.get('span#progress_save').should('be.hidden')
+
+        cy.get('button').contains('Begin Editing').should('be.visible').click()
+
+        cy.intercept({
+            method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/designate_forms_ajax.php"
+        }).as('designate_forms')
+    }
+
+    cy.get('table#event_grid_table').within(($table) => {
+        cy.get('th').contains(event_name).then(($th) => {
+            $th.parents('tr').children('th').each((thi, th) => {
+                if(th.innerText.includes(event_name)){
+                    cy.get('td').contains(instrument_name).then(($td) => {
+                        $td.parent('tr').children('td').each((tdi, td) => {
+                            //If we're in the correct row and column
+                            if(tdi === thi){
+
+                                const element = Cypress.$(td).find((click) ? 'input' : 'img')
+
+                                if(element.length){
+
+                                    if(click && element[0]['checked'] === checked){
+                                        element[0].click()
+                                    } else if (checked && !click) {
+                                        expect(element.length).to.eq(1)
+                                    } else if (!checked && !click) {
+                                        expect(element.length).to.eq(0)
+                                    }
+
+                                } else {
+                                    expect(element.length).to.eq(0)
+                                }
+
+                            }
+                        })
+                    })
+                }
+            })
+        })
+    })
+
+    if(click) {
+        cy.get('button').contains('Save').click()
+        cy.wait('@designate_forms')
+    }
+})
+
+Cypress.Commands.add("toggle_field_validation_type", (field_validation_type, button_text = 'Enable') => {
+    cy.intercept({
+        method: 'POST',
+        url: '/redcap_v' + Cypress.env('redcap_version') + "/ControlCenter/validation_type_setup.php"
+    }).as('validation_type_setup')
+
+    cy.get('td').contains(field_validation_type).parents('tr').children('td').each((td, i) => {
+        //Get to third column
+        if(i === 2 && td.length){
+            if(td[0].innerText.includes(button_text)){
+                td.find('button')[0].click()
+                cy.wait('@validation_type_setup')
+            } else {
+                //Do nothing if we do not find the "button text" - it means we're already in the state we want to be!
+            }
+        }
+    })
+})
+
+//
+
 //yields the visible div with the highest z-index, or the <html> if none are found
 Cypress.Commands.add('get_top_layer', (retryUntil) => {
     let top_layer
@@ -1063,7 +1126,8 @@ Cypress.Commands.add('get_top_layer', (retryUntil) => {
             $els.sort((cur, prev) => {
                 let zp = Cypress.dom.wrap(prev).css('z-index')
                 let zc = Cypress.dom.wrap(cur).css('z-index')
-                return zc - zp
+                // return zc - zp
+                return zp - zc
             })
         }
         top_layer = $els.last()
@@ -1071,7 +1135,6 @@ Cypress.Commands.add('get_top_layer', (retryUntil) => {
     }).then(() => cy.wrap(top_layer)) //yield top_layer to any further chained commands
 })
 
-//TODO: ask Adam if these comments are still needed
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
 //

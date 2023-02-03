@@ -4,7 +4,7 @@ require("./parameter_types.js")
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}
+ * @example I assign the {string} user right to the user named {string} with the username of {string} on project ID {int}
  * @param {string} rights - the specific user right desired (e.g. Stats & Charts)
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
@@ -12,14 +12,14 @@ require("./parameter_types.js")
  * @description Assigns a specific user right to a given user when provided a valid Project ID.
  *
  */
-Given("I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}", (rights_to_assign, proper_name, username, project_id) => {
+Given("I assign the {string} user right to the user named {string} with the username of {string} on project ID {int}", (rights_to_assign, proper_name, username, project_id) => {
     cy.assign_basic_user_right(username, proper_name, rights_to_assign, project_id)
 })
 
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I want to remove the {string} user right to the user named {string} with the username of {string} on project ID {int}
+ * @example I remove the {string} user right to the user named {string} with the username of {string} on project ID {int}
  * @param {string} rights - the specific user right desired (e.g. Stats & Charts)
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
@@ -27,78 +27,77 @@ Given("I want to assign the {string} user right to the user named {string} with 
  * @description Removes a specific user right to a given user when provided a valid Project ID.
  *
  */
-Given("I want to remove the {string} user right to the user named {string} with the username of {string} on project ID {int}", (rights_to_assign, proper_name, username, project_id) => {
+Given("I remove the {string} user right to the user named {string} with the username of {string} on project ID {int}", (rights_to_assign, proper_name, username, project_id) => {
     cy.remove_basic_user_right(username, proper_name, rights_to_assign, project_id)
 })
 
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I want to assign an expiration date to user {string} with username of {string} on project ID {int}
+ * @example I assign an expiration date to user {string} with username of {string} on project ID {int}
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
  * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
  * @description Assigns 'Expiration Date' user right to a given user when provided a valid Project ID.
  *
  */
-Given("I want to assign an expiration date to user {string} with username of {string} on project ID {int}", (proper_name, username, project_id) => {
+Given("I assign an expired expiration date to user {string} with username of {string} on project ID {int}", (proper_name, username, project_id) => {
     cy.assign_expiration_date_to_user(username, proper_name, project_id)
 })
 
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I want to assign an expiration date to user {string} with username of {string} on project ID {int}
+ * @example I assign an expired expiration date to user {string} with username of {string} on project ID {int}
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
  * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
  * @description Removes 'Expiration Date' user right to a given user when provided a valid Project ID.
  *
  */
-Given("I want to remove the expiration date to user {string} with username of {string} on project ID {int}", (proper_name, username, project_id) => {
+Given("I remove the expiration date to user {string} with username of {string} on project ID {int}", (proper_name, username, project_id) => {
     cy.remove_expiration_date_from_user(username, proper_name, project_id)
 })
 
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I want to verify user rights are available for {string} user type on the path {string} on project ID {int}
+ * @example I verify user rights are available for {string} user type on the path {string} on project ID {int}
  * @param {string} user_type - the type of user (e.g. 'standard' - reference "Users" object within cypress.env.json)
  * @param {string} path - the URL path we are testing to see if that user can access (e.g. /ProjectSetup/)
  * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
  * @description Verifies a user is unable to access a specific path of a specific project given a Project ID.
  *
  */
-Given("I want to verify user rights are available for {string} user type on the path {string} on project ID {int}", (user_type, path, pid) => {
+Given("I verify user rights are available for {string} user type on the path {string} on project ID {int}", (user_type, path, pid) => {
     cy.verify_user_rights_available(user_type, path, pid)
 })
 
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I want to verify user rights are unavailable for {string} user type on the path {string} on project ID {int}
+ * @example I verify user rights are unavailable for {string} user type on the path {string} on project ID {int}
  * @param {string} user_type - the type of user (e.g. 'standard' - reference "Users" object within cypress.env.json)
  * @param {string} path - the URL path we are testing to see if that user can access (e.g. /ProjectSetup/)
  * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
  * @description Verifies a user is unable to access a specific path of a specific project given a Project ID.
  *
  */
-Given("I want to verify user rights are unavailable for {string} user type on the path {string} on project ID {int}", (user_type, path, pid) => {
+Given("I verify user rights are unavailable for {string} user type on the path {string} on project ID {int}", (user_type, path, pid) => {
     cy.verify_user_rights_unavailable(user_type, path, pid, false)
 })
 
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I want to assign the {string} user right to the user named {string} with the username of {string} on project ID {int}
- * @param {string} rights - the specific user right desired (e.g. Stats & Charts)
- * @param {string} name - the proper name of the user (e.g. Jane Doe)
- * @param {string} username - the username assigned to the user (e.g. jdoe)
+ * @example I change survey edit rights for {string} user on the form called {string} on project ID {int}
+ * @param {string} user - the username
+ * @param {string} instrument - name of instrument to apply the rights to
  * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
  * @description Assigns a specific user right to a given user when provided a valid Project ID.
  */
-Given("I change survey edit rights for {string} user on the form called {string} on project ID {int}", (user, form, pid) => {
-    cy.change_survey_edit_rights(pid, user, form)
+Given("I change survey edit rights for {string} user on the form called {string} on project ID {int}", (user, instrument, pid) => {
+    cy.change_survey_edit_rights(pid, user, instrument)
 })
 
 /**
@@ -165,17 +164,56 @@ Given("I click to edit username {string}", (text) => {
     cy.get('a[title="Edit user privileges or assign to role"]').contains(text).should('be.visible').click()
 })
 
+const user_right_check_mappings = {
+    'Project Setup & Design' : 'design',
+    'User Rights' : 'user_rights',
+    'Data Access Groups' : 'data_access_groups',
+    'Stats & Charts' : 'graphical',
+    'Create Records' : 'record_create',
+    'Survey Distribution Tools' : 'participants',
+    'Add/Edit/Organize Reports': 'reports',
+    'Rename Records' : 'record_rename',
+    'Delete Records' : 'record_delete',
+    'Calendar' : 'calendar',
+    'Data Import Tool'  : 'data_import_tool',
+    'Data Comparison Tool' : 'data_comparison_tool',
+    'Logging'  : 'data_logging',
+    'File Repository' : 'file_repository',
+    'Record Locking Customization' : 'lock_record_customize',
+    'Lock/Unlock *Entire* Records' : 'lock_record_multiform',
+    'Data Quality - Create & edit rules' : 'data_quality_design',
+    'Data Quality - Execute rules' : 'data_quality_execute',
+}
+
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I select the user right identified by {string}
- * @param {string} text - name of user right
- * @description Assign user right to role/user
+ * @example I check the User Right named {string}
+ * @param {string} text - name of User Right
+ * @description Assign the user right
  *
  */
-Given("I check the user right identified by {string}", (text) => {
-    cy.get(text).should('be.visible').check()
+Given("I check the User Right named {string}", (text) => {
+    cy.get('input[name="' + user_right_check_mappings[text] + '"]').should('be.visible').check()
 })
+
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I uncheck the User Right named {string}
+ * @param {string} text - name of User Right
+ * @description Unassign the user right
+ *
+ */
+Given("I uncheck the User Right named {string}", (text) => {
+    cy.get('input[name="' + user_right_check_mappings[text] + '"]').uncheck()
+})
+
+const single_choice_mappings = {
+    'Data Exports' : 'data_export_tool',
+    'API' : 'data_access_groups',
+    'Lock/Unlock Records' : 'lock_record'
+}
 
 /**
  * @module UserRights
@@ -185,8 +223,12 @@ Given("I check the user right identified by {string}", (text) => {
  * @description Assign user right to role/user
  *
  */
-Given("I check the user right identified by {string} and select option {string}", (text, option) => {
-    cy.get(text).check(option)
+Given("I select the User Right named {string} and choose {string}", (text, option) => {
+    cy.get('input[name="' + single_choice_mappings[text] + '"]').
+        parent().
+        parent().
+        find(':contains(' + option + ')').
+        within(() => { cy.get('input').click() } )
 })
 
 /**
@@ -262,7 +304,13 @@ Given("I enter {string} into the username input field", (text) => {
  *
  */
 Given("I save changes within the context of User Rights", () => {
-    cy.get('.ui-button').contains(/add user|save changes/i).click()
+    cy.intercept({  method: 'POST',
+        url: '/redcap_v' + Cypress.env('redcap_version') + '/UserRights/edit_user.php?*'
+    }).as('saved_user')
+
+    cy.get('button').contains(/add user|save changes/i).click()
+
+    cy.wait('@saved_user')
 })
 
 /**
@@ -285,6 +333,39 @@ Given("I select the option to display E-signature option for the instrument iden
  */
 Given('I scroll the user rights page to the bottom', () => {
     cy.get('input[name="api_import"]').scrollIntoView()
+})
+
+defineParameterType({
+    name: 'user_right_action',
+    regexp: /add|remove/
+})
+
+/**
+ * @module UserRights
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I (add | remove) all basic user rights for the open User Rights dialog box
+ * @description Checks or Unchecks all Basic Rights within the User Rights dialog box.
+ */
+Given('I {user_right_action} all Basic Rights within the open User Rights dialog box', (action) => {
+    //"Full Access" to Data Export Tool
+    if(action === "add"){
+        cy.get('input[name=data_export_tool]').should('be.visible').check('1')
+
+    //"No Access" to Data Export Tool
+    } else if (action === "remove"){
+        cy.get('input[name=data_export_tool]').should('be.visible').check('0')
+    }
+
+    for(var key in user_right_check_mappings) {
+        const input = cy.get('input[name="' + user_right_check_mappings[key] + '"]').scrollIntoView().should('be.visible')
+
+        if(action === "add"){
+            input.check()
+        } else if (action === "remove"){
+            input.uncheck()
+        }
+    }
+
 })
 
 
