@@ -18,17 +18,17 @@ defineParameterType({
 // Compare against the commented-out, less abstract step definitions at the end of the file. I think this is preferable.
 Given('I click on the {ordinal}{clickable} near the text {string}', (n, type, text) => {
     let subsels = {link: 'a', button: 'button', checkbox: 'input[type=checkbox]', radio: 'input[type=radio]'}
-    let subsel = subsels[type]
+    let subsel = subsels[type] //'a', 'button', etc.
     let sel = `:contains(${text}):has(${subsel}):not(:has(:contains(${text}):has(${subsel})))`
     cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)})
         .within(() => {
             cy.get(sel).within(() => {
-                cy.get(`${subsel}:nth(${n})`).click()
+                cy.get(`${subsel}:visible:nth(${n})`).click()
             })
         })
 })
 
-Given('I select {string} from the {ordinal}dropdown nearest the text {string}', (option, n, text) => {
+Given('I select {string} from the {ordinal}dropdown near the text {string}', (option, n, text) => {
     let sel = `:contains(${text}):has(select):not(:has(:contains(${text}):has(select)))`
     cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)})
         .within(() => {
@@ -37,6 +37,26 @@ Given('I select {string} from the {ordinal}dropdown nearest the text {string}', 
             })
         })
 })
+
+Given('I enter {string} into the {ordinal}input field near the text {string}', (input, n, text) => {
+    let sel = `:contains(${text}):has(input,textarea):not(:has(:contains(${text}):has(input,textarea)))`
+    cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)})
+        .within(() => {
+            cy.get(sel).within(() => {
+                cy.get(`input[type=text]:visible,textarea:visible`).eq(n).clear().type(input)
+            })
+        })
+})
+
+// defineParameterType({
+//    name: 'trailingInt',
+//    regexp: '(?:/\s*,\s*(\d+)\s*)?/',
+//    transformer: parseInt
+//})
+
+// Given('I enter {string} into the field near the text {string}{trailingInt}{trailingInt}', (input, text, i, j) => {
+//     // Enter `input` into the i'th input field near the j'th occurence of `text`
+// })
 
 // Given(/^I click on the(?: (first|second|third|fourth|fifth|sixth|seventh|eighth|last))? link near the text "(.*)"/, (n, text) => {
 //     n = ordinal_to_int(n)
