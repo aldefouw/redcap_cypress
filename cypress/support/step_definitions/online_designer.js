@@ -47,7 +47,6 @@ Given("I delete the data instrument named {string}", (instrument_name) => {
 
     cy.wait('@delete_instrument')
 })
-import { Given } from "cypress-cucumber-preprocessor/steps";
 
 /**
  * @module OnlineDesigner
