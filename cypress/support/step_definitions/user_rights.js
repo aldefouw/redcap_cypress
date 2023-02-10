@@ -235,36 +235,36 @@ Given("I select the User Right named {string} and choose {string}", (text, optio
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I click the user right identified by {string}
- * @param {string} text - name of user right
+ * @param {string} sel - A selector matching the element to click
  * @description select user right for role/user
  *
  */
-Given("I click the user right identified by {string}", (text) => {
-    cy.get(text).click()
+Given("I click the user right identified by {string}", (sel) => {
+    cy.get(sel).click()
 })
 
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example the user right identified by {string} should be checked
- * @param {string} text - name of user right
+ * @param {string} sel - A selector matching the checkbox/radio to assert is checked
  * @description User right should be checked
  *
  */
-Given("the user right identified by {string} should be checked", (text) => {
-    cy.get(text).should('be.checked')
+Given("the user right identified by {string} should be checked", (sel) => {
+    cy.get(sel).should('be.checked')
 })
 
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example the user right identified by {string} should not be checked
- * @param {string} text - name of user right
+ * @param {string} sel - A selector matching the checkbox/radio to assert is unchecked
  * @description User right should not be checked
  *
  */
-Given("the user right identified by {string} should not be checked", (text) => {
-    cy.get(text).should('not.be.checked')
+Given("the user right identified by {string} should not be checked", (sel) => {
+    cy.get(sel).should('not.be.checked')
 })
 
 /**
@@ -317,12 +317,12 @@ Given("I save changes within the context of User Rights", () => {
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @example I select the option to display E-signature option for the instrument identified by {string}
- * @param {string} text - Instrument name
+ * @param {string} sel - A selector matching the instrument for which to enable E-signatures
  * @description Enable E-Signature option on instrument
  *
  */
-Given("I select the option to display E-signature option for the instrument identified by {string}", (text) => {
-    cy.get(text).closest('td').find('input').check()
+Given("I select the option to display E-signature option for the instrument identified by {string}", (sel) => {
+    cy.get(sel).closest('td').find('input').check()
 })
 
 /**
@@ -368,4 +368,13 @@ Given('I {user_right_action} all Basic Rights within the open User Rights dialog
 
 })
 
-
+/**
+ * @module UserRights
+ * @author Corey DeBacker <debacker@wisc.edu>
+ * @example I select the Data Exports priveleges option labeled {string}
+ * @param {string} text - the label of the option to be selected
+ * @description Selects a radio option for Data Exports within the user rights configuration dialog based on its label.
+ */
+Given('I select the Data Exports priveleges option labeled {string}', (text) => {
+  cy.get(`:contains(${text}) > [name=data_export_tool]`).check()
+})
