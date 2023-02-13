@@ -58,12 +58,8 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Data Dictionary"
     And I set the input file field named "uploadedfile" to the file at path "cypress/downloads/Design Forms Feature.csv"
-    # wait for csrf token to show up
-    Then the form should have a redcap_csrf_token
     And I click on the button labeled "Upload File"
     Then I should see "Your document was uploaded successfully and awaits your confirmation below."
-    # wait for csrf token to show up
-    Then the form should have a redcap_csrf_token
     And I click on the button labeled "Commit Changes"
     Then I should see "Changes Made Successfully!"
 
@@ -77,8 +73,6 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Data Dictionary"
     And I set the input file field named "uploadedfile" to the file at path "cypress/downloads/Design Forms Feature.csv"
-    # wait for csrf token to show up
-    Then the form should have a redcap_csrf_token
     And I click on the button labeled "Upload File"
     Then I should see "Errors found in your Data Dictionary:"
     And I should see "dd_form"
@@ -93,11 +87,8 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Data Dictionary"
     And I set the input file field named "uploadedfile" to the file at path "cypress/downloads/Design Forms Feature.csv"
-    # wait for csrf token to show up
-    Then the form should have a redcap_csrf_token
     And I click on the button labeled "Upload File"
     Then I should see "Your document was uploaded successfully and awaits your confirmation below."
-    Then the form should have a redcap_csrf_token
     And I click on the button labeled "Commit Changes"
     Then I should see "Changes Made Successfully!"
 
