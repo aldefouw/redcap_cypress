@@ -368,14 +368,14 @@ Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector) => {
 Cypress.Commands.add('upload_data_dictionary', (fixture_file, date_format = "DMY") => {
     cy.upload_file('/dictionaries/' + fixture_file, 'csv', 'input[name="uploadedfile"]')
 
-    cy.wait(500)
+    cy.ensure_csrf_token()
 
     cy.get('button[name=submit]').click()
     cy.get('html').should(($html) => {
         expect($html).to.contain('Commit Changes')
     })
 
-    cy.wait(500)
+    cy.ensure_csrf_token()
 
     cy.get('button').contains('Commit Changes').click()
     cy.get('html').should(($html) => {
@@ -1127,6 +1127,20 @@ Cypress.Commands.add('get_top_layer', (retryUntil) => {
         top_layer = $els.last()
         retryUntil(top_layer) //run assertions, so get can retry on failure
     }).then(() => cy.wrap(top_layer)) //yield top_layer to any further chained commands
+})
+
+Cypress.Commands.add('ensure_csrf_token', () => {
+    cy.url().then(($url) => {
+        if($url !== undefined && $url !== 'about:blank'){
+            if(Cypress.$('form').length > 0){
+                cy.get('form input[name=redcap_csrf_token]').each(($input) => {
+                    cy.window().then((win) => {
+                        expect($input[0].value).to.eq(win.redcap_csrf_token)
+                    })
+                })
+            }
+        }
+    })
 })
 
 // -- This is a child command --
