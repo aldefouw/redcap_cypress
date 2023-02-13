@@ -9,7 +9,7 @@ import { defineParameterType } from "cypress-cucumber-preprocessor/steps";
  * @description Clicks on a button element with a EXACT text label.
  */
 Given("I click on the button labeled exactly {string}", (text) => {
-    cy.get('button').contains(new RegExp("^" + text + "$", "g")).click()
+    cy.get('button').contains(new RegExp("^" + text + "$", "g")).click( { check_csrf: true } )
 })
 
 /**
@@ -69,7 +69,7 @@ defineParameterType({
  * @description Clicks on a button element with a specific text label.
  */
 Given("I click on the button labeled {string}", (text) => {
-    cy.get('button').contains(text).click()
+    cy.get('button').contains(text).click( { check_csrf: true })
 })
 
 /**
@@ -155,7 +155,7 @@ Given("I click on the link labeled {string}", (text) => {
  * @description Clicks on an input element with a specific text label.
  */
 Given("I click on the input button labeled {string}", (text) => {
-    cy.get('input[value="' + text + '"]').click()
+    cy.get('input[value="' + text + '"]').click({ check_csrf: true })
 })
 
 /**

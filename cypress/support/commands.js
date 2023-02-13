@@ -368,16 +368,12 @@ Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector) => {
 Cypress.Commands.add('upload_data_dictionary', (fixture_file, date_format = "DMY") => {
     cy.upload_file('/dictionaries/' + fixture_file, 'csv', 'input[name="uploadedfile"]')
 
-    cy.ensure_csrf_token()
-
-    cy.get('button[name=submit]').click()
+    cy.get('button[name=submit]').click({ check_csrf: true })
     cy.get('html').should(($html) => {
         expect($html).to.contain('Commit Changes')
     })
 
-    cy.ensure_csrf_token()
-
-    cy.get('button').contains('Commit Changes').click()
+    cy.get('button').contains('Commit Changes').click({ check_csrf: true })
     cy.get('html').should(($html) => {
         expect($html).to.contain('Changes')
     })
@@ -1143,22 +1139,18 @@ Cypress.Commands.add('ensure_csrf_token', () => {
     })
 })
 
-Cypress.Commands.add('click_button', { prevSubject: true }, (subject, options) => {
-    cy.ensure_csrf_token()
-    cy.wrap(subject).click(options)
-})
-
-// Cypress.Commands.overwrite(
-//     'click',
-//     (originalFn, subject, positionOrX, y, options = {}) => {
-//         if(options !== undefined && options['skip_csrf'] === true){
-//             return originalFn(subject, positionOrX, y, options)
-//         } else {
-//             cy.ensure_csrf_token()
-//             cy.wrap(subject).click(options)
-//         }
-//     }
-// )
+Cypress.Commands.overwrite(
+    'click',
+    (originalFn, subject, options) => {
+        if(options !== undefined && options['check_csrf']){
+            cy.ensure_csrf_token() //Check the CSRF
+            delete(options['check_csrf']) //Delete the option to check CSRF; (endless loops are bad, right?)
+            cy.wrap(subject).click(options) //Now run the click method as designed
+        } else {
+            return originalFn(subject, options)
+        }
+    }
+)
 
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
