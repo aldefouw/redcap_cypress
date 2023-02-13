@@ -20,8 +20,6 @@ Feature: Manage Project
         When I click on the button labeled "Edit user info"
         And I uncheck the checkbox element labeled "Allow this user to create or copy projects?"
         And I should see "Allow this user to create or copy projects?"
-        # Waiting is sub-ideal but it is seemingly the only way to avoid CSRF errors about multiple tabs!  This seems to be REDCap's fault rather than Cypress.
-        And I wait for 0.5 seconds
         And I click on the input button labeled "Save"
         Then I should see "User has been successfully saved."
 
