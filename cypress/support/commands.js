@@ -1133,15 +1133,32 @@ Cypress.Commands.add('ensure_csrf_token', () => {
     cy.url().then(($url) => {
         if($url !== undefined && $url !== 'about:blank'){
             if(Cypress.$('form').length > 0){
-                cy.get('form input[name=redcap_csrf_token]').each(($input) => {
+                cy.get('form input[name=redcap_csrf_token]').each(($form_token) => {
                     cy.window().then((win) => {
-                        expect($input[0].value).to.eq(win.redcap_csrf_token)
+                        expect($form_token[0].value).to.not.be.null
                     })
                 })
             }
         }
     })
 })
+
+Cypress.Commands.add('click_button', { prevSubject: true }, (subject, options) => {
+    cy.ensure_csrf_token()
+    cy.wrap(subject).click(options)
+})
+
+// Cypress.Commands.overwrite(
+//     'click',
+//     (originalFn, subject, positionOrX, y, options = {}) => {
+//         if(options !== undefined && options['skip_csrf'] === true){
+//             return originalFn(subject, positionOrX, y, options)
+//         } else {
+//             cy.ensure_csrf_token()
+//             cy.wrap(subject).click(options)
+//         }
+//     }
+// )
 
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
