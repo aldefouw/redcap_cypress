@@ -66,7 +66,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
   Scenario: 7 - Add new field to data dictionary
     Given I add a new variable named "dd_form" in the form named "field_validation_form" with the field type "text" and the label "Testing data dictionary upload 2" into the Data Dictionary file at "cypress/downloads/Design Forms Feature.csv"
     Then the CSV file at path "cypress/downloads/Design Forms Feature.csv" has a value 'field_validation_form' for column "\"Form Name\""
-  
+
   Scenario: 8 - Upload Data Dictionary
     Given I click on the link labeled "My Projects"
     And I click on the link labeled "Design Forms Feature"
@@ -141,7 +141,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     #The item below always passes when Saved! is hidden
     Then I should see "Saved!"
     #Verify "Text Validation" is at the top
-  
+
   Scenario: 18 - Add all instruments to Event 1
     Given I click on the link labeled "Project Setup"
     And I click on the button labeled "Designate Instruments for My Events"
@@ -160,7 +160,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Online Designer"
     And I click on the link labeled "Data Types"
-  
+
   Scenario: 20 - Verify Add Field Types
     Given I click on the Add Field input button below the field named "Text2"
     Then I should see "Add New Field"
@@ -174,19 +174,15 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I should see the element identified by "select[name=val_type]"
     And I should see the element identified by "input[id=field_req0]"
     And I should see the element identified by "input[id=field_req1]"
-    And I should see the element identified by "input[id=field_phi0]" 
-    And I should see the element identified by "input[id=field_phi1]" 
-    And I should see the element identified by "input[id=field_phi0]" 
-    And I should see the element identified by "select[name=custom_alignment]" 
-    And I should see the element identified by "input[name=field_note]" 
+    And I should see the element identified by "input[id=field_phi0]"
+    And I should see the element identified by "input[id=field_phi1]"
+    And I should see the element identified by "input[id=field_phi0]"
+    And I should see the element identified by "select[name=custom_alignment]"
+    And I should see the element identified by "input[name=field_note]"
+    And I click on the button labeled "Cancel" in the dialog box
   
   Scenario: 22 - Add Text Box
-    Given I enter "Text Box" into the field identified by "textarea[name=field_label]"
-    And I enter "textbox" into the field identified by "input[name=field_name]"
-    And I click on the element identified by "textarea[name=field_label]"
-    And I click on the button labeled "Save"
-	  And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    Given I add a new Text Box field labeled "Text Box" with variable name "textbox"
     Then I should see "textbox"
 
   Scenario: 23 - Test illegal variables
@@ -217,33 +213,18 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "textbox"    
   
   Scenario: 24 - Add Notes Box
-    Given I click on the Add Field input button below the field named "Text Box"
-    And I select "textarea" from the dropdown identified by "select[name=field_type]"
-    And I enter "Notes Box" into the field identified by "textarea[name=field_label]"
-    And I enter "notesbox" into the field identified by "input[name=field_name]"
-    And I click on the element identified by "textarea[name=field_label]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    Given I add a new Notes Box field labeled "Notes Box" with variable name "notesbox"
     Then I should see "notesbox"
-    And I should see the element identified by "textarea[id=notesbox]"
 
   Scenario: 25 - Add Calculated Field
-    Given I click on the Add Field input button below the field named "Notes Box"
-    And I select "calc" from the dropdown identified by "select[name=field_type]"
-    Then I should see "Calculation Equation"
-    And I enter "Caculated Field" into the field identified by "textarea[name=field_label]"
-    And I enter "calculated_field" into the field identified by "input[name=field_name]"
-    And I click on the element identified by "textarea[name=element_enum]"
-    And I enter "3*2" into the hidden field identified by "textarea[class=ace_text-input]"
-    And I click on the button labeled "Update & Close Editor" in the dialog box
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    Given I add a new Calculated Field field labeled "Calculated Field" with variable name "calculated_field"
+    And I edit the field labeled "Calculated Field"
+    And I enter the equation "3*2" into Calculation Equation of the open "Edit Field" dialog box
+    And I save the field
     Then I should see "calculated_field"
 
   Scenario: 26 - Add Multiple Choice - Drop-down Auto
-    Given I click on the Add Field input button below the field named "Caculated Field"
+    Given I click on the Add Field input button below the field named "Calculated Field"
     And I select "select" from the dropdown identified by "select[name=field_type]"
     Then I should see "Choices (one choice per line)"
     And I enter "Multiple Choice Dropdown Auto" into the field identified by "textarea[name=field_label]"
