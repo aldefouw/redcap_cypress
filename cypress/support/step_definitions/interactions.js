@@ -20,7 +20,7 @@ Given("I click on the button labeled exactly {string}", (text) => {
  * @description Clicks on a link element with a EXACT text label.
  */
 Given("I click on the link labeled exactly {string}", (text) => {
-    cy.get('a').contains(new RegExp("^" + text + "$", "g")).click()
+    cy.get('a').contains(new RegExp("^" + text + "$", "g")).click({ prevent_detachment: true })
 })
 
 defineParameterType({
@@ -128,7 +128,7 @@ Given("I click on the radio labeled {string} in the dialog box", (text) => {
  * @description Clicks on an anchor element with a specific text label.
  */
 Given("I click on the link labeled {string}", (text) => {
-    cy.get('a').contains(text).should('be.visible').click()
+    cy.get('a').contains(text).should('be.visible').click({ prevent_detachment: true })
 
     // cy.location().then((loc) => {
     //     const current_url = loc.href

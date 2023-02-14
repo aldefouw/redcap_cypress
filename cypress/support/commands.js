@@ -1146,7 +1146,23 @@ Cypress.Commands.add('ensure_csrf_token', () => {
 Cypress.Commands.overwrite(
     'click',
     (originalFn, subject, options) => {
-        if(options !== undefined && options['check_csrf']){
+        if(options !== undefined && options['prevent_detachment']){
+            //Some common elements to tell us things are still loading!
+            if(Cypress.$('span#progress_save').length) cy.get('span#progress_save').should('not.be.visible')
+            if(Cypress.$('div#progress').length) cy.get('div#progress').should('not.be.visible')
+            if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
+
+            delete(options['prevent_detachment']) //Delete the option to prevent detachment; (endless loops are bad, right?)
+
+            cy.wrap(subject).then($el => {
+                if (Cypress.dom.isDetached($el)) {
+                    cy.get(subject[0].parentNode.nodeName).contains(subject[0].parentNode.innerText).click(options)
+                } else {
+                    cy.wrap(subject).click(options) //Now run the click method as designed
+                }
+            })
+
+        } else if(options !== undefined && options['check_csrf']){
             cy.ensure_csrf_token() //Check the CSRF
             delete(options['check_csrf']) //Delete the option to check CSRF; (endless loops are bad, right?)
             cy.wrap(subject).click(options) //Now run the click method as designed
