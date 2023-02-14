@@ -1156,7 +1156,8 @@ Cypress.Commands.overwrite(
 
             cy.wrap(subject).then($el => {
                 if (Cypress.dom.isDetached($el)) {
-                    cy.get(subject[0].parentNode.nodeName).contains(subject[0].parentNode.innerText).click(options)
+                    //Basic idea is that we re-query the element if we've detected detachment has happened ...
+                    cy.get(subject[0].nodeName).contains(subject[0].innerText).click(options)
                 } else {
                     cy.wrap(subject).click(options) //Now run the click method as designed
                 }
