@@ -49,7 +49,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then the CSV file at path "cypress/downloads/Design Forms Feature.csv" has a value 'email' for column "\"Variable / Field Name\""
 
   Scenario: 5 - Add new field to data dictionary
-    Given I add a new variable named "dd_form" in the form named "data_dictionary_form" with the field type "text" and the label "Testing data dictionary upload" into the Data Dictionary file at "cypress/downloads/Design Forms Feature.csv"
+    Given I add a new variable named "dd_form" in the form named "data_dictionary_form" with the field type "text" and the label "Testing data dictionary upload 1" into the Data Dictionary file at "cypress/downloads/Design Forms Feature.csv"
     Then the CSV file at path "cypress/downloads/Design Forms Feature.csv" has a value 'email' for column "\"Variable / Field Name\""
 
   Scenario: 6 - Upload Data Dictionary
@@ -64,7 +64,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "Changes Made Successfully!"
 
   Scenario: 7 - Add new field to data dictionary
-    Given I add a new variable named "dd_form" in the form named "field_validation_form" with the field type "text" and the label "Testing data dictionary upload" into the Data Dictionary file at "cypress/downloads/Design Forms Feature.csv"
+    Given I add a new variable named "dd_form" in the form named "field_validation_form" with the field type "text" and the label "Testing data dictionary upload 2" into the Data Dictionary file at "cypress/downloads/Design Forms Feature.csv"
     Then the CSV file at path "cypress/downloads/Design Forms Feature.csv" has a value 'field_validation_form' for column "\"Form Name\""
   
   Scenario: 8 - Upload Data Dictionary
@@ -437,15 +437,8 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And the AJAX request tagged by "update" has completed
     Then I should see a the field named "Required" before field named "Identifier"
 
-  Scenario: 43 - Delete field
-    Given I click on the button labeled "Return to list of instruments"
-    And I click on the link labeled "Data Dictionary Form"
-    And I click on the Delete Field image for the field named "dd_test"
-    Then I should NOT see "dd_test"
-    #Then I should no longer see the element identified by "tr[id=dd_test-tr]"
-
   Scenario: 44 - Move Field to Other Instrument
-    Given I click on the Move image for the field named "dd_form"
+    And I move the field named "Radio Button Auto" after the field named "Radio Button Manual"
     Then I should see "Move field to another location"
     And I select "identifier" from the dropdown identified by "select[id=move_after_field]"
     And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
@@ -471,6 +464,13 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
     And the AJAX request tagged by "render" has completed
     Then I should see "edit_field"
+
+  #This is intentionally out of order because it makes no sense to delete this field before we move it
+  Scenario: 43 - Delete field
+    Given I click on the button labeled "Return to list of instruments"
+    And I click on the link labeled "Data Dictionary Form"
+    And I delete the field named "Testing data dictionary upload"
+    Then I should NOT see "dd_test"
 
   Scenario: 46 - Copy Field, Cancel
     Given I click on the Copy image for the field named "Identifier"
