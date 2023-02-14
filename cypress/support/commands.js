@@ -53,7 +53,7 @@ Cypress.Commands.add('login', (options) => {
     cy.intercept('POST', '/').as('loginStatus')
     cy.get('input[name=username]').invoke('attr', 'value', options['username'])
     cy.get('input[name=password]').invoke('attr', 'value', options['password'])
-    cy.get('button').contains('Log In').click()
+    cy.get('button').contains('Log In').click({ no_csrf_check: true })
 })
 
 Cypress.Commands.add('logout', () => {
@@ -1146,29 +1146,48 @@ Cypress.Commands.add('ensure_csrf_token', () => {
 Cypress.Commands.overwrite(
     'click',
     (originalFn, subject, options) => {
-        if(options !== undefined && options['prevent_detachment']){
-            //Some common elements to tell us things are still loading!
-            if(Cypress.$('span#progress_save').length) cy.get('span#progress_save').should('not.be.visible')
-            if(Cypress.$('div#progress').length) cy.get('div#progress').should('not.be.visible')
-            if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
 
-            delete(options['prevent_detachment']) //Delete the option to prevent detachment; (endless loops are bad, right?)
-
-            cy.wrap(subject).then($el => {
-                if (Cypress.dom.isDetached($el)) {
-                    //Basic idea is that we re-query the element if we've detected detachment has happened ...
-                    cy.get(subject[0].nodeName).contains(subject[0].innerText).click(options)
-                } else {
-                    cy.wrap(subject).click(options) //Now run the click method as designed
-                }
-            })
-
-        } else if(options !== undefined && options['check_csrf']){
-            cy.ensure_csrf_token() //Check the CSRF
-            delete(options['check_csrf']) //Delete the option to check CSRF; (endless loops are bad, right?)
-            cy.wrap(subject).click(options) //Now run the click method as designed
-        } else {
+        //If we say no CSRF check, then skip it ...
+        if(options !== undefined && options['no_csrf_check']){
+            delete(options['no_csrf_check'])
             return originalFn(subject, options)
+
+        //For all other cases, check for CSRF token
+        } else {
+            if(options === undefined) options = {} //If no options object exists, create it
+            options['no_csrf_check'] = true //Add the "no_csrf_check" to get back to the original click method!
+
+            console.log(subject)
+
+            if(subject[0].nodeName === "A" ||
+                subject[0].nodeName === "BUTTON" ||
+                subject[0].nodeName === "INPUT" && subject[0].type === "button" && subject[0].onclick === ""){
+
+                //Is the element part of a form?
+                if(subject[0].form){
+                    cy.ensure_csrf_token() //Check for the CSRF token to be set in the form
+
+                    // === DETACHMENT PREVENTION === //
+
+                    //Some common elements to tell us things are still loading!
+                    if(Cypress.$('span#progress_save').length) cy.get('span#progress_save').should('not.be.visible')
+                    if(Cypress.$('div#progress').length) cy.get('div#progress').should('not.be.visible')
+                    if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
+                }
+
+                //If our other detachment preventation measures failed, let's check to see if it detached and deal with it
+                cy.wrap(subject).then($el => {
+                    if (Cypress.dom.isDetached($el)) {
+                        //Basic idea is that we re-query the element if we've detected detachment has happened ...
+                        cy.get(subject[0].nodeName).contains(subject[0].innerText).click(options)
+                    } else {
+                        cy.wrap(subject).click(options) //Now run the click method as designed
+                    }
+                })
+
+            } else {
+                return originalFn(subject, options)
+            }
         }
     }
 )
