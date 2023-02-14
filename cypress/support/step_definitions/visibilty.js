@@ -190,3 +190,14 @@ Given("I should see the radio labeled {string} with option {string} {select}", (
     cy.select_radio_by_label(label, option, false, selected === 'selected' ? true: false)
 })
 
+/**
+ * @module Visibility
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I should see a dialog containing the following text: {string}
+ * @param {string} text - the text that should be displayed in a dialog box
+ * @description Visually verifies that the dialog box contains text
+ */
+Given("I should see a dialog containing the following text: {string}", (text) => {
+    cy.verify_text_on_dialog(text)
+})
+

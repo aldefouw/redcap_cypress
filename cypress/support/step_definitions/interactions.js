@@ -260,6 +260,7 @@ Given('I {enter_type} {string} into the data entry form field labeled {string}',
             .click()
             .clear()
             .type(text)
+            .blur() //Remove focus after we are done so alerts pop up
     } else {
         cy.contains('label', label)
             .invoke('attr', 'id')
@@ -268,6 +269,7 @@ Given('I {enter_type} {string} into the data entry form field labeled {string}',
             })
             .click()
             .type(text)
+            .blur() //Remove focus after we are done so alerts pop up
     }
 })
 

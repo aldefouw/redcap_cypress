@@ -1031,6 +1031,10 @@ Cypress.Commands.add("click_on_dialog_button", (text, selector = 'button') => {
     })
 })
 
+Cypress.Commands.add("verify_text_on_dialog", (text) => {
+    cy.get('div[role="dialog"]').should('contain', text)
+})
+
 Cypress.Commands.add("adjust_or_verify_instrument_event", (instrument_name, event_name, checked= false, click = true) => {
 
     if(click) {
