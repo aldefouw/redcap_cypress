@@ -3,6 +3,7 @@ require("./parameter_types.js")
 
 /**
  * @module Visibility
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @author Corey DeBacker <debacker@wisc.edu>
  * @example I (should) see {string}
  * @param {string} text the text visually seen on screen
@@ -10,10 +11,9 @@ require("./parameter_types.js")
  *     NOTE: "should" is optional for readability.
  */
 Given("I (should) see {string}", (text) => {
-    // Allows for steps like: I should see "Adding new user \"test_user\""
+    // double quotes need to be re-escaped before inserting into :contains() selector
     text = text.replaceAll('\"', '\\\"')
-    // Now, the text can be safely inserted between more double quotes - :contains("${text}")
-
+    
     // Match visible elements containing the text, discarding those that contain another matched element to get the deepest.
     // Ensures that the deepest element containing the text is visible, otherwise test fails. This is relevant when text is
     // invisible due to being contained in an invisible element with a visible ascendant.
@@ -32,12 +32,18 @@ Given("Old I should see {string}", (text) => {
 /**
  * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @author Corey DeBacker <debacker@wisc.edu>
  * @example I should NOT see {string}
- * @param {string} text the text visually seen on screen
- * @description Visually verifies that text does NOT exist within the HTML object.
+ * @param {string} text - the text that should not be seen on screen
+ * @description Verifies that text does NOT appear in any visible element
  */
 Given("I should NOT see {string}", (text) => {
-    cy.get('html').then(($html) => { expect($html).to.not.contain(text) })
+    // double quotes need to be re-escaped before inserting into :contains() selector
+    text = text.replaceAll('\"', '\\\"') 
+    let sel = `:contains("${text}"):not(:has(:contains("${text}"))):visible`
+    cy.get(sel).should('not.exist')
+    // Old implementation:
+    // cy.get('html').then(($html) => { expect($html).to.not.contain(text) })
 })
 
 /**
