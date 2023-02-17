@@ -299,6 +299,7 @@ Given("I enter {string} into the username input field", (text) => {
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @author Corey DeBacker <debacker@wisc.edu>
  * @example I save changes within the context of User Rights
  * @description Click on the create add user button and add user
  *
@@ -308,7 +309,7 @@ Given("I save changes within the context of User Rights", () => {
         url: '/redcap_v' + Cypress.env('redcap_version') + '/UserRights/edit_user.php?*'
     }).as('saved_user')
 
-    cy.get('button').contains(/add user|save changes/i).click()
+    cy.get('button:contains(Save Changes),button:contains(Add user)').click()
 
     cy.wait('@saved_user')
 })
