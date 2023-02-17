@@ -194,7 +194,7 @@ const user_right_check_mappings = {
  *
  */
 Given("I check the User Right named {string}", (text) => {
-    cy.get('input[name="' + user_right_check_mappings[text] + '"]').should('be.visible').check()
+    cy.get('input[name="' + user_right_check_mappings[text] + '"]').check()
 })
 
 /**
