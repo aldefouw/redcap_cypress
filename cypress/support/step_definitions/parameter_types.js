@@ -1,9 +1,16 @@
 import { defineParameterType } from "cypress-cucumber-preprocessor/steps";
+import { ordinal_to_int } from '../core/commands.js'
 
 // This file contains definitions for custom parameter types used in step definitions.
 // Parameter type definitions have been consolidated here for easier reference and to avoid duplication.
 // This should also make it easier to identify when refactoring/merging is appropriate.
 // Comments indicate where the parameter type is used.
+
+// visibility.js
+defineParameterType({
+    name: 'LabeledElement',
+    regexp: /button|link/
+})
 
 // data_import.js
 defineParameterType({
@@ -27,6 +34,13 @@ defineParameterType({
 defineParameterType({
     name: 'repeatability',
     regexp: /enabled|disabled|modifiable/
+})
+
+// interactions.js, temp_109_steps.js
+defineParameterType({
+    name: 'ordinal',
+    regexp: /(?:(first|second|third|fourth|fifth|sixth|seventh|eighth|last) )?/,
+    transformer: ordinal_to_int
 })
 
 // interactions.js
@@ -70,4 +84,10 @@ defineParameterType({
 defineParameterType({
     name: 'editField',
     regexp: /(Edit|Branching Logic|Copy|Move|Delete Field)/
+})
+
+// design_forms.js
+defineParameterType({
+    name: 'fieldType',
+    regexp: /(Text Box|Notes Box|Drop-down List|Radio Buttons|Checkboxes|Yes - No|True - False|Signature|File Upload|Slider|Descriptive Text|Begin New Section)/
 })
