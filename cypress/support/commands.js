@@ -53,7 +53,7 @@ Cypress.Commands.add('login', (options) => {
     cy.intercept('POST', '/').as('loginStatus')
     cy.get('input[name=username]').invoke('attr', 'value', options['username'])
     cy.get('input[name=password]').invoke('attr', 'value', options['password'])
-    cy.get('button').contains('Log In').click({ no_csrf_check: true })
+    cy.get('button').contains('Log In').click()
 })
 
 Cypress.Commands.add('logout', () => {
@@ -1133,11 +1133,20 @@ Cypress.Commands.add('ensure_csrf_token', () => {
     cy.url().then(($url) => {
         if($url !== undefined && $url !== 'about:blank'){
             if(Cypress.$('form').length > 0){
-                cy.get('form input[name=redcap_csrf_token]').each(($form_token) => {
-                    cy.window().then((win) => {
-                        expect($form_token[0].value).to.not.be.null
+                cy.getCookies()
+                    .should('have.length.greaterThan', 0)
+                    .then(($cookies) => {
+
+                        //If our cookies include PHPSESSID, we can assume we're logged into REDCap
+                        if($cookies.includes('PHPSESSID')){
+                            //If they do NOT include PHPSESSID, we shouldn't have to worry about this token
+                            cy.get('form input[name=redcap_csrf_token]').each(($form_token) => {
+                                cy.window().then((win) => {
+                                    expect($form_token[0].value).to.not.be.null
+                                })
+                            })
+                        }
                     })
-                })
             }
         }
     })
@@ -1157,7 +1166,7 @@ Cypress.Commands.overwrite(
             if(options === undefined) options = {} //If no options object exists, create it
             options['no_csrf_check'] = true //Add the "no_csrf_check" to get back to the original click method!
 
-            console.log(subject)
+            //console.log(subject)
 
             if(subject[0].nodeName === "A" ||
                 subject[0].nodeName === "BUTTON" ||
