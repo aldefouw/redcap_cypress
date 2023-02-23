@@ -29,7 +29,7 @@ Given("I visit the public survey URL for this project", () => {
  * @param {string} pid - the Project ID of the Public Survey you want to visit
  * @description Visits the Public Survey URL of a specif project identified by a Project ID.
  */
-Given("I visit the public survey URL for Project ID {int}", (pid) => {
+Given("I visit the public survey URL for the current project", (pid = 13) => {
     //Get the public survey URL as an admin so we know survey tools are available
     cy.set_user_type('admin')
 
@@ -186,7 +186,7 @@ Given("I disable surveys for the project", () => {
         url: '/redcap_v' + Cypress.env('redcap_version') + '/ProjectSetup/modify_project_setting_ajax.php?pid=*'
     }).as('projectSettings')
 
-    cy.get('div').contains('Use surveys in this project?').parent().within(($div) => {
+    cy.get('div').contains('Use surveys in this project?').within(($div) => {
         cy.get('button').contains('Disable').click()
     })
 

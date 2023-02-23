@@ -5,64 +5,71 @@ Feature: Reporting
 
   Scenario: Project Setup - 1
     Given I am a "standard" user who logs into REDCap
-    Then I create a project named "22_Reporting_v1115" with project purpose Operational Support via CDISC XML import from fixture location "cdisc_files/projects/DesignForms_v1115.xml"
+    Then I create a project named "Reporting Feature" with project purpose Operational Support via CDISC XML import from fixture location "cdisc_files/projects/DesignForms_v1115.xml"
 
   Scenario: Project Setup - 2
-    Given I visit Project ID 14
-    And I click on the link labeled "Project Setup"
-    And I upload a data dictionary located at "core/22_Reporting_DD.csv" to project ID 14
+    Given I should see a link labeled "My Projects"
+    When I click on the link labeled "My Projects"
+    And I click on the link labeled "Reporting Feature"
 
-Scenario: Project Setup - 3
-    Given I visit Project ID 14
-    And I click on the link labeled "Project Setup"
-    And the AJAX "POST" request at "ProjectSetup/modify_project_setting_ajax.php*" tagged by "modify" is being monitored
-    And I click on the element identified by "button[id=setupEnableSurveysBtn]"
-    And the AJAX request tagged by "modify" has completed
-    Then I should see that surveys are disabled
-    Then I should see that longitudinal mode is "enabled"
-    #Then I should see that repeatable instruments are "Modify"
+    When I click on the button labeled "Data Dictionary"
+    And I upload the data dictionary located at "core/22_Reporting_DD.csv"
+    Then I should see "Changes Made Successfully!"
+
+  Scenario: Project Setup - 3
+    When I click on the link labeled "Project Setup"
+    And I should see that surveys are disabled
+    And I should see that longitudinal mode is "enabled"
+
     Then I should see that auto-numbering is "enabled"
     Then I should see that the scheduling module is "disabled"
     Then I should see that the randomization module is "disabled"
     Then I should see that the designate an email field for communications setting is "disabled"
-    And I click on the link labeled "Project Setup"
+
     And I click on the button labeled "Designate Instruments for My Events"
-    And I click on the button labeled "Begin Editing"
-    And I add an instrument named "Export" to the event named "Event 1"
-    And I remove an instrument named "Export" to the event named "Event 2"
-    And I add an instrument named "Repeating" to the event named "Event 1"
-    And I add an instrument named "Repeating" to the event named "Event 2"
-    And the AJAX "POST" request at "Design/designate_forms_ajax*" tagged by "designate" is being monitored
-    Then I click on the button labeled "Save"
-    And the AJAX request tagged by "designate" has completed
-    And I click on the link labeled "Project Setup"
-    And the AJAX "POST" request at "*RepeatInstanceController:renderSetup*" tagged by "repeating" is being monitored
-    And I click on the element identified by "button[id=enableRepeatingFormsEventsBtn]"
-    And the AJAX request tagged by "repeating" has completed
-    And I select "" from the dropdown identified by "select[name=repeat_whole_event-41]"
-    And I select "PARTIAL" from the dropdown identified by "select[name=repeat_whole_event-42]"
-    And I click on the button labeled "Save" in the dialog box
+
+    And I enable the Data Collection Instrument named "Export" for the Event named "Event 1"
+    And I disable the Data Collection Instrument named "Export" for the Event named "Event 2"
+    And I enable the Data Collection Instrument named "Repeating" for the Event named "Event 1"
+    And I enable the Data Collection Instrument named "Repeating" for the Event named "Event 2"
+
+    When I click on the link labeled "Project Setup"
+
+    And I open the dialog box for the Repeatable Instruments and Events module
+    And I select "-- not repeating --" on the dropdown table field labeled "Event 1 (Arm 1: Arm 1)"
+    And I select "Repeat Instruments (repeat independently of each other)" on the dropdown table field labeled "Event 2 (Arm 1: Arm 1)"
+    And I click on the button labeled "Save"
+
     And I click on the button labeled "Define My Events"
-    And I click on the element identified by "a[onclick=\"delVisit('1','43',4);\"]"
+    And I delete the Event Name of "Event Three"
+
     And I click on the link labeled "Arm 2:"
     And I click on the link labeled "Delete Arm 2"
-    
 
   Scenario: Project Setup - 4
-    Given I upload import data from the data import file located at "core/22_Reporting_IMP.csv" to project ID 14
+    Given I click on the link labeled "Data Import Tool"
+    And I upload a "csv" format file located at "import_files/core/22_Reporting_IMP.csv", by clicking "input[name=uploadedfile]" to select the file, and clicking "button[name=submit]" to upload the file
+
+    Then I should see "DATA DISPLAY TABLE"
+    And I should see "(new record)"
+    And I should see a button labeled "Import Data"
+
+    When I click on the button labeled "Import Data"
+    Then I should see "Import Successful!"
+    And I should see "8"
+    And I should see "records were created"
 
   Scenario: 1 - Navigate to the validation website's REDCap login page; Login as test_user
     Given I am a "standard" user who logs into REDCap
 
   Scenario: 2 - Verify project complies with all setup steps in Test Requirements
     Given I click on the link labeled "My Projects"
-    And I click on the link labeled "22_Reporting_v1115"
-    Then I should see "22_Reporting_v1115" in the title
+    And I click on the link labeled "Reporting Feature"
+    Then I should see "Reporting Feature" in the title
     #Verification done in Project Setup - 3
 
   Scenario: 3 - Create new report
-    Given I visit Project ID 14
-    And I click on the link labeled "Data Exports, Reports, and Stats"
+    When I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Create New Report"
     And I enter "Report 1" into the input field labeled "Name of Report"
     And I click on the button labeled "Quick Add"
@@ -117,8 +124,11 @@ Scenario: Project Setup - 3
     Then I should see "CDISC ODM (XML)"
 
     When I export data for the report named "Report 1" in "csvraw" format
-    Then I should see "Data export was successful!"
-    Then I should receive a download to a "csv" file
+    When I should see "Data export was successful!"
+    Given I should receive a download to a "csv" file
+
+    And I click on the button labeled "Close" in the dialog box
+
     Then I should have a "csv" file that contains the headings below
     | record_id | redcap_event_name | redcap_repeat_instrument | redcap_repeat_instance | fname | lname | reminder | description |
     Then I should have a "csv" file that contains 8 distinct records
@@ -281,8 +291,8 @@ Scenario: Project Setup - 3
     Then I should see the report with a column labeled "Description"
 
   Scenario: 19 - Edit User Privileges
-    Given I visit Project ID 14
-    And I remove the "Add/Edit/Organize Reports" user right to the user named "Test User" with the username of "test_user" on project ID 14
+    Given I click on the link labeled "User Rights"
+    And I remove the "Add/Edit/Organize Reports" user right to the user named "Test User" with the username of "test_user"
     Then I should see "User \"test_user\" was successfully edited"
 
   Scenario: 20 - Verify Privileges

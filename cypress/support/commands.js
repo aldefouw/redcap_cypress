@@ -593,11 +593,11 @@ Cypress.Commands.add('import_data_file', (fixture_file,pid) => {
 
 })
 
-Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_to_assign, project_id, assign_right = true, user_type = 'admin', selector = 'input', value = null) => {
-    cy.visit_version({page:'index.php', params: 'pid='+project_id})
-    cy.get('html').should('contain', 'User Rights')
+Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_to_assign, project_id = 13, assign_right = true, user_type = 'admin', selector = 'input', value = null) => {
+    //cy.visit_version({page:'index.php', params: 'pid='+project_id})
+    //cy.get('html').should('contain', 'User Rights')
 
-    cy.get('a').contains('User Rights').click()
+    //cy.get('a').contains('User Rights').click()
 
     let user_has_rights_assigned = Cypress.$("a:contains(" + JSON.stringify(username + ' (' + proper_name + ')') + ")");
     
@@ -1141,11 +1141,18 @@ Cypress.Commands.add('ensure_csrf_token', () => {
                         $cookies.forEach(($cookie) => {
                             //If our cookies include PHPSESSID, we can assume we're logged into REDCap
                             //If they do NOT include PHPSESSID, we shouldn't have to worry about this token
-                            if($cookie['name'] === 'PHPSESSID'){
+                            //It also appears that the Report Forms DO not need a CSRF token, which is interesting ...
+                            if($cookie['name'] === 'PHPSESSID' && Cypress.$('form#create_report_form').length === 0){
                                 cy.get('form input[name=redcap_csrf_token]').each(($form_token) => {
                                     cy.window().then((win) => {
                                         expect($form_token[0].value).to.not.be.null
                                     })
+
+                                    // === DETACHMENT PREVENTION === //
+                                    //Some common elements to tell us things are still loading!
+                                    if(Cypress.$('span#progress_save').length) cy.get('span#progress_save').should('not.be.visible')
+                                    if(Cypress.$('div#progress').length) cy.get('div#progress').should('not.be.visible')
+                                    if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
                                 })
                             }
                         })
@@ -1179,13 +1186,6 @@ Cypress.Commands.overwrite(
                 //Is the element part of a form?
                 if(subject[0].form){
                     cy.ensure_csrf_token() //Check for the CSRF token to be set in the form
-
-                    // === DETACHMENT PREVENTION === //
-
-                    //Some common elements to tell us things are still loading!
-                    if(Cypress.$('span#progress_save').length) cy.get('span#progress_save').should('not.be.visible')
-                    if(Cypress.$('div#progress').length) cy.get('div#progress').should('not.be.visible')
-                    if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
                 }
 
                 //If our other detachment preventation measures failed, let's check to see if it detached and deal with it

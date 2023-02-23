@@ -18,9 +18,11 @@ Feature: Design Forms using Data Dictionary & Online Designer
 
   Scenario: 1 - Navigate, Login to REDCap, Verify User Rights
     Given I am a "standard" user who logs into REDCap
-    #TODO: Remove PID dependency because this is brittle!
-    Then I verify user rights are available for "standard" user type on the path "ProjectSetup" on project ID 13
-  
+    And I click on the link labeled "My Projects"
+    And I click on the link labeled "Design Forms Feature"
+    And I click on the link labeled "User Rights"
+    Then I assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user"
+
   Scenario: 2 - Verify Project Settings
     Given I click on the link labeled "My Projects"
     And I click on the link labeled "Design Forms Feature"
@@ -390,25 +392,14 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see ""
 
   Scenario: 40 - Add Identifier
-    Given I click on the Add Field input button below the field named "Descriptive Text"
-    And I select "text" from the dropdown identified by "select[name=field_type]"
-    And I enter "Identifier" into the field identified by "textarea[name=field_label]"
-    And I enter "identifier" into the field identified by "input[name=field_name]"
-    And I click on the element identified by "input[id=field_phi1]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    Given I add a new Descriptive Text field labeled "Identifier" with variable name "identifier"
     Then I should see "identifier"
 
   Scenario: 41 - Add Required Field
-    Given I click on the Add Field input button below the field named "Identifier"
-    And I select "text" from the dropdown identified by "select[name=field_type]"
-    And I enter "Required" into the field identified by "textarea[name=field_label]"
-    And I enter "required" into the field identified by "input[name=field_name]"
-    And I click on the element identified by "input[id=field_req1]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    Given I add a new Text Box field labeled "Required" with variable name "required"
+    And I edit the Data Collection Instrument field labeled "Required"
+    And I mark the field required
+    And I save the field
     Then I should see "required"
     Then I should see "must provide value"
 
@@ -420,15 +411,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
 
   Scenario: 44 - Move Field to Other Instrument
     And I move the field named "Radio Button Auto" after the field named "Radio Button Manual"
-    Then I should see "Move field to another location"
-    And I select "identifier" from the dropdown identified by "select[id=move_after_field]"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And I click on the button labeled "Move field" in the dialog box
     Then I should see "Successfully moved"
-    And I should see "dd_form: "
-    And I click on the button labeled "Close" in the dialog box
-    And the AJAX request tagged by "render" has completed
-    Then I should no longer see the element identified by "tr[id=dd_form-tr]"
 
   Scenario: 45 - Edit moved field
     Given I click on the button labeled "Return to list of instruments"

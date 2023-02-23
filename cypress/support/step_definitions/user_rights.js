@@ -10,8 +10,9 @@ import {Given, defineParameterType} from "cypress-cucumber-preprocessor/steps";
  * @description Assigns a specific user right to a given user when provided a valid Project ID.
  *
  */
-Given("I assign the {string} user right to the user named {string} with the username of {string} on project ID {int}", (rights_to_assign, proper_name, username, project_id) => {
-    cy.assign_basic_user_right(username, proper_name, rights_to_assign, project_id)
+
+Given("I assign the {string} user right to the user named {string} with the username of {string}", (rights_to_assign, proper_name, username) => {
+    cy.assign_basic_user_right(username, proper_name, rights_to_assign)
 })
 
 /**
@@ -25,8 +26,8 @@ Given("I assign the {string} user right to the user named {string} with the user
  * @description Removes a specific user right to a given user when provided a valid Project ID.
  *
  */
-Given("I remove the {string} user right to the user named {string} with the username of {string} on project ID {int}", (rights_to_assign, proper_name, username, project_id) => {
-    cy.remove_basic_user_right(username, proper_name, rights_to_assign, project_id)
+Given("I remove the {string} user right to the user named {string} with the username of {string}", (rights_to_assign, proper_name, username) => {
+    cy.remove_basic_user_right(username, proper_name, rights_to_assign, 13)
 })
 
 /**

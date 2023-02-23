@@ -39,9 +39,14 @@ Given("I {toggleAction} surveys", (action) => {
  * @description Disables or enables longitudinal mode for the project in view.
  */
  Given("I {toggleAction} longitudinal mode", (action) => {
+     cy.intercept({  method: 'POST',
+         url: '/redcap_v' + Cypress.env('redcap_version') + '/ProjectSetup/modify_project_setting_ajax.php*'
+     }).as('longitudinal_mode')
+
     let want_enabled = action === 'enable'
     let expected_text = want_enabled ? 'Enable' : 'Disable'
     cy.get('#setupLongiBtn').then(($button) => {
+
         if ($button.text().trim() === expected_text) { //action needed
             cy.wrap($button).click().then(() => {
                 if(want_enabled) {
@@ -52,6 +57,7 @@ Given("I {toggleAction} surveys", (action) => {
                     })
                 }
             })
+            cy.wait('@longitudinal_mode')
         } else {
             cy.log("Warning: Longitudinal mode is already " + expected_text.toLowerCase() + "d!")
         }

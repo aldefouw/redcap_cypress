@@ -5,9 +5,12 @@ Feature: Security Settings
 
   Scenario: Project Setup 1 - Create 12_SecuritySettings_v1115 and add admin as user to 
     Given I am an "standard" user who logs into REDCap
-    And I create a project named "12_SecuritySettings_v1115" with project purpose Operational Support via CDISC XML import from fixture location "cdisc_files/projects/DesignForms_v1115.xml"
-    And I visit Project ID 14
+    And I create a project named "Security Settings Feature" with project purpose Operational Support via CDISC XML import from fixture location "cdisc_files/projects/DesignForms_v1115.xml"
+
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Security Settings Feature"
     And I click on the link labeled "User Rights"
+
     And I enter "test_admin" into the field identified by "input[id=new_username]"
     And I click on the button labeled "Add with custom rights"
     And I click on the button labeled "Add user" in the dialog box

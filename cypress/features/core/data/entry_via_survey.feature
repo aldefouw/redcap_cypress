@@ -5,26 +5,47 @@ Feature: Data Entry through the Survey
 
   Scenario: Step 1 - Create the Project
     Given I am an "admin" user who logs into REDCap
-    And I visit Project ID 13
-    And I upload a data dictionary located at "core/15_DirectDataEntry_SurveyDD.csv" to project ID 13
-    And I visit the "Project Setup" page with parameter string of "pid=13"
-    And I click on the button labeled "Disable"
 
-    And I should see "Enable"
+    And I create a project named "Entry Via Survey Feature" with project purpose Operational Support via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
 
-    And I click on the button labeled "Define My Events"
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Entry Via Survey Feature"
+    And I click on the link labeled "Project Setup"
 
-    And I should see "Event 1"
+    And I enable surveys for the project
+    And I enable longitudinal mode
+    And I should see that longitudinal mode is "enabled"
+
+    And I wait for 3 seconds
+
+    And I should see a button labeled "Designate Instruments for My Events"
+    And I click on the button labeled "Designate Instruments for My Events"
+
+    #Arm 1
+    Then I should see "Arm name: "
+    Given I verify the Data Collection Instrument named "Text Validation" is enabled for the Event named "Event 1"
+
+
+    And I click on the link labeled "User Rights"
+    And I assign the "Project Design and Setup" user right to the user named "Test User" with the username of "test_user"
 
   Scenario: An external user visits a public survey
     And I am a "standard" user who logs into REDCap
-    Given I visit the public survey URL for Project ID 3
-    Then I should see "Example Survey" in the title
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "Entry Via Survey Feature"
+
+    And I click on the button labeled "Online Designer"
+    #TODO: Refactor this next step into a STEP DEFINITION that enables survey for the appropriate data collection instrument based on name ...
+    And I click on the element identified by "#row_1 > :nth-child(5) > .fc > .jqbuttonsm"
+    And I should see "Basic Survey Options"
+    And I should see a button labeled "Save Changes"
+    And I click on the button labeled "Save Changes"
+    Then I should see "Your survey settings were successfully saved!"
 
   Scenario: A standard user enters data into a public survey
-    Given I visit the public survey URL for Project ID 9
-    And I enter "user1@yahoo.com" into the "E-mail address" survey text input field
-
+    Given I visit the public survey URL for the current project
+    Then I should see "Text Validation" in the title
+    And I enter "user1@yahoo.com" into the "Email" survey text input field
     When I click on the button labeled "Submit"
     Then I should see "Thank you for taking the survey"
 
