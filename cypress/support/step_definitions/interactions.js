@@ -69,7 +69,7 @@ defineParameterType({
  * @description Clicks on a button element with a specific text label.
  */
 Given("I click on the button labeled {string}", (text) => {
-    cy.get('button').contains(text).click( )
+    cy.get('button').contains(text).click()
 })
 
 /**
