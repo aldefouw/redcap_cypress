@@ -1168,6 +1168,7 @@ Cypress.Commands.overwrite(
         //For all other cases, check for CSRF token
         } else {
             if(options === undefined) options = {} //If no options object exists, create it
+            options['no_csrf_check'] = true //Add the "no_csrf_check" to get back to the original click method!
 
             //console.log(subject)
 
@@ -1193,7 +1194,6 @@ Cypress.Commands.overwrite(
                         //Basic idea is that we re-query the element if we've detected detachment has happened ...
                         cy.get(subject[0].nodeName).contains(subject[0].innerText).click(options)
                     } else {
-                        options['no_csrf_check'] = true //Add the "no_csrf_check" to get back to the original click method!
                         cy.wrap(subject).click(options) //Now run the click method as designed
                     }
                 })
