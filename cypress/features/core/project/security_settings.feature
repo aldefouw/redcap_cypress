@@ -72,8 +72,8 @@ Feature: Security Settings
     And I click on the link labeled "Edit a Project's Settings"
     Then I should see "Edit a Project's Settings"
     Then I should see "Choose an existing project to edit its settings:"
-    And I select "12_SecuritySettings_v1115" from the dropdown identified by "select"
-    Then I should see "12_SecuritySettings_v1115"
+    And I select "Security Settings Feature" from the dropdown identified by "select"
+    Then I should see "Security Settings Feature"
     And I select "OFFLINE" from the dropdown identified by "select[name=online_offline]"
     And I click on the element identified by "input[type=submit]"
     Then I should see "Your changes have been saved!"
@@ -82,9 +82,9 @@ Feature: Security Settings
   Scenario: 9 - Check Project Status as Standard User
     Given I am a "standard" user who logs into REDCap
     And I click on the link labeled "My Projects"
-    Then I should see "12_SecuritySettings_v1115"
+    Then I should see "Security Settings Feature"
     Then I should see "OFFLINE"
-    And I click on the link labeled "12_SecuritySettings_v1115"
+    And I click on the link labeled "Security Settings Feature"
     Then I should see "This REDCap project is currently offline."
     Then I should see "Please return to this project at another time."
     Then I should see "We apologize for any inconvenience."
@@ -94,7 +94,7 @@ Feature: Security Settings
     #Given I simulate re-launching the browser
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "My Projects"
-    And I click on the link labeled "12_SecuritySettings_v1115"
+    And I click on the link labeled "Security Settings Feature"
     Then I should see "This project is currently OFFLINE and is not accessible to normal users. You can return it back to ONLINE status in the"
     Then I should see "This project is currently OFFLINE and is not accessible to normal users."
     Then I should see "You can return it back to"
@@ -106,8 +106,8 @@ Feature: Security Settings
     And I click on the link labeled "Edit a Project's Settings"
     Then I should see "Edit a Project's Settings"
     Then I should see "Choose an existing project to edit its settings:"
-    And I select "12_SecuritySettings_v1115" from the dropdown identified by "select"
-    Then I should see "12_SecuritySettings_v1115"
+    And I select "Security Settings Feature" from the dropdown identified by "select"
+    Then I should see "Security Settings Feature"
     And I select "ONLINE" from the dropdown identified by "select[name=online_offline]"
     And I click on the element identified by "input[type=submit]"
     Then I should see "Your changes have been saved!"
@@ -117,7 +117,7 @@ Feature: Security Settings
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "My Projects"
     Then I should NOT see "OFFLINE"
-    And I click on the link labeled "12_SecuritySettings_v1115"
+    And I click on the link labeled "Security Settings Feature"
     Then I should NOT see "This project is currently OFFLINE and is not accessible to normal users."
     Then I should NOT see "You can return it back to"
     Then I should NOT see "ONLINE status in the"
@@ -128,9 +128,9 @@ Feature: Security Settings
 Scenario: 13 - Check Project Status as Standard User
     Given I am a "standard" user who logs into REDCap
     And I click on the link labeled "My Projects"
-    Then I should see "12_SecuritySettings_v1115"
+    Then I should see "Security Settings Feature"
     Then I should NOT see "OFFLINE"
-    And I click on the link labeled "12_SecuritySettings_v1115"
+    And I click on the link labeled "Security Settings Feature"
     Then I should NOT see "This REDCap project is currently offline."
     Then I should NOT see "Please return to this project at another time."
     Then I should NOT see "We apologize for any inconvenience."
