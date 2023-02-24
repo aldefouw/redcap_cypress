@@ -415,7 +415,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
 
   Scenario: 45 - Edit moved field
     Given I click on the button labeled "Return to list of instruments"
-    And I click on the link labeled "Data Types"
+    And I click on the link labeled "Data Dictionary Form"
     Given the AJAX "GET" request at "Design/edit_field_prefill.php*" tagged by "edit" is being monitored
     And I click on the Edit image for the field named "Testing data dictionary upload"
     And the AJAX request tagged by "edit" has completed
@@ -437,6 +437,8 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should NOT see "dd_test"
 
   Scenario: 46 - Copy Field, Cancel
+    Given I click on the button labeled "Return to list of instruments"
+    And I click on the link labeled "Data Types"
     Given I click on the Copy image for the field named "Identifier"
     And I click on the button labeled "Cancel" in the dialog box
     Then I should NOT see "identifier_2"
