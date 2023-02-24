@@ -32,8 +32,9 @@ Feature: Field Validation
 
     And I click on the link labeled "Project Setup"
 
-    And I disable surveys for the project
+    And I should see that surveys are disabled
     And I disable longitudinal mode
+    And I should see that longitudinal mode is "disabled"
 
     And I open the dialog box for the Repeatable Instruments and Events module
     And I check the checkbox in table labeled "Text Validation"
