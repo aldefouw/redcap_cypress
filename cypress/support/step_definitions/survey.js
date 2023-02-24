@@ -189,15 +189,25 @@ Given("I disable surveys for the project", () => {
     cy.get('div').contains('Use surveys in this project?').within(($div) => {
         cy.get('button').contains('Disable').click()
     })
-    
-    //Wait to make sure that the AJAX request has completed before we move onto checking data
-    cy.wait('@projectSettings')
 
-    if(Cypress.$('div[role=dialog]').length){
-        cy.get('div[role=dialog]').within(() => {
-            cy.get('button').contains('Disable').click()
-        })
-    }
+
+    cy.get('div[role=dialog]').then(($dialog) => {
+
+        //Cases where the dialog does not appear
+        if($dialog === null){
+            cy.wait('@projectSettings')
+
+        //Cases where the dialog does appear
+        } else {
+            cy.wrap($dialog).within(($div) => {
+                cy.get('button').contains('Disable').click()
+
+                //Wait to make sure that the AJAX request has completed before we move onto checking data
+                cy.wait('@projectSettings')
+            })
+        }
+    })
+
 })
 
 
