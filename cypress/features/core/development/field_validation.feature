@@ -32,7 +32,7 @@ Feature: Field Validation
 
     And I click on the link labeled "Project Setup"
 
-    And I disable surveys
+    And I disable surveys for the project
     And I disable longitudinal mode
 
     And I open the dialog box for the Repeatable Instruments and Events module
