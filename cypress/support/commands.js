@@ -1126,8 +1126,7 @@ Cypress.Commands.add('get_top_layer', (retryUntil) => {
             $els.sort((cur, prev) => {
                 let zp = Cypress.dom.wrap(prev).css('z-index')
                 let zc = Cypress.dom.wrap(cur).css('z-index')
-                // return zc - zp
-                return zp - zc
+                return zc - zp
             })
         }
         top_layer = $els.last()
