@@ -1,6 +1,5 @@
 import { Given } from "cypress-cucumber-preprocessor/steps";
 require("./parameter_types.js")
-import { ordinal_to_int } from '../core/commands'
 
 /**
  * @module Interactions
@@ -66,24 +65,19 @@ defineParameterType({
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the( {string}) button labeled {string}
- * @param {string} n - (optional) The ordinal specifying which matching button to click
- *      Valid options are "first", "second", "third", "fourth", "fifth", "sixth", "seventh", or "eighth".
+ * @param {ordinal} n - (optional) The ordinal specifying which matching button to click
+ *      Valid options are "first", "last", "second", "third", "fourth", "fifth", "sixth", "seventh", or "eighth".
  * @param {string} text - the text on the button element you want to click
  * @description Clicks on a button element with a specific text label. If `n` is not specified, the first matching
  *      button is clicked.
  */
-Given(/^I click on the(?: (first|second|third|fourth|fifth|sixth|seventh|eighth|last))? button labeled "(.*)"$/, (n, text) => {
-    n = ordinal_to_int(n)
-    let sel = `:button:contains("${text}"):visible:nth(${n}),:button[value*="${text}"]:visible:nth(${n})` //for assertion
+// Similar issue as "I enter {string} into the {ordinal}input field near the text {string}", see comment. Low impact.
+Given("I click on the {ordinal}button labeled {string}", (n, text) => {
+    let sel = `:button:contains("${text}"):visible,:button[value*="${text}"]:visible` //for assertion
     cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)}) //assertion could be improved, ugly logs
         .within(() => {
-            cy.get(sel).click()
+            cy.get(sel).eq(n).invoke('removeAttr', 'target').click()
         })
-})
-
-//For comparing results of tests before z-index & n'th selector changes
-Given("Old I click on the button labeled {string}", (text) => {
-    cy.get('button').contains(text).click()
 })
 
 /**
@@ -138,11 +132,12 @@ Given("I click on the radio labeled {string} in the dialog box", (text) => {
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the link labeled {string}
+ * @param {ordinal} n - (optional) The ordinal specifying which matching button to click
+ *      Valid options are "first", "last", "second", "third", "fourth", "fifth", "sixth", "seventh", or "eighth".
  * @param {string} text - the text on the anchor element you want to click
  * @description Clicks on an anchor element with a specific text label.
  */
-Given(/^I click on the(?: (first|second|third|fourth|fifth|sixth|seventh|eighth))? link labeled "(.*)"/, (n, text) => {
-    n = ordinal_to_int(n)
+Given("I click on the {ordinal}link labeled {string}", (n, text) => {
     let sel = `a:contains("${text}"):visible:nth(${n})`
     cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)})
         .within(() => cy.get(sel).click())
