@@ -1142,7 +1142,7 @@ Cypress.Commands.add('ensure_csrf_token', () => {
                             //If our cookies include PHPSESSID, we can assume we're logged into REDCap
                             //If they do NOT include PHPSESSID, we shouldn't have to worry about this token
                             //It also appears that the Report Forms DO not need a CSRF token, which is interesting ...
-                            if($cookie['name'] === 'PHPSESSID' && Cypress.$('form#create_report_form').length === 0){
+                            if($cookie['name'] === 'PHPSESSID'){
                                 cy.get('form input[name=redcap_csrf_token]').each(($form_token) => {
                                     cy.window().then((win) => {
                                         expect($form_token[0].value).to.not.be.null
@@ -1181,25 +1181,18 @@ Cypress.Commands.overwrite(
 
             if(subject[0].nodeName === "A" ||
                 subject[0].nodeName === "BUTTON" ||
-                subject[0].nodeName === "INPUT" && subject[0].type === "button" && subject[0].onclick === "" ||
-                subject[0].nodeName === "SPAN"
+                subject[0].nodeName === "INPUT" && subject[0].type === "button" && subject[0].onclick === ""
             ){
 
                 //Is the element part of a form?
-                if(subject[0].form){
+                if(subject[0].form && Cypress.$(subject[0].form)[0].id !== 'create_report_form'){
                     cy.ensure_csrf_token() //Check for the CSRF token to be set in the form
                 }
 
-                //If our other detachment preventation measures failed, let's check to see if it detached and deal with it
+                //If our other detachment prevention measures failed, let's check to see if it detached and deal with it
                 cy.wrap(subject).then($el => {
-                    if (Cypress.dom.isDetached($el)) {
-                        options['force'] = true
-                        //Basic idea is that we re-query the element if we've detected detachment has happened ...
-                        cy.get(subject[0].nodeName).contains(subject[0].innerText).click(options)
-                    } else {
-                        cy.wrap(subject).click(options) //Now run the click method as designed
-                    }
-                })
+                    return Cypress.dom.isDetached($el) ? Cypress.$($el): $el
+                }).click(options)
 
             } else {
                 return originalFn(subject, options)
