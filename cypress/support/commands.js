@@ -1039,9 +1039,7 @@ Cypress.Commands.add("adjust_or_verify_instrument_event", (instrument_name, even
 
     if(click) {
         cy.get('span#progress_save').should('be.hidden')
-
         cy.get('button').contains('Begin Editing').should('be.visible').click()
-
         cy.intercept({
             method: 'POST',
             url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/designate_forms_ajax.php"
@@ -1084,6 +1082,7 @@ Cypress.Commands.add("adjust_or_verify_instrument_event", (instrument_name, even
     if(click) {
         cy.get('button').contains('Save').click()
         cy.wait('@designate_forms')
+        cy.get('span#progress_save').should('be.hidden')
     }
 })
 
