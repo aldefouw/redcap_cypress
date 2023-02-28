@@ -1133,13 +1133,6 @@ Cypress.Commands.add('ensure_csrf_token', () => {
     cy.url().then(($url) => {
         if($url !== undefined && $url !== 'about:blank'){
             if(Cypress.$('form').length > 0){
-
-                // === DETACHMENT PREVENTION === //
-                //Some common elements to tell us things are still loading!
-                if(Cypress.$('span#progress_save').length) cy.get('span#progress_save').should('not.be.visible')
-                if(Cypress.$('div#progress').length) cy.get('div#progress').should('not.be.visible')
-                if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
-
                 cy.getCookies()
                     .should('have.length.greaterThan', 0)
                     .then(($cookies) => {
@@ -1154,6 +1147,12 @@ Cypress.Commands.add('ensure_csrf_token', () => {
                                         expect($form_token[0].value).to.not.be.null
                                     })
                                 })
+
+                                // === DETACHMENT PREVENTION === //
+                                //Some common elements to tell us things are still loading!
+                                if(Cypress.$('span#progress_save').length) cy.get('span#progress_save').should('not.be.visible')
+                                if(Cypress.$('div#progress').length) cy.get('div#progress').should('not.be.visible')
+                                if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
                             }
                         })
                     })
