@@ -120,10 +120,6 @@ require("../parameter_types.js")
  * @param {string} field - the name of the field you want to edit
  * @description Clicks on the image link of the action you want to perform on a field
  */
- defineParameterType({
-    name: 'editField',
-    regexp: /(Edit|Branching Logic|Copy)/
-})
  Given("I click on the {editField} image for the field named {string}", (type, field_name) => {
     cy.click_on_design_field_function(type, field_name)
 })

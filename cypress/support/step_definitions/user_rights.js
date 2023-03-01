@@ -183,6 +183,7 @@ const user_right_check_mappings = {
     'Lock/Unlock *Entire* Records' : 'lock_record_multiform',
     'Data Quality - Create & edit rules' : 'data_quality_design',
     'Data Quality - Execute rules' : 'data_quality_execute',
+
 }
 
 /**
@@ -194,7 +195,10 @@ const user_right_check_mappings = {
  *
  */
 Given("I check the User Right named {string}", (text) => {
-    cy.get('input[name="' + user_right_check_mappings[text] + '"]').check()
+    cy.get('[role=dialog]:contains(Adding new user),[role=dialog]:contains(Editing existing user)')
+        .should('be.visible').then(() => {
+            cy.get('input[name="' + user_right_check_mappings[text] + '"]').check()
+        })
 })
 
 /**
@@ -218,17 +222,23 @@ const single_choice_mappings = {
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @author Corey DeBacker <debacker@wisc.edu>
  * @example I check the user right identified by {string} and check option {string}
- * @param {string} text - name of user right
+ * @param {string} privName - name of user right, e.g. "Data Exports"
+ * @param {string} privOption - option to select, e.g. "No Access"
  * @description Assign user right to role/user
  *
  */
-Given("I select the User Right named {string} and choose {string}", (text, option) => {
-    cy.get('input[name="' + single_choice_mappings[text] + '"]').
-        parent().
-        parent().
-        find(':contains(' + option + ')').
-        within(() => { cy.get('input').click() } )
+Given("I select the User Right named {string} and choose {string}", (privName, privOption) => {
+    //ensure the user rights dialog has opened
+    cy.get('[role=dialog]:contains("You may set the rights"):visible').should('exist').then(() => {
+        let re = RegExp(String.raw`^\s*${privOption.replace(/[.*+?^${}()|[\]\/\\]/g, '\\$&')}\s*`, 'g')
+        cy.get('input[name="' + single_choice_mappings[privName] + '"]')
+            .parent()
+            .contains(re)
+            .find('input')
+            .check({force:true})
+    })
 })
 
 /**
@@ -378,4 +388,42 @@ Given('I {user_right_action} all Basic Rights within the open User Rights dialog
  */
 Given('I select the Data Exports priveleges option labeled {string}', (text) => {
   cy.get(`:contains(${text}) > [name=data_export_tool]`).check()
+})
+
+// Does basically the same as Rushi's "I select the User Right named {string} and choose {string}"
+// Consider deleting this later, and modifying Rushi's method to support the Lock/Unlock Records settings
+/**
+ * @module UserRights
+ * @author Corey DeBacker <debacker@wisc.edu>
+ * @example I select the Lock/Unlock Records option labeled {string}
+ * @param {string} text - the label of the option to be selected
+ * @description Selects a radio option for Lock/Unlock Records within the user rights configuration dialog based on its label.
+ */
+Given('I select the Lock\\/Unlock Records option labeled {string}', (text) => {
+    let sel = `:contains(${text}):not(:has(:contains(${text}))):first input[name=lock_record]`
+    // cy.get('[role=dialog]:contains(Adding new user),[role=dialog]:contains(Editing existing user)')
+    //     .should('be.visible').then(() => {
+    //         cy.get(sel) //element needs to be attached and visible
+    //             .check({force: true}) //element is considered to be invisible due to ancestor's overflow style
+    //     })
+    cy.get(sel).should(($el) => {
+
+    })
+})
+    
+// Achieves same result as Adam's "I grant {data_viewing_rights} level of Data Entry Rights on the {string} instrument for the username {string} for project ID {int}"
+// However, the old method uses a cy.visit which we are trying to move away from. This also eliminates unnecessary parameters,
+// but requires that the user rights configuration dialog is open
+/**
+ * @module UserRights
+ * @author Corey DeBacker <debacker@wisc.edu>
+ * @example I set Data Viewing Rights to < No Access | Read Only | View & Edit > for the instrument {string}
+ * @param {data_viewing_rights} level - the level of rights to be assigned
+ * @param {string} instrument - the label of the instrument for which to configure data entry rights
+ * @description Selects a radio option for Data Entry Rights for the specified instrument within the user rights configuration dialog.
+ */
+Given('I set Data Viewing Rights to {data_viewing_rights} for the instrument {string}', (level, instrument) => {
+    let input_values = {'No Access': 0, 'Read Only': 2, 'View & Edit': 1}
+    cy.get(`table#form_rights tr:has(td:contains(${instrument})) input[value=${input_values[level]}]:visible`)
+        .check()
 })
