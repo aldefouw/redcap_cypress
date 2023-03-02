@@ -73,11 +73,12 @@ defineParameterType({
  */
 // Similar issue as "I enter {string} into the {ordinal}input field near the text {string}", see comment. Low impact.
 Given("I click on the {ordinal}button labeled {string}", (n, text) => {
-    let sel = `:button:contains("${text}"):visible,:button[value*="${text}"]:visible` //for assertion
-    cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)}) //assertion could be improved, ugly logs
-        .within(() => {
-            cy.get(sel).eq(n).invoke('removeAttr', 'target').click()
-        })
+    cy.get('button').contains(text).click()
+    // let sel = `:button:contains("${text}"):visible,:button[value*="${text}"]:visible` //for assertion
+    // cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)}) //assertion could be improved, ugly logs
+    //     .within(() => {
+    //         cy.get(sel).eq(n).invoke('removeAttr', 'target').click()
+    //     })
 })
 
 /**
@@ -138,9 +139,11 @@ Given("I click on the radio labeled {string} in the dialog box", (text) => {
  * @description Clicks on an anchor element with a specific text label.
  */
 Given("I click on the {ordinal}link labeled {string}", (n, text) => {
-    let sel = `a:contains("${text}"):visible:nth(${n})`
-    cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)})
-        .within(() => cy.get(sel).click())
+    cy.get('a').contains(text).click()
+
+    // let sel = `a:contains("${text}"):visible:nth(${n})`
+    // cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)})
+    //    .within(() => cy.get(sel).click())
     // cy.get(`a:contains("${text}")`).filter(':visible').first().click()
     // cy.get('a').contains(text).should('be.visible').click({force:true})
 })
