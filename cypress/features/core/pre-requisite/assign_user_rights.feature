@@ -255,7 +255,7 @@ Feature: Assign User Rights
     And I select the User Right named "Lock/Unlock Records" and choose "Locking / Unlocking with E-signature authority"
     Then I should see "Please note that giving a user 'Locking / Unlocking with E-signature authority' privileges"
     
-    When I click on the button labeled "Close"
+    When I click on the button labeled "Close" in the dialog box
     And I save changes within the context of User Rights
     # User Rights table should show green shield
 
@@ -386,7 +386,7 @@ Feature: Assign User Rights
 #     Then I should see "Delete role?"
 #     When I click on the element identified by "button:contains('Cancel'):last"
 #     #When I click on the button labeled "Cancel"
-#     And I click on the button labeled "Close"
+#     And I click on the button labeled "Close" in the dialog box
 #       #Might not work - is the x button 
 #     Then I should see a link labeled "Reviewer"
 
@@ -429,7 +429,7 @@ Feature: Assign User Rights
 #     When I click on the link labeled "test_user"  
 #     And I click on the button labeled "Remove from role"
 #     And I should see "NOTICE: User's privileges will remain the same"
-#     When I click on the button labeled "Close"
+#     When I click on the button labeled "Close" in the dialog box
 #     #The user is no longer on the same row as the Data Entry role.
 
 
