@@ -279,11 +279,6 @@ Given("I move the field named {string} after the field named {string}", (field_n
     cy.get('input[name=redcap_csrf_token]')
 })
 
-defineParameterType({
-    name: 'fieldType',
-    regexp: /(Text Box|Notes Box|Drop-down List|Radio Buttons|Checkboxes|Yes - No|True - False|Signature|File Upload|Slider|Descriptive Text|Begin New Section|Calculated Field)/
-})
-
 /**
  * @module DesignForms
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
