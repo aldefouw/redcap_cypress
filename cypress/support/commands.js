@@ -24,26 +24,27 @@ function preventClickTimeoutFail() {
     })
 }
 
-//Useful for clicking buttons located within a stacked dialog box (i.e. a dialog box that is displayed ontop of
-//another dialog box, based on z-index). Clicks the last visible button within the frontmost dialog box containing `label`
+/**
+ * Useful for clicking buttons located within a stacked dialog box (i.e. a dialog
+ * box that is displayed ontop of another dialog box, based on z-index). Clicks
+ * the last visible button within the frontmost dialog box containing `label`
+ * 
+ * @deprecated
+ * 
+ * @param {string} label label of the button to click
+ */
 Cypress.Commands.add('click_top_dialog_button', (label) => {
     cy.get('div[role=dialog][style*="z-index"]:visible').then($divs => {
         //sort dialog boxes based on z-index, ascending order
-        let sorted = $divs.sort((cur, prev) => {
+        $divs.sort((cur, prev) => {
             let zp = Cypress.dom.wrap(prev).css('z-index')
             let zc = Cypress.dom.wrap(cur).css('z-index')
             return zc - zp
         })
-        //assign highest z-index div to $div
-        // let $div = Cypress.dom.wrap(sorted).last() //Cypress last()
-        let $div = Cypress.dom.wrap(sorted.last()) //jQuery last()
-        //TODO: either works, revisit later to pick best option
-
-        //wrap div and look within to click matching button
-        cy.wrap($div).within(($div) => {
-            cy.get(`button:contains("${label}"):visible`).last().click()
+        //wrap last div and look within to click matching button
+        cy.wrap($divs.last()).within(() => {
+            cy.get(`:button:contains("${label}"):visible,:button[value*="${label}"]`).last().click()
         })
-        
     })
 })
 
@@ -364,6 +365,11 @@ Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector) => {
     })
 })
 
+// Requires that the current page is Project Setup
+Cypress.Commands.add('download_data_dictionary', () => {
+    preventClickTimeoutFail()
+    cy.get('a').contains('Download the current Data Dictionary').click()
+})
 
 Cypress.Commands.add('upload_data_dictionary', (fixture_file, date_format = "DMY") => {
     cy.upload_file('/dictionaries/' + fixture_file, 'csv', 'input[name="uploadedfile"]')

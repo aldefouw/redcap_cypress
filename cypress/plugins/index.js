@@ -39,7 +39,6 @@ module.exports = (on, config) => {
 		if(advanced_user_info) { user_sql = seeds_location + '/user_info/advanced.sql'; }
 
 		var auth_sql = seeds_location + '/auth.sql';
-		var rights_sql = seeds_location + '/rights.sql';
 		var config_sql = seeds_location + '/config.sql';
 
 		//CREATE STRUCTURE FILE
@@ -61,8 +60,6 @@ module.exports = (on, config) => {
 			let demo_sql=`${sql_path}/create_demo_db${i}.sql`
 			shell.cat(demo_sql).toEnd(structure_and_data_file)
 		}
-
-		shell.cat(rights_sql).toEnd(structure_and_data_file);
 
 		shell.cat(config_sql).sed('REDCAP_VERSION_MAGIC_STRING', redcap_version).toEnd(structure_and_data_file);
 

@@ -1,30 +1,82 @@
 import { Given } from "cypress-cucumber-preprocessor/steps";
-
-defineParameterType({
-    name: 'see',
-    regexp: /should see|see/
-})
+require("./parameter_types.js")
 
 /**
  * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @author Corey DeBacker <debacker@wisc.edu>
  * @example I (should) see {string}
  * @param {string} text the text visually seen on screen
- * @description Visually verifies that text exists within the HTML object. NOTE: "should" is optional for readability.
+ * @description Verifies that the text is visible. If a dialog box is open, only content contained within it is considered visible.
+ *     NOTE: "should" is optional for readability.
  */
-Given("I {see} {string}", (see, text) => {
-    cy.get('html').should(($html) => { expect($html).to.contain(text) })
+Given("I (should) see {string}", (text) => {
+    // double quotes need to be re-escaped before inserting into :contains() selector
+    text = text.replaceAll('\"', '\\\"')
+    
+    // Match visible elements containing the text, discarding those that contain another matched element to get the deepest.
+    // Ensures that the deepest element containing the text is visible, otherwise test fails. This is relevant when text is
+    // invisible due to being contained in an invisible element with a visible ascendant.
+    let sel = `:contains("${text}"):not(:has(:contains("${text}"))):visible`
+        + `,select:visible option:selected:contains("${text}")`
+    cy.get_top_layer(($el) => {
+        expect($el.find(sel).length).to.be.above(0) //TODO: rework assertion to improve logging output
+    })
+})
+
+/**
+ * @module Visibility
+ * @author Corey DeBacker <debacker@wisc.edu>
+ * @example I should see a {LabeledElement} labeled {string}
+ * @param {LabeledElement} el - type of element, in {link, button}
+ * @param {string} text - the label of the link that should be seen on screen (matches partially)
+ * @description Verifies that a visible element of the specified type containing `text` exists
+ */
+Given("I should see a {LabeledElement} labeled {string}", (el, text) => {
+    // double quotes need to be re-escaped before inserting into :contains() selector
+    text = text.replaceAll('\"', '\\\"')
+    let subsel = {'link':'a', 'button':'button'}[el]
+    let sel = `${subsel}:contains("${text}"):visible` + (el == 'button' ? `,button[value="${text}"]` : '')
+    cy.get_top_layer(($e) => {expect($e.find(sel).length).to.be.above(0)})
+})
+
+// For comparing results of tests before z-index & n'th selector changes
+Given("Old I should see {string}", (text) => {
+    cy.get('html').should(($html) => {expect($html).to.contain(text)})
 })
 
 /**
  * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @author Corey DeBacker <debacker@wisc.edu>
  * @example I should NOT see {string}
- * @param {string} text the text visually seen on screen
- * @description Visually verifies that text does NOT exist within the HTML object.
+ * @param {string} text - the text that should not be seen on screen
+ * @description Verifies that text does NOT appear in any visible element
  */
 Given("I should NOT see {string}", (text) => {
-    cy.get('html').then(($html) => { expect($html).to.not.contain(text) })
+    // double quotes need to be re-escaped before inserting into :contains() selector
+    text = text.replaceAll('\"', '\\\"') 
+    let sel = `:contains("${text}"):not(:has(:contains("${text}"))):visible`
+        + `,select:visible option:selected:contains("${text}")`
+    cy.get_top_layer(($e) => {expect($e.find(sel).length).to.equal(0)})
+    // Old implementation:
+    // cy.get('html').then(($html) => { expect($html).to.not.contain(text) })
+})
+
+/**
+ * @module Visibility
+ * @author Corey DeBacker <debacker@wisc.edu>
+ * @example I should NOT see a {LabeledElement} labeled {string}
+ * @param {LabeledElement} el - type of element, in {link, button}
+ * @param {string} text - the label of the link that should not be seen on screen (matches partially)
+ * @description Verifies that there are no visible elements of the specified type with the label `text`
+ */
+Given("I should NOT see a {LabeledElement} labeled {string}", (el, text) => {
+    // double quotes need to be re-escaped before inserting into :contains() selector
+    text = text.replaceAll('\"', '\\\"')
+    let subsel = {'link':'a', 'button':'button'}[el]
+    let sel = `${subsel}:contains("${text}"):visible` + (el == 'button' ? `,button[value="${text}"]:visible` : '')
+    cy.get_top_layer(($e) => {console.log(sel);expect($e.find(sel)).to.have.lengthOf(0)})
 })
 
 /**
@@ -76,17 +128,6 @@ Given("I should see a button labeled {string}", (label) => {
 
 /**
  * @module Visibility
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I should see a link labeled {string}
- * @param {string} label the label on an anchor tag
- * @description Visually verifies that there is a link with a specific label.
- */
-Given("I should see a link labeled {string}", (label) => {
-    cy.get('a').contains(label)
-})
-
-/**
- * @module Visibility
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I should see a new dialog box named {string}
  * @param {string} text the id of the new dialog box
@@ -105,10 +146,6 @@ Given("I should see a new dialog box named {string}", (text) => {
  * @param {string} check - valid choices are 'checked' OR 'unchecked'
  * @description Visually verifies that a specified checkbox is checked or uncheck
  */
-defineParameterType({
-    name: 'check',
-    regexp: /checked|unchecked/
-})
  Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
     //Really only added this to delay cypress cause sometimes it was moving forward without being checked
     //ATTN: Function no longer needed, can probably delete if no one needs it

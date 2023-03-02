@@ -1,5 +1,5 @@
 import { Given } from "cypress-cucumber-preprocessor/steps";
-import { defineParameterType } from "cypress-cucumber-preprocessor/steps";
+require("./parameter_types.js")
 
 /**
  * @module Interactions
@@ -64,12 +64,20 @@ defineParameterType({
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the button labeled {string}
+ * @example I click on the( {string}) button labeled {string}
+ * @param {ordinal} n - (optional) The ordinal specifying which matching button to click
+ *      Valid options are "first", "last", "second", "third", "fourth", "fifth", "sixth", "seventh", or "eighth".
  * @param {string} text - the text on the button element you want to click
- * @description Clicks on a button element with a specific text label.
+ * @description Clicks on a button element with a specific text label. If `n` is not specified, the first matching
+ *      button is clicked.
  */
-Given("I click on the button labeled {string}", (text) => {
-    cy.get('button').contains(text).click()
+// Similar issue as "I enter {string} into the {ordinal}input field near the text {string}", see comment. Low impact.
+Given("I click on the {ordinal}button labeled {string}", (n, text) => {
+    let sel = `:button:contains("${text}"):visible,:button[value*="${text}"]:visible` //for assertion
+    cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)}) //assertion could be improved, ugly logs
+        .within(() => {
+            cy.get(sel).eq(n).invoke('removeAttr', 'target').click()
+        })
 })
 
 /**
@@ -124,27 +132,22 @@ Given("I click on the radio labeled {string} in the dialog box", (text) => {
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the link labeled {string}
+ * @param {ordinal} n - (optional) The ordinal specifying which matching button to click
+ *      Valid options are "first", "last", "second", "third", "fourth", "fifth", "sixth", "seventh", or "eighth".
  * @param {string} text - the text on the anchor element you want to click
  * @description Clicks on an anchor element with a specific text label.
  */
-Given("I click on the link labeled {string}", (text) => {
-    cy.get('a').contains(text).click()
+Given("I click on the {ordinal}link labeled {string}", (n, text) => {
+    let sel = `a:contains("${text}"):visible:nth(${n})`
+    cy.get_top_layer(($el) => {expect($el.find(sel)).length.to.be.above(0)})
+        .within(() => cy.get(sel).click())
+    // cy.get(`a:contains("${text}")`).filter(':visible').first().click()
+    // cy.get('a').contains(text).should('be.visible').click({force:true})
+})
 
-    // cy.location().then((loc) => {
-    //     const current_url = loc.href
-    //
-    //     cy.get('a').contains(text).then(($text) => {
-    //         //If we are staying on the same page, we need to force the click since element is guaranteed to detach
-    //         if(current_url === $text[0]['href']){
-    //             $text[0].click({ force: true })
-    //
-    //         //In all other cases, let's do a standard click
-    //         } else {
-    //             $text[0].click()
-    //         }
-    //     })
-    //
-    // })
+//For comparing results of tests before z-index & n'th selector changes
+Given("Old I click on the link labeled {string}", (text) => {
+    cy.get('a').contains(text).should('be.visible').click({force:true})
 })
 
 /**
@@ -329,19 +332,14 @@ Given("I select {string} from the dropdown identified by {string} labeled {strin
     })
 })
 
-defineParameterType({
-    name: 'element_type',
-    regexp: /element|checkbox/
-})
 /**
  * @module Interactions
  * @author Corey Debacker <debacker@wisc.edu>
- * @example I click on the < element | checkbox > identified by {string}
- * @param {string} element_type - valid choices are 'element' OR 'checkbox'
+ * @example I click on the element identified by {string}
  * @param {string} selector - the selector of the element to click on
- * @description Clicks on an element identified by specific selector
+ * @description Clicks on an element identified by specific selector. 
  */
-Given("I click on the {element_type} identified by {string}", (type, selector) => {
+Given("I click on the element identified by {string}", (selector) => {
     cy.get(selector).click()
 })
 
@@ -474,11 +472,6 @@ Given('I enter {string} into the field identified by {string} labeled {string}',
     })
 })
 
-
-defineParameterType({
-    name: 'confirmation',
-    regexp: /accept|cancel/
-})
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>

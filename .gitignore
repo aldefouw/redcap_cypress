@@ -7,6 +7,9 @@ test_db/initial_db_seed.lock
 
 /www
 /redcap_docker
+/cypress/downloads
+
+/cypress/downloads
 
 /cypress/downloads
 
