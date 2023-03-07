@@ -371,11 +371,11 @@ Given('I {user_right_action} all Basic Rights within the open User Rights dialog
 /**
  * @module UserRights
  * @author Corey DeBacker <debacker@wisc.edu>
- * @example I select the Data Exports priveleges option labeled {string}
+ * @example I select the Data Exports privileges option labeled {string}
  * @param {string} text - the label of the option to be selected
  * @description Selects a radio option for Data Exports within the user rights configuration dialog based on its label.
  */
-Given('I select the Data Exports priveleges option labeled {string}', (text) => {
+Given('I select the Data Exports privileges option labeled {string}', (text) => {
     cy.get(`:contains(${text}) > [name=data_export_tool]`).check()
 })
 
