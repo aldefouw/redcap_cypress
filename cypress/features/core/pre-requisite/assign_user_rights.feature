@@ -1,7 +1,7 @@
 Feature: Assign User Rights
 
   As a REDCap end user, I want to see that:
-  - The system allows the ability to add, edit or delete the following core user priveleges:
+  - The system allows the ability to add, edit or delete the following core user privileges:
   --- 2. Expiration Date
   --- 3. Project Design and Setup
   --- 4. User Rights
@@ -28,7 +28,7 @@ Feature: Assign User Rights
     When I enable surveys
     When I disable longitudinal mode
     And I click on the button labeled "Additional customizations"
-    And I click on the checkbox near the text "Enable the Field Comment Log"
+    And I check the checkbox labeled "Enable the Field Comment Log or Data Resolution Workflow (Data Queries)?"
     And I click on the button labeled "Save"
     Then I should see "Success! Your changes have been saved."
     # Manual script says there should be one record with one instrument that is a survey,
@@ -38,14 +38,14 @@ Feature: Assign User Rights
     When I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
-    And I enter "test_user" into the input field near the text "Add with custom rights"
+    And I enter "test_user" into the input field labeled "Add with custom rights"
     And I click on the button labeled "Add with custom rights"
-    Then I should see 'Adding new user "test_user"'
+    Then I should see a dialog containing the following text: 'Editing existing user "test_user"'
     And I remove all Basic Rights within the open User Rights dialog box
     # Script has expected result: "Data Entry rights remain".
     # Consider adding an assertion here.
     Then I save changes within the context of User Rights
-    
+
     When I click on the link labeled "My Projects"
     Then I should see "Listed below are the REDCap projects"
 
@@ -67,7 +67,7 @@ Feature: Assign User Rights
     And I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
-    And I assign an expired expiration date to user "Test User" with username of "test_user" on project ID 13
+    And I assign an expired expiration date to user "Test User" with username of "test_user"
     # ^ Current implementation of this step makes preceding steps redundant,
     # but I've kept them in case this one changes, to maintain congruence with the manual script
 
@@ -83,7 +83,7 @@ Feature: Assign User Rights
     And I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
-    And I remove the expiration date to user "Test User" with username of "test_user" on project ID 13
+    And I remove the expiration date to user "Test User" with username of "test_user"
     # Then I should NOT see "10/31/2022"
     # Manual script expected result (unasserted):
     #   The Expiration column shows 'never' for test_user
@@ -119,7 +119,7 @@ Feature: Assign User Rights
   Scenario: 7 - Assign Data Exports - De-identified to test_user
     Given I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
-    And I select the Data Exports priveleges option labeled "De-Identified*"
+    And I select the Data Exports privileges option labeled "De-Identified*"
     And I save changes within the context of User Rights
     # Manual script expected result (unasserted):
     #   Verify in the main User Rights page the ‘Data Export Tool’ box says De-identified for user test_user.
@@ -165,7 +165,7 @@ Feature: Assign User Rights
   Scenario: 12 - Remove Data Exports, Data Import, and Data Comparison User Rights 
     Given I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
-    And I select the Data Exports priveleges option labeled "No Access"
+    And I select the Data Exports privileges option labeled "No Access"
     And I uncheck the User Right named "Data Import Tool"
     And I uncheck the User Right named "Data Comparison Tool"
     And I check the User Right named "Logging"
@@ -240,6 +240,7 @@ Feature: Assign User Rights
     # Given I click on the link labeled "User Rights"
     And I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
+    Then I should see a dialog containing the following text: "Editing existing user"
     And I check the User Right named "Record Locking Customization"
     And I save changes within the context of User Rights
 
@@ -250,7 +251,7 @@ Feature: Assign User Rights
   Scenario: 20 - Assign Lock/Unlock Records - Locking / Unlocking with E-signature authority to test_user
     And I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
-    # Comment out below line if db seed reset is enabled
+    Then I should see a dialog containing the following text: "Editing existing user"
     And I select the User Right named "Lock/Unlock Records" and choose "Disabled"
     And I select the User Right named "Lock/Unlock Records" and choose "Locking / Unlocking with E-signature authority"
     Then I should see "Please note that giving a user 'Locking / Unlocking with E-signature authority' privileges"
@@ -262,6 +263,7 @@ Feature: Assign User Rights
   Scenario: 21 - Assign Lock/Unlock Records - Locking / Unlocking to test_user
     Given I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
+    Then I should see a dialog containing the following text: "Editing existing user"
     And I select the User Right named "Lock/Unlock Records" and choose "Locking / Unlocking"
 
     When I save changes within the context of User Rights
@@ -270,6 +272,7 @@ Feature: Assign User Rights
   Scenario: 22 - Assign Lock/Unlock *Entire* Records (record level) to test_user
     Given I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
+    Then I should see a dialog containing the following text: "Editing existing user"
     And I check the User Right named "Lock/Unlock *Entire* Records"
     
     When I save changes within the context of User Rights
@@ -278,12 +281,13 @@ Feature: Assign User Rights
   Scenario: 23 - Assign Data Entry - No Access to test_user
     Given I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
+    Then I should see a dialog containing the following text: "Editing existing user"
     And I set Data Viewing Rights to No Access for the instrument "Text Validation"
     And I set Data Viewing Rights to No Access for the instrument "Data Types"
     And I save changes within the context of User Rights
 
     When I click on the link labeled "View / Edit Records"
-    And I select "1" from the dropdown near the text "Choose an existing Record ID"
+    And I select "1" on the dropdown field labeled "Choose an exising Record ID"
     Then I should NOT see "Text Validation"
     And I should NOT see "Data Types"
 

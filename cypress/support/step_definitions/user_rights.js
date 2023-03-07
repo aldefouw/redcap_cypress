@@ -379,4 +379,21 @@ Given('I select the Data Exports privileges option labeled {string}', (text) => 
     cy.get(`:contains(${text}) > [name=data_export_tool]`).check()
 })
 
+// Achieves same result as Adam's "I grant {data_viewing_rights} level of Data Entry Rights on the {string} instrument for the username {string} for project ID {int}"
+// However, the old method uses a cy.visit which we are trying to move away from. This also eliminates unnecessary parameters,
+// but requires that the user rights configuration dialog is open
+/**
+ * @module UserRights
+ * @author Corey DeBacker <debacker@wisc.edu>
+ * @example I set Data Viewing Rights to < No Access | Read Only | View & Edit > for the instrument {string}
+ * @param {data_viewing_rights} level - the level of rights to be assigned
+ * @param {string} instrument - the label of the instrument for which to configure data entry rights
+ * @description Selects a radio option for Data Entry Rights for the specified instrument within the user rights configuration dialog.
+ */
+Given('I set Data Viewing Rights to {data_viewing_rights} for the instrument {string}', (level, instrument) => {
+    let input_values = {'No Access': 0, 'Read Only': 2, 'View & Edit': 1}
+    cy.get(`table#form_rights tr:has(td:contains(${instrument})) input[value=${input_values[level]}]:visible`)
+        .check()
+})
+
 
