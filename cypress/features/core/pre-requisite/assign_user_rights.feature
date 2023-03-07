@@ -285,11 +285,6 @@ Feature: Assign User Rights
     # User Rights table should still show a green check for Record Locking Customization
 
   Scenario: 23 - Assign Data Entry - No Access to test_user
-    Given I am an "standard" user who logs into REDCap
-    Given I click on the link labeled "My Projects"
-    And I click on the link labeled "AssignUserRightsProject"
-    And I click on the link labeled "User Rights"
-
     Given I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
     Then I should see a dialog containing the following text: "Editing existing user"
