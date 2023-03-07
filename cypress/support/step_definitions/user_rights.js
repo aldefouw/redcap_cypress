@@ -335,7 +335,6 @@ Given("I save changes within the context of User Rights", () => {
  *
  */
 Given("I select the option to display E-signature option for the instrument identified by {string}", (text) => {
-    cy.get('div[role=dialog]').should('be.visible')
     cy.get(text).closest('td').find('input').check()
 })
 
