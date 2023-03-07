@@ -1,4 +1,6 @@
 import {Given, defineParameterType} from "cypress-cucumber-preprocessor/steps";
+import escapeStringRegexp from 'escape-string-regexp'
+
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -194,7 +196,7 @@ const user_right_check_mappings = {
  *
  */
 Given("I check the User Right named {string}", (text) => {
-    cy.get('input[name="' + user_right_check_mappings[text] + '"]').should('be.visible').check()
+    cy.get('input[name="' + user_right_check_mappings[text] + '"]').scrollIntoView().should('be.visible').check()
 })
 
 /**
@@ -206,7 +208,7 @@ Given("I check the User Right named {string}", (text) => {
  *
  */
 Given("I uncheck the User Right named {string}", (text) => {
-    cy.get('input[name="' + user_right_check_mappings[text] + '"]').should('be.visible').uncheck()
+    cy.get('input[name="' + user_right_check_mappings[text] + '"]').scrollIntoView().should('be.visible').uncheck()
 })
 
 const single_choice_mappings = {
@@ -227,8 +229,14 @@ Given("I select the User Right named {string} and choose {string}", (text, optio
     cy.get('input[name="' + single_choice_mappings[text] + '"]').
         parent().
         parent().
-        find(':contains(' + option + ')').
-        within(() => { cy.get('input').click() } )
+        within(() => {
+            cy.get('div').
+                contains(new RegExp(escapeStringRegexp(option))).
+                find('input').
+                scrollIntoView().
+                should('be.visible').
+                click()
+        })
 })
 
 /**
@@ -311,6 +319,8 @@ Given("I save changes within the context of User Rights", () => {
     cy.get('button').contains(/add user|save changes/i).click()
 
     cy.wait('@saved_user')
+
+    if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
 })
 
 /**

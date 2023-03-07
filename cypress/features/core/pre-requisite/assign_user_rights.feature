@@ -22,7 +22,7 @@ Feature: Assign User Rights
 
   Scenario: Project Setup - 1
     Given I am an "admin" user who logs into REDCap
-    And I create a project named "SecondProject_1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
+    And I create a project named "AssignUserRightsProject" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
     
   Scenario: Project Setup - 2
     When I enable surveys
@@ -34,13 +34,13 @@ Feature: Assign User Rights
     # Manual script says there should be one record with one instrument that is a survey,
     # but there are no instruments or records.
 
-  Scenario: 1 - Add test_user to SecondProject_1115
+  Scenario: 1 - Add test_user to AssignUserRightsProject project
     When I click on the link labeled "My Projects"
-    And I click on the link labeled "SecondProject_1115"
+    And I click on the link labeled "AssignUserRightsProject"
     And I click on the link labeled "User Rights"
     And I enter "test_user" into the input field labeled "Add with custom rights"
     And I click on the button labeled "Add with custom rights"
-    Then I should see a dialog containing the following text: 'Editing existing user "test_user"'
+    Then I should see a dialog containing the following text: "Editing existing user"
     And I remove all Basic Rights within the open User Rights dialog box
     # Script has expected result: "Data Entry rights remain".
     # Consider adding an assertion here.
@@ -51,10 +51,11 @@ Feature: Assign User Rights
 
     Given I logout
     Then I should see "Please log in"
+
     And I am a "standard" user who logs into REDCap
     Then I should see "Logged in as"
     And I click on the link labeled "My Projects"
-    And I click on the link labeled "SecondProject_1115"
+    And I click on the link labeled "AssignUserRightsProject"
     Then I should see a link labeled "Project Home"
     And I should see a link labeled "Codebook"
     And I should see a link labeled "Record Status Dashboard"
@@ -65,7 +66,7 @@ Feature: Assign User Rights
   Scenario: 2 - Add expiration data for test_user
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "My Projects"
-    And I click on the link labeled "SecondProject_1115"
+    And I click on the link labeled "AssignUserRightsProject"
     And I click on the link labeled "User Rights"
     And I assign an expired expiration date to user "Test User" with username of "test_user"
     # ^ Current implementation of this step makes preceding steps redundant,
@@ -74,14 +75,14 @@ Feature: Assign User Rights
     Given I logout
     And I am a "standard" user who logs into REDCap
     When I click on the link labeled "My Projects"
-    And I click on the link labeled "SecondProject_1115"
+    And I click on the link labeled "AssignUserRightsProject"
     Then I should see "Your access to this particular REDCap project has expired."
     Given I logout
 
   Scenario: 3-4 - Assign Project Design and Setup & User Rights to test_user
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "My Projects"
-    And I click on the link labeled "SecondProject_1115"
+    And I click on the link labeled "AssignUserRightsProject"
     And I click on the link labeled "User Rights"
     And I remove the expiration date to user "Test User" with username of "test_user"
     # Then I should NOT see "10/31/2022"
@@ -90,7 +91,7 @@ Feature: Assign User Rights
 
     When I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
-    Then I should see 'Editing existing user "test_user"'
+    Then I should see a dialog containing the following text: "Editing existing user"
     When I check the User Right named "Project Setup & Design"
     And I check the User Right named "User Rights"
     And I save changes within the context of User Rights
@@ -101,7 +102,7 @@ Feature: Assign User Rights
     Given I logout
     And I am a "standard" user who logs into REDCap
     And I click on the link labeled "My Projects"
-    And I click on the link labeled "SecondProject_1115"
+    And I click on the link labeled "AssignUserRightsProject"
     Then I should see a link labeled "Project Setup"
     And I should see a link labeled "Designer"
     And I should see a link labeled "Dictionary"
@@ -232,6 +233,7 @@ Feature: Assign User Rights
     # Given I click on the link labeled "User Rights"
     And I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
+    Then I should see a dialog containing the following text: "Editing existing user"
     And I check the User Right named "Delete Records"
     And I save changes within the context of User Rights
     # Verify green check appears
@@ -249,6 +251,10 @@ Feature: Assign User Rights
     # User Rights table should show a green check
 
   Scenario: 20 - Assign Lock/Unlock Records - Locking / Unlocking with E-signature authority to test_user
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "AssignUserRightsProject"
+    And I click on the link labeled "User Rights"
+
     And I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
     Then I should see a dialog containing the following text: "Editing existing user"
@@ -256,7 +262,7 @@ Feature: Assign User Rights
     And I select the User Right named "Lock/Unlock Records" and choose "Locking / Unlocking with E-signature authority"
     Then I should see "Please note that giving a user 'Locking / Unlocking with E-signature authority' privileges"
     
-    When I click on the button labeled "Close"
+    When I click on the button labeled "Close" in the dialog box
     And I save changes within the context of User Rights
     # User Rights table should show green shield
 
@@ -279,6 +285,11 @@ Feature: Assign User Rights
     # User Rights table should still show a green check for Record Locking Customization
 
   Scenario: 23 - Assign Data Entry - No Access to test_user
+    Given I am an "standard" user who logs into REDCap
+    Given I click on the link labeled "My Projects"
+    And I click on the link labeled "AssignUserRightsProject"
+    And I click on the link labeled "User Rights"
+
     Given I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
     Then I should see a dialog containing the following text: "Editing existing user"
@@ -286,8 +297,8 @@ Feature: Assign User Rights
     And I set Data Viewing Rights to No Access for the instrument "Data Types"
     And I save changes within the context of User Rights
 
-    When I click on the link labeled "View / Edit Records"
-    And I select "1" on the dropdown field labeled "Choose an exising Record ID"
+    And I click on the link labeled "View / Edit Records"
+    And I select "1" on the dropdown table field labeled "Choose an existing Record ID"
     Then I should NOT see "Text Validation"
     And I should NOT see "Data Types"
 
@@ -302,7 +313,7 @@ Feature: Assign User Rights
 #     Given I logout
 #     And I am an "admin" user who logs into REDCap
 #     And I click on the link labeled "My Projects"
-#     And I click on the link labeled "SecondProject_1115"
+#     And I click on the link labeled "AssignUserRightsProject"
 #     When I click on the link labeled "Designer"
 #     And I click on the element identified by "button:contains('Enable'):first"
 #     And I click on the button labeled "Save Changes"
@@ -420,7 +431,7 @@ Feature: Assign User Rights
 #   Scenario: 32 - Assign test_user to Data Entry 
 #     Given I am an "admin" user who logs into REDCap
 #     And I click on the link labeled "My Projects"
-#     And I click on the link labeled "SecondProject_1115"
+#     And I click on the link labeled "AssignUserRightsProject"
 #     And I click on the link labeled "User Rights"
 #     When I enter "test_user" into the field identified by "[id=new_username_assign]"
 #     And I click on the button labeled "Assign to role"
