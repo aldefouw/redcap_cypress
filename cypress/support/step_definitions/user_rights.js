@@ -196,6 +196,7 @@ const user_right_check_mappings = {
  *
  */
 Given("I check the User Right named {string}", (text) => {
+    cy.get('div[role=dialog]').should('be.visible')
     cy.get('input[name="' + user_right_check_mappings[text] + '"]').scrollIntoView().should('be.visible').check()
 })
 
@@ -208,6 +209,7 @@ Given("I check the User Right named {string}", (text) => {
  *
  */
 Given("I uncheck the User Right named {string}", (text) => {
+    cy.get('div[role=dialog]').should('be.visible')
     cy.get('input[name="' + user_right_check_mappings[text] + '"]').scrollIntoView().should('be.visible').uncheck()
 })
 
@@ -226,6 +228,7 @@ const single_choice_mappings = {
  *
  */
 Given("I select the User Right named {string} and choose {string}", (text, option) => {
+    cy.get('div[role=dialog]').should('be.visible')
     cy.get('input[name="' + single_choice_mappings[text] + '"]').
         parent().
         parent().
@@ -332,6 +335,7 @@ Given("I save changes within the context of User Rights", () => {
  *
  */
 Given("I select the option to display E-signature option for the instrument identified by {string}", (text) => {
+    cy.get('div[role=dialog]').should('be.visible')
     cy.get(text).closest('td').find('input').check()
 })
 
@@ -357,6 +361,8 @@ defineParameterType({
  * @description Checks or Unchecks all Basic Rights within the User Rights dialog box.
  */
 Given('I {user_right_action} all Basic Rights within the open User Rights dialog box', (action) => {
+    cy.get('div[role=dialog]').should('be.visible')
+
     //"Full Access" to Data Export Tool
     if(action === "add"){
         cy.get('input[name=data_export_tool]').should('be.visible').check('1')
@@ -386,6 +392,7 @@ Given('I {user_right_action} all Basic Rights within the open User Rights dialog
  * @description Selects a radio option for Data Exports within the user rights configuration dialog based on its label.
  */
 Given('I select the Data Exports privileges option labeled {string}', (text) => {
+    cy.get('div[role=dialog]').should('be.visible')
     cy.get(`:contains(${text}) > [name=data_export_tool]`).check()
 })
 
@@ -401,6 +408,7 @@ Given('I select the Data Exports privileges option labeled {string}', (text) => 
  * @description Selects a radio option for Data Entry Rights for the specified instrument within the user rights configuration dialog.
  */
 Given('I set Data Viewing Rights to {data_viewing_rights} for the instrument {string}', (level, instrument) => {
+    cy.get('div[role=dialog]').should('be.visible')
     let input_values = {'No Access': 0, 'Read Only': 2, 'View & Edit': 1}
     cy.get(`table#form_rights tr:has(td:contains(${instrument})) input[value=${input_values[level]}]:visible`)
         .check()
