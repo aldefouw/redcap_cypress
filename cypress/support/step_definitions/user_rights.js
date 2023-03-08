@@ -414,3 +414,19 @@ Given('I set Data Viewing Rights to {data_viewing_rights} for the instrument {st
 })
 
 
+/**
+ * @module UserRights
+ * @author Corey DeBacker <debacker@wisc.edu>
+ * @example I set Data Viewing Rights to < No Access | Read Only | View & Edit > for the instrument {string}
+ * @param {data_viewing_rights} level - the level of rights to be assigned
+ * @param {string} instrument - the label of the instrument for which to configure data entry rights
+ * @description Selects a radio option for Data Entry Rights for the specified instrument within the user rights configuration dialog.
+ */
+Given('I ', (level, instrument) => {
+    cy.get('div[role=dialog]').should('be.visible')
+    let input_values = {'No Access': 0, 'Read Only': 2, 'View & Edit': 1}
+    cy.get(`table#form_rights tr:has(td:contains(${instrument})) input[value=${input_values[level]}]:visible`)
+        .check()
+})
+
+

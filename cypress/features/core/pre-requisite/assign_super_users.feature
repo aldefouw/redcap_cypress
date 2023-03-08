@@ -3,18 +3,16 @@ Feature: Assign Super Users / Account Managers
   As a REDCap end user
   I want to see that Assign Super Users / Account Managers is functioning as expected
 
-Background:
+Scenario: 2 - Control Center Links Visible
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "Control Center"
-
-Scenario: 2 - Control Center Links Visible
     Then I should see "Control Center Home"
     And I should see "Projects"
     And I should see "Users"
     And I should see "System Configuration"
 
 Scenario: 3 - Administrator Privileges Page Visible
-    When I click on the link labeled "Administrator Privileges"
+    Given I click on the link labeled "Administrator Privileges"
     Then I should see "Set administrator privileges"
     And I should see "Access to all projects and data with maximum user privileges"
     And I should see "Manage user accounts"
@@ -24,11 +22,12 @@ Scenario: 3 - Administrator Privileges Page Visible
     And I should see "Access to Control Center dashboards"
 
 Scenario: 4 - Add test_user to Administrator List
-    When I click on the link labeled "Administrator Privileges"
-    And I enter "test_user" into the field identified by "[id=user_search]"
+    Given I enter "test_user" into the field with the placeholder text of "Search users to add as admin"
     And I click on the element identified by "[id=0-admin_rights]"
     And I click on the button labeled "Add"
-    Then I should see "has now been granted one or more administrator privileges"
+    Then I should see 'The user "test_user" has now been granted one or more administrator privileges'
+    And I click on the button labeled "OK"
+    And I should see "test_user"
     
 Scenario: 5 - View test_user in Admin List
     When I click on the link labeled "Administrator Privileges"
@@ -44,11 +43,12 @@ Scenario: 6 - Verify test_user Administrator Privileges
         #come back to 
 
 Scenario: 7 & 8 - Grant test_user2 Administrator Privileges
-    When I click on the link labeled "Administrator Privileges"
-    And I enter "test_user2" into the field identified by "[id=user_search]"
+    Given I enter "test_user2" into the field with the placeholder text of "Search users to add as admin"
     And I click on the element identified by "[id=0-account_manager]"
     And I click on the button labeled "Add"
-    Then I should see "has now been granted one or more administrator privileges"
+    Then I should see 'The user "test_user2" has now been granted one or more administrator privileges'
+    And I click on the button labeled "OK"
+    And I should see "test_user2"
 
 Scenario: 9 - View test_user2 in Admin List
     When I click on the link labeled "Administrator Privileges"
@@ -67,6 +67,8 @@ Scenario: 10 - Verify test_user2 Account Manager Privileges
     And I should see "System Configuration"
 
 Scenario: 11 - Switch test_user2 to Maximum User Privileges
+    Given I am an "admin" user who logs into REDCap
+    And I click on the link labeled "Control Center"
     When I click on the link labeled "Administrator Privileges"
     And I click on the element identified by "[id=4-super_user]"
     And I click on the element identified by "[id=4-account_manager]"
@@ -94,6 +96,8 @@ Scenario: 14 - View and Edit Project Settings Page
     Then I should see "Navigate to project Classic Database"
 
 Scenario: 15 - Switch test_user2 to System Configuration Modifier
+    Given I am an "admin" user who logs into REDCap
+    And I click on the link labeled "Control Center"
     When I click on the link labeled "Administrator Privileges"
     And I click on the element identified by "[id=4-access_system_config]"
     And I click on the element identified by "[id=4-super_user]"
@@ -122,6 +126,8 @@ Scenario: 16 - Verify test_user2 System Configuration Access
     And I should see "Secondary tests"
 
 Scenario: 17 - Switch test_user2 to have access to Control Center Dashboards
+    Given I am an "admin" user who logs into REDCap
+    And I click on the link labeled "Control Center"
     When I click on the link labeled "Administrator Privileges"
     And I click on the element identified by "[id=4-access_admin_dashboards]"
     And I click on the element identified by "[id=4-access_system_config]"
@@ -142,6 +148,8 @@ Scenario: 18 - Verify test_user2 Maximum User Privileges
     And I should see "System Configuration"
 
 Scenario: 19 - Switch test_user and test_user2 to no admin privileges
+    Given I am an "admin" user who logs into REDCap
+    And I click on the link labeled "Control Center"
     When I click on the link labeled "Administrator Privileges"
     And I click on the element identified by "[id=4-access_admin_dashboards]"
     And I click on the element identified by "[id=2-admin_rights]"
@@ -156,31 +164,24 @@ Scenario: 19 - Switch test_user and test_user2 to no admin privileges
     Then I should see "Control Center"
     And I click on the link labeled "Control Center"
     And I click on the link labeled "Administrator Privileges"
-    Then I should NOT see "user1115_1"
-    And I should NOT see "user1115_1"
+    Then I should NOT see "test_user"
+    And I should NOT see "test_user2"
 
 Scenario: 20 - Check Audit Log of User Actions
     When I click on the link labeled "Activity Log"
-    And I should see "All User Activity for Today"
+    Then I should see "All User Activity for Today"
     And I should see "(10 events)"
     And I should see "Time"
     And I should see "User"
     And I should see "Event"
 
 Scenario: 21 - Confirm test_user does not have Admin Rights
-    When I click on the link labeled "Log out"
-    And I enter "test_user" into the input field labeled "Username:"
-    And I enter "PASSWORD HERE" into the input field labeled "Password:" 
-    And I click on the button labeled "Log In"
-    #And I should not have access to Control Center
+    Given I am a "standard" user who logs into REDCap
+    Then I should NOT see a link labeled "Control Center"
 
 Scenario: 22 - Confirm test_user2 does not have Admin Rights
-     When I click on the link labeled "Log out"
-    And I enter "test_user2" into the input field labeled "Username:"
-    And I enter "PASSWORD HERE" into the input field labeled "Password:" 
-    And I click on the button labeled "Log In"
-    #And I should not have access to Control Center
-
+    Given I am a "standard2" user who logs into REDCap
+    Then I should NOT see a link labeled "Control Center"
 
 
 
