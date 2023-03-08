@@ -3,7 +3,7 @@ Feature: Assign Super Users / Account Managers
   As a REDCap end user
   I want to see that Assign Super Users / Account Managers is functioning as expected
 
-Scenario: 2 - Control Center Links Visible
+Scenario: 1-2 - Control Center Links Visible
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "Control Center"
     Then I should see "Control Center Home"
@@ -31,21 +31,23 @@ Scenario: 4 - Add test_user to Administrator List
     
 Scenario: 5 - View test_user in Admin List
     When I click on the link labeled "Administrator Privileges"
-    Then I should see "test_user"
+    Then I should see "Set REDCap Administrator Privileges"
+    And I should see "test_user"
 
 Scenario: 6 - Verify test_user Administrator Privileges
     Given I am an "standard" user who logs into REDCap
     Then I should see "Control Center"
     And I click on the link labeled "Control Center"
     Then I should see "Users"
-    When I click on the link labeled "Administrator Privileges"
-    #Then I should see "[<input id=2-admin_rights checked=checked disabled=disabled type=checkbox>]"
-        #come back to 
 
-Scenario: 7 & 8 - Grant test_user2 Administrator Privileges
+Scenario: 7-8 - Grant test_user2 Administrator Privileges
+    Given I click on the link labeled "Administrator Privileges"
+    Then I should see "Set REDCap Administrator Privileges"
+
     Given I enter "test_user2" into the field with the placeholder text of "Search users to add as admin"
     And I click on the element identified by "[id=0-account_manager]"
     And I click on the button labeled "Add"
+
     Then I should see 'The user "test_user2" has now been granted one or more administrator privileges'
     And I click on the button labeled "OK"
     And I should see "test_user2"
@@ -182,8 +184,3 @@ Scenario: 21 - Confirm test_user does not have Admin Rights
 Scenario: 22 - Confirm test_user2 does not have Admin Rights
     Given I am a "standard2" user who logs into REDCap
     Then I should NOT see a link labeled "Control Center"
-
-
-
-
-
