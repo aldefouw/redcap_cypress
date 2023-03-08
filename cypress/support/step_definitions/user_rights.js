@@ -1,4 +1,6 @@
 import {Given, defineParameterType} from "cypress-cucumber-preprocessor/steps";
+import escapeStringRegexp from 'escape-string-regexp'
+
 /**
  * @module UserRights
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -22,12 +24,11 @@ Given("I assign the {string} user right to the user named {string} with the user
  * @param {string} rights - the specific user right desired (e.g. Stats & Charts)
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
- * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
  * @description Removes a specific user right to a given user when provided a valid Project ID.
  *
  */
 Given("I remove the {string} user right to the user named {string} with the username of {string}", (rights_to_assign, proper_name, username) => {
-    cy.remove_basic_user_right(username, proper_name, rights_to_assign, 13)
+    cy.remove_basic_user_right(username, proper_name, rights_to_assign)
 })
 
 /**
@@ -36,12 +37,11 @@ Given("I remove the {string} user right to the user named {string} with the user
  * @example I assign an expiration date to user {string} with username of {string} on project ID {int}
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
- * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
  * @description Assigns 'Expiration Date' user right to a given user when provided a valid Project ID.
  *
  */
-Given("I assign an expired expiration date to user {string} with username of {string} on project ID {int}", (proper_name, username, project_id) => {
-    cy.assign_expiration_date_to_user(username, proper_name, project_id)
+Given("I assign an expired expiration date to user {string} with username of {string}", (proper_name, username) => {
+    cy.assign_expiration_date_to_user(username, proper_name)
 })
 
 /**
@@ -50,12 +50,11 @@ Given("I assign an expired expiration date to user {string} with username of {st
  * @example I assign an expired expiration date to user {string} with username of {string} on project ID {int}
  * @param {string} name - the proper name of the user (e.g. Jane Doe)
  * @param {string} username - the username assigned to the user (e.g. jdoe)
- * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
  * @description Removes 'Expiration Date' user right to a given user when provided a valid Project ID.
  *
  */
-Given("I remove the expiration date to user {string} with username of {string} on project ID {int}", (proper_name, username, project_id) => {
-    cy.remove_expiration_date_from_user(username, proper_name, project_id)
+Given("I remove the expiration date to user {string} with username of {string}", (proper_name, username) => {
+    cy.remove_expiration_date_from_user(username, proper_name)
 })
 
 /**
@@ -64,12 +63,11 @@ Given("I remove the expiration date to user {string} with username of {string} o
  * @example I verify user rights are available for {string} user type on the path {string} on project ID {int}
  * @param {string} user_type - the type of user (e.g. 'standard' - reference "Users" object within cypress.env.json)
  * @param {string} path - the URL path we are testing to see if that user can access (e.g. /ProjectSetup/)
- * @param {int} pid - the project ID where the user rights should be assigned (e.g. 13)
  * @description Verifies a user is unable to access a specific path of a specific project given a Project ID.
  *
  */
-Given("I verify user rights are available for {string} user type on the path {string} on project ID {int}", (user_type, path, pid) => {
-    cy.verify_user_rights_available(user_type, path, pid)
+Given("I verify user rights are available for {string} user type on the path {string}", (user_type, path, pid) => {
+    cy.verify_user_rights_available(user_type, path)
 })
 
 /**
@@ -198,7 +196,8 @@ const user_right_check_mappings = {
  *
  */
 Given("I check the User Right named {string}", (text) => {
-    cy.get('input[name="' + user_right_check_mappings[text] + '"]').should('be.visible').check()
+    cy.get('div[role=dialog]').should('be.visible')
+    cy.get('input[name="' + user_right_check_mappings[text] + '"]').scrollIntoView().should('be.visible').check()
 })
 
 /**
@@ -210,7 +209,8 @@ Given("I check the User Right named {string}", (text) => {
  *
  */
 Given("I uncheck the User Right named {string}", (text) => {
-    cy.get('input[name="' + user_right_check_mappings[text] + '"]').uncheck()
+    cy.get('div[role=dialog]').should('be.visible')
+    cy.get('input[name="' + user_right_check_mappings[text] + '"]').scrollIntoView().should('be.visible').uncheck()
 })
 
 const single_choice_mappings = {
@@ -228,11 +228,18 @@ const single_choice_mappings = {
  *
  */
 Given("I select the User Right named {string} and choose {string}", (text, option) => {
+    cy.get('div[role=dialog]').should('be.visible')
     cy.get('input[name="' + single_choice_mappings[text] + '"]').
         parent().
         parent().
-        find(':contains(' + option + ')').
-        within(() => { cy.get('input').click() } )
+        within(() => {
+            cy.get('div').
+                contains(new RegExp(escapeStringRegexp(option))).
+                find('input').
+                scrollIntoView().
+                should('be.visible').
+                click()
+        })
 })
 
 /**
@@ -315,6 +322,8 @@ Given("I save changes within the context of User Rights", () => {
     cy.get('button').contains(/add user|save changes/i).click()
 
     cy.wait('@saved_user')
+
+    if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
 })
 
 /**
@@ -351,6 +360,8 @@ defineParameterType({
  * @description Checks or Unchecks all Basic Rights within the User Rights dialog box.
  */
 Given('I {user_right_action} all Basic Rights within the open User Rights dialog box', (action) => {
+    cy.get('div[role=dialog]').should('be.visible')
+
     //"Full Access" to Data Export Tool
     if(action === "add"){
         cy.get('input[name=data_export_tool]').should('be.visible').check('1')
@@ -370,6 +381,52 @@ Given('I {user_right_action} all Basic Rights within the open User Rights dialog
         }
     }
 
+})
+
+/**
+ * @module UserRights
+ * @author Corey DeBacker <debacker@wisc.edu>
+ * @example I select the Data Exports privileges option labeled {string}
+ * @param {string} text - the label of the option to be selected
+ * @description Selects a radio option for Data Exports within the user rights configuration dialog based on its label.
+ */
+Given('I select the Data Exports privileges option labeled {string}', (text) => {
+    cy.get('div[role=dialog]').should('be.visible')
+    cy.get(`:contains(${text}) > [name=data_export_tool]`).check()
+})
+
+// Achieves same result as Adam's "I grant {data_viewing_rights} level of Data Entry Rights on the {string} instrument for the username {string} for project ID {int}"
+// However, the old method uses a cy.visit which we are trying to move away from. This also eliminates unnecessary parameters,
+// but requires that the user rights configuration dialog is open
+/**
+ * @module UserRights
+ * @author Corey DeBacker <debacker@wisc.edu>
+ * @example I set Data Viewing Rights to < No Access | Read Only | View & Edit > for the instrument {string}
+ * @param {data_viewing_rights} level - the level of rights to be assigned
+ * @param {string} instrument - the label of the instrument for which to configure data entry rights
+ * @description Selects a radio option for Data Entry Rights for the specified instrument within the user rights configuration dialog.
+ */
+Given('I set Data Viewing Rights to {data_viewing_rights} for the instrument {string}', (level, instrument) => {
+    cy.get('div[role=dialog]').should('be.visible')
+    let input_values = {'No Access': 0, 'Read Only': 2, 'View & Edit': 1}
+    cy.get(`table#form_rights tr:has(td:contains(${instrument})) input[value=${input_values[level]}]:visible`)
+        .check()
+})
+
+
+/**
+ * @module UserRights
+ * @author Corey DeBacker <debacker@wisc.edu>
+ * @example I set Data Viewing Rights to < No Access | Read Only | View & Edit > for the instrument {string}
+ * @param {data_viewing_rights} level - the level of rights to be assigned
+ * @param {string} instrument - the label of the instrument for which to configure data entry rights
+ * @description Selects a radio option for Data Entry Rights for the specified instrument within the user rights configuration dialog.
+ */
+Given('I ', (level, instrument) => {
+    cy.get('div[role=dialog]').should('be.visible')
+    let input_values = {'No Access': 0, 'Read Only': 2, 'View & Edit': 1}
+    cy.get(`table#form_rights tr:has(td:contains(${instrument})) input[value=${input_values[level]}]:visible`)
+        .check()
 })
 
 

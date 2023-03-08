@@ -593,11 +593,7 @@ Cypress.Commands.add('import_data_file', (fixture_file,pid) => {
 
 })
 
-Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_to_assign, project_id = 13, assign_right = true, user_type = 'admin', selector = 'input', value = null) => {
-    //cy.visit_version({page:'index.php', params: 'pid='+project_id})
-    //cy.get('html').should('contain', 'User Rights')
-
-    //cy.get('a').contains('User Rights').click()
+Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_to_assign, project_id , assign_right = true, user_type = 'admin', selector = 'input', value = null) => {
 
     let user_has_rights_assigned = Cypress.$("a:contains(" + JSON.stringify(username + ' (' + proper_name + ')') + ")");
     
@@ -740,16 +736,16 @@ Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_t
     }
 })
 
-Cypress.Commands.add('remove_basic_user_right', (username, proper_name, rights_to_assign, project_id, user_type = 'admin', selector = 'input', value = null) => {
-    cy.assign_basic_user_right(username, proper_name, rights_to_assign, project_id, false, user_type, selector, value)
+Cypress.Commands.add('remove_basic_user_right', (username, proper_name, rights_to_assign, user_type = 'admin', selector = 'input', value = null) => {
+    cy.assign_basic_user_right(username, proper_name, rights_to_assign, null, false, user_type, selector, value)
 })
 
-Cypress.Commands.add('assign_expiration_date_to_user', (username, proper_name, project_id) => {
-    cy.assign_basic_user_right(username, proper_name, "Expiration Date", project_id, true)
+Cypress.Commands.add('assign_expiration_date_to_user', (username, proper_name) => {
+    cy.assign_basic_user_right(username, proper_name, "Expiration Date", null, true)
 })
 
-Cypress.Commands.add('remove_expiration_date_from_user', (username, proper_name, project_id) => {
-    cy.assign_basic_user_right(username, proper_name, "Expiration Date", project_id, false)
+Cypress.Commands.add('remove_expiration_date_from_user', (username, proper_name) => {
+    cy.assign_basic_user_right(username, proper_name, "Expiration Date", null, false)
 })
 
 

@@ -1,5 +1,5 @@
-import { Given } from "cypress-cucumber-preprocessor/steps";
-import { defineParameterType } from "cypress-cucumber-preprocessor/steps";
+import { Given } from "cypress-cucumber-preprocessor/steps"
+import { defineParameterType } from "cypress-cucumber-preprocessor/steps"
 
 /**
  * @module Interactions
@@ -804,4 +804,17 @@ Given('I select {string} on the dropdown {dropdown_type} labeled {string}', (tex
  */
 Given(/^I wait for (\d+(?:\.\d+)?) seconds$/, (seconds) => {
     cy.wait(seconds * 1000)
+})
+
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I enter {string} into the field with the placeholder text of {string}
+ * @param {string} text - the text to enter into the field
+ * @param {string} placeholder - the text that is currently in the field as a placeholder
+ * @description Enter text into a specific field
+ */
+Given("I enter {string} into the field with the placeholder text of {string}", (text, placeholder) => {
+    cy.get('input[placeholder="' + placeholder + '"]').type(text).blur()
 })

@@ -1,4 +1,4 @@
-import { Given } from "cypress-cucumber-preprocessor/steps";
+import {defineParameterType, Given} from "cypress-cucumber-preprocessor/steps";
 
 defineParameterType({
     name: 'see',
@@ -164,7 +164,7 @@ Given("I should see the dropdown identified by {string} with the option {string}
  * @description Visually verifies that the alert box contains text
  */
 Given("I should see {string} in an alert box", (text) => {
-    
+
     cy.on('window:alert',(txt)=>{
         //Mocha assertions
         expect(txt).to.contains(text);
@@ -187,7 +187,7 @@ defineParameterType({
  * @description Visually verifies that the alert box contains text
  */
 Given("I should see the radio labeled {string} with option {string} {select}", (label, option, selected) => {
-    cy.select_radio_by_label(label, option, false, selected === 'selected' ? true: false)
+    cy.select_radio_by_label(label, option, false, selected === 'selected')
 })
 
 /**
@@ -201,3 +201,39 @@ Given("I should see a dialog containing the following text: {string}", (text) =>
     cy.verify_text_on_dialog(text)
 })
 
+defineParameterType({
+    name: 'LabeledElement',
+    regexp: /button|link/
+})
+
+/**
+ * @module Visibility
+ * @author Corey DeBacker <debacker@wisc.edu>
+ * @example I should see a {LabeledElement} labeled {string}
+ * @param {LabeledElement} el - type of element, in {link, button}
+ * @param {string} text - the label of the link that should be seen on screen (matches partially)
+ * @description Verifies that a visible element of the specified type containing `text` exists
+ */
+Given("I should see a {LabeledElement} labeled {string}", (el, text) => {
+    // double quotes need to be re-escaped before inserting into :contains() selector
+    text = text.replaceAll('\"', '\\\"')
+    let subsel = {'link':'a', 'button':'button'}[el]
+    let sel = `${subsel}:contains("${text}"):visible` + (el === 'button' ? `,button[value="${text}"]` : '')
+    cy.get_top_layer(($e) => {expect($e.find(sel).length).to.be.above(0)})
+})
+
+/**
+ * @module Visibility
+ * @author Corey DeBacker <debacker@wisc.edu>
+ * @example I should NOT see a {LabeledElement} labeled {string}
+ * @param {LabeledElement} el - type of element, in {link, button}
+ * @param {string} text - the label of the link that should not be seen on screen (matches partially)
+ * @description Verifies that there are no visible elements of the specified type with the label `text`
+ */
+Given("I should NOT see a {LabeledElement} labeled {string}", (el, text) => {
+    // double quotes need to be re-escaped before inserting into :contains() selector
+    text = text.replaceAll('\"', '\\\"')
+    let subsel = {'link':'a', 'button':'button'}[el]
+    let sel = `${subsel}:contains("${text}"):visible` + (el == 'button' ? `,button[value="${text}"]:visible` : '')
+    cy.get_top_layer(($e) => {console.log(sel);expect($e.find(sel)).to.have.lengthOf(0)})
+})
