@@ -816,5 +816,5 @@ Given(/^I wait for (\d+(?:\.\d+)?) seconds$/, (seconds) => {
  * @description Enter text into a specific field
  */
 Given("I enter {string} into the field with the placeholder text of {string}", (text, placeholder) => {
-    cy.get('input[placeholder="' + placeholder + '"]').type(text)
+    cy.get('input[placeholder="' + placeholder + '"]').type(text).blur()
 })
