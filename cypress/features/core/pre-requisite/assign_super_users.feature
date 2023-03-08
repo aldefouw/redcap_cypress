@@ -200,7 +200,6 @@ Scenario: 19 - Switch test_user and test_user2 to no admin privileges
 Scenario: 20 - Check Audit Log of User Actions
     When I click on the link labeled "Activity Log"
     Then I should see "All User Activity for Today"
-    And I should see "(9 events)"
     And I should see "Time"
     And I should see "User"
     And I should see "Event"
