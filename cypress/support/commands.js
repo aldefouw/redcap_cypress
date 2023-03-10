@@ -1101,7 +1101,18 @@ Cypress.Commands.add("toggle_field_validation_type", (field_validation_type, but
     })
 })
 
-//
+//Provide a robust way for this to find either a button or input button that contains this text
+Cypress.Commands.add('button_or_input', (text_label) => {
+    cy.get(':button').then(($button) => {
+        $button.each(($i) => {
+            if($button[$i].value === text_label){
+                return cy.wrap($button[$i])
+            } else if ($button[$i].innerText === text_label){
+                return cy.wrap($button[$i])
+            }
+        })
+    })
+})
 
 //yields the visible div with the highest z-index, or the <html> if none are found
 Cypress.Commands.add('get_top_layer', (retryUntil) => {
