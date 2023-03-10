@@ -307,7 +307,10 @@ Then("I should see the survey open exactly once by watching the tag of {string}"
  * @description Enters draft mode
  */
  Given("I enter draft mode", () => {
-    cy.get('input[value="Enter Draft Mode"]').click()
+    cy.get('html').should('contain', 'Enter Draft Mode')
+
+    cy.button_or_input('Enter Draft Mode').click()
+
     //Check to see that REDCap indicates we're in DRAFT mode
     cy.get('div#actionMsg').should(($alert) => {
         expect($alert).to.contain('The project is now in Draft Mode.')
