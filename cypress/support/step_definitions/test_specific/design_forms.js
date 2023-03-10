@@ -108,7 +108,7 @@ defineParameterType({
     regexp: /(Add Field|Add Matrix of Fields|Import from Field Bank)/
 })
  Given("I click on the {addField} input button below the field named {string}", (type, target) => {
-    cy.get('tbody[class=formtbody]').children('tr').contains(target)
+    cy.get('tbody[class=formtbody]').children('tr:contains(' + target +')').contains(target)
         .parents('tr').next().within(() => {
             cy.get('input[value="' + type + '"]').click()
         })
