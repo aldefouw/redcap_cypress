@@ -119,8 +119,8 @@ Feature: Design Forms using Data Dictionary & Online Designer
 
   Scenario: 14 - Copy My First Instrument 2
     Given I click on the Instrument Action "Copy" for the instrument named "My First Instrument 2"
-    And I clear the field labeled "New instrument name:"
-    And I enter "Text Validation" into the input field labeled "New instrument name:"
+    Then I should see a dialog containing the following text: "New instrument name:"
+    And I clear field and enter "Text Validation" into the input field labeled "New instrument name:"
     And I click on the button labeled "Copy instrument" in the dialog box
     Then I should see "Text Validation"
 
