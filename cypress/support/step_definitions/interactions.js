@@ -593,11 +593,16 @@ Given('for this scenario, I will {confirmation} a confirmation window containing
 
     cy.get('td').contains('New instrument name').parent().within(($td) => {
         cy.get('input[type=text]').type(instrument_name)
-        cy.get('input[value=Create]').click()
+        cy.button_or_input('Create').click()
     })
 
-     cy.wait('@new_data_instrument')
-})
+     cy.wait('@new_data_instrument').then(() => {
+         //Close the dialog box which appears on newer versions of REDCap
+         if (Cypress.$('div[role=dialog]').length) {
+             cy.button_or_input('Close').click()
+         }
+     })
+ })
 
 /**
  * @module Interactions
