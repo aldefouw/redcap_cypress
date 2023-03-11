@@ -128,7 +128,7 @@ Given("I click on the radio labeled {string} in the dialog box", (text) => {
  * @description Clicks on an anchor element with a specific text label.
  */
 Given("I click on the link labeled {string}", (text) => {
-    cy.get('a').contains(text).click()
+    cy.get('a:visible').contains(text).click()
 
     // cy.location().then((loc) => {
     //     const current_url = loc.href
