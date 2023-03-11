@@ -283,23 +283,23 @@ Given("I should receive a download to a {string} file", (format) => {
 
         switch (ext) {
             case "bat":
-                if (format == sps) {
-                    hyperlink = 'a[href*="/DataExport/spss_pathway_mapper.php"]:visible'
+                if (format === sps) {
+                    hyperlink = 'a:has(img[src*="spss"]:visible):visible'
                 } else {
-                    hyperlink = 'a[href*="/DataExport/sas_pathway_mapper.php"]:visible'
+                    hyperlink = 'a:has(img[src*="pathway"]:visible):visible'
                 }
                 content_type = "application/bat"
                 break;
             case "csv":
                 content_type = "application/csv"
-                hyperlink = 'a[href*="/FileRepository/file_download.php"]:visible'
+                hyperlink = 'a:has(img[src*="csv"]:visible):visible'
                 break;
             default:
                 content_type = "application/octet-stream"
-                hyperlink = 'a[href*="/FileRepository/file_download.php"]:visible'
+                hyperlink = 'a:has(img[src*="Resources/images/download"]):visible'
         }
 
-        if(ext == ".bat"){
+        if(ext === ".bat"){
 
             cy.get(hyperlink).then((anchor) => {
                 const url = anchor.prop('href');
@@ -312,8 +312,8 @@ Given("I should receive a download to a {string} file", (format) => {
 
                     cy.writeFile("cypress/downloads" + '/test_file.' + ext, $response.body)
 
-                });
-            });
+                })
+            })
 
         } else {
             cy.get(hyperlink).eq(i).then((anchor) => {
@@ -327,11 +327,10 @@ Given("I should receive a download to a {string} file", (format) => {
 
                     cy.writeFile("cypress/downloads" + '/test_file.' + ext, $response.body)
 
-                });
-            });
+                })
+            })
         }
     }
-
 })
 
 /**
