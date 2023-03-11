@@ -213,17 +213,33 @@ defineParameterType({
  * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
  */
 Given('I {enter_type} {string} into the input field labeled {string}', (enter_type, text, label) => {
-    let sel = `:contains("${label}")`
+    let elm = null
 
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
-        cy.contains(label).then(($label) => {
+    cy.contains(label).then(($label) => {
+        cy.wrap($label).parent().then(($parent) =>{
+
+            if($parent.find('input').length){
+                elm = cy.wrap($parent).find('input')
+            } else if ($parent.parent().find('input').length ) {
+                elm = cy.wrap($parent).parent().find('input')
+            }
+
             if(enter_type === "enter"){
-                cy.wrap($label).parent().find('input').type(text)
+                elm.type(text)
             } else if (enter_type === "clear field and enter") {
-                cy.wrap($label).parent().find('input').clear().type(text)
+                elm.clear().type(text)
             }
         })
     })
+
+    // Keep until new proven to work
+    // cy.wrap($label).parent().parent().within(() => {
+    //     if(enter_type === "enter"){
+    //         cy.get('input').type(text)
+    //     } else if (enter_type === "clear field and enter") {
+    //         cy.get('input').clear().type(text)
+    //     }
+    // })
 })
 
 /**
