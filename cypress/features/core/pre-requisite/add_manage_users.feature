@@ -16,7 +16,7 @@ Scenario: 3- Save User Settings System Configurations
     Then I should see "System-level User Settings"
     When I select "No, only Administrators can create new projects" on the dropdown field labeled "Allow normal users to create new projects?"
     And I select "No" on the dropdown field labeled "By default, allow new users to create projects"
-    When I click on the input button labeled "Save Changes"
+    When I click on the button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
 Scenario: 4- Display User Management for Table-based Authentication Page 
@@ -30,7 +30,7 @@ Scenario: 5- Create a user
     And I enter "1115_1" into the input field labeled "Last name:"
     And I enter "user1115@redcap.edu" into the input field labeled "Primary email:"
     And I click on the input element labeled "Allow this user to request that projects be created for them by a REDCap administrator?"
-    And I click on the input button labeled "Save"
+    And I click on the button labeled "Save"
     Then I should see "User has been successfully saved."
     And I should see "An email with login information was sent to: user1115@redcap.edu"
 
@@ -60,7 +60,7 @@ Scenario: 11- Prevent a Second User with the Same Username
     And I enter "User12" into the input field labeled "First name:"
     And I enter "1115_12" into the input field labeled "Last name:"
     And I enter "user11115@redcap.edu" into the input field labeled "Primary email:"
-    And I click on the input button labeled "Save"
+    And I click on the button labeled "Save"
     Then I should see "ERROR: The user could not be added! A user already exists named" 
 
 Scenario: 12- Find user1115_1 Under Browse Users Page 
@@ -77,7 +77,7 @@ Scenario: 13 - Cancel Suspend test_user Account
     And I click on the button labeled "Search"
     And I should see "User information for"
 
-    Then I click on the input button labeled "Suspend user account"
+    Then I click on the button labeled "Suspend user account"
     Then I should NOT see "Success! The user has now been suspended from REDCap"
     And I should NOT see "unsuspend user"
 
@@ -88,7 +88,7 @@ Scenario: 14 - Suspend test_user Account
     And I click on the button labeled "Search"
     And I should see "User information for"
 
-    Then I click on the input button labeled "Suspend user account"
+    Then I click on the button labeled "Suspend user account"
     And I should see "Success! The user has now been suspended from REDCap"
     And I should see "unsuspend user"
 
@@ -269,7 +269,7 @@ Scenario: 33- Change primary Email for user1115_4
     Then I should see "User information for"
     When I click on the button labeled "Edit user info"
     And I enter "tester@test.edu" into the input field labeled "Primary email:"
-    And I click on the input button labeled "Save"
+    And I click on the button labeled "Save"
     Then I should see "The user's primary email was changed, and the user was notified about this change."
     And I should see "tester@test.edu"
 
@@ -277,7 +277,7 @@ Scenario: 34- Update User Settings
     When I click on the link labeled "User Settings"
     And I select "Yes, normal users can create new projects" on the dropdown field labeled "Allow normal users to create new projects?"
     And I select "Yes" on the dropdown field labeled "By default, allow new users to create projects or request that projects be created for them?"
-    When I click on the input button labeled "Save Changes"
+    When I click on the button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
 Scenario: 35- Add user1115_5
@@ -287,7 +287,7 @@ Scenario: 35- Add user1115_5
     And I enter "1115_5" into the input field labeled "Last name:"
     And I enter "user1115.5@redcap.edu" into the input field labeled "Primary email:"
     And I check the checkbox labeled "Allow this user to create or copy projects?"
-    And I click on the input button labeled "Save"
+    And I click on the button labeled "Save"
     Then I should see "User has been successfully saved."
     And I should see "An email with login information was sent to: user1115.5@redcap.edu"
 
@@ -301,7 +301,7 @@ Scenario: 37- Edit Security & Authentication settings
     And I enter "1" into the input field labeled "Number of failed login attempts before user is locked out for a specified amount of time, which is set below."
     And I clear the field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
     And I enter "1" into the input field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
-    And I click on the input button labeled "Save Changes"
+    And I click on the button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
 Scenario: 38- Log in test_user with Old Password

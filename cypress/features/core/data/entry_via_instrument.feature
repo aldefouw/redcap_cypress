@@ -35,10 +35,10 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the button labeled 'Define My Events'
     And I click on the link labeled "Arm 2:"
     And I enter "Event 2" into the input field labeled "Descriptive name for this event"
-    And I click on the input button labeled "Add new event"
+    And I click on the button labeled "Add new event"
     Then I should see "Event 2"
     When I enter "Event 3" into the input field labeled "Descriptive name for this event"
-    And I click on the input button labeled "Add new event"
+    And I click on the button labeled "Add new event"
     Then I should see "Event 3"
 
   Scenario: 0 - Project Setup - Designate Instruments to Events
