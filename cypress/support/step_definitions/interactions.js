@@ -69,7 +69,11 @@ defineParameterType({
  * @description Clicks on a button element with a specific text label.
  */
 Given("I click on the button labeled {string}", (text) => {
-    cy.get('button').contains(text).click()
+    let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+        cy.get(sel).click()
+    })
 })
 
 /**
@@ -145,17 +149,6 @@ Given("I click on the link labeled {string}", (text) => {
     //     })
     //
     // })
-})
-
-/**
- * @module Interactions
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the input button labeled {string}
- * @param {string} text - the text value of the input element you want to click
- * @description Clicks on an input element with a specific text label.
- */
-Given("I click on the input button labeled {string}", (text) => {
-    cy.get('input[value="' + text + '"]').click()
 })
 
 /**
