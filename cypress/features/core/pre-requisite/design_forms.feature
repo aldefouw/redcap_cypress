@@ -164,7 +164,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I click on the link labeled "Data Types"
 
   Scenario: 20 - Verify Add Field Types
-    Given I click on the Add Field button below the field named "Text2"
+    Given I click on the Add Field input button below the field named "Text2"
     Then I should see "Add New Field"
     Then I should see the dropdown identified by "select[name=field_type]" with the options below
     | Text Box | Notes Box | Calculated Field | Multiple Choice - Drop-down List | Multiple Choice - Radio Buttons | Checkboxes | Signature | File Upload | Descriptive Text | Begin New Section |
@@ -226,7 +226,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "calculated_field"
 
   Scenario: 26 - Add Multiple Choice - Drop-down Auto
-    Given I click on the Add Field button below the field named "Calculated Field"
+    Given I click on the Add Field input button below the field named "Calculated Field"
     And I select "select" from the dropdown identified by "select[name=field_type]"
     Then I should see "Choices (one choice per line)"
     And I enter "Multiple Choice Dropdown Auto" into the field identified by "textarea[name=field_label]"
@@ -243,7 +243,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "multiple_dropdown_auto"
 
   Scenario: 27 - Add Multiple Choice - Drop-down Manual
-    Given I click on the Add Field button below the field named "Multiple Choice Dropdown Auto"
+    Given I click on the Add Field input button below the field named "Multiple Choice Dropdown Auto"
     And I select "select" from the dropdown identified by "select[name=field_type]"
     Then I should see "Choices (one choice per line)"
     And I enter "Multiple Choice Dropdown Manual" into the field identified by "textarea[name=field_label]"
@@ -256,7 +256,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "multiple_dropdown_manual"
 
   Scenario: 28 - Add Multiple Choice - Radio Auto
-    Given I click on the Add Field button below the field named "Multiple Choice Dropdown Manual"
+    Given I click on the Add Field input button below the field named "Multiple Choice Dropdown Manual"
     And I select "radio" from the dropdown identified by "select[name=field_type]"
     Then I should see "Choices (one choice per line)"
     And I enter "Radio Button Auto" into the field identified by "textarea[name=field_label]"
@@ -273,7 +273,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "radio_button_auto"
 
   Scenario: 29 - Add Multiple Choice Radio Manual
-    Given I click on the Add Field button below the field named "Radio Button Auto"
+    Given I click on the Add Field input button below the field named "Radio Button Auto"
     And I select "radio" from the dropdown identified by "select[name=field_type]"
     Then I should see "Choices (one choice per line)"
     And I enter "Radio Button Manual" into the field identified by "textarea[name=field_label]"
@@ -294,7 +294,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I click on the button labeled "Cancel"
 
   Scenario: 31 - Add Checkbox
-    Given I click on the Add Field button below the field named "Radio Button Manual"
+    Given I click on the Add Field input button below the field named "Radio Button Manual"
     And I select "checkbox" from the dropdown identified by "select[name=field_type]"
     And I enter "Checkbox" into the field identified by "textarea[name=field_label]"
     And I enter "1, Checkbox{enter}2, Checkbox2{enter}3, Checkbox3" into the field identified by "textarea[name=element_enum]"
@@ -306,7 +306,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "checkbox"
     
   Scenario: 32 - Add Signature
-    Given I click on the Add Field button below the field named "Checkbox"
+    Given I click on the Add Field input button below the field named "Checkbox"
     And I select "Signature (draw signature with mouse or finger)" from the dropdown identified by "select[name=field_type]"
     And I enter "Signature" into the field identified by "textarea[name=field_label]"
     And I enter "signature" into the field identified by "input[name=field_name]"
@@ -318,7 +318,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "signature"
 
   Scenario: 33 - Add File Upload
-    Given I click on the Add Field button below the field named "Signature"
+    Given I click on the Add Field input button below the field named "Signature"
     And I select "File Upload (for users to upload files)" from the dropdown identified by "select[name=field_type]"
     And I enter "File Upload" into the field identified by "textarea[name=field_label]"
     And I enter "file_upload" into the field identified by "input[name=field_name]"
@@ -330,7 +330,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "file_upload"
 
   Scenario: 34 - Add Descriptive Text With File
-    Given I click on the Add Field button below the field named "File Upload"
+    Given I click on the Add Field input button below the field named "File Upload"
     And I select "descriptive" from the dropdown identified by "select[name=field_type]"
     And I enter "Descriptive Text with File" into the field identified by "textarea[name=field_label]"
     And I enter "descriptive_file_text" into the field identified by "input[name=field_name]"
@@ -347,7 +347,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "descriptive_file_text"
 
   Scenario: 35 - Add Descriptive Text
-    Given I click on the Add Field button below the field named "Descriptive Text with File"
+    Given I click on the Add Field input button below the field named "Descriptive Text with File"
     And I select "descriptive" from the dropdown identified by "select[name=field_type]"
     And I enter "Descriptive Text" into the field identified by "textarea[name=field_label]"
     And I enter "descriptive_text" into the field identified by "input[name=field_name]"
@@ -375,7 +375,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
   Scenario: 38 - Add New Section
     Given I click on the link labeled "Designer"
     And I click on the link labeled "Data Types"
-    And I click on the Add Field button below the field named "Descriptive Text"
+    And I click on the Add Field input button below the field named "Descriptive Text"
     And I select "section_header" from the dropdown identified by "select[name=field_type]"
     And I enter "Section Break" into the field identified by "textarea[name=field_label]"
     And I click on the button labeled "Save"
@@ -383,7 +383,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I should NOT see "Section Break"
 
   Scenario: 39 - Add New Section
-    Given I click on the Add Field button below the field named "File Upload"
+    Given I click on the Add Field input button below the field named "File Upload"
     And I select "section_header" from the dropdown identified by "select[name=field_type]"
     And I enter "Section Break" into the field identified by "textarea[name=field_label]"
     And I click on the button labeled "Save"
