@@ -82,7 +82,7 @@ Given("I should see a button labeled {string}", (label) => {
  * @description Visually verifies that there is a link with a specific label.
  */
 Given("I should see a link labeled {string}", (label) => {
-    cy.get('a').contains(label)
+    cy.get(`a:contains("${label}"):visible`)
 })
 
 /**
@@ -112,7 +112,7 @@ defineParameterType({
  Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
     //Really only added this to delay cypress cause sometimes it was moving forward without being checked
     //ATTN: Function no longer needed, can probably delete if no one needs it
-    check == 'checked' ? cy.get(sel).should('be.checked') : cy.get(sel).should('not.be.checked')
+    check === 'checked' ? cy.get(sel).should('be.checked') : cy.get(sel).should('not.be.checked')
 })
 
 /**
