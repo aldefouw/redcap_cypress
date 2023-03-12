@@ -71,7 +71,7 @@ Given("I should see {string} in the title", (title) => {
  * @description Visually verifies that there is a button with a specific label.
  */
 Given("I should see a button labeled {string}", (label) => {
-    cy.get('button').contains(label)
+    cy.get(`:button:contains("${label}"):visible`)
 })
 
 /**
