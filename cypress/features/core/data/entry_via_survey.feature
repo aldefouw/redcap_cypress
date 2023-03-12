@@ -94,7 +94,7 @@ Feature: Data Entry through the Survey
 #    And I click on the button labeled "Online Designer"
 #    Then I should see "Draft Mode"
 #
-#    When I click on the input button labeled "Enter Draft Mode"
+#    When I click on the button labeled "Enter Draft Mode"
 #    Then I should see "The project is now in Draft Mode"
 #
 #    And I click on the link labeled "Pre-Screening Survey"
@@ -105,7 +105,7 @@ Feature: Data Entry through the Survey
 #    And I save the field
 #    And the AJAX request tagged by "save_field" has completed
 #
-#    And I click on the input button labeled "Submit Changes for Review"
+#    And I click on the button labeled "Submit Changes for Review"
 #    And I should see "SUBMIT CHANGES FOR REVIEW"
 #    And I click on the button labeled "Submit"
 #    Then I should see "Changes Were Made Automatically"

@@ -35,7 +35,7 @@ Feature: Project Status
     When I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
     And I select "Yes, normal users can move projects to production" on the dropdown field labeled "Allow normal users to move projects to production?"
-    And I click on the input button labeled "Save Changes"
+    And I click on the button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
   Scenario: 6  - Login as test user
