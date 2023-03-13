@@ -47,3 +47,22 @@ Given("I delete the data instrument named {string}", (instrument_name) => {
 
     cy.wait('@delete_instrument')
 })
+
+
+/**
+ * @module OnlineDesigner
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I enable surveys for the data instrument named {string}
+ * @param {string} instrument_name - name of current instrument
+ * @description Enables a data collection instrument as a survey
+ */
+
+Given("I enable surveys for the data instrument named {string}", (instrument_name) => {
+    cy.get('table[id=table-forms_surveys]').within(() => {
+        cy.get('tr').contains(instrument_name).parents('tr').find(':button').contains('Enable').click()
+    })
+
+    cy.get(`:button:contains("Save Changes"):visible:first`).click()
+
+    cy.get('html').should('contain', 'Your survey settings were successfully saved!')
+})
