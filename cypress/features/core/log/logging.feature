@@ -272,7 +272,7 @@ Feature: Logging
     Then I click on the link labeled "Logging"
     And I select the "Page Views" option identified by "page_view" from the Filter by event dropdown field
     Then I should see 'Page View' in the logging table
-    And I should see '/redcap_v11.1.5/Logging/index.php?pid=13' in the logging table
+    And I should see '/Logging/index.php' in the logging table
 
   Scenario: 28 - Logging: filter by event - All event types (username) - by specific username
     Then I click on the link labeled "Logging"
