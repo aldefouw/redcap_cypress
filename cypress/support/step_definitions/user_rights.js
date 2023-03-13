@@ -239,7 +239,7 @@ Given("I select the User Right named {string} and choose {string}", (text, optio
     cy.get('div[role=dialog]').should('be.visible')
 
     //For REDCap v12 + we have per instrument data exports, so let's handle that case here
-    if(text === "Data Exports" && Cypress.$(`input[type=radio][name*="export-form-"]`).length){
+    if(text === "Data Exports" && Cypress.$('input[name="' + single_choice_mappings[text] + '"]').length === 0){
 
         //TODO: Possibly generate a Step Definition that allows us to configure this on a per instrument basis
         //For now, we are going to select every form to have the same option
@@ -390,11 +390,11 @@ Given('I {user_right_action} all Basic Rights within the open User Rights dialog
     cy.get('div[role=dialog]').should('be.visible')
 
     //"Full Access" to Data Export Tool - does NOT apply to v12+
-    if(action === "add" && Cypress.$('input[name=data_export_tool]').length){
+    if(action === "add" && Cypress.$('input[name="' + single_choice_mappings[text] + '"]').length !== 0){
         cy.get('input[name=data_export_tool]').should('be.visible').check('1')
 
     //"No Access" to Data Export Tool - does NOT apply to v12+
-    } else if (action === "remove" && Cypress.$('input[name=data_export_tool]').length){
+    } else if (action === "remove" && Cypress.$('input[name="' + single_choice_mappings[text] + '"]').length !== 0){
         cy.get('input[name=data_export_tool]').should('be.visible').check('0')
     }
 
