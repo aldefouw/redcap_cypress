@@ -244,9 +244,11 @@ Given("I select the User Right named {string} and choose {string}", (text, optio
         //TODO: Possibly generate a Step Definition that allows us to configure this on a per instrument basis
         //For now, we are going to select every form to have the same option
         cy.get(`input[type=radio][name*="export-form-"]`).then(($e) => {
-            if($e[0].value === data_export_mappings[option]) {
-                cy.wrap($e).check()
-            }
+            $e.each((i) => {
+                if($e[i].value === data_export_mappings[option]) {
+                    cy.wrap($e[i]).click()
+                }
+            })
         })
 
     } else {
