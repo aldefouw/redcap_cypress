@@ -1,0 +1,34 @@
+"Time / Date",Username,Action,"List of Data Changes OR Fields Exported",Record
+"2023-03-13 15:34",test_user2,"Manage/Design ","Multi-Language Management: A snapshot of the settings has been created [ID=1].",
+"2023-03-13 15:34",test_user2,"Manage/Design ","Approve production project modifications (automatic)",
+"2023-03-13 15:34",test_user2,"Manage/Design ","Create data collection instrument",
+"2023-03-13 15:34",test_user2,"Manage/Design ","Create project field",
+"2023-03-13 15:34",test_user2,"Manage/Design ","Enter draft mode",
+"2023-03-13 15:34",test_user2,"Update record 1",,1
+"2023-03-13 15:34",test_user2,"E-signature 1","Action: Negate e-signature Record: 1 Form: Text Validation",1
+"2023-03-13 15:34",test_user2,"Lock/Unlock Record 1","Action: Unlock instrument Record: 1 Form: Text Validation",1
+"2023-03-13 15:34",test_user2,"Update record 1",,1
+"2023-03-13 15:34",test_user2,"E-signature 1","Action: Save e-signature Record: 1 Form: Text Validation",1
+"2023-03-13 15:34",test_user2,"Update record 1",,1
+"2023-03-13 15:34",test_user2,"Lock/Unlock Record 1","Action: Lock instrument Record: 1 Form: Text Validation",1
+"2023-03-13 15:34",test_user2,"Update user test_user","user = 'test_user'",test_user
+"2023-03-13 15:34",test_user2,"Data export ","Download exported data file (CSV raw)",
+"2023-03-13 15:34",test_user2,"Data export ","report_id: ALL, export_format: CSV, rawOrLabel: raw, fields: ""record_id, ptname, email, text_validation_complete""",
+"2023-03-13 15:34",test_user,"Add user test_user2","user = 'test_user2'",test_user2
+"2023-03-13 15:34",test_user,"Delete user test_user2","user = 'test_user2'",test_user2
+"2023-03-13 15:34",test_user,"Delete user role ","role = 'Data'",
+"2023-03-13 15:34",test_user,"Edit user role ","role = 'Data'",
+"2023-03-13 15:33",test_user,"Create user role ","role = 'Data'",
+"2023-03-13 15:33",test_user,"Delete record 3","record_id = '3'",3
+"2023-03-13 15:33",test_user,"Create record 3","ptname = 'Delete', email = 'delete@test.com', text_validation_complete = '0', record_id = '3'",3
+"2023-03-13 15:33",test_user,"Create record 2","ptname = 'Test2', email = 'test2@test.com', text_validation_complete = '0', record_id = '2'",2
+"2023-03-13 15:33",test_user,"Update record 1","ptname = 'Testing'",1
+"2023-03-13 15:33",test_user,"Create record 1","ptname = 'Test', email = 'test@test.com', text_validation_complete = '0', record_id = '1'",1
+"2023-03-13 15:33",test_admin,"Manage/Design ","Move project to Production status",
+"2023-03-13 15:33",test_admin,"Manage/Design ","Customize record locking",
+"2023-03-13 15:33",test_admin,"Add user test_user2","user = 'test_user2'",test_user2
+"2023-03-13 15:33",test_admin,"Update user test_user","user = 'test_user'",test_user
+"2023-03-13 15:33",test_admin,"Update user test_admin","user = 'test_admin'",test_admin
+"2023-03-13 15:32",test_admin,"Add user test_admin","user = 'test_admin'",test_admin
+"2023-03-13 15:32",test_admin,"Add user test_admin","user = 'test_admin'",test_admin
+"2023-03-13 15:32",test_admin,"Manage/Design ","Create project using REDCap XML file",
