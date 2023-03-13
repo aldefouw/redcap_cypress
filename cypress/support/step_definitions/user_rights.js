@@ -239,7 +239,7 @@ Given("I select the User Right named {string} and choose {string}", (text, optio
     cy.get('div[role=dialog]').should('be.visible')
 
     //For REDCap v12 + we have per instrument data exports, so let's handle that case here
-    if(text === "Data Exports" && Cypress.$('input[name="' + single_choice_mappings[text] + '"]').length === 0){
+    if(text === "Data Exports" && Cypress.$('input[name=data_export_tool]').length === 0 && Cypress.$('input[type=radio][name*="export-form-"]').length){
 
         //TODO: Possibly generate a Step Definition that allows us to configure this on a per instrument basis
         //For now, we are going to select every form to have the same option
