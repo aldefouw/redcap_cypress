@@ -378,26 +378,29 @@ defineParameterType({
  * @description Checks or Unchecks all Basic Rights within the User Rights dialog box.
  */
 Given('I {user_right_action} all Basic Rights within the open User Rights dialog box', (action) => {
-    cy.get('div[role=dialog]').should('be.visible')
+    cy.get('div[role=dialog]').should('be.visible').then(() => {
 
-    //"Full Access" to Data Export Tool - does NOT apply to v12+
-    if(action === "add" && Cypress.$('input[name="' + single_choice_mappings[text] + '"]').length !== 0){
-        cy.get('input[name=data_export_tool]').should('be.visible').check('1')
+        //"Full Access" to Data Export Tool - does NOT apply to v12+
+        if(action === "add" && Cypress.$('input[name=data_export_tool]').length !== 0){
+            cy.get('input[name=data_export_tool]').should('be.visible').check('1')
 
-    //"No Access" to Data Export Tool - does NOT apply to v12+
-    } else if (action === "remove" && Cypress.$('input[name="' + single_choice_mappings[text] + '"]').length !== 0){
-        cy.get('input[name=data_export_tool]').should('be.visible').check('0')
-    }
-
-    for(var key in user_right_check_mappings) {
-        const input = cy.get('input[name="' + user_right_check_mappings[key] + '"]').scrollIntoView().should('be.visible')
-
-        if(action === "add"){
-            input.check()
-        } else if (action === "remove"){
-            input.uncheck()
+            //"No Access" to Data Export Tool - does NOT apply to v12+
+        } else if (action === "remove" && Cypress.$('input[name=data_export_tool]').length !== 0){
+            cy.get('input[name=data_export_tool]').should('be.visible').check('0')
         }
-    }
+
+        for(var key in user_right_check_mappings) {
+            const input = cy.get('input[name="' + user_right_check_mappings[key] + '"]').scrollIntoView().should('be.visible')
+
+            if(action === "add"){
+                input.check()
+            } else if (action === "remove"){
+                input.uncheck()
+            }
+        }
+
+        cy.get('div[role=dialog]').should('be.visible')
+    })
 
 })
 
