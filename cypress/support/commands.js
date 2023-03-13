@@ -1138,7 +1138,9 @@ Cypress.Commands.add('get_top_layer', (retryUntil) => {
 Cypress.Commands.add('ensure_csrf_token', () => {
     cy.url().then(($url) => {
         if($url !== undefined && $url !== 'about:blank'){
-            if(Cypress.$('form').length > 0){
+
+            //If this is a form but NOT the LOGIN form
+            if(Cypress.$('form').length > 0 && Cypress.$('#redcap_login_a38us_09i85').length === 0){
                 cy.getCookies()
                     .should('have.length.greaterThan', 0)
                     .then(($cookies) => {
