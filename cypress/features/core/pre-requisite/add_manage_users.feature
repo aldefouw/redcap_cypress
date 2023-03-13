@@ -307,6 +307,7 @@ Scenario: 37- Edit Security & Authentication settings
 Scenario: 38- Log in test_user with Old Password
     #This scenario exists so that 39 is one too many attempts at logging in
     Given I logout
+    Then I should see "Log In"
     And I enter "test_user" into the input field labeled "Username:"
     And I enter "test" into the input field labeled "Password:" 
     And I click on the button labeled "Log In"
