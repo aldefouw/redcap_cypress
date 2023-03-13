@@ -219,6 +219,14 @@ const single_choice_mappings = {
     'Lock/Unlock Records' : 'lock_record'
 }
 
+//These apply to REDCap v12+
+const data_export_mappings = {
+    'No Access' : '0',
+    'De-Identified' : '2',
+    'Remove All Identifier Fields' : '3',
+    'Full Data Set' : '1'
+}
+
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
@@ -246,18 +254,19 @@ Given("I select the User Right named {string} and choose {string}", (text, optio
     } else {
 
         cy.get('input[name="' + single_choice_mappings[text] + '"]').
-        parent().
-        parent().
-        within(() => {
-            cy.get('div').
-            contains(new RegExp(escapeStringRegexp(option))).
-            find('input').
-            scrollIntoView().
-            should('be.visible').
-            click()
-        })
+            parent().
+            parent().
+            within(() => {
+                cy.get('div').
+                contains(new RegExp(escapeStringRegexp(option))).
+                find('input').
+                scrollIntoView().
+                should('be.visible').
+                click()
+            })
 
     }
+
 })
 
 /**
@@ -402,18 +411,6 @@ Given('I {user_right_action} all Basic Rights within the open User Rights dialog
         cy.get('div[role=dialog]').should('be.visible')
     })
 
-})
-
-/**
- * @module UserRights
- * @author Corey DeBacker <debacker@wisc.edu>
- * @example I select the Data Exports privileges option labeled {string}
- * @param {string} text - the label of the option to be selected
- * @description Selects a radio option for Data Exports within the user rights configuration dialog based on its label.
- */
-Given('I select the Data Exports privileges option labeled {string}', (text) => {
-    cy.get('div[role=dialog]').should('be.visible')
-    cy.get(`:contains(${text}) > [name=data_export_tool]`).check()
 })
 
 // Achieves same result as Adam's "I grant {data_viewing_rights} level of Data Entry Rights on the {string} instrument for the username {string} for project ID {int}"
