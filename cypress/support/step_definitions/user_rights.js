@@ -219,6 +219,14 @@ const single_choice_mappings = {
     'Lock/Unlock Records' : 'lock_record'
 }
 
+//These apply to REDCap v12+
+const data_export_mappings = {
+    'No Access' : '0',
+    'De-Identified' : '2',
+    'Remove All Identifier Fields' : '3',
+    'Full Data Set' : '1'
+}
+
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
@@ -229,17 +237,34 @@ const single_choice_mappings = {
  */
 Given("I select the User Right named {string} and choose {string}", (text, option) => {
     cy.get('div[role=dialog]').should('be.visible')
-    cy.get('input[name="' + single_choice_mappings[text] + '"]').
-        parent().
-        parent().
-        within(() => {
-            cy.get('div').
+
+    //For REDCap v12 + we have per instrument data exports, so let's handle that case here
+    if(text === "Data Exports" && Cypress.$(`input[type=radio][name*="export-form-"]`).length){
+
+        //TODO: Possibly generate a Step Definition that allows us to configure this on a per instrument basis
+        //For now, we are going to select every form to have the same option
+        cy.get(`input[type=radio][name*="export-form-"]`).then(($e) => {
+            if($e[0].value === data_export_mappings[option]) {
+                cy.wrap($e).check()
+            }
+        })
+
+    } else {
+
+        cy.get('input[name="' + single_choice_mappings[text] + '"]').
+            parent().
+            parent().
+            within(() => {
+                cy.get('div').
                 contains(new RegExp(escapeStringRegexp(option))).
                 find('input').
                 scrollIntoView().
                 should('be.visible').
                 click()
-        })
+            })
+
+    }
+
 })
 
 /**
