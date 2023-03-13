@@ -284,6 +284,7 @@ Cypress.Commands.add('select_checkbox_by_label', ($name, $value) => {
 })
 
 Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000) => {
+    if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
     cy.find_online_designer_field(name).parent().parentsUntil('tr').find('img[title=Edit]').parent().click()
     cy.get('div[role=dialog]').contains('Edit Field').should('be.visible')
 })
