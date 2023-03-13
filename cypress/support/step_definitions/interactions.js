@@ -206,24 +206,31 @@ defineParameterType({
  * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
  */
 Given('I {enter_type} {string} into the input field labeled {string}', (enter_type, text, label) => {
-    let elm = null
+    let sel = `:contains("${label}"):visible`
 
-    cy.contains(label).then(($label) => {
-        cy.wrap($label).parent().then(($parent) =>{
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
 
-            if($parent.find('input').length){
-                elm = cy.wrap($parent).find('input')
-            } else if ($parent.parent().find('input').length ) {
-                elm = cy.wrap($parent).parent().find('input')
-            }
+        let elm = null
 
-            if(enter_type === "enter"){
-                elm.type(text)
-            } else if (enter_type === "clear field and enter") {
-                elm.clear().type(text)
-            }
+        cy.contains(label).then(($label) => {
+            cy.wrap($label).parent().then(($parent) =>{
+
+                if($parent.find('input').length){
+                    elm = cy.wrap($parent).find('input')
+                } else if ($parent.parent().find('input').length ) {
+                    elm = cy.wrap($parent).parent().find('input')
+                }
+
+                if(enter_type === "enter"){
+                    elm.type(text)
+                } else if (enter_type === "clear field and enter") {
+                    elm.clear().type(text)
+                }
+            })
         })
+
     })
+
 
     // Keep until new proven to work
     // cy.wrap($label).parent().parent().within(() => {
