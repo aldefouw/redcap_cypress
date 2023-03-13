@@ -289,7 +289,7 @@ Feature: Logging
   Scenario: 30 - Download All logging and open file to verify
 
     Then I click on the link labeled "Logging"
-    And I export all logging from the project and verify the result against expected logging results in the file named "23Logging1115_ExpectedLogs.csv"
+    And I export all logging from the project and verify the result against expected logging results for this version of REDCap
 
   Scenario: 31 - Login as admin
     Given I am an "admin" user who logs into REDCap
