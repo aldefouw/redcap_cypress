@@ -58,9 +58,9 @@ Feature: Manage Project
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 6- User Settings Configuration - Modify Repeatable Instruments & Events
-        Given I should see "Yes, normal users can modify the repeatable instance setup in production"
-        And I should see "No, only Administrators can modify the repeatable instance setup in production"
-        When I select "No, only Administrators can modify the repeatable instance setup in production" on the dropdown field labeled "Allow normal users to modify the 'Repeatable Instruments & Events' settings for projects while in production status?"
+        Given I should see "Yes, normal users can modify the repeating instance setup in production"
+        And I should see "No, only Administrators can modify the repeating instance setup in production"
+        When I select "No, only Administrators can modify the repeating instance setup in production" on the dropdown field labeled "Allow normal users to modify the 'Repeating Instruments & Events' settings for projects while in production status?"
         And I click on the button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
@@ -172,8 +172,8 @@ Feature: Manage Project
         Then I should see "Project Status Management"
 
     Scenario: 21- Copy Project
-        Given I click on the button labeled "Copy the project"
-        Then I should see "Make a Copy of the Project"
+        Given I click on the button labeled "Copy the Project"
+        Then I should see "Copy the Project"
         And I enter "ProjectCopy_1115" into the field identified by "input" labeled "Project title:"
         And I click on the link labeled "Select All"
         And I click on the button labeled "Copy project"
@@ -495,7 +495,7 @@ Feature: Manage Project
     Scenario: 63 - Allow Normal Users to Modify the Repeatable Instruments & Events
         Given I click on the link labeled "Control Center"
         And I click on the link labeled "User Settings"
-        And I select "Yes, normal users can modify the repeatable instance setup in production" on the dropdown field labeled "Allow normal users to modify the 'Repeatable Instruments & Events' settings for projects while in production status?"
+        And I select "Yes, normal users can modify the repeating instance setup in production" on the dropdown field labeled "Allow normal users to modify the 'Repeating Instruments & Events' settings for projects while in production status?"
         And I select "Yes, normal users can add/modify events in production" on the dropdown field labeled "Allow normal users to add or modify events and arms on the Define My Events page for longitudinal projects while in production status?"
         And I click on the button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
