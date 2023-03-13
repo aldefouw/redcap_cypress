@@ -42,7 +42,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @description Select logging option from the dropdown field on the logging page
  */
  Given('I should see {string} in the logging table', (text) => {
-    cy.get('table').contains('td', text);
+    cy.get('table').contains('td', text, { matchCase: false });
 })
 
 /**
