@@ -445,8 +445,8 @@ Feature: Design Forms using Data Dictionary & Online Designer
  
   Scenario: 47 - Copy Field, Confirm
     Given I click on the Copy image for the field named "Identifier"
-    And I click on the button labeled "Copy field" in the dialog box
     And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
+    And I click on the button labeled "Copy field" in the dialog box
     And the AJAX request tagged by "render" has completed
     Then I should see "identifier_2"
 
