@@ -120,7 +120,7 @@ Feature: Assign User Rights
   Scenario: 7 - Assign Data Exports - De-identified to test_user
     Given I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
-    And I select the Data Exports privileges option labeled "De-Identified*"
+    And I select the User Right named "Data Exports" and choose "De-Identified"
     And I save changes within the context of User Rights
     # Manual script expected result (unasserted):
     #   Verify in the main User Rights page the ‘Data Export Tool’ box says De-identified for user test_user.
@@ -166,7 +166,7 @@ Feature: Assign User Rights
   Scenario: 12 - Remove Data Exports, Data Import, and Data Comparison User Rights 
     Given I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
-    And I select the Data Exports privileges option labeled "No Access"
+    And I select the User Right named "Data Exports" and choose "No Access"
     And I uncheck the User Right named "Data Import Tool"
     And I uncheck the User Right named "Data Comparison Tool"
     And I check the User Right named "Logging"
