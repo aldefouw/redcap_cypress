@@ -229,17 +229,35 @@ const single_choice_mappings = {
  */
 Given("I select the User Right named {string} and choose {string}", (text, option) => {
     cy.get('div[role=dialog]').should('be.visible')
-    cy.get('input[name="' + single_choice_mappings[text] + '"]').
+
+    //For REDCap v12 + we have per instrument data exports, so let's handle that case here
+    if(text === "Data Exports" && Cypress.$(`input[type=radio][name*="export-form-"]`).length){
+
+        //TODO: Possibly generate a Step Definition that allows us to configure this on a per instrument basis
+        //For now, we are going to select every form to have the same option
+        cy.get(`input[type=radio][name*="export-form-"]`).then(($e) => {
+            $e.each((i) => {
+                if($e[i].value === data_export_mappings[option]) {
+                    cy.wrap($e[i]).click()
+                }
+            })
+        })
+
+    } else {
+
+        cy.get('input[name="' + single_choice_mappings[text] + '"]').
         parent().
         parent().
         within(() => {
             cy.get('div').
-                contains(new RegExp(escapeStringRegexp(option))).
-                find('input').
-                scrollIntoView().
-                should('be.visible').
-                click()
+            contains(new RegExp(escapeStringRegexp(option))).
+            find('input').
+            scrollIntoView().
+            should('be.visible').
+            click()
         })
+
+    }
 })
 
 /**
