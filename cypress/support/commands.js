@@ -57,8 +57,14 @@ Cypress.Commands.add('login', (options) => {
 })
 
 Cypress.Commands.add('logout', () => {
-    const url = '/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1'
-    cy.visit('/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
+    let url = '/redcap_v' + Cypress.env('redcap_version')
+
+    if(compareVersions.compare(Cypress.env('redcap_version'), '12.0.0', '>=')){
+        url += '/index.php?action=logout=1'
+    } else {
+        url += '/index.php?logout=1'
+    }
+    cy.visit(url)
 })
 
 Cypress.Commands.add('visit_version', (options) => {
