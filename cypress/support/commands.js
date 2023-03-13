@@ -284,6 +284,7 @@ Cypress.Commands.add('select_checkbox_by_label', ($name, $value) => {
 })
 
 Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000) => {
+    if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
     cy.find_online_designer_field(name).parent().parentsUntil('tr').find('img[title=Edit]').parent().click()
     cy.get('div[role=dialog]').contains('Edit Field').should('be.visible')
 })
@@ -1101,7 +1102,18 @@ Cypress.Commands.add("toggle_field_validation_type", (field_validation_type, but
     })
 })
 
-//
+//Provide a robust way for this to find either a button or input button that contains this text
+Cypress.Commands.add('button_or_input', (text_label) => {
+    cy.get(':button').then(($button) => {
+        $button.each(($i) => {
+            if($button[$i].value === text_label){
+                return cy.wrap($button[$i])
+            } else if ($button[$i].innerText === text_label){
+                return cy.wrap($button[$i])
+            }
+        })
+    })
+})
 
 //yields the visible div with the highest z-index, or the <html> if none are found
 Cypress.Commands.add('get_top_layer', (retryUntil) => {
@@ -1127,7 +1139,9 @@ Cypress.Commands.add('get_top_layer', (retryUntil) => {
 Cypress.Commands.add('ensure_csrf_token', () => {
     cy.url().then(($url) => {
         if($url !== undefined && $url !== 'about:blank'){
-            if(Cypress.$('form').length > 0){
+
+            //If this is a form but NOT the LOGIN form
+            if(Cypress.$('form').length > 0 && Cypress.$('#redcap_login_a38us_09i85').length === 0){
                 cy.getCookies()
                     .should('have.length.greaterThan', 0)
                     .then(($cookies) => {

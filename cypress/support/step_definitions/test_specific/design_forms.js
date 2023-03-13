@@ -108,7 +108,7 @@ defineParameterType({
     regexp: /(Add Field|Add Matrix of Fields|Import from Field Bank)/
 })
  Given("I click on the {addField} input button below the field named {string}", (type, target) => {
-    cy.get('tbody[class=formtbody]').children('tr').contains(target)
+    cy.get('tbody[class=formtbody]').children('tr:contains(' + target +')').contains(target)
         .parents('tr').next().within(() => {
             cy.get('input[value="' + type + '"]').click()
         })
@@ -168,7 +168,7 @@ Given("I move the field named {string} after the field named {string}", (field_n
     cy.click_on_design_field_function("Move", field_name)
 
     //Get the variable name of the field to move "after"
-    cy.get('label').contains(after_field).then(($label) => {
+    cy.get('label:contains(' + after_field + '):visible').then(($label) => {
         const after_field_var_name = $label[0]['id'].split('label-')[1]
         cy.get('#move_after_field').select(after_field_var_name).should('have.value', after_field_var_name)
     })

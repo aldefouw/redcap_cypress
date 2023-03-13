@@ -178,7 +178,7 @@ Feature: Logging
 
   Scenario: 18 - Unlock form
     Given I see "Instrument locked by test_user2"
-    And I click on the input button labeled "Unlock form"
+    And I click on the button labeled "Unlock form"
     Then I should see "UNLOCK FORM?"
     And I click on the button labeled "Unlock"
     Then I should see "UNLOCK SUCCESSFUL!"
@@ -301,7 +301,7 @@ Feature: Logging
     #And I click on the dropdown identified by 'select' and select value '14' labelled by
     Then I should see "project settings"
     And I select "Yes, delete the record's logged events when deleting the record" on the dropdown field labeled "Delete a record's logging activity when deleting the record?"
-    And I click on the input button labeled "Save Changes"
+    And I click on the button labeled "Save Changes"
     And I click on the link labeled "Logging"
 
   Scenario: 33 - Login as test_user
@@ -365,10 +365,10 @@ Feature: Logging
     And I click on the button labeled "Define My Events"
     And I click on the link labeled "+Add New Arm"
     And I enter "Arm 2" into the Arm name field
-    And I click on the input button labeled "Save"
+    And I click on the button labeled "Save"
     Then I should see "No events have been defined for this Arm"
     And I enter "Event 1" into the input field labeled "Descriptive name for this event"
-    And I click on the input button labeled "Add new event"
+    And I click on the button labeled "Add new event"
     Then I should see "Event 1"
 
   Scenario: 37 - Designate Instrument

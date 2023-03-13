@@ -16,10 +16,10 @@ Feature: Data Entry through the Survey
     And I enable longitudinal mode
     And I should see that longitudinal mode is "enabled"
 
-    And I wait for 3 seconds
-
+    Then I should see "Survey Distribution Tools"
     And I should see a button labeled "Designate Instruments for My Events"
-    And I click on the button labeled "Designate Instruments for My Events"
+
+    Then I click on the button labeled "Designate Instruments for My Events"
 
     #Arm 1
     Then I should see "Arm name: "
@@ -35,12 +35,8 @@ Feature: Data Entry through the Survey
     And I click on the link labeled "Entry Via Survey Feature"
 
     And I click on the button labeled "Online Designer"
-    #TODO: Refactor this next step into a STEP DEFINITION that enables survey for the appropriate data collection instrument based on name ...
-    And I click on the element identified by "#row_1 > :nth-child(5) > .fc > .jqbuttonsm"
-    And I should see "Basic Survey Options"
-    And I should see a button labeled "Save Changes"
-    And I click on the button labeled "Save Changes"
-    Then I should see "Your survey settings were successfully saved!"
+    And I enable surveys for the data instrument named "Text Validation"
+    Then I should see "Data Collection Instruments"
 
 #  Scenario: A standard user enters data into a public survey
 #    Given I visit the public survey URL for the current project
@@ -94,7 +90,7 @@ Feature: Data Entry through the Survey
 #    And I click on the button labeled "Online Designer"
 #    Then I should see "Draft Mode"
 #
-#    When I click on the input button labeled "Enter Draft Mode"
+#    When I click on the button labeled "Enter Draft Mode"
 #    Then I should see "The project is now in Draft Mode"
 #
 #    And I click on the link labeled "Pre-Screening Survey"
@@ -105,7 +101,7 @@ Feature: Data Entry through the Survey
 #    And I save the field
 #    And the AJAX request tagged by "save_field" has completed
 #
-#    And I click on the input button labeled "Submit Changes for Review"
+#    And I click on the button labeled "Submit Changes for Review"
 #    And I should see "SUBMIT CHANGES FOR REVIEW"
 #    And I click on the button labeled "Submit"
 #    Then I should see "Changes Were Made Automatically"

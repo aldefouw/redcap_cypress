@@ -69,7 +69,11 @@ defineParameterType({
  * @description Clicks on a button element with a specific text label.
  */
 Given("I click on the button labeled {string}", (text) => {
-    cy.get('button').contains(text).click()
+    let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+        cy.get(sel).click()
+    })
 })
 
 /**
@@ -128,7 +132,7 @@ Given("I click on the radio labeled {string} in the dialog box", (text) => {
  * @description Clicks on an anchor element with a specific text label.
  */
 Given("I click on the link labeled {string}", (text) => {
-    cy.get('a').contains(text).click()
+    cy.get('a:visible').contains(text).click()
 
     // cy.location().then((loc) => {
     //     const current_url = loc.href
@@ -145,17 +149,6 @@ Given("I click on the link labeled {string}", (text) => {
     //     })
     //
     // })
-})
-
-/**
- * @module Interactions
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the input button labeled {string}
- * @param {string} text - the text value of the input element you want to click
- * @description Clicks on an input element with a specific text label.
- */
-Given("I click on the input button labeled {string}", (text) => {
-    cy.get('input[value="' + text + '"]').click()
 })
 
 /**
@@ -213,17 +206,40 @@ defineParameterType({
  * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
  */
 Given('I {enter_type} {string} into the input field labeled {string}', (enter_type, text, label) => {
-    let sel = `:contains("${label}")`
+    let sel = `:contains("${label}"):visible`
 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+
+        let elm = null
+
         cy.contains(label).then(($label) => {
-            if(enter_type === "enter"){
-                cy.wrap($label).parent().find('input').type(text)
-            } else if (enter_type === "clear field and enter") {
-                cy.wrap($label).parent().find('input').clear().type(text)
-            }
+            cy.wrap($label).parent().then(($parent) =>{
+
+                if($parent.find('input').length){
+                    elm = cy.wrap($parent).find('input')
+                } else if ($parent.parent().find('input').length ) {
+                    elm = cy.wrap($parent).parent().find('input')
+                }
+
+                if(enter_type === "enter"){
+                    elm.type(text)
+                } else if (enter_type === "clear field and enter") {
+                    elm.clear().type(text)
+                }
+            })
         })
+
     })
+
+
+    // Keep until new proven to work
+    // cy.wrap($label).parent().parent().within(() => {
+    //     if(enter_type === "enter"){
+    //         cy.get('input').type(text)
+    //     } else if (enter_type === "clear field and enter") {
+    //         cy.get('input').clear().type(text)
+    //     }
+    // })
 })
 
 /**
@@ -593,11 +609,16 @@ Given('for this scenario, I will {confirmation} a confirmation window containing
 
     cy.get('td').contains('New instrument name').parent().within(($td) => {
         cy.get('input[type=text]').type(instrument_name)
-        cy.get('input[value=Create]').click()
+        cy.button_or_input('Create').click()
     })
 
-     cy.wait('@new_data_instrument')
-})
+     cy.wait('@new_data_instrument').then(() => {
+         //Close the dialog box which appears on newer versions of REDCap
+         if (Cypress.$('div[role=dialog]').length) {
+             cy.button_or_input('Close').click()
+         }
+     })
+ })
 
 /**
  * @module Interactions
