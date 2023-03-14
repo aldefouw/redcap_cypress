@@ -1,14 +1,5 @@
-import { defineParameterType, Given } from "cypress-cucumber-preprocessor/steps";
-
-defineParameterType({
-    name: 'toggleAction',
-    regexp: /enable|disable/
-})
-
-defineParameterType({
-    name: 'status',
-    regexp: /enabled|disabled/
-})
+import { Given } from "cypress-cucumber-preprocessor/steps";
+require('./parameter_types.js')
 
 /**
  * @module ProjectSetup
@@ -88,11 +79,6 @@ Given('I should see that longitudinal mode is "{status}"', (state) => {
     cy.get('#setupLongiBtn').should('contain.text', expected_text);
 })
 
-defineParameterType({
-    name: 'repeatability',
-    regexp: /enabled|disabled|modifiable/
-})
-
 /**
  * @module ProjectSetup
  * @author Corey Debacker <debacker@wisc.edu>
@@ -117,11 +103,6 @@ Given("I should see that repeatable instruments are {repeatability}", (state) =>
     cy.get('#enableRepeatingFormsEventsBtn').should('contain.text', expected_text);
 })
 
-defineParameterType({
-    name: 'repeatability_click',
-    regexp: /enable|disable|modify/
-})
-
 /**
  * @module ProjectSetup
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -135,9 +116,6 @@ Given("I open the dialog box for the Repeatable Instruments and Events module", 
         expect($div).to.contain('Instrument')
     })
 })
-
-
-
 
 /**
  * @module ProjectSetup

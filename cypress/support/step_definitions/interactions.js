@@ -1,5 +1,4 @@
 import { Given } from "cypress-cucumber-preprocessor/steps"
-import { defineParameterType } from "cypress-cucumber-preprocessor/steps"
 
 /**
  * @module Interactions
@@ -21,11 +20,6 @@ Given("I click on the button labeled exactly {string}", (text) => {
  */
 Given("I click on the link labeled exactly {string}", (text) => {
     cy.get('a').contains(new RegExp("^" + text + "$", "g")).click()
-})
-
-defineParameterType({
-    name: 'instrument_save_options',
-    regexp: /Save & Stay|Save & Exit Record|Save & Go To Next Record|Save & Exit Form|Save & Go To Next Form|Save & Go To Next Instance/
 })
 
 /**
@@ -192,11 +186,6 @@ Given("I save the field", () => {
     cy.save_field()
 })
 
-defineParameterType({
-    name: 'enter_type',
-    regexp: /enter|clear field and enter/
-})
-
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -345,10 +334,6 @@ Given("I select {string} from the dropdown identified by {string} labeled {strin
     })
 })
 
-defineParameterType({
-    name: 'element_type',
-    regexp: /element|checkbox/
-})
 /**
  * @module Interactions
  * @author Corey Debacker <debacker@wisc.edu>
@@ -385,16 +370,6 @@ Given("I enter {string} into the hidden field identified by {string}", (text, se
     cy.get(sel).type(text, {force: true})
 })
 
-defineParameterType({
-    name: 'click_type',
-    regexp: /click on|check|uncheck/
-})
-
-defineParameterType({
-    name: 'checkbox_field_type',
-    regexp: /checkbox|checkbox in table/
-})
-
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -427,10 +402,7 @@ Given("I {click_type} the {checkbox_field_type} labeled {string}", (check, field
     })
 })
 
-defineParameterType({
-    name: 'elm_type',
-    regexp: /input|list item|checkbox|span/
-})
+
 
 /**
  * @module Interactions
@@ -494,11 +466,6 @@ Given('I enter {string} into the field identified by {string} labeled {string}',
     })
 })
 
-
-defineParameterType({
-    name: 'confirmation',
-    regexp: /accept|cancel/
-})
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -789,10 +756,6 @@ Given('I select {string} from the Validation dropdown of the open "Edit Field" d
 })
 
 
-defineParameterType({
-    name: 'dropdown_type',
-    regexp: /field|table field/
-})
 
 /**
  * @module Interactions
