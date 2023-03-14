@@ -182,7 +182,7 @@ function test_link (link, title, try_again = true) {
 }
 
 Cypress.Commands.add('contains_cc_link', (link, title = '') => {
-    if(title == '') title = link
+    if(title === '') title = link
     let t = Cypress.$("div#control_center_menu a:contains(" + JSON.stringify(link) + ")");
     t.length ? test_link(link, title) : test_link(link.split(' ')[0], title.split(' ')[0])
 })
