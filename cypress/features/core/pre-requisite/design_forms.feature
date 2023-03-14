@@ -336,7 +336,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I enter "descriptive_file_text" into the field identified by "input[name=field_name]"
     And I click on the element identified by "textarea[name=field_label]"
     And I click on the element identified by "a[onclick='openAttachPopup();']"
-    And I set the input file field named "file" to the file at path "cypress/fixtures/import_files/core/7_image_v913.jpg"
+    And I set the input file field named "myfile" to the file at path "cypress/fixtures/import_files/core/7_image_v913.jpg"
     And I click on the button labeled "Upload file" in the dialog box
     And I should see "Upload in progress..."
     And I should see "Document was successfully uploaded"
