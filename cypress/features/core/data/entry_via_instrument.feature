@@ -313,7 +313,7 @@ Feature: Data Entry through the Data Collection Instrument
 
   Scenario: 29 to 31 - Delete Event
     When I click on the link labeled "Record Status Dashboard"
-    And I click on the link labeled "3"
+    Then I click on the link labeled exactly "3"
     Then I should see "Record Home Page"
 
     When I click the X to delete all data related to the event named "Event 1"
