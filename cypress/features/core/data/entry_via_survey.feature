@@ -46,13 +46,13 @@ Feature: Data Entry through the Survey
 #    Then I should see "Thank you for taking the survey"
 #
 #  Scenario: A standard user disables survey functionality
-#    Given I visit Project ID 9
+#    Given I click on the link labeled "My Projects"
 #
 #    When I visit the "Data Entry" page with parameter string of "pid=9&id=1&page=prescreening_survey"
 #    Then I should see that the "E-mail address" field contains the value of "user1@yahoo.com"
 #
 #  Scenario: A standard user distributes a survey to a list of users
-#    Given I visit Project ID 9
+#    Given I click on the link labeled "My Projects"
 #    And I enable surveys for Project ID 9
 #
 #    When I visit the "Surveys/invite_participants.php" page with parameter string of "pid=9"
@@ -60,7 +60,7 @@ Feature: Data Entry through the Survey
 #    Then I should see "Email"
 #
 #  Scenario: A standard user generates a survey from within a participant record using Log Out + Open Survey
-#    Given I visit Project ID 9
+#    Given I click on the link labeled "My Projects"
 #    And I click on the link labeled "Add / Edit Records"
 #    And I click on the button labeled "Add new record"
 #    And I click on the table cell containing a link labeled "Pre-Screening Survey"
@@ -72,7 +72,7 @@ Feature: Data Entry through the Survey
 #    Then I should see the survey open exactly once by watching the tag of "logout_open_survey"
 #
 #  Scenario: A standard user is prompted to leave the survey to avoid overwriting survey responses when opening surveys from data entry form
-#    Given I visit Project ID 9
+#    Given I click on the link labeled "My Projects"
 #    And I click on the link labeled "Add / Edit Records"
 #    And I click on the button labeled "Add new record"
 #    And I click on the table cell containing a link labeled "Pre-Screening Survey"
@@ -85,7 +85,7 @@ Feature: Data Entry through the Survey
 #    And I should see "Stay on page"
 #
 #  Scenario: A participant can enter data in a data collection instrument enabled and distributed as a survey
-#    Given I visit Project ID 9
+#    Given I click on the link labeled "My Projects"
 #    And I click on the link labeled "Project Setup"
 #    And I click on the button labeled "Online Designer"
 #    Then I should see "Draft Mode"
