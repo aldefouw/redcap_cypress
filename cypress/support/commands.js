@@ -57,8 +57,7 @@ Cypress.Commands.add('login', (options) => {
 })
 
 Cypress.Commands.add('logout', () => {
-    const url = '/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1'
-    cy.visit('/redcap_v' + Cypress.env('redcap_version') + '/index.php?logout=1')
+    cy.visit_version({page: '', params: 'logout=1'})
 })
 
 Cypress.Commands.add('visit_version', (options) => {

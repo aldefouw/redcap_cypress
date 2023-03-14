@@ -298,7 +298,7 @@ Feature: Data Entry through the Data Collection Instrument
 
   Scenario: 28 - Edit record
     Given I click on the link labeled "Record Status Dashboard"
-    And I locate the bubble for the "Data Types" instrument on event "Event 1" for record ID "3" and click on the bubble
+    And I locate the bubble for the "Data Types" instrument on event "Event 1" for record ID "2" and click on the bubble
     And I enter "Mary" into the data entry form field labeled "Name"
     And I select the dropdown option "Complete" for the Data Collection Instrument field labeled "Complete?"
     And I click on the button labeled "Save & Exit Form"
@@ -313,7 +313,7 @@ Feature: Data Entry through the Data Collection Instrument
 
   Scenario: 29 to 31 - Delete Event
     When I click on the link labeled "Record Status Dashboard"
-    And I click on the link labeled "3"
+    Then I click on the link labeled exactly "2"
     Then I should see "Record Home Page"
 
     When I click the X to delete all data related to the event named "Event 1"
@@ -327,7 +327,7 @@ Feature: Data Entry through the Data Collection Instrument
     When I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms/events)"
     And I click on the button labeled "DELETE RECORD" in the dialog box
-    Then I should see 'Record ID "3" was successfully deleted.'
+    Then I should see 'Record ID "2" was successfully deleted.'
 
     When I close popup
     And I click on the link labeled "Record Status Dashboard"

@@ -1,5 +1,6 @@
 import {Given, defineParameterType} from "cypress-cucumber-preprocessor/steps";
 import escapeStringRegexp from 'escape-string-regexp'
+import compareVersions from "compare-versions";
 
 /**
  * @module UserRights
@@ -219,6 +220,14 @@ const single_choice_mappings = {
     'Lock/Unlock Records' : 'lock_record'
 }
 
+//These apply to REDCap v12+
+const data_export_mappings = {
+    'No Access' : '0',
+    'De-Identified' : '2',
+    'Remove All Identifier Fields' : '3',
+    'Full Data Set' : '1'
+}
+
 /**
  * @module UserRights
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
@@ -229,17 +238,36 @@ const single_choice_mappings = {
  */
 Given("I select the User Right named {string} and choose {string}", (text, option) => {
     cy.get('div[role=dialog]').should('be.visible')
-    cy.get('input[name="' + single_choice_mappings[text] + '"]').
-        parent().
-        parent().
-        within(() => {
-            cy.get('div').
+
+    //For REDCap v12 + we have per instrument data exports, so let's handle that case here
+    if(text === "Data Exports" && compareVersions.compare(Cypress.env('redcap_version'), '12.0.0', '>=')){
+
+        //TODO: Possibly generate a Step Definition that allows us to configure this on a per instrument basis
+        //For now, we are going to select every form to have the same option
+        cy.get(`input[type=radio][name*="export-form-"]`).then(($e) => {
+            $e.each((i) => {
+                if($e[i].value === data_export_mappings[option]) {
+                    cy.wrap($e[i]).click()
+                }
+            })
+        })
+
+    } else {
+
+        cy.get('input[name="' + single_choice_mappings[text] + '"]').
+            parent().
+            parent().
+            within(() => {
+                cy.get('div').
                 contains(new RegExp(escapeStringRegexp(option))).
                 find('input').
                 scrollIntoView().
                 should('be.visible').
                 click()
-        })
+            })
+
+    }
+
 })
 
 /**
@@ -360,39 +388,30 @@ defineParameterType({
  * @description Checks or Unchecks all Basic Rights within the User Rights dialog box.
  */
 Given('I {user_right_action} all Basic Rights within the open User Rights dialog box', (action) => {
-    cy.get('div[role=dialog]').should('be.visible')
+    cy.get('div[role=dialog]').should('be.visible').then(() => {
 
-    //"Full Access" to Data Export Tool
-    if(action === "add"){
-        cy.get('input[name=data_export_tool]').should('be.visible').check('1')
+        //"Full Access" to Data Export Tool - does NOT apply to v12+
+        if(action === "add" && Cypress.$('input[name=data_export_tool]').length !== 0){
+            cy.get('input[name=data_export_tool]').should('be.visible').check('1')
 
-    //"No Access" to Data Export Tool
-    } else if (action === "remove"){
-        cy.get('input[name=data_export_tool]').should('be.visible').check('0')
-    }
-
-    for(var key in user_right_check_mappings) {
-        const input = cy.get('input[name="' + user_right_check_mappings[key] + '"]').scrollIntoView().should('be.visible')
-
-        if(action === "add"){
-            input.check()
-        } else if (action === "remove"){
-            input.uncheck()
+            //"No Access" to Data Export Tool - does NOT apply to v12+
+        } else if (action === "remove" && Cypress.$('input[name=data_export_tool]').length !== 0){
+            cy.get('input[name=data_export_tool]').should('be.visible').check('0')
         }
-    }
 
-})
+        for(var key in user_right_check_mappings) {
+            const input = cy.get('input[name="' + user_right_check_mappings[key] + '"]').scrollIntoView().should('be.visible')
 
-/**
- * @module UserRights
- * @author Corey DeBacker <debacker@wisc.edu>
- * @example I select the Data Exports privileges option labeled {string}
- * @param {string} text - the label of the option to be selected
- * @description Selects a radio option for Data Exports within the user rights configuration dialog based on its label.
- */
-Given('I select the Data Exports privileges option labeled {string}', (text) => {
-    cy.get('div[role=dialog]').should('be.visible')
-    cy.get(`:contains(${text}) > [name=data_export_tool]`).check()
+            if(action === "add"){
+                input.check()
+            } else if (action === "remove"){
+                input.uncheck()
+            }
+        }
+
+        cy.get('div[role=dialog]').should('be.visible')
+    })
+
 })
 
 // Achieves same result as Adam's "I grant {data_viewing_rights} level of Data Entry Rights on the {string} instrument for the username {string} for project ID {int}"
