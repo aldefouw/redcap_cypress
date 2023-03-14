@@ -1,4 +1,5 @@
-import {defineParameterType, Given} from "cypress-cucumber-preprocessor/steps";
+import {Given} from "cypress-cucumber-preprocessor/steps";
+require('./parameter_types.js')
 
 /**
  * @module ControlCenter
@@ -20,11 +21,6 @@ Given('I enable the Field Validation Type named {string} within the Control Cent
  */
 Given('I disable the Field Validation Type named {string} within the Control Center', (field_validation_type) => {
     cy.toggle_field_validation_type(field_validation_type, 'Disable')
-})
-
-defineParameterType({
-    name: 'toggle',
-    regexp: /enable|disable/
 })
 
 /**

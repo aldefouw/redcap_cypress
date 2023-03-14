@@ -1,4 +1,5 @@
-import {defineParameterType, Given} from "cypress-cucumber-preprocessor/steps";
+import {Given} from "cypress-cucumber-preprocessor/steps";
+require('./parameter_types.js')
 
 /**
  * @module DataImport
@@ -37,11 +38,6 @@ Given("I upload a {string} format file located at {string}, by clicking {string}
     cy.upload_file(file_location, format, upload_selector).then(() => {
         cy.get(button_selector).click()
     })
-})
-
-defineParameterType({
-    name: 'project_type',
-    regexp: /Practice \/ Just for fun|Operational Support|Research|Quality Improvement|Other/
 })
 
 /**
