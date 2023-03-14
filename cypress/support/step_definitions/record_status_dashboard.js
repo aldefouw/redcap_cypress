@@ -1,4 +1,5 @@
-import {defineParameterType, Given} from "cypress-cucumber-preprocessor/steps";
+import {Given} from "cypress-cucumber-preprocessor/steps";
+require('./parameter_types.js')
 
 /**
  * @module RecordStatusDashboard
@@ -42,12 +43,6 @@ Given("I click on the bubble for the {string} data collection instrument for rec
     }).then(() => {
         cy.wrap(link_location).click()
     })
-})
-
-
-defineParameterType({
-    name: 'cell_action',
-    regexp: /and click the new instance link|and click on the bubble|and click the repeating instrument bubble for the first instance|and click the repeating instrument bubble for the second instance|and click the repeating instrument bubble for the third instance/
 })
 
 /**
@@ -173,11 +168,6 @@ Given("I locate the bubble for the {string} instrument on event {string} for rec
             })
         }
     })
-})
-
-defineParameterType({
-    name: 'add_or_select',
-    regexp: /add|select/
 })
 
 /**
