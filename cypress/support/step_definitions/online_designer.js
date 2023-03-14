@@ -10,19 +10,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  */
 
 Given("I rename the current data instrument named {string} to {string}", (current_name, new_name) => {
-
-    cy.get('table[id=table-forms_surveys]')
-        .find('tr').contains(current_name)
-        .parents('tr').find('button').contains('Choose action').click()
-
-    cy.get('ul[id=formActionDropdown]').find('a').contains('Rename').click()
-
-    cy.get("input[value='My First Instrument']").clear().type(new_name)
-
-    cy.get("input[value='My First Instrument']").parent().within(() => {
-      cy.get('input[type=button]').click()
-    })
-
+    cy.rename_instrument(current_name, new_name)
 })
 
 /**
@@ -43,7 +31,7 @@ Given("I delete the data instrument named {string}", (instrument_name) => {
         .parents('tr').find('button').contains('Choose action').click()
     cy.get('ul[id=formActionDropdown]').find('a').contains('Delete').click()
 
-    cy.get('button').contains('Yes, delete it').click()
+    cy.get(':button:contains("Yes, delete it"):visible').click()
 
     cy.wait('@delete_instrument')
 })

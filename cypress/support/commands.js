@@ -819,21 +819,17 @@ Cypress.Commands.add('create_instrument', (instr_name) => {
     })
 })
 
-//TODO: consider refactoring to avoid get()'ing the row twice, reuse a reference instead
-//TODO: wrap async commands in then() blocks
-Cypress.Commands.add('rename_instrument', (from, to) => {
-    //get row, click actions dropdown
-    cy.get(`div.projtitle:contains("${from}")`).parentsUntil('tr').last().parent().within(($tr) => {
-        cy.get('button:contains("Choose action")').click()
-    })
-    //dropdown menu is inserted into HTML outside of the tr, so we exit the within() block
-    cy.get('ul#formActionDropdown').within(($ul) => {
-        cy.get('a:contains("Rename")').click()
-    })
-    //back within tr, type new name and click save
-    cy.get(`div.projtitle:contains("${from}")`).parentsUntil('tr').last().parent().within(($tr) => {
-        cy.get('input[id^="form_menu_description_input-"]').clear().type(to)
-        cy.get('input[id^="form_menu_save_btn-"]').click()
+Cypress.Commands.add('rename_instrument', (current_name, new_name) => {
+    cy.get('table[id=table-forms_surveys]')
+        .find('tr').contains(current_name)
+        .parents('tr').find('button').contains('Choose action').click()
+
+    cy.get('ul[id=formActionDropdown]').find('a').contains('Rename').click()
+
+    cy.get(`input[value="${current_name}"]`).clear().type(new_name)
+
+    cy.get(`input[value="${current_name}"]`).parent().within(() => {
+        cy.get(':button:contains("Save"):visible:first,:button[value*="Save"]:visible:first').click()
     })
 })
 
@@ -871,7 +867,6 @@ Cypress.Commands.add('reorder_instrument', (from, to) => {
     cy.log(cy.wrap(el_from) === cy.get(sel_from))
 })
 
-
 Cypress.Commands.add('read_directory', (dir) => {
     cy.task('readDirectory', (dir)).then((files) => {
         return files
@@ -904,7 +899,6 @@ Cypress.Commands.add('click_on_design_field_function', (type, field) => {
 })
 
 Cypress.Commands.add('change_event_name', (current_name, proposed_name, production = false) => {
-
     if(!production){
         cy.intercept({
             method: 'GET',
@@ -930,8 +924,6 @@ Cypress.Commands.add('change_event_name', (current_name, proposed_name, producti
         cy.wait('@save_events')
     }
 })
-
-
 
 Cypress.Commands.add('delete_event_name', (event_name) => {
     cy.intercept({
