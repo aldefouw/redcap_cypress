@@ -23,3 +23,29 @@ Given("I should no longer see the element identified by {string}", (selector) =>
     else
         cy.get(selector).should('not.exist')
 })
+
+/**
+ * @module Interactions
+ * @author Corey Debacker <debacker@wisc.edu>
+ * @example I click on the < element | checkbox > identified by {string}
+ * @param {string} element_type - valid choices are 'element' OR 'checkbox'
+ * @param {string} selector - the selector of the element to click on
+ * @description Clicks on an element identified by specific selector
+ */
+Given("I click on the {element_type} identified by {string}", (type, selector) => {
+    cy.get(selector).click()
+})
+
+/**
+ * @module Visibility
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I should see the checkbox identified by {string}, {check}
+ * @param {string} selector - the selector that identifies a checkbox
+ * @param {string} check - valid choices are 'checked' OR 'unchecked'
+ * @description Visually verifies that a specified checkbox is checked or uncheck
+ */
+Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
+    //Really only added this to delay cypress cause sometimes it was moving forward without being checked
+    //ATTN: Function no longer needed, can probably delete if no one needs it
+    check === 'checked' ? cy.get(sel).should('be.checked') : cy.get(sel).should('not.be.checked')
+})

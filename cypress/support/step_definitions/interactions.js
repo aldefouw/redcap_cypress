@@ -334,17 +334,7 @@ Given("I select {string} from the dropdown identified by {string} labeled {strin
     })
 })
 
-/**
- * @module Interactions
- * @author Corey Debacker <debacker@wisc.edu>
- * @example I click on the < element | checkbox > identified by {string}
- * @param {string} element_type - valid choices are 'element' OR 'checkbox'
- * @param {string} selector - the selector of the element to click on
- * @description Clicks on an element identified by specific selector
- */
-Given("I click on the {element_type} identified by {string}", (type, selector) => {
-    cy.get(selector).click()
-})
+
 
 /**
  * @module Interactions
@@ -373,7 +363,9 @@ Given("I enter {string} into the hidden field identified by {string}", (text, se
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the checkbox labeled {string}
+ * @example I {click_type} the {checkbox_field_type} labeled {string}
+ * @param {click_type} check - check or uncheck
+ * @param {checkbox_field_type} field_type - checkbox or checkbox table
  * @param {string} label - the label associated with the checkbox field
  * @description Selects a checkbox field by its label
  */
@@ -392,11 +384,11 @@ Given("I {click_type} the {checkbox_field_type} labeled {string}", (check, field
             }
 
             if(check === "click on"){
-                selector.click()
+                selector.scrollIntoView().should('be.visible').click()
             } else if (check === "check"){
-                selector.check()
+                selector.scrollIntoView().should('be.visible').check()
             } else if (check === "uncheck"){
-                selector.uncheck()
+                selector.scrollIntoView().should('be.visible').uncheck()
             }
         })
     })

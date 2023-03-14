@@ -1,4 +1,5 @@
 import {Given} from "cypress-cucumber-preprocessor/steps";
+require('./parameter_types.js')
 
 /**
  * @module Visibility
@@ -74,7 +75,7 @@ Given("I should see a link labeled {string}", (label) => {
  * @param {string} check - valid choices are 'checked' OR 'unchecked'
  * @description Visually verifies that a specified checkbox is checked or uncheck
  */
- Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
+Given("I should see the checkbox identified by {string}, {check}", (sel, check) => {
     //Really only added this to delay cypress cause sometimes it was moving forward without being checked
     //ATTN: Function no longer needed, can probably delete if no one needs it
     check === 'checked' ? cy.get(sel).should('be.checked') : cy.get(sel).should('not.be.checked')
@@ -120,6 +121,38 @@ Given("I should see the dropdown identified by {string} with the option {string}
     //cy.get(selector).invoke('val').should('eq', option)
     cy.get(selector).find(':selected').should('have.text', option)
 })
+
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click on the checkbox labeled {string}
+ * @param {string} label - the label associated with the checkbox field
+ * @description Selects a checkbox field by its label
+ */
+Given("I should see a {checkbox_field_type} labeled {string} that is {check}", (field_type, label, check) => {
+    let sel = `:contains("${label}"):visible`
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+
+        let selector = null
+
+        cy.contains(label).then(($label) => {
+            if(field_type === "checkbox in table"){
+                selector = cy.wrap($label).parentsUntil('tr').parent().first().find('input[type=checkbox]')
+            } else {
+                selector = cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]')
+            }
+
+             if (check === "checked"){
+                selector.then(($input) => { expect($input).to.be.checked })
+            } else if (check === "unchecked"){
+                 selector.then(($input) => { expect($input).to.not.be.checked })
+            }
+        })
+    })
+})
+
 
 /**
  * @module Visibility
@@ -219,4 +252,21 @@ Given("I should NOT see a {LabeledElement} labeled {string}", (el, text) => {
     let subsel = {'link':'a', 'button':'button'}[el]
     let sel = `${subsel}:contains("${text}"):visible` + (el === 'button' ? `,button[value="${text}"]:visible` : '')
     cy.get_top_layer(($e) => {console.log(sel);expect($e.find(sel)).to.have.lengthOf(0)})
+})
+
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I should see {string} in the data entry form field labeled {string}
+ * @param {string} text - the text that should be in the field
+ * @param {string} label - the label of the field
+ * @description Identifies specific text string in a field identified by a label.
+ */
+Given('I should see {string} in the data entry form field labeled {string}', (text, label) => {
+    cy.contains('label', label)
+        .invoke('attr', 'id')
+        .then(($id) => {
+            cy.get('[name="' + $id.split('label-')[1] + '"]').should('have.value', text)
+        })
 })
