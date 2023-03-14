@@ -468,8 +468,12 @@ Given("I {click_type} the {elm_type} element labeled {string}", (click_type, ele
  * @description Selects a file path to upload into input named name
  */
 Given("I set the input file field named {string} to the file at path {string}", (name, path) => {
-    cy.get('input[name=' + name + ']').then(($field) => {
-        cy.wrap($field).selectFile(path)
+    let sel = 'input[name=' + name + ']'
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+        cy.get('input[name=' + name + ']').then(($field) => {
+            cy.wrap($field).selectFile(path)
+        })
     })
 })
 
