@@ -424,24 +424,6 @@ Cypress.Commands.add('delete_project_permanently', () => {
     cy.wait('@delete_project')
 })
 
-Cypress.Commands.add('delete_project_complete', (pid) => {
-    cy.mysql_query(`START TRANSACTION;
-
-        USE \`REDCAP_DB_NAME\`;
-        SET AUTOCOMMIT=0;
-        SET UNIQUE_CHECKS=0;
-        SET FOREIGN_KEY_CHECKS=0;
-
-        DELETE FROM redcap_data WHERE project_id = ${pid};
-        DELETE FROM redcap_record_list WHERE project_id = ${pid};
-        DELETE FROM redcap_record_counts WHERE project_id = ${pid};
-        DELETE FROM redcap_user_rights WHERE project_id = ${pid};
-        DELETE FROM redcap_projects WHERE project_id = ${pid};
-
-        COMMIT;`
-    )
-})
-
 Cypress.Commands.add('delete_records', (pid) => {
     cy.visit_version({ page: 'ProjectSetup/other_functionality.php', params: `pid=${pid}`})
     cy.get('button', {force: true}).contains('Erase all data').click({force: true})
