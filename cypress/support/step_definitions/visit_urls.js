@@ -19,7 +19,7 @@ Given(/^I visit the "(.*)" page(?: with parameter string of "(.*)")?$/, (base_fo
  * @module VisitUrls
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I visit the version URL {string}
- * @param {string} url the URL witout the version folder
+ * @param {string} url the URL without the version folder
  * @description Instructs Cypress to visit specific URL
  */
 Given("I visit the version URL {string}", (url) => {
