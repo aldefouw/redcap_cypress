@@ -7,7 +7,7 @@ Scenario: 1- Login as admin1115
     Given I am an "admin" user who logs into REDCap
 
 Scenario: 2- Visible Pages
-    Given I visit the "Control Center" page
+    Given I click on the link labeled "Control Center"
     When I click on the link labeled "User Settings"
     Then I should see "System-level User Settings" 
 
@@ -101,7 +101,7 @@ Scenario: 15- Login with Suspended User Account
 
 Scenario: 16- View test_user in Suspended Users List
     Given I am an "admin" user who logs into REDCap
-    And I visit the "Control Center" page
+    And I click on the link labeled "Control Center"
     When I click on the link labeled "Browse Users"
     Then I should see "User Search: Search for user by username, first name, last name, or primary email"
     When I click on the link labeled "View User List By Criteria"
@@ -150,7 +150,7 @@ Scenario: 20- Confirm test_user can log in
 
 Scenario: 21- Find test_user2 Under Browse Users Page
     Given I am an "admin" user who logs into REDCap
-    And I visit the "Control Center" page
+    And I click on the link labeled "Control Center"
     And I click on the link labeled "Browse Users"
     And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
@@ -160,7 +160,7 @@ Scenario: 21- Find test_user2 Under Browse Users Page
     And I should see "test_user2@example.com"
 
 Scenario: 22- Find test_user2 Under Browse Users Page by email
-    And I visit the "Control Center" page
+    And I click on the link labeled "Control Center"
     And I click on the link labeled "Browse Users"
     And I enter "test_user2@example.com" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the input element labeled "User Search: Search for user by username, first name, last name, or primary email"
@@ -173,7 +173,7 @@ Scenario: 22- Find test_user2 Under Browse Users Page by email
 
 Scenario: 23 - Find test_user2 Under Browse Users Page by Last name and Cancel Delete User from System
     Given for this scenario, I will cancel a confirmation window containing the text "Are you sure you wish to delete the user from REDCap?"
-    And I visit the "Control Center" page
+    And I click on the link labeled "Control Center"
     And I click on the link labeled "Browse Users"
     And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
@@ -184,7 +184,7 @@ Scenario: 23 - Find test_user2 Under Browse Users Page by Last name and Cancel D
 
 Scenario: 24 - Find test_user2 Under Browse Users Page by Last name and Delete User from System
     Given for this scenario, I will accept a confirmation window containing the text "Are you sure you wish to delete the user from REDCap?"
-    And I visit the "Control Center" page
+    And I click on the link labeled "Control Center"
     And I click on the link labeled "Browse Users"
     And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
@@ -194,7 +194,7 @@ Scenario: 24 - Find test_user2 Under Browse Users Page by Last name and Delete U
     Then I should see "The user 'test_user2' has now been removed and deleted from all REDCap projects"
 
 Scenario: 25- Confirm test_user2 Does Not Exist
-    And I visit the "Control Center" page
+    And I click on the link labeled "Control Center"
     And I click on the link labeled "Browse Users"
     And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
@@ -221,7 +221,7 @@ Scenario: 28- Confirm test_user Does Not Have Access to Control Center or Create
 
 Scenario: 29- Cancel Change password for user1115_4 through Browse Users
     Given I am an "admin" user who logs into REDCap
-    And I visit the "Control Center" page
+    And I click on the link labeled "Control Center"
     When I click on the link labeled "Browse Users"
     And I click on the link labeled "View User List By Criteria"
     And I click on the button labeled "Display User List"
