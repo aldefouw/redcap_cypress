@@ -867,7 +867,7 @@ Cypress.Commands.add('reorder_instrument', (from, to) => {
     const dY = coords_to.y - coords_from.y
     //drag/move the instrument
     // cy.wrap(el_from).move({deltaX:dX, deltaY:dY})
-    cy.log(cy.wrap(el_from) == cy.get(sel_from))
+    cy.log(cy.wrap(el_from) === cy.get(sel_from))
     cy.log(cy.wrap(el_from) === cy.get(sel_from))
 })
 
