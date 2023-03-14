@@ -12,29 +12,6 @@ import '@4tw/cypress-drag-drop'
 // Commands in this file are CRUCIAL and are an embedded part of the REDCap Cypress Framework.
 // They are very stable and do not change often, if ever
 
-//Useful for clicking buttons located within a stacked dialog box (i.e. a dialog box that is displayed ontop of
-//another dialog box, based on z-index). Clicks the last visible button within the frontmost dialog box containing `label`
-Cypress.Commands.add('click_top_dialog_button', (label) => {
-    cy.get('div[role=dialog][style*="z-index"]:visible').then($divs => {
-        //sort dialog boxes based on z-index, ascending order
-        let sorted = $divs.sort((cur, prev) => {
-            let zp = Cypress.dom.wrap(prev).css('z-index')
-            let zc = Cypress.dom.wrap(cur).css('z-index')
-            return zc - zp
-        })
-        //assign highest z-index div to $div
-        // let $div = Cypress.dom.wrap(sorted).last() //Cypress last()
-        let $div = Cypress.dom.wrap(sorted.last()) //jQuery last()
-        //TODO: either works, revisit later to pick best option
-
-        //wrap div and look within to click matching button
-        cy.wrap($div).within(($div) => {
-            cy.get(`button:contains("${label}"):visible`).last().click()
-        })
-        
-    })
-})
-
 Cypress.Commands.add('login', (options) => {
     cy.logout()
     cy.visit('/')
