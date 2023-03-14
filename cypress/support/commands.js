@@ -12,18 +12,6 @@ import '@4tw/cypress-drag-drop'
 // Commands in this file are CRUCIAL and are an embedded part of the REDCap Cypress Framework.
 // They are very stable and do not change often, if ever
 
-function preventClickTimeoutFail() {
-    //Needed to prevent tests from failing on expected timeout due to
-    //side effect of clicking on a download link that doesn't load a new page
-    cy.window().document().then(function (doc) {
-        doc.addEventListener('click', () => {
-            setTimeout(function () {
-                doc.location.reload()
-            }, 2000)
-        })
-    })
-}
-
 //Useful for clicking buttons located within a stacked dialog box (i.e. a dialog box that is displayed ontop of
 //another dialog box, based on z-index). Clicks the last visible button within the frontmost dialog box containing `label`
 Cypress.Commands.add('click_top_dialog_button', (label) => {
