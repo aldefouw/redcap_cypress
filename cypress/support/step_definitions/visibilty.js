@@ -234,6 +234,6 @@ Given("I should NOT see a {LabeledElement} labeled {string}", (el, text) => {
     // double quotes need to be re-escaped before inserting into :contains() selector
     text = text.replaceAll('\"', '\\\"')
     let subsel = {'link':'a', 'button':'button'}[el]
-    let sel = `${subsel}:contains("${text}"):visible` + (el == 'button' ? `,button[value="${text}"]:visible` : '')
+    let sel = `${subsel}:contains("${text}"):visible` + (el === 'button' ? `,button[value="${text}"]:visible` : '')
     cy.get_top_layer(($e) => {console.log(sel);expect($e.find(sel)).to.have.lengthOf(0)})
 })

@@ -66,7 +66,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
         let found = false
         for(let i = 1; i < lines.length; i++){
             let columns = lines[i].split(',')
-            if(columns[index] == value) { 
+            if(columns[index] === value) {
                 found = true
                 break
             }
@@ -93,7 +93,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
 
         let newLines = []
         for(let i = 0; i < lines.length; i++){
-            if(i != line-1){
+            if(i !== line-1){
                 newLines.push(lines[i])
             }
         }
