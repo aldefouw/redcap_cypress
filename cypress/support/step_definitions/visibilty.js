@@ -149,6 +149,34 @@ Given("I should see the dropdown identified by {string} with the option {string}
 
 /**
  * @module Visibility
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I should see the dropdown {dropdown_type} labeled {string} with the option {string} selected
+ * @param {string} label - the label of the field
+ * @param {string} option - the option selected
+ * @description Selects a specific item from a dropdown
+ */
+Given('I should see the dropdown {dropdown_type} labeled {string} with the option {string} selected', (type, label, option) => {
+    let sel = `:contains("${label}"):visible`
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+        if(type === "table field") {
+            cy.contains(label).then(($label) => {
+                cy.wrap($label).parentsUntil(':has(:has(:has(:has(select))))').first().parent().parent().within(($elm) => {
+                    cy.wrap($elm).find('select').find(':selected').should('have.text', option)
+                })
+            })
+        } else if (type === "field"){
+            cy.contains(label).then(($label) => {
+                cy.wrap($label).parent().find('select').find(':selected').should('have.text', option)
+            })
+        }
+    })
+})
+
+
+
+/**
+ * @module Visibility
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I should see {string} in an alert box
  * @param {string} text - the text that should be displayed in an alert box

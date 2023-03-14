@@ -12,41 +12,6 @@ import '@4tw/cypress-drag-drop'
 // Commands in this file are CRUCIAL and are an embedded part of the REDCap Cypress Framework.
 // They are very stable and do not change often, if ever
 
-function preventClickTimeoutFail() {
-    //Needed to prevent tests from failing on expected timeout due to
-    //side effect of clicking on a download link that doesn't load a new page
-    cy.window().document().then(function (doc) {
-        doc.addEventListener('click', () => {
-            setTimeout(function () {
-                doc.location.reload()
-            }, 2000)
-        })
-    })
-}
-
-//Useful for clicking buttons located within a stacked dialog box (i.e. a dialog box that is displayed ontop of
-//another dialog box, based on z-index). Clicks the last visible button within the frontmost dialog box containing `label`
-Cypress.Commands.add('click_top_dialog_button', (label) => {
-    cy.get('div[role=dialog][style*="z-index"]:visible').then($divs => {
-        //sort dialog boxes based on z-index, ascending order
-        let sorted = $divs.sort((cur, prev) => {
-            let zp = Cypress.dom.wrap(prev).css('z-index')
-            let zc = Cypress.dom.wrap(cur).css('z-index')
-            return zc - zp
-        })
-        //assign highest z-index div to $div
-        // let $div = Cypress.dom.wrap(sorted).last() //Cypress last()
-        let $div = Cypress.dom.wrap(sorted.last()) //jQuery last()
-        //TODO: either works, revisit later to pick best option
-
-        //wrap div and look within to click matching button
-        cy.wrap($div).within(($div) => {
-            cy.get(`button:contains("${label}"):visible`).last().click()
-        })
-        
-    })
-})
-
 Cypress.Commands.add('login', (options) => {
     cy.logout()
     cy.visit('/')
@@ -217,7 +182,7 @@ function test_link (link, title, try_again = true) {
 }
 
 Cypress.Commands.add('contains_cc_link', (link, title = '') => {
-    if(title == '') title = link
+    if(title === '') title = link
     let t = Cypress.$("div#control_center_menu a:contains(" + JSON.stringify(link) + ")");
     t.length ? test_link(link, title) : test_link(link.split(' ')[0], title.split(' ')[0])
 })
@@ -459,31 +424,6 @@ Cypress.Commands.add('delete_project_permanently', () => {
     cy.wait('@delete_project')
 })
 
-Cypress.Commands.add('delete_project_complete', (pid) => {
-    cy.mysql_query(`START TRANSACTION;
-
-        USE \`REDCAP_DB_NAME\`;
-        SET AUTOCOMMIT=0;
-        SET UNIQUE_CHECKS=0;
-        SET FOREIGN_KEY_CHECKS=0;
-
-        DELETE FROM redcap_data WHERE project_id = ${pid};
-        DELETE FROM redcap_record_list WHERE project_id = ${pid};
-        DELETE FROM redcap_record_counts WHERE project_id = ${pid};
-        DELETE FROM redcap_user_rights WHERE project_id = ${pid};
-        DELETE FROM redcap_projects WHERE project_id = ${pid};
-
-        COMMIT;`
-    )
-})
-
-Cypress.Commands.add('delete_records', (pid) => {
-    cy.visit_version({ page: 'ProjectSetup/other_functionality.php', params: `pid=${pid}`})
-    cy.get('button', {force: true}).contains('Erase all data').click({force: true})
-    cy.get('div[role="dialog"]', {force: true}).find('button').contains('Erase all data').click({force: true})
-    cy.get('span#ui-id-2', {force: true}).closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
-})
-
 Cypress.Commands.add('access_api_token', (pid, user) => {
     // This assumes user already has API token created
     cy.fetch_login().then(($r) => {
@@ -495,12 +435,11 @@ Cypress.Commands.add('access_api_token', (pid, user) => {
 })
 
 Cypress.Commands.add('import_data_file', (fixture_file,pid) => {
-
     let admin_user = Cypress.env('users')['admin']['user']
     let current_token = null;
 
     let current_user_type = window.user_info.get_previous_user_type()
-    if(current_user_type != 'admin'){
+    if(current_user_type !== 'admin'){
         cy.set_user_type('admin')
         cy.fetch_login()
     } 
@@ -584,17 +523,14 @@ Cypress.Commands.add('import_data_file', (fixture_file,pid) => {
 
         }
 
-        if(current_user_type != 'admin'){
+        if(current_user_type !== 'admin'){
             cy.set_user_type(current_user_type)
             cy.fetch_login()
         }
-
     })
-
 })
 
 Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_to_assign, project_id , assign_right = true, user_type = 'admin', selector = 'input', value = null) => {
-
     let user_has_rights_assigned = Cypress.$("a:contains(" + JSON.stringify(username + ' (' + proper_name + ')') + ")");
     
     if (!user_has_rights_assigned.length){
@@ -883,21 +819,17 @@ Cypress.Commands.add('create_instrument', (instr_name) => {
     })
 })
 
-//TODO: consider refactoring to avoid get()'ing the row twice, reuse a reference instead
-//TODO: wrap async commands in then() blocks
-Cypress.Commands.add('rename_instrument', (from, to) => {
-    //get row, click actions dropdown
-    cy.get(`div.projtitle:contains("${from}")`).parentsUntil('tr').last().parent().within(($tr) => {
-        cy.get('button:contains("Choose action")').click()
-    })
-    //dropdown menu is inserted into HTML outside of the tr, so we exit the within() block
-    cy.get('ul#formActionDropdown').within(($ul) => {
-        cy.get('a:contains("Rename")').click()
-    })
-    //back within tr, type new name and click save
-    cy.get(`div.projtitle:contains("${from}")`).parentsUntil('tr').last().parent().within(($tr) => {
-        cy.get('input[id^="form_menu_description_input-"]').clear().type(to)
-        cy.get('input[id^="form_menu_save_btn-"]').click()
+Cypress.Commands.add('rename_instrument', (current_name, new_name) => {
+    cy.get('table[id=table-forms_surveys]')
+        .find('tr').contains(current_name)
+        .parents('tr').find('button').contains('Choose action').click()
+
+    cy.get('ul[id=formActionDropdown]').find('a').contains('Rename').click()
+
+    cy.get(`input[value="${current_name}"]`).clear().type(new_name)
+
+    cy.get(`input[value="${current_name}"]`).parent().within(() => {
+        cy.get(':button:contains("Save"):visible:first,:button[value*="Save"]:visible:first').click()
     })
 })
 
@@ -931,10 +863,9 @@ Cypress.Commands.add('reorder_instrument', (from, to) => {
     const dY = coords_to.y - coords_from.y
     //drag/move the instrument
     // cy.wrap(el_from).move({deltaX:dX, deltaY:dY})
-    cy.log(cy.wrap(el_from) == cy.get(sel_from))
+    cy.log(cy.wrap(el_from) === cy.get(sel_from))
     cy.log(cy.wrap(el_from) === cy.get(sel_from))
 })
-
 
 Cypress.Commands.add('read_directory', (dir) => {
     cy.task('readDirectory', (dir)).then((files) => {
@@ -968,7 +899,6 @@ Cypress.Commands.add('click_on_design_field_function', (type, field) => {
 })
 
 Cypress.Commands.add('change_event_name', (current_name, proposed_name, production = false) => {
-
     if(!production){
         cy.intercept({
             method: 'GET',
@@ -994,8 +924,6 @@ Cypress.Commands.add('change_event_name', (current_name, proposed_name, producti
         cy.wait('@save_events')
     }
 })
-
-
 
 Cypress.Commands.add('delete_event_name', (event_name) => {
     cy.intercept({
