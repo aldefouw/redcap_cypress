@@ -424,13 +424,6 @@ Cypress.Commands.add('delete_project_permanently', () => {
     cy.wait('@delete_project')
 })
 
-Cypress.Commands.add('delete_records', (pid) => {
-    cy.visit_version({ page: 'ProjectSetup/other_functionality.php', params: `pid=${pid}`})
-    cy.get('button', {force: true}).contains('Erase all data').click({force: true})
-    cy.get('div[role="dialog"]', {force: true}).find('button').contains('Erase all data').click({force: true})
-    cy.get('span#ui-id-2', {force: true}).closest('div[role="dialog"]').find('button').contains('Close').click({force: true})
-})
-
 Cypress.Commands.add('access_api_token', (pid, user) => {
     // This assumes user already has API token created
     cy.fetch_login().then(($r) => {
@@ -442,12 +435,11 @@ Cypress.Commands.add('access_api_token', (pid, user) => {
 })
 
 Cypress.Commands.add('import_data_file', (fixture_file,pid) => {
-
     let admin_user = Cypress.env('users')['admin']['user']
     let current_token = null;
 
     let current_user_type = window.user_info.get_previous_user_type()
-    if(current_user_type != 'admin'){
+    if(current_user_type !== 'admin'){
         cy.set_user_type('admin')
         cy.fetch_login()
     } 
@@ -531,17 +523,14 @@ Cypress.Commands.add('import_data_file', (fixture_file,pid) => {
 
         }
 
-        if(current_user_type != 'admin'){
+        if(current_user_type !== 'admin'){
             cy.set_user_type(current_user_type)
             cy.fetch_login()
         }
-
     })
-
 })
 
 Cypress.Commands.add('assign_basic_user_right', (username, proper_name, rights_to_assign, project_id , assign_right = true, user_type = 'admin', selector = 'input', value = null) => {
-
     let user_has_rights_assigned = Cypress.$("a:contains(" + JSON.stringify(username + ' (' + proper_name + ')') + ")");
     
     if (!user_has_rights_assigned.length){
