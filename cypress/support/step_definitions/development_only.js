@@ -9,3 +9,17 @@ import {Given} from "cypress-cucumber-preprocessor/steps";
 Given("I want to pause", () => {
     cy.pause()
 })
+
+/**
+ * @module Visibility
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I should NOT see {string}
+ * @param {string} selector - the selector that identifies an element
+ * @description Visually verifies that element exists and is not visible OR does not exist
+ */
+Given("I should no longer see the element identified by {string}", (selector) => {
+    if(Cypress.$(selector).length)
+        cy.get(selector).should('not.be.visible')
+    else
+        cy.get(selector).should('not.exist')
+})
