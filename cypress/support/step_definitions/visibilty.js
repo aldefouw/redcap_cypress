@@ -36,6 +36,20 @@ Given("I should see the element identified by {string}", (selector) => {
 
 /**
  * @module Visibility
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I should NOT see {string}
+ * @param {string} selector - the selector that identifies an element
+ * @description Visually verifies that element exists and is not visible OR does not exist
+ */
+Given("I should no longer see the element identified by {string}", (selector) => {
+    if(Cypress.$(selector).length)
+        cy.get(selector).should('not.be.visible')
+    else
+        cy.get(selector).should('not.exist')
+})
+
+/**
+ * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see {string} in the title
  * @param {string} title the HTML page title
@@ -65,6 +79,18 @@ Given("I should see a button labeled {string}", (label) => {
  */
 Given("I should see a link labeled {string}", (label) => {
     cy.get(`a:contains("${label}"):visible`)
+})
+
+/**
+ * @module Visibility
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I should see a new dialog box named {string}
+ * @param {string} text the id of the new dialog box
+ * @description Visually verifies that there is a new dialog box with the id text
+ */
+Given("I should see a new dialog box named {string}", (text) => {
+    // Need to make this more specific for dialog boxes dialog, simpleDialog, etc
+    cy.get('div[id="' + text + '"]', { timeout: 10000 }).should('be.visible')
 })
 
 /**
@@ -221,6 +247,8 @@ Given("I should see the radio labeled {string} with option {string} {select}", (
 Given("I should see a dialog containing the following text: {string}", (text) => {
     cy.verify_text_on_dialog(text)
 })
+
+
 
 /**
  * @module Visibility
