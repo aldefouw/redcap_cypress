@@ -5,7 +5,7 @@ jobs:
     machine:
       image: ubuntu-2004:202201-02
     parallelism: 8
-    steps: 
+    steps:
       - checkout
       - run:
           name: Install MySQL Client
