@@ -58,7 +58,7 @@ Feature: Field Validation
     And I upload the data dictionary located at "core/08_FieldValidation_v1115_DataDictionary.csv"
     Then I should see "Changes Made Successfully!"
 
-  Scenario: 4 - Open Text Validation Instrument 
+  Scenario: 4 - Open Text Validation Instrument
     When I click on the link labeled "Designer"
     And I click on the link labeled "Text Validation"
     Then I should see a button labeled "Return to list of instruments"

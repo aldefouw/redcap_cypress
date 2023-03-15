@@ -125,7 +125,7 @@ Feature: Reporting
     And I click on the record "2" link for the row containing "Repeating"
     Then I should see "Repeating"
     Then I should see "Editing existing Record ID 2"
-    And I should see "record 2 event 2 a" in the data entry form field labeled "Description"
+    Then I should see the input field identified by "textarea[name=description]" with the value "record 2 event 2 a"
 
   Scenario: 6 - Export Report and verify CSV data
     Given I click on the link labeled "Report 1"
@@ -144,11 +144,11 @@ Feature: Reporting
     And I click on the button labeled "Close" in the dialog box
 
     Then I should have a "csv" file that contains the headings below
-    | record_id | redcap_event_name | redcap_repeat_instrument | redcap_repeat_instance | fname | lname | reminder | description |
+      | record_id | redcap_event_name | redcap_repeat_instrument | redcap_repeat_instance | fname | lname | reminder | description |
     Then I should have a "csv" file that contains 8 distinct records
     Then I should have a "csv" file that contains 19 rows
     Then I should have a "csv" file that contains 11 repeating instrument rows
-    
+
   Scenario: 7 - Edit Report: Remove Description, Don't show all events or repeating instruments
     Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Edit"
@@ -157,7 +157,7 @@ Feature: Reporting
     Then I should see a dialog containing the following text: "Quick Add"
     And I uncheck the checkbox in table labeled "Description"
     #Then I should see the element identified by "input[name='field[]']" have length 5
-    #check hidden element count, because the onclick function takes too long to finish. count includes itself 
+    #check hidden element count, because the onclick function takes too long to finish. count includes itself
     And I click on the button labeled "Close"
 
     Given I see "Additional report options"
@@ -184,8 +184,8 @@ Feature: Reporting
     Then I should see a dialog containing the following text: "Quick Add"
     And I check the checkbox in table labeled "DOB"
     And I click on the button labeled "Close"
-    And I select "Event 1" on the multiselect field labeled "Filter by event"
-    And I select "dob" on the dropdown field labeled "First by"
+    And I select "Event 1" from the dropdown identified by "select[id=filter_events]" labeled "Filter by event"
+    And I select "dob" from the dropdown identified by "select[name='sort[]']" labeled "First by"
     And I click on the button labeled "Save Report"
     Then I should see a dialog containing the following text: 'Your report has been saved!'
 
@@ -193,9 +193,9 @@ Feature: Reporting
     Then I should see the report with 8 rows
     Then I should see the report with 8 distinct records
     Then I should see the report with the column named "DOB" ascending
-  
+
   Scenario: 9 - Edit Report: DOB Descending
-    Given I click on the link labeled "Data Exports, Reports, and Stats" 
+    Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Edit" for the report named "Report 1"
     And I select "Descending order" from the dropdown identified by "select[name='sortascdesc[]']" labeled "First by"
     And I click on the button labeled "Save Report"
@@ -207,12 +207,12 @@ Feature: Reporting
     Then I should see the report with the column named "DOB" descending
 
   Scenario: 10 - Edit Report: Filter DOB > 6/20/19
-    Given I click on the link labeled "Data Exports, Reports, and Stats" 
+    Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Edit" for the report named "Report 1"
     And I click on the button labeled "View full list of fields" for the row labeled "Filter 1"
-    And I select "dob" on the dropdown table field labeled "Filter 1"
+    And I select "dob" from the dropdown identified by "select[name='limiter[]']" labeled "Filter 1"
     Then I should see the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1" with the options below
-    | = | not = | <  | < = | > | > = |
+      | = | not = | <  | < = | > | > = |
     And I select ">" from the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1"
     And I enter "6/20/19" into the input field labeled "M-D-Y"
     And I click on the button labeled "Save Report"
@@ -223,11 +223,11 @@ Feature: Reporting
     Then I should see the report with 4 distinct records
 
   Scenario: 11 - Edit Report: Filter First name contains o
-    Given I click on the link labeled "Data Exports, Reports, and Stats" 
+    Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Edit" for the report named "Report 1"
-    And I select "fname" on the dropdown table field labeled "Filter 1"
+    And I select "fname" from the dropdown identified by "select[name='limiter[]']" labeled "Filter 1"
     Then I should see the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1" with the options below
-    | = | not = | contains | does not contain | starts with | ends with |
+      | = | not = | contains | does not contain | starts with | ends with |
     And I select "contains" from the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1"
     And I enter "o" into the field identified by "input[name='limiter_value[]']" labeled "Filter 1"
     And I click on the button labeled "Save Report"
@@ -238,11 +238,11 @@ Feature: Reporting
     Then I should see the report with 3 distinct records
 
   Scenario: 12 - Edit Report: Filter First name OR DOB < 6/20/19
-    Given I click on the link labeled "Data Exports, Reports, and Stats" 
+    Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Edit" for the report named "Report 1"
     And I click on the button labeled "View full list of fields" for the row labeled "Filter 2"
     And I should see "Filter 2"
-    And I select "dob" on the dropdown table field labeled "Filter 2"
+    And I select "dob" from the dropdown identified by "select[name='limiter[]']" labeled "Filter 2"
     And I select "<" from the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 2"
     And I enter "6/20/19" into the field identified by "input[name='limiter_value[]']" labeled "Filter 2"
     And I select "OR" from the dropdown identified by "select[name='limiter_group_operator[]']" labeled "Filter 2"
@@ -254,7 +254,7 @@ Feature: Reporting
     Then I should see the report with 4 distinct records
 
   Scenario: 13 - Edit Report: Filter First name AND DOB < 6/20/19
-    Given I click on the link labeled "Data Exports, Reports, and Stats" 
+    Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Edit" for the report named "Report 1"
     And I select "AND" from the dropdown identified by "select[name='limiter_group_operator[]']" labeled "Filter 2"
     And I click on the button labeled "Save Report"
@@ -265,43 +265,43 @@ Feature: Reporting
     Then I should see the report with 2 distinct records
 
   Scenario: 14 - Copy Report, cancel
-    Given I click on the link labeled "Data Exports, Reports, and Stats" 
+    Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Copy"
-    
+
     And I click on the button labeled "Cancel" in the dialog box
     #reload the page instead of waiting for UI change
-    And I click on the link labeled "Data Exports, Reports, and Stats" 
+    And I click on the link labeled "Data Exports, Reports, and Stats"
     Then I should NOT see "Report 1 (copy)"
 
   Scenario: 15 - Copy Report, confirm
     Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Copy"
-    
+
     And I click on the button labeled "Copy" in the dialog box
     #reload the page instead of waiting for UI change
-    And I click on the link labeled "Data Exports, Reports, and Stats" 
+    And I click on the link labeled "Data Exports, Reports, and Stats"
     Then I should see "Report 1 (copy)"
 
   Scenario: 16 - Delete Report, cancel
-    Given I click on the link labeled "Data Exports, Reports, and Stats" 
+    Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Delete" for the report named "Report 1 (copy)"
 
     And I click on the button labeled "Cancel" in the dialog box
     #reload the page instead of waiting for UI change
-    And I click on the link labeled "Data Exports, Reports, and Stats" 
+    And I click on the link labeled "Data Exports, Reports, and Stats"
     Then I should see "Report 1 (copy)"
 
   Scenario: 17 - Delete Report, confirm
-    Given I click on the link labeled "Data Exports, Reports, and Stats" 
+    Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Delete" for the report named "Report 1 (copy)"
 
     And I click on the button labeled "Delete" in the dialog box
     #reload the page instead of waiting for UI change
-    And I click on the link labeled "Data Exports, Reports, and Stats" 
+    And I click on the link labeled "Data Exports, Reports, and Stats"
     Then I should NOT see "Report 1 (copy)"
 
   Scenario: 18 - All data: View Report
-    Given I click on the link labeled "Data Exports, Reports, and Stats" 
+    Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "View Report" for the report named "All data"
     Then I should see the report with 19 rows
     Then I should see the report with a column labeled "First name"
@@ -315,7 +315,7 @@ Feature: Reporting
     Then I should see 'User "test_user" was successfully edited'
 
   Scenario: 20 - Verify Privileges
-    Given I click on the link labeled "Data Exports, Reports, and Stats" 
+    Given I click on the link labeled "Data Exports, Reports, and Stats"
     Then I should NOT see the buttons labeled Edit, Copy, and Delete
 
   Scenario: 21 - Logout
