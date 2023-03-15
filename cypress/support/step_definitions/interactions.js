@@ -736,7 +736,7 @@ Given('I select {string} on the {dropdown_type} labeled {string}', (text, type, 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
         if(type === "dropdown table field" || type === "multiselect table field") {
             cy.contains(label).then(($label) => {
-                cy.wrap($label).parentsUntil('tr').parent().first().within(($elm) => {
+                cy.wrap($label).parentsUntil(':has(:has(:has(:has(select))))').first().parent().parent().within(($elm) => {
                     cy.wrap($elm).find('select:visible:first').select(text)
                 })
             })
