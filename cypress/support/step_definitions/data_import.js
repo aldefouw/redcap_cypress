@@ -15,18 +15,6 @@ Given("I upload the data dictionary located at {string}", (data_dictionary) => {
 /**
  * @module DataImport
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I upload import data from the data import file located at {string} to project ID {int}
- * @param {string} import_file - the path to the desired data import file located within the /fixtures/import_files/ folder.
- * @param {int} pid - the Project ID where the data dictionary should be upploaded (e.g. 13)
- * @description Imports well-formed REDCap data import file to a specific project given a Project ID.
- */
-Given("I upload import data from the data import file located at {string} to project ID {int}", (import_file, pid) => {
-    cy.import_data_file(import_file, pid)
-})
-
-/**
- * @module DataImport
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I upload a {string} format file located at {string}, by clicking {string} to select the file, and clicking {string} to upload the file
  * @param {string} format - the format of the file that is being uploaded (e.g. csv)
  * @param {string} file_location - the location of the file being uploaded (e.g. import_files/core/filename.csv)
