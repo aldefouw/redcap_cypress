@@ -49,3 +49,22 @@ Given("I should see the checkbox identified by {string}, {check}", (sel, check) 
     //ATTN: Function no longer needed, can probably delete if no one needs it
     check === 'checked' ? cy.get(sel).should('be.checked') : cy.get(sel).should('not.be.checked')
 })
+
+/**
+ * @module Interactions
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I select {string} from the dropdown identified by {string} labeled {string}
+ * @param {string} value - the option to select from the dropdown
+ * @param {string} selector - the selector of the dropdown to choose an option from
+ * @param {string} label - the label of the dropdown to choose and option from
+ * @description Selects a dropdown by its table row name, label, and the option via a specific string.
+ */
+Given("I select {string} from the dropdown identified by {string} labeled {string}", (value, selector, label) => {
+    // Find the cell that contains the label and find the parent
+    cy.get('td').contains(label).parents('tr').within(() => {
+        //cy.get(sel).contains(value).parents("select").select(value, { force: true })
+        cy.contains(selector, value).then(($label) => {
+            cy.wrap($label).select(value, {force: true})
+        })
+    })
+})

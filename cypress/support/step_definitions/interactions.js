@@ -313,29 +313,6 @@ Given('I click on the table cell containing a link labeled {string}', (text) => 
     cy.get('td').contains(text).parent().find('a').click()
 })
 
-
-
-/**
- * @module Interactions
- * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
- * @example I select {string} from the dropdown identified by {string} labeled {string}
- * @param {string} value - the option to select from the dropdown
- * @param {string} selector - the selector of the dropdown to choose an option from
- * @param {string} label - the label of the dropdown to choose and option from
- * @description Selects a dropdown by its table row name, label, and the option via a specific string.
- */
-Given("I select {string} from the dropdown identified by {string} labeled {string}", (value, selector, label) => {
-    // Find the cell that contains the label and find the parent
-    cy.get('td').contains(label).parents('tr').within(() => {
-        //cy.get(sel).contains(value).parents("select").select(value, { force: true })
-        cy.contains(selector, value).then(($label) => {
-            cy.wrap($label).select(value, {force: true})
-        })
-    })
-})
-
-
-
 /**
  * @module Interactions
  * @author Corey Debacker <debacker@wisc.edu>
@@ -753,19 +730,19 @@ Given('I select {string} from the Validation dropdown of the open "Edit Field" d
  * @param {string} label - the label of the field
  * @description Selects a specific item from a dropdown
  */
-Given('I select {string} on the dropdown {dropdown_type} labeled {string}', (text, type, label) => {
+Given('I select {string} on the {dropdown_type} labeled {string}', (text, type, label) => {
     let sel = `:contains("${label}"):visible`
 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
-        if(type === "table field") {
+        if(type === "dropdown table field" || type === "multiselect table field") {
             cy.contains(label).then(($label) => {
-                cy.wrap($label).parentsUntil(':has(:has(:has(:has(select))))').first().parent().parent().within(($elm) => {
-                    cy.wrap($elm).find('select').select(text)
+                cy.wrap($label).parentsUntil('tr').parent().first().within(($elm) => {
+                    cy.wrap($elm).find('select:visible:first').select(text)
                 })
             })
-        } else if (type === "field"){
+        } else if (type === "dropdown field" || type === "multiselect field"){
             cy.contains(label).then(($label) => {
-                cy.wrap($label).parent().find('select').select(text)
+                cy.wrap($label).parent().find('select:visible:first').select(text)
             })
         }
     })

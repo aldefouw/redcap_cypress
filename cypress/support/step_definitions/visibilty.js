@@ -188,7 +188,7 @@ Given("I should see a {checkbox_field_type} labeled {string} that is {check}", (
  * @param {string} option - the option selected
  * @description Selects a specific item from a dropdown
  */
-Given('I should see the dropdown {dropdown_type} labeled {string} with the option {string} selected', (type, label, option) => {
+Given('I should see the {dropdown_type} labeled {string} with the option {string} selected', (type, label, option) => {
     let sel = `:contains("${label}"):visible`
 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {

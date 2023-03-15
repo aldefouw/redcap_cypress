@@ -22,18 +22,7 @@ Given("I rename the current data instrument named {string} to {string}", (curren
  */
 
 Given("I delete the data instrument named {string}", (instrument_name) => {
-    cy.intercept({  method: 'GET',
-        url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/delete_form.php?*'
-    }).as('delete_instrument')
-
-    cy.get('table[id=table-forms_surveys]')
-        .find('tr').contains(instrument_name)
-        .parents('tr').find('button').contains('Choose action').click()
-    cy.get('ul[id=formActionDropdown]').find('a').contains('Delete').click()
-
-    cy.get(':button:contains("Yes, delete it"):visible').click()
-
-    cy.wait('@delete_instrument')
+    cy.delete_instrument(instrument_name)
 })
 
 
@@ -46,11 +35,5 @@ Given("I delete the data instrument named {string}", (instrument_name) => {
  */
 
 Given("I enable surveys for the data instrument named {string}", (instrument_name) => {
-    cy.get('table[id=table-forms_surveys]').within(() => {
-        cy.get('tr').contains(instrument_name).parents('tr').find(':button').contains('Enable').click()
-    })
-
-    cy.get(`:button:contains("Save Changes"):visible:first`).click()
-
-    cy.get('html').should('contain', 'Your survey settings were successfully saved!')
+    cy.enable_surveys(instrument_name)
 })

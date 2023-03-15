@@ -125,7 +125,7 @@ Feature: Reporting
     And I click on the record "2" link for the row containing "Repeating"
     Then I should see "Repeating"
     Then I should see "Editing existing Record ID 2"
-    Then I should see the input field identified by "textarea[name=description]" with the value "record 2 event 2 a"
+    And I should see "record 2 event 2 a" in the data entry form field labeled "Description"
 
   Scenario: 6 - Export Report and verify CSV data
     Given I click on the link labeled "Report 1"
@@ -184,8 +184,8 @@ Feature: Reporting
     Then I should see a dialog containing the following text: "Quick Add"
     And I check the checkbox in table labeled "DOB"
     And I click on the button labeled "Close"
-    And I select "Event 1" from the dropdown identified by "select[id=filter_events]" labeled "Filter by event"
-    And I select "dob" from the dropdown identified by "select[name='sort[]']" labeled "First by"
+    And I select "Event 1" on the multiselect field labeled "Filter by event"
+    And I select "dob" on the dropdown field labeled "First by"
     And I click on the button labeled "Save Report"
     Then I should see a dialog containing the following text: 'Your report has been saved!'
 
@@ -210,7 +210,7 @@ Feature: Reporting
     Given I click on the link labeled "Data Exports, Reports, and Stats" 
     And I click on the button labeled "Edit" for the report named "Report 1"
     And I click on the button labeled "View full list of fields" for the row labeled "Filter 1"
-    And I select "dob" from the dropdown identified by "select[name='limiter[]']" labeled "Filter 1"
+    And I select "dob" on the dropdown table field labeled "Filter 1"
     Then I should see the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1" with the options below
     | = | not = | <  | < = | > | > = |
     And I select ">" from the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1"
@@ -225,7 +225,7 @@ Feature: Reporting
   Scenario: 11 - Edit Report: Filter First name contains o
     Given I click on the link labeled "Data Exports, Reports, and Stats" 
     And I click on the button labeled "Edit" for the report named "Report 1"
-    And I select "fname" from the dropdown identified by "select[name='limiter[]']" labeled "Filter 1"
+    And I select "fname" on the dropdown table field labeled "Filter 1"
     Then I should see the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1" with the options below
     | = | not = | contains | does not contain | starts with | ends with |
     And I select "contains" from the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1"
@@ -242,7 +242,7 @@ Feature: Reporting
     And I click on the button labeled "Edit" for the report named "Report 1"
     And I click on the button labeled "View full list of fields" for the row labeled "Filter 2"
     And I should see "Filter 2"
-    And I select "dob" from the dropdown identified by "select[name='limiter[]']" labeled "Filter 2"
+    And I select "dob" on the dropdown table field labeled "Filter 2"
     And I select "<" from the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 2"
     And I enter "6/20/19" into the field identified by "input[name='limiter_value[]']" labeled "Filter 2"
     And I select "OR" from the dropdown identified by "select[name='limiter_group_operator[]']" labeled "Filter 2"

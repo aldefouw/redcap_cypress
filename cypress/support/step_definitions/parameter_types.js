@@ -164,5 +164,5 @@ defineParameterType({
 //interactions.js
 defineParameterType({
     name: 'dropdown_type',
-    regexp: /field|table field/
+    regexp: /dropdown field|dropdown table field|multiselect field|multiselect table field/
 })
