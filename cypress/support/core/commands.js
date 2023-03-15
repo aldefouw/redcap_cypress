@@ -23,13 +23,22 @@ require('./commands/visit_urls.js')
 //   /suport/modules/commands.js
 //   /support/plugins/commands.js
 
-Cypress.Commands.add('get_element_by_label', (container, label_selector, label, selector = null, original_selector = null, i = 0) => {
+Cypress.Commands.add('get_element_by_label', (label, selector = null, original_selector = null, i = 0) => {
     if (original_selector === null) { original_selector = selector }
-    if(Cypress.$(container).find(label_selector).parentsUntil(selector).length){
-        return cy.wrap(label).parentsUntil(selector).first().parent().find(`${original_selector}:first`)
-    } else if (i <= 5) {
-        cy.get_element_by_label(container, label_selector, label, `:has(${selector})`, original_selector, i + 1)
-    }
+
+    cy.wrap(label).then(($self) => {
+        if(i === 0 && $self.parent().find(selector).length){
+            return $self.parent().find(selector)
+        } else {
+            cy.wrap(label).parentsUntil(`:has(${selector})`).last().parent().then(($parent) => {
+                if($parent.find(selector).length){
+                    return $parent.find(selector)
+                } else if (i <= 5) {
+                    cy.get_element_by_label(label, `:has(${selector})`, original_selector, i + 1)
+                }
+            })
+        }
+    })
 })
 
 //Provide a robust way for this to find either a button or input button that contains this text

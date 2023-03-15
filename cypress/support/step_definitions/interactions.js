@@ -351,7 +351,7 @@ Given("I {click_type} the {checkbox_field_type} labeled {string}", (check, field
 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
         cy.contains(label).then(($label) => {
-            let selector = cy.get_element_by_label(container, sel, $label, 'input[type=checkbox]:visible')
+            let selector = cy.get_element_by_label($label, 'input[type=checkbox]:visible')
 
             if (check === "click on") {
                 selector.scrollIntoView().click()
