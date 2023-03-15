@@ -253,3 +253,19 @@ Given("I should NOT see a {LabeledElement} labeled {string}", (el, text) => {
     let sel = `${subsel}:contains("${text}"):visible` + (el === 'button' ? `,button[value="${text}"]:visible` : '')
     cy.get_top_layer(($e) => {console.log(sel);expect($e.find(sel)).to.have.lengthOf(0)})
 })
+
+/**
+ * @module Visibility
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I should see {string} in the data entry form field labeled {string}
+ * @param {string} text - the text that should be in the field
+ * @param {string} label - the label of the field
+ * @description Identifies specific text string in a field identified by a label.
+ */
+Given('I should see {string} in the data entry form field labeled {string}', (text, label) => {
+    cy.contains('label', label)
+        .invoke('attr', 'id')
+        .then(($id) => {
+            cy.get('[name="' + $id.split('label-')[1] + '"]').should('have.value', text)
+        })
+})
