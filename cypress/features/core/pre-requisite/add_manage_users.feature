@@ -303,10 +303,10 @@ Scenario: 37- Edit Security & Authentication settings
     And I enter "1" into the input field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
     And I click on the button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
+    And I logout
 
+#This scenario exists so that 39 is one too many attempts at logging in
 Scenario: 38- Log in test_user with Old Password
-    #This scenario exists so that 39 is one too many attempts at logging in
-    Given I logout
     Then I should see "Log In"
     And I enter "test_user" into the input field labeled "Username:"
     And I enter "test" into the input field labeled "Password:" 
