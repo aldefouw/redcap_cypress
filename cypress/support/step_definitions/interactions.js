@@ -349,31 +349,9 @@ Given("I enter {string} into the hidden field identified by {string}", (text, se
 Given("I {click_type} the {checkbox_field_type} labeled {string}", (check, field_type, label) => {
     let sel = `:contains("${label}"):visible`
 
-    function getFirstCheckbox(test, sel, label, t = 'input[type=checkbox]:visible', i = 0){
-        if(Cypress.$(test).find(sel).parentsUntil(t).length){
-
-            return cy.wrap(label).parentsUntil(t).first().parent().find('input[type=checkbox]:visible:first').then(($elm) =>{
-                console.log($elm)
-            })
-
-        } else if (i <= 5) {
-            getFirstCheckbox(test, sel, label, `:has(${t})`, i + 1)
-        } else {
-            return null
-        }
-    }
-
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(($test) => {
-
-        let selector = null
-
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
         cy.contains(label).then(($label) => {
-            if (field_type === "checkbox in table") {
-                selector = getFirstCheckbox($test, sel, $label)
-            } else {
-                selector = cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]:visible:first')
-            }
-
+            let selector = cy.get_element_by_label(container, sel, $label, 'input[type=checkbox]:visible')
 
             if (check === "click on") {
                 selector.scrollIntoView().click()
