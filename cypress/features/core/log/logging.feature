@@ -239,9 +239,9 @@ Feature: Logging
   Scenario: 24 - Logging: filter by event - User or role
     Then I click on the link labeled "Logging"
     And I select the "User or role created-updated-deleted" option identified by "user" from the Filter by event dropdown field
-    Then I should see 'Update User' in the logging table
-    And I should see 'Create User' in the logging table
-    And I should see 'Delete User' in the logging table
+    Then I should see 'Updated User' in the logging table
+    And I should see 'Created User' in the logging table
+    And I should see 'Deleted User' in the logging table
     And I should see 'user = \'test_user\'' in the logging table
     And I should see 'user = \'test_user2\'' in the logging table
     And I should see 'role = \'Data\'' in the logging table
@@ -249,9 +249,9 @@ Feature: Logging
   Scenario: 25 - Logging: filter by event - Record created-updated-deleted
     Then I click on the link labeled "Logging"
     And I select the "Record created-updated-deleted" option identified by "record" from the Filter by event dropdown field
-    Then I should see 'Update Record' in the logging table
-    And I should see 'Create Record' in the logging table
-    And I should see 'Delete Record' in the logging table
+    Then I should see 'Updated Record' in the logging table
+    And I should see 'Created Record' in the logging table
+    And I should see 'Deleted Record' in the logging table
     And I should see 'record_id = \'3\'' in the logging table
     And I should see 'ptname = \'Delete\', email = \'delete@test.com\', text_validation_complete = \'0\', record_id = \'3\'' in the logging table
     And I should see 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'' in the logging table
@@ -283,7 +283,7 @@ Feature: Logging
   Scenario: 29 - Logging: filter by event - All event types (record) - by specific record
     Then I click on the link labeled "Logging"
     And I select the '2' option from the Filter by record dropdown field
-    Then I should see 'Create Record' in the logging table
+    Then I should see 'Created Record' in the logging table
     And I should see 'ptname = \'Test2\', email = \'test2@test.com\', text_validation_complete = \'0\', record_id = \'2\'' in the logging table
 
   Scenario: 30 - Download All logging and open file to verify
@@ -333,9 +333,9 @@ Feature: Logging
   Scenario: 35 - Logging: filter by event - Record created-updated-deleted
     Then I click on the link labeled "Logging"
     And I select the "Record created-updated-deleted" option identified by "record" from the Filter by event dropdown field
-    Then I should see 'Update Record' in the logging table
-    And I should see 'Create Record' in the logging table
-    And I should see 'Delete Record' in the logging table
+    Then I should see 'Updated Record' in the logging table
+    And I should see 'Created Record' in the logging table
+    And I should see 'Deleted Record' in the logging table
     #And I should see '[*DATA REMOVED*]' in the logging table
     #And I should see '[All data values were removed from this record\'s logging activity.]' in the logging table
 
