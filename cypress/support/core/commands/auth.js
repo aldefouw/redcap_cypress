@@ -21,7 +21,9 @@ Cypress.Commands.add('login', (options) => {
 })
 
 Cypress.Commands.add('logout', () => {
-    cy.visit_version({page: '', params: 'logout=1'})
+    cy.clearCookie('PHPSESSID')
+    cy.visit_version({page: "", parameters: "action=logout"})
+    cy.get('html').should('contain', 'Log In')
 })
 
 Cypress.Commands.add('set_user_type', (user_type) => {
