@@ -150,26 +150,31 @@ Given("I should see the dropdown identified by {string} with the option {string}
 /**
  * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I should see the dropdown {dropdown_type} labeled {string} with the option {string} selected
- * @param {string} label - the label of the field
- * @param {string} option - the option selected
- * @description Selects a specific item from a dropdown
+ * @example I should see a {checkbox_field_type} labeled {string} that is {check}
+ * @param {string} label - the label associated with the checkbox field
+ * @param {check} check - state of checkbox (check/unchecked)
+ * @description Selects a checkbox field by its label
  */
-Given('I should see the dropdown {dropdown_type} labeled {string} with the option {string} selected', (type, label, option) => {
+Given("I should see a {checkbox_field_type} labeled {string} that is {check}", (field_type, label, check) => {
     let sel = `:contains("${label}"):visible`
 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
-        if(type === "table field") {
-            cy.contains(label).then(($label) => {
-                cy.wrap($label).parentsUntil(':has(:has(:has(:has(select))))').first().parent().parent().within(($elm) => {
-                    cy.wrap($elm).find('select').find(':selected').should('have.text', option)
-                })
-            })
-        } else if (type === "field"){
-            cy.contains(label).then(($label) => {
-                cy.wrap($label).parent().find('select').find(':selected').should('have.text', option)
-            })
-        }
+
+        let selector = null
+
+        cy.contains(label).then(($label) => {
+            if(field_type === "checkbox in table"){
+                selector = cy.wrap($label).parentsUntil('tr').parent().first().find('input[type=checkbox]')
+            } else {
+                selector = cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]')
+            }
+
+            if (check === "checked"){
+                selector.then(($input) => { expect($input).to.be.checked })
+            } else if (check === "unchecked"){
+                selector.then(($input) => { expect($input).to.not.be.checked })
+            }
+        })
     })
 })
 
