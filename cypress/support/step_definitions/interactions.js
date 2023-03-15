@@ -386,17 +386,17 @@ Given("I {click_type} the {checkbox_field_type} labeled {string}", (check, field
 
         cy.contains(label).then(($label) => {
             if(field_type === "checkbox in table"){
-                selector = cy.wrap($label).parentsUntil('tr').parent().first().find('input[type=checkbox]')
+                selector = cy.wrap($label).parentsUntil('tr').parent().first().find('input[type=checkbox]:visible:first')
             } else {
-                selector = cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]')
+                selector = cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]:visible:first')
             }
 
             if(check === "click on"){
-                selector.click()
+                selector.scrollIntoView().click()
             } else if (check === "check"){
-                selector.check()
+                selector.scrollIntoView().check()
             } else if (check === "uncheck"){
-                selector.uncheck()
+                selector.scrollIntoView().uncheck()
             }
         })
     })
