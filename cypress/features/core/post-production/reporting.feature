@@ -84,14 +84,14 @@ Feature: Reporting
 
     And I click on the button labeled "Quick Add"
     Then I should see a dialog containing the following text: "Quick Add"
-    And I check the checkbox in table labeled "First name"
-    And I check the checkbox in table labeled "Last name"
-    And I check the checkbox in table labeled "Reminder"
-    And I check the checkbox in table labeled "Description"
+    And I check the checkbox labeled "First name"
+    And I check the checkbox labeled "Last name"
+    And I check the checkbox labeled "Reminder"
+    And I check the checkbox labeled "Description"
     And I click on the button labeled "Close" in the dialog box
 
     Then I should see "Additional report options"
-    And I should see a checkbox in table labeled "Show data for all events" that is checked
+    And I should see a checkbox labeled "Show data for all events" that is checked
 
     When I click on the button labeled "Save Report"
     Then I should see a dialog containing the following text: 'Your report has been saved!'
@@ -155,13 +155,13 @@ Feature: Reporting
 
     And I click on the button labeled "Quick Add"
     Then I should see a dialog containing the following text: "Quick Add"
-    And I uncheck the checkbox in table labeled "Description"
+    And I uncheck the checkbox labeled "Description"
     #Then I should see the element identified by "input[name='field[]']" have length 5
     #check hidden element count, because the onclick function takes too long to finish. count includes itself 
     And I click on the button labeled "Close"
 
     Given I see "Additional report options"
-    And I uncheck the checkbox in table labeled "Show data for all events or repeating instruments/events"
+    And I uncheck the checkbox labeled "Show data for all events or repeating instruments/events"
     And I click on the button labeled "Save Report"
     Then I should see a dialog containing the following text: 'Your report has been saved!'
 
@@ -182,7 +182,7 @@ Feature: Reporting
     And I click on the button labeled "Edit"
     And I click on the button labeled "Quick Add"
     Then I should see a dialog containing the following text: "Quick Add"
-    And I check the checkbox in table labeled "DOB"
+    And I check the checkbox labeled "DOB"
     And I click on the button labeled "Close"
     And I select "Event 1" on the multiselect field labeled "Filter by event"
     And I select "dob" on the dropdown field labeled "First by"
