@@ -111,14 +111,15 @@ Given("I enable surveys for the project", () => {
     cy.intercept({
         method: 'POST',
         url: '/redcap_v' + Cypress.env('redcap_version') + '/ProjectSetup/modify_project_setting_ajax.php?pid=*'
-    }).as('projectSettings')
+    }).as('enable_survey')
 
     cy.get('div').contains('Use surveys in this project?').parent().within(($div) => {
         cy.get('button').contains('Enable').click()
     })
 
     //Wait to make sure that the AJAX request has completed before we move onto next test
-    cy.wait('@projectSettings')
+    cy.wait('@enable_survey')
+    cy.get('#setupEnableSurveysBtn').should('contain.text', 'Disable')
 })
 
 /**
