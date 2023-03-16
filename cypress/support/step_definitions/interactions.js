@@ -31,7 +31,7 @@ Given("I click on the link labeled exactly {string}", (text) => {
  */
  Given("I select the submit option labeled \"{instrument_save_options}\" on the Data Collection Instrument", (text) => {
 
-     //REDCap does some crazy conditional display of buttons so we try to handle that as we best can
+     //REDCap does some crazy conditional display of buttons, so we try to handle that as we best can
      cy.get('tr#__SUBMITBUTTONS__-tr').within(() => {
          let btn = Cypress.$("button:contains(" + JSON.stringify(text) + ")");
 

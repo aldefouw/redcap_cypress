@@ -8,7 +8,7 @@ import {Given} from "cypress-cucumber-preprocessor/steps";
  */
 
 Given("I move the project back to development mode via the Other Functionality page", (text) => {
-    cy.get('button').contains('Move back to Development status').click()
+    cy.move_project_to_development()
 })
 
 /**
