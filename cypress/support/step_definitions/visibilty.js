@@ -210,6 +210,32 @@ Given('I should see the {dropdown_type} labeled {string} with the option {string
 
 /**
  * @module Visibility
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I should see a {checkbox_field_type} labeled {string} that is {check}
+ * @param {string} label - the label associated with the checkbox field
+ * @param {check} check - state of checkbox (check/unchecked)
+ * @description Selects a checkbox field by its label
+ */
+Given("I should see a {checkbox_field_type} labeled {string} that is {check}", (field_type, label, check) => {
+    let sel = `:contains("${label}"):visible`
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
+        cy.contains(label).then(($label) => {
+            let selector = cy.get_element_by_label($label, 'input[type=checkbox]:visible')
+
+            if (check === "checked") {
+                selector.scrollIntoView().then(($input) => { expect($input).to.be.checked })
+            } else if (check === "unchecked") {
+                selector.scrollIntoView().then(($input) => { expect($input).to.be.checked })
+            }
+        })
+    })
+})
+
+
+
+/**
+ * @module Visibility
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I should see {string} in an alert box
  * @param {string} text - the text that should be displayed in an alert box
