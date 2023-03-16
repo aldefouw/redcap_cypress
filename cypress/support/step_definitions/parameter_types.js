@@ -160,3 +160,8 @@ defineParameterType({
     name: 'dropdown_type',
     regexp: /dropdown field|dropdown table field|multiselect field|multiselect table field/
 })
+
+defineParameterType({
+    name: 'labeledExactly',
+    regexp: /labeled|labeled exactly/
+})

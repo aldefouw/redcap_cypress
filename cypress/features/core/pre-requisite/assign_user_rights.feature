@@ -25,7 +25,7 @@ Feature: Assign User Rights
     And I create a project named "AssignUserRightsProject" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
     
   Scenario: Project Setup - 2
-    When I enable surveys
+    When I enable surveys for the project
     When I disable longitudinal mode
     And I click on the button labeled "Additional customizations"
     And I check the checkbox labeled "Enable the Field Comment Log or Data Resolution Workflow (Data Queries)?"

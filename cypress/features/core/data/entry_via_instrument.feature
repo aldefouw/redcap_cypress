@@ -87,7 +87,7 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the button labeled "Erase all data" in the dialog box
     Then I should see "All data has now been deleted from the project!"
 
-    When I close popup
+    When I close the popup
     Then I should see "Data Management"
 
   Scenario: 0 - Project modifications to the Data Types form
@@ -266,7 +266,7 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms/events)"
     And I click on the button labeled "DELETE RECORD" in the dialog box
-    And I close popup
+    And I close the popup
     And I click on the link labeled "Record Status Dashboard"
     Then I should see "Arm 1:"
 
@@ -329,7 +329,7 @@ Feature: Data Entry through the Data Collection Instrument
     And I click on the button labeled "DELETE RECORD" in the dialog box
     Then I should see 'Record ID "2" was successfully deleted.'
 
-    When I close popup
+    When I close the popup
     And I click on the link labeled "Record Status Dashboard"
     Then I should see "Arm 2:"
     And I should see "No records exist yet"
