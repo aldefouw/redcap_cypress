@@ -33,7 +33,7 @@ Given('I should see a row labeled {string} in the projects table', (project_name
 })
 
 /**
- * @module TestSpecific/BrowseProjects
+ * @module BrowseProjects
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see projects sorted correctly when I click on {string} to sort in either direction
  * @param {string} column_name - name of the Column we want to click on to change the sort direction
@@ -44,7 +44,7 @@ Given('I should see projects sorted correctly when I click on {string} to sort i
 })
 
 /**
- * @module TestSpecific/BrowseProjects
+ * @module BrowseProjects
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I enter {string} into the filter projects field
  * @param {string} filter_string - string that we enter into the filter field
