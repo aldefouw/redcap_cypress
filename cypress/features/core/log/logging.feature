@@ -88,7 +88,7 @@ Feature: Logging
     And I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms)"
     And I click on the button labeled "DELETE RECORD"
-    Then I close popup
+    Then I close the pop
 
   Scenario: 7 - Add new role
     Given I click on the link labeled "User Rights"
@@ -131,7 +131,7 @@ Feature: Logging
     And I check the User Right named 'Record Locking Customization'
     And I select the User Right named "Lock/Unlock Records" and choose "Locking / Unlocking with E-signature authority"
     Then I should see "NOTICE"
-    And I close popup
+    And I close the pop
     And I check the User Right named "Create Records"
     And I save changes within the context of User Rights
 
@@ -328,7 +328,7 @@ Feature: Logging
 
     And I click on the button labeled "DELETE RECORD"
     And I should see 'Record ID "2" was successfully deleted'
-    Then I close popup
+    Then I close the pop
 
   Scenario: 35 - Logging: filter by event - Record created-updated-deleted
     Then I click on the link labeled "Logging"
@@ -416,7 +416,7 @@ Feature: Logging
     # And I enter 'DELETE' into the field identified by 'input[type=text]'
     # And I click on the button labeled 'Confirm'
     And I click on the button labeled "DELETE RECORD"
-    Then I close popup
+    Then I close the pop
 
   Scenario: 42 - Logging: filter by event - Record created-updated-deleted
 

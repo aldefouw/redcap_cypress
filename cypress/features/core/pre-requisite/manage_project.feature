@@ -323,7 +323,7 @@ Feature: Manage Project
         Then I should see "Delete this instrument's survey settings"
         And I click on the button labeled "Delete Survey Settings" in the dialog box
         Then I should see "Survey successfully deleted!"
-        And I close popup
+        And I close the pop
         Then I should see "Data Collection Instruments"
 
     Scenario: 41 - Enable Survey for My First Instrument

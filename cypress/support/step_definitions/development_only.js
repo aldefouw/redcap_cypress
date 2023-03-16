@@ -71,6 +71,18 @@ Given("I select {string} from the dropdown identified by {string} labeled {strin
 
 /**
  * @module DevelopmentOnly
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I select {string} from the dropdown identified by {string}
+ * @param {string} value - the option to select from the dropdown
+ * @param {string} label - the label of the dropdown to choose an option from
+ * @description Selects a dropdown by its label and the option via a specific string.
+ */
+Given('I select {string} from the dropdown identified by {string}', (value,label) => {
+    cy.get(label).select(value, { force: true })
+})
+
+/**
+ * @module DevelopmentOnly
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I should NOT see {string}
  * @param {string} selector - the selector that identifies an element
@@ -109,7 +121,7 @@ Given("I should see the input field identified by {string} with the value {strin
 })
 
 /**
- * @module Visibility
+ * @module DevelopmentOnly
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I should see the dropdown identified by {string} with the option {string} selected
  * @param {string} selector the selector that identifies a checkbox
@@ -122,7 +134,7 @@ Given("I should see the dropdown identified by {string} with the option {string}
 })
 
 /**
- * @module Visibility
+ * @module DevelopmentOnly
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I should NOT see {string}
  * @param {string} selector - the selector that identifies an element
@@ -136,7 +148,7 @@ Given("I should no longer see the element identified by {string}", (selector) =>
 })
 
 /**
- * @module Visibility
+ * @module DevelopmentOnly
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I should see a new dialog box named {string}
  * @param {string} text the id of the new dialog box
@@ -148,7 +160,7 @@ Given("I should see a new dialog box named {string}", (text) => {
 })
 
 /**
- * @module Visibility
+ * @module DevelopmentOnly
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I should see the dropdown identified by {string} with the options below
  * @param {string} selector the selector that identifies a dropbox
@@ -159,4 +171,60 @@ Given("I should see the dropdown identified by {string} with the options below",
     for(let i = 0; i < options.rawTable[0].length; i++){
         cy.get(selector).should('contain', options.rawTable[0][i])
     }
+})
+
+/**
+ * @module DevelopmentOnly
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I clear the field identified by {string}
+ * @param {string} selector - the selector of the field to select
+ * @description Clears the text from an input field based upon its selector
+ */
+Given('I clear the field identified by {string}', (selector) => {
+    cy.get(selector).clear()
+})
+
+/**
+ * @module DevelopmentOnly
+ * @author Corey Debacker <debacker@wisc.edu>
+ * @example I enter {string} into the field identified by {string}
+ * @param {string} text - the text to enter into the field
+ * @param {string} selector - the selector of the element to enter the text into
+ * @description Enter text into a specific field
+ */
+Given("I enter {string} into the field identified by {string}", (text, sel) => {
+    cy.get(sel).type(text)
+})
+
+/**
+ * @module DevelopmentOnly
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I check the checkbox identified by {string}
+ * @param {string} value - input element
+ * @description Checks the checkbox identified by its element
+ */
+Given('I check the checkbox identified by {string}', (value) => {
+    cy.get(value).check()
+})
+
+/**
+ * @module DevelopmentOnly
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I uncheck the checkbox identified by {string}
+ * @param {string} value - input element
+ * @description Unchecks the checkbox identified by its element
+ */
+Given('I uncheck the checkbox identified by {string}', (value) => {
+    cy.get(value).uncheck()
+})
+
+/**
+ * @module DevelopmentOnly
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I click the input element identified by {string}
+ * @param {string} value - input element that you want to click
+ * @description Clicks the input field
+ */
+Given('I click the input element identified by {string}', (value) => {
+    cy.get(value).click()
 })
