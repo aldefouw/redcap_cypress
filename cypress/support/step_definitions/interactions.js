@@ -349,22 +349,15 @@ Given("I enter {string} into the hidden field identified by {string}", (text, se
 Given("I {click_type} the {checkbox_field_type} labeled {string}", (check, field_type, label) => {
     let sel = `:contains("${label}"):visible`
 
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
-
-        let selector = null
-
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
         cy.contains(label).then(($label) => {
-            if(field_type === "checkbox in table"){
-                selector = cy.wrap($label).parentsUntil('tr').parent().first().find('input[type=checkbox]:visible:first')
-            } else {
-                selector = cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]:visible:first')
-            }
+            let selector = cy.get_element_by_label($label, 'input[type=checkbox]:visible')
 
-            if(check === "click on"){
+            if (check === "click on") {
                 selector.scrollIntoView().click()
-            } else if (check === "check"){
+            } else if (check === "check") {
                 selector.scrollIntoView().check()
-            } else if (check === "uncheck"){
+            } else if (check === "uncheck") {
                 selector.scrollIntoView().uncheck()
             }
         })
@@ -409,8 +402,12 @@ Given("I {click_type} the {elm_type} element labeled {string}", (click_type, ele
  * @description Selects a file path to upload into input named name
  */
 Given("I set the input file field named {string} to the file at path {string}", (name, path) => {
-    cy.get('input[name=' + name + ']').then(($field) => {
-        cy.wrap($field).selectFile(path)
+    let sel = 'input[name=' + name + ']'
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+        cy.get('input[name=' + name + ']').then(($field) => {
+            cy.wrap($field).selectFile(path)
+        })
     })
 })
 
