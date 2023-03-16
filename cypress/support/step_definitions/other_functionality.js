@@ -3,7 +3,7 @@ import {Given} from "cypress-cucumber-preprocessor/steps";
 /**
  * @module OtherFunctionality
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I move the project back to development mode
+ * @example I move the project back to development mode via the Other Functionality page
  * @description Move project back to development mode
  */
 

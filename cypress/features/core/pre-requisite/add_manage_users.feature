@@ -254,7 +254,7 @@ Scenario: 30- Change password for user1115_4 through Browse Users
 
     When I click on the button labeled "Reset password" in the dialog box
     Then I should see "The changes have been made successfully to the selected users!"
-    And I close the pop
+    And I close the popup
 
 #Scenario: 31- Log Into user1115_4 with Old Password
         #aldefouw will handle 

@@ -70,10 +70,10 @@ Given("I click on the link {labeledExactly} {string}", (exactly, text) => {
 /**
  * @module Interactions
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I close the pop
+ * @example I close the popup
  * @description Closes popup with button labeled "Close"
  */
- Given("I close the pop", (text) => {
+ Given("I close the popup", (text) => {
     cy.focused().should('have.text', 'Close').click()
  })
 
@@ -236,8 +236,7 @@ Given("I enter {string} into the hidden field identified by {string}", (text, se
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I (click on|check|uncheck) the checkbox labeled {string}
- * @param {click_type} check - check or uncheck
+ * @example I < click on | check | uncheck > the checkbox labeled {string}
  * @param {string} label - the label associated with the checkbox field
  * @description Selects a checkbox field by its label
  */
@@ -324,7 +323,7 @@ Given('I enter {string} into the field identified by {string} labeled {string}',
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example for this scenario, I will <accept/cancel> a confirmation window containing the text {string}
+ * @example for this scenario, I will < accept | cancel > a confirmation window containing the text {string}
  * @param {string} action - valid choices are 'accept' OR 'cancel'
  * @param {string} window_text - text that is expected to appear in the confirmation window
  * @description Pre-emptively tell Cypress what to do about a confirmation window.  NOTE: This step must come BEFORE step that clicks button.

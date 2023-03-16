@@ -4,38 +4,9 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @module Survey
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I visit the public survey URL for this project
- * @description Visits the Public Survey URL of a specif project identified by a Project ID.
+ * @description Visits the Public Survey URL of the current project we are in.
  */
 Given("I visit the public survey URL for this project", () => {
-    //Look for the name of the Distribution Tools for a Survey
-    cy.get('a').contains('Survey Distribution Tools').click()
-
-    //Get the Public Survey URL block
-    cy.get('div').contains('Public Survey URL').parent().find('input').then(($input) => {
-        return $input[0].value
-    }).then(($url) => {
-        //Make sure we aren't logged in
-        cy.logout()
-
-        //Now we can visit the URL as an external user
-        cy.visit_base({ url: $url })
-    })
-})
-
-/**
- * @module Survey
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I visit the public survey URL for Project ID {int}
- * @param {string} pid - the Project ID of the Public Survey you want to visit
- * @description Visits the Public Survey URL of a specif project identified by a Project ID.
- */
-Given("I visit the public survey URL for the current project", (pid = 13) => {
-    //Get the public survey URL as an admin so we know survey tools are available
-    cy.set_user_type('admin')
-
-    //Visit the project ID specified
-    cy.visit_version({page: 'index.php', params: 'pid=' + pid})
-
     //Look for the name of the Distribution Tools for a Survey
     cy.get('a').contains('Survey Distribution Tools').click()
 
@@ -128,30 +99,6 @@ Given("I enter {string} into the {string} survey text input field", (text, field
  Given("I enter the Username: {string} and password {string} for e-signature", (username, password) => {
     cy.get('input[id="esign_username"]').type(username)
     cy.get('input[id="esign_password"').type(password)
-})
-
-/**
- * @module Survey
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I disable surveys for Project ID {int}
- * @param {string} pid - the text you want to enter into the survey field
- * @description Disables surveys on a particular Project ID.
- */
-Given("I disable surveys for Project ID {int}", (pid) => {
-    cy.intercept({
-        method: 'POST',
-        url: '/redcap_v' + Cypress.env('redcap_version') + '/ProjectSetup/modify_project_setting_ajax.php?pid=*'
-    }).as('projectSettings')
-
-    //Re-enable surveys before proceeding
-    cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=' + pid})
-
-    cy.get('div').contains('Use surveys in this project?').parent().within(($div) => {
-        cy.get('button').contains('Disable').click()
-    })
-
-    //Wait to make sure that the AJAX request has completed before we move onto checking data
-    cy.wait('@projectSettings')
 })
 
 /**
@@ -271,24 +218,6 @@ Then("I should see the survey open exactly once by watching the tag of {string}"
     cy.get('td').contains('New instrument name').parent().within(($td) => {
         cy.get('input[type=text]', {force: true}).type(formname)
         cy.get('input[value=Create]', {force: true}).click()
-    })
-})
-
-
-/**
- * @module Survey
- * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I enter draft mode
- * @description Enters draft mode
- */
- Given("I enter draft mode", () => {
-    cy.get('html').should('contain', 'Enter Draft Mode')
-
-    cy.button_or_input('Enter Draft Mode').click()
-
-    //Check to see that REDCap indicates we're in DRAFT mode
-    cy.get('div#actionMsg').should(($alert) => {
-        expect($alert).to.contain('The project is now in Draft Mode.')
     })
 })
 

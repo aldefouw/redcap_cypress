@@ -125,8 +125,7 @@ Given("I should see a dialog containing the following text: {string}", (text) =>
 /**
  * @module Visibility
  * @author Corey DeBacker <debacker@wisc.edu>
- * @example I should see a {LabeledElement} labeled {string}
- * @param {LabeledElement} el - type of element, in {link, button}
+ * @example I should see a < button | link > labeled {string}
  * @param {string} text - the label of the link that should be seen on screen (matches partially)
  * @description Verifies that a visible element of the specified type containing `text` exists
  */
@@ -141,8 +140,7 @@ Given("I should see a {LabeledElement} labeled {string}", (el, text) => {
 /**
  * @module Visibility
  * @author Corey DeBacker <debacker@wisc.edu>
- * @example I should NOT see a {LabeledElement} labeled {string}
- * @param {LabeledElement} el - type of element, in {link, button}
+ * @example I should NOT see a < button | link > labeled {string}
  * @param {string} text - the label of the link that should not be seen on screen (matches partially)
  * @description Verifies that there are no visible elements of the specified type with the label `text`
  */

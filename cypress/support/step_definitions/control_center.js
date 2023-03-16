@@ -26,8 +26,7 @@ Given('I disable the Field Validation Type named {string} within the Control Cen
 /**
  * @module ControlCenter
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I enable/disable the Administrator Privilege {string} for the administrator {string}
- * @param {string} action - enable / disable
+ * @example I < enable | disable > the Administrator Privilege {string} for the administrator {string}
  * @param {string} privilege - the label of the privilege you want for the user
  * @param {string} admin_user - the name of the user you are setting the privilege for
  * @description Enables the privilege for the administrator based upon user

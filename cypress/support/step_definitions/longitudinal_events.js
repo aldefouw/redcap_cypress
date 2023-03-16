@@ -126,7 +126,7 @@ Given("I verify the Data Collection Instrument named {string} is disabled for th
 /**
  * @module LongitudinalEvents
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I (enter | clear field and enter) {string} into the Arm name field
+ * @example I (clear field) and enter {string} into the Arm name field
  * @param {string} arm_name - the desired name for the arm
  * @description Enters text into the Arm name field on the Define My Events page
  */

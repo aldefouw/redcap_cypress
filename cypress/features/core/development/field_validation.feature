@@ -28,7 +28,7 @@ Feature: Field Validation
     When I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms/events)"
     And I click on the button labeled "DELETE RECORD" in the dialog box
-    And I close the pop
+    And I close the popup
 
     And I click on the link labeled "Project Setup"
 

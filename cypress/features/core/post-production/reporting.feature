@@ -47,7 +47,7 @@ Feature: Reporting
     #TODO: This needs to be refactored into a save button for the specific Repeatable Instruments and Events Module
     And the AJAX request tagged by "repeating" has completed
 
-    And I close the pop
+    And I close the popup
 
     And I click on the button labeled "Define My Events"
     And I delete the Event Name of "Event Three"

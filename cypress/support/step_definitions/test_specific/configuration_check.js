@@ -1,7 +1,7 @@
 import {Given} from "cypress-cucumber-preprocessor/steps";
 
 /**
- * @module TestSpecific/ConfigurationCheck
+ * @module ConfigurationCheck
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should be able to locate and visit the Control Center link labeled {string} and see the title {string}
  * @param {string} link_label - the name of the link label in the Control Center panel
