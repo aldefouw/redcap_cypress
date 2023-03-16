@@ -5,14 +5,14 @@ Feature: Manage Project
 
     Scenario: 0 - Initial Setup Requirement - Add from Email Address
         Given I am an "admin" user who logs into REDCap
-        And I visit the "Control Center" page
+        And I click on the link labeled "Control Center"
         And I click on the link labeled "General Configuration"
         And I enter "no-reply@test.com" into the input field labeled "Set a Universal FROM Email address"
         And I click on the button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
 
     Scenario: 0 - Initial Setup Requirement - Edit test_user2 to not Create or Copy Projects
-        Given I visit the "Control Center" page
+        Given I click on the link labeled "Control Center"
         When I click on the link labeled "Browse Users"
         And I enter "test_user2" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
         And I click on the button labeled "Search"
@@ -24,7 +24,7 @@ Feature: Manage Project
         Then I should see "User has been successfully saved."
 
     Scenario: 1 - Visit Control Center Page
-        Given I visit the "Control Center" page
+        Given I click on the link labeled "Control Center"
         Then I should see "Control Center Home"
 
     Scenario: 2- User Settings Configuration - Create Projects
@@ -103,7 +103,7 @@ Feature: Manage Project
         Given I am an "admin" user who logs into REDCap
 
     Scenario: 13- Allow Normal Users to Create New Projects
-        Given I visit the "Control Center" page
+        Given I click on the link labeled "Control Center"
         And I click on the link labeled "User Settings"
         Then I should see "Settings related to Project Creation and Project Status Changes"
         When I select "Yes, normal users can create new projects" on the dropdown field labeled "Allow normal users to create new projects?"
@@ -201,7 +201,7 @@ Feature: Manage Project
         Given I am an "admin" user who logs into REDCap
 
     Scenario: 24 - Allow Normal Users to Move to Production
-        Given I visit the "Control Center" page
+        Given I click on the link labeled "Control Center"
         When I click on the link labeled "User Settings"
         And I select "Yes, normal users can move projects to production" on the dropdown field labeled "Allow normal users to move projects to production?"
         And I click on the button labeled "Save Changes"
@@ -373,7 +373,7 @@ Feature: Manage Project
         And I am an "admin" user who logs into REDCap
 
     Scenario: 47 - Allow Users to Edit Survey Responses
-        Given I visit the "Control Center" page
+        Given I click on the link labeled "Control Center"
         When I click on the link labeled "User Settings"
         And I select "Enabled" on the dropdown field labeled "Allow users to edit survey responses?"
         And I click on the button labeled "Save Changes"
@@ -451,7 +451,7 @@ Feature: Manage Project
         Then I should see "The changes were NOT committed to the project but were removed"
 
     Scenario: 57 - Allow Users to Make Draft Mode Changes
-        Given I visit the "Control Center" page
+        Given I click on the link labeled "Control Center"
         When I click on the link labeled "User Settings"
         And I select "Yes, if project has no records OR if has records and no critical issues exist" on the dropdown field labeled "Allow production Draft Mode changes to be approved automatically under certain conditions?"
         And I click on the button labeled "Save Changes"

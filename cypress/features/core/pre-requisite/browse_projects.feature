@@ -8,7 +8,7 @@ Feature: Browse Projects
     And I create a project named "FirstProject_1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/projects/FirstProject_1115.xml"
 
   Scenario: 1 - View all non-archived projects
-    When I visit the "Control Center" page
+    When I click on the link labeled "Control Center"
     And I click on the link labeled "Browse Projects"
     When I click on the button labeled "View all projects"
     Then I should see 13 rows displayed in the projects table

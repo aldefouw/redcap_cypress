@@ -5,7 +5,7 @@ Feature: Configuration Check
 
   Scenario: 1 - Home Page - Visible Tabs
     Given I am an "admin" user who logs into REDCap
-    And I visit the "Control Center" page
+    And I click on the link labeled "Control Center"
     Then I should see a link labeled "My Projects"
     And I should see a link labeled "New Project"
     And I should see a link labeled "Help & FAQ"

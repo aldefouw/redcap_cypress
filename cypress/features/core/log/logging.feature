@@ -295,7 +295,7 @@ Feature: Logging
     Given I am an "admin" user who logs into REDCap
 
   Scenario: 32 - Delete a record’s logging activity when deleting the records
-    When I visit the "Control Center" page
+    When I click on the link labeled "Control Center"
     And I click on the link labeled "Edit a Project's Settings"
     And I select 'Logging_Feature' from the dropdown identified by 'select'
     #And I click on the dropdown identified by 'select' and select value '14' labelled by

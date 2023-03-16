@@ -293,7 +293,7 @@ Feature: Assign User Rights
     And I save changes within the context of User Rights
 
     And I click on the link labeled "View / Edit Records"
-    And I select "1" on the dropdown table field labeled "Choose an existing Record ID"
+    And I select "1" on the dropdown field labeled "Choose an existing Record ID"
     Then I should NOT see "Text Validation"
     And I should NOT see "Data Types"
 

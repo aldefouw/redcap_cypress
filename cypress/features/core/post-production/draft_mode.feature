@@ -30,7 +30,7 @@ Scenario: 0 - Project Setup - 2, 3
     And I move the project to production by selection option "Keep ALL data saved so far"
 
 Scenario: 0 - Project Setup - 4
-    And I visit the "Control Center" page
+    And I click on the link labeled "Control Center"
     And I click on the link labeled "General Configuration"
     And I enter "no-reply@test.com" into the input field labeled "Set a Universal FROM Email address"
     And I click on the button labeled "Save Changes"
