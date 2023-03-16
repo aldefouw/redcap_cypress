@@ -131,7 +131,7 @@ Feature: Project Status
     Then I should see "NOTICE: Project was marked as Completed"
     When I click on the button labeled "Restore Project"
     Then I should see "PROJECT RESTORED!"
-    And I close popup
+    And I close the popup
 
   Scenario: 22 - Login as test user
     Given I logout
@@ -198,6 +198,6 @@ Feature: Project Status
     Then I should see "NOTICE: Project was marked as Completed" 
     When I click on the button labeled "Restore Project"
     Then I should see "PROJECT RESTORED!"
-    And I close popup
+    And I close the popup
 
 

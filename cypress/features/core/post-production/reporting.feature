@@ -47,7 +47,7 @@ Feature: Reporting
     #TODO: This needs to be refactored into a save button for the specific Repeatable Instruments and Events Module
     And the AJAX request tagged by "repeating" has completed
 
-    And I close popup
+    And I close the popup
 
     And I click on the button labeled "Define My Events"
     And I delete the Event Name of "Event Three"
@@ -148,7 +148,7 @@ Feature: Reporting
     Then I should have a "csv" file that contains 8 distinct records
     Then I should have a "csv" file that contains 19 rows
     Then I should have a "csv" file that contains 11 repeating instrument rows
-    
+
   Scenario: 7 - Edit Report: Remove Description, Don't show all events or repeating instruments
     Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Edit"
@@ -157,7 +157,7 @@ Feature: Reporting
     Then I should see a dialog containing the following text: "Quick Add"
     And I uncheck the checkbox labeled "Description"
     #Then I should see the element identified by "input[name='field[]']" have length 5
-    #check hidden element count, because the onclick function takes too long to finish. count includes itself 
+    #check hidden element count, because the onclick function takes too long to finish. count includes itself
     And I click on the button labeled "Close"
 
     Given I see "Additional report options"

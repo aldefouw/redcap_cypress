@@ -67,7 +67,7 @@ Scenario: 10 - Verify test_user2 Account Manager Privileges
     And I should see a link labeled "Browse Users"
     And I should see a link labeled "Add Users (Table-based Only)"
     And I should see a link labeled "Administrator Privileges"
-    #And I should see a link labeled "External Modules"
+    And I should see a link labeled "External Modules"
     And I should see "Miscellaneous Modules"
     And I should see "System Configuration"
 
@@ -84,7 +84,7 @@ Scenario: 12 - Verify test_user2 Maximum User Privileges
     And I should see a link labeled "Edit a Project's Settings"
     And I should see a link labeled "Survey Link Lookup"
     And I should see a link labeled "Administrator Privileges"
-    #And I should see a link labeled "External Modules"
+    And I should see a link labeled "External Modules"
     And I should see "Miscellaneous Modules"
     And I should see "System Configuration"
 
@@ -159,7 +159,7 @@ Scenario: 18 - Verify test_user2 Maximum User Privileges
     And I should see a link labeled "Activity Graphs"
     And I should see a link labeled "Map of Users"
     And I should see "Projects"
-    #And I should see "Technical / Developer Tools"
+    And I should see "Technical / Developer Tools"
     And I should see "Miscellaneous Modules"
     And I should see "System Configuration"
 

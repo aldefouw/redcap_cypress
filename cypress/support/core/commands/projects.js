@@ -7,17 +7,35 @@ Cypress.Commands.add('delete_project_permanently', () => {
         method: 'POST',
         url: '/redcap_v' + Cypress.env('redcap_version') + "/ProjectGeneral/delete_project.php?*"
     }).as('delete_project')
+
     cy.get('button').contains('Delete the project').click()
     cy.get('input#delete_project_confirm').should('be.visible').type('DELETE').then((input) => {
         cy.get(input).closest('div[role="dialog"]').find('button').contains('Delete the project').click()
         cy.get('button').contains('Yes, delete the project').click()
     })
+
     cy.wait('@delete_project')
 })
 
-Cypress.Commands.add('move_project_to_production', (project_id, keep_data = true) => {
-    cy.visit_version({page: 'ProjectSetup/index.php', params: `pid=${project_id}`})
-    cy.get('button').contains('Move project to production').should('be.visible').click()
-    cy.get(`input#${keep_data ? "keep_data" : "delete_data"}`).check()
-    cy.get('button').contains('YES, Move to Production Status').should('be.visible').click()
+Cypress.Commands.add('move_project_to_production', (text) => {
+    cy.intercept({
+        method: 'POST',
+        url: '/redcap_v' + Cypress.env('redcap_version') + '/ProjectGeneral/change_project_status.php*'
+    }).as('production_status')
+
+    cy.get('span').contains(text).click()
+    cy.get('button').contains('Production Status').click()
+    cy.get('div#actionMsg').should('be.visible')
+
+    cy.wait('@production_status')
+})
+
+Cypress.Commands.add('move_project_to_development', () => {
+    cy.intercept({  method: 'POST',
+        url: '/redcap_v' + Cypress.env('redcap_version') + '/ProjectGeneral/change_project_status*'
+    }).as('change_project_status')
+
+    cy.get('button').contains('Move back to Development status').click()
+
+    cy.wait('@change_project_status')
 })

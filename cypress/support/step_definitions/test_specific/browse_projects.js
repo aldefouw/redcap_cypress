@@ -1,7 +1,7 @@
 import {Given} from "cypress-cucumber-preprocessor/steps";
 
 /**
- * @module TestSpecific/BrowseProjects
+ * @module BrowseProjects
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see {int} row(s) displayed in the projects table
  * @param {int} num_rows - number of rows expected to be displayed in the Projects Table
@@ -18,7 +18,7 @@ Given('I should see {int} row(s) displayed in the projects table', (num_rows) =>
 })
 
 /**
- * @module TestSpecific/BrowseProjects
+ * @module BrowseProjects
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see a row labeled {string} in the projects table
  * @param {string} project_name - name of the REDCap Project we are expecting to see
@@ -33,7 +33,7 @@ Given('I should see a row labeled {string} in the projects table', (project_name
 })
 
 /**
- * @module TestSpecific/BrowseProjects
+ * @module BrowseProjects
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see projects sorted correctly when I click on {string} to sort in either direction
  * @param {string} column_name - name of the Column we want to click on to change the sort direction
@@ -44,7 +44,7 @@ Given('I should see projects sorted correctly when I click on {string} to sort i
 })
 
 /**
- * @module TestSpecific/BrowseProjects
+ * @module BrowseProjects
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I enter {string} into the filter projects field
  * @param {string} filter_string - string that we enter into the filter field

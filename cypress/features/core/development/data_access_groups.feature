@@ -14,7 +14,7 @@ Scenario: Project Setup - 2
     When I click on the link labeled "Other Functionality"
     And I click on the button labeled "Erase all data"
     And I click on the button labeled "Erase all data" in the dialog box 
-    And I close popup
+    And I close the popup
 
     When I click on the link labeled "Project Setup"
     And I enable surveys for the project

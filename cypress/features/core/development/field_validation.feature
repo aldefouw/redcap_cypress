@@ -6,7 +6,7 @@ Feature: Field Validation
   Scenario: 0 - Project Setup
     Given I am an "admin" user who logs into REDCap
     And I create a project named "FirstProject_1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/07_DesignForms_v1115.xml"
-  
+
     And I click on the link labeled "Control Center"
     And I click on the link labeled "Field Validation Types"
 
@@ -28,7 +28,7 @@ Feature: Field Validation
     When I click on the button labeled "Choose action for record"
     And I select the option labeled "Delete record (all forms/events)"
     And I click on the button labeled "DELETE RECORD" in the dialog box
-    And I close popup
+    And I close the popup
 
     And I click on the link labeled "Project Setup"
 
@@ -57,7 +57,7 @@ Feature: Field Validation
     When I click on the button labeled "Data Dictionary"
     And I upload the data dictionary located at "core/08_FieldValidation_v1115_DataDictionary.csv"
     Then I should see "Changes Made Successfully!"
-    
+
   Scenario: 4 - Open Text Validation Instrument 
     When I click on the link labeled "Designer"
     And I click on the link labeled "Text Validation"
@@ -67,7 +67,7 @@ Feature: Field Validation
     Given I click on the Add Field input button below the field named "Record ID"
     And I select "Text Box (Short Text, Number, Date/Time, ...)" from the Field Type dropdown of the open "Edit Field" dialog box
     Then I should see the dropdown identified by "[name=val_type]" with the options below
-    | Date (D-M-Y) | Date (Y-M-D) | Datetime (M-D-Y H:M) | Datetime (Y-M-D H:M) | Datetime w/ seconds (D-M-Y H:M:S) | Datetime w/ seconds (M-D-Y H:M:S) | Phone (North America) | Zipcode (U.S.) |
+      | Date (D-M-Y) | Date (Y-M-D) | Datetime (M-D-Y H:M) | Datetime (Y-M-D H:M) | Datetime w/ seconds (D-M-Y H:M:S) | Datetime w/ seconds (M-D-Y H:M:S) | Phone (North America) | Zipcode (U.S.) |
 
     # ^ this might not be what we want, this is checking for these options and not that the options specified in the script are not there
     When I click on the button labeled "Cancel"
@@ -84,7 +84,7 @@ Feature: Field Validation
     And I enable the Field Validation Type named "Number (1 decimal place - comma as decimal)" within the Control Center
     And I enable the Field Validation Type named "Time (HH:MM)" within the Control Center
 
-  Scenario: 7 - Open Text Validation Instrument 
+  Scenario: 7 - Open Text Validation Instrument
     Given I click on the link labeled "My Projects"
     And I click on the link labeled "FirstProject_1115"
     When I click on the link labeled "Designer"
@@ -93,7 +93,7 @@ Feature: Field Validation
     Given I click on the Add Field input button below the field named "Record ID"
     And I select "Text Box (Short Text, Number, Date/Time, ...)" from the Field Type dropdown of the open "Edit Field" dialog box
     Then I should see the dropdown identified by "select[id=val_type]" with the options below
-    | Date (D-M-Y) | Datetime (M-D-Y H:M) | Datetime w/ seconds (Y-M-D H:M:S) | Email | Integer | Number | Number (1 decimal place - comma as decimal) | Time (HH:MM) |
+      | Date (D-M-Y) | Datetime (M-D-Y H:M) | Datetime w/ seconds (Y-M-D H:M:S) | Email | Integer | Number | Number (1 decimal place - comma as decimal) | Time (HH:MM) |
     When I click on the button labeled "Cancel"
 
   Scenario: 8 - Add A New Record
@@ -160,43 +160,43 @@ Feature: Field Validation
 
   Scenario: 17 - Date (D-M-Y) Range Field
     When I enter "15-02-22" into the data entry form field labeled "Date (D-M-Y) range"
-    And I should see a dialog containing the following text: "The value you provided is outside the suggested range (01-01-2019 - 31-01-2019). This value is admissible, but you may wish to double check it."
+    And I should see a dialog containing the following text: "The value you provided is outside the suggested range. (01-01-2019 - 31-01-2019). This value is admissible, but you may wish to double check it."
     And I click on the button labeled "Close" in the dialog box
     And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
 
   Scenario: 18 - DateTime (M-D-Y H:M) Range Field
     When I enter "01-15-22 16:00" into the data entry form field labeled "DateTime (M-D-Y H:M) range"
-    And I should see a dialog containing the following text: "The value you provided is outside the suggested range (01-01-2019 10:00 - 01-01-2019 15:36). This value is admissible, but you may wish to double check it."
+    And I should see a dialog containing the following text: "The value you provided is outside the suggested range. (01-01-2019 10:00 - 01-01-2019 15:36). This value is admissible, but you may wish to double check it."
     And I click on the button labeled "Close" in the dialog box
     And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
 
   Scenario: 19 - DateTime with Seconds (Y-M-D H:M:S) Range Field
     When I enter "2022-01-15 09:15:10" into the data entry form field labeled "DateTime with Seconds (Y-M-D H:M:S) range"
-    And I should see a dialog containing the following text: "The value you provided is outside the suggested range (2019-01-01 09:00:00 - 2019-01-01 09:15:00). This value is admissible, but you may wish to double check it."
+    And I should see a dialog containing the following text: "The value you provided is outside the suggested range. (2019-01-01 09:00:00 - 2019-01-01 09:15:00). This value is admissible, but you may wish to double check it."
     And I click on the button labeled "Close" in the dialog box
     And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
 
   Scenario: 20 - Integer Range Field
     When I enter "30" into the data entry form field labeled "Integer range"
-    And I should see a dialog containing the following text: "The value you provided is outside the suggested range (0 - 10). This value is admissible, but you may wish to double check it."
+    And I should see a dialog containing the following text: "The value you provided is outside the suggested range. (0 - 10). This value is admissible, but you may wish to double check it."
     And I click on the button labeled "Close" in the dialog box
     And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
 
   Scenario: 21 - Number Range Field
     When I enter "5.5" into the data entry form field labeled "Number range"
-    And I should see a dialog containing the following text: "The value you provided is outside the suggested range (5.505 - 6.005). This value is admissible, but you may wish to double check it."
+    And I should see a dialog containing the following text: "The value you provided is outside the suggested range. (5.505 - 6.005). This value is admissible, but you may wish to double check it."
     And I click on the button labeled "Close" in the dialog box
     And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
 
   Scenario: 22 - Number (1 Decimal Place comma as decimal) Range Field
     When I enter "21,8" into the data entry form field labeled "Number (1 Decimal Place comma as decimal) range"
-    And I should see a dialog containing the following text: "The value you provided is outside the suggested range (1,0 - 20,0). This value is admissible, but you may wish to double check it."
+    And I should see a dialog containing the following text: "The value you provided is outside the suggested range. (1,0 - 20,0). This value is admissible, but you may wish to double check it."
     And I click on the button labeled "Close" in the dialog box
     And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
 
   Scenario: 23 - Time (HH:MM) Range Field
     When I enter "05:01" into the data entry form field labeled "Time (HH:MM) range"
-    And I should see a dialog containing the following text: "The value you provided is outside the suggested range (06:00 - 08:00). This value is admissible, but you may wish to double check it."
+    And I should see a dialog containing the following text: "The value you provided is outside the suggested range. (06:00 - 08:00). This value is admissible, but you may wish to double check it."
     And I click on the button labeled "Close" in the dialog box
     And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
 

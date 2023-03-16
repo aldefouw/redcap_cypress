@@ -109,10 +109,10 @@ Feature: Manage Project
         When I select "Yes, normal users can create new projects" on the dropdown field labeled "Allow normal users to create new projects?"
         And I click on the button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
-    
+
     Scenario: 14- Login with test_user
         Given I am an "standard" user who logs into REDCap
-    
+
     Scenario: 15- Create Project and add test_admin to Project
         Given I click on the link labeled "New Project"
         Then I should see "Create Project"
@@ -172,8 +172,8 @@ Feature: Manage Project
         Then I should see "Project Status Management"
 
     Scenario: 21- Copy Project
-        Given I click on the button labeled "Copy the Project"
-        Then I should see "Copy the Project"
+        Given I click on the button labeled "Copy the project"
+        Then I should see "Make a Copy of the Project"
         And I enter "ProjectCopy_1115" into the field identified by "input" labeled "Project title:"
         And I click on the link labeled "Select All"
         And I click on the button labeled "Copy project"
@@ -248,7 +248,7 @@ Feature: Manage Project
 
     Scenario: 31 - Login with test_user
         Given I am an "standard" user who logs into REDCap
-    
+
     Scenario: 32 - Disable / Enable Longitudinal Data Collection
         Given I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
@@ -261,7 +261,7 @@ Feature: Manage Project
         And I click on the button labeled "Define My Events"
         Then I should see "Event 1"
         Given I add an event named "Event 2" into the currently selected arm
-    
+
     Scenario: 34 - Add Event 1 in Arm 2
         When I click on the link labeled "Add New Arm"
         And I enter "Arm 2" into the Arm name field
@@ -269,7 +269,7 @@ Feature: Manage Project
         Then I should see "No events have been defined for this Arm"
         Given I add an event named "Event 1" into the currently selected arm
         Then I should see "Event 1"
-    
+
     Scenario: 35 - Edit Designate Instruments for Arm 1
         Given I click on the link labeled "Designate Instruments for My Events"
         And I click on the link labeled "Arm 1"
@@ -294,7 +294,7 @@ Feature: Manage Project
         And I click on the button labeled "Save"
         Then I should see "Your settings for repeating instruments and/or events have been successfully saved. (The page will now reload.)"
         Then I should see that repeatable instruments are modifiable
-    
+
     Scenario: 38 - Disable / Enable Surveys
         Given I should see that surveys are disabled
         When I enable surveys for the project
@@ -303,7 +303,7 @@ Feature: Manage Project
         Then I should see that surveys are disabled
         When I enable surveys for the project
         Then I should see that surveys are enabled
-    
+
     #the following # out lines are looking for enabled/disabled surveys for specific instruments. We do not currently have a step definition for individual instrument surveys, only to check if surveys are enabled within the entire project
     Scenario: 39 - Enable Survey for My First Instrument
         Given I click on the button labeled "Online Designer"
@@ -323,7 +323,7 @@ Feature: Manage Project
         Then I should see "Delete this instrument's survey settings"
         And I click on the button labeled "Delete Survey Settings" in the dialog box
         Then I should see "Survey successfully deleted!"
-        And I close popup
+        And I close the popup
         Then I should see "Data Collection Instruments"
 
     Scenario: 41 - Enable Survey for My First Instrument
@@ -495,7 +495,7 @@ Feature: Manage Project
     Scenario: 63 - Allow Normal Users to Modify the Repeatable Instruments & Events
         Given I click on the link labeled "Control Center"
         And I click on the link labeled "User Settings"
-        And I select "Yes, normal users can modify the repeating instance setup in production" on the dropdown field labeled "Allow normal users to modify the 'Repeating Instruments & Events' settings for projects while in production status?"
+        And I select "Yes, normal users can modify the repeatable instance setup in production" on the dropdown field labeled "Allow normal users to modify the 'Repeatable Instruments & Events' settings for projects while in production status?"
         And I select "Yes, normal users can add/modify events in production" on the dropdown field labeled "Allow normal users to add or modify events and arms on the Define My Events page for longitudinal projects while in production status?"
         And I click on the button labeled "Save Changes"
         Then I should see "Your system configuration values have now been changed!"
@@ -504,7 +504,7 @@ Feature: Manage Project
         Given I logout
         And I am an "standard" user who logs into REDCap
 
-    Scenario: 65 - Verify Changing Repeating Forms 
+    Scenario: 65 - Verify Changing Repeating Forms
         Given I click on the link labeled "My Projects"
         And I click on the link labeled "FirstProject_1115"
         And I click on the link labeled "Project Setup"
@@ -528,7 +528,7 @@ Feature: Manage Project
         And I click on the button labeled "Add new event"
         Then I should see "Event 3"
 
-    Scenario: 67 - Add Arm 3 
+    Scenario: 67 - Add Arm 3
         Given I should see a link labeled "Add New Arm"
         When I click on the link labeled "Add New Arm"
         And I enter "Arm 3" into the Arm name field
@@ -541,8 +541,8 @@ Feature: Manage Project
         And I should see "events can only be renamed by REDCap administrators"
         And I click on the button labeled "Close" in the dialog box
         Then I should see "Event 3"
- 
-    Scenario: 69 - Edit Event 3 
+
+    Scenario: 69 - Edit Event 3
         Given I logout
         And I am an "admin" user who logs into REDCap
         And I click on the link labeled "My Projects"
@@ -616,7 +616,7 @@ Feature: Manage Project
         Then I should see "SUCCESS! The changes you just submitted were made AUTOMATICALLY."
         And I click on the button labeled "Close" in the dialog box
 
-    Scenario: 75 - Confirm One Record and Two Instruments 
+    Scenario: 75 - Confirm One Record and Two Instruments
         Given I click on the link labeled "Record Status Dashboard"
         Then I should see a link labeled "1"
         And I should see a link labeled "Arm 1"

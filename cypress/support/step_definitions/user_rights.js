@@ -439,4 +439,13 @@ Given('I ', (level, instrument) => {
         .check()
 })
 
-
+/**
+ * @module UserRights
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I click on the button labeled Remove User
+ * @description Clicks the button to remove user from the User Rights page
+ */
+Given('I click on the button labeled Remove User', () => {
+    cy.get('div#editUserPopup').should('be.visible').parent().find('button').contains("Remove user").should('be.visible').click()
+    cy.get('span').contains("Remove user?").should('be.visible').closest('div[role="dialog"]').find('button').contains("Remove user").click()
+})
