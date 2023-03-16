@@ -148,38 +148,6 @@ Given("I should see the dropdown identified by {string} with the option {string}
     cy.get(selector).find(':selected').should('have.text', option)
 })
 
-
-/**
- * @module Interactions
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the checkbox labeled {string}
- * @param {string} label - the label associated with the checkbox field
- * @description Selects a checkbox field by its label
- */
-Given("I should see a {checkbox_field_type} labeled {string} that is {check}", (field_type, label, check) => {
-    let sel = `:contains("${label}"):visible`
-
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
-
-        let selector = null
-
-        cy.contains(label).then(($label) => {
-            if(field_type === "checkbox in table"){
-                selector = cy.wrap($label).parentsUntil('tr').parent().first().find('input[type=checkbox]')
-            } else {
-                selector = cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]')
-            }
-
-             if (check === "checked"){
-                selector.then(($input) => { expect($input).to.be.checked })
-            } else if (check === "unchecked"){
-                 selector.then(($input) => { expect($input).to.not.be.checked })
-            }
-        })
-    })
-})
-
-
 /**
  * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -206,17 +174,15 @@ Given('I should see the {dropdown_type} labeled {string} with the option {string
     })
 })
 
-
-
 /**
  * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I should see a {checkbox_field_type} labeled {string} that is {check}
+ * @example I should see a checkbox labeled {string} that is {check}
  * @param {string} label - the label associated with the checkbox field
  * @param {check} check - state of checkbox (check/unchecked)
  * @description Selects a checkbox field by its label
  */
-Given("I should see a {checkbox_field_type} labeled {string} that is {check}", (field_type, label, check) => {
+Given("I should see a checkbox labeled {string} that is {check}", (field_type, label, check) => {
     let sel = `:contains("${label}"):visible`
 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
@@ -231,8 +197,6 @@ Given("I should see a {checkbox_field_type} labeled {string} that is {check}", (
         })
     })
 })
-
-
 
 /**
  * @module Visibility
@@ -308,9 +272,8 @@ Given("I should NOT see a {LabeledElement} labeled {string}", (el, text) => {
     cy.get_top_layer(($e) => {console.log(sel);expect($e.find(sel)).to.have.lengthOf(0)})
 })
 
-
 /**
- * @module Interactions
+ * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see {string} in the data entry form field labeled {string}
  * @param {string} text - the text that should be in the field
