@@ -12,6 +12,11 @@ defineParameterType({
     regexp: /button|link/
 })
 
+defineParameterType({
+    name: 'labelMatch',
+    regexp: /labeled exactly|labeled/
+})
+
 // data_import.js
 defineParameterType({
     name: 'project_type',
