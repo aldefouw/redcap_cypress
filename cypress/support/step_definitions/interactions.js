@@ -345,7 +345,7 @@ Given("I enter {string} into the hidden field identified by {string}", (text, se
  * @param {string} label - the label associated with the checkbox field
  * @description Selects a checkbox field by its label
  */
-Given("I {click_type} the checkbox labeled {string}", (check, field_type, label) => {
+Given("I {click_type} the checkbox labeled {string}", (check, label) => {
     let sel = `:contains("${label}"):visible`
 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
