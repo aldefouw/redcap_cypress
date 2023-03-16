@@ -219,18 +219,16 @@ Given('I should see the {dropdown_type} labeled {string} with the option {string
 Given('I should see the dropdown {dropdown_type} labeled {string} with the option {string} selected', (type, label, option) => {
     let sel = `:contains("${label}"):visible`
 
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
-        if(type === "table field") {
-            cy.contains(label).then(($label) => {
-                cy.wrap($label).parentsUntil(':has(:has(:has(:has(select))))').first().parent().parent().within(($elm) => {
-                    cy.wrap($elm).find('select').find(':selected').should('have.text', option)
-                })
-            })
-        } else if (type === "field"){
-            cy.contains(label).then(($label) => {
-                cy.wrap($label).parent().find('select').find(':selected').should('have.text', option)
-            })
-        }
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
+        cy.contains(label).then(($label) => {
+            let selector = cy.get_element_by_label($label, 'input[type=checkbox]:visible')
+
+            if (check === "checked") {
+                selector.scrollIntoView().then(($input) => { expect($input).to.be.checked })
+            } else if (check === "unchecked") {
+                selector.scrollIntoView().then(($input) => { expect($input).to.be.checked })
+            }
+        })
     })
 })
 
