@@ -28,11 +28,11 @@ Cypress.Commands.add('get_element_by_label', (label, selector = null, original_s
 
     cy.wrap(label).then(($self) => {
         if(i === 0 && $self.parent().find(selector).length){
-            return $self.parent().find(selector)
+            return $self.parent().find(`${selector}:first`)
         } else {
             cy.wrap(label).parentsUntil(`:has(${selector})`).last().parent().then(($parent) => {
                 if($parent.find(selector).length){
-                    return $parent.find(selector)
+                    return $parent.find(`${selector}:first`)
                 } else if (i <= 5) {
                     cy.get_element_by_label(label, `:has(${selector})`, original_selector, i + 1)
                 }
