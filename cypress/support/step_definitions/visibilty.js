@@ -219,21 +219,14 @@ Given('I should see the {dropdown_type} labeled {string} with the option {string
 Given("I should see a {checkbox_field_type} labeled {string} that is {check}", (field_type, label, check) => {
     let sel = `:contains("${label}"):visible`
 
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
-
-        let selector = null
-
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
         cy.contains(label).then(($label) => {
-            if(field_type === "checkbox in table"){
-                selector = cy.wrap($label).parentsUntil('tr').parent().first().find('input[type=checkbox]')
-            } else {
-                selector = cy.wrap($label).parentsUntil(':has(:has(input[type=checkbox]))').first().parent().find('input[type=checkbox]')
-            }
+            let selector = cy.get_element_by_label($label, 'input[type=checkbox]:visible')
 
-            if (check === "checked"){
-                selector.then(($input) => { expect($input).to.be.checked })
-            } else if (check === "unchecked"){
-                selector.then(($input) => { expect($input).to.not.be.checked })
+            if (check === "checked") {
+                selector.scrollIntoView().then(($input) => { expect($input).to.be.checked })
+            } else if (check === "unchecked") {
+                selector.scrollIntoView().then(($input) => { expect($input).to.be.checked })
             }
         })
     })
