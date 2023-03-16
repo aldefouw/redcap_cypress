@@ -24,10 +24,10 @@ Scenario: Project Setup - 2
     Then I should see that longitudinal mode is "disabled"
 
     And I open the dialog box for the Repeatable Instruments and Events module
-    And I check the checkbox in table labeled "Text Validation"
-    And I check the checkbox in table labeled "Data Types"
-    And I uncheck the checkbox in table labeled "Text Validation"
-    And I uncheck the checkbox in table labeled "Data Types"
+    And I check the checkbox labeled "Text Validation"
+    And I check the checkbox labeled "Data Types"
+    And I uncheck the checkbox labeled "Text Validation"
+    And I uncheck the checkbox labeled "Data Types"
     And I click on the button labeled "Save" in the dialog box
 
     And I should see that repeatable instruments are disabled

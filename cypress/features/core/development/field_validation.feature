@@ -37,7 +37,7 @@ Feature: Field Validation
     And I should see that longitudinal mode is "disabled"
 
     And I open the dialog box for the Repeatable Instruments and Events module
-    And I check the checkbox in table labeled "Text Validation"
+    And I check the checkbox labeled "Text Validation"
     And I click on the button labeled "Save" in the dialog box
 
     And I should see that repeatable instruments are modifiable

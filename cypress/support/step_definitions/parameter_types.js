@@ -151,12 +151,6 @@ defineParameterType({
 
 //interactions.js
 defineParameterType({
-    name: 'checkbox_field_type',
-    regexp: /checkbox|checkbox in table/
-})
-
-//interactions.js
-defineParameterType({
     name: 'elm_type',
     regexp: /input|list item|checkbox|span/
 })
