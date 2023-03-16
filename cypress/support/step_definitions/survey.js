@@ -206,31 +206,6 @@ Given("I disable surveys for the project", () => {
     cy.wait('@projectSettings')
 })
 
-
-/**
- * @module Survey
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I enable surveys for Project ID {int}
- * @param {string} pid - the text you want to enter into the survey field
- * @description Enables surveys on a particular Project ID.
- */
-Given("I enable surveys for Project ID {int}", (project_id) => {
-    cy.intercept({
-        method: 'POST',
-        url: '/redcap_v' + Cypress.env('redcap_version') + '/ProjectSetup/modify_project_setting_ajax.php?pid=*'
-    }).as('projectSettings')
-
-    //Re-enable surveys before proceeding
-    cy.visit_version({page: 'ProjectSetup/index.php', params: 'pid=' + project_id})
-
-    cy.get('div').contains('Use surveys in this project?').parent().within(($div) => {
-        cy.get('button').contains('Enable').click()
-    })
-
-    //Wait to make sure that the AJAX request has completed before we move onto next test
-    cy.wait('@projectSettings')
-})
-
 /**
  * @module Survey
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
