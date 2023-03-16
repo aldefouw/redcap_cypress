@@ -323,7 +323,7 @@ Scenario: 39- Log in test_user with Too Many Attempts
 
     Scenario: 40- Log in test_user with Correct Password after Buffer Period
     Given I wait for one minute
-    And I visit the REDCap login page
+    And I visit the version URL "/"    
     And I enter "test_user" into the input field labeled "Username:"
     And I enter "Testing123" into the input field labeled "Password:" 
     And I click on the button labeled "Log In"

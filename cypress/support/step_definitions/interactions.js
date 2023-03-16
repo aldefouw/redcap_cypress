@@ -3,24 +3,23 @@ import { Given } from "cypress-cucumber-preprocessor/steps"
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the <link|button> labeled (exactly) {string}
- * @param {string} text - the (exact) text on the element you want to click
- * @description Clicks on an element with (exact) text label.
+ * @example I click on the button labeled exactly {string}
+ * @param {string} text - the EXACT text on the button element you want to click
+ * @description Clicks on a button element with a EXACT text label.
  */
-Given("I click on the {LabeledElement} {labelMatch} {string}", (element, label_match, text) => {
-    const l = label_match === 'labeled exactly' ? new RegExp("^" + text + "$", "g") : text
+Given("I click on the button labeled exactly {string}", (text) => {
+    cy.get('button').contains(new RegExp("^" + text + "$", "g")).click(  )
+})
 
-    let sel = ''
-
-    if(element === 'link'){
-        sel = `a:contains("${l}"):visible:first`
-    } else if(element === 'button'){
-        sel = `button:contains("${l}"):visible:first,input[value*="${l}"]:visible:first`
-    }
-
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
-        cy.get(sel).click()
-    })
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click on the link labeled exactly {string}
+ * @param {string} text - the EXACT text on the link element you want to click
+ * @description Clicks on a link element with a EXACT text label.
+ */
+Given("I click on the link labeled exactly {string}", (text) => {
+    cy.get('a').contains(new RegExp("^" + text + "$", "g")).click()
 })
 
 /**
@@ -31,6 +30,7 @@ Given("I click on the {LabeledElement} {labelMatch} {string}", (element, label_m
  * @description Clicks on a "Save" option on a Data Collection instrument form
  */
  Given("I select the submit option labeled \"{instrument_save_options}\" on the Data Collection Instrument", (text) => {
+
      //REDCap does some crazy conditional display of buttons, so we try to handle that as we best can
      cy.get('tr#__SUBMITBUTTONS__-tr').within(() => {
          let btn = Cypress.$("button:contains(" + JSON.stringify(text) + ")");
@@ -55,6 +55,20 @@ Given("I click on the {LabeledElement} {labelMatch} {string}", (element, label_m
      })
  })
 
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click on the button labeled {string}
+ * @param {string} text - the text on the button element you want to click
+ * @description Clicks on a button element with a specific text label.
+ */
+Given("I click on the button labeled {string}", (text) => {
+    let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+        cy.get(sel).click()
+    })
+})
 
 /**
  * @module Interactions
@@ -102,6 +116,33 @@ Given("I click on the button labeled {string} in the dialog box", (text) => {
  */
 Given("I click on the radio labeled {string} in the dialog box", (text) => {
     cy.click_on_dialog_button(text, 'span')
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click on the link labeled {string}
+ * @param {string} text - the text on the anchor element you want to click
+ * @description Clicks on an anchor element with a specific text label.
+ */
+Given("I click on the link labeled {string}", (text) => {
+    cy.get('a:visible').contains(text).click()
+
+    // cy.location().then((loc) => {
+    //     const current_url = loc.href
+    //
+    //     cy.get('a').contains(text).then(($text) => {
+    //         //If we are staying on the same page, we need to force the click since element is guaranteed to detach
+    //         if(current_url === $text[0]['href']){
+    //             $text[0].click({ force: true })
+    //
+    //         //In all other cases, let's do a standard click
+    //         } else {
+    //             $text[0].click()
+    //         }
+    //     })
+    //
+    // })
 })
 
 /**
@@ -674,6 +715,8 @@ Given('I select {string} from the Field Type dropdown of the open "Edit Field" d
 Given('I select {string} from the Validation dropdown of the open "Edit Field" dialog box', (dropdown_option) => {
     cy.get('select#val_type').select(dropdown_option)
 })
+
+
 
 /**
  * @module Interactions
