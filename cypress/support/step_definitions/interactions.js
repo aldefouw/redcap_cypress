@@ -412,12 +412,12 @@ Given('I select the checkbox option {string} for the field labeled {string}', (c
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I select {string} on the dropdown field labeled {string}
+ * @example I select {string} on the < dropdown | multiselect > field labeled {string}
  * @param {string} text - the text to enter into the field
  * @param {string} label - the label of the field
  * @description Selects a specific item from a dropdown
  */
-Given('I select {string} on the {dropdown_type} labeled {string}', (text, type, label) => {
+Given('I select {string} on the {dropdown_type} field labeled {string}', (text, type, label) => {
     let sel = `:contains("${label}"):visible`
 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {

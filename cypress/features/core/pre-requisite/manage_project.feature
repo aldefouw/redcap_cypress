@@ -117,7 +117,7 @@ Feature: Manage Project
         Given I click on the link labeled "New Project"
         Then I should see "Create Project"
         And I enter "FirstProject_1115" into the field identified by "input" labeled "Project title:"
-        And I select "Operational Support" on the dropdown table field labeled "Project's purpose:"
+        And I select "Operational Support" on the dropdown field labeled "Project's purpose:"
         And I click on the button labeled "Create Project"
         Then I should see "Your new REDCap project has been created and is ready to be accessed."
 
@@ -132,7 +132,7 @@ Feature: Manage Project
         Given I click on the link labeled "Project Setup"
         And I click on the button labeled "Modify project title, purpose, etc."
         Then I should see "Modify Project Settings"
-        And I select "Practice / Just for fun" on the dropdown table field labeled "Project's purpose:"
+        And I select "Practice / Just for fun" on the dropdown field labeled "Project's purpose:"
         When I click on the button labeled "Save"
         Then I should see "Success! Your changes have been saved."
 
@@ -288,9 +288,9 @@ Feature: Manage Project
         Given I click on the link labeled 'Project Setup'
         And I should see that repeatable instruments are disabled
         And I open the dialog box for the Repeatable Instruments and Events module
-        And I select "Repeat Instruments (repeat independently of each other)" on the dropdown table field labeled "Event 1 (Arm 1: Arm 1)"
+        And I select "Repeat Instruments (repeat independently of each other)" on the dropdown field labeled "Event 1 (Arm 1: Arm 1)"
         And I check the checkbox labeled "Form 1 2"
-        And I select "Repeat Entire Event (repeat all instruments together)" on the dropdown table field labeled "Event 1 (Arm 2: Arm 2)"
+        And I select "Repeat Entire Event (repeat all instruments together)" on the dropdown field labeled "Event 1 (Arm 2: Arm 2)"
         And I click on the button labeled "Save"
         Then I should see "Your settings for repeating instruments and/or events have been successfully saved. (The page will now reload.)"
         Then I should see that repeatable instruments are modifiable
@@ -338,13 +338,13 @@ Feature: Manage Project
 
     Scenario: 42 - Change Survey Status to Offline
         Given I click on the button labeled "Survey settings"
-        And I select "Survey Offline" on the dropdown table field labeled "Survey Status"
+        And I select "Survey Offline" on the dropdown field labeled "Survey Status"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
 
     Scenario: 43 - Change Survey Status to Active
         Given I click on the button labeled "Survey settings"
-        And I select "Survey Active" on the dropdown table field labeled "Survey Status"
+        And I select "Survey Active" on the dropdown field labeled "Survey Status"
         And I click on the button labeled "Save Changes"
         Then I should see "Your survey settings were successfully saved!"
 
@@ -517,7 +517,7 @@ Feature: Manage Project
         Then I should see "Close"
         And I click on the button labeled "Close" in the dialog box
 
-        Given I select "Repeat Instruments (repeat independently of each other)" on the dropdown table field labeled "Event 1 (Arm 1: Arm 1)"
+        Given I select "Repeat Instruments (repeat independently of each other)" on the dropdown field labeled "Event 1 (Arm 1: Arm 1)"
         Then I should see "Cancel"
         And I click on the button labeled "Cancel" in the dialog box
 
