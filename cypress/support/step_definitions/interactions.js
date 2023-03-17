@@ -422,7 +422,7 @@ Given('I select {string} on the {dropdown_type} labeled {string}', (text, type, 
 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
         cy.contains(label).then(($label) => {
-            let selector = cy.get_element_by_label($label, 'select:visible')
+            let selector = cy.get_element_by_label($label, `select:has(option:contains("${text}")):visible`)
             selector.scrollIntoView().select(text)
         })
     })
