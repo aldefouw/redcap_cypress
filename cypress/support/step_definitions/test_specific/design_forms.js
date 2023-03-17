@@ -1,298 +1,88 @@
 import { Given } from "cypress-cucumber-preprocessor/steps";
+///////////////
+//Instruments//
+///////////////
 
 /**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I rename the current data instrument named {string} to {string}
- * @param {string} current_name - name of current instrument
- * @param {string} new_name - name to rename the instrument to
- * @description Renames a data collection instrument
- */
-
-Given("I rename the current data instrument named {string} to {string}", (current_name, new_name) => {
-    cy.rename_instrument(current_name, new_name)
-})
-
-/**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I delete the data instrument named {string}
- * @param {string} instrument_name - name of current instrument
- * @description Deletes a data collection instrument
- */
-
-Given("I delete the data instrument named {string}", (instrument_name) => {
-    cy.delete_instrument(instrument_name)
-})
-
-
-/**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I enable surveys for the data instrument named {string}
- * @param {string} instrument_name - name of current instrument
- * @description Enables a data collection instrument as a survey
- */
-
-Given("I enable surveys for the data instrument named {string}", (instrument_name) => {
-    cy.enable_surveys(instrument_name)
-})
-
-/**
- * @module OnlineDesigner
- * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I create a new data collection instrument called {string}
- * @param {string} instrument_name - the name of the instrument to create
- * @description Clicks the button to create new instrument and enters the instrument name into the text box
- */
-Given('I create a new data collection instrument called {string}', (instrument_name) => {
-    cy.intercept({  method: 'POST',
-        url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/create_form.php?*'
-    }).as('new_data_instrument')
-
-    cy.get('div').
-    contains('a new instrument from scratch').
-    parent().
-    within(($div) => {
-        cy.get('button').contains('Create').click()
-    })
-
-    cy.get('body').contains('Add instrument here')
-    cy.get('button').contains("Add instrument here").click()
-    cy.get('span').contains('New instrument name') //Make sure this exists first
-
-    cy.get('td').contains('New instrument name').parent().within(($td) => {
-        cy.get('input[type=text]').type(instrument_name)
-        cy.button_or_input('Create').click()
-    })
-
-    cy.wait('@new_data_instrument').then(() => {
-        //Close the dialog box which appears on newer versions of REDCap
-        if (Cypress.$('div[role=dialog]').length) {
-            cy.button_or_input('Close').click()
-        }
-    })
-})
-
-/**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I edit the Data Collection Instrument field labeled {string}
- * @param {string} label - the label of the field to edit
- * @description Opens the edit window for the field with the specified label
- */
-Given('I edit the Data Collection Instrument field labeled {string}', (label) => {
-    cy.edit_field_by_label(label)
-})
-
-/**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I edit the Data Collection Instrument field labeled {string}
- * @param {string} label - the label of the field to edit
- * @description Opens the edit window for the field with the specified label
- */
-Given('I enter Choices of {string} into the open "Edit Field" dialog box', (choices) => {
-    let field_choices = cy.select_field_choices()
-    field_choices.clear()
-    field_choices.type(choices)
-})
-
-/**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I edit the Data Collection Instrument field labeled {string}
- * @param {string} label - the label of the field to edit
- * @description Opens the edit window for the field with the specified label
- */
-Given('I enter {string} into the Field Label of the open "Edit Field" dialog box', (field_label) => {
-    cy.get('textarea#field_label').clear().type(field_label)
-})
-
-/**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I edit the Data Collection Instrument field labeled {string}
- * @param {string} label - the label of the field to edit
- * @description Opens the edit window for the field with the specified label
- */
-Given('I enter {string} into the Field Label of the open "Edit Field" dialog box', (field_label) => {
-    cy.get('textarea#field_label').clear().type(field_label)
-})
-
-/**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I enter the equation {string} into Calculation Equation of the open "Edit Field" dialog box
- * @param {string} equation - the equation to enter
- * @description Enters specified equation into a Calculated Field within an open "Edit Field" dialog box
- */
-Given('I enter the equation {string} into Calculation Equation of the open "Edit Field" dialog box', (equation) => {
-    cy.get('textarea#element_enum').click()
-    cy.get('div.ace_content').type("{shift}{home}{del}" + equation)
-    cy.get('button').contains('Update & Close Editor').click()
-})
-
-/**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I select {string} from the Field Type dropdown of the open "Edit Field" dialog box
- * @param {string} label - the label of the field to edit
- * @description Selects option from the Field Type dropdown in open "Edit Field" dialog box
- */
-Given('I select {string} from the Field Type dropdown of the open "Edit Field" dialog box', (dropdown_option) => {
-    cy.get('select#field_type').select(dropdown_option)
-})
-
-/**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I select {string} from the Validation dropdown of the open "Edit Field" dialog box
- * @param {string} label - the label of the field to edit
- * @description Selects option from the Validation dropdown in open "Edit Field" dialog box
- */
-Given('I select {string} from the Validation dropdown of the open "Edit Field" dialog box', (dropdown_option) => {
-    cy.get('select#val_type').select(dropdown_option)
-})
-
-/**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I edit the field labeled {string}
- * @param {string} text - the text value of the label associated with a specific field
- * @description Edits a field in the Online Designer by its specified field label.
- */
-Given("I edit the field labeled {string}", (text) => {
-    cy.edit_field_by_label(text)
-})
-
-/**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I mark the field required
- * @description Marks a field as required within the Online Designer.
- */
-Given("I mark the field required", () => {
-    cy.get('input#field_req1').click()
-})
-
-/**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I mark the field as not required
- * @description Marks a field as NOT required within the Online Designer.
- */
-Given("I mark the field as not required", () => {
-    cy.get('input#field_req0').click()
-})
-
-/**
- * @module OnlineDesigner
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I save the field
- * @description Saves a Field within the Online Designer.
- */
-Given("I save the field", () => {
-    cy.save_field()
-})
-
-/**
- * @module OnlineDesigner
- * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I enter draft mode
- * @description Enters draft mode
- */
-Given("I enter draft mode", () => {
-    cy.get('html').should('contain', 'Enter Draft Mode')
-
-    cy.button_or_input('Enter Draft Mode').click()
-
-    //Check to see that REDCap indicates we're in DRAFT mode
-    cy.get('div#actionMsg').should(($alert) => {
-        expect($alert).to.contain('The project is now in Draft Mode.')
-    })
-})
-
-/**
- * @module OnlineDesigner
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I add an instrument named {string} the event named {string}
  * @param {string} instrument - the name of the instrument you are adding to an event
  * @param {string} event - the name of the event you are adding an instrument to
  * @description Interactions - Checks a specfic checkbox for an  instrument and event name
  */
-Given("I add an instrument named {string} to the event named {string}", (instrument, event) => {
-
+ Given("I add an instrument named {string} to the event named {string}", (instrument, event) => {
+    
     cy.get('table[id=event_grid_table]').find('th').contains(event).parents('th').invoke('index').then((index) => {
         cy.get('table[id=event_grid_table]')
-            .children('tbody')
-            .contains('tr', instrument)
-            .find('input').eq(index-1).check()
+                .children('tbody')
+                .contains('tr', instrument)
+                .find('input').eq(index-1).check()
     })
-
+    
 })
 
 /**
- * @module OnlineDesigner
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I remove an instrument named {string} the event named {string}
  * @param {string} instrument - the name of the instrument you are adding to an event
  * @param {string} event - the name of the event you are adding an instrument to
  * @description Interactions - Unchecks a specfic checkbox for an  instrument and event name
  */
-Given("I remove an instrument named {string} to the event named {string}", (instrument, event) => {
-
+ Given("I remove an instrument named {string} to the event named {string}", (instrument, event) => {
+    
     cy.get('table[id=event_grid_table]').find('th').contains(event).parents('th').invoke('index').then((index) => {
         cy.get('table[id=event_grid_table]')
-            .children('tbody')
-            .contains('tr', instrument)
-            .find('input').eq(index-1).uncheck()
+                .children('tbody')
+                .contains('tr', instrument)
+                .find('input').eq(index-1).uncheck()
     })
-
+    
 })
 
 /**
- * @module OnlineDesigner
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I add an instrument below the instrument named {string}
  * @param {string} instrument - the name of the instrument you are adding an instrument below
  * @description Interactions - Clicks the Add Instrument Here button below a specific Instrument name
  */
-Given("I add an instrument below the instrument named {string}", (instrument) => {
+ Given("I add an instrument below the instrument named {string}", (instrument) => {
 
     cy.get('table[id=table-forms_surveys]')
         .find('tr').contains(instrument)
-        .parents('tr')
-        .next().find('button').contains("Add instrument here").click()
+            .parents('tr')
+                .next().find('button').contains("Add instrument here").click()
 
 })
 
 /**
- * @module OnlineDesigner
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I add an instrument below the instrument named {string}
  * @param {string} action - the action label of the link that should be clicked
  * @param {string} instrument - the name of the instrument that a form should be added below
  * @description Interactions - Clicks the "choose action" button and clicks an anchor link
  */
-Given("I click on the Instrument Action {string} for the instrument named {string}", (action, instrument) => {
+ Given("I click on the Instrument Action {string} for the instrument named {string}", (action, instrument) => {
 
     cy.get('table[id=table-forms_surveys]')
         .find('tr').contains(instrument)
-        .parents('tr').find('button').contains('Choose action').click()
+            .parents('tr').find('button').contains('Choose action').click()
     cy.get('ul[id=formActionDropdown]').find('a').contains(action).click({force: true})
 
 })
 
 /**
- * @module OnlineDesigner
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I drag on the instrument named {string} to the position {int}
  * @param {string} instrument - the naame of the instrument being drag-n-dropped
  * @param {int} position - the position (index starting from 0) where the instrument should be placed
  * @description Interactions - Drag and drop the instrument to the int position
  */
-Given("I drag on the instrument named {string} to position {int}", (instrument, position) => {
+ Given("I drag on the instrument named {string} to position {int}", (instrument, position) => {
 
     cy.get('table[id=table-forms_surveys]').find('tr').contains(instrument).parents('tr').then((row) => {
         cy.get('table[id=table-forms_surveys]').find('tr').eq(position).find('td[class=dragHandle]').as('target')
@@ -306,7 +96,7 @@ Given("I drag on the instrument named {string} to position {int}", (instrument, 
 ///////////
 
 /**
- * @module OnlineDesigner
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I click on the {addField} input button below the field named {string}
  * @param {addField} type - the type of addField action you want to perform
@@ -316,12 +106,12 @@ Given("I drag on the instrument named {string} to position {int}", (instrument, 
 Given("I click on the {addField} input button below the field named {string}", (type, target) => {
     cy.get('tbody[class=formtbody]').children('tr:contains(' + target +')').contains(target)
         .parents('tr').next().within(() => {
-        cy.get('input[value="' + type + '"]').click()
-    })
+            cy.get('input[value="' + type + '"]').click()
+        })
 })
 
 /**
- * @module OnlineDesigner
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I click on the {editField} image for the field named {string}
  * @param {string} type - the type of edit action you want to perform on a field
@@ -329,12 +119,12 @@ Given("I click on the {addField} input button below the field named {string}", (
  * @description Clicks on the image link of the action you want to perform on a field
  */
 
-Given("I click on the {editField} image for the field named {string}", (type, field_name) => {
+ Given("I click on the {editField} image for the field named {string}", (type, field_name) => {
     cy.click_on_design_field_function(type, field_name)
 })
 
 /**
- * @module OnlineDesigner
+ * @module DesignForms
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I delete the field named {string}
  * @param {string} type - the type of edit action you want to perform on a field
@@ -360,7 +150,7 @@ Given("I delete the field named {string}", (field_name) => {
 })
 
 /**
- * @module OnlineDesigner
+ * @module DesignForms
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I move the field named {string} after the field named {string}
  * @param {string} field_name - name of field you want to move
@@ -389,31 +179,31 @@ Given("I move the field named {string} after the field named {string}", (field_n
 })
 
 /**
- * @module OnlineDesigner
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I drag on the field named {string} to the position {int}
  * @param {string} field - the name of the field being drag-n-dropped
  * @param {int} position - the position (index starting from 0) where the instrument should be placed
  * @description Interactions - Drag and drop the field to the int position
  */
-Given("I drag on the field named {string} to position {int}", (field, position) => {
+ Given("I drag on the field named {string} to position {int}", (field, position) => {
 
     cy.get('table[id*=design-]').contains(field).parents('table[id*=design-]').then((row) => {
         cy.get('table[id*=design-]').eq(position).as('target')
         cy.wrap(row).dragTo('@target')
     })
 
-})
+ })
 
-/**
- * @module OnlineDesigner
+ /**
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I should see a the field named {string} before field named {string}
  * @param {string} fieldBefore the field name that comes before
  * @param {string} fieldAfter the field name that comes after
  * @description Visually verifies that the fieldBefore is before fieldAfter
  */
-Given("I should see a the field named {string} before field named {string}", (fieldBefore, fieldAfter) => {
+  Given("I should see a the field named {string} before field named {string}", (fieldBefore, fieldAfter) => {
     cy.get('tr[id*=-tr]').contains(fieldBefore).parents('tr[id*=-tr]')
         .nextAll().contains(fieldAfter)
 })
@@ -423,7 +213,7 @@ Given("I should see a the field named {string} before field named {string}", (fi
 ///////////////////
 
 /**
- * @module OnlineDesigner
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I add a new variable named {string} in the form named {string} with the field type {string} and the label {string} into the Data Dictionary file at {string}
  * @param {string} variable - the variable name being added to the data dictionary
@@ -433,7 +223,7 @@ Given("I should see a the field named {string} before field named {string}", (fi
  * @param {string} path - the path of the data dictionary
  * @description Interactions - Add a variable, field type, form name to the data dictionary
  */
-Given("I add a new variable named {string} in the form named {string} with the field type {string} and the label {string} into the Data Dictionary file at {string}", (variable, form_name, field_type, label, path) => {
+ Given("I add a new variable named {string} in the form named {string} with the field type {string} and the label {string} into the Data Dictionary file at {string}", (variable, form_name, field_type, label, path) => {
 
     //variable,form_name,,text,label,,,,,,,,,,,,,
     let input = variable + "," + form_name + ",,text," + label + ",,,,,,,,,,,,,\n"
@@ -443,13 +233,13 @@ Given("I add a new variable named {string} in the form named {string} with the f
 })
 
 /**
- * @module OnlineDesigner
+ * @module DesignForms
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I download the data dictionary and save the file as {string}
  * @param {string} name - name to save the data dictionary file
  * @description Utility - Download and save the data dictionary file
  */
-Given("I download the data dictionary and save the file as {string}", (name) => {
+ Given("I download the data dictionary and save the file as {string}", (name) => {
     cy.intercept({
         method: 'GET',
         url: '/redcap_v' + Cypress.env('redcap_version') + '/' + '/Design/data_dictionary_download.php?*'
@@ -478,8 +268,19 @@ Given("I download the data dictionary and save the file as {string}", (name) => 
 
 })
 
+
 /**
- * @module OnlineDesigner
+ * @module DesignForms
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example the form should have a redcap_csrf_token
+ * @description Checks to verify that a redcap_csrf_token is a field on the page's form
+ */
+ Given("the form should have a redcap_csrf_token", () => {
+    cy.get('input[name=redcap_csrf_token]')
+})
+
+/**
+ * @module DesignForms
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @author Madilynn Peterson <mmpeterson24@wisc.edu>
  * @example I add a new {fieldType} field labeled {string} with variable name {string}
