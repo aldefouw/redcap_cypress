@@ -1,6 +1,6 @@
 {
   "name": "redcap_cypress",
-  "version": "11.1.5",
+  "version": "12.4.14",
   "description": "This repository is a template to assist you in writing **automated tests for REDCap**.",
   "main": "index.js",
   "dependencies": {
