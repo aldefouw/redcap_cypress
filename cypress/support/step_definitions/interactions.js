@@ -420,18 +420,11 @@ Given('I select the checkbox option {string} for the field labeled {string}', (c
 Given('I select {string} on the {dropdown_type} labeled {string}', (text, type, label) => {
     let sel = `:contains("${label}"):visible`
 
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
-        if(type === "dropdown table field" || type === "multiselect table field") {
-            cy.contains(label).then(($label) => {
-                cy.wrap($label).parentsUntil('tr').parent().first().within(($elm) => {
-                    cy.wrap($elm).find('select:visible:first').select(text)
-                })
-            })
-        } else if (type === "dropdown field" || type === "multiselect field"){
-            cy.contains(label).then(($label) => {
-                cy.wrap($label).parent().find('select:visible:first').select(text)
-            })
-        }
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
+        cy.contains(label).then(($label) => {
+            let selector = cy.get_element_by_label($label, 'select:visible')
+            selector.scrollIntoView().select(text)
+        })
     })
 })
 
