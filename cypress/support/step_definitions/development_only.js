@@ -13,7 +13,7 @@ Given("I want to pause", () => {
 /**
  * @module DevelopmentOnly
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
- * @example I should NOT see {string}
+ * @example I should no longer see the element identified by {string}
  * @param {string} selector - the selector that identifies an element
  * @description Visually verifies that element exists and is not visible OR does not exist
  */
@@ -84,7 +84,7 @@ Given('I select {string} from the dropdown identified by {string}', (value,label
 /**
  * @module DevelopmentOnly
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
- * @example I should NOT see {string}
+ * @example I should see the element identified by {string}
  * @param {string} selector - the selector that identifies an element
  * @description Visually verifies that element exists and is visible
  */
@@ -136,7 +136,7 @@ Given("I should see the dropdown identified by {string} with the option {string}
 /**
  * @module DevelopmentOnly
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
- * @example I should NOT see {string}
+ * @example I should no longer see the element identified by {string}
  * @param {string} selector - the selector that identifies an element
  * @description Visually verifies that element exists and is not visible OR does not exist
  */
