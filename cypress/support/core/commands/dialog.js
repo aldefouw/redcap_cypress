@@ -19,5 +19,5 @@ Cypress.Commands.add("click_on_dialog_button", (text, selector = 'button') => {
 })
 
 Cypress.Commands.add("verify_text_on_dialog", (text) => {
-    cy.get('div[role="dialog"]:visible').should('contain', text)
+    cy.get(`div[role="dialog"]:visible:contains("${text}")`)
 })
