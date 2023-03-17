@@ -19,7 +19,7 @@ Cypress.Commands.add("click_on_dialog_button", (text, selector = 'button') => {
 })
 
 Cypress.Commands.add("verify_text_on_dialog", (text) => {
-    cy.get('div#working').should('not.be.visible')
+    if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
 
     cy.get('div[role="dialog"]').then((divs) => {
         // can be multiple layers of dialogs, find the top most - tintin edit
