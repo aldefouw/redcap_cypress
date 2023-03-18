@@ -43,10 +43,14 @@ Given("I should see {string} in the title", (title) => {
  * @description Selects a specific item from a dropdown
  */
 Given('I should see the {dropdown_type} field labeled {string} with the option {string} selected', (type, label, option) => {
-    const label_selector = `:contains("${label}"):visible`
-    const element_selector = `select:has(option:contains("${option}")):visible`
-    const field = cy.get_labeled_element(label_selector, element_selector)
-    field.find(':selected').should('have.text', option)
+    let sel = `:contains("${label}"):visible`
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+        cy.contains(label).then(($label) => {
+            let selector = cy.get_element_by_label($label, `select:has(option:contains("${option}")):visible`)
+            selector.scrollIntoView().find(':selected').should('have.text', option)
+        })
+    })
 })
 
 /**

@@ -418,10 +418,14 @@ Given('I select the checkbox option {string} for the field labeled {string}', (c
  * @description Selects a specific item from a dropdown
  */
 Given('I select {string} on the {dropdown_type} field labeled {string}', (option, type, label) => {
-    const label_selector = `:contains("${label}"):visible`
-    const element_selector = `select:has(option:contains("${option}")):visible`
-    const field = cy.get_labeled_element(label_selector, element_selector)
-    field.select(option)
+    let sel = `:contains("${label}"):visible`
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+        cy.contains(label).then(($label) => {
+            let selector = cy.get_element_by_label($label, `select:has(option:contains("${option}")):visible`)
+            selector.scrollIntoView().select(option)
+        })
+    })
 })
 
 /**
