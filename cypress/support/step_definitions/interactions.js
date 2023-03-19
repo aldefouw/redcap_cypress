@@ -223,18 +223,6 @@ Given('I click on the table cell containing a link labeled {string}', (text) => 
 
 /**
  * @module Interactions
- * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
- * @example I enter {string} into the hidden field identified by {string}
- * @param {string} text - the text to enter into the field
- * @param {string} selector - the selector of the element to enter the text into
- * @description Enter text into a specific field that is hidden (Specifically for Logic Editor)
- */
-Given("I enter {string} into the hidden field identified by {string}", (text, sel) => {
-    cy.get(sel).type(text, {force: true})
-})
-
-/**
- * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I < click on | check | uncheck > the checkbox labeled {string}
  * @param {string} label - the label associated with the checkbox field
