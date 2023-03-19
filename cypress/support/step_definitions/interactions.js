@@ -229,20 +229,17 @@ Given('I click on the table cell containing a link labeled {string}', (text) => 
  * @description Selects a checkbox field by its label
  */
 Given("I {click_type} the checkbox labeled {string}", (check, label) => {
-    let sel = `:contains("${label}"):visible`
-
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
-        cy.contains(label).then(($label) => {
-            let selector = cy.get_element_by_label($label, 'input[type=checkbox]:visible')
-
-            if (check === "click on") {
-                selector.scrollIntoView().click()
-            } else if (check === "check") {
-                selector.scrollIntoView().check()
-            } else if (check === "uncheck") {
-                selector.scrollIntoView().uncheck()
-            }
-        })
+    let label_selector = `:contains("${label}"):visible`
+    let element_selector = `input[type=checkbox]:visible`
+    cy.top_layer(label_selector).within(() => {
+        let selector = cy.get_labeled_element(element_selector, label)
+        if (check === "click on") {
+            selector.scrollIntoView().click()
+        } else if (check === "check") {
+            selector.scrollIntoView().check()
+        } else if (check === "uncheck") {
+            selector.scrollIntoView().uncheck()
+        }
     })
 })
 

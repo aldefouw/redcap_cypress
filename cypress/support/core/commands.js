@@ -31,8 +31,14 @@ Cypress.Commands.add("top_layer", (label_selector) => {
     ).then((el) => { return el })
 })
 
-Cypress.Commands.add("get_labeled_element", (element_selector, label) => {
-    cy.contains(label).then(($label) => { return cy.get_element_by_label($label, element_selector).scrollIntoView() })
+Cypress.Commands.add("get_labeled_element", (element_selector, label, scroll = true) => {
+    cy.contains(label).then(($label) => {
+        if(scroll){
+            cy.get_element_by_label($label, element_selector).scrollIntoView()
+        } else {
+            cy.get_element_by_label($label, element_selector)
+        }
+    })
 })
 
 
