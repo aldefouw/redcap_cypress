@@ -43,13 +43,10 @@ Given("I should see {string} in the title", (title) => {
  * @description Selects a specific item from a dropdown
  */
 Given('I should see the {dropdown_type} field labeled {string} with the option {string} selected', (type, label, option) => {
-    let sel = `:contains("${label}"):visible`
-
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
-        cy.contains(label).then(($label) => {
-            let selector = cy.get_element_by_label($label, `select:has(option:contains("${option}")):visible`)
-            selector.scrollIntoView().find(':selected').should('have.text', option)
-        })
+    let label_selector = `:contains("${label}"):visible`
+    let element_selector = `select:has(option:contains("${option}")):visible`
+    cy.top_layer(label_selector).within(() => {
+        cy.get_labeled_element(element_selector, label).find(':selected').should('have.text', option)
     })
 })
 
@@ -62,18 +59,10 @@ Given('I should see the {dropdown_type} field labeled {string} with the option {
  * @description Selects a checkbox field by its label
  */
 Given("I should see a checkbox labeled {string} that is {check}", (field_type, label, check) => {
-    let sel = `:contains("${label}"):visible`
-
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
-        cy.contains(label).then(($label) => {
-            let selector = cy.get_element_by_label($label, 'input[type=checkbox]:visible')
-
-            if (check === "checked") {
-                selector.scrollIntoView().then(($input) => { expect($input).to.be.checked })
-            } else if (check === "unchecked") {
-                selector.scrollIntoView().then(($input) => { expect($input).to.be.checked })
-            }
-        })
+    let label_selector = `:contains("${label}"):visible`
+    let element_selector = `input[type=checkbox]:visible`
+    cy.top_layer(label_selector).within(() => {
+        cy.get_labeled_element(element_selector, label).should(check === "checked" ? "be.checked" : "not.be.checked")
     })
 })
 
