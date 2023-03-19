@@ -8,6 +8,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps"
  * @description Clicks on a "Save" option on a Data Collection instrument form
  */
  Given("I select the submit option labeled \"{instrument_save_options}\" on the Data Collection Instrument", (text) => {
+
      //REDCap does some crazy conditional display of buttons, so we try to handle that as we best can
      cy.get('tr#__SUBMITBUTTONS__-tr').within(() => {
          let btn = Cypress.$("button:contains(" + JSON.stringify(text) + ")");
@@ -125,7 +126,8 @@ Given("I click on the radio labeled {string} in the dialog box", (text) => {
 Given('I {enter_type} {string} into the input field labeled {string}', (enter_type, text, label) => {
     let sel = `:contains("${label}"):visible`
 
-    cy.top_layer(sel).within(() => {
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+
         let elm = null
 
         cy.contains(label).then(($label) => {
@@ -144,6 +146,7 @@ Given('I {enter_type} {string} into the input field labeled {string}', (enter_ty
                 }
             })
         })
+
     })
 })
 
@@ -220,22 +223,36 @@ Given('I click on the table cell containing a link labeled {string}', (text) => 
 
 /**
  * @module Interactions
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I enter {string} into the hidden field identified by {string}
+ * @param {string} text - the text to enter into the field
+ * @param {string} selector - the selector of the element to enter the text into
+ * @description Enter text into a specific field that is hidden (Specifically for Logic Editor)
+ */
+Given("I enter {string} into the hidden field identified by {string}", (text, sel) => {
+    cy.get(sel).type(text, {force: true})
+})
+
+/**
+ * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I < click on | check | uncheck > the checkbox labeled {string}
  * @param {string} label - the label associated with the checkbox field
  * @description Selects a checkbox field by its label
  */
 Given("I {click_type} the checkbox labeled {string}", (check, label) => {
-    let label_selector = `:contains("${label}"):visible`
-    let element_selector = `input[type=checkbox]:visible`
-    cy.top_layer(label_selector).within(() => {
-        cy.get_labeled_element(element_selector, label).then((checkbox) => {
+    let sel = `:contains("${label}"):visible`
+
+    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
+        cy.contains(label).then(($label) => {
+            let selector = cy.get_element_by_label($label, 'input[type=checkbox]:visible')
+
             if (check === "click on") {
-                checkbox.click()
+                selector.scrollIntoView().click()
             } else if (check === "check") {
-                checkbox.check()
+                selector.scrollIntoView().check()
             } else if (check === "uncheck") {
-                checkbox.uncheck()
+                selector.scrollIntoView().uncheck()
             }
         })
     })
