@@ -37,26 +37,16 @@ Given("I should see {string} in the title", (title) => {
 /**
  * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I should see the dropdown {dropdown_type} labeled {string} with the option {string} selected
+ * @example I should see the < dropdown | multiselect > field labeled {string} with the option {string} selected
  * @param {string} label - the label of the field
  * @param {string} option - the option selected
  * @description Selects a specific item from a dropdown
  */
-Given('I should see the {dropdown_type} labeled {string} with the option {string} selected', (type, label, option) => {
-    let sel = `:contains("${label}"):visible`
-
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
-        if(type === "table field") {
-            cy.contains(label).then(($label) => {
-                cy.wrap($label).parentsUntil(':has(:has(:has(:has(select))))').first().parent().parent().within(($elm) => {
-                    cy.wrap($elm).find('select').find(':selected').should('have.text', option)
-                })
-            })
-        } else if (type === "field"){
-            cy.contains(label).then(($label) => {
-                cy.wrap($label).parent().find('select').find(':selected').should('have.text', option)
-            })
-        }
+Given('I should see the {dropdown_type} field labeled {string} with the option {string} selected', (type, label, option) => {
+    let label_selector = `:contains("${label}"):visible`
+    let element_selector = `select:has(option:contains("${option}")):visible`
+    cy.top_layer(label_selector).within(() => {
+        cy.get_labeled_element(element_selector, label).find(':selected').should('have.text', option)
     })
 })
 
@@ -69,18 +59,10 @@ Given('I should see the {dropdown_type} labeled {string} with the option {string
  * @description Selects a checkbox field by its label
  */
 Given("I should see a checkbox labeled {string} that is {check}", (field_type, label, check) => {
-    let sel = `:contains("${label}"):visible`
-
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within((container) => {
-        cy.contains(label).then(($label) => {
-            let selector = cy.get_element_by_label($label, 'input[type=checkbox]:visible')
-
-            if (check === "checked") {
-                selector.scrollIntoView().then(($input) => { expect($input).to.be.checked })
-            } else if (check === "unchecked") {
-                selector.scrollIntoView().then(($input) => { expect($input).to.be.checked })
-            }
-        })
+    let label_selector = `:contains("${label}"):visible`
+    let element_selector = `input[type=checkbox]:visible`
+    cy.top_layer(label_selector).within(() => {
+        cy.get_labeled_element(element_selector, label).should(check === "checked" ? "be.checked" : "not.be.checked")
     })
 })
 

@@ -36,8 +36,8 @@ Feature: Reporting
     When I click on the link labeled "Project Setup"
 
     And I open the dialog box for the Repeatable Instruments and Events module
-    And I select "-- not repeating --" on the dropdown table field labeled "Event 1 (Arm 1: Arm 1)"
-    And I select "Repeat Instruments (repeat independently of each other)" on the dropdown table field labeled "Event 2 (Arm 1: Arm 1)"
+    And I select "-- not repeating --" on the dropdown field labeled "Event 1 (Arm 1: Arm 1)"
+    And I select "Repeat Instruments (repeat independently of each other)" on the dropdown field labeled "Event 2 (Arm 1: Arm 1)"
 
      #TODO: This needs to be refactored into a save button for the specific Repeatable Instruments and Events Module
     And the AJAX "POST" request at "*RepeatInstanceController:saveSetup*" tagged by "repeating" is being monitored
@@ -210,7 +210,7 @@ Feature: Reporting
     Given I click on the link labeled "Data Exports, Reports, and Stats" 
     And I click on the button labeled "Edit" for the report named "Report 1"
     And I click on the button labeled "View full list of fields" for the row labeled "Filter 1"
-    And I select "dob" on the dropdown table field labeled "Filter 1"
+    And I select "dob" on the dropdown field labeled "Filter 1"
     Then I should see the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1" with the options below
     | = | not = | <  | < = | > | > = |
     And I select ">" from the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1"
@@ -225,7 +225,7 @@ Feature: Reporting
   Scenario: 11 - Edit Report: Filter First name contains o
     Given I click on the link labeled "Data Exports, Reports, and Stats" 
     And I click on the button labeled "Edit" for the report named "Report 1"
-    And I select "fname" on the dropdown table field labeled "Filter 1"
+    And I select "fname" on the dropdown field labeled "Filter 1"
     Then I should see the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1" with the options below
     | = | not = | contains | does not contain | starts with | ends with |
     And I select "contains" from the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1"
@@ -242,7 +242,7 @@ Feature: Reporting
     And I click on the button labeled "Edit" for the report named "Report 1"
     And I click on the button labeled "View full list of fields" for the row labeled "Filter 2"
     And I should see "Filter 2"
-    And I select "dob" on the dropdown table field labeled "Filter 2"
+    And I select "dob" on the dropdown field labeled "Filter 2"
     And I select "<" from the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 2"
     And I enter "6/20/19" into the field identified by "input[name='limiter_value[]']" labeled "Filter 2"
     And I select "OR" from the dropdown identified by "select[name='limiter_group_operator[]']" labeled "Filter 2"
