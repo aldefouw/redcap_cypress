@@ -23,6 +23,25 @@ require('./commands/visit_urls.js')
 //   /suport/modules/commands.js
 //   /support/plugins/commands.js
 
+
+
+Cypress.Commands.add("top_layer", (label_selector) => {
+    cy.get_top_layer(($el) => {
+        expect($el.find(label_selector)).length.to.be.above(0)}
+    ).then((el) => { return el })
+})
+
+Cypress.Commands.add("get_labeled_element", (element_selector, label, scroll = true) => {
+    cy.contains(label).then(($label) => {
+        if(scroll){
+            cy.get_element_by_label($label, element_selector).scrollIntoView()
+        } else {
+            cy.get_element_by_label($label, element_selector)
+        }
+    })
+})
+
+
 Cypress.Commands.add('get_element_by_label', (label, selector = null, original_selector = null, i = 0) => {
     if (original_selector === null) { original_selector = selector }
 
