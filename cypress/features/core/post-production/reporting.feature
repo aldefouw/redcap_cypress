@@ -91,7 +91,7 @@ Feature: Reporting
     And I click on the button labeled "Close" in the dialog box
 
     Then I should see "Additional report options"
-    And I should see a checkbox labeled "Show data for all events or repeating instruments for each record returned" that is checked
+    And I should see a checkbox labeled "Show data for all events" that is checked
 
     When I click on the button labeled "Save Report"
     Then I should see a dialog containing the following text: 'Your report has been saved!'
@@ -148,7 +148,7 @@ Feature: Reporting
     Then I should have a "csv" file that contains 8 distinct records
     Then I should have a "csv" file that contains 19 rows
     Then I should have a "csv" file that contains 11 repeating instrument rows
-
+    
   Scenario: 7 - Edit Report: Remove Description, Don't show all events or repeating instruments
     Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Edit"
@@ -157,11 +157,11 @@ Feature: Reporting
     Then I should see a dialog containing the following text: "Quick Add"
     And I uncheck the checkbox labeled "Description"
     #Then I should see the element identified by "input[name='field[]']" have length 5
-    #check hidden element count, because the onclick function takes too long to finish. count includes itself
+    #check hidden element count, because the onclick function takes too long to finish. count includes itself 
     And I click on the button labeled "Close"
 
     Given I see "Additional report options"
-    And I uncheck the checkbox labeled "Show data for all events or repeating instruments for each record returned"
+    And I uncheck the checkbox labeled "Show data for all events or repeating instruments/events"
     And I click on the button labeled "Save Report"
     Then I should see a dialog containing the following text: 'Your report has been saved!'
 
