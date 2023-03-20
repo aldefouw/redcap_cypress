@@ -255,3 +255,15 @@ Given("the AJAX {string} request at {string} tagged by {string} is being monitor
 Given("the AJAX request tagged by {string} has completed", (tag) => {
     cy.wait('@' + tag)
 })
+
+/**
+ * @module Interactions
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I enter {string} into the hidden field identified by {string}
+ * @param {string} text - the text to enter into the field
+ * @param {string} selector - the selector of the element to enter the text into
+ * @description Enter text into a specific field that is hidden (Specifically for Logic Editor)
+ */
+Given("I enter {string} into the hidden field identified by {string}", (text, sel) => {
+    cy.get(sel).type(text, {force: true})
+})
