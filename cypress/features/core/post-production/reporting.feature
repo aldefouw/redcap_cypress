@@ -157,11 +157,11 @@ Feature: Reporting
     Then I should see a dialog containing the following text: "Quick Add"
     And I uncheck the checkbox labeled "Description"
     #Then I should see the element identified by "input[name='field[]']" have length 5
-    #check hidden element count, because the onclick function takes too long to finish. count includes itself 
+    #check hidden element count, because the onclick function takes too long to finish. count includes itself
     And I click on the button labeled "Close"
 
     Given I see "Additional report options"
-    And I uncheck the checkbox labeled "Show data for all events or repeating instruments/events"
+    And I uncheck the checkbox labeled "Show data for all events or repeating instruments for each record returned"
     And I click on the button labeled "Save Report"
     Then I should see a dialog containing the following text: 'Your report has been saved!'
 
