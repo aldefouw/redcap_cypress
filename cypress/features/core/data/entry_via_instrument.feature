@@ -71,11 +71,11 @@ Feature: Data Entry through the Data Collection Instrument
     Given I click on the link labeled 'Project Setup'
     And I should see that repeatable instruments are modifiable
     And I open the dialog box for the Repeatable Instruments and Events module
-    And I select "Repeat Instruments (repeat independently of each other)" on the dropdown table field labeled "Event 1 (Arm 1: Arm 1)"
+    And I select "Repeat Instruments (repeat independently of each other)" on the dropdown field labeled "Event 1 (Arm 1: Arm 1)"
     And I check the checkbox labeled "Data Dictionary"
     And I uncheck the checkbox labeled "Data Types"
-    And I select "-- not repeating --" on the dropdown table field labeled "Event 2 (Arm 1: Arm 1)"
-    And I select "Repeat Entire Event (repeat all instruments together)" on the dropdown table field labeled "Event 1 (Arm 2: Arm Two)"
+    And I select "-- not repeating --" on the dropdown field labeled "Event 2 (Arm 1: Arm 1)"
+    And I select "Repeat Entire Event (repeat all instruments together)" on the dropdown field labeled "Event 1 (Arm 2: Arm Two)"
     And I click on the button labeled "Save"
     Then I should see a dialog containing the following text: "Successfully saved"
     And I click on the button labeled "Close" in the dialog box
