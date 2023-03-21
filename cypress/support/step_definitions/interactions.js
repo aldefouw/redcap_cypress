@@ -47,13 +47,11 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
             method: 'POST',
             url: '/redcap_v' + Cypress.env('redcap_version') + "/*RepeatInstanceController:saveSetup*"
         }).as('repeat_save')
-    }
-
-    if(button_type === " on the dialog box for User Rights") {
+    } else if(button_type === " on the Designate Instruments for My Events page") {
         cy.intercept({
             method: 'POST',
-            url: '/redcap_v' + Cypress.env('redcap_version') + '/UserRights/edit_user.php?*'
-        }).as('saved_user')
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/designate_forms_ajax*'
+        }).as('designate_instruments')
     }
 
     if(exactly === 'labeled exactly'){
@@ -68,13 +66,9 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
 
     if(button_type === " on the dialog box for the Repeatable Instruments and Events module"){
         cy.wait('@repeat_save')
+    } else if (button_type === " on the Designate Instruments for My Events page") {
+        cy.wait('@designate_instruments')
     }
-
-    if(button_type === " on the dialog box for User Rights") {
-        cy.wait('@saved_user')
-    }
-
-    if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
 })
 
 /**

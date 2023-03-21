@@ -168,5 +168,5 @@ defineParameterType({
 
 defineParameterType({
     name: 'saveButtonRouteMonitoring',
-    regexp: /| on the dialog box for the Repeatable Instruments and Events module| on the dialog box for User Rights/
+    regexp: /| on the dialog box for the Repeatable Instruments and Events module| on the Designate Instruments for My Events page/
 })

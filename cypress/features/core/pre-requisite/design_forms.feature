@@ -151,10 +151,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I add an instrument named "Text Validation" to the event named "Event 1"
     And I add an instrument named "Data Dictionary Form" to the event named "Event 1"
     And I add an instrument named "Demo Branching" to the event named "Event 1"
-    And the AJAX "POST" request at "Design/designate_forms_ajax*" tagged by "designate" is being monitored
-    Then I click on the button labeled "Save"
-    And the AJAX request tagged by "designate" has completed
-
+    Then I click on the button labeled "Save" on the Designate Instruments for My Events page
 
   Scenario: 19 - Open Data Types Form
     Given I click on the link labeled "My Projects"
