@@ -151,10 +151,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I add an instrument named "Text Validation" to the event named "Event 1"
     And I add an instrument named "Data Dictionary Form" to the event named "Event 1"
     And I add an instrument named "Demo Branching" to the event named "Event 1"
-    And the AJAX "POST" request at "Design/designate_forms_ajax*" tagged by "designate" is being monitored
-    Then I click on the button labeled "Save"
-    And the AJAX request tagged by "designate" has completed
-
+    Then I click on the button labeled "Save" on the Designate Instruments for My Events page
 
   Scenario: 19 - Open Data Types Form
     Given I click on the link labeled "My Projects"
@@ -209,9 +206,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I should see the input field identified by "input[name=field_name]" with the value "a2bc"
     And I clear the field identified by "input[name=field_name]"
     And I enter "textbox" into the field identified by "input[name=field_name]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    And I click on the button labeled "Save" on the Online Designer page
     Then I should see "textbox"    
   
   Scenario: 24 - Add Notes Box
@@ -237,9 +232,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see the input field identified by "textarea[name=element_enum]" with the value "1, DDChoice1\n2, DDChoice2\n3, DDChoice3"
     And I enter "multiple_dropdown_auto" into the field identified by "input[name=field_name]"
     And I click on the element identified by "textarea[name=field_label]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    And I click on the button labeled "Save" on the Online Designer page
     Then I should see "multiple_dropdown_auto"
 
   Scenario: 27 - Add Multiple Choice - Drop-down Manual
@@ -250,9 +243,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I enter "5, DDChoice5{enter}7, DDChoice6{enter}6, DDChoice7" into the field identified by "textarea[name=element_enum]"
     And I enter "multiple_dropdown_manual" into the field identified by "input[name=field_name]"
     And I click on the element identified by "textarea[name=field_label]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    And I click on the button labeled "Save" on the Online Designer page
     Then I should see "multiple_dropdown_manual"
 
   Scenario: 28 - Add Multiple Choice - Radio Auto
@@ -267,9 +258,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see the input field identified by "textarea[name=element_enum]" with the value "1, Choice1\n2, Choice2\n3, Choice.3"
     And I enter "radio_button_auto" into the field identified by "input[name=field_name]"
     And I click on the element identified by "textarea[name=field_label]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    And I click on the button labeled "Save" on the Online Designer page
     Then I should see "radio_button_auto"
 
   Scenario: 29 - Add Multiple Choice Radio Manual
@@ -281,9 +270,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I click on the element identified by "input[name=field_name]"
     And I enter "radio_button_manual" into the field identified by "input[name=field_name]"
     And I click on the element identified by "textarea[name=field_label]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    And I click on the button labeled "Save" on the Online Designer page
     Then I should see "radio_button_manual"
 
   Scenario: 30 - Edit Radio Button
@@ -300,9 +287,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I enter "1, Checkbox{enter}2, Checkbox2{enter}3, Checkbox3" into the field identified by "textarea[name=element_enum]"
     And I enter "checkbox" into the field identified by "input[name=field_name]"
     And I click on the element identified by "textarea[name=field_label]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    And I click on the button labeled "Save" on the Online Designer page
     Then I should see "checkbox"
     
   Scenario: 32 - Add Signature
@@ -311,9 +296,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I enter "Signature" into the field identified by "textarea[name=field_label]"
     And I enter "signature" into the field identified by "input[name=field_name]"
     And I click on the element identified by "textarea[name=field_label]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    And I click on the button labeled "Save" on the Online Designer page
     Then I should see a link labeled "Add signature"
     Then I should see "signature"
 
@@ -323,9 +306,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I enter "File Upload" into the field identified by "textarea[name=field_label]"
     And I enter "file_upload" into the field identified by "input[name=field_name]"
     And I click on the element identified by "textarea[name=field_label]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    And I click on the button labeled "Save" on the Online Designer page
     Then I should see a link labeled "Upload file"
     Then I should see "file_upload"
 
@@ -341,9 +322,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I should see "Upload in progress..."
     And I should see "Document was successfully uploaded"
     And I click on the button labeled "Close" in the dialog box
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    And I click on the button labeled "Save" on the Online Designer page
     Then I should see "descriptive_file_text"
 
   Scenario: 35 - Add Descriptive Text
@@ -352,9 +331,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I enter "Descriptive Text" into the field identified by "textarea[name=field_label]"
     And I enter "descriptive_text" into the field identified by "input[name=field_name]"
     And I click on the element identified by "textarea[name=field_label]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    And I click on the button labeled "Save" on the Online Designer page
     Then I should see "descriptive_text"
 
   Scenario: 36 - Confirm Descriptive Text exists
@@ -378,7 +355,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I click on the Add Field input button below the field named "Descriptive Text"
     And I select "section_header" from the dropdown identified by "select[name=field_type]"
     And I enter "Section Break" into the field identified by "textarea[name=field_label]"
-    And I click on the button labeled "Save"
+    And I click on the button labeled "Save" on the Online Designer page
     Then I should see "Sorry, but Section Headers cannot be the last field on a data entry form." in an alert box
     And I should NOT see "Section Break"
 
@@ -386,9 +363,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Given I click on the Add Field input button below the field named "File Upload"
     And I select "section_header" from the dropdown identified by "select[name=field_type]"
     And I enter "Section Break" into the field identified by "textarea[name=field_label]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    And I click on the button labeled "Save" on the Online Designer page
     Then I should see ""
 
   Scenario: 40 - Add Identifier
@@ -424,9 +399,7 @@ Feature: Design Forms using Data Dictionary & Online Designer
     And I clear the field identified by "input[name=field_name]"
     And I enter "Edit Field" into the field identified by "textarea[name=field_label]"
     And I enter "edit_field" into the field identified by "input[name=field_name]"
-    And I click on the button labeled "Save"
-    And the AJAX "GET" request at "Design/online_designer_render_fields.php*" tagged by "render" is being monitored
-    And the AJAX request tagged by "render" has completed
+    And I click on the button labeled "Save" on the Online Designer page
     Then I should see "edit_field"
 
   #This is intentionally out of order because it makes no sense to delete this field before we move it
