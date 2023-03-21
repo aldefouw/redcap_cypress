@@ -38,14 +38,7 @@ Feature: Reporting
     And I open the dialog box for the Repeatable Instruments and Events module
     And I select "-- not repeating --" on the dropdown field labeled "Event 1 (Arm 1: Arm 1)"
     And I select "Repeat Instruments (repeat independently of each other)" on the dropdown field labeled "Event 2 (Arm 1: Arm 1)"
-
-     #TODO: This needs to be refactored into a save button for the specific Repeatable Instruments and Events Module
-    And the AJAX "POST" request at "*RepeatInstanceController:saveSetup*" tagged by "repeating" is being monitored
-
-    And I click on the button labeled "Save"
-
-    #TODO: This needs to be refactored into a save button for the specific Repeatable Instruments and Events Module
-    And the AJAX request tagged by "repeating" has completed
+    And I click on the button labeled "Save" on the dialog box for the Repeatable Instruments and Events module
 
     And I close the popup
 
