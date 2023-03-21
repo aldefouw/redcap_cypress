@@ -52,6 +52,11 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
             method: 'POST',
             url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/designate_forms_ajax*'
         }).as('designate_instruments')
+    } else if(button_type === " on the Online Designer page"){
+        cy.intercept({
+            method: 'GET',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/online_designer_render_fields.php*'
+        }).as('online_designer')
     }
 
     if(exactly === 'labeled exactly'){
@@ -68,6 +73,8 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
         cy.wait('@repeat_save')
     } else if (button_type === " on the Designate Instruments for My Events page") {
         cy.wait('@designate_instruments')
+    } else if (button_type === " on the Online Designer page") {
+        cy.wait('@online_designer')
     }
 })
 
