@@ -38,9 +38,24 @@ import { Given } from "cypress-cucumber-preprocessor/steps"
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the button labeled (exactly) {string}
  * @param {string} text - the text on the button element you want to click
+ * @param {string} text (optional) - < on the dialog box for the Repeatable Instruments and Events module>
  * @description Clicks on a button element with a specific text label.
  */
-Given("I click on the button {labeledExactly} {string}", (exactly, text) => {
+Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}", (exactly, text, button_type) => {
+    if(button_type === " on the dialog box for the Repeatable Instruments and Events module"){
+        cy.intercept({
+            method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + "/*RepeatInstanceController:saveSetup*"
+        }).as('repeat_save')
+    }
+
+    if(button_type === " on the dialog box for User Rights") {
+        cy.intercept({
+            method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/UserRights/edit_user.php?*'
+        }).as('saved_user')
+    }
+
     if(exactly === 'labeled exactly'){
         cy.get(':button:visible').contains(new RegExp("^" + text + "$", "g")).click()
     } else {
@@ -50,6 +65,16 @@ Given("I click on the button {labeledExactly} {string}", (exactly, text) => {
             cy.get(sel).click()
         })
     }
+
+    if(button_type === " on the dialog box for the Repeatable Instruments and Events module"){
+        cy.wait('@repeat_save')
+    }
+
+    if(button_type === " on the dialog box for User Rights") {
+        cy.wait('@saved_user')
+    }
+
+    if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
 })
 
 /**
