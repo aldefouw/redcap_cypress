@@ -31,30 +31,38 @@ Cypress.Commands.add("top_layer", (label_selector) => {
     ).then((el) => { return el })
 })
 
-Cypress.Commands.add("get_labeled_element", (element_selector, label, value = null, scroll = true) => {
+Cypress.Commands.add("get_labeled_element", (element_selector, label, value = null) => {
     cy.contains(label).then(($label) => {
-        if(scroll){
-            cy.get_element_by_label($label, element_selector, value).scrollIntoView()
-        } else {
-            cy.get_element_by_label($label, element_selector, value)
-        }
+        cy.get_element_by_label($label, element_selector, value)
     })
 })
 
 Cypress.Commands.add('filter_elements', (elements, selector, value) => {
-    return elements.find(`${selector}`).filter(function() {
-        if (value !== null && Cypress.$(this).children('option').length > 0){
-            let ret_value = false
+    if(elements.find(`${selector}`).length > 1){
 
-            Cypress.$(this).children('option').each((num, elem) => {
-                if(elem.innerText === value) ret_value = true
-            })
+        return elements.find(`${selector}`).filter(function() {
+            if (value !== null && Cypress.$(this).children('option').length > 0){
+                let ret_value = false
 
-            return ret_value
-        } else {
-            return true
-        }
-    }).first()
+                if(Cypress.$(this).children('option').length > 1){
+                    Cypress.$(this).children('option').each((num, elem) => {
+                        console.log(elem)
+                        console.log(elem.innerText === value)
+                        if(elem.innerText === value) ret_value = true
+                    })
+                } else {
+                    ret_value = true
+                }
+
+                return ret_value
+            } else {
+                return true
+            }
+        }).first()
+
+    } else {
+        return elements.find(`${selector}`).first()
+    }
 })
 
 
