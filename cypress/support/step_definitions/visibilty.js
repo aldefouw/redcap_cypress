@@ -20,7 +20,9 @@ Given("I {see} {string}", (see, text) => {
  * @description Visually verifies that text does NOT exist within the HTML object.
  */
 Given("I should NOT see {string}", (text) => {
-    cy.get('html').then(($html) => { expect($html).to.not.contain(text) })
+    cy.get('html').then(($html) => {
+        $html.should('not.contain.visible', text)
+    })
 })
 
 /**

@@ -112,19 +112,6 @@ Given("I click on the {addField} input button below the field named {string}", (
 
 /**
  * @module DesignForms
- * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
- * @example I click on the {editField} image for the field named {string}
- * @param {string} type - the type of edit action you want to perform on a field
- * @param {string} field - the name of the field you want to edit
- * @description Clicks on the image link of the action you want to perform on a field
- */
-
- Given("I click on the {editField} image for the field named {string}", (type, field_name) => {
-    cy.click_on_design_field_function(type, field_name)
-})
-
-/**
- * @module DesignForms
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I delete the field named {string}
  * @param {string} type - the type of edit action you want to perform on a field

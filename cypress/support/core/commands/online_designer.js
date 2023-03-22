@@ -14,11 +14,22 @@ Cypress.Commands.add('add_field', (field_name, type) => {
 })
 
 Cypress.Commands.add('click_on_design_field_function', (type, field) => {
+    if(type === "Edit"){
+        cy.intercept({
+            method: 'GET',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/edit_field_prefill.php*'
+        }).as('edit')
+    }
+
     cy.get('td[class=frmedit_row]').
     contains(field).
     parents('tr').
     find('img[title="' + type + '"]').
     click()
+
+    if(type === "Edit"){
+        cy.wait('@edit')
+    }
 })
 
 Cypress.Commands.add('edit_field_by_label', (name, timeout = 10000) => {
