@@ -44,17 +44,19 @@ Cypress.Commands.add("get_labeled_element", (element_selector, label, scroll = t
 Cypress.Commands.add('get_element_by_label', (label, selector = null, original_selector = null, i = 0) => {
     if (original_selector === null) { original_selector = selector }
 
-    if(i === 0 && Cypress.$(`${selector}:first`).length > 0){
-        return cy.wrap(label).parent().find(`${selector}:first`)
-    } else {
-        cy.wrap(label).parentsUntil(`:has(${selector})`).last().parent().then(($parent) => {
-            if($parent.find(selector).length){
-                return $parent.find(`${selector}:first`)
-            } else if (i <= 5) {
-                cy.get_element_by_label(label, `:has(${selector})`, original_selector, i + 1)
-            }
-        })
-    }
+    cy.wrap(label).then(($self) => {
+        if(i === 0 && $self.parent().find(selector).length){
+            return $self.parent().find(`${selector}:first`)
+        } else {
+            cy.wrap(label).parentsUntil(`:has(${selector})`).last().parent().then(($parent) => {
+                if($parent.find(selector).length){
+                    return $parent.find(`${selector}:first`)
+                } else if (i <= 5) {
+                    cy.get_element_by_label(label, `:has(${selector})`, original_selector, i + 1)
+                }
+            })
+        }
+    })
 })
 
 //Provide a robust way for this to find either a button or input button that contains this text
