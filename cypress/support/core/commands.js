@@ -41,6 +41,7 @@ Cypress.Commands.add("get_labeled_element", (element_selector, label, scroll = t
     })
 })
 
+
 Cypress.Commands.add('get_element_by_label', (label, selector = null, original_selector = null, i = 0) => {
     if (original_selector === null) { original_selector = selector }
 
@@ -127,7 +128,6 @@ Cypress.Commands.add('ensure_csrf_token', () => {
         }
     })
 })
-
 
 Cypress.Commands.overwrite(
     'click',
