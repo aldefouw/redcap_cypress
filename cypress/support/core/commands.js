@@ -43,7 +43,7 @@ Cypress.Commands.add("get_labeled_element", (element_selector, label, value = nu
 
 Cypress.Commands.add('filter_elements', (elements, selector, value) => {
     return elements.find(`${selector}`).filter(function() {
-        if (Cypress.$(this).children('option').length > 0){
+        if (value !== null && Cypress.$(this).children('option').length > 0){
             let ret_value = false
 
             Cypress.$(this).children('option').each((num, elem) => {
