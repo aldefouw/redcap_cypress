@@ -96,13 +96,6 @@ window.base_url = 'BASE_URL/' + Cypress.config('baseUrl').replace(/\//g, "\\/")
 // }
 
 before(() => {
-
-    Cypress.$.extend(Cypress.$.expr[":"], {
-        econtains: function(obj, index, meta, stack) {
-            return (obj.textContent || obj.innerText || $(obj).text() || "").toLowerCase() == meta[3].toLowerCase();
-        }
-    });
-
     Cypress.Cookies.defaults({
         preserve: ['PHPSESSID', 'redcap_external_module_csrf_token']
     })
