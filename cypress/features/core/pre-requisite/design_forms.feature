@@ -185,9 +185,9 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "textbox"
 
   Scenario: 23 - Test illegal variables
-    Given the AJAX "GET" request at "Design/edit_field_prefill.php*" tagged by "edit" is being monitored
+
     And I click on the Edit image for the field named "Text Box"
-    And the AJAX request tagged by "edit" has completed
+
     And I clear the field identified by "input[name=field_name]"
     And I enter "2" into the field identified by "input[name=field_name]"
     And I click on the element identified by "textarea[name=field_label]"
@@ -274,9 +274,9 @@ Feature: Design Forms using Data Dictionary & Online Designer
     Then I should see "radio_button_manual"
 
   Scenario: 30 - Edit Radio Button
-    Given the AJAX "GET" request at "Design/edit_field_prefill.php*" tagged by "edit" is being monitored
+
     And I click on the Edit image for the field named "Radio Button Manual"
-    And the AJAX request tagged by "edit" has completed
+
     Then I should see the input field identified by "textarea[name=element_enum]" with the value "9..9, Choice99\n100, Choice100\n101, Choice101"
     Then I click on the button labeled "Cancel"
 
@@ -391,9 +391,9 @@ Feature: Design Forms using Data Dictionary & Online Designer
   Scenario: 45 - Edit moved field
     Given I click on the button labeled "Return to list of instruments"
     And I click on the link labeled "Data Dictionary Form"
-    Given the AJAX "GET" request at "Design/edit_field_prefill.php*" tagged by "edit" is being monitored
+
     And I click on the Edit image for the field named "Testing data dictionary upload"
-    And the AJAX request tagged by "edit" has completed
+
     And I select "text" from the dropdown identified by "select[name=field_type]"
     And I clear the field identified by "textarea[name=field_label]"
     And I clear the field identified by "input[name=field_name]"
