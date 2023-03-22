@@ -31,29 +31,59 @@ Cypress.Commands.add("top_layer", (label_selector) => {
     ).then((el) => { return el })
 })
 
-Cypress.Commands.add("get_labeled_element", (element_selector, label, scroll = true) => {
+Cypress.Commands.add("get_labeled_element", (element_selector, label, value = null) => {
     cy.contains(label).then(($label) => {
-        if(scroll){
-            cy.get_element_by_label($label, element_selector).scrollIntoView()
-        } else {
-            cy.get_element_by_label($label, element_selector)
-        }
+        cy.get_element_by_label($label, element_selector, value)
     })
 })
 
+Cypress.Commands.add('filter_elements', (elements, selector, value) => {
+    if(elements.find(`${selector}`).length > 1){
 
-Cypress.Commands.add('get_element_by_label', (label, selector = null, original_selector = null, i = 0) => {
+        let elms = elements.find(`${selector}`).filter(function() {
+            if (value !== null && Cypress.$(this).children('option').length > 0){
+                let ret_value = false
+
+                if(Cypress.$(this).children('option').length > 1){
+                    Cypress.$(this).children('option').each((num, elem) => {
+                        console.log(elem)
+                        console.log(elem.innerText === value)
+                        if(elem.innerText === value) ret_value = true
+                    })
+                } else {
+                    ret_value = true
+                }
+
+                return ret_value
+            } else {
+                return true
+            }
+        })
+
+        if (elms.length >= 1){
+            return elms.first()
+        } else {
+            return elements.find(`${selector}`).first()
+        }
+
+    } else {
+        return elements.find(`${selector}`).first()
+    }
+})
+
+
+Cypress.Commands.add('get_element_by_label', (label, selector = null, value = null, original_selector = null, i = 0) => {
     if (original_selector === null) { original_selector = selector }
 
     cy.wrap(label).then(($self) => {
         if(i === 0 && $self.parent().find(selector).length){
-            return $self.parent().find(`${selector}:first`)
+            return cy.filter_elements($self.parent(), selector, value)
         } else {
             cy.wrap(label).parentsUntil(`:has(${selector})`).last().parent().then(($parent) => {
                 if($parent.find(selector).length){
-                    return $parent.find(`${selector}:first`)
+                    return cy.filter_elements($parent, selector, value)
                 } else if (i <= 5) {
-                    cy.get_element_by_label(label, `:has(${selector})`, original_selector, i + 1)
+                    cy.get_element_by_label(label, `:has(${selector})`, value, original_selector, i + 1)
                 }
             })
         }
