@@ -432,7 +432,7 @@ Given('I select {string} on the {dropdown_type} field labeled {string}', (option
     let label_selector = `:contains("${label}"):visible`
     let element_selector = `select:has(option:contains("${option}")):visible`
     cy.top_layer(label_selector).within(() => {
-        cy.get_labeled_element(element_selector, label).select(option)
+        cy.get_labeled_element(element_selector, label, option).select(option)
     })
 })
 
