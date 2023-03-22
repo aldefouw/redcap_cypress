@@ -40,7 +40,7 @@ Cypress.Commands.add("get_labeled_element", (element_selector, label, value = nu
 Cypress.Commands.add('filter_elements', (elements, selector, value) => {
     if(elements.find(`${selector}`).length > 1){
 
-        return elements.find(`${selector}`).filter(function() {
+        let elms = elements.find(`${selector}`).filter(function() {
             if (value !== null && Cypress.$(this).children('option').length > 0){
                 let ret_value = false
 
@@ -58,7 +58,13 @@ Cypress.Commands.add('filter_elements', (elements, selector, value) => {
             } else {
                 return true
             }
-        }).first()
+        })
+
+        if (elms.length >= 1){
+            return elms.first()
+        } else {
+            return elements.find(`${selector}`).first()
+        }
 
     } else {
         return elements.find(`${selector}`).first()
