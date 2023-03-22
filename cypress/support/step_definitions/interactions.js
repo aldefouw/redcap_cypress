@@ -420,8 +420,6 @@ Given('I select the checkbox option {string} for the field labeled {string}', (c
     cy.select_checkbox_by_label(field_label, checkbox_option)
 })
 
-
-
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -432,9 +430,9 @@ Given('I select the checkbox option {string} for the field labeled {string}', (c
  */
 Given('I select {string} on the {dropdown_type} field labeled {string}', (option, type, label) => {
     let label_selector = `:contains("${label}"):visible`
-    let element_selector = `select:has(option:econtains(${option})):visible`
+    let element_selector = `select:has(option:contains("${option}")):visible`
     cy.top_layer(label_selector).within(() => {
-        cy.get_labeled_element(element_selector, label, false).select(option)
+        cy.get_labeled_element(element_selector, label).select(option)
     })
 })
 
