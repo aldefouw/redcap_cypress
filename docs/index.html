@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset='utf-8'>
-  <title>redcap_cypress 11.1.5 | Documentation</title>
+  <title>redcap_cypress 12.4.14 | Documentation</title>
   <meta name='description' content='This repository is a template to assist you in writing **automated tests for REDCap**.'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' rel='stylesheet'>
@@ -16,7 +16,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>redcap_cypress</h3>
-          <div class='mb1'><code>v11.1.5</code></div>
+          <div class='mb1'><code>v12.4.14</code></div>
             <div>
               <span class="mb0">Step Definition Versions:</span>
               <ul class='mt0'>
@@ -24,8 +24,6 @@
                   <li><a href="v11.1.5.html">v11.1.5</a></li>
               
                   <li><a href="v12.4.14.html">v12.4.14</a></li>
-              
-                  <li><a href="v13.1.14.html">v13.1.14</a></li>
               
               </ul>
             </div>
@@ -155,31 +153,11 @@
                     
               
                     
-                      <h2 class="mt1 mb1">Download</h2>
-                    
-                    <li><a href='#i-download-a-file-by-clicking-on-the-link-labeled-string'>I download a file by clicking on the link labeled {string}</a></li>
-                    
-              
-                    
-                      <h2 class="mt1 mb1">CSV</h2>
-                    
-                    <li><a href='#i-should-have-a-csv-file-located-at-path-string-that-contains-int-rows'>I should have a CSV file located at path {string} that contains {int} rows</a></li>
-                    
-              
-                    
-                    <li><a href='#i-should-have-a-csv-file-at-the-path-string-that-contains-the-headings-below'>I should have a CSV file at the path {string} that contains the headings below</a></li>
-                    
-              
-                    
-                    <li><a href='#i-should-have-a-csv-file-at-path-string-with-a-value-string-for-column-string'>I should have a CSV file at path {string} with a value {string} for column {string}</a></li>
-                    
-              
-                    
-                    <li><a href='#i-remove-line-int-from-a-csv-file-at-path-string'>I remove line {int} from a CSV file at path {string}</a></li>
-                    
-              
-                    
                       <h2 class="mt1 mb1">Interactions</h2>
+                    
+                    <li><a href='#i-enter-string-into-the-hidden-field-identified-by-string'>I enter {string} into the hidden field identified by {string}</a></li>
+                    
+              
                     
                     <li><a href='#i-select-the-submit-option-labeled-string-on-the-data-collection-instrument'>I select the submit option labeled {string} on the Data Collection Instrument</a></li>
                     
@@ -226,10 +204,6 @@
               
                     
                     <li><a href='#i-click-on-the-table-cell-containing-a-link-labeled-string'>I click on the table cell containing a link labeled {string}</a></li>
-                    
-              
-                    
-                    <li><a href='#i-enter-string-into-the-hidden-field-identified-by-string'>I enter {string} into the hidden field identified by {string}</a></li>
                     
               
                     
@@ -290,6 +264,30 @@
               
                     
                     <li><a href='#i-move-the-project-to-production-by-selection-option-string'>I move the project to production by selection option {string}</a></li>
+                    
+              
+                    
+                      <h2 class="mt1 mb1">Download</h2>
+                    
+                    <li><a href='#i-download-a-file-by-clicking-on-the-link-labeled-string'>I download a file by clicking on the link labeled {string}</a></li>
+                    
+              
+                    
+                      <h2 class="mt1 mb1">CSV</h2>
+                    
+                    <li><a href='#i-should-have-a-csv-file-located-at-path-string-that-contains-int-rows'>I should have a CSV file located at path {string} that contains {int} rows</a></li>
+                    
+              
+                    
+                    <li><a href='#i-should-have-a-csv-file-at-the-path-string-that-contains-the-headings-below'>I should have a CSV file at the path {string} that contains the headings below</a></li>
+                    
+              
+                    
+                    <li><a href='#i-should-have-a-csv-file-at-path-string-with-a-value-string-for-column-string'>I should have a CSV file at path {string} with a value {string} for column {string}</a></li>
+                    
+              
+                    
+                    <li><a href='#i-remove-line-int-from-a-csv-file-at-path-string'>I remove line {int} from a CSV file at path {string}</a></li>
                     
               
                     
@@ -925,7 +923,7 @@
                     
               
                     
-                    <li><a href='#i-should-see-the-dropdown-dropdown_type-labeled-string-with-the-option-string-selected'>I should see the dropdown {dropdown_type} labeled {string} with the option {string} selected</a></li>
+                    <li><a href='#i-should-see-the--dropdown--multiselect--field-labeled-string-with-the-option-string-selected'>I should see the &lt; dropdown | multiselect &gt; field labeled {string} with the option {string} selected</a></li>
                     
               
                     
@@ -954,6 +952,10 @@
               
                     
                     <li><a href='#i-should-see-string-in-the-data-entry-form-field-labeled-string'>I should see {string} in the data entry form field labeled {string}</a></li>
+                    
+              
+                    
+                    <li><a href='#i-should-see-an-string-within-the-string-row-of-the-column-labeled-stringtable_name'>I (should) see (a(n)) {string} within the {string} row of the column labeled {string}(table_name)</a></li>
                     
               
                     
@@ -3045,7 +3047,7 @@
             
         
             
-            <h2 class='fl mt3 mb2' id='download'>Download</h3>
+            <h2 class='fl mt3 mb2' id='interactions'>Interactions</h3>
             
             
 <section class='p2 mb2 clearfix bg-white minishadow'>
@@ -3057,8 +3059,8 @@
       
         
           
-          <h2 class='fl mb0 mt0' id='i-download-a-file-by-clicking-on-the-link-labeled-string'>
-          I download a file by clicking on the link labeled {string}
+          <h2 class='fl mb0 mt0' id='i-enter-string-into-the-hidden-field-identified-by-string'>
+          I enter {string} into the hidden field identified by {string}
           </h2>
         
       
@@ -3075,7 +3077,16 @@
           <div class='space-bottom0'>
             <div>
               <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the text on the anchor element you want to click
+  	    the text to enter into the field
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>selector</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the selector of the element to enter the text into
 
             </div>
             
@@ -3085,89 +3096,7 @@
     
 
 
-  <p>Downloads a file from an anchor element with a specific text label.</p>
-
-
-  
-  
-
-  
-  
-  
-  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-            
-        
-            
-            <h2 class='fl mt3 mb2' id='csv'>CSV</h3>
-            
-            
-<section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-
-      
-        
-          
-          <h2 class='fl mb0 mt0' id='i-should-have-a-csv-file-located-at-path-string-that-contains-int-rows'>
-          I should have a <span class="hljs-variable constant_">CSV</span> file located at path {string} that contains {int} rows
-          </h2>
-        
-      
-
-    
-    
-  </div>
-  
-
-  
-      <div class='py1 quiet mt1 prose-big'>Parameters</div>
-      <div class='prose'>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the text path of the CSV location
-
-            </div>
-            
-          </div>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>headings</span> <code class='quiet'>(DataTable)</code>
-  	    the DataTable of headings this file should have
-
-            </div>
-            
-          </div>
-        
-      </div>
-    
-
-
-  <p>Interactions - Checks the number of rows (excluding header) the file should have</p>
+  <p>Enter text into a specific field that is hidden (Specifically for Logic Editor)</p>
 
 
   
@@ -3199,266 +3128,6 @@
 
             
         
-            
-            
-<section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-
-      
-        
-          
-          <h2 class='fl mb0 mt0' id='i-should-have-a-csv-file-at-the-path-string-that-contains-the-headings-below'>
-          I should have a <span class="hljs-variable constant_">CSV</span> file at the path {string} that contains the headings below
-          </h2>
-        
-      
-
-    
-    
-  </div>
-  
-
-  
-      <div class='py1 quiet mt1 prose-big'>Parameters</div>
-      <div class='prose'>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the text path of the CSV location
-
-            </div>
-            
-          </div>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>headings</span> <code class='quiet'>(DataTable)</code>
-  	    the DataTable of headings this file should have
-
-            </div>
-            
-          </div>
-        
-      </div>
-    
-
-
-  <p>Interactions - Checks the number of rows (excluding header) the file should have</p>
-
-
-  
-  
-
-  
-  
-  
-  <p class='mb0'><strong>Author:</strong> <a href="mailto:tin-tin.nguyen@nih.gov">Tintin Nguyen</a></p>
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-            
-        
-            
-            
-<section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-
-      
-        
-          
-          <h2 class='fl mb0 mt0' id='i-should-have-a-csv-file-at-path-string-with-a-value-string-for-column-string'>
-          I should have a <span class="hljs-variable constant_">CSV</span> file at path {string} <span class="hljs-keyword">with</span> a value {string} <span class="hljs-keyword">for</span> column {string}
-          </h2>
-        
-      
-
-    
-    
-  </div>
-  
-
-  
-      <div class='py1 quiet mt1 prose-big'>Parameters</div>
-      <div class='prose'>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the text path of the CSV location
-
-            </div>
-            
-          </div>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>value</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the value of the column data we are verifying
-
-            </div>
-            
-          </div>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>column</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the text name of the column data we are verifying
-
-            </div>
-            
-          </div>
-        
-      </div>
-    
-
-
-  <p>Interactions - Checks the number of rows (excluding header) the file should have</p>
-
-
-  
-  
-
-  
-  
-  
-  <p class='mb0'><strong>Author:</strong> <a href="mailto:tin-tin.nguyen@nih.gov">Tintin Nguyen</a></p>
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-            
-        
-            
-            
-<section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-
-      
-        
-          
-          <h2 class='fl mb0 mt0' id='i-remove-line-int-from-a-csv-file-at-path-string'>
-          I remove line {int} <span class="hljs-keyword">from</span> a <span class="hljs-variable constant_">CSV</span> file at path {string}
-          </h2>
-        
-      
-
-    
-    
-  </div>
-  
-
-  
-      <div class='py1 quiet mt1 prose-big'>Parameters</div>
-      <div class='prose'>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the text path of the CSV location
-
-            </div>
-            
-          </div>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>value</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the value of the column data we are verifying
-
-            </div>
-            
-          </div>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>column</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the text name of the column data we are verifying
-
-            </div>
-            
-          </div>
-        
-      </div>
-    
-
-
-  <p>Interactions - Checks the number of rows (excluding header) the file should have</p>
-
-
-  
-  
-
-  
-  
-  
-  <p class='mb0'><strong>Author:</strong> <a href="mailto:tin-tin.nguyen@nih.gov">Tintin Nguyen</a></p>
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-            
-        
-            
-            <h2 class='fl mt3 mb2' id='interactions'>Interactions</h3>
             
             
 <section class='p2 mb2 clearfix bg-white minishadow'>
@@ -3560,6 +3229,15 @@
             <div>
               <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
   	    the text on the button element you want to click
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    (optional) - &#x3C; on the dialog box for the Repeatable Instruments and Events module>
 
             </div>
             
@@ -4311,86 +3989,6 @@
   
   
   <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-            
-        
-            
-            
-<section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-
-      
-        
-          
-          <h2 class='fl mb0 mt0' id='i-enter-string-into-the-hidden-field-identified-by-string'>
-          I enter {string} into the hidden field identified by {string}
-          </h2>
-        
-      
-
-    
-    
-  </div>
-  
-
-  
-      <div class='py1 quiet mt1 prose-big'>Parameters</div>
-      <div class='prose'>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the text to enter into the field
-
-            </div>
-            
-          </div>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>selector</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the selector of the element to enter the text into
-
-            </div>
-            
-          </div>
-        
-      </div>
-    
-
-
-  <p>Enter text into a specific field that is hidden (Specifically for Logic Editor)</p>
-
-
-  
-  
-
-  
-  
-  
-  <p class='mb0'><strong>Author:</strong> <a href="mailto:tin-tin.nguyen@nih.gov">Tintin Nguyen</a></p>
   
   
 
@@ -5546,6 +5144,419 @@
   
   
   <p class='mb0'><strong>Author:</strong> <a href="mailto:rushi.patel@uhnresearch.ca">Rushi Patel</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            <h2 class='fl mt3 mb2' id='download'>Download</h3>
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-download-a-file-by-clicking-on-the-link-labeled-string'>
+          I download a file by clicking on the link labeled {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the text on the anchor element you want to click
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Downloads a file from an anchor element with a specific text label.</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            <h2 class='fl mt3 mb2' id='csv'>CSV</h3>
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-should-have-a-csv-file-located-at-path-string-that-contains-int-rows'>
+          I should have a <span class="hljs-variable constant_">CSV</span> file located at path {string} that contains {int} rows
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the text path of the CSV location
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>headings</span> <code class='quiet'>(DataTable)</code>
+  	    the DataTable of headings this file should have
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Interactions - Checks the number of rows (excluding header) the file should have</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:tin-tin.nguyen@nih.gov">Tintin Nguyen</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-should-have-a-csv-file-at-the-path-string-that-contains-the-headings-below'>
+          I should have a <span class="hljs-variable constant_">CSV</span> file at the path {string} that contains the headings below
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the text path of the CSV location
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>headings</span> <code class='quiet'>(DataTable)</code>
+  	    the DataTable of headings this file should have
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Interactions - Checks the number of rows (excluding header) the file should have</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:tin-tin.nguyen@nih.gov">Tintin Nguyen</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-should-have-a-csv-file-at-path-string-with-a-value-string-for-column-string'>
+          I should have a <span class="hljs-variable constant_">CSV</span> file at path {string} <span class="hljs-keyword">with</span> a value {string} <span class="hljs-keyword">for</span> column {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the text path of the CSV location
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>value</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the value of the column data we are verifying
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>column</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the text name of the column data we are verifying
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Interactions - Checks the number of rows (excluding header) the file should have</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:tin-tin.nguyen@nih.gov">Tintin Nguyen</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-remove-line-int-from-a-csv-file-at-path-string'>
+          I remove line {int} <span class="hljs-keyword">from</span> a <span class="hljs-variable constant_">CSV</span> file at path {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the text path of the CSV location
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>value</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the value of the column data we are verifying
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>column</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the text name of the column data we are verifying
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Interactions - Checks the number of rows (excluding header) the file should have</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:tin-tin.nguyen@nih.gov">Tintin Nguyen</a></p>
   
   
 
@@ -16727,8 +16738,8 @@
       
         
           
-          <h2 class='fl mb0 mt0' id='i-should-see-the-dropdown-dropdown_type-labeled-string-with-the-option-string-selected'>
-          I should see the dropdown {dropdown_type} labeled {string} <span class="hljs-keyword">with</span> the option {string} selected
+          <h2 class='fl mb0 mt0' id='i-should-see-the--dropdown--multiselect--field-labeled-string-with-the-option-string-selected'>
+          I should see the &lt; dropdown | multiselect &gt; field labeled {string} <span class="hljs-keyword">with</span> the option {string} selected
           </h2>
         
       
@@ -17321,6 +17332,104 @@
             
         
             
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-should-see-an-string-within-the-string-row-of-the-column-labeled-stringtable_name'>
+          I (should) see (<span class="hljs-title function_">a</span>(n)) {string} within the {string} row <span class="hljs-keyword">of</span> the column labeled {string}(table_name)
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>table_item</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the item that you are searching for - includes "checkmark", "x", or any {string}
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>row_label</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the label of the table row
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>column_label</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the label of the table column
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>table_name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    optional table item - " of the User Rights table"
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Identifies specific text or special item within a cell on a table based upon row and column labels</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
             <h2 class='fl mt3 mb2' id='visitpage'>Visit Page</h3>
             
             
@@ -17347,7 +17456,7 @@
   
 
 
-  <p>Instructs Cypress to the REDCpa login page</p>
+  <p>Instructs Cypress to the REDCap login page</p>
 
 
   
