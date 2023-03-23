@@ -151,7 +151,7 @@ Given("I locate the bubble for the {string} instrument on event {string} for rec
  */
 
 Given("I click the bubble to {add_or_select} a record for the {string} longitudinal instrument on event {string}", (verb, instrument, event) => {
-    cy.table_cell_by_column_and_row_label(event, instrument).then(($td) => {
+    cy.table_cell_by_column_and_row_label(event, instrument, 'table#event_grid_table').then(($td) => {
         cy.wrap($td).find('a:visible:first').click()
     })
 })
