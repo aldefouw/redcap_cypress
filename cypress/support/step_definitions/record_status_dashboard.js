@@ -10,38 +10,8 @@ require('./parameter_types.js')
  * @description Clicks on a bubble within the Record Status Dashboard based upon record ID and the data instrument specified.
  */
 Given("I click on the bubble for the {string} data collection instrument for record ID {string}", (text, record_id) => {
-    let link_location = null
-
-    cy.get('table#record_status_table').within(() => {
-        cy.get('th').then(($th) => {
-            Cypress.$.each($th, (index, th) => {
-                if(th.innerText === text){
-                    cy.get('tr').then(($tr) => {
-                        Cypress.$.each($tr, (tri, tr) => {
-                            if(tri > 0) {
-                                cy.wrap(tr).within(() => {
-                                    cy.get('td').then((td) => {
-                                        if(td[0].innerText === record_id){
-                                            Cypress.$.each(td, (tdi, $td) => {
-                                                if(tdi === index){
-                                                    cy.wrap($td).within(() => {
-                                                        cy.get('a').then(($a) => {
-                                                            link_location = $a
-                                                        })
-                                                    })
-                                                }
-                                            })
-                                        }
-                                    })
-                                })
-                            }
-                        })
-                    })
-                }
-            })
-        })
-    }).then(() => {
-        cy.wrap(link_location).click()
+    cy.table_cell_by_column_and_row_label(text, record_id).then(($td) => {
+        cy.wrap($td).find('a:visible:first').click()
     })
 })
 
@@ -181,38 +151,8 @@ Given("I locate the bubble for the {string} instrument on event {string} for rec
  */
 
 Given("I click the bubble to {add_or_select} a record for the {string} longitudinal instrument on event {string}", (verb, instrument, event) => {
-    let link_location = null
-
-    cy.get('table#event_grid_table').within(() => {
-        cy.get('th').then(($th) => {
-            Cypress.$.each($th, (index, th) => {
-                if(th.innerText.includes(event)){
-                    cy.get('tr').then(($tr) => {
-                        Cypress.$.each($tr, (tri, tr) => {
-                            if(tri > 0) {
-                                cy.wrap(tr).within(() => {
-                                    cy.get('td').then((td) => {
-                                        if(td[0].innerText === instrument){
-                                            Cypress.$.each(td, (tdi, $td) => {
-                                                if(tdi === index){
-                                                    cy.wrap($td).within(() => {
-                                                        cy.get('a').then(($a) => {
-                                                            link_location = $a
-                                                        })
-                                                    })
-                                                }
-                                            })
-                                        }
-                                    })
-                                })
-                            }
-                        })
-                    })
-                }
-            })
-        })
-    }).then(() => {
-        cy.wrap(link_location).click()
+    cy.table_cell_by_column_and_row_label(event, instrument).then(($td) => {
+        cy.wrap($td).find('a:visible:first').click()
     })
 })
 
@@ -240,37 +180,8 @@ Given("I select record ID {string} from arm name {string} on the Add / Edit reco
  */
 
 Given("I click the X to delete all data related to the event named {string}", (event) => {
-    let link_location = null
-
-    cy.get('table#event_grid_table').within(() => {
-        cy.get('th').then(($th) => {
-            Cypress.$.each($th, (index, th) => {
-                if(th.innerText.includes(event)){
-                    const th_index = index
-                    cy.get('tr').then(($tr) => {
-                        Cypress.$.each($tr, (tri, tr) => {
-                            if(tri + 1 === $tr.length) { //last row of table
-                                cy.wrap(tr).within(() => {
-                                    cy.get('td').then((td) => {
-                                        Cypress.$.each(td, (tdi, $td) => {
-                                            if(th_index === tdi) {
-                                                cy.wrap($td).within(() => {
-                                                    cy.get('a').then(($a) => {
-                                                        link_location = $a
-                                                    })
-                                                })
-                                            }
-                                        })
-                                    })
-                                })
-                            }
-                        })
-                    })
-                }
-            })
-        })
-    }).then(() => {
-        cy.wrap(link_location).click()
+    cy.table_cell_by_column_and_row_label(event, "Delete all data on event").then(($td) => {
+        cy.wrap($td).find('a:visible:first').click()
         cy.get('.ui-dialog').should('contain.text', 'DELETE ALL DATA ON THIS EVENT INSTANCE')
     })
 })

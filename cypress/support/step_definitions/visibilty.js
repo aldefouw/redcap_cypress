@@ -149,3 +149,25 @@ Given('I should see {string} in the data entry form field labeled {string}', (te
             cy.get('[name="' + $id.split('label-')[1] + '"]').should('have.value', text)
         })
 })
+
+/**
+ * @module Visibility
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I (should) see (a(n)) {string} within the {string} row of the column labeled {string} of (table_name)
+ * @param {string} table_item - the item that you are searching for - includes "checkmark", "x", or any {string}
+ * @param {string} row_label - the label of the table row
+ * @param {string} column_label - the label of the table column
+ * @param {string} table_name - optional table item - " of the User Rights table"
+ * @description Identifies specific text or special item within a cell on a table based upon row and column labels
+ */
+Given("I (should )see (a )(an ){string} within the {string} row of the column labeled {string}{tableName}", (item, row_label, column_label, table) => {
+    const user_rights = { "checkmark" : `img[src*="tick"]`, "x" : `img[src*="cross"]` }
+
+    cy.table_cell_by_column_and_row_label(column_label, row_label).then(($td) => {
+        if(table === " of the User Rights table" && item.toLowerCase() in user_rights){
+            expect($td.find(user_rights[item.toLowerCase()]).length).to.be.eq(1)
+        } else {
+            expect($td).to.contain(item)
+        }
+    })
+})
