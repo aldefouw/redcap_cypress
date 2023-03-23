@@ -19,15 +19,15 @@ Cypress.Commands.add("dragTo", { prevSubject: 'element'}, (subject, target) => {
 
 })
 
-Cypress.Commands.add("table_cell_by_column_and_row_label", (column_label, row_label, row_number = 0) => {
+Cypress.Commands.add("table_cell_by_column_and_row_label", (column_label, row_label, table_selector= 'table', row_number = 0) => {
     let column_num = 0
     let table_cell = null
-    let selector = `table:has(th:contains("${column_label}"):visible):visible`
-    let td_selector = `tr:has(td:visible)`
+    let selector = `${table_selector}:has(th:contains("${column_label}"):visible):visible`
+    let td_selector = `tr:has(td:visible):visible`
 
     if(row_number === 0) {
-        selector = `table:has(td:contains("${row_label}"):visible,th:contains("${column_label}"):visible):visible`
-        td_selector = `tr:has(td:contains("${row_label}"):visible)`
+        selector = `${table_selector}:has(td:contains("${row_label}"):visible,th:contains("${column_label}"):visible):visible`
+        td_selector = `tr:has(td:contains("${row_label}"):visible):visible`
     }
 
     cy.get(selector).within(() => {
