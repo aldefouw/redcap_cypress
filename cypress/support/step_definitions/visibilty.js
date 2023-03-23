@@ -153,38 +153,21 @@ Given('I should see {string} in the data entry form field labeled {string}', (te
 /**
  * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example Given I see {table_item} within the {string} row of the column labeled {string} of (table_name)
- * @param {string} table_item - the item that you are searching for - includes "a checkmark", "an x", or any {string}
+ * @example I (should) see (a(n)) {string} within the {string} row of the column labeled {string} of (table_name)
+ * @param {string} table_item - the item that you are searching for - includes "checkmark", "x", or any {string}
  * @param {string} row_label - the label of the table row
  * @param {string} column_label - the label of the table column
- * @param {string} table_name - optional table item - includes
- * @description Identifies specific text or special item within a table
+ * @param {string} table_name - optional table item - " of the User Rights table"
+ * @description Identifies specific text or special item within a cell on a table based upon row and column labels
  */
 Given("I (should )see (a )(an ){string} within the {string} row of the column labeled {string}{tableName}", (item, row_label, column_label, table) => {
-    let column_num = 0
+    const user_rights = { "checkmark" : `img[src*="tick"]`, "x" : `img[src*="cross"]` }
 
-    cy.get(`table:has(td:contains("${row_label}"),th:contains("${column_label}"))`).within(() => {
-        cy.get(`th:contains("${column_label}")`).parent('tr').then(($tr) =>{
-            $tr.find('th').each((thi, th) => {
-                if(Cypress.$(th).text().trim().includes(column_label)){
-                    column_num = thi
-                }
-            })
-        })
-    }).then(() => {
-
-        cy.get(`table:has(td:contains("${row_label}"),th:contains("${column_label}"))`).within(() => {
-            cy.get(`td:contains("${row_label}")`).parent('tr').then(($tr) =>{
-                $tr.find('td').each((tdi, td) => {
-                    if(tdi === column_num){
-                        cy.wrap(td).then(($td) => {
-                            expect($td.find('img[src*="tick"]').length).to.be.eq(1)
-                        })
-                    }
-                })
-            })
-        })
-
+    cy.table_cell_by_column_and_row_label(column_label, row_label).then(($td) => {
+        if(table === " of the User Rights table" && item.toLowerCase() in user_rights){
+            expect($td.find(user_rights[item.toLowerCase()]).length).to.be.eq(1)
+        } else {
+            expect($td).to.contain(item)
+        }
     })
-
 })
