@@ -22,15 +22,12 @@ Cypress.Commands.add("dragTo", { prevSubject: 'element'}, (subject, target) => {
 Cypress.Commands.add("table_cell_by_column_and_row_label", (column_label, row_label, row_number = 0) => {
     let column_num = 0
     let table_cell = null
-    let selector = ''
-    let td_selector = ''
+    let selector = `table:has(th:contains("${column_label}"):visible):visible`
+    let td_selector = `tr:has(td:visible)`
 
     if(row_number === 0) {
         selector = `table:has(td:contains("${row_label}"):visible,th:contains("${column_label}"):visible):visible`
         td_selector = `tr:has(td:contains("${row_label}"):visible)`
-    } else {
-        selector = `table:has(th:contains("${column_label}"):visible):visible`
-        td_selector = `tr:has(td:visible)`
     }
 
     cy.get(selector).within(() => {
