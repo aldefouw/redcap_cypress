@@ -19,22 +19,38 @@ Cypress.Commands.add("dragTo", { prevSubject: 'element'}, (subject, target) => {
 
 })
 
-Cypress.Commands.add("table_cell_by_column_and_row_label", (column_label, row_label) => {
+Cypress.Commands.add("table_cell_by_column_and_row_label", (column_label, row_label, row_number = 0) => {
     let column_num = 0
     let table_cell = null
-    const selector = `table:has(td:contains("${row_label}"):visible,th:contains("${column_label}"):visible):visible`
+    let selector = ''
+    let td_selector = ''
+
+    if(row_number === 0) {
+        selector = `table:has(td:contains("${row_label}"):visible,th:contains("${column_label}"):visible):visible`
+        td_selector = `tr:has(td:contains("${row_label}"):visible)`
+    } else {
+        selector = `table:has(th:contains("${column_label}"):visible):visible`
+        td_selector = `tr:has(td:visible)`
+    }
 
     cy.get(selector).within(() => {
-        cy.get(`th:contains("${column_label}"):visible`).parent('tr').then(($tr) =>{
+        cy.get(`th:contains("${column_label}"):visible`).parent('tr').then(($tr) => {
             $tr.find('th').each((thi, th) => {
-                if(Cypress.$(th).text().trim().includes(column_label)) column_num = thi
+                if (Cypress.$(th).text().trim().includes(column_label)) column_num = thi
             })
         })
     }).then(() => {
+
         cy.get(selector).within(() => {
-            cy.get(`td:contains("${row_label}"):visible`).parent('tr').then(($tr) =>{
-                $tr.find('td').each((tdi, td) => {
-                    if(tdi === column_num) table_cell = td
+            cy.get(td_selector).then(($td) => {
+                $td.each(($tri, $tr) => {
+                    cy.wrap($tr).each((tri, tr) => {
+                        tri.find('td').each((tdi, td) => {
+                            if (tdi === column_num && $tri === row_number){
+                                table_cell = td
+                            }
+                        })
+                    })
                 })
             })
         }).then(() => {

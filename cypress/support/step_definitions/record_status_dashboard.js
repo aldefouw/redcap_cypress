@@ -210,37 +210,8 @@ Given("I select record ID {string} from arm name {string} on the Add / Edit reco
  */
 
 Given("I click the X to delete all data related to the event named {string}", (event) => {
-    let link_location = null
-
-    cy.get('table#event_grid_table').within(() => {
-        cy.get('th').then(($th) => {
-            Cypress.$.each($th, (index, th) => {
-                if(th.innerText.includes(event)){
-                    const th_index = index
-                    cy.get('tr').then(($tr) => {
-                        Cypress.$.each($tr, (tri, tr) => {
-                            if(tri + 1 === $tr.length) { //last row of table
-                                cy.wrap(tr).within(() => {
-                                    cy.get('td').then((td) => {
-                                        Cypress.$.each(td, (tdi, $td) => {
-                                            if(th_index === tdi) {
-                                                cy.wrap($td).within(() => {
-                                                    cy.get('a').then(($a) => {
-                                                        link_location = $a
-                                                    })
-                                                })
-                                            }
-                                        })
-                                    })
-                                })
-                            }
-                        })
-                    })
-                }
-            })
-        })
-    }).then(() => {
-        cy.wrap(link_location).click()
+    cy.table_cell_by_column_and_row_label(event, "Delete all data on event").then(($td) => {
+        cy.wrap($td).find('a:visible:first').click()
         cy.get('.ui-dialog').should('contain.text', 'DELETE ALL DATA ON THIS EVENT INSTANCE')
     })
 })
