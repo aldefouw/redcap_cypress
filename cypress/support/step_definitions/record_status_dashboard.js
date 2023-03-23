@@ -181,38 +181,8 @@ Given("I locate the bubble for the {string} instrument on event {string} for rec
  */
 
 Given("I click the bubble to {add_or_select} a record for the {string} longitudinal instrument on event {string}", (verb, instrument, event) => {
-    let link_location = null
-
-    cy.get('table#event_grid_table').within(() => {
-        cy.get('th').then(($th) => {
-            Cypress.$.each($th, (index, th) => {
-                if(th.innerText.includes(event)){
-                    cy.get('tr').then(($tr) => {
-                        Cypress.$.each($tr, (tri, tr) => {
-                            if(tri > 0) {
-                                cy.wrap(tr).within(() => {
-                                    cy.get('td').then((td) => {
-                                        if(td[0].innerText === instrument){
-                                            Cypress.$.each(td, (tdi, $td) => {
-                                                if(tdi === index){
-                                                    cy.wrap($td).within(() => {
-                                                        cy.get('a').then(($a) => {
-                                                            link_location = $a
-                                                        })
-                                                    })
-                                                }
-                                            })
-                                        }
-                                    })
-                                })
-                            }
-                        })
-                    })
-                }
-            })
-        })
-    }).then(() => {
-        cy.wrap(link_location).click()
+    cy.table_cell_by_column_and_row_label(event, instrument).then(($td) => {
+        cy.wrap($td).find('a:visible:first').click()
     })
 })
 

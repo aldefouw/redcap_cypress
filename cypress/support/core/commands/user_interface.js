@@ -22,17 +22,17 @@ Cypress.Commands.add("dragTo", { prevSubject: 'element'}, (subject, target) => {
 Cypress.Commands.add("table_cell_by_column_and_row_label", (column_label, row_label) => {
     let column_num = 0
     let table_cell = null
-    const selector = `table:has(td:contains("${row_label}"),th:contains("${column_label}"))`
+    const selector = `table:has(td:contains("${row_label}"):visible,th:contains("${column_label}"):visible):visible`
 
     cy.get(selector).within(() => {
-        cy.get(`th:contains("${column_label}")`).parent('tr').then(($tr) =>{
+        cy.get(`th:contains("${column_label}"):visible`).parent('tr').then(($tr) =>{
             $tr.find('th').each((thi, th) => {
                 if(Cypress.$(th).text().trim().includes(column_label)) column_num = thi
             })
         })
     }).then(() => {
         cy.get(selector).within(() => {
-            cy.get(`td:contains("${row_label}")`).parent('tr').then(($tr) =>{
+            cy.get(`td:contains("${row_label}"):visible`).parent('tr').then(($tr) =>{
                 $tr.find('td').each((tdi, td) => {
                     if(tdi === column_num) table_cell = td
                 })
