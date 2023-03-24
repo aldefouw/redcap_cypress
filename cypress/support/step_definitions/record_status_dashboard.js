@@ -165,7 +165,7 @@ Given("I click the bubble to {add_or_select} a record for the {string} longitudi
  * @description Selects a specific record from the Add / Edit record page
  */
 
-Given("I select record ID {string} from arm name {string} on the Add / Edit record page", (record_id, arm_name) => {
+Given(/I select record ID "(.*)" from arm name "(.*)" on the Add \/ Edit record page$/, (record_id, arm_name) => {
     cy.get('select#arm_name').select(arm_name)
     cy.get('select#record').select(record_id)
 })
