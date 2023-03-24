@@ -168,7 +168,7 @@ Feature: Logging
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the bubble for the "Text Validation" data collection instrument for record ID "1"
-    And I check the checkbox identified by 'input[id="__ESIGNATURE__"]'
+    And I check the checkbox labeled " E-signature "
     And I select the submit option labeled "Save & Stay" on the Data Collection Instrument
     Then I should see "Username/password verification"
 

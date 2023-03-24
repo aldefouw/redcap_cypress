@@ -76,7 +76,9 @@ Cypress.Commands.add('get_element_by_label', (label, selector = null, value = nu
     if (original_selector === null) { original_selector = selector }
 
     cy.wrap(label).then(($self) => {
-        if(i === 0 && $self.parent().find(selector).length){
+        if(i === 0 && $self.find(selector).length){
+            return cy.filter_elements($self, selector, value)
+        } else if (i === 0 && $self.parent().find(selector).length){
             return cy.filter_elements($self.parent(), selector, value)
         } else {
             cy.wrap(label).parentsUntil(`:has(${selector})`).last().parent().then(($parent) => {
