@@ -50,8 +50,7 @@ Feature: Reporting
 
   Scenario: Project Setup - 4
     Given I click on the link labeled "Data Import Tool"
-    And I upload a "csv" format file located at "import_files/core/22_Reporting_IMP.csv", by clicking "input[name=uploadedfile]" to select the file, and clicking "button[name=submit]" to upload the file
-
+    And I upload a "csv" format file located at "/import_files/core/22_Reporting_IMP.csv", by clicking the button near "Upload your CSV file:" to browse for the file, and clicking the button labeled "Upload File" to upload the file
     Then I should see "DATA DISPLAY TABLE"
     And I should see "(new record)"
     And I should see a button labeled "Import Data"
