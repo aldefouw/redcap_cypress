@@ -139,24 +139,6 @@ Given("I should NOT see the buttons labeled Edit, Copy, and Delete", () => {
 /**
  * @module Reporting
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
- * @example I should see the dropdown identified by {string} labeled {string} with the options below
- * @param {string} selector the selector that identifies a dropbox
- * @param {string} label the label of the row the selector belongs to
- * @param {DataTable} options the Data Table of selectable options
- * @description Visibility - Visually verifies that the element selector labeled label has the options listed
- */
-Given("I should see the dropdown identified by {string} labeled {string} with the options below", (selector, label, options) => {
-    //Really only added this to delay cypress cause sometimes it was moving forward without being checked
-    cy.get('td').contains(label).parents('tr').within(() => {
-        for(let i = 0; i < options.rawTable[0].length; i++){
-            cy.get(selector).should('contain', options.rawTable[0][i])
-        }
-    })
-})
-
-/**
- * @module Reporting
- * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I should see the element identified by {string} have length {int}
  * @param {string} selector the selector that identifies a dropbox
  * @param {int} count the label of the row the selector belongs to
