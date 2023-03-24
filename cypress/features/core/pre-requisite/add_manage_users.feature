@@ -9,9 +9,9 @@ Scenario: 1- Login as admin1115
 Scenario: 2- Visible Pages
     Given I click on the link labeled "Control Center"
     When I click on the link labeled "User Settings"
-    Then I should see "System-level User Settings" 
+    Then I should see "System-level User Settings"
 
-Scenario: 3- Save User Settings System Configurations 
+Scenario: 3- Save User Settings System Configurations
     When I click on the link labeled "User Settings"
     Then I should see "System-level User Settings"
     When I select "No, only Administrators can create new projects" on the dropdown field labeled "Allow normal users to create new projects?"
@@ -19,12 +19,12 @@ Scenario: 3- Save User Settings System Configurations
     When I click on the button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
 
-Scenario: 4- Display User Management for Table-based Authentication Page 
-    When I click on the link labeled "Add Users (Table-based Only)" 
+Scenario: 4- Display User Management for Table-based Authentication Page
+    When I click on the link labeled "Add Users (Table-based Only)"
     Then I should see "User Management for Table-based Authentication"
 
-Scenario: 5- Create a user 
-    When I click on the link labeled "Add Users (Table-based Only)" 
+Scenario: 5- Create a user
+    When I click on the link labeled "Add Users (Table-based Only)"
     And I enter "user1115_1" into the input field labeled "Username:"
     And I enter "User1" into the input field labeled "First name:"
     And I enter "1115_1" into the input field labeled "Last name:"
@@ -36,7 +36,7 @@ Scenario: 5- Create a user
 
 Scenario: 6- Logout as admin1115
 
-#Scenario: 7 - Reset password through email link 
+#Scenario: 7 - Reset password through email link
     #aldefouw will handle password change feature test
 
 Scenario: 8- Login as admin1115
@@ -44,7 +44,7 @@ Scenario: 8- Login as admin1115
 Scenario: 9- Bulk Create users 
     When I click on the link labeled "Add Users (Table-based Only" 
     And I click on the link labeled "Create users (bulk upload)"
-    And I upload a "csv" format file located at "import_files/core/02_AddManageUsersv1115_userbulkupload.csv", by clicking "input[name=fname]" to select the file, and clicking "input[name=submit]" to upload the file
+    And I upload a "csv" format file located at "import_files/core/02_AddManageUsersv1115_userbulkupload.csv", by clicking the button near "Upload CSV file of new users:" to browse for the file, and clicking the button labeled "Upload File" to upload the file
     And I should see "User was successfully added, and an email with login info was sent to user"
     And I should see "user1115_2"
     And I should see "user1115_3"
