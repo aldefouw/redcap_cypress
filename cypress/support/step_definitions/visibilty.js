@@ -51,6 +51,26 @@ Given('I should see the {dropdown_type} field labeled {string} with the option {
 })
 
 /**
+ * @module Reporting
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I should see the {dropdown_type} field labeled {string} with the options below
+ * @param {string} selector the selector that identifies a dropbox
+ * @param {string} label the label of the row the selector belongs to
+ * @param {DataTable} options the Data Table of selectable options
+ * @description Visibility - Visually verifies that the element selector labeled label has the options listed
+ */
+Given("I should see the {dropdown_type} field labeled {string} with the options below", (type, label, options) => {
+    let label_selector = `:contains("${label}"):visible`
+
+    cy.top_layer(label_selector).within(() => {
+        for(let i = 0; i < options.rawTable[0].length; i++){
+            let element_selector = `select:has(option:contains("${options.rawTable[0][i]}")):visible`
+            cy.get_labeled_element(element_selector, label).find(`option:contains("${options.rawTable[0][i]}")`)
+        }
+    })
+})
+
+/**
  * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should see a checkbox labeled {string} that is {check}

@@ -50,7 +50,7 @@ Feature: Project Status
     When I click on the button labeled "Move project to production"
     And I move the project to production by selection option "Keep ALL data saved so far"
     When I click on the link labeled "Add / Edit Records"
-    Then I should see the dropdown identified by "[id=record]" labeled "-- select record --" with the options below
+    Then I should see the dropdown field labeled "Choose an existing Record ID" with the options below
     | 1 |
 
   Scenario: 9 - Other Functionality Tab 
@@ -79,7 +79,8 @@ Feature: Project Status
     When I click on the button labeled "Move project to production"
     And I move the project to production by selection option "Delete ALL data"
     When I click on the link labeled "Add / Edit Records"
-    Then I should see the dropdown identified by "[id=record]" labeled "-- select record --" with the options below
+
+    Then I should see the dropdown field labeled "Choose an existing Record ID" with the options below
     | |
     When I click on the link labeled "Record Status Dashboard"
     Then I should see "No records exist yet"

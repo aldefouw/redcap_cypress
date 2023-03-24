@@ -257,7 +257,7 @@ Given("the AJAX request tagged by {string} has completed", (tag) => {
 })
 
 /**
- * @module Interactions
+ * @module DevelopmentOnly
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I enter {string} into the hidden field identified by {string}
  * @param {string} text - the text to enter into the field
@@ -266,4 +266,22 @@ Given("the AJAX request tagged by {string} has completed", (tag) => {
  */
 Given("I enter {string} into the hidden field identified by {string}", (text, sel) => {
     cy.get(sel).type(text, {force: true})
+})
+
+/**
+ * @module DevelopmentOnly
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I should see the dropdown identified by {string} labeled {string} with the options below
+ * @param {string} selector the selector that identifies a dropbox
+ * @param {string} label the label of the row the selector belongs to
+ * @param {DataTable} options the Data Table of selectable options
+ * @description Visibility - Visually verifies that the element selector labeled label has the options listed
+ */
+Given("I should see the dropdown identified by {string} labeled {string} with the options below", (selector, label, options) => {
+    //Really only added this to delay cypress cause sometimes it was moving forward without being checked
+    cy.get('td').contains(label).parents('tr').within(() => {
+        for(let i = 0; i < options.rawTable[0].length; i++){
+            cy.get(selector).should('contain', options.rawTable[0][i])
+        }
+    })
 })
