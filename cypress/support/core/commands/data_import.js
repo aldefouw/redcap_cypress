@@ -133,16 +133,30 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, date_format = "DMY
     })
 })
 
-Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector) => {
-    cy.get(selector).then(subject => {
-        cy.fixture(fileName, 'base64')
-            .then(Cypress.Blob.base64StringToBlob)
-            .then(blob => {
-                const el = subject[0]
-                const testFile = new File([blob], fileName, { type: fileType })
-                const dataTransfer = new DataTransfer()
-                dataTransfer.items.add(testFile)
-                el.files = dataTransfer.files
-            })
+Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector = '', button_label, nearest_text = '') => {
+    let label_selector = `:has(${selector}):visible`
+    let upload_selector = 'input[type=file]:visible'
+    let upload_element = ''
+    if(nearest_text.length > 0) label_selector = `:contains("${nearest_text}"):has(${upload_selector}):visible`
+
+    cy.top_layer(label_selector).within(() => {
+        if(nearest_text.length > 0) {
+            upload_element = cy.get_labeled_element(upload_selector, nearest_text).first()
+        } else {
+            upload_element = cy.get(selector)
+        }
+
+        upload_element.then(subject => {
+            cy.fixture(fileName, 'base64')
+                .then(Cypress.Blob.base64StringToBlob)
+                .then(blob => {
+                    const el = subject[0]
+                    const testFile = new File([blob], fileName, { type: fileType })
+                    const dataTransfer = new DataTransfer()
+                    dataTransfer.items.add(testFile)
+                    el.files = dataTransfer.files
+                    console.log(el.files)
+                })
+        })
     })
 })
