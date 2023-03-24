@@ -155,7 +155,6 @@ Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector = '', bu
                     const dataTransfer = new DataTransfer()
                     dataTransfer.items.add(testFile)
                     el.files = dataTransfer.files
-                    console.log(el.files)
                 })
         })
     })
