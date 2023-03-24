@@ -239,9 +239,9 @@ Feature: Logging
   Scenario: 24 - Logging: filter by event - User or role
     Then I click on the link labeled "Logging"
     And I select the "User or role created-updated-deleted" option identified by "user" from the Filter by event dropdown field
-    Then I should see 'Updated User' in the logging table
-    And I should see 'Created User' in the logging table
-    And I should see 'Deleted User' in the logging table
+    Then I should see 'Update User' in the logging table
+    And I should see 'Create User' in the logging table
+    And I should see 'Delete User' in the logging table
     And I should see "user = 'test_user'" in the logging table
     And I should see "user = 'test_user2'" in the logging table
     And I should see "role = 'Data'" in the logging table
