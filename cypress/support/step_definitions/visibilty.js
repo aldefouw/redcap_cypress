@@ -65,7 +65,9 @@ Given("I should see the {dropdown_type} field labeled {string} with the options 
     cy.top_layer(label_selector).within(() => {
         for(let i = 0; i < options.rawTable[0].length; i++){
             let element_selector = `select:has(option:contains("${options.rawTable[0][i]}")):visible`
-            cy.get_labeled_element(element_selector, label).find(`option:contains("${options.rawTable[0][i]}")`)
+            let dropdown = cy.get_labeled_element(element_selector, label)
+            dropdown.should('contain', options.rawTable[0][i])
+            cy.wait(500)
         }
     })
 })

@@ -159,10 +159,10 @@ Given('I {enter_type} {string} into the input field labeled {string}', (enter_ty
         cy.contains(label).then(($label) => {
             cy.wrap($label).parent().then(($parent) =>{
 
-                if($parent.find('input').length){
-                    elm = cy.wrap($parent).find('input')
-                } else if ($parent.parent().find('input').length ) {
-                    elm = cy.wrap($parent).parent().find('input')
+                if($parent.find('input[type=text]:visible').length){
+                    elm = cy.wrap($parent).find('input[type=text]:visible')
+                } else if ($parent.parent().find('input[type=text]:visible').length ) {
+                    elm = cy.wrap($parent).parent().find('input[type=text]:visible')
                 }
 
                 if(enter_type === "enter"){
