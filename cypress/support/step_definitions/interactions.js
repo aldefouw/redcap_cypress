@@ -166,9 +166,9 @@ Given('I {enter_type} {string} into the input field labeled {string}', (enter_ty
                 }
 
                 if(enter_type === "enter"){
-                    elm.type(text).blur()
+                    elm.type(text)
                 } else if (enter_type === "clear field and enter") {
-                    elm.clear().type(text).blur()
+                    elm.clear().type(text)
                 }
             })
         })
