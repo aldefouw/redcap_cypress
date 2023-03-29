@@ -166,9 +166,9 @@ Given('I {enter_type} {string} into the input field labeled {string}', (enter_ty
                 }
 
                 if(enter_type === "enter"){
-                    elm.type(text)
+                    elm.type(text).blur()
                 } else if (enter_type === "clear field and enter") {
-                    elm.clear().type(text)
+                    elm.clear().type(text).blur()
                 }
             })
         })
@@ -430,9 +430,17 @@ Given('I select the checkbox option {string} for the field labeled {string}', (c
  */
 Given('I select {string} on the {dropdown_type} field labeled {string}', (option, type, label) => {
     let label_selector = `:contains("${label}"):visible`
-    let element_selector = `select:has(option:contains("${option}")):visible`
+    let element_selector = `select:has(option:contains("${option}")):visible:enabled`
     cy.top_layer(label_selector).within(() => {
-        cy.get_labeled_element(element_selector, label, option).select(option)
+        cy.get_labeled_element(element_selector, label, option).then(($select) => {
+            cy.wrap($select).scrollIntoView().
+                should('be.visible').
+                should('be.enabled').then(($t) => {
+                    cy.wait(500)
+                    cy.wrap($t).select(option)
+                    cy.wait(500)
+                })
+        })
     })
 })
 
