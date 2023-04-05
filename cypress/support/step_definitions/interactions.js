@@ -57,6 +57,10 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
             method: 'GET',
             url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/online_designer_render_fields.php*'
         }).as('online_designer')
+    } else if(button_type === " and cancel the confirmation window"){
+        cy.on('window:confirm', (str) => {
+            return false
+        })
     }
 
     if(exactly === 'labeled exactly'){
