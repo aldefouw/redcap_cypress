@@ -60,7 +60,7 @@ Feature: A.2.2.100 Add/Manage users
     And I click on the button labeled "Save"
     Then I should see "ERROR: The user could not be added!"
 
-  Scenario: A.2.2.100.500- Search a Table-based user
+  Scenario: A.2.2.100.500 Search a Table-based user
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "Control Center"
     And I click on the link labeled "Browse Users"
@@ -70,6 +70,6 @@ Feature: A.2.2.100 Add/Manage users
     And I click on the button labeled "Search"
     Then I should see "Test_User1"
     
-  Scenario: A.2.2.100.600- User has no control center access
+  Scenario: A.2.2.100.600 User has no control center access
     Given I am a "standard" user who logs into REDCap
     Then I should NOT see "Control Center"
