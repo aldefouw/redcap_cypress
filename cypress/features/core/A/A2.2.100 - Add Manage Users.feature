@@ -1,7 +1,7 @@
 Feature: A.2.2.100 Add/Manage users
 
   As a REDCap end user
-  I want to see that Add / Manage Users is functioning as expected.
+  I want to see that Add / Manage Users is functioning as expected
 
   Scenario: A.2.2.100.100 System-level User Settings
     Given I am an "admin" user who logs into REDCap
