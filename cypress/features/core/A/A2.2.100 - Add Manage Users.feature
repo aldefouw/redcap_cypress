@@ -32,6 +32,7 @@ Feature: A.2.2.100 Add/Manage users
     And I click on the button labeled "Save"
     Then I should see "User has been successfully saved."
     And I should see "An email with login information was sent to: Test_User1@redcap.edu"
+    And I logout
 
   Scenario: A.2.2.100.300 Create a Table-based user
     Given I am an "admin" user who logs into REDCap
