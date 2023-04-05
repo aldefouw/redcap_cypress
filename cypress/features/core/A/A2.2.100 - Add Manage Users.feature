@@ -34,7 +34,7 @@ Feature: A.2.2.100 Add/Manage users
     And I should see "An email with login information was sent to: Test_User1@redcap.edu"
     And I logout
 
-  Scenario: A.2.2.100.300 Create a Table-based user
+  Scenario: A.2.2.100.300 Create Table-based users via bulk upload
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "Control Center"
     And I click on the link labeled "Add Users (Table-based Only)"
