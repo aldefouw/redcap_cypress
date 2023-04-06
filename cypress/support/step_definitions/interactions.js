@@ -159,7 +159,7 @@ Given("I click on the radio labeled {string} in the dialog box", (text) => {
  */
 Given('I {enter_type} {string} into the input field labeled {string}', (enter_type, text, label) => {
     let sel = `:contains("${label}"):visible`
-    let element = `input[type=text]:visible:first,input[type=password]:visible:first`
+    let element = `input[type=text]:not(.ui-helper-hidden-accessible):visible:first,input[type=password]:visible:first`
 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
 
