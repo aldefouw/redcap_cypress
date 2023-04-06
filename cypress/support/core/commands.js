@@ -108,7 +108,7 @@ Cypress.Commands.add('button_or_input', (text_label) => {
 //yields the visible div with the highest z-index, or the <html> if none are found
 Cypress.Commands.add('get_top_layer', (retryUntil) => {
     let top_layer
-    cy.get('div[role=dialog][style*=z-index]:visible,html').should($els => {
+    cy.get('div[role=dialog][style*=z-index]:visible,div[class*=tooltip]:visible,div[id=assignUserDropdownDiv]:visible,html').should($els => {
         //if more than body found, find element with highest z-index
         if ($els.length > 1) {
             //remove html from $els so only elements with z-index remain
@@ -121,6 +121,7 @@ Cypress.Commands.add('get_top_layer', (retryUntil) => {
                 //return zp - zc
             })
         }
+
         top_layer = $els.last()
         retryUntil(top_layer) //run assertions, so get can retry on failure
     }).then(() => cy.wrap(top_layer)) //yield top_layer to any further chained commands
