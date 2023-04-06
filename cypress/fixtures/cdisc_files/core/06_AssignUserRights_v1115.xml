@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redcap="https://projectredcap.org" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.3 schema/odm/ODM1-3-1.xsd" ODMVersion="1.3.1" FileOID="000-00-0000" FileType="Snapshot" Description="SecondProject_1115" AsOfDateTime="2023-03-26T15:09:08" CreationDateTime="2023-03-26T15:09:08" SourceSystem="REDCap" SourceSystemVersion="11.1.5">
+<Study OID="Project.SecondProject1115">
+<GlobalVariables>
+	<StudyName>SecondProject_1115</StudyName>
+	<StudyDescription>This file contains the metadata, events, and data for REDCap project "SecondProject_1115".</StudyDescription>
+	<ProtocolName>SecondProject_1115</ProtocolName>
+	<redcap:RecordAutonumberingEnabled>1</redcap:RecordAutonumberingEnabled>
+	<redcap:CustomRecordLabel></redcap:CustomRecordLabel>
+	<redcap:SecondaryUniqueField></redcap:SecondaryUniqueField>
+	<redcap:SchedulingEnabled>0</redcap:SchedulingEnabled>
+	<redcap:SurveysEnabled>1</redcap:SurveysEnabled>
+	<redcap:SurveyInvitationEmailField>email</redcap:SurveyInvitationEmailField>
+	<redcap:Purpose>0</redcap:Purpose>
+	<redcap:PurposeOther></redcap:PurposeOther>
+	<redcap:ProjectNotes></redcap:ProjectNotes>
+	<redcap:SurveyQueueCustomText></redcap:SurveyQueueCustomText>
+	<redcap:DataMartProjectEnabled>0</redcap:DataMartProjectEnabled>
+	<redcap:DatamartAllowRepeatRevision>0</redcap:DatamartAllowRepeatRevision>
+	<redcap:DatamartAllowCreateRevision>0</redcap:DatamartAllowCreateRevision>
+	<redcap:DatamartCronEnabled>0</redcap:DatamartCronEnabled>
+	<redcap:MissingDataCodes></redcap:MissingDataCodes>
+	<redcap:RepeatingInstrumentsAndEvents>
+		<redcap:RepeatingInstruments>
+			<redcap:RepeatingInstrument redcap:UniqueEventName="event_1_arm_1" redcap:RepeatInstrument="data_types" redcap:CustomLabel=""/>
+		</redcap:RepeatingInstruments>
+	</redcap:RepeatingInstrumentsAndEvents>
+	<redcap:SurveysGroup>
+		<redcap:Surveys form_name="text_validation" title="Text Validation" instructions="Please complete the survey below.
+Thank you!" offline_instructions="" acknowledgement="Thank you for taking the survey.
+Have a nice day!" stop_action_acknowledgement="" stop_action_delete_response="0" question_by_section="0" display_page_number="0" question_auto_numbering="1" survey_enabled="1" save_and_return="0" save_and_return_code_bypass="0" logo="" hide_title="0" view_results="0" min_responses_view_results="10" check_diversity_view_results="0" end_survey_redirect_url="" survey_expiration="" promis_skip_question="0" survey_auth_enabled_single="0" edit_completed_response="0" hide_back_button="0" show_required_field_text="1" confirmation_email_subject="" confirmation_email_content="" confirmation_email_from="" confirmation_email_from_display="" confirmation_email_attach_pdf="0" confirmation_email_attachment="" text_to_speech="0" text_to_speech_language="en" end_survey_redirect_next_survey="0" theme="" text_size="1" font_family="16" theme_text_buttons="" theme_bg_page="" theme_text_title="" theme_bg_title="" theme_text_sectionheader="" theme_bg_sectionheader="" theme_text_question="" theme_bg_question="" enhanced_choices="0" repeat_survey_enabled="0" repeat_survey_btn_text="" repeat_survey_btn_location="HIDDEN" response_limit="" response_limit_include_partials="1" response_limit_custom_text="Thank you for your interest; however, the survey is closed because the maximum number of responses has been reached." survey_time_limit_days="" survey_time_limit_hours="" survey_time_limit_minutes="" email_participant_field="" end_of_survey_pdf_download="0" pdf_save_to_field="" pdf_save_to_event_id="" pdf_auto_archive="0" pdf_econsent_version="" pdf_econsent_type="" pdf_econsent_firstname_field="" pdf_econsent_firstname_event_id="" pdf_econsent_lastname_field="" pdf_econsent_lastname_event_id="" pdf_econsent_dob_field="" pdf_econsent_dob_event_id="" pdf_econsent_allow_edit="1" pdf_econsent_signature_field1="" pdf_econsent_signature_field2="" pdf_econsent_signature_field3="" pdf_econsent_signature_field4="" pdf_econsent_signature_field5=""/>
+	</redcap:SurveysGroup>
+</GlobalVariables>
+<MetaDataVersion OID="Metadata.SecondProject1115_2023-03-26_1509" Name="SecondProject_1115" redcap:RecordIdField="record_id">
+	<FormDef OID="Form.text_validation" Name="Text Validation" Repeating="No" redcap:FormName="text_validation">
+		<ItemGroupRef ItemGroupOID="text_validation.record_id" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="text_validation.text_validation_timestamp" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="text_validation.text_validation_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.data_types" Name="Data Types" Repeating="No" redcap:FormName="data_types">
+		<ItemGroupRef ItemGroupOID="data_types.ptname" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="data_types.descriptive_file_text" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="data_types.required" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="data_types.descriptive_text" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="data_types.data_types_complete" Mandatory="No"/>
+	</FormDef>
+	<ItemGroupDef OID="text_validation.record_id" Name="Text Validation" Repeating="No">
+		<ItemRef ItemOID="record_id" Mandatory="No" redcap:Variable="record_id"/>
+		<ItemRef ItemOID="redcap_survey_identifier" Mandatory="No" redcap:Variable="redcap_survey_identifier"/>
+		<ItemRef ItemOID="text_validation_timestamp" Mandatory="No" redcap:Variable="text_validation_timestamp"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="text_validation.text_validation_timestamp" Name="Text Validation" Repeating="No">
+		<ItemRef ItemOID="text_validation_timestamp" Mandatory="No" redcap:Variable="text_validation_timestamp"/>
+		<ItemRef ItemOID="ptname_v2_v2" Mandatory="No" redcap:Variable="ptname_v2_v2"/>
+		<ItemRef ItemOID="email_v2" Mandatory="No" redcap:Variable="email_v2"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="text_validation.text_validation_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="text_validation_complete" Mandatory="No" redcap:Variable="text_validation_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="data_types.ptname" Name="Data Types" Repeating="No">
+		<ItemRef ItemOID="ptname" Mandatory="No" redcap:Variable="ptname"/>
+		<ItemRef ItemOID="text2" Mandatory="No" redcap:Variable="text2"/>
+		<ItemRef ItemOID="textbox" Mandatory="No" redcap:Variable="textbox"/>
+		<ItemRef ItemOID="notesbox" Mandatory="No" redcap:Variable="notesbox"/>
+		<ItemRef ItemOID="calculated_field" Mandatory="No" redcap:Variable="calculated_field"/>
+		<ItemRef ItemOID="multiple_dropdown_auto" Mandatory="No" redcap:Variable="multiple_dropdown_auto"/>
+		<ItemRef ItemOID="multiple_dropdown_manual" Mandatory="No" redcap:Variable="multiple_dropdown_manual"/>
+		<ItemRef ItemOID="radio_button_auto" Mandatory="No" redcap:Variable="radio_button_auto"/>
+		<ItemRef ItemOID="radio_button_manual" Mandatory="No" redcap:Variable="radio_button_manual"/>
+		<ItemRef ItemOID="checkbox___1" Mandatory="No" redcap:Variable="checkbox"/>
+		<ItemRef ItemOID="checkbox___2" Mandatory="No" redcap:Variable="checkbox"/>
+		<ItemRef ItemOID="checkbox___3" Mandatory="No" redcap:Variable="checkbox"/>
+		<ItemRef ItemOID="signature" Mandatory="No" redcap:Variable="signature"/>
+		<ItemRef ItemOID="file_upload" Mandatory="No" redcap:Variable="file_upload"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="data_types.descriptive_file_text" Name="Section Break" Repeating="No">
+		<ItemRef ItemOID="descriptive_file_text" Mandatory="No" redcap:Variable="descriptive_file_text"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="data_types.required" Name="Data Types" Repeating="No">
+		<ItemRef ItemOID="required" Mandatory="Yes" redcap:Variable="required"/>
+		<ItemRef ItemOID="identifier" Mandatory="No" redcap:Variable="identifier"/>
+		<ItemRef ItemOID="identifier_2" Mandatory="No" redcap:Variable="identifier_2"/>
+		<ItemRef ItemOID="edit_field" Mandatory="No" redcap:Variable="edit_field"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="data_types.descriptive_text" Name="Section Break" Repeating="No">
+		<ItemRef ItemOID="descriptive_text" Mandatory="No" redcap:Variable="descriptive_text"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="data_types.data_types_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="data_types_complete" Mandatory="No" redcap:Variable="data_types_complete"/>
+	</ItemGroupDef>
+	<ItemDef OID="record_id" Name="record_id" DataType="text" Length="999" redcap:Variable="record_id" redcap:FieldType="text">
+		<Question><TranslatedText>Record ID</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="redcap_survey_identifier" Name="redcap_survey_identifier" DataType="text" Length="999" redcap:Variable="redcap_survey_identifier">
+		<Question><TranslatedText>Survey Identifier</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="text_validation_timestamp" Name="text_validation_timestamp" DataType="datetime" Length="999" redcap:Variable="text_validation_timestamp">
+		<Question><TranslatedText>Survey Timestamp</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="text_validation_timestamp" Name="text_validation_timestamp" DataType="datetime" Length="999" redcap:Variable="text_validation_timestamp">
+		<Question><TranslatedText>Survey Timestamp</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="ptname_v2_v2" Name="ptname_v2_v2" DataType="text" Length="999" redcap:Variable="ptname_v2_v2" redcap:FieldType="text">
+		<Question><TranslatedText>Name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="email_v2" Name="email_v2" DataType="text" Length="999" redcap:Variable="email_v2" redcap:FieldType="text" redcap:TextValidationType="email">
+		<Question><TranslatedText>Email</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="text_validation_complete" Name="text_validation_complete" DataType="text" Length="1" redcap:Variable="text_validation_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="text_validation_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="ptname" Name="ptname" DataType="text" Length="999" redcap:Variable="ptname" redcap:FieldType="text">
+		<Question><TranslatedText>Name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="text2" Name="text2" DataType="text" Length="999" redcap:Variable="text2" redcap:FieldType="text">
+		<Question><TranslatedText>Text2</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="textbox" Name="textbox" DataType="text" Length="999" redcap:Variable="textbox" redcap:FieldType="text">
+		<Question><TranslatedText>Text Box</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="notesbox" Name="notesbox" DataType="text" Length="999" redcap:Variable="notesbox" redcap:FieldType="textarea">
+		<Question><TranslatedText>Notes Box</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="calculated_field" Name="calculated_field" DataType="float" Length="999" redcap:Variable="calculated_field" redcap:FieldType="calc" redcap:Calculation="3*2">
+		<Question><TranslatedText>Calculated Field</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="multiple_dropdown_auto" Name="multiple_dropdown_auto" DataType="text" Length="1" redcap:Variable="multiple_dropdown_auto" redcap:FieldType="select">
+		<Question><TranslatedText>Multiple Choice Dropdown Auto</TranslatedText></Question>
+		<CodeListRef CodeListOID="multiple_dropdown_auto.choices"/>
+	</ItemDef>
+	<ItemDef OID="multiple_dropdown_manual" Name="multiple_dropdown_manual" DataType="text" Length="1" redcap:Variable="multiple_dropdown_manual" redcap:FieldType="select">
+		<Question><TranslatedText>Multiple Choice Dropdown Manual</TranslatedText></Question>
+		<CodeListRef CodeListOID="multiple_dropdown_manual.choices"/>
+	</ItemDef>
+	<ItemDef OID="radio_button_auto" Name="radio_button_auto" DataType="text" Length="1" redcap:Variable="radio_button_auto" redcap:FieldType="radio">
+		<Question><TranslatedText>Radio Button Auto</TranslatedText></Question>
+		<CodeListRef CodeListOID="radio_button_auto.choices"/>
+	</ItemDef>
+	<ItemDef OID="radio_button_manual" Name="radio_button_manual" DataType="text" Length="4" redcap:Variable="radio_button_manual" redcap:FieldType="radio">
+		<Question><TranslatedText>Radio Button Manual</TranslatedText></Question>
+		<CodeListRef CodeListOID="radio_button_manual.choices"/>
+	</ItemDef>
+	<ItemDef OID="checkbox___1" Name="checkbox___1" DataType="boolean" Length="1" redcap:Variable="checkbox" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Checkbox</TranslatedText></Question>
+		<CodeListRef CodeListOID="checkbox___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="checkbox___2" Name="checkbox___2" DataType="boolean" Length="1" redcap:Variable="checkbox" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Checkbox</TranslatedText></Question>
+		<CodeListRef CodeListOID="checkbox___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="checkbox___3" Name="checkbox___3" DataType="boolean" Length="1" redcap:Variable="checkbox" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Checkbox</TranslatedText></Question>
+		<CodeListRef CodeListOID="checkbox___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="signature" Name="signature" DataType="text" Length="999" redcap:Variable="signature" redcap:FieldType="file" redcap:TextValidationType="signature">
+		<Question><TranslatedText>Signature</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="file_upload" Name="file_upload" DataType="text" Length="999" redcap:Variable="file_upload" redcap:FieldType="file">
+		<Question><TranslatedText>File Upload</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="descriptive_file_text" Name="descriptive_file_text" DataType="text" Length="999" redcap:Variable="descriptive_file_text" redcap:FieldType="descriptive" redcap:SectionHeader="Section Break">
+		<Question><TranslatedText>Descriptive Text with File</TranslatedText></Question>
+		<redcap:Attachment DocName="7_image_v913.jpg" MimeType="image/jpeg"><![CDATA[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]]></redcap:Attachment>
+	</ItemDef>
+	<ItemDef OID="required" Name="required" DataType="text" Length="999" redcap:Variable="required" redcap:FieldType="text" redcap:RequiredField="y">
+		<Question><TranslatedText>Required</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="identifier" Name="identifier" DataType="text" Length="999" redcap:Variable="identifier" redcap:FieldType="text" redcap:Identifier="y">
+		<Question><TranslatedText>Identifier</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="identifier_2" Name="identifier_2" DataType="text" Length="999" redcap:Variable="identifier_2" redcap:FieldType="text" redcap:Identifier="y">
+		<Question><TranslatedText>Identifier</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="edit_field" Name="edit_field" DataType="text" Length="999" redcap:Variable="edit_field" redcap:FieldType="text">
+		<Question><TranslatedText>Edit Field</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="descriptive_text" Name="descriptive_text" DataType="text" Length="999" redcap:Variable="descriptive_text" redcap:FieldType="descriptive" redcap:SectionHeader="Section Break">
+		<Question><TranslatedText>Descriptive Text</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="data_types_complete" Name="data_types_complete" DataType="text" Length="1" redcap:Variable="data_types_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="data_types_complete.choices"/>
+	</ItemDef>
+	<CodeList OID="text_validation_complete.choices" Name="text_validation_complete" DataType="text" redcap:Variable="text_validation_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="multiple_dropdown_auto.choices" Name="multiple_dropdown_auto" DataType="text" redcap:Variable="multiple_dropdown_auto">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>DDChoice1</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>DDChoice2</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>DDChoice3</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="multiple_dropdown_manual.choices" Name="multiple_dropdown_manual" DataType="text" redcap:Variable="multiple_dropdown_manual">
+		<CodeListItem CodedValue="5"><Decode><TranslatedText>DDChoice5</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="7"><Decode><TranslatedText>DDChoice6</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="6"><Decode><TranslatedText>DDChoice7</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="radio_button_auto.choices" Name="radio_button_auto" DataType="text" redcap:Variable="radio_button_auto">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Choice1</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Choice2</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>Choice.3</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="radio_button_manual.choices" Name="radio_button_manual" DataType="text" redcap:Variable="radio_button_manual">
+		<CodeListItem CodedValue="9..9"><Decode><TranslatedText>Choice99</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="100"><Decode><TranslatedText>Choice100</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="101"><Decode><TranslatedText>Choice101</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="checkbox___1.choices" Name="checkbox___1" DataType="boolean" redcap:Variable="checkbox" redcap:CheckboxChoices="1, Checkbox|2, Checkbox2|3, Checkbox3">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="checkbox___2.choices" Name="checkbox___2" DataType="boolean" redcap:Variable="checkbox" redcap:CheckboxChoices="1, Checkbox|2, Checkbox2|3, Checkbox3">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="checkbox___3.choices" Name="checkbox___3" DataType="boolean" redcap:Variable="checkbox" redcap:CheckboxChoices="1, Checkbox|2, Checkbox2|3, Checkbox3">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="data_types_complete.choices" Name="data_types_complete" DataType="text" redcap:Variable="data_types_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+</MetaDataVersion>
+</Study>
+<ClinicalData StudyOID="Project.SecondProject1115" MetaDataVersionOID="Metadata.SecondProject1115_2023-03-26_1509">
+	<SubjectData SubjectKey="1" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.text_validation" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="text_validation.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="1"/>
+					<ItemData ItemOID="ptname_v2_v2" Value="Test User"/>
+					<ItemData ItemOID="email_v2" Value="test@test.com"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="text_validation.text_validation_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="text_validation_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="calculated_field" Value="6"/>
+					<ItemData ItemOID="checkbox___1" Value="0"/>
+					<ItemData ItemOID="checkbox___2" Value="0"/>
+					<ItemData ItemOID="checkbox___3" Value="0"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+</ClinicalData>
+</ODM>
