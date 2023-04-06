@@ -79,6 +79,10 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
         cy.wait('@designate_instruments')
     } else if (button_type === " on the Online Designer page") {
         cy.wait('@online_designer')
+    } else if (button_type === " and cancel the confirmation window") {
+        cy.on('window:confirm', (str) => {
+            return true //subsequent windows go back to default behavior 
+        })
     }
 })
 
