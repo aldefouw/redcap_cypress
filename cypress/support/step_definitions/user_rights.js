@@ -418,8 +418,8 @@ Given('I {user_right_action} all Basic Rights within the open User Rights dialog
  */
 Given('I set Data Viewing Rights to {data_viewing_rights} for the instrument {string}', (level, instrument) => {
     cy.get('div[role=dialog]').should('be.visible')
-    let input_values = {'No Access': 0, 'Read Only': 2, 'View & Edit': 1}
-    cy.get(`table#form_rights tr:has(td:contains(${instrument})) input[value=${input_values[level]}]:visible`)
+    let selectors = {'No Access': 'input[value=0]', 'Read Only': 'input[value=2]', 'View & Edit': 'input[value=1]', 'Edit survey responses': 'input[type=checkbox]'}
+    cy.get(`table#form_rights tr:has(td:contains(${instrument})) ${selectors[level]}`)
         .check()
 })
 
