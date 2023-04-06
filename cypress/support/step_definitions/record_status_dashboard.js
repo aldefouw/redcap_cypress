@@ -147,11 +147,25 @@ Given("I locate the bubble for the {string} instrument on event {string} for rec
  * @example I click the bubble to < add | select > a record for the {string} longitudinal instrument on event {string}
  * @param {string} instrument - the name of the instrument you want to add a record to
  * @param {string} event - the name of the event you want to add a record to
- * @description Clicks on an instrument / event pairing to add a record on the Record Home Page
+ * @description Clicks on an instrument / event pairing to add / select a record on the Record Home Page
  */
 
 Given("I click the bubble to {add_or_select} a record for the {string} longitudinal instrument on event {string}", (verb, instrument, event) => {
     cy.table_cell_by_column_and_row_label(event, instrument, 'table#event_grid_table').then(($td) => {
+        cy.wrap($td).find('a:visible:first').click()
+    })
+})
+
+/**
+ * @module RecordStatusDashboard
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click the bubble to < add | select > a record for the {string} classic instrument
+ * @param {string} instrument - the name of the classic instrument you want to add a record to
+ * @description Clicks on an instrument to add / select a record on the Record Home Page
+ */
+
+Given("I click the bubble to {add_or_select} a record for the {string} classic instrument", (verb, instrument) => {
+    cy.table_cell_by_column_and_row_label("Status", instrument, 'table#event_grid_table').then(($td) => {
         cy.wrap($td).find('a:visible:first').click()
     })
 })
