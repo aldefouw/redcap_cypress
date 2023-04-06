@@ -177,7 +177,11 @@ Given('I {enter_type} {string} into the input field labeled {string}', (enter_ty
                 if(enter_type === "enter"){
                     elm.type(text)
                 } else if (enter_type === "clear field and enter") {
-                    elm.clear().type(text)
+                    if(text.length > 0){
+                        elm.clear().type(text)
+                    } else {
+                        elm.clear()
+                    }
                 }
             })
         })
