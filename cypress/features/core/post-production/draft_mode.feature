@@ -10,8 +10,8 @@ Scenario: 0 - Project Setup - 1
 Scenario: 0 - Project Setup - 2, 3
     And I should see a link labeled "User Rights"
     And I click on the link labeled "User Rights"
-    And I click to edit username "test_user (Test User)"
-    And I click on the button labeled "Edit user privileges"
+    And I enter "test_user" into the input field labeled "Add with custom rights"
+    And I click on the button labeled "Add with custom rights"
     And I check the User Right named 'Project Setup & Design'
     And I save changes within the context of User Rights
 

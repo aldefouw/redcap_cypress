@@ -140,7 +140,7 @@ Feature: Reporting
     Then I should have a "csv" file that contains 8 distinct records
     Then I should have a "csv" file that contains 19 rows
     Then I should have a "csv" file that contains 11 repeating instrument rows
-    
+
   Scenario: 7 - Edit Report: Remove Description, Don't show all events or repeating instruments
     Given I click on the link labeled "Data Exports, Reports, and Stats"
     And I click on the button labeled "Edit"
@@ -189,7 +189,7 @@ Feature: Reporting
   Scenario: 9 - Edit Report: DOB Descending
     Given I click on the link labeled "Data Exports, Reports, and Stats" 
     And I click on the button labeled "Edit" for the report named "Report 1"
-    And I select "Descending order" from the dropdown identified by "select[name='sortascdesc[]']" labeled "First by"
+    And I select "Descending order" on the dropdown field labeled "First by"
     And I click on the button labeled "Save Report"
     Then I should see a dialog containing the following text: 'Your report has been saved!'
 
@@ -203,9 +203,9 @@ Feature: Reporting
     And I click on the button labeled "Edit" for the report named "Report 1"
     And I click on the button labeled "View full list of fields" for the row labeled "Filter 1"
     And I select "dob" on the dropdown field labeled "Filter 1"
-    Then I should see the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1" with the options below
+    And I should see the dropdown field labeled "Filter 1" with the options below
     | = | not = | <  | < = | > | > = |
-    And I select ">" from the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1"
+    And I select ">" on the dropdown field labeled "Filter 1"
     And I enter "6/20/19" into the input field labeled "M-D-Y"
     And I click on the button labeled "Save Report"
     Then I should see a dialog containing the following text: 'Your report has been saved!'
@@ -218,10 +218,10 @@ Feature: Reporting
     Given I click on the link labeled "Data Exports, Reports, and Stats" 
     And I click on the button labeled "Edit" for the report named "Report 1"
     And I select "fname" on the dropdown field labeled "Filter 1"
-    Then I should see the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1" with the options below
+    And I should see the dropdown field labeled "Filter 1" with the options below
     | = | not = | contains | does not contain | starts with | ends with |
-    And I select "contains" from the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 1"
-    And I enter "o" into the field identified by "input[name='limiter_value[]']" labeled "Filter 1"
+    And I select "contains" on the dropdown field labeled "Filter 1"
+    And I enter "o" into the input field labeled "Filter 1"
     And I click on the button labeled "Save Report"
     Then I should see a dialog containing the following text: 'Your report has been saved!'
 
@@ -235,8 +235,8 @@ Feature: Reporting
     And I click on the button labeled "View full list of fields" for the row labeled "Filter 2"
     And I should see "Filter 2"
     And I select "dob" on the dropdown field labeled "Filter 2"
-    And I select "<" from the dropdown identified by "select[name='limiter_operator[]']" labeled "Filter 2"
-    And I enter "6/20/19" into the field identified by "input[name='limiter_value[]']" labeled "Filter 2"
+    And I select "<" on the dropdown field labeled "Filter 2"
+    And I enter "6/20/19" into the input field labeled "Filter 2"
     And I select "OR" from the dropdown identified by "select[name='limiter_group_operator[]']" labeled "Filter 2"
     And I click on the button labeled "Save Report"
     Then I should see a dialog containing the following text: 'Your report has been saved!'
