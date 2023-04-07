@@ -180,3 +180,8 @@ defineParameterType({
     name: 'linkNames',
     regexp: /link|tab/
 })
+
+defineParameterType({
+    name: 'tableTypes',
+    regexp: /|logging|browse users/
+})

@@ -193,3 +193,23 @@ Given("I (should )see (a )(an ){string} within the {string} row of the column la
         }
     })
 })
+
+/**
+ * @module Visibility
+ * @author Rushi Patel <rushi.patel@uhnresearch.ca>
+ * @example I should see {string} in the < optional type > table
+ * @param {string} text - text to look for
+ * @param {string} type - options: < logging | browse users >
+ * @description Identify specific text within a table
+ */
+Given('I should see {string} in the {tableTypes} table', (text, table_type = '') => {
+    let selector = 'table'
+
+    if(table_type === 'logging'){
+        selector = 'table.form_border'
+    } else if (table_type === 'browse users'){
+        selector = 'table#sponsorUsers-table'
+    }
+
+    cy.get(selector).contains('td', text, { matchCase: false });
+})
