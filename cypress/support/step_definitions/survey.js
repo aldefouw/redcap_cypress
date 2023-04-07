@@ -115,8 +115,8 @@ Given("I enable surveys for the project", () => {
 
     cy.get('div').contains('Use surveys in this project?').parent().within(($div) => {
         cy.get('button').then(($btn)=> {
-            if ($btn.text().trim() === "Enable") {
-                cy.wrap($btn).click()
+            if ($btn[0].text().trim() === "Enable") {
+                $btn[0].click()
                 //Wait to make sure that the AJAX request has completed before we move onto next test
                 cy.wait('@enable_survey')
                 cy.get('#setupEnableSurveysBtn').should('contain.text', 'Disable')
@@ -143,9 +143,9 @@ Given("I disable surveys for the project", () => {
     cy.get('div').contains('Use surveys in this project?').within(($div) => {
 
         cy.get('button').then(($btn)=> {
-            if ($btn.text().trim() === "Disable") {
+            if ($btn[0].text().trim() === "Disable") {
 
-                cy.wrap($btn).click()
+                $btn[0].click()
 
                 //If the onclick attribute includes firing a confirmation window
                 if($btn[0].getAttribute('onclick') === "confirmUndoEnableSurveys()") {
