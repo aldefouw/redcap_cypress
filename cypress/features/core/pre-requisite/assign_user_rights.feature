@@ -57,7 +57,7 @@ Feature: Assign User Rights
     And I create a project named "SecondProject_1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/06_AssignUserRights_v1115.xml"
     
   Scenario: Project Setup - 2
-    When I enable surveys for the project
+    When I should see that surveys are enabled
     When I disable longitudinal mode
     And I click on the button labeled "Additional customizations"
     And I click on the checkbox labeled "Enable the Field Comment Log"
