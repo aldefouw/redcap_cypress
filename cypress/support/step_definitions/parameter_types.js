@@ -70,7 +70,7 @@ defineParameterType({
 // user_rights.js
 defineParameterType({
     name: 'data_viewing_rights',
-    regexp: /No Access|Read Only|View & Edit/
+    regexp: /No Access|Read Only|View & Edit|Edit survey responses/
 })
 
 // taken from visibility.js, but was not used.
@@ -184,4 +184,9 @@ defineParameterType({
 defineParameterType({
     name: 'tableTypes',
     regexp: /|logging|browse users/
+})
+
+defineParameterType({
+    name: 'baseElement',
+    regexp: /| on the tooltip| on the dialog box| on the role selector dropdown/
 })
