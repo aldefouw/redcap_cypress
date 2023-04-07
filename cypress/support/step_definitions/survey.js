@@ -114,12 +114,18 @@ Given("I enable surveys for the project", () => {
     }).as('enable_survey')
 
     cy.get('div').contains('Use surveys in this project?').parent().within(($div) => {
-        cy.get('button').contains('Enable').click()
+        cy.get('button').then(($btn)=> {
+            if ($btn.text().trim() === "Enable") {
+                cy.wrap($btn).click()
+                //Wait to make sure that the AJAX request has completed before we move onto next test
+                cy.wait('@enable_survey')
+                cy.get('#setupEnableSurveysBtn').should('contain.text', 'Disable')
+            } else {
+                cy.log("Warning: Surveys are already enabled!")
+            }
+        })
     })
 
-    //Wait to make sure that the AJAX request has completed before we move onto next test
-    cy.wait('@enable_survey')
-    cy.get('#setupEnableSurveysBtn').should('contain.text', 'Disable')
 })
 
 /**
@@ -132,26 +138,31 @@ Given("I disable surveys for the project", () => {
     cy.intercept({
         method: 'POST',
         url: '/redcap_v' + Cypress.env('redcap_version') + '/ProjectSetup/modify_project_setting_ajax.php?pid=*'
-    }).as('projectSettings')
+    }).as('disable_survey')
 
     cy.get('div').contains('Use surveys in this project?').within(($div) => {
-        cy.get('button').contains('Disable').then(($btn) => {
 
-            //First click the button
-            $btn[0].click()
+        cy.get('button').then(($btn)=> {
+            if ($btn.text().trim() === "Disable") {
 
-            //If the onclick attribute includes firing a confirmation window
-            if($btn[0].getAttribute('onclick') === "confirmUndoEnableSurveys()") {
-                cy.document().its('body').find('div[role=dialog]').within(() => {
-                    //Click to disable this too
-                    cy.get('button').contains('Disable').click()
-                })
+                cy.wrap($btn).click()
+
+                //If the onclick attribute includes firing a confirmation window
+                if($btn[0].getAttribute('onclick') === "confirmUndoEnableSurveys()") {
+                    cy.document().its('body').find('div[role=dialog]').within(() => {
+                        //Click to disable this too
+                        cy.get('button').contains('Disable').click()
+                    })
+                }
+
+                //Wait to make sure that the AJAX request has completed before we move onto checking data
+                cy.wait('@disable_survey')
+
+            } else {
+                cy.log("Warning: Surveys are already disabled!")
             }
         })
     })
-
-    //Wait to make sure that the AJAX request has completed before we move onto checking data
-    cy.wait('@projectSettings')
 })
 
 /**
