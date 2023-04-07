@@ -174,23 +174,35 @@ Given("I should see that the {string} field contains the value of {string}", (fi
  * @param {string} tag - (optional) the value of the tag specified
  * @description Clicks on a survey option label.  Track it via an optional tag.
  */
-Given(/^I click on the survey option label containing "(.*)" label(?: and want to track the response with a tag of "(.*)")?$/, (survey_option_label, tag) => {
-    if(tag !== undefined){
-        cy.window().then(win => {
-            cy.stub(win, 'surveyOpen').callsFake((url, target) => {
-                return win.open.wrappedMethod.call(win, url, '_self')
-            }).as(tag)
-        })
-    }
+Given(/^I click on the survey option label containing "(.*)" label(?: and want to track the response with a tag of "(.*)")?$/, (survey_option_label, tag = 'default_survey_option') => {
+    cy.window().then(win => {
+        cy.stub(win, 'surveyOpen').callsFake((url, target) => {
+            return win.open.wrappedMethod.call(win, url, '_self')
+        }).as(tag)
+    })
+
+    let link = null;
 
     cy.get('ul li').contains(survey_option_label).then(($li) => {
         cy.wrap($li[0]).click() //Click the link
 
-        if(tag !== undefined) {
+        //If we need to open the survey
+        if(survey_option_label === "Open survey" || survey_option_label.includes("Log out") ){
             let onclick = Cypress.$($li[0]).prop('onclick').toString(); //Get the survey link
             let survey = onclick.split("surveyOpen('");
-            window.redcap_survey_link = survey[1].split("'")[0];
+            link = survey[1].split("'")[0];
+
+            if(tag === 'default_survey_option') {
+                cy.get('@' + tag).should('have.been.calledOnceWithExactly', link, 0)
+            }
+
+            if(survey_option_label.includes("Log out") ){
+                cy.logout()
+            }
+            cy.visit(link)
         }
+
+        window.redcap_survey_link = link;
     })
 })
 
@@ -201,7 +213,7 @@ Given(/^I click on the survey option label containing "(.*)" label(?: and want t
  * @param {string} tag - the value of the tag specified
  * @description Verifies whether the survey has opened exactly once via the tracked tag.
  */
-Then("I should see the survey open exactly once by watching the tag of {string}", (tag) => {
+Then("I (should) see the survey open exactly once by watching the tag of {string}", (tag) => {
     //Check to see if the window would have opened
     cy.get('@' + tag).should('have.been.calledOnceWithExactly', window.redcap_survey_link, 0)
 })
