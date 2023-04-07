@@ -27,35 +27,36 @@ Feature: Assign User Rights
   - 27. The system shall allow for the creation, copying and deletion of user roles.
   - 32. The system shall support adding and removing users from user roles.
 
-  # @focus
-  # Scenario: Fast setup (disable when testing full script)
-  #   Given I am an "admin" user who logs into REDCap
-  #   And I create a project named "SecondProject_1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/06_AssignUserRights_v1115.xml"
-  #   And I enable surveys
-  #   And I disable longitudinal mode
-  #   And I click on the button labeled "Additional customizations"
-  #   And I click on the checkbox near the text "Enable the Field Comment Log"
-  #   And I click on the button labeled "Save"
-  #   Then I should see "Success! Your changes have been saved."
-
-  #   Given I click on the link labeled "User Rights"
-  #   And I enter "test_user" into the input field near the text "Add with custom rights"
-  #   And I click on the button labeled "Add with custom rights"
-  #   Then I should see 'Adding new user "test_user"'
-    
-  #   Given I remove all Basic Rights within the open User Rights dialog box
-  #   And I check the User Right named "User Rights"
-  #   # Script has expected result: "Data Entry rights remain".
-  #   # Consider adding an assertion here.
-  #   And I save changes within the context of User Rights
-  #   And I am a "standard" user who logs into REDCap
-  #   And I click on the link labeled "My Projects"
-  #   And I click on the link labeled "SecondProject_1115"
+#   @focus
+#   Scenario: Fast setup (disable when testing full script)
+#     Given I am an "admin" user who logs into REDCap
+#     And I create a project named "SecondProject_1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/06_AssignUserRights_v1115.xml"
+#     And I enable surveys for the project
+#     And I disable longitudinal mode
+#     And I click on the button labeled "Additional customizations"
+#     And I click on the checkbox labeled "Enable the Field Comment Log"
+#     And I click on the button labeled "Save"
+#     Then I should see "Success! Your changes have been saved."
+#
+#     Given I click on the link labeled "User Rights"
+#     And I enter "test_user" into the input field labeled "Add with custom rights"
+#     And I click on the button labeled "Add with custom rights"
+#     Then I should see 'Adding new user "test_user"'
+#
+#     Given I remove all Basic Rights within the open User Rights dialog box
+#     And I check the User Right named "User Rights"
+#     # Script has expected result: "Data Entry rights remain".
+#     # Consider adding an assertion here.
+#     And I save changes within the context of User Rights
+#     And I am a "standard" user who logs into REDCap
+#     And I click on the link labeled "My Projects"
+#     And I click on the link labeled "SecondProject_1115"
+#     Given I click on the link labeled "User Rights"
 
   Scenario: Project Setup - 1
     Given I am an "admin" user who logs into REDCap
     And I create a project named "SecondProject_1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/06_AssignUserRights_v1115.xml"
-    
+
   Scenario: Project Setup - 2
     When I enable surveys for the project
     When I disable longitudinal mode
@@ -419,9 +420,9 @@ Feature: Assign User Rights
 
   Scenario: 31 - Attempt to assign test_user (self) to role without User Rights privileges
     Given I click on the link labeled "test_user"
-    And I click on the button labeled "Assign to role"
-    And I select "Data Entry" on the dropdown field labeled "Select Role:"
-    And I click on the button labeled exactly "Assign"
+    And I click on the button labeled "Assign to role" on the tooltip
+    And I select "Data Entry" on the dropdown field labeled "Select Role:" on the role selector dropdown
+    And I click on the button labeled exactly "Assign" on the role selector dropdown
     Then I should see "NOTICE: User Rights mismatch"
 
     Given I click on the button labeled "Close"
@@ -432,10 +433,9 @@ Feature: Assign User Rights
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
     And I click on the link labeled "test_user"
-    And I click on the button labeled "Assign to role"
-    And I should see "Select Role:"
-    And I select "Data Entry" on the dropdown field labeled "Select Role:"
-    And I click on the button labeled exactly "Assign"
+    And I click on the button labeled "Assign to role" on the tooltip
+    And I select "Data Entry" on the dropdown field labeled "Select Role:" on the role selector dropdown
+    And I click on the button labeled exactly "Assign" on the role selector dropdown
     # Then I should see 'User "test_user" has been successfully ASSIGNED to the user role "Data Entry".'
     # ^ Full string not detected due to awkward HTML structure
     Then I should see 'has been successfully ASSIGNED to the user role "Data Entry"'
