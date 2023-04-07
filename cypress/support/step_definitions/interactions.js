@@ -61,6 +61,10 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
         cy.on('window:confirm', (str) => {
             return false
         })
+    } else if(button_type === " and accept the confirmation window"){
+        cy.on('window:confirm', (str) => {
+            return true
+        })
     }
 
     if(exactly === 'labeled exactly'){
@@ -89,11 +93,11 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the link labeled (exactly) {string}
+ * @example I click on the < link | tab > labeled (exactly) {string}
  * @param {string} text - the text on the anchor element you want to click
  * @description Clicks on an anchor element with a specific text label.
  */
-Given("I click on the link {labeledExactly} {string}", (exactly, text) => {
+Given("I click on the {linkNames} {labeledExactly} {string}", (link_name, exactly, text) => {
     if(exactly === 'labeled exactly'){
         cy.get('a:visible').contains(new RegExp("^" + text + "$", "g")).click()
     } else {
@@ -159,6 +163,7 @@ Given("I click on the radio labeled {string} in the dialog box", (text) => {
  */
 Given('I {enter_type} {string} into the input field labeled {string}', (enter_type, text, label) => {
     let sel = `:contains("${label}"):visible`
+    let element = `input[type=text]:visible:first,input[type=password]:visible:first`
 
     cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
 
@@ -167,10 +172,10 @@ Given('I {enter_type} {string} into the input field labeled {string}', (enter_ty
         cy.contains(label).then(($label) => {
             cy.wrap($label).parent().then(($parent) =>{
 
-                if($parent.find('input').length){
-                    elm = cy.wrap($parent).find('input')
-                } else if ($parent.parent().find('input').length ) {
-                    elm = cy.wrap($parent).parent().find('input')
+                if($parent.find(element).length){
+                    elm = cy.wrap($parent).find(element)
+                } else if ($parent.parent().find(element).length ) {
+                    elm = cy.wrap($parent).parent().find(element)
                 }
 
                 if(enter_type === "enter"){
@@ -438,9 +443,17 @@ Given('I select the checkbox option {string} for the field labeled {string}', (c
  */
 Given('I select {string} on the {dropdown_type} field labeled {string}', (option, type, label) => {
     let label_selector = `:contains("${label}"):visible`
-    let element_selector = `select:has(option:contains("${option}")):visible`
+    let element_selector = `select:has(option:contains("${option}")):visible:enabled`
     cy.top_layer(label_selector).within(() => {
-        cy.get_labeled_element(element_selector, label, option).select(option)
+        cy.get_labeled_element(element_selector, label, option).then(($select) => {
+            cy.wrap($select).scrollIntoView().
+                should('be.visible').
+                should('be.enabled').then(($t) => {
+                    cy.wait(500)
+                    cy.wrap($t).select(option)
+                    cy.wait(500)
+                })
+        })
     })
 })
 

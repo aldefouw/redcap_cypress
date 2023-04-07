@@ -37,17 +37,6 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
 /**
  * @module Logging
  * @author Rushi Patel <rushi.patel@uhnresearch.ca>
- * @example I should see {string} in the logging table
- * @param {string} text - text to look for
- * @description Select logging option from the dropdown field on the logging page
- */
- Given('I should see {string} in the logging table', (text) => {
-    cy.get('table').contains('td', text, { matchCase: false });
-})
-
-/**
- * @module Logging
- * @author Rushi Patel <rushi.patel@uhnresearch.ca>
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I export all logging from the project and verify the result against expected logging results for this version of REDCap
  * @description Exports all logging from the Logging page
