@@ -175,3 +175,8 @@ defineParameterType({
     name: 'tableName',
     regexp: /| of the User Rights table/
 })
+
+defineParameterType({
+    name: 'linkNames',
+    regexp: /link|tab/
+})

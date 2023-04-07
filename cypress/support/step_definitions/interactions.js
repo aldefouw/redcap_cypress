@@ -89,11 +89,11 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the link labeled (exactly) {string}
+ * @example I click on the < link | tab > labeled (exactly) {string}
  * @param {string} text - the text on the anchor element you want to click
  * @description Clicks on an anchor element with a specific text label.
  */
-Given("I click on the link {labeledExactly} {string}", (exactly, text) => {
+Given("I click on the {linkNames} {labeledExactly} {string}", (link_name, exactly, text) => {
     if(exactly === 'labeled exactly'){
         cy.get('a:visible').contains(new RegExp("^" + text + "$", "g")).click()
     } else {
