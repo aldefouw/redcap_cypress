@@ -25,10 +25,10 @@ require('./commands/visit_urls.js')
 
 
 
-Cypress.Commands.add("top_layer", (label_selector) => {
+Cypress.Commands.add("top_layer", (label_selector, base_element = 'div[role=dialog][style*=z-index]:visible,html') => {
     cy.get_top_layer(($el) => {
         expect($el.find(label_selector)).length.to.be.above(0)}
-    ).then((el) => { return el })
+    , base_element).then((el) => { return el })
 })
 
 Cypress.Commands.add("get_labeled_element", (element_selector, label, value = null) => {
@@ -106,12 +106,9 @@ Cypress.Commands.add('button_or_input', (text_label) => {
 })
 
 //yields the visible div with the highest z-index, or the <html> if none are found
-Cypress.Commands.add('get_top_layer', (retryUntil) => {
+Cypress.Commands.add('get_top_layer', (retryUntil, element = 'div[role=dialog][style*=z-index]:visible,html') => {
     let top_layer
-
-    //div[class*=tooltip]:visible,div[id=assignUserDropdownDiv]:visible
-
-    cy.get('div[role=dialog][style*=z-index]:visible,html').should($els => {
+    cy.get(element).should($els => {
         //if more than body found, find element with highest z-index
         if ($els.length > 1) {
             //remove html from $els so only elements with z-index remain

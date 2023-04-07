@@ -419,9 +419,9 @@ Feature: Assign User Rights
 
   Scenario: 31 - Attempt to assign test_user (self) to role without User Rights privileges
     Given I click on the link labeled "test_user"
-    And I click on the button labeled "Assign to role"
-    And I select "Data Entry" on the dropdown field labeled "Select Role:"
-    And I click on the button labeled exactly "Assign"
+    And I click on the button labeled "Assign to role" on the tooltip
+    And I select "Data Entry" on the dropdown field labeled "Select Role:" on the role selector dropdown
+    And I click on the button labeled exactly "Assign" on the role selector dropdown
     Then I should see "NOTICE: User Rights mismatch"
 
     Given I click on the button labeled "Close"
@@ -432,10 +432,9 @@ Feature: Assign User Rights
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
     And I click on the link labeled "test_user"
-    And I click on the button labeled "Assign to role"
-    And I should see "Select Role:"
-    And I select "Data Entry" on the dropdown field labeled "Select Role:"
-    And I click on the button labeled exactly "Assign"
+    And I click on the button labeled "Assign to role" on the tooltip
+    And I select "Data Entry" on the dropdown field labeled "Select Role:" on the role selector dropdown
+    And I click on the button labeled exactly "Assign" on the role selector dropdown
     # Then I should see 'User "test_user" has been successfully ASSIGNED to the user role "Data Entry".'
     # ^ Full string not detected due to awkward HTML structure
     Then I should see 'has been successfully ASSIGNED to the user role "Data Entry"'

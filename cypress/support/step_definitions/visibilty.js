@@ -4,12 +4,20 @@ require('./parameter_types.js')
 /**
  * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I (should) see {string}
+ * @example I (should) see {string} < optional element specifier >
  * @param {string} text the text visually seen on screen
+ * @param {string} element - options: < on the tooltip | on the role selector dropdown | on the dialog box  >
  * @description Visually verifies that text exists within the HTML object. NOTE: "should" is optional for readability.
  */
-Given("I {see} {string}", (see, text) => {
-    cy.get('html').should(($html) => { expect($html).to.contain(text) })
+Given("I {see} {string}{baseElement}", (see, text, base_element) => {
+    const choices = {
+        '' : 'div[role=dialog][style*=z-index]:visible,html',
+        ' on the tooltip' : 'div[class*=tooltip]:visible',
+        ' on the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
+        ' on the dialog box' : 'div[role=dialog][style*=z-index]:visible'
+    }
+
+    cy.get(choices[base_element]).should(($html) => { expect($html).to.contain(text) })
 })
 
 /**
@@ -17,10 +25,18 @@ Given("I {see} {string}", (see, text) => {
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I should NOT see {string}
  * @param {string} text the text visually seen on screen
+ * @param {string} element - options: < on the tooltip | on the role selector dropdown | on the dialog box  >
  * @description Visually verifies that text does NOT exist within the HTML object.
  */
-Given("I should NOT see {string}", (text) => {
-    cy.get('html').then(($html) => { expect($html).to.not.contain(text) })
+Given("I should NOT see {string}{baseElement}", (text, base_element) => {
+    const choices = {
+        '' : 'div[role=dialog][style*=z-index]:visible,html',
+        ' on the tooltip' : 'div[class*=tooltip]:visible',
+        ' on the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
+        ' on the dialog box' : 'div[role=dialog][style*=z-index]:visible'
+    }
+
+    cy.get(choices[base_element]).then(($html) => { expect($html).to.not.contain(text) })
 })
 
 /**

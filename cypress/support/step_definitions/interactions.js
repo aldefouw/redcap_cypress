@@ -41,7 +41,20 @@ import { Given } from "cypress-cucumber-preprocessor/steps"
  * @param {string} text (optional) - < on the dialog box for the Repeatable Instruments and Events module>
  * @description Clicks on a button element with a specific text label.
  */
-Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}", (exactly, text, button_type) => {
+Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}{baseElement}", (exactly, text, button_type, base_element) => {
+    const choices = {
+        '' : 'div[role=dialog][style*=z-index]:visible,html',
+        ' on the tooltip' : 'div[class*=tooltip]:visible',
+        ' on the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
+        ' on the dialog box' : 'div[role=dialog][style*=z-index]:visible'
+    }
+
+    let outer_element = 'div[role=dialog][style*=z-index]:visible,html'
+
+    if(base_element.length > 0){
+        outer_element = choices[base_element]
+    }
+
     if(button_type === " on the dialog box for the Repeatable Instruments and Events module"){
         cy.intercept({
             method: 'POST',
@@ -64,11 +77,16 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
     }
 
     if(exactly === 'labeled exactly'){
-        cy.get(':button:visible').contains(new RegExp("^" + text + "$", "g")).click()
+        let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
+
+        cy.top_layer(sel, outer_element).within(() => {
+            cy.get(':button:visible').contains(new RegExp("^" + text + "$", "g")).click()
+        })
+
     } else {
         let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
 
-        cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+        cy.top_layer(sel, outer_element).within(() => {
             cy.get(sel).click()
         })
     }
@@ -441,10 +459,19 @@ Given('I select the checkbox option {string} for the field labeled {string}', (c
  * @param {string} label - the label of the field
  * @description Selects a specific item from a dropdown
  */
-Given('I select {string} on the {dropdown_type} field labeled {string}', (option, type, label) => {
+Given('I select {string} on the {dropdown_type} field labeled {string}{baseElement}', (option, type, label, base_element) => {
+    const choices = {
+        '' : 'div[role=dialog][style*=z-index]:visible,html',
+        ' on the tooltip' : 'div[class*=tooltip]:visible',
+        ' on the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
+        ' on the dialog box' : 'div[role=dialog][style*=z-index]:visible'
+    }
+
+    let outer_element = choices[base_element]
+
     let label_selector = `:contains("${label}"):visible`
     let element_selector = `select:has(option:contains("${option}")):visible:enabled`
-    cy.top_layer(label_selector).within(() => {
+    cy.top_layer(label_selector, outer_element).within(() => {
         cy.get_labeled_element(element_selector, label, option).then(($select) => {
             cy.wrap($select).scrollIntoView().
                 should('be.visible').
