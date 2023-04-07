@@ -61,6 +61,10 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
         cy.on('window:confirm', (str) => {
             return false
         })
+    } else if(button_type === " and accept the confirmation window"){
+        cy.on('window:confirm', (str) => {
+            return true
+        })
     }
 
     if(exactly === 'labeled exactly'){
