@@ -175,3 +175,8 @@ defineParameterType({
     name: 'tableName',
     regexp: /| of the User Rights table/
 })
+
+defineParameterType({
+    name: 'baseElement',
+    regexp: /| on the tooltip| on the dialog box| on the role selector dropdown/
+})
