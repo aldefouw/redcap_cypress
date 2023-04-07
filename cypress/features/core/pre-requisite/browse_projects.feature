@@ -7,6 +7,14 @@ Feature: Browse Projects
     Given I am an "admin" user who logs into REDCap
     And I create a project named "FirstProject_1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/projects/FirstProject_1115.xml"
 
+    When I click on the link labeled "My Projects"
+    And I click on the link labeled "FirstProject_1115"
+    And I click on the link labeled "User Rights"
+    And I enter "test_user" into the input field labeled "Add with custom rights"
+    And I click on the button labeled "Add with custom rights"
+    Then I should see 'Adding new user "test_user"'
+    And I save changes within the context of User Rights
+
   Scenario: 1 - View all non-archived projects
     When I click on the link labeled "Control Center"
     And I click on the link labeled "Browse Projects"

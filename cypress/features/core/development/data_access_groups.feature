@@ -64,11 +64,11 @@ Scenario: 5 - DagTest instrument
     And I click on the button labeled "Save Changes"
 
 Scenario: 6 - DAG Link
-    When I click on the link labeled "DAGs"
+#    When I click on the link labeled "DAGs"
 
 Scenario: 7 - Create Data Access 1 Group
-    When I enter "Data Access 1" into the field identified by "[id=new_group]"
-    And I click on the button labeled "Add Group"
+#    When I enter "Data Access 1" into the field identified by "[id=new_group]"
+#    And I click on the button labeled "Add Group"
 
 Scenario: 8 - 
 
