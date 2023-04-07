@@ -42,7 +42,7 @@ Feature: Assign User Rights
   #   And I enter "test_user" into the input field near the text "Add with custom rights"
   #   And I click on the button labeled "Add with custom rights"
   #   Then I should see 'Adding new user "test_user"'
-
+    
   #   Given I remove all Basic Rights within the open User Rights dialog box
   #   And I check the User Right named "User Rights"
   #   # Script has expected result: "Data Entry rights remain".
@@ -55,12 +55,12 @@ Feature: Assign User Rights
   Scenario: Project Setup - 1
     Given I am an "admin" user who logs into REDCap
     And I create a project named "SecondProject_1115" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/06_AssignUserRights_v1115.xml"
-
+    
   Scenario: Project Setup - 2
-    When I enable surveys for the project
+    When I enable surveys
     When I disable longitudinal mode
     And I click on the button labeled "Additional customizations"
-    And I click on the checkbox labeled "Enable the Field Comment Log"
+    And I click on the checkbox near the text "Enable the Field Comment Log"
     #  ^ Defaults to enabled, despite importing CDISC from project with it disabled.
     And I click on the button labeled "Save"
     Then I should see "Success! Your changes have been saved."
@@ -69,7 +69,7 @@ Feature: Assign User Rights
     When I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
-    And I enter "test_user" into the input field labeled "Add with custom rights"
+    And I enter "test_user" into the input field near the text "Add with custom rights"
     And I click on the button labeled "Add with custom rights"
     Then I should see 'Adding new user "test_user"'
     And I remove all Basic Rights within the open User Rights dialog box
@@ -99,7 +99,7 @@ Feature: Assign User Rights
     And I click on the link labeled "User Rights"
     And I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
-    And I enter "1/1/23" into the input field labeled "Expiration Date"
+    And I enter "1/1/23" into the second input field near the text "Expiration Date"
     # ^ "second input" needed, due to hidden helper element that for some reason matches :visible
     #   This might get replaced with its own step definition for entering an expiration date
     #   @adam
@@ -121,9 +121,7 @@ Feature: Assign User Rights
     And I click on the button labeled "Edit user privileges"
     Then I should see 'Editing existing user "test_user"'
 
-
-
-    And I clear field and enter "" into the input field labeled "Expiration Date"
+    When I clear the second input field near the text "Expiration Date"
     When I check the User Right named "Project Setup & Design"
     And I save changes within the context of User Rights
     Then I should see "never" within the "test_user" row of the column labeled "Expiration" of the User Rights table
@@ -334,7 +332,7 @@ Feature: Assign User Rights
     And I save changes within the context of User Rights
 
     When I click on the link labeled "View / Edit Records"
-    And I select "1" on the dropdown field labeled "Choose an existing Record ID"
+    And I select "1" from the dropdown near the text "Choose an existing Record ID"
     Then I should NOT see "Text Validation"
     And I should NOT see "Data Types"
 
@@ -347,8 +345,8 @@ Feature: Assign User Rights
     And I save changes within the context of User Rights
     
     When I click on the link labeled "View / Edit Records"
-    And I select "1" on the dropdown field labeled "Choose an existing Record ID"
-    And I click the bubble to select a record for the "Text Validation" classic instrument
+    And I select "1" from the dropdown near the text "Choose an existing Record ID"
+    And I click on the link near the text "Text Validation"
     Then I should NOT see a button labeled "Save & Exit Form"
 
   Scenario: 25 - Assign Data Entry - View & Edit right to test_user
@@ -360,7 +358,7 @@ Feature: Assign User Rights
     And I save changes within the context of User Rights
 
     When I click on the link labeled "View / Edit Records"
-    And I select "1" on the dropdown field labeled "Choose an existing Record ID"
+    And I select "1" from the dropdown near the text "Choose an existing Record ID"
 
   Scenario: 26 - Assign Data Entry - Edit Survey Responses to test_user
     Given I click on the link labeled "User Rights"
@@ -370,9 +368,8 @@ Feature: Assign User Rights
     And I save changes within the context of User Rights
 
     When I click on the link labeled "View / Edit Records"
-    And I select "1" on the dropdown field labeled "Choose an existing Record ID"
-    And I click the bubble to select a record for the "Text Validation" classic instrument
-
+    And I select "1" from the dropdown near the text "Choose an existing Record ID"
+    And I click on the link near the text "Text Validation"
     # Then I should see a button labeled "Edit response"
     # ^ Exporting the project with a completed survey response, then creating a project using that CDISC causes
     #   the survey response to change its form status from "Completed Survey Response" to just "Complete", and
@@ -381,7 +378,7 @@ Feature: Assign User Rights
 
   Scenario: 27 - Create "Data Entry" role
     Given I click on the link labeled "User Rights"
-    And I enter "Data Entry" into the input field labeled "Create role"
+    And I enter "Data Entry" into the input field near the text "Create role"
     And I click on the button labeled "Create role"
     And I click on the button labeled "Create role" in the dialog box
     Then I should see 'Role "Data Entry" was successfully added'
@@ -419,22 +416,22 @@ Feature: Assign User Rights
 
   Scenario: 31 - Attempt to assign test_user (self) to role without User Rights privileges
     Given I click on the link labeled "test_user"
-    And I click on the button labeled "Assign to role" on the tooltip
-    And I select "Data Entry" on the dropdown field labeled "Select Role:" on the role selector dropdown
-    And I click on the button labeled exactly "Assign" on the role selector dropdown
+    And I click on the second button labeled "Assign to role"
+    And I select "Data Entry" from the dropdown near the text "Select Role:"
+    And I click on the button labeled exactly "Assign"
     Then I should see "NOTICE: User Rights mismatch"
 
     Given I click on the button labeled "Close"
 
-  Scenario: 32 - As admin, assign test_user to role without User Rights privileges
+  Scenario: 32 - As admin, assign test_user to role without User Rights priveleges
     Given I am an "admin" user who logs into REDCap
     And I click on the link labeled "My Projects"
     And I click on the link labeled "SecondProject_1115"
     And I click on the link labeled "User Rights"
     And I click on the link labeled "test_user"
-    And I click on the button labeled "Assign to role" on the tooltip
-    And I select "Data Entry" on the dropdown field labeled "Select Role:" on the role selector dropdown
-    And I click on the button labeled exactly "Assign" on the role selector dropdown
+    And I click on the second button labeled "Assign to role"
+    And I select "Data Entry" from the dropdown near the text "Select Role:"
+    And I click on the button labeled exactly "Assign"
     # Then I should see 'User "test_user" has been successfully ASSIGNED to the user role "Data Entry".'
     # ^ Full string not detected due to awkward HTML structure
     Then I should see 'has been successfully ASSIGNED to the user role "Data Entry"'
