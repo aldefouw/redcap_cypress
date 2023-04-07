@@ -279,7 +279,7 @@ Feature: Logging
     And I select the "test_admin" option from the Filter by username dropdown field
     And I select the "test_user" option from the Filter by username dropdown field
     And I select the "test_user2" option from the Filter by username dropdown field
-    
+
   Scenario: 29 - Logging: filter by event - All event types (record) - by specific record
     Then I click on the link labeled "Logging"
     And I select the '2' option from the Filter by record dropdown field
