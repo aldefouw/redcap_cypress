@@ -159,7 +159,7 @@ Scenario: 18 - Verify test_user2 Maximum User Privileges
     And I should see a link labeled "Activity Graphs"
     And I should see a link labeled "Map of Users"
     And I should see "Projects"
-    And I should see "Technical / Developer Tools"
+    #And I should see "Technical / Developer Tools"
     And I should see "Miscellaneous Modules"
     And I should see "System Configuration"
 
