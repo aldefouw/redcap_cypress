@@ -153,7 +153,7 @@ Feature: Reporting
     And I click on the button labeled "Close"
 
     Given I see "Additional report options"
-    And I uncheck the checkbox labeled "Show data for all events or repeating instruments for each record returned"
+    And I uncheck the checkbox labeled "Show data for all events or repeating instruments/events"
     And I click on the button labeled "Save Report"
     Then I should see a dialog containing the following text: 'Your report has been saved!'
 
