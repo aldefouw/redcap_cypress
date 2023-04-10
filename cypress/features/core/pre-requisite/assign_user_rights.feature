@@ -161,9 +161,9 @@ Feature: Assign User Rights
   Scenario: 7 - Assign Data Exports - De-identified right to test_user
     Given I click on the link labeled "test_user"
     And I click on the button labeled "Edit user privileges"
-    And I select the User Right named "Data Exports" and choose "De-Identified*"
+    And I select the User Right named "Data Exports" and choose "De-Identified"
     And I save changes within the context of User Rights
-    Then I should see "De-Identified" within the "test_user" row of the column labeled "Data Export Tool" of the User Rights table
+    Then I should see "De-Identified" within the "test_user" row of the column labeled "Data Export Rights" of the User Rights table
 
     When I click on the link labeled "User Rights"
     Then I should see a link labeled "Data Exports, Reports, and Stats"
@@ -216,7 +216,7 @@ Feature: Assign User Rights
     And I uncheck the User Right named "Data Comparison Tool"
     And I check the User Right named "Logging"
     And I save changes within the context of User Rights
-    Then I should see an "x" within the "test_user" row of the column labeled "Data Export Tool" of the User Rights table
+    Then I should see "No Access" within the "test_user" row of the column labeled "Data Export Rights" of the User Rights table
     And I should see an "x" within the "test_user" row of the column labeled "Data Import Tool" of the User Rights table
     And I should see an "x" within the "test_user" row of the column labeled "Data Comparison Tool" of the User Rights table
     And I should see a "checkmark" within the "test_user" row of the column labeled "Logging" of the User Rights table
