@@ -25,6 +25,8 @@ Cypress.Commands.add('export_logging_csv_report', () => {
                 expect(headers).to.have.property('content-type', 'application/csv')
                 return body;
             }).then((body) => {
+                //console.log(body)
+                //cy.pause()
                 return cy.task('parseCsv', {csv_string: body});
             });
         });
