@@ -202,7 +202,7 @@ Given('I {enter_type} {string} into the input field labeled {string}', (enter_ty
                     if(text.length > 0){
                         elm.clear().type(text)
                     } else {
-                        elm.clear()
+                        elm.clear().type(`{enter}`)
                     }
                 }
             })
