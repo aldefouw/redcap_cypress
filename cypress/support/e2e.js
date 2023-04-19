@@ -113,7 +113,7 @@ before(() => {
     cy.set_user_info(Cypress.env('users'))
 
     //By default, we are going to login as a standard user
-    cy.set_user_type('standard')
+    //cy.set_user_type('standard')
 
     //Create the initial database structure
     cy.base_db_seed()
