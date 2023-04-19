@@ -5,7 +5,7 @@ Feature: A.1.1.100 Run Configuration Check test page
 
   Scenario: A.1.1.100.100 Configuration Checklist Tests
 
-    Given I am an "admin" user who logs into REDCap
+    Given I login to REDCap with the user "Test_Admin"
     And I click on the link labeled "Control Center"
     Then I should see a link labeled "My Projects"
     And I should see a link labeled "New Project"

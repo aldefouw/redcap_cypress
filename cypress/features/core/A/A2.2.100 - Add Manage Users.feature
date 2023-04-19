@@ -4,7 +4,7 @@ Feature: A.2.2.100 Add/Manage users
   I want to see that Add / Manage Users is functioning as expected
 
   Scenario: A.2.2.100.100 System-level User Settings
-    Given I am an "admin" user who logs into REDCap
+    Given I login to REDCap with the user "Test_Admin"
     And I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
     Then I should see "System-level User Settings"
@@ -19,7 +19,7 @@ Feature: A.2.2.100 Add/Manage users
     Then I should see "Your system configuration values have now been changed!"
 
   Scenario: A.2.2.100.200 Create a Table-based user
-    Given I am an "admin" user who logs into REDCap
+    Given I login to REDCap with the user "Test_Admin"
     And I click on the link labeled "Control Center"
     And I click on the link labeled "Add Users (Table-based Only)"
     Then I should see "User Management for Table-based Authentication"
@@ -35,7 +35,7 @@ Feature: A.2.2.100 Add/Manage users
     And I logout
 
   Scenario: A.2.2.100.300 Create Table-based users via bulk upload
-    Given I am an "admin" user who logs into REDCap
+    Given I login to REDCap with the user "Test_Admin"
     And I click on the link labeled "Control Center"
     And I click on the link labeled "Add Users (Table-based Only)"
     Then I should see "User Management for Table-based Authentication"
@@ -48,7 +48,7 @@ Feature: A.2.2.100 Add/Manage users
     And I should see "Test_User4"
 
   Scenario: A.2.2.100.400 Prevent a Second User with the Same Username
-    Given I am an "admin" user who logs into REDCap
+    Given I login to REDCap with the user "Test_Admin"
     And I click on the link labeled "Control Center"
     And I click on the link labeled "Add Users (Table-based Only)"
     Then I should see "User Management for Table-based Authentication"
@@ -62,7 +62,7 @@ Feature: A.2.2.100 Add/Manage users
     Then I should see "ERROR: The user could not be added!"
 
   Scenario: A.2.2.100.500 Search a Table-based user
-    Given I am an "admin" user who logs into REDCap
+    Given I login to REDCap with the user "Test_Admin"
     And I click on the link labeled "Control Center"
     And I click on the link labeled "Browse Users"
     Then I should see "User Search: Search for user by username, first name, last name, or primary email"
@@ -72,5 +72,5 @@ Feature: A.2.2.100 Add/Manage users
     Then I should see "Test_User1"
     
   Scenario: A.2.2.100.600 User has no control center access
-    Given I am a "standard" user who logs into REDCap
+    Given I login to REDCap with the user "Test_User1"
     Then I should NOT see "Control Center"
