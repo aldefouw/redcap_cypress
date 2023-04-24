@@ -4,6 +4,8 @@ Feature: Logging
   I want to see that Logging is functioning as expected
 
   Scenario: 0 - Project Setup
+    Given I login to REDCap with username ""
+
     When I am an "admin" user who logs into REDCap
     Then I create a project named "Logging_Feature" with project purpose Practice / Just for fun via CDISC XML import from fixture location "cdisc_files/core/logging.xml"
     And I click on the link labeled "User Rights"
