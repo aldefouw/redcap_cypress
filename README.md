@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/aldefouw/redcap_cypress/tree/v13.1.14.svg?style=svg)](https://circleci.com/gh/aldefouw/redcap_cypress/tree/v13.1.14)
+[![CircleCI](https://circleci.com/gh/aldefouw/redcap_cypress/tree/v13.1.26_rapid.svg?style=svg)](https://circleci.com/gh/aldefouw/redcap_cypress/tree/v13.1.26_rapid)
 
 # REDCap Cypress Test Framework
 
