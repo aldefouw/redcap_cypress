@@ -33,6 +33,8 @@ Feature: A.2.2.100 Add/Manage users
     Then I should see "User has been successfully saved."
     And I should see "An email with login information was sent to: Test_User1@redcap.edu"
     And I logout
+    # Reset password through email link
+    # leader will handle password change feature test
 
   Scenario: A.2.2.100.300 Create Table-based users via bulk upload
     Given I login to REDCap with the user "Test_Admin"
