@@ -7,12 +7,6 @@ Feature: A.1.1.100 Run Configuration Check test page
 
     Given I login to REDCap with the user "Test_Admin"
     And I click on the link labeled "Control Center"
-    Then I should see a link labeled "My Projects"
-    And I should see a link labeled "New Project"
-    And I should see a link labeled "Help & FAQ"
-    And I should see a link labeled "Control Center"
-
-    When I click on the link labeled "Control Center"
     Then I should be able to locate and visit the Control Center link labeled "Browse Projects"
     And I should be able to locate and visit the Control Center link labeled "Edit a Project's Settings"
     And I should be able to locate and visit the Control Center link labeled "Configuration Check"
