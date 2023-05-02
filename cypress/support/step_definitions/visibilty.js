@@ -13,6 +13,7 @@ Given("I {see} {string}{baseElement}", (see, text, base_element) => {
     const choices = {
         '' : 'div[role=dialog][style*=z-index]:visible,html',
         ' on the tooltip' : 'div[class*=tooltip]:visible',
+        ' on the popup' : 'div[id*=popup]:visible',
         ' on the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
         ' on the dialog box' : 'div[role=dialog][style*=z-index]:visible'
     }
