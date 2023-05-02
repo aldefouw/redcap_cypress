@@ -219,10 +219,23 @@ Given('I {enter_type} {string} into the input field labeled {string}', (enter_ty
  * @param {string} label - the label of the field
  * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
  */
-Given('I enter {string} into the textarea field labeled {string}', (text, label) => {
+Given('I {enter_type} {string} into the textarea field labeled {string}', (enter_type, text, label) => {
     //We locate the label element first.  This isn't always a label which is unfortunate, but this approach seems to work so far.
-    cy.contains(label).then(($label) => {
-        cy.wrap($label).parent().find('textarea').type(text)
+    let label_selector = `:contains("${label}"):visible`
+    let element_selector = `textarea:visible:first`
+
+    cy.top_layer(label_selector).within(() => {
+        let selector = cy.get_labeled_element(element_selector, label)
+
+        if(enter_type === "enter"){
+            selector.type(text)
+        } else if (enter_type === "clear field and enter") {
+            if(text.length > 0){
+                selector.clear().type(text)
+            } else {
+                selector.clear().type(`{enter}`)
+            }
+        }
     })
 })
 
