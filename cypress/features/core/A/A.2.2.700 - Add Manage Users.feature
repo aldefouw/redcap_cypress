@@ -18,14 +18,14 @@ Feature: A.2.2.700 Add/Manage users
     #First login attempt with incorrect password
     Given I logout
     Then I should see "Log In"
-    When I enter "Test_User1" into the input field labeled "Username:"
+    When I enter "test_user1_cypress" into the input field labeled "Username:"
     And I enter "test" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "ERROR: You entered an invalid user name or password!"
 
     #Second attempt with correct password - but within 1 minute threshold - means we cannot login
     Given I see "Log In"
-    And I enter "Test_User1" into the input field labeled "Username:"
+    And I enter "test_user1_cypress" into the input field labeled "Username:"
     And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "ACCESS DENIED!"
@@ -34,7 +34,7 @@ Feature: A.2.2.700 Add/Manage users
     #Third attempt, wait a minute first - then we can proceed as normal
     Given I wait for one minute
     And I visit the REDCap login page
-    And I enter "Test_User1" into the input field labeled "Username:"
+    And I enter "test_user1_cypress" into the input field labeled "Username:"
     And I enter "Testing123" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see a link labeled "My Projects"
