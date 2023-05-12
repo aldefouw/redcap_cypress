@@ -7,41 +7,42 @@ Feature: A.2.2.400 Add/Manage users
 
     Given I login to REDCap with the user "Test_Admin"
     And I click on the link labeled "Control Center"
-    And I click on the link labeled " Add Users (Table-based Only)"
-    Then I should see “Create Single User”
+    And I click on the link labeled "Add Users (Table-based Only)"
+    Then I should see "Create single user"
 
-    When I enter “Delete_User” the input field labeled “Username:”
-    And I enter “User_firstname” the input field labeled “First name:”
-    And I enter “User_lastname” the input field labeled “Last name:”
-    And I enter “Delete_User@test.edu” the input field labeled “Primary email:”
-    And I click on the input button labeled "Save"
-    Then I should see “User has been successfully saved.”
+    When I enter "Delete_User" into the input field labeled "Username:"
+    And I enter "User_firstname" into the input field labeled "First name:"
+    And I enter "User_lastname" into the input field labeled "Last name:"
+    And I enter "Delete_User@test.edu" into the input field labeled "Primary email:"
+    And I click on the button labeled "Save"
+    Then I should see "User has been successfully saved."
 
     When I click on the link labeled "Browse Users"
     Then I should see "User Search: Search for user by username, first name, last name, or primary email"
 
-    When I enter "Delete_User” into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    When I enter "Delete_User" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     Then I should see "Editable user attributes"
-    And I should see "Delete_User”
+    And I should see "Delete_User"
 
-    Given I click on the button labeled "Delete user from system" and cancel the confirmation window.
+    Given I click on the button labeled "Delete user from system" and cancel the confirmation window
     Then I should NOT see "The user 'Delete_User' has now been removed and deleted from all REDCap projects"
 
     When I click on the link labeled "Browse Users"
     Then I should see "User Search: Search for user by username, first name, last name, or primary email"
 
-    When I enter "Delete_User” into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    When I enter "Delete_User" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
     Then I should see "Editable user attributes"
-    And I should see "Delete_User”
+    And I should see "Delete_User"
 
-    When I click on the button labeled "Delete user from system" and accept the confirmation window.
+    When I click on the button labeled "Delete user from system" and accept the confirmation window
     Then I should see "The user 'Delete_User' has now been removed and deleted from all REDCap projects"
+    And I click on the button labeled "Close"
 
     When I click on the link labeled "Browse Users"
     Then I should see "User Search: Search for user by username, first name, last name, or primary email"
 
-    When I enter "Delete_User” into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
+    When I enter "Delete_User" into the input field labeled "User Search: Search for user by username, first name, last name, or primary email"
     And I click on the button labeled "Search"
-    Then I should see " User does not exist!"
+    Then I should see "User does not exist!"
