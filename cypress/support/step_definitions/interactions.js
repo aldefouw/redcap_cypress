@@ -62,6 +62,10 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
             return false
         })
     } else if(button_type === " and accept the confirmation window"){
+        cy.window().then((win) =>
+            cy.stub(win, 'confirm').as('confirm').returns(true),
+        )
+
         cy.on('window:confirm', (str) => {
             return true
         })
