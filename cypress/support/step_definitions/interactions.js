@@ -41,7 +41,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps"
  * @param {string} text (optional) - < on the dialog box for the Repeatable Instruments and Events module>
  * @description Clicks on a button element with a specific text label.
  */
-Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}", (exactly, text, button_type) => {
+Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}{iframeVisibility}", (exactly, text, button_type, iframe) => {
     if(button_type === " on the dialog box for the Repeatable Instruments and Events module"){
         cy.intercept({
             method: 'POST',
@@ -72,11 +72,13 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
     }
 
     if(exactly === 'labeled exactly'){
-        cy.get(':button:visible').contains(new RegExp("^" + text + "$", "g")).click()
+        const base = (iframe === " in the iframe") ? cy.frameLoaded().then(() => { cy.iframe() }) : cy.get(':button:visible')
+        base.contains(new RegExp("^" + text + "$", "g")).click()
     } else {
         let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
+        const base = (iframe === " in the iframe") ? cy.frameLoaded().then(() => { cy.iframe() }) : cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} )
 
-        cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+        base.within(() => {
             cy.get(sel).click()
         })
     }
@@ -482,4 +484,15 @@ Given(/^I wait for (\d+(?:\.\d+)?) seconds$/, (seconds) => {
  */
 Given("I enter {string} into the field with the placeholder text of {string}", (text, placeholder) => {
     cy.get('input[placeholder="' + placeholder + '"]').type(text).blur()
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I close the iframe window
+ * @description Closes iframe window on the To-Do List page
+ */
+Given("I close the iframe window", () => {
+    cy.frameLoaded()
+    cy.get('div.trim-close-btn').click()
 })

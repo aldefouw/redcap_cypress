@@ -185,3 +185,23 @@ defineParameterType({
     name: 'tableTypes',
     regexp: /|logging|browse users/
 })
+
+defineParameterType({
+    name: 'toDoTableTypes',
+    regexp: /Pending Requests|Low Priority Pending Requests|Completed & Achived Requests/
+})
+
+defineParameterType({
+    name: 'toDoRequestTypes',
+    regexp: /Move to prod|Approve draft changes|Copy project/
+})
+
+defineParameterType({
+    name: 'toDoTableIcons',
+    regexp: /process request|get more information|add or edit a comment|Move to low priority section|archive request notification/
+})
+
+defineParameterType({
+    name: 'iframeVisibility',
+    regexp: /| in the iframe/
+})

@@ -96,4 +96,41 @@ Given('I enable the Administrator Privilege {string} for a new administrator', (
     })
 })
 
+const to_do_list_tables = {
+    'Pending Requests' : 'pending-container',
+    'Low Priority Pending Requests' : 'complete-ignore-container',
+    'Completed & Archived Requests' : 'archived-container',
+}
 
+/**
+ * @module ControlCenter
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example And I click on the {icon} icon for the {string} request created for the project named {string} within the {string} table
+ * @param {string} icon - the description of the icon want to target
+ * @param {string} request_type - the value of the request type you want to target
+ * @param {string} project_name - the text value of project name you want to target
+ * @param {string} table_name - the text value of table you want to target
+ * @description Clicks on an icon within the To-Do-List page based upon Icon, Request Type, Project Name, and Table Name specified.
+ */
+Given('I click on the "{toDoTableIcons}" icon for the "{toDoRequestTypes}" request created for the project named {string} within the "{toDoTableTypes}" table', (icon, request_type, project_name, table_name) => {
+    cy.get(`.${to_do_list_tables[table_name]}`).within(() => {
+        cy.get(`.request-container:contains("${project_name}"):has(.type:contains("${request_type}"))`).within(() => {
+            cy.get(`button[data-tooltip="${icon}"]`).click()
+        })
+    })
+})
+
+/**
+ * @module ControlCenter
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example And I should see the {string} request created for the project named {string} within the {string} table
+ * @param {string} request_type - the value of the request type you want to target
+ * @param {string} project_name - the text value of project name you want to target
+ * @param {string} table_name - the text value of table you want to target
+ * @description Identifies Request Type within the To-Do-List page based upon Project Name, and Table Name specified.
+ */
+Given('I should see the "{toDoRequestTypes}" request created for the project named {string} within the {string} table', (request_type, project_name, table_name) => {
+    cy.get(`.${to_do_list_tables[table_name]}`).within(() => {
+        cy.get(`.request-container:contains("${project_name}"):has(.type:contains("${request_type}"))`)
+    })
+})

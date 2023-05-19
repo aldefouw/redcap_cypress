@@ -8,8 +8,9 @@ require('./parameter_types.js')
  * @param {string} text the text visually seen on screen
  * @description Visually verifies that text exists within the HTML object. NOTE: "should" is optional for readability.
  */
-Given("I {see} {string}", (see, text) => {
-    cy.get('html').should(($html) => { expect($html).to.contain(text) })
+Given("I {see} {string}{iframeVisibility}", (see, text, iframe) => {
+    const base = (iframe === " in the iframe") ? cy.frameLoaded().then(() => { cy.iframe() }) : cy.get('body')
+    base.should(($body) => { expect($body).to.contain(text) })
 })
 
 /**
