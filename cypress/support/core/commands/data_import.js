@@ -159,3 +159,14 @@ Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector = '', bu
         })
     })
 })
+
+Cypress.Commands.add('file_repo_upload', (fileName) => {
+    //Make sure the page is not loading
+    cy.get('#file-repository-table_processing').should('have.css', 'display', 'none');
+
+    //Specify Fixture
+    cy.fixture(fileName).as('fileUploadFixture')
+
+    //Select the Fixture within the Upload Input Button - no need to do anything else because JavaScript is automatically fired within REDCap
+    cy.get('input#file-repository-file-input').selectFile('@fileUploadFixture')
+})
