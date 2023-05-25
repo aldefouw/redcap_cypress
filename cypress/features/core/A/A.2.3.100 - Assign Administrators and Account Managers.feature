@@ -8,4 +8,4 @@ Feature: A.2.3.100 Assign administrators and account managers
     And I click on the link labeled "Control Center"
     And I click on the link labeled "Administrator Privileges"
     Then I should see "Set administrator privileges"
-    And I should see "Test_Admin" in the administrators table
+    And I should see "test_admin_cypress" in the administrators table
