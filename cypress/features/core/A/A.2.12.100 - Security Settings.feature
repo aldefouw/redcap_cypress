@@ -20,7 +20,7 @@ Feature: A.2.12.100 Security Settings
     #Test REDCap offline for Standard User
     Given I login to REDCap with the user "Test_User1"
     Then I should see "This is a test.  The Vanderbilt REDCap System is offline and will be back online shortly."
-    When I logout
+    And I logout
 
     #Test REDCap offline for Admin User
     Given I login to REDCap with the user "Test_Admin"
