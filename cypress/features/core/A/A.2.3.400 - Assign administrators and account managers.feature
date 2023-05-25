@@ -9,7 +9,7 @@ Feature: A.2.3.400 Assign administrators and account managers
     And I click on the link labeled "Administrator Privileges"
     Then I should see "Set administrator privileges"
 
-    When I enter "Test_User1" into the field with the placeholder text of "Search users to add as admin"
+    When I enter "test_user1_cypress" into the field with the placeholder text of "Search users to add as admin"
     And I enable the Administrator Privilege "Set administrator privileges" for a new administrator
     And I enable the Administrator Privilege "Access to all projects and data" for a new administrator
     And I enable the Administrator Privilege "Manage user accounts" for a new administrator
@@ -18,7 +18,7 @@ Feature: A.2.3.400 Assign administrators and account managers
     And I enable the Administrator Privilege "Modify system configuration pages" for a new administrator
     And I enable the Administrator Privilege "Access to Control Center dashboards" for a new administrator
     And I click on the button labeled "Add"
-    Then I should see 'The user "Test_User1" has now been granted one or more administrator privileges'
+    Then I should see 'The user "test_user1_cypress" has now been granted one or more administrator privileges'
     And I click on the button labeled "OK" in the dialog box
 
     Given I logout
@@ -34,13 +34,13 @@ Feature: A.2.3.400 Assign administrators and account managers
     And I click on the link labeled "Control Center"
     And I click on the link labeled "Administrator Privilege"
     Then I should see "Set administrator privileges"
-    When I disable the Administrator Privilege "Set administrator privileges" for the administrator "Test_User1"
-    And I disable the Administrator Privilege "Access to all projects and data" for the administrator "Test_User1"
-    And I disable the Administrator Privilege "Manage user accounts" for the administrator "Test_User1"
-    And I disable the Administrator Privilege "Perform REDCap upgrades" for the administrator "Test_User1"
-    And I disable the Administrator Privilege "Install, upgrade, and configure" for the administrator "Test_User1"
-    And I disable the Administrator Privilege "Modify system configuration pages" for the administrator "Test_User1"
-    And I disable the Administrator Privilege "Access to Control Center dashboards" for the administrator "Test_User1"
+    When I disable the Administrator Privilege "Set administrator privileges" for the administrator "test_user1_cypress"
+    And I disable the Administrator Privilege "Access to all projects and data" for the administrator "test_user1_cypress"
+    And I disable the Administrator Privilege "Manage user accounts" for the administrator "test_user1_cypress"
+    And I disable the Administrator Privilege "Perform REDCap upgrades" for the administrator "test_user1_cypress"
+    And I disable the Administrator Privilege "Install, upgrade, and configure" for the administrator "test_user1_cypress"
+    And I disable the Administrator Privilege "Modify system configuration pages" for the administrator "test_user1_cypress"
+    And I disable the Administrator Privilege "Access to Control Center dashboards" for the administrator "test_user1_cypress"
     Then I should see a dialog containing the following text: "NOTICE"
     And I should see a dialog containing the following text: "Please be aware that you have unchecked ALL the administrator privileges for this user"
     And I click on the button labeled "Close" in the dialog box
