@@ -212,6 +212,8 @@ Given('I should see {string} in the {tableTypes} table', (text, table_type = '')
         selector = 'table#sponsorUsers-table'
     } else if (table_type === 'file repository'){
         selector = 'table#file-repository-table'
+    } else if (table_type === "administrators"){
+        selector = 'table#admin-rights-table'
     }
 
     cy.get(selector).contains('td', text, { matchCase: false });
