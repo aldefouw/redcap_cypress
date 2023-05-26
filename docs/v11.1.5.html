@@ -415,11 +415,11 @@
                     
               
                     
-                    <li><a href='#i-add-an-instrument-named-string-the-event-named-string'>I add an instrument named {string} the event named {string}</a></li>
+                    <li><a href='#i-add-an-instrument-named-string-to-the-event-named-string'>I add an instrument named {string} to the event named {string}</a></li>
                     
               
                     
-                    <li><a href='#i-remove-an-instrument-named-string-the-event-named-string'>I remove an instrument named {string} the event named {string}</a></li>
+                    <li><a href='#i-remove-an-instrument-named-string-from-the-event-named-string'>I remove an instrument named {string} from the event named {string}</a></li>
                     
               
                     
@@ -538,6 +538,10 @@
               
                     
                     <li><a href='#i-click-the-bubble-to--add--select--a-record-for-the-string-longitudinal-instrument-on-event-string'>I click the bubble to &lt; add | select &gt; a record for the {string} longitudinal instrument on event {string}</a></li>
+                    
+              
+                    
+                    <li><a href='#i-click-the-bubble-to--add--select--a-record-for-the-string-classic-instrument'>I click the bubble to &lt; add | select &gt; a record for the {string} classic instrument</a></li>
                     
               
                     
@@ -903,17 +907,13 @@
                     
               
                     
-                    <li><a href='#i-set-data-viewing-rights-to--no-access--read-only--view--edit--for-the-instrument-string'>I set Data Viewing Rights to &lt; No Access | Read Only | View &amp; Edit &gt; for the instrument {string}</a></li>
-                    
-              
-                    
                     <li><a href='#i-click-on-the-button-labeled-remove-user'>I click on the button labeled Remove User</a></li>
                     
               
                     
                       <h2 class="mt1 mb1">Visibility</h2>
                     
-                    <li><a href='#i-should-see-string'>I (should) see {string}</a></li>
+                    <li><a href='#i-should-see-string--optional-element-specifier-'>I (should) see {string} &lt; optional element specifier &gt;</a></li>
                     
               
                     
@@ -7649,8 +7649,8 @@
       
         
           
-          <h2 class='fl mb0 mt0' id='i-add-an-instrument-named-string-the-event-named-string'>
-          I add an instrument named {string} the event named {string}
+          <h2 class='fl mb0 mt0' id='i-add-an-instrument-named-string-to-the-event-named-string'>
+          I add an instrument named {string} to the event named {string}
           </h2>
         
       
@@ -7729,8 +7729,8 @@
       
         
           
-          <h2 class='fl mb0 mt0' id='i-remove-an-instrument-named-string-the-event-named-string'>
-          I remove an instrument named {string} the event named {string}
+          <h2 class='fl mb0 mt0' id='i-remove-an-instrument-named-string-from-the-event-named-string'>
+          I remove an instrument named {string} <span class="hljs-keyword">from</span> the event named {string}
           </h2>
         
       
@@ -9866,7 +9866,78 @@
     
 
 
-  <p>Clicks on an instrument / event pairing to add a record on the Record Home Page</p>
+  <p>Clicks on an instrument / event pairing to add / select a record on the Record Home Page</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-click-the-bubble-to--add--select--a-record-for-the-string-classic-instrument'>
+          I click the bubble to &lt; add | select &gt; a record <span class="hljs-keyword">for</span> the {string} classic instrument
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>instrument</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the classic instrument you want to add a record to
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Clicks on an instrument to add / select a record on the Record Home Page</p>
 
 
   
@@ -16410,86 +16481,6 @@
       
         
           
-          <h2 class='fl mb0 mt0' id='i-set-data-viewing-rights-to--no-access--read-only--view--edit--for-the-instrument-string'>
-          I set <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Viewing</span> <span class="hljs-title class_">Rights</span> to &lt; <span class="hljs-title class_">No</span> <span class="hljs-title class_">Access</span> | <span class="hljs-title class_">Read</span> <span class="hljs-title class_">Only</span> | <span class="hljs-title class_">View</span> &amp; <span class="hljs-title class_">Edit</span> &gt; <span class="hljs-keyword">for</span> the instrument {string}
-          </h2>
-        
-      
-
-    
-    
-  </div>
-  
-
-  
-      <div class='py1 quiet mt1 prose-big'>Parameters</div>
-      <div class='prose'>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>level</span> <code class='quiet'>(data_viewing_rights)</code>
-  	    the level of rights to be assigned
-
-            </div>
-            
-          </div>
-        
-          <div class='space-bottom0'>
-            <div>
-              <span class='code bold'>instrument</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the label of the instrument for which to configure data entry rights
-
-            </div>
-            
-          </div>
-        
-      </div>
-    
-
-
-  <p>Selects a radio option for Data Entry Rights for the specified instrument within the user rights configuration dialog.</p>
-
-
-  
-  
-
-  
-  
-  
-  <p class='mb0'><strong>Author:</strong> <a href="mailto:debacker@wisc.edu">Corey DeBacker</a></p>
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-            
-        
-            
-            
-<section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-
-      
-        
-          
           <h2 class='fl mb0 mt0' id='i-click-on-the-button-labeled-remove-user'>
           I click on the button labeled <span class="hljs-title class_">Remove</span> <span class="hljs-title class_">User</span>
           </h2>
@@ -16549,8 +16540,8 @@
       
         
           
-          <h2 class='fl mb0 mt0' id='i-should-see-string'>
-          I (should) see {string}
+          <h2 class='fl mb0 mt0' id='i-should-see-string--optional-element-specifier-'>
+          I (should) see {string} &lt; optional element specifier &gt;
           </h2>
         
       
@@ -16568,6 +16559,15 @@
             <div>
               <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
   	    the text visually seen on screen
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    options: &#x3C; on the tooltip | on the role selector dropdown | on the dialog box  >
 
             </div>
             
@@ -16639,6 +16639,15 @@
             <div>
               <span class='code bold'>text</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
   	    the text visually seen on screen
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    options: &#x3C; on the tooltip | on the role selector dropdown | on the dialog box  >
 
             </div>
             
