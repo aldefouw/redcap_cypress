@@ -103,7 +103,36 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
  * @param {string} text - the text on the anchor element you want to click
  * @description Clicks on an anchor element with a specific text label.
  */
-Given("I click on the {linkNames} {labeledExactly} {string}", (link_name, exactly, text) => {
+Given("I click on the {linkNames} {labeledExactly} {string}{saveButtonRouteMonitoring}", (link_name, exactly, text, link_type) => {
+    if(link_type === " on the dialog box for the Repeatable Instruments and Events module"){
+        cy.intercept({
+            method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + "/*RepeatInstanceController:saveSetup*"
+        }).as('repeat_save')
+    } else if(link_type === " on the Designate Instruments for My Events page") {
+        cy.intercept({
+            method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/designate_forms_ajax*'
+        }).as('designate_instruments')
+    } else if(link_type === " on the Online Designer page"){
+        cy.intercept({
+            method: 'GET',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/online_designer_render_fields.php*'
+        }).as('online_designer')
+    } else if(link_type === " and cancel the confirmation window"){
+        cy.on('window:confirm', (str) => {
+            return false
+        })
+    } else if(link_type === " and accept the confirmation window"){
+        cy.window().then((win) =>
+            cy.stub(win, 'confirm').as('confirm').returns(true),
+        )
+
+        cy.on('window:confirm', (str) => {
+            return true
+        })
+    }
+
     if(exactly === 'labeled exactly'){
         cy.get('a:visible').contains(new RegExp("^" + text + "$", "g")).click()
     } else {
