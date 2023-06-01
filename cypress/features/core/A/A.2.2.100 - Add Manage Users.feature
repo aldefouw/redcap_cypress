@@ -24,7 +24,7 @@ Feature: A.2.2.100 Add/Manage users
     And I click on the link labeled "Add Users (Table-based Only)"
     Then I should see "User Management for Table-based Authentication"
 
-    When I enter "Test_User1" into the input field labeled "Username:"
+    When I enter "Test_User1_Cypress" into the input field labeled "Username:"
     And I enter "User1" into the input field labeled "First name:"
     And I enter "Test" into the input field labeled "Last name:"
     And I enter "Test_User1@redcap.edu" into the input field labeled "Primary email:"
