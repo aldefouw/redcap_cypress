@@ -13,7 +13,7 @@ Feature: A.2.2.700 Add/Manage users
     And I enter "0" into the input field labeled "Number of failed login attempts before user is locked out for a specified amount of time, which is set below."
     And I clear the field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
     And I enter "2" into the input field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
-    And I click on the input button labeled "Save Changes"
+    And I click on the button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
     Given I logout
 
@@ -25,7 +25,7 @@ Feature: A.2.2.700 Add/Manage users
     Given I wait for 2 minutes
 
     Given I login to REDCap with the user "Test_User1"
-    And I see “My Projects”
+    And I see "My Projects"
     Given I logout
 
     Given I login to REDCap with the user "Test_Admin"
@@ -37,7 +37,7 @@ Feature: A.2.2.700 Add/Manage users
     And I enter "2" into the input field labeled "Number of failed login attempts before user is locked out for a specified amount of time, which is set below."
     And I clear the field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
     And I enter "1" into the input field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
-    And I click on the input button labeled "Save Changes"
+    And I click on the button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
     Given I logout
 
@@ -59,5 +59,5 @@ Feature: A.2.2.700 Add/Manage users
     Given I wait for 1 minute
 
     Given I login to REDCap with the user "Test_User1"
-    And I see “My Projects”
+    And I see "My Projects"
     Given I logout
