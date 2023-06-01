@@ -12,22 +12,57 @@ Feature: A.2.2.600 Add/Manage users
     When I clear the field labeled "Number of failed login attempts before user is locked out for a specified amount of time, which is set below."
     And I enter "1" into the input field labeled "Number of failed login attempts before user is locked out for a specified amount of time, which is set below."
     And I clear the field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
-    And I enter "1" into the input field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
-    And I click on the button labeled "Save Changes"
+    And I enter "2" into the input field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
+    And I click on the input button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
-
     Given I logout
-    And I enter "test_user1_cypress" into the input field labeled "Username:"
+
+    Given I enter "Test_User1" into the input field labeled "Username:"
     And I enter "test" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "ERROR: You entered an invalid user name or password!"
 
-    Given I enter "test_user1_cypress" into the input field labeled "Username:"
+    Given I enter "Test_User1" into the input field labeled "Username:"
     And I enter "test" into the input field labeled "Password:"
     And I click on the button labeled "Log In"
     Then I should see "ACCESS DENIED!"
-    And I should see "exceeded the maximum amount of failed login attempts"
 
-    Given I wait for one minute
-    And I login to REDCap with the user "Test_User1"
-    Then I should see a link labeled "My Projects"
+    Given I wait 2 minutes
+
+    Given I login to REDCap with the user "Test_User1"
+    And I see “My Projects”
+    Given I logout
+
+    Given I login to REDCap with the user "Test_Admin"
+    And I click on the link labeled "Control Center"
+    And I click on the link labeled "Security & Authentication"
+    Then I should see "Security & Authentication Configuration"
+
+    When I clear the field labeled "Number of failed login attempts before user is locked out for a specified amount of time, which is set below."
+    And I enter "2" into the input field labeled "Number of failed login attempts before user is locked out for a specified amount of time, which is set below."
+    And I clear the field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
+    And I enter "1" into the input field labeled "Amount of time user will be locked out after having failed login attempts exceeding the limit set above."
+    And I click on the input button labeled "Save Changes"
+    Then I should see "Your system configuration values have now been changed!"
+    Given I logout
+
+    Given I enter "Test_User1" into the input field labeled "Username:"
+    And I enter "test" into the input field labeled "Password:"
+    And I click on the button labeled "Log In"
+    Then I should see "ERROR"
+
+    Given I enter "Test_User1" into the input field labeled "Username:"
+    And I enter "test" into the input field labeled "Password:"
+    And I click on the button labeled "Log In"
+    Then I should see "ERROR"
+
+    Given I enter "Test_User1" into the input field labeled "Username:"
+    And I enter "test" into the input field labeled "Password:"
+    And I click on the button labeled "Log In"
+    Then I should see "ACCESS DENIED!"
+
+    Given I wait 1 minute
+
+    Given I login to REDCap with the user "Test_User1"
+    And I see “My Projects”
+    Given I logout
