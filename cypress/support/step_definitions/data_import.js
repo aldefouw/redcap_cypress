@@ -45,12 +45,12 @@ Given("I upload a file located at {string} to the File Repository", (file_locati
 /**
  * @module DataImport
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I create a project named {string} with project purpose <project_purpose> via CDISC XML import from fixture location {string}
+ * @example I create a new project named {string} by clicking on "New Project" in the menu bar, selecting "{string}" from the dropdown, choosing file {string}, and clicking the "Create Project" button
  * @param {string} project_name - the desired name for the project
  * @param {string} project_purpose - Practice / Just for fun | Operational Support | Research | Quality Improvement | Other
- * @param {string} cdisc_file - the fixture path to the CDISC XML file (relative path; fixtures are located in /cypress/fixtures/)
+ * @param {string} cdisc_file - the fixture path to the CDISC XML file (relative path; fixtures are located in /cypress/fixtures/cdisc_files/)
  * @description Creates a project from a CDISC XML fixture file given a project name and project purpose.
  */
-Given("I create a project named {string} with project purpose {project_type} via CDISC XML import from fixture location {string}", (project_name, project_type, cdisc_file) => {
+Given('I create a new project named {string} by clicking on "New Project" in the menu bar, selecting "{project_type}" from the dropdown, choosing file {string}, and clicking the "Create Project" button', (project_name, project_type, cdisc_file) => {
     cy.create_cdisc_project(project_name, project_type, cdisc_file)
 })

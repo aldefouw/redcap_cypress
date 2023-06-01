@@ -429,7 +429,7 @@ Given('for this scenario, I will {confirmation} a confirmation window containing
  * @description Clicks the element that contains the text specified
  */
 Given('I click the element containing the following text: {string}', (value) => {
-    cy.get(':contains(' + value + '):last').click()
+    cy.get(':contains("' + value + '"):visible:last').click()
 })
 
 /**
@@ -524,4 +524,19 @@ Given("I enter {string} into the field with the placeholder text of {string}", (
 Given("I close the iframe window", () => {
     cy.frameLoaded()
     cy.get('div.trim-close-btn').click()
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click on the table heading column labeled {string}
+ * @param {string} column - the text to enter into the field
+ * @description Clicks on a specific table column
+ */
+Given('I click on the table heading column labeled {string}', (column) => {
+    let selector = `table:has(th:contains("${column}"):visible):visible`
+
+    cy.get(selector).then(($th) => {
+        cy.wrap($th).find(`:contains("${column}"):visible:first`).click()
+    })
 })

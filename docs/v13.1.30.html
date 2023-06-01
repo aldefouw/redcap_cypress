@@ -83,7 +83,7 @@
                     
               
                     
-                    <li><a href='#i-create-a-project-named-string-with-project-purpose-project_purpose-via-cdisc-xml-import-from-fixture-location-string'>I create a project named {string} with project purpose &lt;project_purpose&gt; via CDISC XML import from fixture location {string}</a></li>
+                    <li><a href='#i-create-a-new-project-named-string-by-clicking-on-new-project-in-the-menu-bar-selecting-string-from-the-dropdown-choosing-file-string-and-clicking-the-create-project-button'>I create a new project named {string} by clicking on &quot;New Project&quot; in the menu bar, selecting &quot;{string}&quot; from the dropdown, choosing file {string}, and clicking the &quot;Create Project&quot; button</a></li>
                     
               
                     
@@ -311,6 +311,10 @@
                     
               
                     
+                    <li><a href='#i-click-on-the-table-heading-column-labeled-string'>I click on the table heading column labeled {string}</a></li>
+                    
+              
+                    
                     <li><a href='#i-move-the-project-to-production-by-selection-option-string'>I move the project to production by selection option {string}</a></li>
                     
               
@@ -364,6 +368,14 @@
               
                     
                     <li><a href='#i-should-not-see-options-to-edit-or-delete-events'>I should NOT see options to Edit or Delete events</a></li>
+                    
+              
+                    
+                    <li><a href='#i-add-an-instrument-named-string-to-the-event-named-string'>I add an instrument named {string} to the event named {string}</a></li>
+                    
+              
+                    
+                    <li><a href='#i-remove-an-instrument-named-string-from-the-event-named-string'>I remove an instrument named {string} from the event named {string}</a></li>
                     
               
                     
@@ -711,7 +723,7 @@
                     
                       <h2 class="mt1 mb1">Add Manage Users</h2>
                     
-                    <li><a href='#i-wait-for-one-minute'>I wait for one minute</a></li>
+                    <li><a href='#i-wait-for-integer-minutes'>I wait for {integer} minute(s)</a></li>
                     
               
                     
@@ -1734,8 +1746,8 @@
       
         
           
-          <h2 class='fl mb0 mt0' id='i-create-a-project-named-string-with-project-purpose-project_purpose-via-cdisc-xml-import-from-fixture-location-string'>
-          I create a project named {string} <span class="hljs-keyword">with</span> project purpose &lt;project_purpose&gt; via <span class="hljs-variable constant_">CDISC</span> <span class="hljs-variable constant_">XML</span> <span class="hljs-keyword">import</span> <span class="hljs-keyword">from</span> fixture location {string}
+          <h2 class='fl mb0 mt0' id='i-create-a-new-project-named-string-by-clicking-on-new-project-in-the-menu-bar-selecting-string-from-the-dropdown-choosing-file-string-and-clicking-the-create-project-button'>
+          I create a <span class="hljs-keyword">new</span> project named {string} by clicking on <span class="hljs-string">&quot;New Project&quot;</span> <span class="hljs-keyword">in</span> the menu bar, selecting <span class="hljs-string">&quot;{string}&quot;</span> <span class="hljs-keyword">from</span> the dropdown, choosing file {string}, and clicking the <span class="hljs-string">&quot;Create Project&quot;</span> button
           </h2>
         
       
@@ -1770,7 +1782,7 @@
           <div class='space-bottom0'>
             <div>
               <span class='code bold'>cdisc_file</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-  	    the fixture path to the CDISC XML file (relative path; fixtures are located in /cypress/fixtures/)
+  	    the fixture path to the CDISC XML file (relative path; fixtures are located in /cypress/fixtures/cdisc_files/)
 
             </div>
             
@@ -5947,6 +5959,77 @@
       
         
           
+          <h2 class='fl mb0 mt0' id='i-click-on-the-table-heading-column-labeled-string'>
+          I click on the table heading column labeled {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>column</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the text to enter into the field
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Clicks on a specific table column</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
           <h2 class='fl mb0 mt0' id='i-move-the-project-to-production-by-selection-option-string'>
           I move the project to production by selection option {string}
           </h2>
@@ -6858,6 +6941,166 @@
   
   
   <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-add-an-instrument-named-string-to-the-event-named-string'>
+          I add an instrument named {string} to the event named {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>instrument</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the instrument you are adding to an event
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>event</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the event you are adding an instrument to
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Interactions - Checks a specfic checkbox for an  instrument and event name</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:tin-tin.nguyen@nih.gov">Tintin Nguyen</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-remove-an-instrument-named-string-from-the-event-named-string'>
+          I remove an instrument named {string} <span class="hljs-keyword">from</span> the event named {string}
+          </h2>
+        
+      
+
+    
+    
+  </div>
+  
+
+  
+      <div class='py1 quiet mt1 prose-big'>Parameters</div>
+      <div class='prose'>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>instrument</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the instrument you are adding to an event
+
+            </div>
+            
+          </div>
+        
+          <div class='space-bottom0'>
+            <div>
+              <span class='code bold'>event</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+  	    the name of the event you are adding an instrument to
+
+            </div>
+            
+          </div>
+        
+      </div>
+    
+
+
+  <p>Interactions - Unchecks a specfic checkbox for an  instrument and event name</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:tin-tin.nguyen@nih.gov">Tintin Nguyen</a></p>
   
   
 
@@ -12970,8 +13213,8 @@
       
         
           
-          <h2 class='fl mb0 mt0' id='i-wait-for-one-minute'>
-          I wait <span class="hljs-keyword">for</span> one minute
+          <h2 class='fl mb0 mt0' id='i-wait-for-integer-minutes'>
+          I wait <span class="hljs-keyword">for</span> {integer} <span class="hljs-title function_">minute</span>(s)
           </h2>
         
       
@@ -12984,7 +13227,7 @@
   
 
 
-  <p>Waits for a minute before allowing anything else to happen</p>
+  <p>Waits for specified number of minutes before allowing anything else to happen</p>
 
 
   

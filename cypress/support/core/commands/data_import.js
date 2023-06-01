@@ -4,11 +4,11 @@
 
 Cypress.Commands.add('create_cdisc_project', (project_name, project_type, cdisc_file) => {
     //Run through the steps to import the project via CDISC ODM
-    cy.visit_base({url: 'index.php?action=create'})
+    cy.get('a:visible:contains("New Project")').click()
     cy.get('input#app_title').type(project_name)
     cy.get('select#purpose').select(project_type)
     cy.get('input#project_template_radio2').click()
-    cy.upload_file(cdisc_file, 'xml', 'input[name="odm"]')
+    cy.upload_file("cdisc_files/" + cdisc_file, 'xml', 'input[name="odm"]')
     cy.get('button').contains('Create Project').click().then(() => {
         let pid = null;
         cy.url().should((url) => {
