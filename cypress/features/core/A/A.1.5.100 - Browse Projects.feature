@@ -52,6 +52,6 @@ Feature: A.1.5.100 Browse Projects
     And I click on the link labeled "Browse Projects"
     Then I should see "Viewing projects accessible by user:"
 
-    When I enter "Test_Admin" into the input field labeled "Viewing projects accessible by user:"
+    When I enter "test_admin_cypress" into the input field labeled "Viewing projects accessible by user:"
     And I click on the button labeled exactly "View"
     Then I should see "A.1.5.100.100"
