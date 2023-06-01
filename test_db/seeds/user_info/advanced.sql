@@ -4,5 +4,4 @@ INSERT INTO redcap_user_information (ui_id, username, user_email, user_firstname
 (3,'Test_User2','Test_User2@test.edu','Test','User2', 0, 0, 0, 0, 0, 0),
 (4,'Test_User3','Test_User3@test.edu','Test','User3', 0, 0, 0, 0, 0, 0),
 (5,'Test_User4','Test_User4@test.edu','Test','User4', 0, 0, 0, 0, 0, 0),
-(6,'Delete_User','delete_user@test.edu','User_firstname','User_lastname', 0, 0, 0, 0, 0, 0),
-(7,'Test_Admin','test_admin@test.edu','Admin','User', 1, 1, 1, 1, 1, 1);
+(6,'Test_Admin','test_admin@test.edu','Admin','User', 1, 1, 1, 1, 1, 1);
