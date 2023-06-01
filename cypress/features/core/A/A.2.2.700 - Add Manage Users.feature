@@ -32,7 +32,7 @@ Feature: A.2.2.700 Add/Manage users
     And I should see "exceeded the maximum amount of failed login attempts"
 
     #Third attempt, wait a minute first - then we can proceed as normal
-    Given I wait for one minute
+    Given I wait for 1 minute
     And I visit the REDCap login page
     And I enter "test_user1_cypress" into the input field labeled "Username:"
     And I enter "Testing123" into the input field labeled "Password:"
