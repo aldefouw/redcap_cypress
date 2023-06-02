@@ -184,6 +184,7 @@ Given('I should see {string} in the data entry form field labeled {string}', (te
  * @description Identifies specific text or special item within a cell on a table based upon row and column labels
  */
 Given("I (should )see (a )(an ){string} within the {string} row of the column labeled {string}{tableName}", (item, row_label, column_label, table) => {
+    if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
     const user_rights = { "checkmark" : `img[src*="tick"]`, "x" : `img[src*="cross"]` }
 
     cy.table_cell_by_column_and_row_label(column_label, row_label).then(($td) => {

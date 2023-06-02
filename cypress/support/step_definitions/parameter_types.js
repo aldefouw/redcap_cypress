@@ -205,3 +205,8 @@ defineParameterType({
     name: 'iframeVisibility',
     regexp: /| in the iframe/
 })
+
+defineParameterType({
+    name: 'baseElement',
+    regexp: /| on the tooltip| on the dialog box| on the role selector dropdown| on the popup/
+})

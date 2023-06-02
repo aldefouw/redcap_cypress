@@ -41,7 +41,20 @@ import { Given } from "cypress-cucumber-preprocessor/steps"
  * @param {string} text (optional) - < on the dialog box for the Repeatable Instruments and Events module>
  * @description Clicks on a button element with a specific text label.
  */
-Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}{iframeVisibility}", (exactly, text, button_type, iframe) => {
+Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}{baseElement}", (exactly, text, button_type, base_element) => {
+    const choices = {
+        '' : 'div[role=dialog][style*=z-index]:visible,html',
+        ' on the tooltip' : 'div[class*=tooltip]:visible',
+        ' on the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
+        ' on the dialog box' : 'div[role=dialog][style*=z-index]:visible'
+    }
+
+    let outer_element = 'div[role=dialog][style*=z-index]:visible,html'
+
+    if(base_element.length > 0){
+        outer_element = choices[base_element]
+    }
+
     if(button_type === " on the dialog box for the Repeatable Instruments and Events module"){
         cy.intercept({
             method: 'POST',
@@ -62,23 +75,22 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
             return false
         })
     } else if(button_type === " and accept the confirmation window"){
-        cy.window().then((win) =>
-            cy.stub(win, 'confirm').as('confirm').returns(true),
-        )
-
         cy.on('window:confirm', (str) => {
             return true
         })
     }
 
     if(exactly === 'labeled exactly'){
-        const base = (iframe === " in the iframe") ? cy.frameLoaded().then(() => { cy.iframe() }) : cy.get(':button:visible')
-        base.contains(new RegExp("^" + text + "$", "g")).click()
+        let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
+
+        cy.top_layer(sel, outer_element).within(() => {
+            cy.get(':button:visible').contains(new RegExp("^" + text + "$", "g")).click()
+        })
+
     } else {
         let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
-        const base = (iframe === " in the iframe") ? cy.frameLoaded().then(() => { cy.iframe() }) : cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} )
 
-        base.within(() => {
+        cy.top_layer(sel, outer_element).within(() => {
             cy.get(sel).click()
         })
     }
@@ -476,18 +488,27 @@ Given('I select the checkbox option {string} for the field labeled {string}', (c
  * @param {string} label - the label of the field
  * @description Selects a specific item from a dropdown
  */
-Given('I select {string} on the {dropdown_type} field labeled {string}', (option, type, label) => {
+Given('I select {string} on the {dropdown_type} field labeled {string}{baseElement}', (option, type, label, base_element) => {
+    const choices = {
+        '' : 'div[role=dialog][style*=z-index]:visible,html',
+        ' on the tooltip' : 'div[class*=tooltip]:visible',
+        ' on the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
+        ' on the dialog box' : 'div[role=dialog][style*=z-index]:visible'
+    }
+
+    let outer_element = choices[base_element]
+
     let label_selector = `:contains("${label}"):visible`
     let element_selector = `select:has(option:contains("${option}")):visible:enabled`
-    cy.top_layer(label_selector).within(() => {
+    cy.top_layer(label_selector, outer_element).within(() => {
         cy.get_labeled_element(element_selector, label, option).then(($select) => {
             cy.wrap($select).scrollIntoView().
-                should('be.visible').
-                should('be.enabled').then(($t) => {
-                    cy.wait(500)
-                    cy.wrap($t).select(option)
-                    cy.wait(500)
-                })
+            should('be.visible').
+            should('be.enabled').then(($t) => {
+                cy.wait(500)
+                cy.wrap($t).select(option)
+                cy.wait(500)
+            })
         })
     })
 })
@@ -512,7 +533,8 @@ Given(/^I wait for (\d+(?:\.\d+)?) seconds$/, (seconds) => {
  * @description Enter text into a specific field
  */
 Given("I enter {string} into the field with the placeholder text of {string}", (text, placeholder) => {
-    cy.get('input[placeholder="' + placeholder + '"]').type(text).blur()
+    const selector = 'input[placeholder="' + placeholder + '"]:visible,input[value="' + placeholder + '"]:visible'
+    cy.get(selector).invoke('attr', 'value', text)
 })
 
 /**
@@ -540,3 +562,4 @@ Given('I click on the table heading column labeled {string}', (column) => {
         cy.wrap($th).find(`:contains("${column}"):visible:first`).click()
     })
 })
+
