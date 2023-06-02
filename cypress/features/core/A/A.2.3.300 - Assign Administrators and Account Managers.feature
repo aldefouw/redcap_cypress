@@ -3,7 +3,7 @@ Feature: A.2.3.300 Assign administrators and account managers
   As a REDCap end user
   I want to see that Assign Super Users / Account Managers is functioning as expected
 
-  Scenario: A.2.3.200.100 Give/remove user admin user rights
+  Scenario: A.2.3.300.100 Modify and Revoke Admin’s User Rights
     Given I login to REDCap with the user "Test_Admin"
     And I click on the link labeled "Control Center"
     And I click on the link labeled "Administrator Privileges"
