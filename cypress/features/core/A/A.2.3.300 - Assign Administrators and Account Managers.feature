@@ -5,8 +5,8 @@ Feature: A.2.3.300 Assign administrators and account managers
 
   Scenario: A.2.3.200.100 Give/remove user admin user rights
     Given I login to REDCap with the user "Test_Admin"
-    And I visit the "Control Center" page
-    And I visit the "Administrator Privileges"
+    And I click on the link labeled "Control Center"
+    And I click on the link labeled "Administrator Privileges"
     Then I should see "Set administrator privileges"
 
     When I enter "Test_User1" into the field with the placeholder text of "Search users to add as admin"
@@ -16,15 +16,15 @@ Feature: A.2.3.300 Assign administrators and account managers
     And I click on the button labeled "OK"
     And I should see "Test_User1"
 
-    When I visit the "Control Center" page
-    And I visit the "Administrator Privileges"
+    When I click on the link labeled "Control Center"
+    And I click on the link labeled "Administrator Privileges"
     Then I should see "Set administrator privileges"
     And I enable the Administrator Privilege "Manage user accounts" for the administrator "Test_User1"
     And I enable the Administrator Privilege "Modify system configuration pages" for the administrator "Test_User1"
     Given I logout
 
     Given I login to REDCap with the user "Test_User1"
-    When I visit the "Control Center" page
+    When I click on the link labeled "Control Center"
     Then I should see "Control Center Home"
     And I should see a link labeled "Browse Projects"
     And I should see a link labeled "Browse Users"
@@ -33,8 +33,8 @@ Feature: A.2.3.300 Assign administrators and account managers
     Given I logout
 
     Given I login to REDCap with the user "Test_Admin"
-    And I visit the "Control Center" page
-    And I visit the "Administrator Privileges"
+    And I click on the link labeled "Control Center"
+    And I click on the link labeled "Administrator Privileges"
     Then I should see "Set administrator privileges"
 
     When I disable the Administrator Privilege "Set administrator privileges" for the administrator "Test_User1"
