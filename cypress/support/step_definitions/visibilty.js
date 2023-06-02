@@ -219,3 +219,14 @@ Given('I should see {string} in the {tableTypes} table', (text, table_type = '')
 
     cy.get(selector).contains('td', text, { matchCase: false });
 })
+
+/**
+ * @module Visibility
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I should see project status of {projectStatus}
+ * @param {string} status - the project status to look for
+ * @description Identify project status
+ */
+Given('I (should) see Project Status: "{projectStatus}"', (status) => {
+    cy.get(':contains("Project status:")').contains(status);
+})

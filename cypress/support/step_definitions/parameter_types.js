@@ -210,3 +210,8 @@ defineParameterType({
     name: 'baseElement',
     regexp: /| on the tooltip| on the dialog box| on the role selector dropdown| on the popup/
 })
+
+defineParameterType({
+    name: 'projectStatus',
+    regexp: /|Production|Development/
+})

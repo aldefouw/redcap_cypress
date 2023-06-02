@@ -41,7 +41,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps"
  * @param {string} text (optional) - < on the dialog box for the Repeatable Instruments and Events module>
  * @description Clicks on a button element with a specific text label.
  */
-Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}{baseElement}", (exactly, text, button_type, base_element) => {
+Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}{baseElement}{iframeVisibility}", (exactly, text, button_type, base_element, iframe) => {
     const choices = {
         '' : 'div[role=dialog][style*=z-index]:visible,html',
         ' on the tooltip' : 'div[class*=tooltip]:visible',
@@ -51,8 +51,12 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
 
     let outer_element = 'div[role=dialog][style*=z-index]:visible,html'
 
-    if(base_element.length > 0){
+    if(base_element.length > 0 && iframe !== ' in the iframe'){
         outer_element = choices[base_element]
+    }
+
+    if (iframe === " in the iframe"){
+        let outer_element = cy.frameLoaded().then(() => { cy.iframe() })
     }
 
     if(button_type === " on the dialog box for the Repeatable Instruments and Events module"){
@@ -80,19 +84,36 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
         })
     }
 
-    if(exactly === 'labeled exactly'){
-        let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
+    if (iframe === " in the iframe"){
+        const base = cy.frameLoaded().then(() => { cy.iframe() })
 
-        cy.top_layer(sel, outer_element).within(() => {
-            cy.get(':button:visible').contains(new RegExp("^" + text + "$", "g")).click()
-        })
+        if(exactly === 'labeled exactly'){
+            base.within(() => {
+                cy.get('button:visible').contains(new RegExp("^" + text + "$", "g")).click()
+            })
+        } else {
+            let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
+
+            base.within(() => {
+                cy.get(sel).click()
+            })
+        }
 
     } else {
-        let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
+        if(exactly === 'labeled exactly'){
+            let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
 
-        cy.top_layer(sel, outer_element).within(() => {
-            cy.get(sel).click()
-        })
+            cy.top_layer(sel, outer_element).within(() => {
+                cy.get(':button:visible').contains(new RegExp("^" + text + "$", "g")).click()
+            })
+
+        } else {
+            let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
+
+            cy.top_layer(sel, outer_element).within(() => {
+                cy.get(sel).click()
+            })
+        }
     }
 
     if(button_type === " on the dialog box for the Repeatable Instruments and Events module"){
@@ -185,8 +206,10 @@ Given("I click on the button labeled {string} for the row labeled {string}", (te
  * @param {string} text - the text on the button element you want to click
  * @description Clicks on a button element with a specific text label in a dialog box.
  */
-Given("I click on the button labeled {string} in the dialog box", (text) => {
-    cy.click_on_dialog_button(text)
+Given("I click on the button labeled {string} in the dialog box{iframeVisibility}", (text, iframe) => {
+    let element = ''
+    if(iframe === " in the iframe"){ element = cy.frameLoaded().then(() => { cy.iframe() }) }
+    cy.click_on_dialog_button(text, 'button', element)
 })
 
 /**
@@ -196,8 +219,10 @@ Given("I click on the button labeled {string} in the dialog box", (text) => {
  * @param {string} text - the text on the button element you want to click
  * @description Clicks on a radio element with a specific text label in a dialog box.
  */
-Given("I click on the radio labeled {string} in the dialog box", (text) => {
-    cy.click_on_dialog_button(text, 'span')
+Given("I click on the radio labeled {string} in the dialog box{iframeVisibility}", (text, iframe) => {
+    let element = ''
+    if(iframe === " in the iframe"){ element = cy.frameLoaded().then(() => { cy.iframe() }) }
+    cy.click_on_dialog_button(text, 'span', element)
 })
 
 /**
