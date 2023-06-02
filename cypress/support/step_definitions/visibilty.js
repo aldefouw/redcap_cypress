@@ -227,6 +227,6 @@ Given('I should see {string} in the {tableTypes} table', (text, table_type = '')
  * @param {string} status - the project status to look for
  * @description Identify project status
  */
-Given('I (should) see Project Status: "{projectStatus}"', (status) => {
-    cy.get(':contains("Project status:")').contains(status);
+Given('I (should )see Project status: "{projectStatus}"', (status) => {
+    cy.get('div.menubox:contains("Project status:")').contains(status);
 })
