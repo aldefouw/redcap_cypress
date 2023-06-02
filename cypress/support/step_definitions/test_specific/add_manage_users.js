@@ -6,6 +6,6 @@ import {Given} from "cypress-cucumber-preprocessor/steps";
  * @example I wait for {integer} minute(s)
  * @description Waits for specified number of minutes before allowing anything else to happen
  */
-Given("I wait for {int} minute(s)", (minutes) => {
+Given("I wait for (another ){int} minute(s)", (minutes) => {
     cy.wait(minutes * 60000)
 })
