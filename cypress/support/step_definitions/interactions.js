@@ -548,7 +548,7 @@ Given(/^I wait for (\d+(?:\.\d+)?) seconds$/, (seconds) => {
  */
 Given("I enter {string} into the field with the placeholder text of {string}", (text, placeholder) => {
     const selector = 'input[placeholder="' + placeholder + '"]:visible,input[value="' + placeholder + '"]:visible'
-    cy.get(selector).invoke('attr', 'value', text)
+    cy.get(selector).type(text).blur()
 })
 
 /**
