@@ -1,5 +1,52 @@
 import { Given } from "cypress-cucumber-preprocessor/steps"
 
+function before_click_monitor(type){
+    if (type === " on the dialog box for the Repeatable Instruments and Events module"){
+        cy.intercept({
+            method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + "/*RepeatInstanceController:saveSetup*"
+        }).as('repeat_save')
+    } else if (type === " on the Designate Instruments for My Events page") {
+        cy.intercept({
+            method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/designate_forms_ajax*'
+        }).as('designate_instruments')
+    } else if (type === " on the Online Designer page"){
+        cy.intercept({
+            method: 'GET',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/online_designer_render_fields.php*'
+        }).as('online_designer')
+    } else if (type === " and cancel the confirmation window"){
+        cy.on('window:confirm', (str) => {
+            return false
+        })
+    } else if (type === " and accept the confirmation window"){
+        cy.window().then((win) =>
+            cy.stub(win, 'confirm').as('confirm').returns(true),
+        )
+
+        cy.on('window:confirm', (str) => {
+            return true
+        })
+    }
+}
+
+function after_click_monitor(type){
+    if(type === " in the dialog box to request a change in project status"){
+        cy.get('div#actionMsg').should("have.css", "display", "none")
+    } else if (type === " on the dialog box for the Repeatable Instruments and Events module"){
+        cy.wait('@repeat_save')
+    } else if (type === " on the Designate Instruments for My Events page") {
+        cy.wait('@designate_instruments')
+    } else if (type === " on the Online Designer page") {
+        cy.wait('@online_designer')
+    } else if (type === " and cancel the confirmation window") {
+        cy.on('window:confirm', (str) => {
+            return true //subsequent windows go back to default behavior
+        })
+    }
+}
+
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -59,30 +106,7 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
         let outer_element = cy.frameLoaded().then(() => { cy.iframe() })
     }
 
-    if(button_type === " on the dialog box for the Repeatable Instruments and Events module"){
-        cy.intercept({
-            method: 'POST',
-            url: '/redcap_v' + Cypress.env('redcap_version') + "/*RepeatInstanceController:saveSetup*"
-        }).as('repeat_save')
-    } else if(button_type === " on the Designate Instruments for My Events page") {
-        cy.intercept({
-            method: 'POST',
-            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/designate_forms_ajax*'
-        }).as('designate_instruments')
-    } else if(button_type === " on the Online Designer page"){
-        cy.intercept({
-            method: 'GET',
-            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/online_designer_render_fields.php*'
-        }).as('online_designer')
-    } else if(button_type === " and cancel the confirmation window"){
-        cy.on('window:confirm', (str) => {
-            return false
-        })
-    } else if(button_type === " and accept the confirmation window"){
-        cy.on('window:confirm', (str) => {
-            return true
-        })
-    }
+    before_click_monitor(button_type)
 
     if (iframe === " in the iframe"){
         const base = cy.frameLoaded().then(() => { cy.iframe() })
@@ -116,17 +140,7 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
         }
     }
 
-    if(button_type === " on the dialog box for the Repeatable Instruments and Events module"){
-        cy.wait('@repeat_save')
-    } else if (button_type === " on the Designate Instruments for My Events page") {
-        cy.wait('@designate_instruments')
-    } else if (button_type === " on the Online Designer page") {
-        cy.wait('@online_designer')
-    } else if (button_type === " and cancel the confirmation window") {
-        cy.on('window:confirm', (str) => {
-            return true //subsequent windows go back to default behavior 
-        })
-    }
+    after_click_monitor(button_type)
 })
 
 /**
@@ -137,40 +151,15 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
  * @description Clicks on an anchor element with a specific text label.
  */
 Given("I click on the {linkNames} {labeledExactly} {string}{saveButtonRouteMonitoring}", (link_name, exactly, text, link_type) => {
-    if(link_type === " on the dialog box for the Repeatable Instruments and Events module"){
-        cy.intercept({
-            method: 'POST',
-            url: '/redcap_v' + Cypress.env('redcap_version') + "/*RepeatInstanceController:saveSetup*"
-        }).as('repeat_save')
-    } else if(link_type === " on the Designate Instruments for My Events page") {
-        cy.intercept({
-            method: 'POST',
-            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/designate_forms_ajax*'
-        }).as('designate_instruments')
-    } else if(link_type === " on the Online Designer page"){
-        cy.intercept({
-            method: 'GET',
-            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/online_designer_render_fields.php*'
-        }).as('online_designer')
-    } else if(link_type === " and cancel the confirmation window"){
-        cy.on('window:confirm', (str) => {
-            return false
-        })
-    } else if(link_type === " and accept the confirmation window"){
-        cy.window().then((win) =>
-            cy.stub(win, 'confirm').as('confirm').returns(true),
-        )
-
-        cy.on('window:confirm', (str) => {
-            return true
-        })
-    }
+    before_click_monitor(link_type)
 
     if(exactly === 'labeled exactly'){
         cy.get('a:visible').contains(new RegExp("^" + text + "$", "g")).click()
     } else {
         cy.get('a:visible').contains(text).click()
     }
+
+    after_click_monitor(link_type)
 })
 
 /**
