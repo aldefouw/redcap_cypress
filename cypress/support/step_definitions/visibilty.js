@@ -9,14 +9,7 @@ require('./parameter_types.js')
  * @description Visually verifies that text exists within the HTML object. NOTE: "should" is optional for readability.
  */
 Given("I {see} {string}{iframeVisibility}", (see, text, iframe) => {
-    let base = cy.get('body')
-
-    if(iframe === " in the iframe"){
-        base = cy.frameLoaded().then(() => { cy.iframe() })
-    }
-
-    console.log(base)
-
+    const base = (iframe === " in the iframe") ? cy.frameLoaded().then(() => { cy.iframe() }) : cy.get('body')
     base.should(($body) => { expect($body).to.contain(text) })
 })
 
