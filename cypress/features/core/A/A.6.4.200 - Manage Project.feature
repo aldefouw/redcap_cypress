@@ -5,15 +5,15 @@ Feature: A.6.4.200 Manage project creation, deletion, and settings
 
   Scenario: A.6.4.200.100 User requests admin move project to production
     Given I login to REDCap with the user "Test_Admin"
-    And I create a "New Project" named "A.6.4.200.100", select "Practice / Just for Fun" from the dropdown, choose file "Project_1" and click on the "Create Project" button
+    And I create a new project named "A.6.4.200.100" by clicking on "New Project" in the menu bar, selecting "Practice / Just for fun" from the dropdown, choosing file "Project_1.xml", and clicking the "Create Project" button
     When I click on the link labeled "My Projects"
     And I click on the link labeled "A.6.4.200.100"
     And I click on the link labeled "User Rights"
-    And I enter "Test_User1" into the input field labeled "Assign to role"
-    And I should see the dropdown field labeled "Select Role"
-    When I assign "1_FullRights" on dropdown field labeled "Select Role"
-    And I click on the button labeled "Assign"
-    Then I should see "Test_User1" user assigned "1_FullRights" role
+    And I enter "Test_User1" into the field with the placeholder text of "Assign new user to role"
+    And I click on the button labeled "Assign to role"
+    And I select "1_FullRights" on the dropdown field labeled "Select Role" on the role selector dropdown
+    When I click on the button labeled exactly "Assign" on the role selector dropdown
+    Then I should see "Test User1" within the "1_FullRights" row of the column labeled "Username" of the User Rights table
 
     When I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
@@ -27,50 +27,50 @@ Feature: A.6.4.200 Manage project creation, deletion, and settings
     When I click on the link labeled "My Projects"
     And I click on the link labeled "A.6.4.200.100"
     And I click on the link labeled "Project Setup"
-    Then I should see the button labeled "Move project to production"
+    Then I should see a button labeled "Move project to production"
 
     When I click on the button labeled "Move project to production"
-    And I click on the radio button labeled "Keep ALL data saved so far" in the dialog box
-    And I click on the button labeled "Yes, Request Admin to Move to Production Status" in the dialog box
+    And I click on the radio labeled "Keep ALL data saved so far" in the dialog box
+    And I click on the button labeled "Yes, Request Admin to Move to Production Status" in the dialog box to request a change in project status
     Then I should see "Request pending"
-    And I click on the button labeled “Logging”
-    Then I see “Request approval for production project modifications”
+    And I click on the link labeled "Logging"
+    Then I should see "Send request to move project to production status" in the logging table
     Given I logout
 
     Given I login to REDCap with the user "Test_Admin"
     When I click on the link labeled "My Projects"
     And I click on the link labeled "A.6.4.200.100"
     And I click on the link labeled "Control Center"
-    And I click on the link labeled "To-Do List()"
+    And I click on the link labeled "To-Do List"
 
     Then I should see "Pending Requests"
-    And I should see request type "Move to prod"
 
-    When I click on the "Get More Information" icon for the " Move to Prod" request created for the project "A.6.4.200.100" within the " Pending Requests" table
-    And I click on the button labeled "process request" in the dialog box
-    And I click on the radio labeled "Keep ALL data saved so far."
-    And I click on the button labeled "YES, Move to Production Status" in the dialog box
-    Then I should see "The user request for their REDCap project to move to production status has been approved."
+    Given I should see the "Move to prod" request created for the project named "A.6.4.200.100" within the "Pending Requests" table
+    When I click on the "process request" icon for the "Move to prod" request created for the project named "A.6.4.200.100" within the "Pending Requests" table
+    Then I should see "Move Project To Production Status?" in the iframe
 
-    When I click on the button labeled "Close" on the dialog box
-    And I click on the link labeled "My Projects"
+    Given I click on the radio labeled "Keep ALL data saved so far." in the dialog box in the iframe
+    When I click on the button labeled "YES, Move to Production Status" in the dialog box in the iframe
+    And I close the iframe window
+    Then I should see the "Move to prod" request created for the project named "A.6.4.200.100" within the "Completed & Archived Requests" table
+
+    Given I click on the link labeled "My Projects"
     And I click on the link labeled "A.6.4.200.100"
-    Then I should see " Project status: Production"
-    And I click on the button labeled “Logging”
-    Then I should see “Move project to Production status”
+    Then I should see Project status: "Production"
+    And I click on the link labeled "Logging"
+    Then I should see "Move project to Production status" in the logging table
 
   Scenario: A.6.4.200.200 User moves project to production
     Given I login to REDCap with the user "Test_Admin"
-    And I create a "New Project" named "A.6.4.200.200", select "Practice / Just for Fun" from the dropdown, choose file "Project_1" and click on the "Create Project" button
+    And I create a new project named "A.6.4.200.200" by clicking on "New Project" in the menu bar, selecting "Practice / Just for fun" from the dropdown, choosing file "Project_1.xml", and clicking the "Create Project" button
     When I click on the link labeled "My Projects"
     And I click on the link labeled "A.6.4.200.200"
     And I click on the link labeled "User Rights"
-    And I enter "Test_User2" into the input field labeled "Assign to role"
-    Then I should see the dropdown field labeled "Select Role"
-
-    When I assign "1_FullRights" on dropdown field labeled "Select Role"
-    And I click on the button labeled "Assign"
-    Then I should see "Test_User1" user assigned "1_FullRights" role
+    And I enter "Test_User1" into the field with the placeholder text of "Assign new user to role"
+    And I click on the button labeled "Assign to role"
+    And I select "1_FullRights" on the dropdown field labeled "Select Role" on the role selector dropdown
+    And I click on the button labeled exactly "Assign" on the role selector dropdown
+    Then I should see "Test User1" within the "1_FullRights" row of the column labeled "Username" of the User Rights table
 
     When I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
@@ -83,12 +83,12 @@ Feature: A.6.4.200 Manage project creation, deletion, and settings
     Given I login to REDCap with the user "Test_User1"
     When I click on the link labeled "My Projects"
     And I click on the link labeled "A.6.4.200.200"
-    And I click on the link "Project Setup"
-    Then I should see the button labeled "Move project to production"
+    And I click on the link labeled "Project Setup"
+    Then I should see a button labeled "Move project to production"
 
-    When I click on the button labeled "Move project to production"
-    And I click on the radio button labeled "Keep ALL data saved so far" in the dialog box
-    And I click on the button labeled "YES, Move to Production Status" in the dialog box
-    Then I see " Project status:  Production"
-    And I click on the button labeled “Logging”
-    Then I should see “Move project to Production status”
+    Given I click on the button labeled "Move project to production"
+    And I click on the radio labeled "Keep ALL data saved so far." in the dialog box
+    And I click on the button labeled "YES, Move to Production Status" in the dialog box to request a change in project status
+    Then I should see Project status: "Production"
+    Given I click on the link labeled "Logging"
+    Then I should see "Move project to Production status" in the logging table
