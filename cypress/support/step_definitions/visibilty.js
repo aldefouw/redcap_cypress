@@ -10,7 +10,7 @@ require('./parameter_types.js')
  */
 Given("I {see} {string}{iframeVisibility}", (see, text, iframe) => {
     const base = (iframe === " in the iframe") ? cy.frameLoaded().then(() => { cy.iframe() }) : cy.get('body')
-    base.should(($body) => { expect($body).to.contain(text) })
+    base.within(($elm) => { cy.wrap($elm).should('contain', text) })
 })
 
 /**
