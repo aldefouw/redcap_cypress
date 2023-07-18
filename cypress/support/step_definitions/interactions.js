@@ -261,7 +261,16 @@ Given('I {enter_type} {string} into the input field labeled {string}', (enter_ty
 Given('I enter {string} into the textarea field labeled {string}', (text, label) => {
     //We locate the label element first.  This isn't always a label which is unfortunate, but this approach seems to work so far.
     cy.contains(label).then(($label) => {
-        cy.wrap($label).parent().find('textarea').type(text)
+
+        cy.wrap($label).parent().find('textarea').then(($textarea) => {
+            //If the textarea has a TinyMCE editor applied to it
+            if($textarea.hasClass('mceEditor')){
+                cy.setTinyMceContent($textarea[0]['id'], text)
+            //All other cases
+            } else {
+                $textarea.type(text)
+            }
+        })
     })
 })
 

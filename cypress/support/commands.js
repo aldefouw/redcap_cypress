@@ -8,6 +8,7 @@ import './projects/commands'
 import compareVersions from 'compare-versions';
 import 'cypress-iframe';
 import '@4tw/cypress-drag-drop'
+import '@foreachbe/cypress-tinymce'
 
 // Commands in this file are CRUCIAL and are an embedded part of the REDCap Cypress Framework.
 // They are very stable and do not change often, if ever
