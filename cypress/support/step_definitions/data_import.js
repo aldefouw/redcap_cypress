@@ -51,6 +51,6 @@ Given("I upload a file located at {string} to the File Repository", (file_locati
  * @param {string} cdisc_file - the fixture path to the CDISC XML file (relative path; fixtures are located in /cypress/fixtures/cdisc_files/)
  * @description Creates a project from a CDISC XML fixture file given a project name and project purpose.
  */
-Given('I create a new project named {string} by clicking on "New Project" in the menu bar, selecting "{project_type}" from the dropdown, choosing file {string}, and clicking the "Create Project" button', (project_name, project_type, cdisc_file) => {
-    cy.create_cdisc_project(project_name, project_type, cdisc_file)
+Given('I create a new project named {string} by clicking on "New Project" in the menu bar, selecting "{project_type}" from the dropdown, choosing file {string}, and clicking the "{moveToProductionButton}" button', (project_name, project_type, cdisc_file, button_label) => {
+    cy.create_cdisc_project(project_name, project_type, cdisc_file, button_label)
 })

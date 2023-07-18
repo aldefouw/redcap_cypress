@@ -2,14 +2,14 @@
 //# Commands       A B C D E F G H I J K L M N O P Q R S T U V W X Y Z        #
 //#############################################################################
 
-Cypress.Commands.add('create_cdisc_project', (project_name, project_type, cdisc_file) => {
+Cypress.Commands.add('create_cdisc_project', (project_name, project_type, cdisc_file, button_label = 'Create Project') => {
     //Run through the steps to import the project via CDISC ODM
     cy.get('a:visible:contains("New Project")').click()
     cy.get('input#app_title').type(project_name)
     cy.get('select#purpose').select(project_type)
     cy.get('input#project_template_radio2').click()
     cy.upload_file("cdisc_files/" + cdisc_file, 'xml', 'input[name="odm"]')
-    cy.get('button').contains('Create Project').click().then(() => {
+    cy.get('button').contains(button_label).click().then(() => {
         let pid = null;
         cy.url().should((url) => {
             return url

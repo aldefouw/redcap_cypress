@@ -215,3 +215,8 @@ defineParameterType({
     name: 'projectStatus',
     regexp: /|Production|Development/
 })
+
+defineParameterType({
+    name: 'moveToProductionButton',
+    regexp: /|Create Project|Send Request/
+})
