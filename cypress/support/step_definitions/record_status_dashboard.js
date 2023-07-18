@@ -29,7 +29,7 @@ Given("I click on the bubble for the {string} data collection instrument for rec
 Given("I locate the bubble for the {string} instrument on event {string} for record ID {string} {cell_action}", (instrument, event, record_id, cell_action) => {
     let link_location = null
     let instrument_location = null
-    let event_sections = []
+    let event_sections = {}
     let event_counter = 0
     let repeating = false
 
@@ -55,10 +55,16 @@ Given("I locate the bubble for the {string} instrument on event {string} for rec
             })
         })
 
+        //console.log(event_sections)
+        //console.log(event_counter)
+
         cy.get('th').then(($th) => {
             Cypress.$.each($th, (index, th) => {
                     cy.get('tr').then(($tr) => {
                         Cypress.$.each($tr, (tri, tr) => {
+
+                            //console.log(tri)
+
                             if(tri === 1) {
                                 cy.wrap(tr).within(() => {
                                     cy.get('th').then((th) => {
@@ -77,16 +83,29 @@ Given("I locate the bubble for the {string} instrument on event {string} for rec
                                     })
                                 })
 
+                                //console.log(instrument_location)
+
                             } else if (tri > 1) {
+
+                                //console.log('in here')
 
                                 cy.wrap(tr).within(() => {
                                     cy.get('td').then((td) => {
-                                        if (td[0].innerText === record_id) {
+
+                                        //console.log(td[0].innerText.length)
+                                        //console.log(td[0].innerText.trim().length)
+
+                                        //Here is where we locate the reocrd we're interested in
+                                        if (td[0].innerText.trim() === record_id) {
                                             Cypress.$.each(td, (tdi, $td) => {
 
                                                 //console.log(tdi)
 
                                                 if (tdi === instrument_location + 1) {
+
+                                                    //console.log('instrument location reached')
+                                                    //console.log($td)
+
                                                     cy.wrap($td).within(() => {
 
                                                         if(cell_action === "and click on the bubble" || repeating){
