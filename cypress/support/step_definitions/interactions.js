@@ -268,7 +268,7 @@ Given('I enter {string} into the textarea field labeled {string}', (text, label)
                 cy.setTinyMceContent($textarea[0]['id'], text)
             //All other cases
             } else {
-                $textarea.type(text)
+                cy.wrap($textarea).type(text)
             }
         })
     })
