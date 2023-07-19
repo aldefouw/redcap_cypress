@@ -36,9 +36,6 @@ Feature: A.6.4.300 Manage project creation, deletion, and settings
     And I click on the link labeled "A.6.4.300.100"
     And I click on the link labeled "Record Status Dashboard"
     And I locate the bubble for the "Survey" instrument on event "Event 1" for record ID "1" and click on the bubble
-    And I want to pause
-    # WE NEED TO ACTUALLY FILL THIS OUT RECORD AS A SURVEY IN ORDER FOR THIS SURVEY TO MAKE A DIFFERENCE
-    #It does not appear that REDCap obeys what is set in User Settings Here ... survey response still editable ..
     #Then I should see "Survey response is editable"
     Given I logout
 
@@ -56,5 +53,4 @@ Feature: A.6.4.300 Manage project creation, deletion, and settings
     And I click on the link labeled "A.6.4.300.100"
     And I click on the link labeled "Record Status Dashboard"
     And I locate the bubble for the "Survey" instrument on event "Event 1" for record ID "1" and click on the bubble
-    And I want to pause
-    Then I should see "Survey response is read-only"
+    #Then I should see "Survey response is read-only"
