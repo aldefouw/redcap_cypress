@@ -134,7 +134,7 @@ defineParameterType({
 //interactions.js
 defineParameterType({
     name: 'enter_type',
-    regexp: /enter|clear field and enter/
+    regexp: /verify|enter|clear field and enter/
 })
 
 //interactions.js
@@ -173,7 +173,7 @@ defineParameterType({
 
 defineParameterType({
     name: 'tableName',
-    regexp: /| of the User Rights table/
+    regexp: /| of the User Rights table| of the Reports table/
 })
 
 defineParameterType({
@@ -183,7 +183,7 @@ defineParameterType({
 
 defineParameterType({
     name: 'tableTypes',
-    regexp: /|logging|browse users|file repository|administrators/
+    regexp: /|logging|browse users|file repository|administrators|reports|report data/
 })
 
 defineParameterType({

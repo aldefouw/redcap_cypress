@@ -185,6 +185,8 @@ Given('I should see {string} in the data entry form field labeled {string}', (te
  */
 Given("I (should )see (a )(an ){string} within the {string} row of the column labeled {string}{tableName}", (item, row_label, column_label, table) => {
     if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
+    if(Cypress.$('div#report_load_progress').length) cy.get('div#report_load_progress').should('not.be.visible')
+
     const user_rights = { "checkmark" : `img[src*="tick"]`, "x" : `img[src*="cross"]` }
 
     cy.table_cell_by_column_and_row_label(column_label, row_label).then(($td) => {
@@ -215,9 +217,13 @@ Given('I should see {string} in the {tableTypes} table', (text, table_type = '')
         selector = 'table#file-repository-table'
     } else if (table_type === "administrators"){
         selector = 'table#admin-rights-table'
+    } else if (table_type === 'reports'){
+        selector = 'table#table-report_list'
+    } else if (table_type === 'report data'){
+        selector = 'table#report_table'
     }
 
-    cy.get(selector).contains('td', text, { matchCase: false });
+    cy.get(`${selector}:visible`).contains('td', text, { matchCase: false });
 })
 
 /**

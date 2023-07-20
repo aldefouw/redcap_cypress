@@ -92,10 +92,18 @@ Given('I edit the Data Collection Instrument field labeled {string}', (label) =>
  * @param {string} label - the label of the field to edit
  * @description Opens the edit window for the field with the specified label
  */
-Given('I enter Choices of {string} into the open "Edit Field" dialog box', (choices) => {
+Given('I {enter_type} Choice(s) of {string} in(to) the open "Edit Field" dialog box', (enter_type, choices) => {
     let field_choices = cy.select_field_choices()
-    field_choices.clear()
-    field_choices.type(choices)
+    if(enter_type === "clear field and enter") {
+        field_choices.clear()
+        field_choices.type(`{enter}${choices}`)
+    } else if (enter_type === "verify") {
+        console.log(field_choices.value)
+        console.log(field_choices)
+        field_choices.should('contain.value', choices)
+    } else {
+        field_choices.type(`{enter}${choices}`)
+    }
 })
 
 /**
@@ -488,7 +496,7 @@ Given("I download the data dictionary and save the file as {string}", (name) => 
  * @param {string} variable_name - variable name
  * @description Creates a new field in the Online Designer
  */
-Given("I add a new {fieldType} field labeled {string} with variable name {string}", (field_type, field_text, variable_name) => {
+Given("I add a new {fieldType} field labeled {string} with variable name {string} and click on the {string} button", (field_type, field_text, variable_name, save_button_text) => {
     cy.get('input#btn-last').click().then(() => {
         cy.get('select#field_type')
             .find('option')
@@ -500,7 +508,7 @@ Given("I add a new {fieldType} field labeled {string} with variable name {string
         cy.get('input#field_name').type(variable_name)
         cy.get('input#field_label_rich_text_checkbox').uncheck()
         cy.get('textarea#field_label').type(field_text)
-        cy.get('button').contains('Save').click().then(() => {
+        cy.get('button').contains(save_button_text).click().then(() => {
             cy.get('table#draggable').should(($t) => {
                 expect($t).to.contain('Variable: '+ variable_name)
             })
