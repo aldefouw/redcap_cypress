@@ -220,3 +220,8 @@ defineParameterType({
     name: 'moveToProductionButton',
     regexp: /|Create Project|Send Request/
 })
+
+defineParameterType({
+    name: 'checkBoxRadio',
+    regexp: /|checkbox|radio/
+})
