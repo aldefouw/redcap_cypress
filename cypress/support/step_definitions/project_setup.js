@@ -78,7 +78,11 @@ Given("I should see that repeatable instruments are {repeatability}", (state) =>
             break;
     }
 
-    cy.get('#enableRepeatingFormsEventsBtn').should('contain.text', expected_text);
+    if(state === 'unchangeable'){
+        cy.get('#enableRepeatingFormsEventsBtn').should('be.disabled');
+    } else {
+        cy.get('#enableRepeatingFormsEventsBtn').should('contain.text', expected_text);
+    }
 })
 
 /**

@@ -39,7 +39,7 @@ defineParameterType({
 // project_setup.js
 defineParameterType({
     name: 'repeatability',
-    regexp: /enabled|disabled|modifiable/
+    regexp: /enabled|disabled|modifiable|unchangeable/
 })
 
 // project_setup.js
@@ -128,7 +128,7 @@ defineParameterType({
 //interactions.js
 defineParameterType({
     name: 'instrument_save_options',
-    regexp: /Save & Stay|Save & Exit Record|Save & Go To Next Record|Save & Exit Form|Save & Go To Next Form|Save & Go To Next Instance/
+    regexp: /Save & Stay|Save & Exit Record|Save & Go To Next Record|Save & Exit Form|Save & Go To Next Form|Save & Go To Next Instance|Save & Add New Instance/
 })
 
 //interactions.js

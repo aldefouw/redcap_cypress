@@ -339,7 +339,7 @@ Given('I click on the table cell containing a link labeled {string}', (text) => 
  */
 Given("I {click_type} the {checkBoxRadio} labeled {string}", (check, type, label) => {
     let label_selector = `:contains("${label}"):visible`
-    let element_selector = `input[type=${type}]:visible`
+    let element_selector = `input[type=${type}]:visible:not([disabled])`
     cy.top_layer(label_selector).within(() => {
         let selector = cy.get_labeled_element(element_selector, label)
         if (type === "radio" || check === "click on") {
