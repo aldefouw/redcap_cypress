@@ -333,10 +333,6 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
 
     When I click on the link labeled "Designer"
 
-    #We were already in DRAFT MODE.  See line 314.
-    #And I click on the button labeled "Enter Draft Mode"
-    #Then I should see "The project is now in Draft Mode"
-
     When I click on the link labeled "Data Types"
     And I click on the Edit image for the field named "Radio Button Manual"
 
