@@ -63,108 +63,127 @@ Feature: A.6.4.500 Manage project creation, deletion, and settings
     Then I should see "Your settings for repeating instruments and/or events have been successfully saved. (The page will now reload.)"
 
     And I click on the link labeled "Logging"
-    Then I should see "Set up repeating instruments/events" in the logging table
+    Then I should see a table row containing the following values in the logging table:
+      | test_user1 | Manage/Design | Set up repeating instruments/events |
 
     Given I click on the link labeled "Add / Edit Records"
     Given I select record ID "1" from arm name "Arm 1: Arm 1" on the Add / Edit record page
     And I click the bubble to select a record for the "Survey" longitudinal instrument on event "Event Three"
+
     And I enter "MyName" into the data entry form field labeled "Name"
     Given I select the submit option labeled "Save & Add New Instance" on the Data Collection Instrument
     And I enter "MyOtherName" into the data entry form field labeled "Name"
     Given I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
 
-    And I click the bubble to select a record for the "Survey" longitudinal instrument on event "Event Three"
-    Then I see "Current instance: "
+    And I click the bubble to select a record for the "Survey" longitudinal instrument on event "Event Three" and click the repeating instrument bubble for the first instance
+    Then I see "Current instance:"
+
+    Given I click on the link labeled "Record ID 1"
     And I click the bubble to select a record for the "Data Types" longitudinal instrument on event "Event 1"
     Then I should NOT see "Current instance:"
 
-    And I click on the link labeled "Data Export, Reports, and Stats"
-    Then I should see "A All data (records and fields)"
-    And I click on the button labeled "View Report"
-    Then I should NOT see repeat instrument "Data Types" for "Event 1 (Arm 1: Arm 1)"
-    And I should see repeat instrument "Data Types” for "Event Three (Arm 1: Arm 1)"
-    And I should see "MyOtherName"
+    Given I click on the link labeled "Data Exports, Reports, and Stats"
+    When I see a dialog containing the following text: "Save your changes?"
+    Then I click on the button labeled "Leave without saving changes" in the dialog box
 
-    And I click on the link labeled "Project Setup"
-    Then I should see "repeating instruments and events"
+    Given I see a table row containing the following values in the reports table:
+      | A | All data (all records and fields) |
+    When I click on the button labeled "View Report"
+
+    Then I should see table rows containing the following values in the report data table:
+      | Event Three (Arm 1: Arm 1) | Survey | 1 | Name MyName |
+      | Event Three (Arm 1: Arm 1) | Survey | 2 | Name MyOtherName |
+    And I should NOT see "Data Types"
+
+    Given I click on the link labeled "Project Setup"
+    Then I should see "Repeating instruments and events"
 
     When I open the dialog box for the Repeatable Instruments and Events module
     And I close the popup
     And I select "Repeat Instruments (repeat independently of each other)" on the dropdown field labeled "Event 1 (Arm 1: Arm 1)"
     And I check the checkbox labeled "Data Types"
-    And I select "Not repeating" on the dropdown field labeled "Event Three (Arm 1: Arm 1)"
+    And I select "-- not repeating --" on the dropdown field labeled "Event Three (Arm 1: Arm 1)"
     And I click on the button labeled "Save"
     Then I see "Successfully saved"
 
-    And I click on the button labeled "Logging"
-    Then I see "Set up repeating instruments/events"
+    When I click on the link labeled "Logging"
+    Then I should see a table row containing the following values in the logging table:
+      | test_user1 | Manage/Design | Set up repeating instruments/events |
 
-    Given I click on the link labeled "Add/Edit Records"
-    And I select "1" on the dropdown field labeled "Choose an existing Record ID"
+    Given I click on the link labeled "Add / Edit Records"
+    And I select record ID "1" from arm name "Arm 1: Arm 1" on the Add / Edit record page
     And I click the bubble to select a record for the "Survey" longitudinal instrument on event "Event Three"
     Then I should NOT see "Current instance:"
     And I click on the button labeled "Cancel"
-    And I click on the button labeled "OK" in the dialog box
     Then I see "data entry cancelled - not saved"
     And I click the bubble to select a record for the "Data Types" longitudinal instrument on event "Event 1"
     Then I see "Current instance:"
 
-    And I click on the link labeled "Data Export, Reports, and Stats"
-    Then I should see "A All data (records and fields)"
-    And I click on the button labeled "View Report"
-    Then I should see repeat instrument instance for instrument "Data Types" for "Event 1 (Arm 1: Arm 1)"
-    And I should NOT see repeat instrument instance for instrument "Data Types" for "Event Three (Arm 1: Arm 1)"
+    Given I click on the link labeled "Data Exports, Reports, and Stats"
+    When I see a dialog containing the following text: "Save your changes?"
+    Then I click on the button labeled "Leave without saving changes" in the dialog box
+
+    Given I see a table row containing the following values in the reports table:
+      | A | All data (all records and fields) |
+    When I click on the button labeled "View Report"
+
+    Then I should see a table row containing the following values in the report data table:
+      | Event 2 (Arm 1: Arm 1) |  | 1 |  |  | Name | email@test.edu | Unverified |
     And I should NOT see "MyOtherName"
-    And I should see repeat event instance for event "Event 2 (Arm 1: Arm 1)"
-    And I should NOT see repeat event instance for event "Event Three (Arm 1: Arm 1)"
 
     When I click on the link labeled "Project Setup"
     And I open the dialog box for the Repeatable Instruments and Events module
     And I close the popup
-    And I select "Not repeating" on the dropdown field labeled "Event 2 (Arm 1: Arm 1)"
-    And I select "Repeat Entire Event" on the dropdown field labeled "Event Three (Arm 1: Arm 1)"
+    And I select "-- not repeating --" on the dropdown field labeled "Event 2 (Arm 1: Arm 1)"
+    And I select "Repeat Entire Event (repeat all instruments together)" on the dropdown field labeled "Event Three (Arm 1: Arm 1)"
     And I click on the button labeled "Save"
     Then I see "Successfully saved"
 
-    And I click on the button labeled "Logging"
+    And I click on the link labeled "Logging"
     Then I see "Set up repeating instruments/events"
 
-    Given I click on the link labeled "Add/Edit Records"
-    And I select "1" on the dropdown field labeled "Choose an existing Record ID"
-    Then I should NOT see "(#2)"
-    When I click on "Add New"
-    And I click the bubble for the "Survey" longitudinal instrument on event "Event Three" instance "2"
-    And I enter "My repeat event name" into the "Name" text input field
-    And I click the button "Save & Exit Form"
-    Then I see "(#2)"
+    Given I click on the link labeled "Add / Edit Records"
+    And I select record ID "1" from arm name "Arm 1: Arm 1" on the Add / Edit record page
+    Then I should NOT see "(#3)"
 
-    And I click on the link labeled "Data Export, Reports, and Stats"
-    Then I should see "A All data (records and fields)"
+    When I click on the button labeled "Add new"
+    And I click the bubble to add a record for the "Survey" longitudinal instrument on event "(#3)"
+    Then I should see "Editing existing Record ID 1"
+
+    When I clear field and enter "My repeat event name" into the data entry form field labeled "Name"
+    And I select the submit option labeled "Save & Exit Form" on the Data Collection Instrument
+    Then I should see "(#3)"
+
+    And I click on the link labeled "Data Exports, Reports, and Stats"
+    Given I see a table row containing the following values in the reports table:
+      | A | All data (all records and fields) |
     And I click on the button labeled "View Report"
-    Then I should NOT see repeat event instance for event "Event 2 (Arm 1: Arm 1)"
-    And I should see repeat event instance for event "Event Three (Arm 1: Arm 1)"
+    And I should see a "1" within the "Event Three (Arm 1: Arm 1)" row of the column labeled "Repeat Instance" of the Reports table
     And I should see "My repeat event name"
 
     When I click on the link labeled "Project Setup"
     And I open the dialog box for the Repeatable Instruments and Events module
     And I close the popup
-    And I select "Repeat Entire Event" on the dropdown field labeled "Event 2 (Arm 1: Arm 1)"
-    And I select "Not repeating" on the dropdown field labeled "Event Three (Arm 1: Arm 1)"
+    And I select "-- not repeating --" on the dropdown field labeled "Event Three (Arm 1: Arm 1)"
+    And I select "Repeat Entire Event (repeat all instruments together)" on the dropdown field labeled "Event 2 (Arm 1: Arm 1)"
     And I click on the button labeled "Save"
     Then I see "Successfully saved"
 
-    When I click on the link labeled "Data Export, Reports, and Stats"
-    Then I should see "A All data (records and fields)
+    When I click on the link labeled "Data Exports, Reports, and Stats"
+    Given I see a table row containing the following values in the reports table:
+      | A | All data (all records and fields) |
     And I click on the button labeled "View Report"
-    Then I should see repeat event instance for event "Event 2 (Arm 1: Arm 1)"
-    And I should see repeat event instance for event "Event Three (Arm 1: Arm 1)"
+    And I should see a "1" within the "Event 2 (Arm 1: Arm 1)" row of the column labeled "Repeat Instance" of the Reports table
+    And I should see "" within the "Event Three (Arm 1: Arm 1)" row of the column labeled "Repeat Instance" of the Reports table
     And I should NOT see "My repeat event name"
 
-    Given I click on the link labeled "Add/Edit Records"
-    And I select "1" on the dropdown field labeled "Choose an existing Record ID"
-    And I click the X to delete all data related to the event named "Event 2 (Arm 1: Arm 1)"
+    Given I click on the link labeled "Add / Edit Records"
+    And I select record ID "1" from arm name "Arm 1: Arm 1" on the Add / Edit record page
+    And I click the X to delete all data related to the event named "Event 2"
     And I click on the button labeled "Delete this instance of this event" in the dialog box
     Then I should NOT see "(#2)"
 
-    And I click on the button labeled "Logging"
-    Then I see "Delete record"
+    And I click on the link labeled "Logging"
+
+    Then I should see a table row containing the following values in the logging table:
+      | test_user1 | Delete record | record_Id = '1' |
