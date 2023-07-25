@@ -140,7 +140,8 @@ Feature: A.6.4.500 Manage project creation, deletion, and settings
     Then I see "Successfully saved"
 
     And I click on the link labeled "Logging"
-    Then I see "Set up repeating instruments/events"
+    Then I should see a table row containing the following values in the logging table:
+      | test_user1 | Manage/Design | Set up repeating instruments/events |
 
     Given I click on the link labeled "Add / Edit Records"
     And I select record ID "1" from arm name "Arm 1: Arm 1" on the Add / Edit record page
@@ -182,8 +183,8 @@ Feature: A.6.4.500 Manage project creation, deletion, and settings
     And I click the X to delete all data related to the event named "Event 2"
     And I click on the button labeled "Delete this instance of this event" in the dialog box
     Then I should NOT see "(#2)"
+    And I should see "successfully deleted entire event of data"
 
-    And I click on the link labeled "Logging"
-
+    When I click on the link labeled "Logging"
     Then I should see a table row containing the following values in the logging table:
       | test_user1 | Delete record | record_Id = '1' |
