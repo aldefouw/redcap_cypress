@@ -1,5 +1,6 @@
 import {Given} from "cypress-cucumber-preprocessor/steps";
 require('./parameter_types.js')
+require('./mappings.js')
 
 /**
  * @module Visibility
@@ -206,23 +207,8 @@ Given("I (should )see (a )(an ){string} within the {string} row of the column la
  * @param {string} type - options: < logging | browse users | file repository >
  * @description Identify specific text within a table
  */
-Given('I should see {string} in the {tableTypes} table', (text, table_type = '') => {
-    let selector = 'table'
-
-    if(table_type === 'logging'){
-        selector = 'table.form_border'
-    } else if (table_type === 'browse users'){
-        selector = 'table#sponsorUsers-table'
-    } else if (table_type === 'file repository'){
-        selector = 'table#file-repository-table'
-    } else if (table_type === "administrators"){
-        selector = 'table#admin-rights-table'
-    } else if (table_type === 'reports'){
-        selector = 'table#table-report_list'
-    } else if (table_type === 'report data'){
-        selector = 'table#report_table'
-    }
-
+Given('I should see {string} in the {tableTypes} table', (text, table_type = 'a') => {
+    let selector = window.tableMappings[table_type]
     cy.get(`${selector}:visible`).contains('td', text, { matchCase: false });
 })
 
@@ -235,4 +221,25 @@ Given('I should see {string} in the {tableTypes} table', (text, table_type = '')
  */
 Given('I (should )see Project status: "{projectStatus}"', (status) => {
     cy.get('div.menubox:contains("Project status:")').contains(status);
+})
+
+/**
+ * @module Visibility
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I (should) see a table row containing the following text in the {tableType} table:
+ * @param {string} dataTable - table row we are expecting to see where cells are delimited by pipe characters e.g. | text to search for in cell |
+ * @description Allows us to check tabular data rows within REDCap
+ */
+Given('I (should )see (a )table row(s) containing the following values in (the ){tableTypes} table:', (table_type = 'a', dataTable) => {
+    let selector = window.tableMappings[table_type]
+    let tabular_data = dataTable['rawTable']
+    let row_selector = ''
+
+    cy.get(`${selector}:visible`).within(() => {
+        tabular_data.forEach((row) => {
+            row_selector = 'tr:visible'
+            row.forEach((element) => { row_selector += `:has(td:contains(${JSON.stringify(element)}))` })
+            cy.get(row_selector).should('have.length.greaterThan', 0)
+        })
+    })
 })

@@ -55,3 +55,9 @@ Cypress.Commands.add("table_cell_by_column_and_row_label", (column_label, row_la
         })
     })
 })
+
+Cypress.Commands.add("fetch_bubble_record_homepage", (table_selector = '#event_grid_table', event, instrument, instance) => {
+
+    cy.table_cell_by_column_and_row_label(event, instrument, '#event_grid_table')
+
+})

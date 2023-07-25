@@ -163,21 +163,6 @@ Given("I locate the bubble for the {string} instrument on event {string} for rec
 /**
  * @module RecordStatusDashboard
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click the bubble to < add | select > a record for the {string} longitudinal instrument on event {string}
- * @param {string} instrument - the name of the instrument you want to add a record to
- * @param {string} event - the name of the event you want to add a record to
- * @description Clicks on an instrument / event pairing to add a record on the Record Home Page
- */
-
-Given("I click the bubble to {add_or_select} a record for the {string} longitudinal instrument on event {string}", (verb, instrument, event) => {
-    cy.table_cell_by_column_and_row_label(event, instrument, 'table#event_grid_table').then(($td) => {
-        cy.wrap($td).find('a:visible:first').click()
-    })
-})
-
-/**
- * @module RecordStatusDashboard
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I select record ID {string} from arm name {string} on the Add / Edit record page
  * @param {string} record_id - the name of the record ID
  * @param {string} arm_name - name of the arm as displayed in the dropdown menu (e.g. Arm 1: Arm 1)

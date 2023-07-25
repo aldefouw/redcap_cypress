@@ -183,7 +183,7 @@ defineParameterType({
 
 defineParameterType({
     name: 'tableTypes',
-    regexp: /|logging|browse users|file repository|administrators|reports|report data/
+    regexp: /|a|logging|browse users|file repository|administrators|reports|report data/
 })
 
 defineParameterType({
