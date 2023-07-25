@@ -116,7 +116,7 @@ defineParameterType({
 
 defineParameterType({
     name: 'cell_action',
-    regexp: /and click the new instance link|and click on the bubble|and click the repeating instrument bubble for the first instance|and click the repeating instrument bubble for the second instance|and click the repeating instrument bubble for the third instance/
+    regexp: / and click the new instance link|and click on the bubble| and click the repeating instrument bubble for the first instance| and click the repeating instrument bubble for the second instance| and click the repeating instrument bubble for the third instance||/
 })
 
 //visibility.js

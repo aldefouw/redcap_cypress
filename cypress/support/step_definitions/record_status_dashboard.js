@@ -26,16 +26,16 @@ Given("I click on the bubble for the {string} data collection instrument for rec
  * @description Clicks on a bubble within the Record Status Dashboard based upon record ID and the longitudinal data instrument specified within an event.
  */
 
-Given("I locate the bubble for the {string} instrument on event {string} for record ID {string} {cell_action}", (instrument, event, record_id, cell_action) => {
+Given("I locate the bubble for the {string} instrument on event {string} for record ID {string}{cell_action}", (instrument, event, record_id, cell_action) => {
     let link_location = null
     let instrument_location = null
     let event_sections = {}
     let event_counter = 0
     let repeating = false
 
-    if(cell_action === "and click the repeating instrument bubble for the first instance" ||
-        cell_action === "and click the repeating instrument bubble for the second instance" ||
-        cell_action === "and click the repeating instrument bubble for the third instance"){
+    if(cell_action === " and click the repeating instrument bubble for the first instance" ||
+        cell_action === " and click the repeating instrument bubble for the second instance" ||
+        cell_action === " and click the repeating instrument bubble for the third instance"){
         repeating = true
     }
 
@@ -144,11 +144,11 @@ Given("I locate the bubble for the {string} instrument on event {string} for rec
             cy.get('#instancesTablePopup').within(() => {
                 let instance = null
 
-                if(cell_action === "and click the repeating instrument bubble for the first instance"){
+                if(cell_action === " and click the repeating instrument bubble for the first instance"){
                     instance = 1
-                } else if (cell_action === "and click the repeating instrument bubble for the second instance"){
+                } else if (cell_action === " and click the repeating instrument bubble for the second instance"){
                     instance = 2
-                } else if (cell_action === "and click the repeating instrument bubble for the third instance"){
+                } else if (cell_action === " and click the repeating instrument bubble for the third instance"){
                     instance = 3
                 }
 

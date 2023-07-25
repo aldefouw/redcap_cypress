@@ -285,7 +285,7 @@ Given('I enter {string} into the textarea field labeled {string}', (text, label)
 Given('I {enter_type} {string} into the data entry form field labeled {string}', (enter_type, text, label) => {
     //Note that we CLICK on the field (to select it) BEFORE we type in it - otherwise the text ends up somewhere else!
     if(enter_type === "clear field and enter"){
-        cy.contains('label', label)
+        cy.get(`label:contains(${JSON.stringify(label)})`)
             .invoke('attr', 'id')
             .then(($id) => {
                 cy.get('[name="' + $id.split('label-')[1] + '"]')
@@ -295,7 +295,7 @@ Given('I {enter_type} {string} into the data entry form field labeled {string}',
             .type(text)
             .blur() //Remove focus after we are done so alerts pop up
     } else {
-        cy.contains('label', label)
+        cy.get(`label:contains(${JSON.stringify(label)})`)
             .invoke('attr', 'id')
             .then(($id) => {
                 cy.get('[name="' + $id.split('label-')[1] + '"]')
