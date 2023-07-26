@@ -9,7 +9,7 @@ import { Given } from "cypress-cucumber-preprocessor/steps";
  * @description Changes the name of an event on the "Define My Events" page for a Longitudinal Project
  */
 Given("I change the current Event Name from {string} to {string}", (current_name, proposed_name) => {
-   cy.change_event_name(current_name, proposed_name)
+   cy.change_event_name(current_name, proposed_name, false, false)
 })
 
 /**
@@ -41,18 +41,22 @@ Given("I delete the Event Name of {string}", (event_name) => {
  * @param {string} event_name - the name of the event
  * @description Adds an event via the "Define My Events" page for a Longitudinal Project
  */
-Given("I add an event named {string} into the currently selected arm", (event_name) => {
+Given("I add an event named {string} with offset of {int} day(s) into the currently selected arm", (event_name, days) => {
    cy.intercept({
       method: 'GET',
       url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/define_events_ajax.php?*"
    }).as("add_event")
 
-   let sel = `:contains(Descriptive name for this event)`
+   // IMPORTANT NOTE: We are intentionally selecting one column to the left of what we want
+   // The "Add new event" button spans across two cells!
+   //Setting the Event name
+   cy.table_cell_by_column_and_row_label("Offset Range", "Descriptive name for this event", 'table#event_table', 'td').then(($td) => {
+      cy.wrap($td).find('input').type(event_name)
+   })
 
-   cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
-      cy.contains('Descriptive name for this event').then(($label) => {
-         cy.wrap($label).parent().find('input').type(event_name)
-      })
+   // Setting the number of days.  Same column offset as noted above applies!
+   cy.table_cell_by_column_and_row_label("Event #", "Descriptive name for this event", 'table#event_table', 'td').then(($td) => {
+      cy.wrap($td).find('input').type(days)
    })
 
    //Tried doing this with the Cypress recommended way but it failed because behvaior is inconsistent!
@@ -187,4 +191,21 @@ Given("I remove an instrument named {string} from the event named {string}", (in
           .find('input').eq(index-1).uncheck()
    })
 
+})
+
+/**
+ * @module LongitudinalEvents
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click on the {editField} image for the event named {string}
+ * @param {string} type - the type of edit action you want to perform on a field
+ * @param {string} event - the name of the event you want to edit
+ * @description Clicks on the image link of the action you want to perform on a event
+ */
+
+Given("I click on the {editEvent} image for the event named {string}", (type, event_name) => {
+   if(type === "Edit"){
+      cy.change_event_name(event_name, '', false, false)
+   } else if (type === "Delete"){
+      cy.delete_event_name(event_name)
+   }
 })

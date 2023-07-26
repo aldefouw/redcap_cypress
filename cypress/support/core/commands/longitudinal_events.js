@@ -53,30 +53,34 @@ Cypress.Commands.add("adjust_or_verify_instrument_event", (instrument_name, even
     }
 })
 
-Cypress.Commands.add('change_event_name', (current_name, proposed_name, production = false) => {
-    if(!production){
+Cypress.Commands.add('change_event_name', (current_name, proposed_name = '', production = false, save = true) => {
+    if(!production && save){
         cy.intercept({
             method: 'GET',
             url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/define_events_ajax.php?*"
         }).as('define_ajax_events')
     }
 
-    cy.get('td').contains(current_name).parents('tr').within(() => {
-        cy.get('img[title="Edit"]').click()
-    })
+    if(!save) {
+        cy.get('td').contains(current_name).parents('tr').within(() => {
+            cy.get('img[title="Edit"]').click()
+        })
+    }
 
     if(!production) {
         cy.wait('@define_ajax_events')
 
-        cy.intercept({
-            method: 'POST',
-            url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/define_events_ajax.php"
-        }).as('save_events')
+        if(save) {
+            cy.intercept({
+                method: 'POST',
+                url: '/redcap_v' + Cypress.env('redcap_version') + "/Design/define_events_ajax.php"
+            }).as('save_events')
 
-        cy.get('input[value="' + current_name + '"]').clear().type(proposed_name).parents('tr').within(() => {
-            cy.get('input[value=Save]').click()
-        })
-        cy.wait('@save_events')
+            cy.get('input[value="' + current_name + '"]').clear().type(proposed_name).parents('tr').within(() => {
+                    cy.get('input[value=Save]').click()
+            })
+            cy.wait('@save_events')
+        }
     }
 })
 
@@ -93,3 +97,4 @@ Cypress.Commands.add('delete_event_name', (event_name) => {
     })
     cy.wait('@delete_ajax_events')
 })
+

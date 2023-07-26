@@ -108,6 +108,12 @@ defineParameterType({
     regexp: /(Edit|Branching Logic|Copy|Move|Delete Field)/
 })
 
+// longitudinal_events.js
+defineParameterType({
+    name: 'editEvent',
+    regexp: /(Edit|Delete)/
+})
+
 // design_forms.js
 defineParameterType({
     name: 'fieldType',
@@ -183,7 +189,7 @@ defineParameterType({
 
 defineParameterType({
     name: 'tableTypes',
-    regexp: /|a|logging|browse users|file repository|administrators|reports|report data/
+    regexp: /|a|logging|browse users|file repository|administrators|reports|report data|define events/
 })
 
 defineParameterType({

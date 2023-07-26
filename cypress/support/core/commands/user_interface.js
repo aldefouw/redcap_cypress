@@ -19,21 +19,24 @@ Cypress.Commands.add("dragTo", { prevSubject: 'element'}, (subject, target) => {
 
 })
 
-Cypress.Commands.add("table_cell_by_column_and_row_label", (column_label, row_label, table_selector= 'table', row_number = 0) => {
+Cypress.Commands.add("table_cell_by_column_and_row_label", (column_label, row_label, table_selector= 'table', header_row_type = 'th', row_number = 0) => {
     let column_num = 0
     let table_cell = null
-    let selector = `${table_selector}:has(th:contains("${column_label}"):visible):visible`
+    let selector = `${table_selector}:has(${header_row_type}:contains(${JSON.stringify(column_label)}):visible):visible`
     let td_selector = `tr:has(td:visible):visible`
 
     if(row_number === 0) {
-        selector = `${table_selector}:has(td:contains("${row_label}"):visible,th:contains("${column_label}"):visible):visible`
-        td_selector = `tr:has(td:contains("${row_label}"):visible):visible`
+        selector = `${table_selector}:has(td:contains(${JSON.stringify(row_label)}):visible,${header_row_type}:contains(${JSON.stringify(column_label)}):visible):visible`
+        td_selector = `tr:has(td:contains(${JSON.stringify(row_label)}):visible):visible`
     }
 
     cy.get(selector).within(() => {
-        cy.get(`th:contains("${column_label}"):visible`).parent('tr').then(($tr) => {
-            $tr.find('th').each((thi, th) => {
-                if (Cypress.$(th).text().trim().includes(column_label)) column_num = thi
+        cy.get(`${header_row_type}:contains(${JSON.stringify(column_label)}):visible`).parent('tr').then(($tr) => {
+            $tr.find(header_row_type).each((thi, th) => {
+                // console.log(Cypress.$(th).text().trim().includes(column_label))
+                // console.log(thi)
+                if (Cypress.$(th).text().trim().includes(column_label) && column_num === 0) column_num = thi
+                //if (Cypress.$(th).text().trim().includes(column_label) && column_num === 0) console.log(thi)
             })
         })
     }).then(() => {
@@ -44,6 +47,7 @@ Cypress.Commands.add("table_cell_by_column_and_row_label", (column_label, row_la
                     cy.wrap($tr).each((tri, tr) => {
                         tri.find('td').each((tdi, td) => {
                             if (tdi === column_num && $tri === row_number){
+                                console.log(column_num)
                                 table_cell = td
                             }
                         })

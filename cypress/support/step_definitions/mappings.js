@@ -5,5 +5,6 @@ window.tableMappings = {
     'file repository' : 'table#file-repository-table',
     'administrators' : 'table#admin-rights-table',
     'reports' : 'table#table-report_list',
-    'report data' : 'table#report_table'
+    'report data' : 'table#report_table',
+    'define events' : 'table#event_table'
 }
