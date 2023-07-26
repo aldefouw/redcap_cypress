@@ -105,8 +105,9 @@ Feature: A.6.4.500 Manage project creation, deletion, and settings
     And I check the checkbox labeled "Data Types"
     And I select "-- not repeating --" on the dropdown field labeled "Event Three (Arm 1: Arm 1)"
     And I click on the button labeled "Save"
-    Then I see "Successfully saved"
+    Then I should see a dialog containing the following text: "Your settings for repeating instruments and/or events have been successfully saved."
 
+    Given I click on the button labeled "Close" in the dialog box
     When I click on the link labeled "Logging"
     Then I should see a table row containing the following values in the logging table:
       | test_user1 | Manage/Design | Set up repeating instruments/events |
@@ -138,8 +139,9 @@ Feature: A.6.4.500 Manage project creation, deletion, and settings
     And I select "-- not repeating --" on the dropdown field labeled "Event 2 (Arm 1: Arm 1)"
     And I select "Repeat Entire Event (repeat all instruments together)" on the dropdown field labeled "Event Three (Arm 1: Arm 1)"
     And I click on the button labeled "Save"
-    Then I see "Successfully saved"
+    Then I should see a dialog containing the following text: "Your settings for repeating instruments and/or events have been successfully saved."
 
+    Given I click on the button labeled "Close" in the dialog box
     And I click on the link labeled "Logging"
     Then I should see a table row containing the following values in the logging table:
       | test_user1 | Manage/Design | Set up repeating instruments/events |
@@ -169,8 +171,9 @@ Feature: A.6.4.500 Manage project creation, deletion, and settings
     And I select "-- not repeating --" on the dropdown field labeled "Event Three (Arm 1: Arm 1)"
     And I select "Repeat Entire Event (repeat all instruments together)" on the dropdown field labeled "Event 2 (Arm 1: Arm 1)"
     And I click on the button labeled "Save"
-    Then I see "Successfully saved"
+    Then I should see a dialog containing the following text: "Your settings for repeating instruments and/or events have been successfully saved."
 
+    Given I click on the button labeled "Close" in the dialog box
     When I click on the link labeled "Data Exports, Reports, and Stats"
     Given I see a table row containing the following values in the reports table:
       | A | All data (all records and fields) |
