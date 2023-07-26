@@ -60,8 +60,9 @@ Feature: A.6.4.500 Manage project creation, deletion, and settings
     And I select "Repeat Instruments (repeat independently of each other)" on the dropdown field labeled "Event Three (Arm 1: Arm 1)"
     And I check the checkbox labeled "Survey"
     And I click on the button labeled "Save"
-    Then I should see "Your settings for repeating instruments and/or events have been successfully saved. (The page will now reload.)"
+    Then I should see a dialog containing the following text: "Your settings for repeating instruments and/or events have been successfully saved."
 
+    Given I click on the button labeled "Close" in the dialog box
     And I click on the link labeled "Logging"
     Then I should see a table row containing the following values in the logging table:
       | test_user1 | Manage/Design | Set up repeating instruments/events |

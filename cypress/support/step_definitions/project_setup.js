@@ -64,7 +64,7 @@ Given('I should see that longitudinal mode is "{status}"', (state) => {
  * @param {string} state the state of the button
  * @description Visually verifies Repeatable Instrument functionality is enabled or disabled in the project.
  */
-Given("I should see that repeatable instruments are {repeatability}", (state) => {
+Given("I (should )see that repeatable instruments are {repeatability}", (state) => {
     let expected_text = ''
     switch (state.toLowerCase()) {
         case 'enabled':
