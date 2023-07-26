@@ -108,11 +108,11 @@ Given("I locate the bubble for the {string} instrument on event {string} for rec
 
                                                     cy.wrap($td).within(() => {
 
-                                                        if(cell_action === "and click on the bubble" || repeating){
+                                                        if(cell_action === " and click on the bubble" || repeating){
                                                             cy.get('a').then(($a) => {
                                                                 link_location = $a
                                                             })
-                                                        } else if (cell_action === "and click the new instance link") {
+                                                        } else if (cell_action === " and click the new instance link") {
                                                             cy.get('button').then(($button) => {
                                                                 link_location = $button
                                                             })
