@@ -137,7 +137,6 @@ Given("I verify the Data Collection Instrument named {string} is disabled for th
  */
 Given("I verify the Data Collection Instrument named {string} is unmodifiable for the Event named {string}", (instrument_name, event_name) => {
    cy.adjust_or_verify_instrument_event(instrument_name, event_name, false, true, true)
-   cy.pause()
 })
 
 /**
