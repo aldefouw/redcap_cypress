@@ -4,6 +4,8 @@
 
 Cypress.Commands.add('get_record_status_dashboard', (event, instrument, record_id, repeating) => {
 
+    // TODO: This is badly in need a refactor using pseudo-selectors but haven't had time yet
+
     let link_location = null
     let instrument_location = null
     let event_sections = {}

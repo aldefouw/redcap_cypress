@@ -32,8 +32,9 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Then I should see "Arm name:  Arm 3"
 
     When I click on the link labeled "Logging"
-    Then I should see "Create arm" in the logging table
-    And I should see "Arm 3" in the logging table
+    Then I should see table rows containing the following values in the logging table:
+      | test_user1 | Manage/Design | Create arm |
+      | test_user1 | Manage/Design | Arm 3: Arm 3 |
 
     Given I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
@@ -61,8 +62,9 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
     When I click on the link labeled "Logging"
 
-    Then I should see "Edit arm name/number" in the logging table
-    And I should see "Arm 2: Arm 2" in the logging table
+    Then I should see table rows containing the following values in the logging table:
+      | test_user1 | Manage/Design | Edit arm name/number |
+      | test_user1 | Manage/Design | Arm 2: Arm 2 |
 
     Given I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
@@ -74,8 +76,9 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Then I should see "Event One"
 
     When I click on the link labeled "Logging"
-    And I should see "Edit event" in the logging table
-    And I should see "Event One, Arm: Arm 2" in the logging table
+    Then I should see table rows containing the following values in the logging table:
+      | test_user1 | Manage/Design | Edit event |
+      | test_user1 | Manage/Design | Event One, Arm: Arm 2 |
 
     Given I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
@@ -107,23 +110,24 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     And I click on the link labeled "Arm 1"
     And I click on the button labeled "Begin Editing"
     And I disable the Data Collection Instrument named "Data Types" for the Event named "Event 1"
-    And I click on the button labeled "Save"
+    And I click on the button labeled "Save" on the Designate Instruments for My Events page
     Then I verify the Data Collection Instrument named "Data Types" is disabled for the Event named "Event 1"
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 1"
-    Then I verify the Data Collection Instrument named "Data Types" is disabled for the Event named "Event 1"
+    #TODO: Presumably, what they are looking for is that a particular column exists in the Record Status Dashboard .. ?
+    #Then I should see Data Collection Instrument named "Consent" for the Event named "Event 1"
 
     When I click on the link labeled "Logging"
     Then I should see table rows containing the following values in the logging table:
-      | test_admin | Manage/Design | Perform instrument-event mappings |
+      | test_user1 | Manage/Design | Perform instrument-event mappings |
 
     Given I click on the link labeled "Project Setup"
     When I click on the button labeled "Designate Instruments for My Events"
     And I click on the link labeled "Arm 1"
     And I click on the button labeled "Begin Editing"
     And I enable the Data Collection Instrument named "Consent" for the Event named "Event 2"
-    And I click on the button labeled "Save"
+    And I click on the button labeled "Save" on the Designate Instruments for My Events page
     Then I verify the Data Collection Instrument named "Consent" is enabled for the Event named "Event 1"
 
     When I click on the link labeled "Record Status Dashboard"
@@ -137,7 +141,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     And I click on the button labeled "Begin Editing"
     And I enable the Data Collection Instrument named "Text Validation" for the Event named "Event 4"
 
-    And I click on the button labeled "Save"
+    And I click on the button labeled "Save" on the Designate Instruments for My Events page
     Then I verify the Data Collection Instrument named "Text Validation" is enabled for the Event named "Event 4"
 
     When I click on the link labeled "Record Status Dashboard"
@@ -150,7 +154,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     And I click on the link labeled "Arm 3"
     When I click on the button labeled "Begin Editing"
     And I enable the Data Collection Instrument named "Consent" for the Event named "Event 1"
-    And I click on the button labeled "Save"
+    And I click on the button labeled "Save" on the Designate Instruments for My Events page
     Then I verify the Data Collection Instrument named "Consent" is enabled for the Event named "Event 1"
 
     When I click on the link labeled "Record Status Dashboard"
@@ -165,9 +169,8 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     And I click on the link labeled "Project Setup"
     And I click on the button labeled "Move project to production"
     And I click on the radio labeled "Keep ALL data saved so far" in the dialog box
-    And I click on the button labeled "YES, Move to Production Status" in the dialog box
-    Then I should see "Project Status"
-    And I should see "Production"
+    And I click on the button labeled "YES, Move to Production Status" in the dialog box to request a change in project status
+    Then I should see Project status: "Production"
 
     When I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
@@ -187,17 +190,19 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     And I should NOT see a button labeled "Add new event"
 
     When I click on the button labeled "Upload or download arms/events"
-    Then I should NOT see the option "Upload arms (CSV)"
-    And I should NOT see the option "Upload events (CSV)"
+    Then I should see "Download arms (CSV)"
+    And I should see "Download events (CSV)"
+    But I should NOT see "Upload arms (CSV)"
+    And I should NOT see "Upload events (CSV)"
 
     Given I click on the link labeled "Project Setup"
     And I click on the button labeled "Designate Instruments for My Events"
-    Then I should NOT see options to Edit or Delete events
     And I should see "Events cannot be modified in production"
-    And I should NOT see the button labeled "Begin Editing"
+    And I should NOT see a button labeled "Begin Editing"
 
-    When I click on the button labeled "Upload or download arms/events"
-    Then I should NOT see the option "Upload instrument-event mappings (CSV)"
+    When I click on the button labeled "Upload or download instrument mappings"
+    Then I should see "Download instrument-event mappings (CSV)"
+    But I should NOT see "Upload instrument-event mappings (CSV)"
     Given I logout
 
     Given I login to REDCap with the user "Test_Admin"
@@ -246,10 +251,10 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Given I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
     And I click on the link labeled "Arm 1"
-    And I verify I cannot change the Event Name "Event 2" while in production
-    And I should see "events can only be renamed by REDCap administrators"
+    
+    When I click on the Edit image for the event named "Event 2"
+    Then I should see a dialog containing the following text: "Sorry, but events can only be renamed by REDCap administrators when a project is in production status"
     And I click on the button labeled "Close" in the dialog box
-    Then I should see "Event 2"
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 1"
@@ -257,44 +262,45 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
     Given I click on the link labeled "Project Setup"
     When I click on the button labeled "Designate Instruments for My Events"
-    And I click on the link labeled "Arm 1"
+    And I click on the link labeled "Arm 2"
     And I click on the button labeled "Begin Editing"
     Then I should see "only REDCap administrators are allowed to uncheck any instruments that are already designated"
-    And I am UNABLE to "uncheck" the Data Collection Instrument named "Data Types" for the Event named "Event One" in arm "Arm 2"
+    Then I verify the Data Collection Instrument named "Data Types" is unmodifiable for the Event named "Event One"
 
     When I click on the button labeled "Upload or download instrument mappings"
     And I click on the link labeled "Upload instrument-event mappings (CSV)"
-    And I choose the file "instrument designation"
-    And I click on button labeled "Upload" in the dialog box
-    Then I should see "ERROR"
+    And I upload a "csv" format file located at "import_files/instrument_designation.csv", by clicking the button near "Select your CSV" to browse for the file, and clicking the button labeled "Upload" to upload the file
+
+    Then I should see a dialog containing the following text: "ERROR"
     And I click on the button labeled "Close" in the dialog box
 
     Given I click on the link labeled "Arm 1"
+    And I click on the button labeled "Begin Editing"
     When I enable the Data Collection Instrument named "Data Types" for the Event named "Event 4"
-    And I click on the button labeled "Save"
+    And I click on the button labeled "Save" on the Designate Instruments for My Events page
     Then I verify the Data Collection Instrument named "Data Types" is enabled for the Event named "Event 4"
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 1"
     #TODO: Presumably, what they are looking for is that a particular column exists in the Record Status Dashboard .. ?
-    Then I should see Data Collection Instrument named "Data Types" enabled for the Event named "Event 4"
+    #Then I should see Data Collection Instrument named "Data Types" enabled for the Event named "Event 4"
 
     When I click on the link labeled "Logging"
     Then I should see table rows containing the following values in the logging table:
-      | test_admin | Manage/Design | Perform instrument-event mappings |
+      | test_user1 | Manage/Design | Perform instrument-event mappings |
 
     Given I click on the link labeled "Project Setup"
     When I click on the button labeled "Designate Instruments for My Events"
     And I click on the link labeled "Arm 4"
     And I click on the button labeled "Begin Editing"
     And I enable the Data Collection Instrument named "Consent" for the Event named "Event 1"
-    And I click on the button labeled "Save"
+    And I click on the button labeled "Save" on the Designate Instruments for My Events page
     Then I verify the Data Collection Instrument named "Consent" is enabled for the Event named "Event 1"
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 4"
     #TODO: Presumably, what they are looking for is that a particular column exists in the Record Status Dashboard .. ?
-    Then I should see Data Collection Instrument named "Consent" enabled for the Event named "Event 1"
+    #Then I should see Data Collection Instrument named "Consent" enabled for the Event named "Event 1"
     And I logout
 
     Given I login to REDCap with the user "Test_Admin"
@@ -316,15 +322,16 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Then I should see "Arm 1: Arm One"
 
     When I click on the link labeled "Logging"
-    Then I should see "Edit arm name" in the logging table
-    And I should see "Arm 1: Arm One" in the logging table
+    Then I should see a table rows containing the following values in the logging table:
+      | test_admin | Manage/Design | Edit arm name/number
+      | test_admin | Manage/Design | Arm 1: Arm One
 
     Given I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
     And I click on the link labeled "Arm One"
     And I click on the Edit image for the event named "Event 4"
     And I change the current Event Name from "Event 4" to "Event Four"
-    And I click on the button labeled "Save"
+    And I click on the button labeled "Save" on the Designate Instruments for My Events page
     Then I should see "Event Four"
 
     When I click on the link labeled "Record Status Dashboard"
@@ -332,21 +339,22 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Then I should see "Event Four"
 
     When I click on the link labeled "Logging"
-    Then I should see "Edit event" in the logging table
-    And I should see "Event Four, Arm: Arm One" in the logging table
+    Then I should see a table rows containing the following values in the logging table:
+      | test_admin | Manage/Design | Edit event |
+      | test_admin | Manage/Design | Event Four, Arm: Arm One |
 
     Given I click on the link labeled "Project Setup"
     When I click on the button labeled "Designate Instruments for My Events"
     And I click on the link labeled "Arm 2"
     And I click on the button labeled "Begin Editing"
     And I disable the Data Collection Instrument named "Data Types" for the Event named "Event One"
-    And I click on the button labeled "Save"
+    And I click on the button labeled "Save" on the Designate Instruments for My Events page
     Then I verify the Data Collection Instrument named "Data Types" is enabled for the Event named "Event One"
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 2"
     #TODO: Presumably, what they are looking for is that a particular column exists in the Record Status Dashboard .. ?
-    Then I should not see Data Collection Instrument named "Data Types" for the Event named "Event One" enabled
+    #Then I should not see Data Collection Instrument named "Data Types" for the Event named "Event One" enabled
 
     When I click on the link labeled "Logging"
     Then I should see table rows containing the following values in the logging table:

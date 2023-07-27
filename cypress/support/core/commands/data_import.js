@@ -133,10 +133,12 @@ Cypress.Commands.add('upload_data_dictionary', (fixture_file, date_format = "DMY
     })
 })
 
-Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector = '', button_label, nearest_text = '') => {
+Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector = '', button_label = '', nearest_text = '') => {
     let label_selector = `:has(${selector}):visible`
     let upload_selector = 'input[type=file]:visible'
     let upload_element = ''
+    let submit_button_selector = `input[type=submit][value*="${button_label}"]:visible,:button:contains("${button_label}"):visible`
+
     if(nearest_text.length > 0) label_selector = `:contains("${nearest_text}"):has(${upload_selector}):visible`
 
     cy.top_layer(label_selector).within(() => {
@@ -155,6 +157,8 @@ Cypress.Commands.add('upload_file', (fileName, fileType = ' ', selector = '', bu
                     const dataTransfer = new DataTransfer()
                     dataTransfer.items.add(testFile)
                     el.files = dataTransfer.files
+
+                    if(button_label !== '') cy.get(submit_button_selector).click()
                 })
         })
     })
