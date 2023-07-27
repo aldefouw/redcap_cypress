@@ -231,3 +231,8 @@ defineParameterType({
     name: 'checkBoxRadio',
     regexp: /|checkbox|radio/
 })
+
+defineParameterType({
+    name: 'notSee',
+    regexp: /||not /
+})

@@ -221,3 +221,22 @@ Given("I click on the {editEvent} image for the event named {string}", (type, ev
       cy.delete_event_name(event_name)
    }
 })
+
+/**
+ * @module LongitudinalEvents
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I (should) see a Data Collection Instrument named {string} for the Event named {string}
+ * @param {string} instrument - the name of the instrument
+ * @param {string} event - the name of the event
+ * @description Verifies an instrument exists within an event on a longitudinal project
+ */
+
+Given("I (should ){notSee}see a Data Collection Instrument named {string} for the Event named {string}", (not_see, instrument, event) => {
+   cy.table_cell_by_column_and_row_label(instrument, "Record ID", 'table#record_status_table', 'th', 'th', 1).then(($td) => {
+      if(not_see === 'not '){
+         expect($td).not.to.contain(instrument)
+      } else {
+         expect($td).to.contain(instrument)
+      }
+   })
+})
