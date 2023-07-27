@@ -22,10 +22,8 @@ Cypress.Commands.add("adjust_or_verify_instrument_event", (instrument_name, even
                                         element[0].click()
                                     } else if (checked && !click) {
                                         expect(element.length).to.eq(1)
-                                        cy.wrap(element).prop('checked').should('be.true')
                                     } else if (!checked && !click) {
-                                        expect(element.length).to.eq(1)
-                                        cy.wrap(element).prop('checked').should('be.false')
+                                        expect(element.length).to.eq(0)
                                     }
 
                                 } else {
