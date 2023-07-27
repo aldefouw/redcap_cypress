@@ -115,8 +115,8 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 1"
-    #TODO: Presumably, what they are looking for is that a particular column exists in the Record Status Dashboard .. ?
-    #Then I should see Data Collection Instrument named "Consent" for the Event named "Event 1"
+    Then I should see a Data Collection Instrument named "Consent" for the Event named "Event 1"
+
 
     When I click on the link labeled "Logging"
     Then I should see table rows containing the following values in the logging table:
@@ -132,8 +132,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 1"
-    #TODO: Presumably, what they are looking for is that a particular column exists in the Record Status Dashboard .. ?
-    #Then I should see Data Collection Instrument named "Consent" for the Event named "Event 2"
+    Then I should see a Data Collection Instrument named "Consent" for the Event named "Event 2"
 
     Given I click on the link labeled "Project Setup"
     When I click on the button labeled "Designate Instruments for My Events"
@@ -146,8 +145,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 1"
-    #TODO: Presumably, what they are looking for is that a particular column exists in the Record Status Dashboard .. ?
-    #Then I should see Data Collection Instrument named "Text Validation" for the Event named "Event 4"
+    Then I should see a Data Collection Instrument named "Text Validation" for the Event named "Event 4"
 
     Given I click on the link labeled "Project Setup"
     When I click on the button labeled "Designate Instruments for My Events"
@@ -159,8 +157,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 3"
-    #TODO: Presumably, what they are looking for is that a particular column exists in the Record Status Dashboard .. ?
-    #Then I should see Data Collection Instrument named "Consent" for the Event named "Event 1"
+    Then I should see a Data Collection Instrument named "Consent" for the Event named "Event 1"
     Given I logout
 
     Given I login to REDCap with the user "Test_Admin"
@@ -282,8 +279,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 1"
-    #TODO: Presumably, what they are looking for is that a particular column exists in the Record Status Dashboard .. ?
-    #Then I should see Data Collection Instrument named "Data Types" enabled for the Event named "Event 4"
+    Then I should see a Data Collection Instrument named "Data Types" for the Event named "Event 4"
 
     When I click on the link labeled "Logging"
     Then I should see table rows containing the following values in the logging table:
@@ -299,8 +295,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 4"
-    #TODO: Presumably, what they are looking for is that a particular column exists in the Record Status Dashboard .. ?
-    #Then I should see Data Collection Instrument named "Consent" enabled for the Event named "Event 1"
+    Then I should see a Data Collection Instrument named "Consent" for the Event named "Event 1"
     And I logout
 
     Given I login to REDCap with the user "Test_Admin"
@@ -353,8 +348,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 2"
-    #TODO: Presumably, what they are looking for is that a particular column exists in the Record Status Dashboard .. ?
-    #Then I should not see Data Collection Instrument named "Data Types" for the Event named "Event One" enabled
+    Then I should not see a Data Collection Instrument named "Data Types" for the Event named "Event One"
 
     When I click on the link labeled "Logging"
     Then I should see table rows containing the following values in the logging table:
