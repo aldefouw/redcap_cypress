@@ -89,6 +89,8 @@ function after_click_monitor(type){
  * @description Clicks on a button element with a specific text label.
  */
 Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}{baseElement}{iframeVisibility}", (exactly, text, button_type, base_element, iframe) => {
+    before_click_monitor(button_type)
+
     const choices = {
         '' : 'div[role=dialog][style*=z-index]:visible,html',
         ' on the tooltip' : 'div[class*=tooltip]:visible',
@@ -105,8 +107,6 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
     if (iframe === " in the iframe"){
         let outer_element = cy.frameLoaded().then(() => { cy.iframe() })
     }
-
-    before_click_monitor(button_type)
 
     if (iframe === " in the iframe"){
         const base = cy.frameLoaded().then(() => { cy.iframe() })

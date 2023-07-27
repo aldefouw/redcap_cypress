@@ -130,6 +130,19 @@ Given("I verify the Data Collection Instrument named {string} is disabled for th
 /**
  * @module LongitudinalEvents
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I verify the Data Collection Instrument named {string} is disabled for the Event named {string}
+ * @param {string} instrument_name - the name of the Data Collection Instrument we are disabling for a specific event
+ * @param {string} event_name - the name of the event to disable the Data Collection Instrument for
+ * @description Verifies a Data Collection Instrument is disabled for a specific Event within a Longitudinal Project. (Assumption: User is on "Designate Instruments for My Events" page.)
+ */
+Given("I verify the Data Collection Instrument named {string} is unmodifiable for the Event named {string}", (instrument_name, event_name) => {
+   cy.adjust_or_verify_instrument_event(instrument_name, event_name, false, true, true)
+   cy.pause()
+})
+
+/**
+ * @module LongitudinalEvents
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I (clear field) and enter {string} into the Arm name field
  * @param {string} arm_name - the desired name for the arm
  * @description Enters text into the Arm name field on the Define My Events page
@@ -204,7 +217,7 @@ Given("I remove an instrument named {string} from the event named {string}", (in
 
 Given("I click on the {editEvent} image for the event named {string}", (type, event_name) => {
    if(type === "Edit"){
-      cy.change_event_name(event_name, '', false, false)
+      cy.change_event_name(event_name, event_name, false, false)
    } else if (type === "Delete"){
       cy.delete_event_name(event_name)
    }
