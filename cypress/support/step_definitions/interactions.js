@@ -37,6 +37,7 @@ function after_click_monitor(type){
     } else if (type === " on the dialog box for the Repeatable Instruments and Events module"){
         cy.wait('@repeat_save')
     } else if (type === " on the Designate Instruments for My Events page") {
+        if(Cypress.$('span#progress_save').length) cy.get('span#progress_save').should('not.be.visible')
         cy.wait('@designate_instruments')
     } else if (type === " on the Online Designer page") {
         cy.wait('@online_designer')
