@@ -348,7 +348,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
     When I click on the link labeled "Record Status Dashboard"
     And I click on the link labeled "Arm 2"
-    #Then I should not see a Data Collection Instrument named "Data Types" for the Event named "Event One"
+    Then I should not see a Data Collection Instrument named "Data Types" for the Event named "Event One"
 
     When I click on the link labeled "Logging"
     Then I should see table rows containing the following values in the logging table:
