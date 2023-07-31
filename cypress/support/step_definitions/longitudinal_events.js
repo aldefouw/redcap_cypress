@@ -232,41 +232,36 @@ Given("I click on the {editEvent} image for the event named {string}", (type, ev
  */
 
 Given("I (should ){notSee}see a Data Collection Instrument named {string} for the Event named {string}", (not_see, instrument, event) => {
-   if(not_see === 'not ') {
 
-      let event_sections = {}
-      let event_counter = 0
-      let instruments = []
+   let event_sections = {}
+   let event_counter = 0
+   let instruments = []
 
-      cy.get('table#record_status_table').within(() => {
-         cy.get('thead').within(() => {
-            cy.get('tr').then(($first_tr) => {
-               Cypress.$.each($first_tr, (tri_row, tri_html) => {
-                  Cypress.$(tri_html).children().each(($thi, $th) => {
-                     if (tri_row === 0 && $thi > 0 && $th.innerText === event) { //exclude Record ID
-                        event_sections[$th.innerText] = {
-                           colspan: $th.colSpan,
-                           start: event_counter + 1,
-                           end: event_counter + $th.colSpan
-                        }
-                        event_counter += $th.colSpan
-                     } else if (tri_row > 0) {
-                        const current_event = event_sections[event]
-                        if ($thi >= current_event['start'] && $thi <= current_event['end']) {
-                           instruments.push($th.innerText)
-                        }
+   cy.get('table#record_status_table').within(() => {
+      cy.get('thead').within(() => {
+         cy.get('tr').then(($first_tr) => {
+            Cypress.$.each($first_tr, (tri_row, tri_html) => {
+               Cypress.$(tri_html).children().each(($thi, $th) => {
+                  if (tri_row === 0 && $thi > 0 && $th.innerText === event) { //exclude Record ID
+                     event_sections[$th.innerText] = {
+                        colspan: $th.colSpan,
+                        start: event_counter + 1,
+                        end: event_counter + $th.colSpan
                      }
-                  })
+                     event_counter += $th.colSpan
+                  } else if (tri_row > 0) {
+                     const current_event = event_sections[event]
+                     if ($thi >= current_event['start'] && $thi <= current_event['end']) {
+                        instruments.push($th.innerText)
+                     }
+                  }
                })
             })
          })
-      }).then(() => {
-         expect(instruments).not.to.include(instrument)
       })
-
-   } else {
-      cy.table_cell_by_column_and_row_label(instrument, "Record ID", 'table#record_status_table', 'th', 'th', 1).then(($td) => {
-         expect($td).to.contain(instrument)
-      })
-   }
+   }).then(() => {
+      (not_see === 'not ') ?
+          expect(instruments).not.to.include(instrument) :
+          expect(instruments).to.include(instrument)
+   })
 })
