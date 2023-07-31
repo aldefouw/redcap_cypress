@@ -248,7 +248,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Given I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
     And I click on the link labeled "Arm 1"
-    
+
     When I click on the Edit image for the event named "Event 2"
     Then I should see a dialog containing the following text: "Sorry, but events can only be renamed by REDCap administrators when a project is in production status"
     And I click on the button labeled "Close" in the dialog box
