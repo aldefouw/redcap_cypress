@@ -242,16 +242,15 @@ Given("I (should ){notSee}see a Data Collection Instrument named {string} for th
          cy.get('tr').then(($first_tr) => {
             Cypress.$.each($first_tr, (tri_row, tri_html) => {
                Cypress.$(tri_html).children().each(($thi, $th) => {
-                  if (tri_row === 0 && $thi > 0 && $th.innerText === event) { //exclude Record ID
+                  if (tri_row === 0) {
                      event_sections[$th.innerText] = {
-                        colspan: $th.colSpan,
-                        start: event_counter + 1,
-                        end: event_counter + $th.colSpan
+                        start: event_counter,
+                        end: (event_counter + $th.colSpan) - 1
                      }
                      event_counter += $th.colSpan
                   } else if (tri_row > 0) {
                      const current_event = event_sections[event]
-                     if ($thi >= current_event['start'] && $thi <= current_event['end']) {
+                     if ($thi >= (current_event['start'] - 1) && ($thi <= current_event['end'] - 1) ) {
                         instruments.push($th.innerText)
                      }
                   }
