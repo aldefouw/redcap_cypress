@@ -18,7 +18,7 @@ Cypress.Commands.add("click_on_dialog_button", (text, selector = 'button', base 
                     topDiv = divs[i]
                 }
             }
-            cy.wrap(topDiv).find(selector).contains(text).click()
+            cy.wrap(topDiv).find(`${selector}:contains(${JSON.stringify(text)}):first`).click()
         })
     })
 })
