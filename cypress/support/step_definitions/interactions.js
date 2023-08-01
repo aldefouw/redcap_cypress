@@ -157,7 +157,7 @@ Given("I click on the {linkNames} {labeledExactly} {string}{saveButtonRouteMonit
     if(exactly === 'labeled exactly'){
         cy.get('a:visible').contains(new RegExp("^" + text + "$", "g")).click()
     } else {
-        cy.get('a:visible').contains(text).click()
+        cy.get(`a:contains(${text}):visible`).contains(text).click()
     }
 
     after_click_monitor(link_type)

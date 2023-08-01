@@ -171,6 +171,7 @@ const user_right_check_mappings = {
     'Create Records' : 'record_create',
     'Survey Distribution Tools' : 'participants',
     'Add/Edit/Organize Reports': 'reports',
+    'Alerts & Notifications' : 'alerts',
     'Rename Records' : 'record_rename',
     'Delete Records' : 'record_delete',
     'Calendar' : 'calendar',
@@ -180,8 +181,13 @@ const user_right_check_mappings = {
     'File Repository' : 'file_repository',
     'Record Locking Customization' : 'lock_record_customize',
     'Lock/Unlock *Entire* Records' : 'lock_record_multiform',
+    'Lock/Unlock *Entire* Records (record level)' : 'lock_record_multiform',
     'Data Quality - Create & edit rules' : 'data_quality_design',
     'Data Quality - Execute rules' : 'data_quality_execute',
+    'API Export' : 'api_export',
+    'API Import/Update' : 'api_import',
+    'REDCap Mobile App - Allow users to collect data offline in the mobile app' : 'mobile_app',
+    'REDCap Mobile App - Allow user to download data for all records to the app?' : 'mobile_app_download_data'
 }
 
 /**
