@@ -236,3 +236,8 @@ defineParameterType({
     name: 'notSee',
     regexp: /||not /
 })
+
+defineParameterType({
+    name: 'headerOrNot',
+    regexp: /||header and |/
+})

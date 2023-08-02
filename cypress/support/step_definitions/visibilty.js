@@ -230,16 +230,59 @@ Given('I (should )see Project status: "{projectStatus}"', (status) => {
  * @param {string} dataTable - table row we are expecting to see where cells are delimited by pipe characters e.g. | text to search for in cell |
  * @description Allows us to check tabular data rows within REDCap
  */
-Given('I (should )see (a )table row(s) containing the following values in (the ){tableTypes} table:', (table_type = 'a', dataTable) => {
+Given('I (should )see (a )table {headerOrNot}row(s) containing the following values in (the ){tableTypes} table:', (header, table_type = 'a', dataTable) => {
     let selector = window.tableMappings[table_type]
     let tabular_data = dataTable['rawTable']
     let row_selector = ''
 
-    cy.get(`${selector}:visible`).within(() => {
-        tabular_data.forEach((row) => {
-            row_selector = 'tr:visible'
-            row.forEach((element) => { row_selector += `:has(td:contains(${JSON.stringify(element)}))` })
-            cy.get(row_selector).should('have.length.greaterThan', 0)
+    //If we are including the table header, we are also going to match specific columns
+    if(header === "header and "){
+        let columns = []
+        let header = tabular_data[0]
+
+        //Establish what column indexes are relevant
+        cy.get(`${selector}:visible tr:visible:first td,th`).then((elements) => {
+            elements.each((index, element) => {
+                header.forEach((cell) => {
+                    if (element.textContent.includes(cell)) {
+                        columns.push(index)
+                    }
+                })
+            })
         })
-    })
+
+        //Find the rows that contain the data we are looking for
+        tabular_data.forEach((row, index) => {
+            if(index > 0){
+                row_selector = 'tr:visible'
+                row.forEach((element) => { row_selector += `:has(td:contains(${JSON.stringify(element)}))` })
+
+                cy.get(row_selector).should('have.length.greaterThan', 0)
+
+                cy.get(row_selector).then((row) => {
+                    cy.wrap(row).find('td').then(($td) => {
+                        $td.each((tdi, td) => {
+                            columns.forEach((col_num) => {
+                                //Verify the specific column exists where we expect
+                                if(col_num === tdi){
+                                    expect(td).to.contain(dataTable['rawTable'][index][tdi - 1])
+                                }
+                            })
+                        })
+                    })
+                })
+            }
+        })
+
+    //Only matching on whether this row exists in the table.  Cells are in no particular order because we have no header to match on.
+    } else {
+        cy.get(`${selector}:visible`).within(() => {
+            tabular_data.forEach((row) => {
+                row_selector = 'tr:visible'
+                row.forEach((element) => { row_selector += `:has(td:contains(${JSON.stringify(element)}))` })
+                cy.get(row_selector).should('have.length.greaterThan', 0)
+            })
+        })
+
+    }
 })
