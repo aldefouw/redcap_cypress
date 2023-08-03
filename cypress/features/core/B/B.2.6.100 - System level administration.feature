@@ -36,8 +36,9 @@ Feature: B.2.6.100 Assign user rights Project Level:  The system shall allow the
     When I select "test_admin" on the dropdown field labeled "Filter by user name"
 
     ##VERIFY_LOG #CROSS-FEATURE: Verify Logging Filter by user name
-    Then I should see table rows containing the following values in the logging table:
-      | test_admin | Add user | Test_User1 |
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action   | List of Data Changes OR Fields Exported |
+      | mm/dd/yyyy hh:mm | test_admin | Add user | user = 'Test_User1'                     |
     And I logout
   
     ##VERIFY: Verify User with Basic custom rights
@@ -114,8 +115,8 @@ Feature: B.2.6.100 Assign user rights Project Level:  The system shall allow the
     ##VERIFY_LOG: Verify Update user rights
     And I click on the link labeled "Logging"
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action   | List of Data Changes OR Fields Exported |
-      | mm/dd/yyyy hh:mm | test_admin | Update user | user = 'test_user1'                  |
+      | Time / Date      | Username   | Action      | List of Data Changes OR Fields Exported |
+      | mm/dd/yyyy hh:mm | test_admin | Update user | user = 'test_user1'                     |
     And I logout
 
     ##VERIFY: Verify User with full custom rights
@@ -162,8 +163,10 @@ Feature: B.2.6.100 Assign user rights Project Level:  The system shall allow the
     ##VERIFY_LOG: Verify Expire User
     And I click on the link labeled "Logging"
     #ATS: There is ZERO mention in the logs of anything related to expiration.  It just says Update user in the logs.
-    Then I should see table rows containing the following values in the logging table:
-      | test_admin | Update user | test_user1 |
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action      | List of Data Changes OR Fields Exported |
+      | mm/dd/yyyy hh:mm | test_admin | Update user | user = 'test_user1'                     |
+
     And I logout
 
     ##VERIFY: Verify User access to project
@@ -185,8 +188,8 @@ Feature: B.2.6.100 Assign user rights Project Level:  The system shall allow the
 
     #ATS: ZERO mention in the logs of anything related to expiration.  It just says 'Update user' in the logs.
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action   | List of Data Changes OR Fields Exported |
-      | mm/dd/yyyy hh:mm | test_admin | Update user | user = 'test_user1'                  |
+      | Time / Date      | Username   | Action      | List of Data Changes OR Fields Exported |
+      | mm/dd/yyyy hh:mm | test_admin | Update user | user = 'test_user1'                     |
 
     And I logout
 
@@ -214,9 +217,9 @@ Feature: B.2.6.100 Assign user rights Project Level:  The system shall allow the
     ##VERIFY_LOG: Verify Logging of Delete user
     And I click on the link labeled "Logging"
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action   | List of Data Changes OR Fields Exported |
-      | mm/dd/yyyy hh:mm | test_admin | Update user | user = 'test_user1'                  |
-      | mm/dd/yyyy hh:mm | test_admin | Delete user | user = 'test_user1'                  |
+      | Time / Date      | Username   | Action      | List of Data Changes OR Fields Exported |
+      | mm/dd/yyyy hh:mm | test_admin | Update user | user = 'test_user1'                     |
+      | mm/dd/yyyy hh:mm | test_admin | Delete user | user = 'test_user1'                     |
 
     And I logout
   
