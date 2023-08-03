@@ -254,8 +254,13 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
         //Find the rows that contain the data we are looking for
         tabular_data.forEach((row, index) => {
             if(index > 0){
-                row_selector = 'tr:visible'
-                row.forEach((element) => { row_selector += `:has(td:contains(${JSON.stringify(element)}))` })
+                row_selector = `${selector}:visible tr:visible`
+                row.forEach((element) => {
+                    //If we find a match for a date or time formatting string
+                    if(!window.dateFormats.hasOwnProperty(element)){
+                        row_selector += `:has(td:contains(${JSON.stringify(element)}))`
+                    }
+                })
 
                 cy.get(row_selector).should('have.length.greaterThan', 0)
 
@@ -263,9 +268,21 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
                     cy.wrap(row).find('td').then(($td) => {
                         $td.each((tdi, td) => {
                             columns.forEach((col_num) => {
-                                //Verify the specific column exists where we expect
                                 if(col_num === tdi){
-                                    expect(td).to.contain(dataTable['rawTable'][index][tdi - 1])
+
+                                    if(window.dateFormats.hasOwnProperty(dataTable['rawTable'][index][tdi])){
+
+                                        cy.wrap(td).should(($element) => {
+                                            const textContent = $element.text()
+                                            const current = dataTable['rawTable'][index][tdi]
+                                            const regex = window.dateFormats[current]
+                                            expect(textContent).to.match(regex)
+                                        })
+
+                                    } else {
+                                        //Verify the specific column exists where we expect
+                                        expect(td).to.contain(dataTable['rawTable'][index][tdi])
+                                    }
                                 }
                             })
                         })
