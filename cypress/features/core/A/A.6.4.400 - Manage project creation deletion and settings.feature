@@ -36,7 +36,11 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     Then I should see Project status: "Production"
 
     And I click on the link labeled "Logging"
-    Then I should see "Move project to Production status" in the logging table
+
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported |
+      | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Move project to Production status       |
+
     When I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
     Then I should see "System-level User Settings"
@@ -52,14 +56,21 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the button labeled "Enter Draft Mode"
     Then I should see "The project is now in Draft Mode"
     And I click on the link labeled "Logging"
-    Then I should see "Enter draft mode" in the logging table
+
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported |
+      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Enter draft mode                        |
 
     When I click on the link labeled "Designer"
     When I click on the button labeled "Submit Changes for Review"
     And I click on the button labeled "Submit" in the dialog box
     Then I should see "Awaiting review of project changes"
     And I click on the link labeled "Logging"
-    Then I should see "Request approval for production project modifications" in the logging table
+
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported               |
+      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Request approval for production project modifications |
+
     Given I logout
 
     Given I login to REDCap with the user "Test_Admin"
@@ -78,7 +89,10 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     When I click on the link labeled "My Projects"
     And I click on the link labeled "A.6.4.400.100"
     And I click on the link labeled "Logging"
-    Then I should see "Reject production project modifications" in the logging table
+
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported |
+      | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Reject production project modifications |
 
     And I click on the link labeled "Designer"
     #THE PROJECT STAYS IN DRAFT MODE IF THE CHANGES ARE REJECTED SO DRAFT MODE BUTTON DOES NOT APPEAR
@@ -89,7 +103,11 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the button labeled "Submit" in the dialog box
     Then I should see "Awaiting review of project changes"
     And I click on the link labeled "Logging"
-    Then I should see "Request approval for production project modifications" in the logging table
+
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported               |
+      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Request approval for production project modifications |
+
     Given I logout
 
     Given I login to REDCap with the user "Test_Admin"
@@ -108,7 +126,11 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     When I click on the link labeled "My Projects"
     And I click on the link labeled "A.6.4.400.100"
     And I click on the link labeled "Logging"
-    Then I should see "Approve production project modifications" in the logging table
+
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported  |
+      | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Approve production project modifications |
+
     And I click on the link labeled "Designer"
     Then I should see "Enter Draft Mode"
 
@@ -171,7 +193,10 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     When I click on the link labeled "My Projects"
     And I click on the link labeled "A.6.4.400.200"
     And I click on the link labeled "Logging"
-    Then I should see "Remove production project modifications" in the logging table
+
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported |
+      | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Remove production project modifications |
 
     And I click on the link labeled "Designer"
     And I click on the button labeled "Enter Draft Mode"
@@ -186,9 +211,11 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     Then I should see "Changes Were Made Automatically"
     And I click on the button labeled "Close" in the dialog box
     And I click on the link labeled "Logging"
-    Then I should see "Approve production project modifications (automatic)" in the logging table
-    And I should see "Create project field" in the logging table
 
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported              |
+      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Approve production project modifications (automatic) |
+      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Create project field                                 |
 
   Scenario: A.6.4.400.300 User’s ability to approve draft changes without administrative approval if no critical issues exist
     Given I login to REDCap with the user "Test_Admin"
@@ -216,6 +243,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the button labeled "Save Changes"
     Then I should see "Your system configuration values have now been changed!"
     Given I logout
+
     Given I login to REDCap with the user "Test_User1"
     When I click on the link labeled "My Projects"
     And I click on the link labeled "A.6.4.400.300"
@@ -232,7 +260,10 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     Then I should see "The project is now in Draft Mode"
 
     And I click on the link labeled "Logging"
-    Then I should see "Approve production project modifications (automatic)" in the logging table
+
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported |
+      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Approve production project modifications (automatic) |
 
     When I click on the link labeled "Designer"
 
@@ -251,7 +282,11 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the button labeled "Submit" in the dialog box
     Then I should see "Awaiting review of project changes"
     And I click on the link labeled "Logging"
-    Then I should see "Request approval for production project modifications" in the logging table
+
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported               |
+      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Request approval for production project modifications |
+
     Given I logout
 
     Given I login to REDCap with the user "Test_Admin"
@@ -271,7 +306,10 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     When I click on the link labeled "My Projects"
     And I click on the link labeled "A.6.4.400.300"
     And I click on the link labeled "Logging"
-    Then I should see "Remove production project modifications" in the logging table
+
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported |
+      | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Remove production project modifications |
 
     And I click on the link labeled "Designer"
     And I click on the button labeled "Enter Draft Mode"
@@ -288,7 +326,11 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the button labeled "Submit" in the dialog box
     Then I should see "Awaiting review of project changes"
     And I click on the link labeled "Logging"
-    Then I should see "Request approval for production project modifications" in the logging table
+
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported               |
+      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Request approval for production project modifications |
+
     Given I logout
 
     Given I login to REDCap with the user "Test_Admin"
@@ -308,7 +350,10 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     When I click on the link labeled "My Projects"
     And I click on the link labeled "A.6.4.400.300"
     And I click on the link labeled "Logging"
-    Then I should see "Approve production project modifications" in the logging table
+
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported   |
+      | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Approve production project modifications  |
 
     And I click on the link labeled "Designer"
     And I click on the button labeled "Enter Draft Mode"
@@ -321,15 +366,25 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     Then I click on the button labeled "Cancel" in the dialog box
 
     When I click on the link labeled "Data Exports, Reports, and Stats"
-    Then I should see "All data (all records and fields)" in the reports table
+
+    Given I see a table rows containing the following values in the reports table:
+      | A | All data (all records and fields)  |
+      | B | Selected instruments and/or events |
+
     And I click on the button labeled "View Report"
 
     # The manual step: Then I should see "Choice100 (101)"
     # IMPORTANT: The above is NOT what we would expect to see
     # The data entered in this project was entered BEFORE we made these changes to the Radio Button Manual field
     # Thus, because we have unmapped the original value (100) from the label of Choice100 ...
-    # We would expect to see ONLY the raw value (100) in the reports table
-    And I should see "(100)" in the report data table
+    # We would expect to see ONLY the raw value (100) in the report data table
+
+    Given I see a table header and rows containing the following values in the report data table:
+      | Record ID | Radio Button Manual |
+      | 1         |                     |
+      | 2         | (100)               |
+      | 3         | (100)               |
+      | 4         | (100)               |
 
     When I click on the link labeled "Designer"
 
