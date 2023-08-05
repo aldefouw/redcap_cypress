@@ -209,7 +209,7 @@ Given("I (should )see (a )(an ){string} within the {string} row of the column la
  */
 Given('I should see {string} in the {tableTypes} table', (text, table_type = 'a') => {
     let selector = window.tableMappings[table_type]
-    cy.get(`${selector}:visible`).contains('td', text, { matchCase: false });
+    cy.get(`${selector}:visible`).contains('td', text, { matchCase: false })
 })
 
 /**
@@ -235,68 +235,73 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
     let tabular_data = dataTable['rawTable']
     let row_selector = ''
 
+    let header_table = selector
+    let main_table = selector
+
+    //This is to account for weird cases where DataTables are present
+    if(Array.isArray(selector)){
+        header_table = selector[0]
+        main_table = selector[1]
+    }
+
     //If we are including the table header, we are also going to match specific columns
-    if(header === "header and "){
-        let columns = []
+    if(header === "header and ") {
+        let columns = {}
         let header = tabular_data[0]
 
-        //Establish what column indexes are relevant
-        cy.get(`${selector}:visible tr:visible:first td,th`).then((elements) => {
-            elements.each((index, element) => {
-                header.forEach((cell) => {
-                    if (element.textContent.includes(cell)) {
-                        columns.push(index)
+        //cy.get('table#report_table tr td:nth-child(1)')
+
+        //First find the column number, which is the index + 1
+        cy.get(`${header_table}:visible tr:first td,th`).each(($cell, cellIndex) => {
+            header.forEach((heading) => {
+                if($cell.text().includes(heading) && !columns.hasOwnProperty(heading)){
+                    columns[heading] = cellIndex
+                }
+            })
+
+        //Then, see if we have rows that match
+        }).then(() => {
+
+            cy.get(`${main_table}:visible`).within(() => {
+                dataTable.hashes().forEach((row) => {
+                    row_selector = 'tr:visible'
+
+                    for (const key in row) {
+                        const value = row[key]
+                        const column = columns[key]
+                        console.log(key)
+                        console.log(column)
+                        if(!window.dateFormats.hasOwnProperty(value)){
+                            //Big sad .. cannot combine nth-child and contains :( 
+                            //row_selector += `:has(td:nth-child(${column})):has(td:contains(${JSON.stringify(value)}))`
+                            row_selector += `:has(td:contains(${JSON.stringify(value)}))`
+                        }
                     }
+
+                    //See if at least one row matches the criteria we are suggesting
+                    cy.get(row_selector).should('have.length.greaterThan', 0).then(($rows) => {
+
+
+                        //Select the column by nth
+
+                    })
+
                 })
             })
-        })
 
-        //Find the rows that contain the data we are looking for
-        tabular_data.forEach((row, index) => {
-            if(index > 0){
-                row_selector = `${selector}:visible tr:visible`
-                row.forEach((element) => {
-                    //If we find a match for a date or time formatting string
-                    if(!window.dateFormats.hasOwnProperty(element)){
-                        row_selector += `:has(td:contains(${JSON.stringify(element)}))`
-                    }
-                })
-
-                cy.get(row_selector).should('have.length.greaterThan', 0)
-
-                cy.get(row_selector).then((row) => {
-                    cy.wrap(row).find('td').then(($td) => {
-                        $td.each((tdi, td) => {
-                            columns.forEach((col_num) => {
-                                if(col_num === tdi){
-
-                                    if(window.dateFormats.hasOwnProperty(dataTable['rawTable'][index][tdi])){
-
-                                        cy.wrap(td).should(($element) => {
-                                            const textContent = $element.text()
-                                            const current = dataTable['rawTable'][index][tdi]
-                                            const regex = window.dateFormats[current]
-                                            expect(textContent).to.match(regex)
-                                        })
-
-                                    } else {
-                                        //Verify the specific column exists where we expect
-                                        expect(td).to.contain(dataTable['rawTable'][index][tdi])
-                                    }
-                                }
-                            })
-                        })
-                    })
-                })
-            }
         })
 
     //Only matching on whether this row exists in the table.  Cells are in no particular order because we have no header to match on.
     } else {
+
         cy.get(`${selector}:visible`).within(() => {
             tabular_data.forEach((row) => {
                 row_selector = 'tr:visible'
-                row.forEach((element) => { row_selector += `:has(td:contains(${JSON.stringify(element)}))` })
+                row.forEach((element) => {
+                    if(!window.dateFormats.hasOwnProperty(element)) {
+                        row_selector += `:has(td:contains(${JSON.stringify(element)}))`
+                    }
+                })
                 cy.get(row_selector).should('have.length.greaterThan', 0)
             })
         })

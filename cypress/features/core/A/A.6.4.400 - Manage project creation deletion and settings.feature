@@ -38,7 +38,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported |
+      | Time / Date      | Username   | Action        |  List of Data ChangesOR Fields Exported |
       | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Move project to Production status       |
 
     When I click on the link labeled "Control Center"
@@ -58,7 +58,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported |
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported |
       | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Enter draft mode                        |
 
     When I click on the link labeled "Designer"
@@ -68,7 +68,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported               |
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported               |
       | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Request approval for production project modifications |
 
     Given I logout
@@ -91,7 +91,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported |
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported |
       | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Reject production project modifications |
 
     And I click on the link labeled "Designer"
@@ -105,7 +105,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported               |
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported               |
       | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Request approval for production project modifications |
 
     Given I logout
@@ -128,7 +128,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported  |
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported  |
       | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Approve production project modifications |
 
     And I click on the link labeled "Designer"
@@ -195,7 +195,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported |
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported |
       | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Remove production project modifications |
 
     And I click on the link labeled "Designer"
@@ -213,7 +213,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported              |
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported              |
       | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Approve production project modifications (automatic) |
       | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Create project field                                 |
 
@@ -262,7 +262,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported |
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported |
       | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Approve production project modifications (automatic) |
 
     When I click on the link labeled "Designer"
@@ -284,7 +284,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported               |
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported               |
       | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Request approval for production project modifications |
 
     Given I logout
@@ -308,7 +308,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported |
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported |
       | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Remove production project modifications |
 
     And I click on the link labeled "Designer"
@@ -328,7 +328,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported               |
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported               |
       | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Request approval for production project modifications |
 
     Given I logout
@@ -352,7 +352,7 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data Changes OR Fields Exported   |
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported   |
       | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Approve production project modifications  |
 
     And I click on the link labeled "Designer"
@@ -380,11 +380,11 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     # We would expect to see ONLY the raw value (100) in the report data table
 
     Given I see a table header and rows containing the following values in the report data table:
-      | Record ID | Radio Button Manual |
-      | 1         |                     |
-      | 2         | (100)               |
-      | 3         | (100)               |
-      | 4         | (100)               |
+      | Record ID | Event Name             | Radio Button Manual |
+      | 1         | Event 1 (Arm 1: Arm 1) |                     |
+      | 2         | Event 1 (Arm 1: Arm 1) | (100)               |
+      | 3         | Event 1 (Arm 1: Arm 1) | (100)               |
+      | 4         | Event 1 (Arm 1: Arm 1) | (100)               |
 
     When I click on the link labeled "Designer"
 
