@@ -269,11 +269,12 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
 
                     for (const key in row) {
                         const value = row[key]
-                        const column = columns[key]
+                        const column = columns[key] + 1
                         console.log(key)
                         console.log(column)
                         if(!window.dateFormats.hasOwnProperty(value)){
                             //Big sad .. cannot combine nth-child and contains :(
+                            //But we can get around this with filtering!
                             //row_selector += `:has(td:nth-child(${column})):has(td:contains(${JSON.stringify(value)}))`
 
                             filter_selector += `:has(td:nth-child(${column}))`
