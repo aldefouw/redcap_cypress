@@ -265,6 +265,7 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
             cy.get(`${main_table}:visible`).within(() => {
                 dataTable.hashes().forEach((row) => {
                     row_selector = 'tr:visible'
+                    let filter_selector = row_selector
 
                     for (const key in row) {
                         const value = row[key]
@@ -272,18 +273,18 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
                         console.log(key)
                         console.log(column)
                         if(!window.dateFormats.hasOwnProperty(value)){
-                            //Big sad .. cannot combine nth-child and contains :( 
+                            //Big sad .. cannot combine nth-child and contains :(
                             //row_selector += `:has(td:nth-child(${column})):has(td:contains(${JSON.stringify(value)}))`
+
+                            filter_selector += `:has(td:nth-child(${column}))`
                             row_selector += `:has(td:contains(${JSON.stringify(value)}))`
                         }
                     }
 
                     //See if at least one row matches the criteria we are suggesting
                     cy.get(row_selector).should('have.length.greaterThan', 0).then(($rows) => {
-
-
-                        //Select the column by nth
-
+                        //Now use filter mechanism to ensure that the nth criteria are met as well
+                        cy.wrap($rows).filter(filter_selector).should('have.length.greaterThan', 0)
                     })
 
                 })
