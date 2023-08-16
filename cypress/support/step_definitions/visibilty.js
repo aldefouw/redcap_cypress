@@ -22,7 +22,17 @@ Given("I {see} {string}{iframeVisibility}", (see, text, iframe) => {
  * @description Visually verifies that text does NOT exist within the HTML object.
  */
 Given("I should NOT see {string}", (text) => {
-    cy.get('html').then(($html) => { expect($html).to.not.contain(text) })
+    cy.get(`html:contains(${JSON.stringify(text)})`).then(($html) => {
+        //If we don't detect it anywhere
+        if($html.length === 0){
+
+            expect('html').to.not.contain(text)
+
+        //If we do detect the text, let us make sure it is not visible on-screen
+        } else {
+            cy.contains(text).should('not.be.visible');
+        }
+    })
 })
 
 /**
@@ -254,6 +264,7 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
         //First find the column number, which is the index + 1
         cy.get(`${header_table}:visible tr:first td,th`).each(($cell, cellIndex) => {
             header.forEach((heading) => {
+                columns[heading] = null
                 if($cell.text().includes(heading) && !columns.hasOwnProperty(heading)){
                     columns[heading] = cellIndex
                 }
@@ -272,7 +283,7 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
                         const column = columns[key] + 1
                         console.log(key)
                         console.log(column)
-                        if(!window.dateFormats.hasOwnProperty(value)){
+                        if(!window.dateFormats.hasOwnProperty(value) && columns[key] !== null){
                             //Big sad .. cannot combine nth-child and contains :(
                             //But we can get around this with filtering!
                             //row_selector += `:has(td:nth-child(${column})):has(td:contains(${JSON.stringify(value)}))`

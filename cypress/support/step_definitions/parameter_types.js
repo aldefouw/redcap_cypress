@@ -70,7 +70,13 @@ defineParameterType({
 // user_rights.js
 defineParameterType({
     name: 'data_viewing_rights',
-    regexp: /No Access|Read Only|View & Edit/
+    regexp: /No Access|Read Only|View & Edit|Edit survey responses/
+})
+
+// user_rights.js
+defineParameterType({
+    name: 'edit_survey_rights',
+    regexp: /| with Edit survey responses checked| with Edit survey responses unchecked||/
 })
 
 // taken from visibility.js, but was not used.
