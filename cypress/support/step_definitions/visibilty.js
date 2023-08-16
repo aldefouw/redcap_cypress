@@ -22,17 +22,13 @@ Given("I {see} {string}{iframeVisibility}", (see, text, iframe) => {
  * @description Visually verifies that text does NOT exist within the HTML object.
  */
 Given("I should NOT see {string}", (text) => {
-    cy.get(`html:contains(${JSON.stringify(text)})`).then(($html) => {
-        //If we don't detect it anywhere
-        if($html.length === 0){
-
-            expect('html').to.not.contain(text)
-
-        //If we do detect the text, let us make sure it is not visible on-screen
-        } else {
-            cy.contains(text).should('not.be.visible');
-        }
-    })
+    //If we don't detect it anywhere
+    if(Cypress.$(`html:contains(${JSON.stringify(text)})`).length === 0){
+        expect('html').to.not.contain(text)
+    //If we do detect the text, let us make sure it is not visible on-screen
+    } else {
+        cy.contains(text).should('not.be.visible');
+    }
 })
 
 /**
