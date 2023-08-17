@@ -122,4 +122,4 @@ Feature: B.2.6.300 The system shall allow instrument level data export rights to
     ##ACTION:
     And I click on the link labeled "Data Exports, Reports, and Stats"
     ##VERIFY
-    Then I should NOT see a button labeled "Export Data"
+    Then I should NOT see "Export Data"
