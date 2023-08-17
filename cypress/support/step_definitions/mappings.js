@@ -26,3 +26,23 @@ window.dateFormats = {
     'hh:mm:ss': /\d{1,2}:\d{2}:\d{2}/,
     'hh:mm:ss.ms': /\d{1,2}:\d{2}:\d{2}\.\d{3}/,
 }
+
+window.exportMappings = {
+    'CSV / Microsoft Excel (raw data)'  :    'csv',
+    'CSV / Microsoft Excel (labels)'    :    'csv',
+    'SPSS Statistical Software'         :    'sps',
+    'SAS Statistical Software'          :    'sas',
+    'R Statistical Software'            :    'r',
+    'Stata Statistical Software'        :    'do',
+    'CDISC ODM (XML)'                   :    'odm'
+}
+
+window.elementChoices = {
+    '' : 'div[role=dialog][style*=z-index]:visible,html',
+    ' on the tooltip' : 'div[class*=tooltip]:visible',
+    ' in the tooltip' : 'div[class*=tooltip]:visible',
+    ' on the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
+    ' in the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
+    ' on the dialog box' : 'div[role=dialog][style*=z-index]:visible',
+    ' in the dialog box' : 'div[role=dialog][style*=z-index]:visible'
+}

@@ -92,17 +92,10 @@ function after_click_monitor(type){
 Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}{baseElement}{iframeVisibility}", (exactly, text, button_type, base_element, iframe) => {
     before_click_monitor(button_type)
 
-    const choices = {
-        '' : 'div[role=dialog][style*=z-index]:visible,html',
-        ' on the tooltip' : 'div[class*=tooltip]:visible',
-        ' on the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
-        ' on the dialog box' : 'div[role=dialog][style*=z-index]:visible'
-    }
-
     let outer_element = 'div[role=dialog][style*=z-index]:visible,html'
 
     if(base_element.length > 0 && iframe !== ' in the iframe'){
-        outer_element = choices[base_element]
+        outer_element = window.elementChoices[base_element]
     }
 
     if (iframe === " in the iframe"){
@@ -338,10 +331,11 @@ Given('I click on the table cell containing a link labeled {string}', (text) => 
  * @param {string} label - the label associated with the checkbox field
  * @description Selects a checkbox field by its label
  */
-Given("I {click_type} the {checkBoxRadio} labeled {string}", (check, type, label) => {
+Given("I {click_type} the {checkBoxRadio} labeled {string}{baseElement}", (check, type, label, base_element) => {
+    let outer_element = window.elementChoices[base_element]
     let label_selector = `:contains("${label}"):visible`
     let element_selector = `input[type=${type}]:visible:not([disabled])`
-    cy.top_layer(label_selector).within(() => {
+    cy.top_layer(label_selector, outer_element).within(() => {
         let selector = cy.get_labeled_element(element_selector, label)
         if (type === "radio" || check === "click on") {
             selector.scrollIntoView().click()
@@ -513,15 +507,7 @@ Given('I select the checkbox option {string} for the field labeled {string}', (c
  * @description Selects a specific item from a dropdown
  */
 Given('I select {string} on the {dropdown_type} field labeled {string}{baseElement}', (option, type, label, base_element) => {
-    const choices = {
-        '' : 'div[role=dialog][style*=z-index]:visible,html',
-        ' on the tooltip' : 'div[class*=tooltip]:visible',
-        ' on the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
-        ' on the dialog box' : 'div[role=dialog][style*=z-index]:visible'
-    }
-
-    let outer_element = choices[base_element]
-
+    let outer_element = window.elementChoices[base_element]
     let label_selector = `:contains("${label}"):visible`
     let element_selector = `select:has(option:contains("${option}")):visible:enabled`
     cy.top_layer(label_selector, outer_element).within(() => {

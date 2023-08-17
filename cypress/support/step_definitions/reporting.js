@@ -209,26 +209,16 @@ Given("I click on the image {string} link for the row containing {string}", (fil
  * @module Reporting
  * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
  * @example I export data for the report named {string} in {string} format
- * @param {string} report the text label of the Report you are looking for
- * @param {string} format the input value of the Radio button you are looking for
- * @description Interactions - Exports the data of the report name you are looking for, selects the export format you are looking for, and exports the data
+ * @param {string} button - the text label of the Report you are looking for
+ * @param {string} report_name - the name of the report you want
+ * @description Interactions - Opens the Export Data dialog for a specific Report Name
  */
-Given("I export data for the report named {string} in {string} format", (report, format) => {
-    cy.get('a').contains('Data Exports, Reports, and Stats').click()
-
+Given("I click on the {string} button for the {string} report in the My Reports & Exports table",(button, report_name) => {
     cy.get('table[id="table-report_list"]').within(() => {
-        cy.get('tr').contains(report).parents('tr').within(() => {
-            cy.get('button').contains('Export Data').click({ force: true })
+        cy.get('tr').contains(report_name).parents('tr').within(() => {
+            cy.get('button').contains(button).click()
         })
     })
-
-    cy.get('input[value="' + format + '"]').check()
-
-    cy.get('div[class="ui-dialog-buttonset"]').within(() => {
-
-        cy.get('button').contains('Export Data').click()
-    })
-
 })
 
 /**
@@ -238,7 +228,7 @@ Given("I export data for the report named {string} in {string} format", (report,
  * @param {string} format the text format of the data export you are looking to receive
  * @description Interactions - Checks the hyperlinks and download formats for the data export
  */
-Given("I should receive a download to a {string} file", (format) => {
+Given("I click on the download icon(s) to receive the file(s) for the {string} format in the dialog box", (format) => {
 
     // file types
     const downloads = {
@@ -250,7 +240,8 @@ Given("I should receive a download to a {string} file", (format) => {
         odm: ["xml"]
     }
 
-    const toDownload = downloads[format]
+    const actual_format = window.exportMappings[format]
+    const toDownload = downloads[actual_format]
 
     for(let i = 0; i < toDownload.length; i++){
 

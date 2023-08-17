@@ -220,7 +220,7 @@ defineParameterType({
 
 defineParameterType({
     name: 'baseElement',
-    regexp: /| on the tooltip| on the dialog box| on the role selector dropdown| on the popup/
+    regexp: /| on the tooltip| on the dialog box| on the role selector dropdown| on the popup| in the tooltip| in the dialog box| in the role selector dropdown| in the popup/
 })
 
 defineParameterType({
