@@ -53,7 +53,7 @@ Feature: B.2.6.400 Assign user rights Project Level:  The system shall allow for
       | 2_Edit_RemoveID         |
       | 3_ReadOnly_Deidentified |
       | 4_NoAccess_Noexport     |
-      | Copy Role               |
+      | Copy role               |
       | TestRole                |
       | TestRole2               |
 
@@ -72,5 +72,5 @@ Feature: B.2.6.400 Assign user rights Project Level:  The system shall allow for
       | 2_Edit_RemoveID         |
       | 3_ReadOnly_Deidentified |
       | 4_NoAccess_Noexport     |
-      | Copy Role               |
+      | Copy role               |
       | TestRole                |
