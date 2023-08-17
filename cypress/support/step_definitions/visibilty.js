@@ -258,51 +258,105 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
         let header = tabular_data[0]
 
         //cy.get('table#report_table tr td:nth-child(1)')
+        //let selection = `${header_table}:visible tr:first td:contains(${JSON.stringify(heading)}):first,th:contains(${JSON.stringify(heading)}):first`
 
-        //First find the column number, which is the index + 1
-        cy.get(`${header_table}:visible tr:first td,th`).each(($cell, cellIndex) => {
+        //if(Cypress.$(selection).length > 0){
+
+        cy.get(`${header_table}:visible tr:first td,th`).then(($cells) => {
+
             header.forEach((heading) => {
                 columns[heading] = null
-                if($cell.text().includes(heading) && !columns.hasOwnProperty(heading)){
-                    columns[heading] = cellIndex
+
+                for(let i = 0; i < $cells.length; i++){
+                    if (Cypress.$($cells[i]).text().includes(heading)) {
+                        columns[heading] = i + 1
+                    }
                 }
             })
 
-        //Then, see if we have rows that match
         }).then(() => {
 
-            cy.get(`${main_table}:visible`).within(() => {
-                dataTable.hashes().forEach((row) => {
-                    row_selector = 'tr:visible'
-                    let filter_selector = row_selector
+            console.log(columns)
 
-                    for (const key in row) {
-                        const value = row[key]
-                        const column = columns[key] + 1
-                        //console.log(key)
-                        //console.log(column)
-                        if(!window.dateFormats.hasOwnProperty(value) && !isNaN(column)){
-                            //Big sad .. cannot combine nth-child and contains :(
-                            //But we can get around this with filtering!
-                            //row_selector += `:has(td:nth-child(${column})):has(td:contains(${JSON.stringify(value)}))`
+            dataTable.hashes().forEach((row) => {
+                row_selector = `${main_table}:visible tr:visible`
+                let filter_selector = []
 
-                            filter_selector += `:has(td:nth-child(${column}))`
+                for (const key in row) {
+                    const value = row[key]
+                    const column = columns[key]
+                    //console.log(key)
+                    //console.log(column)
+                    if(!isNaN(column)){
+                        //Big sad .. cannot combine nth-child and contains :(
+                        //But we can get around this with filtering!
+                        //row_selector += `:has(td:nth-child(${column})):has(td:contains(${JSON.stringify(value)}))`
+
+                        if(window.dateFormats.hasOwnProperty(value)){
+                            row_selector += `:has(td)`
+                            filter_selector.push({ column: column, value: value, regex: true  })
+                        } else {
                             row_selector += `:has(td:contains(${JSON.stringify(value)}))`
+                            filter_selector.push({ column: column, value: value, regex: false  })
                         }
+
                     }
+                }
 
-                    console.log(row_selector)
+                console.log(filter_selector)
 
-                    //See if at least one row matches the criteria we are suggesting
-                    cy.get(row_selector).should('have.length.greaterThan', 0).then(($rows) => {
-                        //Now use filter mechanism to ensure that the nth criteria are met as well
-                        cy.wrap($rows).filter(filter_selector).should('have.length.greaterThan', 0)
+                //See if at least one row matches the criteria we are suggesting
+                cy.get(row_selector).should('have.length.greaterThan', 0).then(($row) => {
+
+                    filter_selector.forEach((item) => {
+                        cy.wrap($row).find(`td:nth-child(${item['column']})`).eq(0).then(($cell) => {
+                            if(item['regex']){
+                                //here we would regex match I guess
+                            } else {
+                                expect($cell).to.contain(item['value'])
+                            }
+                        })
                     })
 
+
+                    //console.log(row_selector)
+                    //console.log(filter_selector)
+
+                    //Now use filter mechanism to ensure that the nth criteria are met as well
+                    //cy.wrap($rows).filter(filter_selector).should('have.length.greaterThan', 0)
                 })
+
             })
 
         })
+
+        //}
+
+
+
+
+        //cy.pause()
+
+        // //First find the column number, which is the index + 1
+        // cy.get(`${header_table}:visible tr:first td,th`).each(($cells) => {
+        //
+        //     header.forEach((heading) => {
+        //         columns[heading] = null
+        //         $cells.each(($number, $cell) => {
+        //             if(Cypress.$($cell).text().includes(heading)){
+        //                 columns[heading] = $number + 1
+        //             }
+        //         })
+        //     })
+        //
+        //     console.log(columns)
+        //
+        // //Then, see if we have rows that match
+        // }).then(() => {
+        //
+        //
+        //
+        // })
 
     //Only matching on whether this row exists in the table.  Cells are in no particular order because we have no header to match on.
     } else {
