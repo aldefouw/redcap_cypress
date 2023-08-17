@@ -237,6 +237,8 @@ Given('I (should )see Project status: "{projectStatus}"', (status) => {
  * @description Allows us to check tabular data rows within REDCap
  */
 Given('I (should )see (a )table {headerOrNot}row(s) containing the following values in (the ){tableTypes} table:', (header, table_type = 'a', dataTable) => {
+    if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
+
     let selector = window.tableMappings[table_type]
     let tabular_data = dataTable['rawTable']
     let row_selector = ''
@@ -277,9 +279,9 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
                     for (const key in row) {
                         const value = row[key]
                         const column = columns[key] + 1
-                        console.log(key)
-                        console.log(column)
-                        if(!window.dateFormats.hasOwnProperty(value) && columns[key] !== null){
+                        //console.log(key)
+                        //console.log(column)
+                        if(!window.dateFormats.hasOwnProperty(value) && !isNaN(column)){
                             //Big sad .. cannot combine nth-child and contains :(
                             //But we can get around this with filtering!
                             //row_selector += `:has(td:nth-child(${column})):has(td:contains(${JSON.stringify(value)}))`
@@ -288,6 +290,8 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
                             row_selector += `:has(td:contains(${JSON.stringify(value)}))`
                         }
                     }
+
+                    console.log(row_selector)
 
                     //See if at least one row matches the criteria we are suggesting
                     cy.get(row_selector).should('have.length.greaterThan', 0).then(($rows) => {
