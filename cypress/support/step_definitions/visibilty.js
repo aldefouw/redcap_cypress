@@ -257,16 +257,9 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
         let columns = {}
         let header = tabular_data[0]
 
-        //cy.get('table#report_table tr td:nth-child(1)')
-        //let selection = `${header_table}:visible tr:first td:contains(${JSON.stringify(heading)}):first,th:contains(${JSON.stringify(heading)}):first`
-
-        //if(Cypress.$(selection).length > 0){
-
         cy.get(`${header_table}:visible tr:first td,th`).then(($cells) => {
-
             header.forEach((heading) => {
                 columns[heading] = null
-
                 for(let i = 0; i < $cells.length; i++){
                     if (Cypress.$($cells[i]).text().includes(heading)) {
                         columns[heading] = i + 1
@@ -275,9 +268,7 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
             })
 
         }).then(() => {
-
-            console.log(columns)
-
+            //console.log(columns)
             dataTable.hashes().forEach((row) => {
                 row_selector = `${main_table}:visible tr:visible`
                 let filter_selector = []
@@ -288,10 +279,8 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
                     //console.log(key)
                     //console.log(column)
                     if(!isNaN(column)){
-                        //Big sad .. cannot combine nth-child and contains :(
-                        //But we can get around this with filtering!
-                        //row_selector += `:has(td:nth-child(${column})):has(td:contains(${JSON.stringify(value)}))`
-
+                        //Big sad .. cannot combine nth-child and contains in a pseudo-selector :(
+                        //We can get around this by finding column index and looking for specific column value within a row
                         if(window.dateFormats.hasOwnProperty(value)){
                             row_selector += `:has(td)`
                             filter_selector.push({ column: column, value: value, regex: true  })
@@ -299,64 +288,28 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
                             row_selector += `:has(td:contains(${JSON.stringify(value)}))`
                             filter_selector.push({ column: column, value: value, regex: false  })
                         }
-
                     }
                 }
 
-                console.log(filter_selector)
+                //console.log(filter_selector)
 
                 //See if at least one row matches the criteria we are suggesting
                 cy.get(row_selector).should('have.length.greaterThan', 0).then(($row) => {
-
                     filter_selector.forEach((item) => {
                         cy.wrap($row).find(`td:nth-child(${item['column']})`).eq(0).then(($cell) => {
+                            const value =  item['value']
+                            //Special case for RegEx on date / time formats
                             if(item['regex']){
-                                //here we would regex match I guess
+                                expect($cell.text()).to.match(window.dateFormats[value])
+                            //All other cases are straight up text matches
                             } else {
                                 expect($cell).to.contain(item['value'])
                             }
                         })
                     })
-
-
-                    //console.log(row_selector)
-                    //console.log(filter_selector)
-
-                    //Now use filter mechanism to ensure that the nth criteria are met as well
-                    //cy.wrap($rows).filter(filter_selector).should('have.length.greaterThan', 0)
                 })
-
             })
-
         })
-
-        //}
-
-
-
-
-        //cy.pause()
-
-        // //First find the column number, which is the index + 1
-        // cy.get(`${header_table}:visible tr:first td,th`).each(($cells) => {
-        //
-        //     header.forEach((heading) => {
-        //         columns[heading] = null
-        //         $cells.each(($number, $cell) => {
-        //             if(Cypress.$($cell).text().includes(heading)){
-        //                 columns[heading] = $number + 1
-        //             }
-        //         })
-        //     })
-        //
-        //     console.log(columns)
-        //
-        // //Then, see if we have rows that match
-        // }).then(() => {
-        //
-        //
-        //
-        // })
 
     //Only matching on whether this row exists in the table.  Cells are in no particular order because we have no header to match on.
     } else {
