@@ -219,11 +219,16 @@ Given("I click on the radio labeled {string} in the dialog box{iframeVisibility}
  * @param {string} label - the label of the field
  * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
  */
-Given('I {enter_type} {string} into the input field labeled {string}', (enter_type, text, label) => {
+Given('I {enter_type} {string} into the input field labeled {string}{baseElement}', (enter_type, text, label, base_element) => {
     let sel = `:contains("${label}"):visible`
     let element = `input[type=text]:visible:first,input[type=password]:visible:first`
 
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+    //Either the base element as specified or the default
+    let outer_element = base_element.length > 0 ?
+        cy.top_layer(sel, window.elementChoices[base_element]) :
+        cy.top_layer(sel)
+
+    outer_element.within(() => {
 
         let elm = null
 
@@ -385,10 +390,15 @@ Given("I {click_type} the {elm_type} element labeled {string}", (click_type, ele
  * @param {string} path - the path of the file to upload
  * @description Selects a file path to upload into input named name
  */
-Given("I set the input file field named {string} to the file at path {string}", (name, path) => {
+Given("I set the input file field named {string} to the file at path {string}{baseElement}", (name, path, base_element) => {
     let sel = 'input[name=' + name + ']'
 
-    cy.get_top_layer(($el) => { expect($el.find(sel)).length.to.be.above(0)} ).within(() => {
+    //Either the base element as specified or the default
+    let outer_element = base_element.length > 0 ?
+        cy.top_layer(sel, window.elementChoices[base_element]) :
+        cy.top_layer(sel)
+
+    outer_element.within(() => {
         cy.get('input[name=' + name + ']').then(($field) => {
             cy.wrap($field).selectFile(path)
         })

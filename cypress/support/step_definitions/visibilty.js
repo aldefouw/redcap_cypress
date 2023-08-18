@@ -147,12 +147,18 @@ Given("I (should )see a dialog containing the following text: {string}", (text) 
  * @param {string} text - the label of the link that should be seen on screen (matches partially)
  * @description Verifies that a visible element of the specified type containing `text` exists
  */
-Given("I should see a {LabeledElement} labeled {string}", (el, text) => {
+Given("I should see a {LabeledElement} labeled {string}{baseElement}", (el, text, base_element) => {
     // double quotes need to be re-escaped before inserting into :contains() selector
     text = text.replaceAll('\"', '\\\"')
     let subsel = {'link':'a', 'button':'button'}[el]
     let sel = `${subsel}:contains("${text}"):visible` + (el === 'button' ? `,input[value="${text}"]:visible` : '')
-    cy.get_top_layer(($e) => {expect($e.find(sel).length).to.be.above(0)})
+
+    //Either the base element as specified or the default
+    let outer_element = base_element.length > 0 ?
+        cy.top_layer(label_selector, window.elementChoices[base_element]) :
+        cy.top_layer(label_selector)
+
+    cy.top_layer(sel, outer_element)
 })
 
 /**
@@ -162,12 +168,18 @@ Given("I should see a {LabeledElement} labeled {string}", (el, text) => {
  * @param {string} text - the label of the link that should not be seen on screen (matches partially)
  * @description Verifies that there are no visible elements of the specified type with the label `text`
  */
-Given("I should NOT see a {LabeledElement} labeled {string}", (el, text) => {
+Given("I should NOT see a {LabeledElement} labeled {string}{baseElement}", (el, text, base_element) => {
     // double quotes need to be re-escaped before inserting into :contains() selector
     text = text.replaceAll('\"', '\\\"')
     let subsel = {'link':'a', 'button':'button'}[el]
     let sel = `${subsel}:contains("${text}"):visible` + (el === 'button' ? `,button[value="${text}"]:visible` : '')
-    cy.get_top_layer(($e) => {console.log(sel);expect($e.find(sel)).to.have.lengthOf(0)})
+
+    //Either the base element as specified or the default
+    let outer_element = base_element.length > 0 ?
+        cy.top_layer(label_selector, window.elementChoices[base_element]) :
+        cy.top_layer(label_selector)
+
+    cy.get_top_layer(outer_element, ($e) => {console.log(sel);expect($e.find(sel)).to.have.lengthOf(0)})
 })
 
 /**
