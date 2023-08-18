@@ -95,7 +95,10 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
     let outer_element = 'div[role=dialog][style*=z-index]:visible,html'
 
     if(base_element.length > 0 && iframe !== ' in the iframe'){
+        console.log(base_element)
         outer_element = window.elementChoices[base_element]
+        console.log(window.elementChoices)
+        console.log(outer_element)
     }
 
     if (iframe === " in the iframe"){
