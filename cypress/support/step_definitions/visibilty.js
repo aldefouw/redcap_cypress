@@ -263,7 +263,11 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
                 header.forEach((heading) => {
                     columns[heading] = null
                     for(let i = 0; i < $cells.length; i++){
-                        if (Cypress.$($cells[i]).text().includes(heading)) {
+                        if (Cypress.$($cells[i]).text().includes(heading) && columns[heading] === null) {
+                            // console.log(heading)
+                            // console.log(i)
+                            // console.log(Cypress.$($cells[i]).text())
+                            // console.log(Cypress.$($cells[i]).text().includes(heading))
                             columns[heading] = i + 1
                         }
                     }
