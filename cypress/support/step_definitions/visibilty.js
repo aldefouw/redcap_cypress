@@ -152,13 +152,7 @@ Given("I should see a {LabeledElement} labeled {string}{baseElement}", (el, text
     text = text.replaceAll('\"', '\\\"')
     let subsel = {'link':'a', 'button':'button'}[el]
     let sel = `${subsel}:contains("${text}"):visible` + (el === 'button' ? `,input[value="${text}"]:visible` : '')
-
-    //Either the base element as specified or the default
-    let outer_element = base_element.length > 0 ?
-        cy.top_layer(label_selector, window.elementChoices[base_element]) :
-        cy.top_layer(label_selector)
-
-    cy.top_layer(sel, outer_element)
+    cy.top_layer(sel, window.elementChoices[base_element])
 })
 
 /**
@@ -174,12 +168,7 @@ Given("I should NOT see a {LabeledElement} labeled {string}{baseElement}", (el, 
     let subsel = {'link':'a', 'button':'button'}[el]
     let sel = `${subsel}:contains("${text}"):visible` + (el === 'button' ? `,button[value="${text}"]:visible` : '')
 
-    //Either the base element as specified or the default
-    let outer_element = base_element.length > 0 ?
-        cy.top_layer(label_selector, window.elementChoices[base_element]) :
-        cy.top_layer(label_selector)
-
-    cy.get_top_layer(outer_element, ($e) => {console.log(sel);expect($e.find(sel)).to.have.lengthOf(0)})
+    cy.get_top_layer(window.elementChoices[base_element], ($e) => {console.log(sel);expect($e.find(sel)).to.have.lengthOf(0)})
 })
 
 /**
