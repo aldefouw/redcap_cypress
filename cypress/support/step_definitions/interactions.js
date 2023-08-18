@@ -313,13 +313,44 @@ Given('I clear the field labeled {string}', (label) => {
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the table cell containing a link labeled {string}
- * @param {string} text - the text in the table cell
+ * @example I click on a table cell containing the text {string} in the data access groups table and clear field and (clear field and) enter {string}
+ * @param {string} text - the text to locate the table cell
+ * @param {string} table - the name of the table
+ * @param {string} new_text - new text to type
  * @description Clicks on a table cell that is identified by a particular text string specified.
  */
-Given('I click on the table cell containing a link labeled {string}', (text) => {
-    cy.get('td').contains(text).parent().find('a').click()
+Given('I click on (a)(the) table cell containing the text {string}( in)( the) {tableTypes} table and {enter_type} {string}', (text, table_type, enter_type, new_text) => {
+    let selector = window.tableMappings[table_type]
+    cy.get(selector).within(() => {
+        cy.get(`td:contains(${JSON.stringify(text)}):visible`).
+        find(`a:contains(${JSON.stringify(text)}):visible:first, span:contains(${JSON.stringify(text)}):visible:first`).
+        eq(0).then(($element) => {
+            cy.wrap($element).click()
+
+            if(enter_type === "clear field and enter"){
+                cy.wrap($element).clear().type(`${new_text}{enter}`)
+            } else if (enter_type === "enter"){
+                cy.wrap($element).type(`${new_text}{enter}`)
+            }
+        })
+    })
 })
+
+/**
+ * @module RecordStatusDashboard
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I click the X to delete the data access group named {string}
+ * @param {string} event - name of the event displayed on the Record Home Page
+ * @description Activates a pop-up confirming that user wants to delete all data on a specific even within a record
+ */
+
+Given("I click the X to delete the data access group named {string}", (dag_name) => {
+    cy.table_cell_by_column_and_row_label("Delete", dag_name).then(($td) => {
+        cy.wrap($td).find('a:visible:first').click()
+        cy.get('.ui-dialog').should('contain.text', 'Delete group')
+    })
+})
+
 
 /**
  * @module Interactions
