@@ -302,15 +302,19 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
                     //See if at least one row matches the criteria we are suggesting
                     cy.get(row_selector).should('have.length.greaterThan', 0).then(($row) => {
                         filter_selector.forEach((item) => {
-                            cy.wrap($row).find(`td:nth-child(${item['column']})`).eq(0).then(($cell) => {
+                            cy.wrap($row).find(`td:nth-child(${item['column']})`).each(($cell) => {
+
                                 const value =  item['value']
+
                                 //Special case for RegEx on date / time formats
-                                if(item['regex']){
+                                if(item['regex'] && window.dateFormats[value].test($cell.text()) ){
                                     expect($cell.text()).to.match(window.dateFormats[value])
+
                                 //All other cases are straight up text matches
-                                } else {
+                                } else if ( $cell.text().includes(item['value']) ) {
                                     expect($cell).to.contain(item['value'])
                                 }
+
                             })
                         })
                     })
