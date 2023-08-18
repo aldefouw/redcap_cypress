@@ -65,8 +65,8 @@ Feature: B.2.6.300 The system shall allow instrument level data export rights to
     When I click on the link labeled "Logging"
     Then I should see a table header and rows containing the following values in the logging table:
       | Time / Date      | Username   | Action      | List of Data ChangesOR Fields Exported  |
-      | mm/dd/yyyy hh:mm | test_user1 | Update user | user = 'test_user1'                     |
-      | mm/dd/yyyy hh:mm | test_user1 | Data export | user = 'test_user1'                     |
+      | mm/dd/yyyy hh:mm | test_user1 | Data export | Download exported data file (CSV raw)   |
+      | mm/dd/yyyy hh:mm | test_admin | Add user    | user = 'test_user1'                     |
 
     #SETUP
     Given I logout
