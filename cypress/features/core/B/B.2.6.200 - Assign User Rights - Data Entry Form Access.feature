@@ -27,7 +27,7 @@ Feature: B.2.6.200 Assign user rights Project Level:  The system shall allow dat
 
     Given I upload a "csv" format file located at "import_files/user list for project 1.csv", by clicking the button near "Select your CSV" to browse for the file, and clicking the button labeled "Upload" to upload the file
     Then I should see a dialog containing the following text: "Upload users (CSV) - Confirm"
-    And I should see a table header and rows containing the following values in the a table:
+    And I should see a table header and rows containing the following values in a table:
       | username   |
       | test_user1 |
       | test_user2 |
@@ -38,7 +38,7 @@ Feature: B.2.6.200 Assign user rights Project Level:  The system shall allow dat
     Then I should see a dialog containing the following text: "SUCCESS!"
     And I close the popup
 
-    And I should see a table header and rows containing the following values in the a table:
+    And I should see a table header and rows containing the following values in a table:
       |Role name                | Username   |
       |                         | test_admin |
       |                         | test_user1 |

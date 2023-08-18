@@ -19,7 +19,7 @@ Feature: B.2.6.400 Assign user rights Project Level:  The system shall allow for
 
     ##VERIFY_UR
     When I click on the button labeled "Create role" in the dialog box
-    Then I should see a table header and rows containing the following values in the a table:
+    Then I should see a table header and rows containing the following values in a table:
       | Role name               |
       | 1_FullRights            |
       | 2_Edit_RemoveID         |
@@ -47,7 +47,7 @@ Feature: B.2.6.400 Assign user rights Project Level:  The system shall allow for
     And I click on the button labeled "Cancel" in the dialog box
 
     ##VERIFY
-    Then I should see a table header and rows containing the following values in the a table:
+    Then I should see a table header and rows containing the following values in a table:
       | Role name               |
       | 1_FullRights            |
       | 2_Edit_RemoveID         |
@@ -66,7 +66,7 @@ Feature: B.2.6.400 Assign user rights Project Level:  The system shall allow for
 
     ##VERIFY
     Then I should NOT see "TestRole2"
-    But I should see a table header and rows containing the following values in the a table:
+    But I should see a table header and rows containing the following values in a table:
       | Role name               |
       | 1_FullRights            |
       | 2_Edit_RemoveID         |
