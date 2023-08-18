@@ -167,7 +167,6 @@ Given("I should NOT see a {LabeledElement} labeled {string}{baseElement}", (el, 
     text = text.replaceAll('\"', '\\\"')
     let subsel = {'link':'a', 'button':'button'}[el]
     let sel = `${subsel}:contains("${text}"):visible` + (el === 'button' ? `,button[value="${text}"]:visible` : '')
-
     cy.get_top_layer(window.elementChoices[base_element], ($e) => {console.log(sel);expect($e.find(sel)).to.have.lengthOf(0)})
 })
 
