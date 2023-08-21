@@ -8,7 +8,8 @@ window.tableMappings = {
     'report data' : ['div.dataTables_scrollHeadInner table', 'table#report_table'],
     'define events' : 'table#event_table',
     'data access groups' : 'table#table-dags_table',
-    'DAGs Switcher' : 'div#dag-switcher-config-container-parent table'
+    'DAGs Switcher' : 'div#dag-switcher-config-container-parent table',
+    'record status dashboard': 'table#record_status_table'
 }
 
 window.dateFormats = {
