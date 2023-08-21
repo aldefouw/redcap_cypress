@@ -354,7 +354,7 @@ Given(/^I click on (?:a|the) table cell containing the text "(.*?)"(?: in)?(?: t
 
 Given("I click the X to delete the data access group named {string}", (dag_name) => {
     cy.table_cell_by_column_and_row_label("Delete", dag_name).then(($td) => {
-        cy.wrap($td).find('a:visible:first img').scrollIntoView().click()
+        cy.wrap($td).find('a:visible:first').click({ waitForAnimations: false })
         cy.get('.ui-dialog').should('contain.text', 'Delete group')
     })
 })
