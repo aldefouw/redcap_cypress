@@ -319,7 +319,13 @@ Given('I clear the field labeled {string}', (label) => {
  * @param {string} new_text - new text to type
  * @description Clicks on a table cell that is identified by a particular text string specified.
  */
-Given('I click on (a)(the) table cell containing the text {string}( in)( the) {tableTypes} table and {enter_type} {string}', (text, table_type, enter_type, new_text) => {
+Given(/^I click on (?:a|the) table cell containing the text "(.*?)"(?: in)?(?: the)? (.*?) table(?: and (.*?) "(.*?)")?$/, (text, table_type, enter_type = '', new_text = '') => {
+    if(table_type === 'data access groups'){
+        cy.intercept({
+            method: 'GET',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/index.php?route=DataAccessGroupsController:getDagSwitcherTable&tablerowsonly=1&pid=*&rowoption=dags*'
+        }).as('dag_data')
+    }
     let selector = window.tableMappings[table_type]
     cy.get(selector).within(() => {
         cy.get(`td:contains(${JSON.stringify(text)}):visible`).
@@ -329,8 +335,10 @@ Given('I click on (a)(the) table cell containing the text {string}( in)( the) {t
 
             if(enter_type === "clear field and enter"){
                 cy.wrap($element).clear().type(`${new_text}{enter}`)
+                if(table_type === 'data access groups') cy.wait('@dag_data')
             } else if (enter_type === "enter"){
                 cy.wrap($element).type(`${new_text}{enter}`)
+                if(table_type === 'data access groups') cy.wait('@dag_data')
             }
         })
     })
@@ -346,7 +354,7 @@ Given('I click on (a)(the) table cell containing the text {string}( in)( the) {t
 
 Given("I click the X to delete the data access group named {string}", (dag_name) => {
     cy.table_cell_by_column_and_row_label("Delete", dag_name).then(($td) => {
-        cy.wrap($td).find('a:visible:first img').scrollIntoView().click({force: true})
+        cy.wrap($td).find('a:visible:first img').scrollIntoView().click()
         cy.get('.ui-dialog').should('contain.text', 'Delete group')
     })
 })
