@@ -6,41 +6,82 @@ Feature: B.2.10.200 Data Access Groups-DAGs User Interface: The system shall sup
   Scenario: B.2.10.200.100 Assign & Remove User to DAG
     #SETUP
     Given I login to REDCap with the user "Test_Admin"
-    And I create a new project named "B.2.10.200.100" by clicking on "New Project" in the menu bar, selecting "Practice / Just for fun" from the dropdown, choosing file "Project_1.xml" and clicking the "Create Project" button
+    And I create a new project named "B.2.10.200.100" by clicking on "New Project" in the menu bar, selecting "Practice / Just for fun" from the dropdown, choosing file "Project_1.xml", and clicking the "Create Project" button
     When I click on the link labeled "My Projects"
     And I click on the link labeled "B.2.10.200.100"
     And I click on the link labeled "User Rights"
-    And I select "Upload users (CSV)" from the dropdown "Upload or download users, roles, and assignments"
-    And I choose file "User_list_for_Project_1" and click the "Upload" button
-    And I click the button "Upload"
-    Then I should see "Test_User1"
-    And I click on the link labeled "DAGs"
+    And I click on the button labeled "Upload or download users, roles, and assignments"
+    Then I should see "Upload users (CSV)"
+
+    When I click on the link labeled "Upload users (CSV)"
+    Then I should see a dialog containing the following text: "Upload users (CSV)"
+
+    Given I upload a "csv" format file located at "import_files/user list for project 1.csv", by clicking the button near "Select your CSV" to browse for the file, and clicking the button labeled "Upload" to upload the file
+    Then I should see a dialog containing the following text: "Upload users (CSV) - Confirm"
+    And I should see a table header and rows containing the following values in a table:
+      | username   |
+      | test_user1 |
+      | test_user2 |
+      | test_user3 |
+      | test_user4 |
+
+    Given I click on the button labeled "Upload"
+    Then I should see a dialog containing the following text: "SUCCESS!"
+
+    When I close the popup
+    Then I should see a table header and rows containing the following values in a table:
+      |Role name                | Username   |
+      |                         | test_admin |
+      |                         | test_user1 |
+      |                         | test_user2 |
+      |                         | test_user3 |
+      |                         | test_user4 |
+      | 1_FullRights            |            |
+      | 2_Edit_RemoveID         |            |
+      | 3_ReadOnly_Deidentified |            |
+      | 4_NoAccess_Noexport     |            |
+      | TestRole                |            |
+
+    When I click on the link labeled "DAGs"
     Then I should see "Assign user to a group"
 
     #FUNCTIONAL REQUIREMENT
     ##ACTION: Assign User to DAG
-    When I select "Test_User1" from "Assign User" dropdown
-    And I select "TestGroup1" from "DAG" dropdown
-    And I click on the link labeled "Assign"
+    When I select "test_user1 (Test User1)" on the dropdown field labeled "Assign user"
+    When I select "TestGroup1" on the dropdown field labeled "to"
+    And I click on the button labeled "Assign"
+
     ##VERIFY: DAG assignment
-    Then I should see "TestGroup1" assigned to "Test_User1" user
+    Then I should see a table header and rows containing the following values in data access groups table:
+      | Data Access Groups      | Users in group |
+      | TestGroup1              | test_user1     |
+
     ##VERIFY_LOG:
-    When I click on the button labeled "Logging"
-    Then I should see “Assign user to data access group” in the logging table
+    When I click on the link labeled "Logging"
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action           | List of Data ChangesOR Fields Exported  |
+      | mm/dd/yyyy hh:mm | test_admin | Manage/Design    | Assign user to data access group        |
+      | mm/dd/yyyy hh:mm | test_admin | Manage/Design    | user = 'test_user1'                     |
+      | mm/dd/yyyy hh:mm | test_admin | Manage/Design    | group = 'TestGroup1'                    |
     And I logout
+
     Given I login to REDCap with the user "Test_User1"
     When I click on the link labeled "My Projects"
     And I click on the link labeled "B.2.10.200.100"
+
     ##VERIFY: Access to DAG Module restricted
-    And I click on the link labeled "Data Access Group"
+    And I click on the button labeled "Data Access Groups"
     Then I should see "RESTRICTED:"
+
     ##VERIFY_UR: DAG assignment
-    When I click on “User Rights”
-    Then I should see "TestGroup1" assigned to "Test_User1"user
+    When I click on the link labeled "User Rights"
+    Then I should see a table header and rows containing the following values in a table:
+      |Role name | Username   | Data Access Groups |
+      | —        | test_user1 | TestGroup1         |
+
     ##VERIFY_RSD:
-    When I click on "Record Status Dashboard"
-    Then I should see "3"
-    And I should NOT see "1"
+    When I click on the link labeled "Record Status Dashboard"
+    Then I should see "No records exist yet"
 
     #SETUP
     And I logout
@@ -49,23 +90,37 @@ Feature: B.2.10.200 Data Access Groups-DAGs User Interface: The system shall sup
     And I click on the link labeled "B.2.10.200.100"
     And I click on the link labeled "DAGs"
     Then I should see "Assign user to a group"
+
     ##ACTION: Remove DAG
-    When I select "Test_User1" from "Assign User" dropdown
-    And I select "[No Assignment]" from "DAG" dropdown
-    And I click on the link labeled "Assign"
+    When I select "test_user1 (Test User1)" on the dropdown field labeled "Assign user"
+    When I select "[No Assignment]" on the dropdown field labeled "to"
+    And I click on the button labeled "Assign"
+
     ##VERIFY
-    Then I should see "[No Assignment]" assigned to "Test_User1" user
+    Then I should see a table header and rows containing the following values in data access groups table:
+      | Data Access Groups        | Users in group          |
+      | [Not assigned to a group] | test_user1 (Test User1) |
     And I logout
+
     Given I login to REDCap with the user "Test_User1"
     When I click on the link labeled "My Projects"
     And I click on the link labeled "B.2.10.200.100"
+
     ##VERIFY: Access to DAG Module
-    And I click on the link labeled "Data Access Group"
+    And I click on the button labeled "Data Access Group"
     Then I should see "Assign user to a group"
+
     ##VERIFY_UR
-    When I click on “User Rights”
-    Then I should see "-" assigned to "Test_User1"user
+    When I click on the link labeled "User Rights"
+    Then I should see a table header and rows containing the following values in a table:
+      |Role name | Username   | Data Access Groups |
+      | —        | test_user1 |                    |
+
     ##VERIFY_RSD:
-    When I click on "Record Status Dashboard"
-    Then I should see "3"
-    And I should see "1"
+    When I click on the link labeled "Record Status Dashboard"
+    Then I should see a table header and rows containing the following values in the record status dashboard table:
+      | Record ID |
+      | 1         |
+      | 2         |
+      | 3         |
+      | 4         |
