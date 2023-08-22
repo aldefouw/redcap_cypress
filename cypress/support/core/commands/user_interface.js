@@ -19,14 +19,19 @@ Cypress.Commands.add("dragTo", { prevSubject: 'element'}, (subject, target) => {
 
 })
 
-Cypress.Commands.add("table_cell_by_column_and_row_label", (column_label, row_label, table_selector= 'table', header_row_type = 'th', row_cell_type = 'td', row_number = 0) => {
+Cypress.Commands.add("table_cell_by_column_and_row_label", (column_label, row_label, table_selector= 'table', header_row_type = 'th', row_cell_type = 'td', row_number = 0, body_table = 'table') => {
     let column_num = 0
     let table_cell = null
     let selector = `${table_selector}:has(${header_row_type}:contains(${JSON.stringify(column_label)}):visible):visible`
     let td_selector = `tr:has(${row_cell_type}:visible):visible`
 
     if(row_number === 0) {
-        selector = `${table_selector}:has(${row_cell_type}:contains(${JSON.stringify(row_label)}):visible,${header_row_type}:contains(${JSON.stringify(column_label)}):visible):visible`
+        if(table_selector !== body_table){
+            selector = `${table_selector}:has(${header_row_type}:contains(${JSON.stringify(column_label)}):visible):visible`
+        } else {
+            selector = `${table_selector}:has(${row_cell_type}:contains(${JSON.stringify(row_label)}):visible,${header_row_type}:contains(${JSON.stringify(column_label)}):visible):visible`
+        }
+
         td_selector = `tr:has(${row_cell_type}:contains(${JSON.stringify(row_label)}):visible):visible`
     }
 
@@ -40,6 +45,10 @@ Cypress.Commands.add("table_cell_by_column_and_row_label", (column_label, row_la
             })
         })
     }).then(() => {
+
+        if(body_table !== 'table'){
+            selector = `${body_table}:has(${header_row_type}:contains(${JSON.stringify(column_label)}):visible):visible`
+        }
 
         cy.get(selector).within(() => {
             cy.get(td_selector).then(($td) => {

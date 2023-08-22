@@ -386,6 +386,27 @@ Given("I {click_type} the {checkBoxRadio} labeled {string}{baseElement}", (check
 /**
  * @module Interactions
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I < click on | check | uncheck > the checkbox labeled {string}
+ * @param {string} label - the label associated with the checkbox field
+ * @description Selects a checkbox field by its label
+ */
+Given("I {click_type} {string} for user {string} in the DAG Switcher{baseElement}", (click_type, dag, user, base_element) => {
+    if(Cypress.$('img[src*="progress"]').length) cy.get('img[src*="progress"]').should('not.be.visible')
+
+    cy.table_cell_by_column_and_row_label(user, dag, 'div.dataTables_scrollHead table', 'th', 'td', 0, 'div.dataTables_scrollBody table').then(($td) => {
+        if(click_type === "click on"){
+            cy.wrap($td).next('td').find('input[type=checkbox]:visible:first').click({ waitForAnimations: false })
+        } else if (click_type === "check"){
+            cy.wrap($td).next('td').find('input[type=checkbox]:visible:first').check({ waitForAnimations: false })
+        } else if (click_type === "uncheck"){
+            cy.wrap($td).next('td').find('input[type=checkbox]:visible:first').uncheck({ waitForAnimations: false })
+        }
+    })
+})
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
  * @example I click on the input element labeled {string}
  * @param {string} label - the label associated with the checkbox field
  * @description Selects a checkbox field by its label

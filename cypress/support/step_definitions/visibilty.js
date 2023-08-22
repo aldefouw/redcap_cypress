@@ -244,6 +244,7 @@ Given('I (should )see Project status: "{projectStatus}"', (status) => {
  */
 Given('I (should )see (a )table {headerOrNot}row(s) containing the following values in (the ){tableTypes} table:', (header, table_type = 'a', dataTable) => {
     if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
+    if(Cypress.$('span#progress_img_user').length) cy.get('span#progress_img_user').should('not.be.visible')
 
     let selector = window.tableMappings[table_type]
     let tabular_data = dataTable['rawTable']
@@ -323,6 +324,7 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
                                 //All other cases are straight up text matches
                                 } else if ( $cell.text().includes(item['value']) ) {
                                     expect($cell).to.contain(item['value'])
+                                    if(item['value'] === "") expect($cell.text().trim().length).to.equal(0)
                                 }
 
                             })
