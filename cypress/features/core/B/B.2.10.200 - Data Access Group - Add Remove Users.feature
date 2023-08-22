@@ -30,17 +30,17 @@ Feature: B.2.10.200 Data Access Groups-DAGs User Interface: The system shall sup
 
     When I close the popup
     Then I should see a table header and rows containing the following values in a table:
-      |Role name                | Username   |
-      |                         | test_admin |
-      |                         | test_user1 |
-      |                         | test_user2 |
-      |                         | test_user3 |
-      |                         | test_user4 |
-      | 1_FullRights            |            |
-      | 2_Edit_RemoveID         |            |
-      | 3_ReadOnly_Deidentified |            |
-      | 4_NoAccess_Noexport     |            |
-      | TestRole                |            |
+      | Role name               | Username            |
+      | —                       | test_admin          |
+      | —                       | test_user1          |
+      | —                       | test_user2          |
+      | —                       | test_user3          |
+      | —                       | test_user4          |
+      | 1_FullRights            | [No users assigned] |
+      | 2_Edit_RemoveID         | [No users assigned] |
+      | 3_ReadOnly_Deidentified | [No users assigned] |
+      | 4_NoAccess_Noexport     | [No users assigned] |
+      | TestRole                | [No users assigned] |
 
     When I click on the link labeled "DAGs"
     Then I should see "Assign user to a group"

@@ -213,9 +213,9 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
 
     Then I should see a table header and rows containing the following values in the logging table:
-      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported              |
-      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Approve production project modifications (automatic) |
-      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Create project field                                 |
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported                |
+      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Approve production project modifications (automatic)  |
+      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Create project field                                  |
 
   Scenario: A.6.4.400.300 User’s ability to approve draft changes without administrative approval if no critical issues exist
     Given I login to REDCap with the user "Test_Admin"
@@ -380,11 +380,11 @@ Feature: A.6.4.400 Manage project creation, deletion, and settings
     # We would expect to see ONLY the raw value (100) in the report data table
 
     Given I see a table header and rows containing the following values in the report data table:
-      | Record ID | Event Name             | Radio Button Manual |
-      | 1         | Event 1 (Arm 1: Arm 1) |                     |
-      | 2         | Event 1 (Arm 1: Arm 1) | (100)               |
-      | 3         | Event 1 (Arm 1: Arm 1) | (100)               |
-      | 4         | Event 1 (Arm 1: Arm 1) | (100)               |
+      | Record ID | Repeat Instrument      | Event Name             | Radio Button Manual |
+      | 1         | Data Types             | Event 1 (Arm 1: Arm 1) |                     |
+      | 2         | Data Types             | Event 1 (Arm 1: Arm 1) | (100)               |
+      | 3         | Data Types             | Event 1 (Arm 1: Arm 1) | (100)               |
+      | 4         | Data Types             | Event 1 (Arm 1: Arm 1) | (100)               |
 
     When I click on the link labeled "Designer"
 

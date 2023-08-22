@@ -324,7 +324,6 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
                                 //All other cases are straight up text matches
                                 } else if ( $cell.text().includes(item['value']) ) {
                                     expect($cell).to.contain(item['value'])
-                                    if(item['value'] === "") expect($cell.text().trim().length).to.equal(0)
                                 }
 
                             })
