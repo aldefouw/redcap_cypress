@@ -263,17 +263,21 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
         let columns = {}
         let header = tabular_data[0]
 
-        cy.top_layer(`${header_table}:visible tr:first td,th`).within(() => {
+        cy.top_layer(`${header_table}:visible tr:visible:first td:visible,th:visible`).within(() => {
 
-            cy.get(`${header_table}:visible tr:first td,th`).then(($cells) => {
+            cy.get(`${header_table}:visible tr:visible:first td:visible,th:visible`).then(($cells) => {
                 header.forEach((heading) => {
                     columns[heading] = null
                     for(let i = 0; i < $cells.length; i++){
-                        if (Cypress.$($cells[i]).text().includes(heading) && columns[heading] === null) {
-                            // console.log(heading)
-                            // console.log(i)
-                            // console.log(Cypress.$($cells[i]).text())
-                            // console.log(Cypress.$($cells[i]).text().includes(heading))
+                        let current_cell = $cells.eq(i)
+
+                        // console.log(current_cell[0])
+                        // console.log(heading)
+                        // console.log(i)
+                        // console.log(current_cell.text())
+                        //console.log(current_cell.text().includes(heading))
+
+                        if (current_cell.text().includes(heading) && columns[heading] === null) {
                             columns[heading] = i + 1
                         }
                     }
