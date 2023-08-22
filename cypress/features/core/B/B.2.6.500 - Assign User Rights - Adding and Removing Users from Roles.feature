@@ -30,17 +30,17 @@ Feature: B.2.6.500 Assign user rights Project Level:  The system shall support a
 
     When I close the popup
     Then I should see a table header and rows containing the following values in a table:
-      |Role name                | Username   |
-      |                         | test_admin |
-      |                         | test_user1 |
-      |                         | test_user2 |
-      |                         | test_user3 |
-      |                         | test_user4 |
-      | 1_FullRights            |            |
-      | 2_Edit_RemoveID         |            |
-      | 3_ReadOnly_Deidentified |            |
-      | 4_NoAccess_Noexport     |            |
-      | TestRole                |            |
+      |Role name                | Username            |
+      | —                       | test_admin          |
+      | —                       | test_user1          |
+      | —                       | test_user2          |
+      | —                       | test_user3          |
+      | —                       | test_user4          |
+      | 1_FullRights            | [No users assigned] |
+      | 2_Edit_RemoveID         | [No users assigned] |
+      | 3_ReadOnly_Deidentified | [No users assigned] |
+      | 4_NoAccess_Noexport     | [No users assigned] |
+      | TestRole                | [No users assigned] |
 
     #FUNCTIONAL REQUIREMENT
     ##ACTION: Cancel assign to role
@@ -51,17 +51,17 @@ Feature: B.2.6.500 Assign user rights Project Level:  The system shall support a
 
     ##VERIFY
     Then I should see a table header and rows containing the following values in a table:
-      |Role name                | Username   |
-      |                         | test_admin |
-      |                         | test_user1 |
-      |                         | test_user2 |
-      |                         | test_user3 |
-      |                         | test_user4 |
-      | 1_FullRights            |            |
-      | 2_Edit_RemoveID         |            |
-      | 3_ReadOnly_Deidentified |            |
-      | 4_NoAccess_Noexport     |            |
-      | TestRole                |            |
+      |Role name                | Username            |
+      | —                       | test_admin          |
+      | —                       | test_user1          |
+      | —                       | test_user2          |
+      | —                       | test_user3          |
+      | —                       | test_user4          |
+      | 1_FullRights            | [No users assigned] |
+      | 2_Edit_RemoveID         | [No users assigned] |
+      | 3_ReadOnly_Deidentified | [No users assigned] |
+      | 4_NoAccess_Noexport     | [No users assigned] |
+      | TestRole                | [No users assigned] |
 
     ##ACTION: Assign to role
     When I click on the link labeled "Test User1"
@@ -71,16 +71,16 @@ Feature: B.2.6.500 Assign user rights Project Level:  The system shall support a
 
     ##VERIFY
     Then I should see a table header and rows containing the following values in a table:
-      |Role name                | Username   |
-      |                         | test_admin |
-      |                         | test_user2 |
-      |                         | test_user3 |
-      |                         | test_user4 |
-      | 1_FullRights            |            |
-      | 2_Edit_RemoveID         |            |
-      | 3_ReadOnly_Deidentified |            |
-      | 4_NoAccess_Noexport     |            |
-      | TestRole                | test_user1 |
+      |Role name                | Username            |
+      | —                       | test_admin          |
+      | —                       | test_user2          |
+      | —                       | test_user3          |
+      | —                       | test_user4          |
+      | 1_FullRights            | [No users assigned] |
+      | 2_Edit_RemoveID         | [No users assigned] |
+      | 3_ReadOnly_Deidentified | [No users assigned] |
+      | 4_NoAccess_Noexport     | [No users assigned] |
+      | TestRole                | test_user1          |
 
     ##ACTION: Re-assign to role
     When I click on the link labeled "Test User1"
@@ -90,16 +90,16 @@ Feature: B.2.6.500 Assign user rights Project Level:  The system shall support a
 
     ##VERIFY
     Then I should see a table header and rows containing the following values in a table:
-      |Role name                | Username   |
-      |                         | test_admin |
-      |                         | test_user2 |
-      |                         | test_user3 |
-      |                         | test_user4 |
-      | 1_FullRights            | test_user1 |
-      | 2_Edit_RemoveID         |            |
-      | 3_ReadOnly_Deidentified |            |
-      | 4_NoAccess_Noexport     |            |
-      | TestRole                |            |
+      |Role name                | Username            |
+      | —                       | test_admin          |
+      | —                       | test_user1          |
+      | —                       | test_user2          |
+      | —                       | test_user3          |
+      | —                       | test_user4          |
+      | 2_Edit_RemoveID         | [No users assigned] |
+      | 3_ReadOnly_Deidentified | [No users assigned] |
+      | 4_NoAccess_Noexport     | [No users assigned] |
+      | TestRole                | [No users assigned] |
 
     ##ACTION: Remove from role
     When I click on the link labeled "Test User1"
@@ -107,17 +107,17 @@ Feature: B.2.6.500 Assign user rights Project Level:  The system shall support a
 
     ##VERIFY
     Then I should see a table header and rows containing the following values in a table:
-      |Role name                | Username   |
-      |                         | test_admin |
-      |                         | test_user2 |
-      |                         | test_user3 |
-      |                         | test_user4 |
-      |                         | test_user1 |
-      | 1_FullRights            |            |
-      | 2_Edit_RemoveID         |            |
-      | 3_ReadOnly_Deidentified |            |
-      | 4_NoAccess_Noexport     |            |
-      | TestRole                |            |
+      |Role name                | Username            |
+      | —                       | test_admin          |
+      | —                       | test_user1          |
+      | —                       | test_user2          |
+      | —                       | test_user3          |
+      | —                       | test_user4          |
+      | 1_FullRights            | [No users assigned] |
+      | 2_Edit_RemoveID         | [No users assigned] |
+      | 3_ReadOnly_Deidentified | [No users assigned] |
+      | 4_NoAccess_Noexport     | [No users assigned] |
+      | TestRole                | [No users assigned] |
 
     And I should see a dialog containing the following text: "User's privileges will remain the same"
     And I close the popup
