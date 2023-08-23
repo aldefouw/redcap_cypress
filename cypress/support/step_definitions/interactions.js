@@ -141,8 +141,13 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
  * @param {string} text - the text on the anchor element you want to click
  * @description Clicks on an anchor element with a specific text label.
  */
-Given("I click on the {linkNames} {labeledExactly} {string}{saveButtonRouteMonitoring}", (link_name, exactly, text, link_type) => {
+Given("I click on the {linkNames} {labeledExactly} {string}{saveButtonRouteMonitoring}{toDownloadFile}", (link_name, exactly, text, link_type, download) => {
     before_click_monitor(link_type)
+
+    if(download === " to download a file") {
+        const loadScript = '<script> setTimeout(() => location.reload(), 1000); </script>';
+        cy.get('body').invoke('append', loadScript);
+    }
 
     if(exactly === 'labeled exactly'){
         cy.get('a:visible').contains(new RegExp("^" + text + "$", "g")).click()
