@@ -20,11 +20,9 @@ Feature: Design forms Using Data Dictionary and Online Designer
     And I click on the link labeled "Download the current Data Dictionary" to download a file
 
     ##VERIFY
-    Then I should see the latest downloaded "csv" file containing the headings below
+    Then I should see the latest downloaded "csv" file containing the headings and rows below
         |"Variable / Field Name"|"Form Name"|"Section Header"|"Field Type"|"Field Label"|"Choices, Calculations, OR Slider Labels"|"Field Note"|"Text Validation Type OR Show Slider Number"|"Text Validation Min"|"Text Validation Max"|Identifier?|"Branching Logic (Show field only if...)"|"Required Field?"|"Custom Alignment"|"Question Number (surveys only)"|"Matrix Group Name"|"Matrix Ranking?"|"Field Annotation"|
-
-#    Then I should see the latest downloaded "csv" file containing the rows below
-#        |record_id              |data_types|                 |text        |"Record ID"  |||||||||||||
+        |record_id              |form_1     |                |text        |"Record ID"  |                                         |            |                                            |                     |                     |           |                                         |                 |                  |                                |                   |                 |                  |
 
     ##ACTION: Upload data dictionary
     When I click on the link labeled "Dictionary"
