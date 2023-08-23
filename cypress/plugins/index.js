@@ -15,6 +15,7 @@ const shell = require('shelljs')
 const sed_lite = require('sed-lite').sed
 const fs = require('fs')
 const csv = require('async-csv')
+const path = require('path')
 
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
@@ -146,6 +147,20 @@ module.exports = (on, config) => {
 	dbSeedLockExists(){
 		const file = shell.pwd() + '/test_db/initial_db_seed.lock'
 		return fs.existsSync(file)
+	},
+
+	fetchLatestDownload(){
+		const downloadsDir = shell.pwd() + '/cypress/downloads/'
+
+		// Read the files in the downloads directory
+		const files = fs.readdirSync(downloadsDir)
+
+		// Sort files by modification time to get the latest one
+		const latestFile = files
+			.map(file => ({ file, mtime: fs.statSync(path.join(downloadsDir, file)).mtime }))
+			.sort((a, b) => b.mtime - a.mtime)[0].file
+
+		return `${downloadsDir}${latestFile}`
 	}
 
   })
