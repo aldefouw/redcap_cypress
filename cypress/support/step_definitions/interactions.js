@@ -89,8 +89,13 @@ function after_click_monitor(type){
  * @param {string} text (optional) - < on the dialog box for the Repeatable Instruments and Events module>
  * @description Clicks on a button element with a specific text label.
  */
-Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}{baseElement}{iframeVisibility}", (exactly, text, button_type, base_element, iframe) => {
+Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}{baseElement}{iframeVisibility}{toDownloadFile}", (exactly, text, button_type, base_element, iframe, download) => {
     before_click_monitor(button_type)
+
+    if(download === " to download a file") {
+        const loadScript = '<script> setTimeout(() => location.reload(), 1000); </script>';
+        cy.get('body').invoke('append', loadScript);
+    }
 
     let outer_element = window.elementChoices[base_element]
 

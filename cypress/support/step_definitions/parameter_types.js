@@ -247,3 +247,8 @@ defineParameterType({
     name: 'headerOrNot',
     regexp: /||header and |/
 })
+
+defineParameterType({
+    name: 'toDownloadFile',
+    regexp: /|| to download a file|/
+})
