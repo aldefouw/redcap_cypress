@@ -175,6 +175,12 @@ Given("I should see that the {string} field contains the value of {string}", (fi
  * @description Clicks on a survey option label.  Track it via an optional tag.
  */
 Given(/^I click on the survey option label containing "(.*)" label(?: and want to track the response with a tag of "(.*)")?$/, (survey_option_label, tag = 'default_survey_option') => {
+    // Handle the beforeunload event to suppress the pop-up that says "Leave Site?"
+    cy.on('beforeunload', (e) => {
+        // Prevent the default behavior, which shows the pop-up
+        e.preventDefault();
+    });
+
     cy.window().then(win => {
         cy.stub(win, 'surveyOpen').callsFake((url, target) => {
             return win.open.wrappedMethod.call(win, url, '_self')
@@ -204,6 +210,8 @@ Given(/^I click on the survey option label containing "(.*)" label(?: and want t
 
         window.redcap_survey_link = link;
     })
+
+    cy.on('beforeunload', () => {});
 })
 
 /**
