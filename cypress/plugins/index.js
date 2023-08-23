@@ -149,14 +149,17 @@ module.exports = (on, config) => {
 		return fs.existsSync(file)
 	},
 
-	fetchLatestDownload(){
+	fetchLatestDownload({fileExtension}){
 		const downloadsDir = shell.pwd() + '/cypress/downloads/'
 
 		// Read the files in the downloads directory
 		const files = fs.readdirSync(downloadsDir)
 
+		// Filter files by extension
+		const filteredFiles = files.filter(file => path.extname(file) === `.${fileExtension}`);
+
 		// Sort files by modification time to get the latest one
-		const latestFile = files
+		const latestFile = filteredFiles
 			.map(file => ({ file, mtime: fs.statSync(path.join(downloadsDir, file)).mtime }))
 			.sort((a, b) => b.mtime - a.mtime)[0].file
 

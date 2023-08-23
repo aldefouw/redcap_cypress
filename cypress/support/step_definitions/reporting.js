@@ -309,18 +309,19 @@ Given("I click on the download icon(s) to receive the file(s) for the {string} f
  * @param {DataTable} headings the DataTable of headings this file should have
  * @description Interactions - Checks the number of rows (excluding header) the file should have
  */
-Given("I should have a {string} file that contains the headings below", (format, headings) => {
+Given(/^I should (see|have) (a|the latest downloaded) "(.*)" file (that contains|containing) the headings below?/, (see, latest, format, contains, headings) => {
+    cy.task('fetchLatestDownload', ({fileExtension: format})).then((latest_file) => {
+        if(latest !== "the latest downloaded") latest_file = "cypress/downloads" + '/test_file.' + format
 
-    cy.readFile("cypress/downloads" + '/test_file.' + format).then( ($text) => {
-        let lines = $text.trim().split('\n')
-        let header_line = headings.rawTable[0][0]
-        for(let i = 1; i < headings.rawTable[0].length; i++){
-            header_line += "," + headings.rawTable[0][i]
-        }
-
-        expect(lines[0]).to.equal(header_line)
+        cy.readFile(latest_file).then( ($text) => {
+            let lines = $text.trim().split('\n')
+            let header_line = headings.rawTable[0][0]
+            for(let i = 1; i < headings.rawTable[0].length; i++){
+                header_line += "," + headings.rawTable[0][i]
+            }
+            expect(lines[0]).to.equal(header_line)
+        })
     })
-
 })
 
 /**
