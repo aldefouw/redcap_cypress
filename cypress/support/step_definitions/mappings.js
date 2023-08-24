@@ -50,3 +50,16 @@ window.elementChoices = {
     ' on the dialog box' : 'div[role=dialog]:visible',
     ' in the dialog box' : 'div[role=dialog]:visible'
 }
+
+window.ordinalChoices = {
+    first: 0,
+    second: 1,
+    third: 2,
+    fourth: 3,
+    fifth: 4,
+    sixth: 5,
+    seventh: 6,
+    eighth: 7,
+    ninth: 8,
+    last: -1
+}

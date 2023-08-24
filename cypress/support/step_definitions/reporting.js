@@ -309,7 +309,7 @@ Given("I click on the download icon(s) to receive the file(s) for the {string} f
  * @param {DataTable} headings the DataTable of headings this file should have
  * @description Interactions - Checks the number of rows (excluding header) the file should have
  */
-Given(/^I should (see|have) (a|the latest downloaded) "(.*)" file (that contains|containing) the (headings|headings and rows) below?/, (see, latest, format, contains, type, headings) => {
+Given(/^I should (see|have) (a|the latest downloaded) "(.*)" file (that contains|containing|including) the (headings|headings and rows) below?/, (see, latest, format, contains, type, headings) => {
     cy.task('fetchLatestDownload', ({fileExtension: format})).then((latest_file) => {
         if(latest !== "the latest downloaded") latest_file = "cypress/downloads" + '/test_file.' + format
 
@@ -321,7 +321,9 @@ Given(/^I should (see|have) (a|the latest downloaded) "(.*)" file (that contains
             }
             expect(lines[0]).to.equal(header_line)
 
+            //This is the exact match option
             if(type === "headings and rows"){
+
                 for(let i = 1; i < lines.length; i++){
                     let body_row = headings.rawTable[i][0]
                     for(let h = 1; h < headings.rawTable[i].length; h++){
@@ -329,6 +331,12 @@ Given(/^I should (see|have) (a|the latest downloaded) "(.*)" file (that contains
                     }
                     expect(body_row).to.eq(lines[i])
                 }
+
+            //This is the "including" match option
+            } else if (type === "headings and rows" && contains === "including"){
+
+                //TODO: This needs to be implemented
+
             }
         })
     })

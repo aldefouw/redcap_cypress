@@ -1,5 +1,4 @@
 import { defineParameterType } from "cypress-cucumber-preprocessor/steps";
-import { ordinal_to_int } from '../core/commands.js'
 
 // This file contains definitions for custom parameter types used in step definitions.
 // Parameter type definitions have been consolidated here for easier reference and to avoid duplication.
@@ -51,8 +50,7 @@ defineParameterType({
 // interactions.js, temp_109_steps.js
 defineParameterType({
     name: 'ordinal',
-    regexp: /(?:(first|second|third|fourth|fifth|sixth|seventh|eighth|last) )?/,
-    transformer: ordinal_to_int
+    regexp: /(?: (first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|last||))?/,
 })
 
 // interactions.js

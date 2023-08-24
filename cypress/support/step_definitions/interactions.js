@@ -89,7 +89,10 @@ function after_click_monitor(type){
  * @param {string} text (optional) - < on the dialog box for the Repeatable Instruments and Events module>
  * @description Clicks on a button element with a specific text label.
  */
-Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring}{baseElement}{iframeVisibility}{toDownloadFile}", (exactly, text, button_type, base_element, iframe, download) => {
+Given("I click on the{ordinal} button {labeledExactly} {string}{saveButtonRouteMonitoring}{baseElement}{iframeVisibility}{toDownloadFile}", (ordinal, exactly, text, button_type, base_element, iframe, download) => {
+    let ord = 0
+    if(ordinal !== undefined) ord = window.ordinalChoices[ordinal]
+
     before_click_monitor(button_type)
 
     if(download === " to download a file") {
@@ -104,29 +107,29 @@ Given("I click on the button {labeledExactly} {string}{saveButtonRouteMonitoring
 
         if(exactly === 'labeled exactly'){
             base.within(() => {
-                cy.get('button:visible').contains(new RegExp("^" + text + "$", "g")).click()
+                cy.get('button:visible,input[value*=""]:visible').contains(new RegExp("^" + text + "$", "g")).eq(ord).click()
             })
         } else {
-            let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
+            let sel = `button:contains("${text}"):visible,input[value*="${text}"]:visible`
 
             base.within(() => {
-                cy.get(sel).click()
+                cy.get(sel).eq(ord).click()
             })
         }
 
     } else {
         if(exactly === 'labeled exactly'){
-            let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
+            let sel = `button:contains("${text}"):visible,input[value*=""]:visible`
 
             cy.top_layer(sel, outer_element).within(() => {
-                cy.get(':button:visible').contains(new RegExp("^" + text + "$", "g")).click()
+                cy.get(':button:visible,input[value*=""]:visible').contains(new RegExp("^" + text + "$", "g")).eq(ord).click()
             })
 
         } else {
-            let sel = `button:contains("${text}"):visible:first,input[value*="${text}"]:visible:first`
+            let sel = `button:contains("${text}"):visible,input[value*="${text}"]:visible`
 
             cy.top_layer(sel, outer_element).within(() => {
-                cy.get(sel).click()
+                cy.get(sel).eq(ord).click()
             })
         }
     }
@@ -228,15 +231,14 @@ Given('I {enter_type} {string} into the input field labeled {string}{baseElement
         cy.top_layer(sel)
 
     outer_element.within(() => {
-
         let elm = null
 
-        cy.contains(label).then(($label) => {
+        cy.get(sel).then(($label) => {
             cy.wrap($label).parent().then(($parent) =>{
 
-                if($parent.find(element).length){
+                if($parent.find(element).length > 0){
                     elm = cy.wrap($parent).find(element)
-                } else if ($parent.parent().find(element).length ) {
+                } else if ($parent.parent().find(element).length > 0) {
                     elm = cy.wrap($parent).parent().find(element)
                 }
 
