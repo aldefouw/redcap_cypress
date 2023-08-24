@@ -28,7 +28,9 @@ Feature: User Interface: The logging module shall be secure, tamper-proof, and n
     ##ACTION: Logging Module – Admin unable to edit
     When I click on the link labeled "Logging"
     ##VERIFY
-    Then I should NOT see "Edit/Modify/Upload"
+    Then I should NOT see a button labeled "Edit"
+    And I should NOT see a button labeled "Modify"
+    And I should NOT see a button labeled "Upload"
     And I logout
 
     #FUNCTIONAL REQUIREMENT
