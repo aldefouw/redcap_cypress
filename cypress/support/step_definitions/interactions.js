@@ -222,7 +222,7 @@ Given("I click on the radio labeled {string} in the dialog box{iframeVisibility}
  * @description Enters a specific text string into a field identified by a label.  (NOTE: The field is not automatically cleared.)
  */
 Given('I {enter_type} {string} into the input field labeled {string}{baseElement}', (enter_type, text, label, base_element) => {
-    let sel = `:contains("${label}"):visible`
+    let sel = `:contains(${JSON.stringify(label)}):visible`
     let element = `input[type=text]:visible:first,input[type=password]:visible:first`
 
     //Either the base element as specified or the default
@@ -233,12 +233,11 @@ Given('I {enter_type} {string} into the input field labeled {string}{baseElement
     outer_element.within(() => {
         let elm = null
 
-        cy.get(sel).then(($label) => {
+        cy.contains(label).should('be.visible').then(($label) => {
             cy.wrap($label).parent().then(($parent) =>{
-
-                if($parent.find(element).length > 0){
+                if($parent.find(element).length){
                     elm = cy.wrap($parent).find(element)
-                } else if ($parent.parent().find(element).length > 0) {
+                } else if ($parent.parent().find(element).length) {
                     elm = cy.wrap($parent).parent().find(element)
                 }
 

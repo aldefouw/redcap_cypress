@@ -48,7 +48,8 @@ window.elementChoices = {
     ' on the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
     ' in the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
     ' on the dialog box' : 'div[role=dialog]:visible',
-    ' in the dialog box' : 'div[role=dialog]:visible'
+    ' in the dialog box' : 'div[role=dialog]:visible',
+    ' within the data collection instrument list' : 'table#table-forms_surveys'
 }
 
 window.ordinalChoices = {
