@@ -354,5 +354,5 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
 })
 
 Given("I {see} the pdf has loaded in the iframe", (see) => {
-    cy.frameLoaded().then(() => { cy.iframe() })
+    cy.frameLoaded()
 })
