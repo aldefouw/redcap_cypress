@@ -246,7 +246,6 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
     if(Cypress.$('div#working:visible').length) cy.get('div#working').should('not.be.visible')
     if(Cypress.$('span#progress_img_user:visible').length) cy.get('span#progress_img_user').should('not.be.visible')
     if(Cypress.$('img[src*="progress_circle"]:visible').length) cy.get('img[src*="progress_circle"]').should('not.be.visible')
-    if(Cypress.$('div[id*="popup"]').length) cy.get('div[id*="popup"]').should('not.be.visible')
 
     let selector = window.tableMappings[table_type]
     let tabular_data = dataTable['rawTable']
