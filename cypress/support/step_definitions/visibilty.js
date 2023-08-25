@@ -10,7 +10,7 @@ require('./mappings.js')
  * @description Visually verifies that text exists within the HTML object. NOTE: "should" is optional for readability.
  */
 Given("I {see} {string}{iframeVisibility}", (see, text, iframe) => {
-    const base = (iframe === " in the iframe") ? cy.frameLoaded().then(() => { cy.iframe() }) : cy.get(`body:has(:contains(${JSON.stringify(text)}):visible)`)
+    const base = (iframe === " in the iframe") ? cy.frameLoaded().then(() => { cy.iframe() }) : cy.get(`body:contains(${JSON.stringify(text)}):visible`)
     base.within(($elm) => { cy.wrap($elm).should('contain', text) })
 })
 
