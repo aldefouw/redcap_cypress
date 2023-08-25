@@ -41,7 +41,7 @@ function after_click_monitor(type){
         cy.get('div#actionMsg').should("have.css", "display", "none")
     } else if (type === " on the dialog box for the Repeatable Instruments and Events module"){
         cy.wait('@repeat_save')
-    }else if (type === " to rename an instrument"){
+    } else if (type === " to rename an instrument"){
         cy.wait('@rename_instrument')
     } else if (type === " on the Designate Instruments for My Events page") {
         if(Cypress.$('span#progress_save').length) cy.get('span#progress_save').should('not.be.visible')
@@ -96,7 +96,7 @@ function after_click_monitor(type){
  * @param {string} text (optional) - < on the dialog box for the Repeatable Instruments and Events module>
  * @description Clicks on a button element with a specific text label.
  */
-Given("I click on the{ordinal} button {labeledExactly} {string}{saveButtonRouteMonitoring}{baseElement}{iframeVisibility}{toDownloadFile}", (ordinal, exactly, text, button_type, base_element, iframe, download) => {
+Given("I click on the{ordinal} button {labeledExactly} {string}{baseElement}{saveButtonRouteMonitoring}{iframeVisibility}{toDownloadFile}", (ordinal, exactly, text, button_type, base_element, iframe, download) => {
     let ord = 0
     if(ordinal !== undefined) ord = window.ordinalChoices[ordinal]
 
@@ -199,19 +199,6 @@ Given("I click on the button labeled {string} for the row labeled {string}", (te
         // Find the button element
         cy.get('button[title="' + text +'"]').click()
     })
-})
-
-/**
- * @module Interactions
- * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
- * @example I click on the button labeled {string} in the dialog box
- * @param {string} text - the text on the button element you want to click
- * @description Clicks on a button element with a specific text label in a dialog box.
- */
-Given("I click on the button labeled {string} in the dialog box{iframeVisibility}", (text, iframe) => {
-    let element = ''
-    if(iframe === " in the iframe"){ element = cy.frameLoaded().then(() => { cy.iframe() }) }
-    cy.click_on_dialog_button(text, 'button', element)
 })
 
 /**

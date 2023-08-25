@@ -10,7 +10,7 @@ require('./mappings.js')
  * @description Visually verifies that text exists within the HTML object. NOTE: "should" is optional for readability.
  */
 Given("I {see} {string}{iframeVisibility}", (see, text, iframe) => {
-    const base = (iframe === " in the iframe") ? cy.frameLoaded().then(() => { cy.iframe() }) : cy.get(`body:contains(${JSON.stringify(text)}):visible`)
+    const base = (iframe === " in the iframe") ? cy.frameLoaded().then(() => { cy.iframe() }) : cy.get(`body:has(:contains(${JSON.stringify(text)}):visible)`)
     base.within(($elm) => { cy.wrap($elm).should('contain', text) })
 })
 
@@ -232,7 +232,7 @@ Given('I should see {string} in the {tableTypes} table', (text, table_type = 'a'
  * @description Identify project status
  */
 Given('I (should )see Project status: "{projectStatus}"', (status) => {
-    cy.get('div.menubox:contains("Project status:")').contains(status);
+    cy.get('div.menubox:contains("Project status:")').should('contain', status);
 })
 
 /**
@@ -246,6 +246,7 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
     if(Cypress.$('div#working:visible').length) cy.get('div#working').should('not.be.visible')
     if(Cypress.$('span#progress_img_user:visible').length) cy.get('span#progress_img_user').should('not.be.visible')
     if(Cypress.$('img[src*="progress_circle"]:visible').length) cy.get('img[src*="progress_circle"]').should('not.be.visible')
+    if(Cypress.$('div[id*="popup"]').length) cy.get('div[id*="popup"]').should('not.be.visible')
 
     let selector = window.tableMappings[table_type]
     let tabular_data = dataTable['rawTable']
