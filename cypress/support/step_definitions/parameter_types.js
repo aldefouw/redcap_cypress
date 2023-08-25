@@ -178,7 +178,7 @@ defineParameterType({
 
 defineParameterType({
     name: 'saveButtonRouteMonitoring',
-    regexp: /| on the dialog box for the Repeatable Instruments and Events module| on the Designate Instruments for My Events page| on the Online Designer page| and cancel the confirmation window| and accept the confirmation window| in the dialog box to request a change in project status/
+    regexp: /| on the dialog box for the Repeatable Instruments and Events module| on the Designate Instruments for My Events page| on the Online Designer page| and cancel the confirmation window| and accept the confirmation window| in the dialog box to request a change in project status| to rename an instrument/
 })
 
 defineParameterType({
@@ -218,7 +218,7 @@ defineParameterType({
 
 defineParameterType({
     name: 'baseElement',
-    regexp: /| on the tooltip| on the dialog box| on the role selector dropdown| on the popup| in the tooltip| in the dialog box| in the role selector dropdown| in the popup| within the data collection instrument list/
+    regexp: /| on the tooltip| on the dialog box| on the role selector dropdown| on the popup| in the tooltip| in the dialog box| in the role selector dropdown| in the popup| within the data collection instrument list| on the action popup| in the action popup/
 })
 
 defineParameterType({

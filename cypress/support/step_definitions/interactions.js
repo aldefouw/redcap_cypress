@@ -11,6 +11,11 @@ function before_click_monitor(type){
             method: 'POST',
             url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/designate_forms_ajax*'
         }).as('designate_instruments')
+    } else if (type === " to rename an instrument"){
+        cy.intercept({
+            method: 'POST',
+            url: '/redcap_v' + Cypress.env('redcap_version') + '/Design/set_form_name.php*'
+        }).as('rename_instrument')
     } else if (type === " on the Online Designer page"){
         cy.intercept({
             method: 'GET',
@@ -36,6 +41,8 @@ function after_click_monitor(type){
         cy.get('div#actionMsg').should("have.css", "display", "none")
     } else if (type === " on the dialog box for the Repeatable Instruments and Events module"){
         cy.wait('@repeat_save')
+    }else if (type === " to rename an instrument"){
+        cy.wait('@rename_instrument')
     } else if (type === " on the Designate Instruments for My Events page") {
         if(Cypress.$('span#progress_save').length) cy.get('span#progress_save').should('not.be.visible')
         cy.wait('@designate_instruments')
@@ -144,19 +151,26 @@ Given("I click on the{ordinal} button {labeledExactly} {string}{saveButtonRouteM
  * @param {string} text - the text on the anchor element you want to click
  * @description Clicks on an anchor element with a specific text label.
  */
-Given("I click on the {linkNames} {labeledExactly} {string}{saveButtonRouteMonitoring}{toDownloadFile}", (link_name, exactly, text, link_type, download) => {
+Given("I click on the {linkNames} {labeledExactly} {string}{saveButtonRouteMonitoring}{toDownloadFile}{baseElement}", (link_name, exactly, text, link_type, download, base_element) => {
     before_click_monitor(link_type)
+
+    if(base_element === undefined){
+        base_element = ''
+    }
+    let outer_element = window.elementChoices[base_element]
 
     if(download === " to download a file") {
         const loadScript = '<script> setTimeout(() => location.reload(), 1000); </script>';
         cy.get('body').invoke('append', loadScript);
     }
 
-    if(exactly === 'labeled exactly'){
-        cy.get('a:visible').contains(new RegExp("^" + text + "$", "g")).click()
-    } else {
-        cy.get(`a:contains(${JSON.stringify(text)}):visible`).contains(text).click()
-    }
+    cy.top_layer('a:visible', outer_element).within(() => {
+        if(exactly === 'labeled exactly'){
+            cy.get('a:visible').contains(new RegExp("^" + text + "$", "g")).click()
+        } else {
+            cy.get(`a:contains(${JSON.stringify(text)}):visible`).contains(text).click()
+        }
+    })
 
     after_click_monitor(link_type)
 })
@@ -615,9 +629,16 @@ Given(/^I wait for (\d+(?:\.\d+)?) seconds$/, (seconds) => {
  * @param {string} placeholder - the text that is currently in the field as a placeholder
  * @description Enter text into a specific field
  */
-Given("I enter {string} into the field with the placeholder text of {string}", (text, placeholder) => {
+Given("I {enter_type} {string} into the field with the placeholder text of {string}", (enter_type, text, placeholder) => {
     const selector = 'input[placeholder="' + placeholder + '"]:visible,input[value="' + placeholder + '"]:visible'
-    cy.get(selector).type(text).blur()
+
+    const elm = cy.get(selector)
+
+    if(enter_type === "enter"){
+        elm.type(text)
+    } else if (enter_type === "clear field and enter") {
+        elm.clear().type(text)
+    }
 })
 
 /**
