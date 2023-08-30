@@ -133,7 +133,7 @@ Cypress.Commands.add('mysql_query', (query) => {
 Cypress.Commands.add('mysql_snapshot_export', () => {
     const mysql = Cypress.env("mysql")
 
-    const cmd = `${mysql['path']}dump -h${mysql['host']} --port=${mysql['port']} ${mysql['db_name']} -u${mysql['db_user']} -p${mysql['db_pass']} > /Users/aldefouw/Dev/redcap/redcap_cypress/test_db/latest_snapshot.sql`
+    const cmd = `${mysql['path']}dump -h${mysql['host']} --port=${mysql['port']} ${mysql['db_name']} -u${mysql['db_user']} -p${mysql['db_pass']} > test_db/latest_snapshot.sql`
 
     cy.exec(cmd, { timeout: 100000}).then((response) => {
         expect(response['code']).to.eq(0)
@@ -144,14 +144,10 @@ Cypress.Commands.add('mysql_snapshot_export', () => {
 Cypress.Commands.add('mysql_snapshot_import', () => {
     const mysql = Cypress.env("mysql")
 
-    const cmd = `${mysql['path']}dump -h${mysql['host']} --port=${mysql['port']} ${mysql['db_name']} -u${mysql['db_user']} -p${mysql['db_pass']} < /Users/aldefouw/Dev/redcap/redcap_cypress/test_db/latest_snapshot.sql`
+    const cmd = `${mysql['path']} -h${mysql['host']} --port=${mysql['port']} ${mysql['db_name']} -u${mysql['db_user']} -p${mysql['db_pass']} < test_db/latest_snapshot.sql`
 
     cy.exec(cmd, { timeout: 100000}).then((response) => {
         expect(response['code']).to.eq(0)
         return response['stdout']
     })
-})
-
-Cypress.Commands.add('snapshot_export_url', () => {
-
 })
