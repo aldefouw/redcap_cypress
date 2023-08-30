@@ -96,7 +96,7 @@ function after_click_monitor(type){
  * @param {string} text (optional) - < on the dialog box for the Repeatable Instruments and Events module>
  * @description Clicks on a button element with a specific text label.
  */
-Given("I click on the{ordinal} button {labeledExactly} {string}{baseElement}{saveButtonRouteMonitoring}{iframeVisibility}{toDownloadFile}", (ordinal, exactly, text, button_type, base_element, iframe, download) => {
+Given("I click on the{ordinal} button {labeledExactly} {string}{saveButtonRouteMonitoring}{baseElement}{iframeVisibility}{toDownloadFile}", (ordinal, exactly, text, button_type, base_element, iframe, download) => {
     let ord = 0
     if(ordinal !== undefined) ord = window.ordinalChoices[ordinal]
 
