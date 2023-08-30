@@ -25,6 +25,20 @@ module.exports = (on, config) => {
 
   on('task', {
 
+	currentSnapshotInfo({url, user, pass}){
+		let snapshot_url_path = shell.pwd() + '/test_db/latest_snapshot.info'
+		shell.ShellString(`${url}\n${user}\n${pass}`).to(snapshot_url_path);
+		return fs.existsSync(snapshot_url_path)
+	},
+
+	snapshotExists(){
+		//SNAPSHOT PATH
+		var snapshot_file = shell.pwd() + '/test_db/latest_snapshot.sql';
+
+		// SEE IF SNAPSHOT EXISTS
+		return fs.existsSync(snapshot_file)
+	},
+
 	populateStructureAndData({redcap_version, advanced_user_info, source_location}) {
 
  		// DEFINE OTHER LOCATIONS

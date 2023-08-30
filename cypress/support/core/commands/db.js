@@ -15,52 +15,73 @@ Cypress.Commands.add('base_db_seed', () => {
     //Get MySQL array from Environment Variables
     let mysql = Cypress.env('mysql')
 
-    // We can skip populating the base db seed on successive runs by adding a false value to the mysql['initial_db_seed'] key in cypress.env.json
-    // This should really ever be run in development but shouldn't necessarily harm production since we still need a DB lock file to proceed
-    cy.task('dbSeedLockExists').then((db_seed_exists) => {
+    cy.task('snapshotExists').then((snapshot_exists) => {
 
-        if(
-            !mysql.hasOwnProperty('skip_db_seed') ||
-            mysql.hasOwnProperty('skip_db_seed') && mysql['skip_db_seed'] && !db_seed_exists ||
-            !mysql['skip_db_seed']
-        ) {
+        //If a snapshot exists, let us import it
+        if(snapshot_exists){
 
-            cy.task('populateStructureAndData', {
-                redcap_version: Cypress.env('redcap_version'),
-                advanced_user_info: compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>='),
-                source_location: redcap_source_path
-            }).then((structure_and_data_file_exists) => {
+            //Import the DB snapshot
+            cy.mysql_snapshot_import()
 
-                //Only run this block if the Structure and Data File exists and has gone through proper processes
-                if (structure_and_data_file_exists) {
+            //Here we get the latest URL after logging in
+            cy.readFile('test_db/latest_snapshot.info').then((text) => {
+                const line = text.split("\n")
+                cy.login({ username: line[1], password: line[2] })
+                window.user_info.set_previous_user_type()
+                cy.visit(line[0])
+            })
 
-                    //Create the database if it doesn't exist
-                    cy.mysql_db('create_database', '', false).then(() => {
+        } else {
 
-                        //Pull in the structure and data from REDCap Source
-                        cy.mysql_db('structure_and_data', window.base_url).then(() => {
+            // We can skip populating the base db seed on successive runs by adding a false value to the mysql['initial_db_seed'] key in cypress.env.json
+            // This should really ever be run in development but shouldn't necessarily harm production since we still need a DB lock file to proceed
+            cy.task('dbSeedLockExists').then((db_seed_exists) => {
 
-                            if (Cypress.env('redcap_hooks_path') !== undefined) {
-                                const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\/");
-                                cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
-                            }
+                if(
+                    !mysql.hasOwnProperty('skip_db_seed') ||
+                    mysql.hasOwnProperty('skip_db_seed') && mysql['skip_db_seed'] && !db_seed_exists ||
+                    !mysql['skip_db_seed']
+                ) {
 
-                            //Clear out all cookies
-                            cy.clearCookies()
+                    cy.task('populateStructureAndData', {
+                        redcap_version: Cypress.env('redcap_version'),
+                        advanced_user_info: compareVersions.compare(Cypress.env('redcap_version'), '10.1.0', '>='),
+                        source_location: redcap_source_path
+                    }).then((structure_and_data_file_exists) => {
 
-                            //Create a DB Seed Lock file
-                            cy.task('createInitialDbSeedLock')
-                        })
+                        //Only run this block if the Structure and Data File exists and has gone through proper processes
+                        if (structure_and_data_file_exists) {
+
+                            //Create the database if it doesn't exist
+                            cy.mysql_db('create_database', '', false).then(() => {
+
+                                //Pull in the structure and data from REDCap Source
+                                cy.mysql_db('structure_and_data', window.base_url).then(() => {
+
+                                    if (Cypress.env('redcap_hooks_path') !== undefined) {
+                                        const redcap_hooks_path = "REDCAP_HOOKS_PATH/" + Cypress.env('redcap_hooks_path').replace(/\//g, "\\/");
+                                        cy.mysql_db('hooks_config', redcap_hooks_path) //Fetch the hooks SQL seed data
+                                    }
+
+                                    //Clear out all cookies
+                                    cy.clearCookies()
+
+                                    //Create a DB Seed Lock file
+                                    cy.task('createInitialDbSeedLock')
+                                })
+
+                            })
+
+                        } else {
+                            alert('Warning: Error generating structure and data file.  This usually happpens because your REDCap source code is missing files.')
+                        }
 
                     })
-
-                } else {
-                    alert('Warning: Error generating structure and data file.  This usually happpens because your REDCap source code is missing files.')
                 }
-
             })
         }
     })
+
 })
 
 Cypress.Commands.add('mysql_db', (type, replace = '', include_db_name = true) => {
@@ -107,4 +128,30 @@ Cypress.Commands.add('mysql_query', (query) => {
         expect(response['code']).to.eq(0)
         return response['stdout']
     })
+})
+
+Cypress.Commands.add('mysql_snapshot_export', () => {
+    const mysql = Cypress.env("mysql")
+
+    const cmd = `${mysql['path']}dump -h${mysql['host']} --port=${mysql['port']} ${mysql['db_name']} -u${mysql['db_user']} -p${mysql['db_pass']} > /Users/aldefouw/Dev/redcap/redcap_cypress/test_db/latest_snapshot.sql`
+
+    cy.exec(cmd, { timeout: 100000}).then((response) => {
+        expect(response['code']).to.eq(0)
+        return response['stdout']
+    })
+})
+
+Cypress.Commands.add('mysql_snapshot_import', () => {
+    const mysql = Cypress.env("mysql")
+
+    const cmd = `${mysql['path']}dump -h${mysql['host']} --port=${mysql['port']} ${mysql['db_name']} -u${mysql['db_user']} -p${mysql['db_pass']} < /Users/aldefouw/Dev/redcap/redcap_cypress/test_db/latest_snapshot.sql`
+
+    cy.exec(cmd, { timeout: 100000}).then((response) => {
+        expect(response['code']).to.eq(0)
+        return response['stdout']
+    })
+})
+
+Cypress.Commands.add('snapshot_export_url', () => {
+
 })
