@@ -33,3 +33,4 @@ mysql-cli.zip
 *.code-workspace
 
 /test_db/latest_snapshot.sql
+/test_db/latest_snapshot.info
