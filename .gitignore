@@ -31,3 +31,5 @@ mysql-cli.zip
 
 /.vscode
 *.code-workspace
+
+/test_db/latest_snapshot.sql
