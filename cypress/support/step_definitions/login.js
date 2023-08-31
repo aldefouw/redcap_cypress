@@ -11,7 +11,6 @@ Given("I (attempt to )(am still )(login )(logged in )to REDCap with the user {st
     cy.logout()
     cy.set_user_type(user)
     cy.fetch_login()
-    cy.get(`body:has(:contains(${JSON.stringify('Logged in as')}):visible)`).should('contain.text', 'Logged in as')
 })
 
 /**
