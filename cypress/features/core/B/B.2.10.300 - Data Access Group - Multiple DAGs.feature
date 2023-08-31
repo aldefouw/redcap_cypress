@@ -116,7 +116,9 @@ Feature: B.2.10.300 Data Access Groups-DAGs User Interface: The system shall all
     When I select "TestGroup1" on the dropdown field labeled "Select the Data Access Group" on the dialog box
     Then I click on the button labeled "Switch" in the dialog box
     And I should see a dialog containing the following text: "Successfully switched"
-    And I click on the button labeled "OK" in the dialog box
+
+    #This is problematic for ATS because this button AUTOMATICALLY disappears ...
+    #And I click on the button labeled "OK" in the dialog box
 
     ##VERIFY
     Then I should see "Data Collection—TestGroup1"
@@ -133,7 +135,9 @@ Feature: B.2.10.300 Data Access Groups-DAGs User Interface: The system shall all
     When I select "TestGroup2" on the dropdown field labeled "Select the Data Access Group" on the dialog box
     Then I click on the button labeled "Switch" in the dialog box
     And I should see a dialog containing the following text: "Successfully switched"
-    And I click on the button labeled "OK" in the dialog box
+
+    #This is problematic for ATS because this button AUTOMATICALLY disappears ...
+    #And I click on the button labeled "OK" in the dialog box
 
     Then I should see "Data Collection—TestGroup2"
 
