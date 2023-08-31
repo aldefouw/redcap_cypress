@@ -164,13 +164,15 @@ Given("I click on the {linkNames} {labeledExactly} {string}{saveButtonRouteMonit
         cy.get('body').invoke('append', loadScript);
     }
 
-    cy.top_layer('a:visible', outer_element).within(() => {
-        if(exactly === 'labeled exactly'){
+    if(exactly === 'labeled exactly') {
+        cy.top_layer(`a:contains(${JSON.stringify(text)}):visible`, outer_element).within(() => {
             cy.get('a:visible').contains(new RegExp("^" + text + "$", "g")).click()
-        } else {
+        })
+    } else {
+        cy.top_layer(`a:contains(${JSON.stringify(text)}):visible`, outer_element).within(() => {
             cy.get(`a:contains(${JSON.stringify(text)}):visible`).contains(text).click()
-        }
-    })
+        })
+    }
 
     after_click_monitor(link_type)
 })
