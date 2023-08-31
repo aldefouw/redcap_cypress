@@ -32,6 +32,7 @@ Feature: Design forms Using Data Dictionary and Online Designer
     And I click on the button labeled "Enter Draft Mode"
     Then I should see "The project is now in Draft Mode"
 
+    #This establishes what instruments are here initially
     Then I should see a table header and rows containing the following values in a table:
         | Instrument name   | Fields |
         | Text Validation   | 3      |
@@ -48,6 +49,7 @@ Feature: Design forms Using Data Dictionary and Online Designer
     And I click on the button labeled "Yes, delete it" in the dialog box
     Then I should see "The data collection instrument and all its fields have been successfully deleted"
 
+    #This establishes what instruments are here now
     Then I should see a table header and rows containing the following values in a table:
         | Instrument name   | Fields |
         | Data Types        | 21     |
