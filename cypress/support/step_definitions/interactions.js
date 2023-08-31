@@ -103,7 +103,7 @@ Given("I click on the{ordinal} button {labeledExactly} {string}{saveButtonRouteM
     before_click_monitor(button_type)
 
     if(download === " to download a file") {
-        const loadScript = '<script> setTimeout(() => location.reload(), 1000); </script>';
+        const loadScript = '<script> setTimeout(() => location.reload(), 2000); </script>';
         cy.get('body').invoke('append', loadScript);
     }
 
@@ -160,7 +160,7 @@ Given("I click on the {linkNames} {labeledExactly} {string}{saveButtonRouteMonit
     let outer_element = window.elementChoices[base_element]
 
     if(download === " to download a file") {
-        const loadScript = '<script> setTimeout(() => location.reload(), 1000); </script>';
+        const loadScript = '<script> setTimeout(() => location.reload(), 2000); </script>';
         cy.get('body').invoke('append', loadScript);
     }
 
