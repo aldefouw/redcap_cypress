@@ -227,6 +227,7 @@ Given("I (should )see (a )(an ){string} within the {string} row of the column la
  * @description Identify specific text within a table
  */
 Given('I should see {string} in the {tableTypes} table', (text, table_type = 'a') => {
+    notLoading()
     let selector = window.tableMappings[table_type]
     cy.get(`${selector}:visible`).contains('td', text, { matchCase: false })
 })
@@ -250,6 +251,8 @@ Given('I (should )see Project status: "{projectStatus}"', (status) => {
  * @description Allows us to check tabular data rows within REDCap
  */
 Given('I (should )see (a )table {headerOrNot}row(s) containing the following values in (the ){tableTypes} table:', (header, table_type = 'a', dataTable) => {
+    notLoading()
+
     if(Cypress.$('div#working:visible').length) cy.get('div#working').should('not.be.visible')
     if(Cypress.$('span#progress_img_user:visible').length) cy.get('span#progress_img_user').should('not.be.visible')
     if(Cypress.$('img[src*="progress_circle"]:visible').length) cy.get('img[src*="progress_circle"]').should('not.be.visible')
