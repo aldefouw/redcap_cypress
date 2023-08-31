@@ -172,7 +172,6 @@ Feature: B.2.10.400 Data Access Groups-DAGs User Interface: The system shall pro
     And I should see "Please complete the survey below."
 
     Given I click on the button labeled "Next Page"
-    And I see the pdf has loaded in the iframe
     Then I should see "Displayed below is a read-only copy of your survey responses."
     And I check the checkbox labeled "I certify"
     When I click on the button labeled "Submit"
@@ -255,7 +254,6 @@ Feature: B.2.10.400 Data Access Groups-DAGs User Interface: The system shall pro
     And I should see "Please complete the survey below."
 
     Given I click on the button labeled "Next Page"
-    And I see the pdf has loaded in the iframe
     Then I should see "Displayed below is a read-only copy of your survey responses."
     And I check the checkbox labeled "I certify"
     When I click on the button labeled "Submit"

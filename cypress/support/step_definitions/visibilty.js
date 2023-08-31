@@ -2,6 +2,12 @@ import {Given} from "cypress-cucumber-preprocessor/steps";
 require('./parameter_types.js')
 require('./mappings.js')
 
+function notLoading(){
+    if(Cypress.$('span#progress_save').length) cy.get('span#progress_save').should('not.be.visible')
+    if(Cypress.$('div#progress').length) cy.get('div#progress').should('not.be.visible')
+    if(Cypress.$('div#working').length) cy.get('div#working').should('not.be.visible')
+}
+
 /**
  * @module Visibility
  * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
@@ -10,6 +16,7 @@ require('./mappings.js')
  * @description Visually verifies that text exists within the HTML object. NOTE: "should" is optional for readability.
  */
 Given("I {see} {string}{iframeVisibility}", (see, text, iframe) => {
+    notLoading()
     const base = (iframe === " in the iframe") ? cy.frameLoaded().then(() => { cy.iframe() }) : cy.get(`body:has(:contains(${JSON.stringify(text)}):visible)`)
     base.within(($elm) => { cy.wrap($elm).should('contain', text) })
 })
