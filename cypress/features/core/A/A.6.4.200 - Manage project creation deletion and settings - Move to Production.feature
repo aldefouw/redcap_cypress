@@ -65,7 +65,6 @@ Feature: A.6.4.200 Manage project creation, deletion, and settings
       | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported  |
       | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Move project to Production status       |
 
-  @focus
   Scenario: A.6.4.200.200 User moves project to production
     Given I login to REDCap with the user "Test_Admin"
     And I create a new project named "A.6.4.200.200" by clicking on "New Project" in the menu bar, selecting "Practice / Just for fun" from the dropdown, choosing file "Project_1.xml", and clicking the "Create Project" button
