@@ -34,7 +34,9 @@ Feature: A.6.4.200 Manage project creation, deletion, and settings
     And I click on the button labeled "Yes, Request Admin to Move to Production Status" in the dialog box to request a change in project status
     Then I should see "Request pending"
     And I click on the link labeled "Logging"
-    Then I should see "Send request to move project to production status" in the logging table
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported            |
+      | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Send request to move project to production status |
     Given I logout
 
     Given I login to REDCap with the user "Test_Admin"
@@ -58,8 +60,12 @@ Feature: A.6.4.200 Manage project creation, deletion, and settings
     And I click on the link labeled "A.6.4.200.100"
     Then I should see Project status: "Production"
     And I click on the link labeled "Logging"
-    Then I should see "Move project to Production status" in the logging table
+    And I want to export a snapshot of this feature here
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported  |
+      | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Move project to Production status       |
 
+  @focus
   Scenario: A.6.4.200.200 User moves project to production
     Given I login to REDCap with the user "Test_Admin"
     And I create a new project named "A.6.4.200.200" by clicking on "New Project" in the menu bar, selecting "Practice / Just for fun" from the dropdown, choosing file "Project_1.xml", and clicking the "Create Project" button
@@ -91,4 +97,6 @@ Feature: A.6.4.200 Manage project creation, deletion, and settings
     And I click on the button labeled "YES, Move to Production Status" in the dialog box to request a change in project status
     Then I should see Project status: "Production"
     Given I click on the link labeled "Logging"
-    Then I should see "Move project to Production status" in the logging table
+    Then I should see a table header and rows containing the following values in the logging table:
+      | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported  |
+      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Move project to Production status       |

@@ -12,5 +12,6 @@ Feature: A.2.2.500 Add/Manage users
     When I click on the link labeled "View User List By Criteria"
     And I select "All users" on the dropdown field labeled "Display only:"
     And I click on the button labeled "Display User List"
-    Then I should see "Loading..."
-    And I should see "Test_Admin" in the browse users table
+    Then I should see a table header and rows containing the following values in the browse users table:
+      | Username   | First Name   | Last Name  | Email                |
+      | test_admin | Admin        | User       | test_admin@test.edu |

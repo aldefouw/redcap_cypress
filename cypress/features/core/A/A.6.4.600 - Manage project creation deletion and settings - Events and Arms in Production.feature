@@ -32,9 +32,10 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Then I should see "Arm name:  Arm 3"
 
     When I click on the link labeled "Logging"
-    Then I should see table rows containing the following values in the logging table:
-      | test_user1 | Manage/Design | Create arm |
-      | test_user1 | Manage/Design | Arm 3: Arm 3 |
+    Then I should see table header and rows containing the following values in the logging table:
+      | Username   | Action        | List of Data ChangesOR Fields Exported |
+      | test_user1 | Manage/Design | Create arm                             |
+      | test_user1 | Manage/Design | Arm 3: Arm 3                           |
 
     Given I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
@@ -44,10 +45,11 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Then I should see "Event 1" in the define events table
 
     When I click on the link labeled "Logging"
-    Then I should see table rows containing the following values in the logging table:
-      | test_user1 | Manage/Design | Create arm |
-      | test_user1 | Manage/Design | Arm 3: Arm 3 |
-      | test_user1 | Manage/Design | Create event |
+    Then I should see table header and rows containing the following values in the logging table:
+      | Username   | Action        | List of Data ChangesOR Fields Exported                          |
+      | test_user1 | Manage/Design | Create arm                                                      |
+      | test_user1 | Manage/Design | Arm 3: Arm 3                                                    |
+      | test_user1 | Manage/Design | Create event                                                    |
       | test_user1 | Manage/Design | Event: Event 1, Arm: Arm 3, Days Offset: 0, Offset Range: -0/+0 |
 
     Given I click on the link labeled "Project Setup"
@@ -62,9 +64,10 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
     When I click on the link labeled "Logging"
 
-    Then I should see table rows containing the following values in the logging table:
-      | test_user1 | Manage/Design | Edit arm name/number |
-      | test_user1 | Manage/Design | Arm 2: Arm 2 |
+    Then I should see table header and rows containing the following values in the logging table:
+      | Username   | Action        | List of Data ChangesOR Fields Exported |
+      | test_user1 | Manage/Design | Edit arm name/number                   |
+      | test_user1 | Manage/Design | Arm 2: Arm 2                           |
 
     Given I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
@@ -76,9 +79,10 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Then I should see "Event One"
 
     When I click on the link labeled "Logging"
-    Then I should see table rows containing the following values in the logging table:
-      | test_user1 | Manage/Design | Edit event |
-      | test_user1 | Manage/Design | Event One, Arm: Arm 2 |
+    Then I should see table header and rows containing the following values in the logging table:
+      | Username   | Action        | List of Data ChangesOR Fields Exported |
+      | test_user1 | Manage/Design | Edit event                             |
+      | test_user1 | Manage/Design | Event One, Arm: Arm 2                  |
 
     Given I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
@@ -89,11 +93,12 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Then I should see "Event 4" in the define events table
 
     When I click on the link labeled "Logging"
-    Then I should see table rows containing the following values in the logging table:
-      | test_user1 | Manage/Design | Create arm |
-      | test_user1 | Manage/Design | Arm 2: Arm 2 |
-      | test_user1 | Manage/Design | Create event |
-      | test_user1 | Manage/Design | Event: Event 4, Arm: Arm 1, Days Offset: 4, Offset Range: -0/+0 |
+    Then I should see table header and rows containing the following values in the logging table:
+      | Username   | Action        | List of Data ChangesOR Fields Exported                           |
+      | test_user1 | Manage/Design | Create arm                                                       |
+      | test_user1 | Manage/Design | Arm 2: Arm 2                                                     |
+      | test_user1 | Manage/Design | Create event                                                     |
+      | test_user1 | Manage/Design | Event: Event 4, Arm: Arm 1, Days Offset: 4, Offset Range: -0/+0  |
 
     When I click on the link labeled "Record Status Dashboard"
     Then I should see "Arm 3: Arm 3"
@@ -119,8 +124,9 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
 
     When I click on the link labeled "Logging"
-    Then I should see table rows containing the following values in the logging table:
-      | test_user1 | Manage/Design | Perform instrument-event mappings |
+    Then I should see table header and rows containing the following values in the logging table:
+      | Username   | Action        | List of Data ChangesOR Fields Exported |
+      | test_user1 | Manage/Design | Perform instrument-event mappings      |
 
     Given I click on the link labeled "Project Setup"
     When I click on the button labeled "Designate Instruments for My Events"
@@ -228,10 +234,11 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Then I should see "Event 1" in the define events table
 
     When I click on the link labeled "Logging"
-    Then I should see table rows containing the following values in the logging table:
-      | test_user1 | Manage/Design | Create arm |
-      | test_user1 | Manage/Design | Arm 4: Arm 4 |
-      | test_user1 | Manage/Design | Create event |
+    Then I should see table header and rows containing the following values in the logging table:
+      | Username   | Action        | List of Data ChangesOR Fields Exported                          |
+      | test_user1 | Manage/Design | Create arm                                                      |
+      | test_user1 | Manage/Design | Arm 4: Arm 4                                                    |
+      | test_user1 | Manage/Design | Create event                                                    |
       | test_user1 | Manage/Design | Event: Event 1, Arm: Arm 4, Days Offset: 0, Offset Range: -0/+0 |
 
     Given I click on the link labeled "Project Setup"
@@ -283,8 +290,9 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Then I should see a Data Collection Instrument named "Data Types" for the Event named "Event 4"
 
     When I click on the link labeled "Logging"
-    Then I should see table rows containing the following values in the logging table:
-      | test_user1 | Manage/Design | Perform instrument-event mappings |
+    Then I should see table header and rows containing the following values in the logging table:
+      | Username   | Action        | List of Data ChangesOR Fields Exported |
+      | test_user1 | Manage/Design | Perform instrument-event mappings      |
 
     Given I click on the link labeled "Project Setup"
     When I click on the button labeled "Designate Instruments for My Events"
@@ -318,9 +326,10 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Then I should see "Arm 1: Arm One"
 
     When I click on the link labeled "Logging"
-    Then I should see a table rows containing the following values in the logging table:
-      | test_admin | Manage/Design | Edit arm name/number
-      | test_admin | Manage/Design | Arm 1: Arm One
+    Then I should see table header and rows containing the following values in the logging table:
+      | Username   | Action        | List of Data ChangesOR Fields Exported |
+      | test_admin | Manage/Design | Edit arm name/number                   |
+      | test_admin | Manage/Design | Arm 1: Arm One                         |
 
     Given I click on the link labeled "Project Setup"
     And I click on the button labeled "Define My Events"
@@ -335,9 +344,10 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Then I should see "Event Four"
 
     When I click on the link labeled "Logging"
-    Then I should see a table rows containing the following values in the logging table:
-      | test_admin | Manage/Design | Edit event |
-      | test_admin | Manage/Design | Event Four, Arm: Arm One |
+    Then I should see table header and rows containing the following values in the logging table:
+      | Username   | Action        | List of Data ChangesOR Fields Exported |
+      | test_admin | Manage/Design | Edit event                             |
+      | test_admin | Manage/Design | Event Four, Arm: Arm One               |
 
     Given I click on the link labeled "Project Setup"
     When I click on the button labeled "Designate Instruments for My Events"
@@ -352,8 +362,9 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     Then I should not see a Data Collection Instrument named "Data Types" for the Event named "Event One"
 
     When I click on the link labeled "Logging"
-    Then I should see table rows containing the following values in the logging table:
-      | test_admin | Manage/Design | Perform instrument-event mappings |
+    Then I should see table header and rows containing the following values in the logging table:
+      | Username   | Action        | List of Data ChangesOR Fields Exported |
+      | test_admin | Manage/Design | Perform instrument-event mappings      |
 
     When I click on the link labeled "Control Center"
     And I click on the link labeled "User Settings"
