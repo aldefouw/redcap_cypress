@@ -60,7 +60,6 @@ Feature: A.6.4.200 Manage project creation, deletion, and settings
     And I click on the link labeled "A.6.4.200.100"
     Then I should see Project status: "Production"
     And I click on the link labeled "Logging"
-    And I want to export a snapshot of this feature here
     Then I should see a table header and rows containing the following values in the logging table:
       | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported  |
       | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Move project to Production status       |
