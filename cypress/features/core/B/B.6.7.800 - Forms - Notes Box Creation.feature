@@ -87,5 +87,5 @@ Feature: Design forms Using Data Dictionary and Online Designer
     ##VERIFY_CODEBOOK
     When I click on the link labeled "Codebook"
     Then I should see a table header and rows containing the following values in the codebook table:
-        | Variable / Field Name | Field Label | Field Attributes |
-        | [notesbox2]           | Notes box 2 | notes            |
+      | Variable / Field Name | Field Label | Field Attributes |
+      | [notesbox2]           | Notes box 2 | notes            |
