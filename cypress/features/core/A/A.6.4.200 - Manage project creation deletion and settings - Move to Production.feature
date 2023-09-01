@@ -36,7 +36,7 @@ Feature: A.6.4.200 Manage project creation, deletion, and settings
     And I click on the link labeled "Logging"
     Then I should see a table header and rows containing the following values in the logging table:
       | Time / Date      | Username   | Action        | List of Data ChangesOR Fields Exported            |
-      | mm/dd/yyyy hh:mm | test_admin | Manage/Design | Send request to move project to production status |
+      | mm/dd/yyyy hh:mm | test_user1 | Manage/Design | Send request to move project to production status |
     Given I logout
 
     Given I login to REDCap with the user "Test_Admin"
