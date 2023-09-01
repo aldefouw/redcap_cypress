@@ -422,7 +422,7 @@ Given("I drag on the field named {string} to position {int}", (field, position) 
  * @description Visually verifies that the fieldBefore is before fieldAfter
  */
 Given("I should see (a )(the )field named {string}", (field_name) => {
-    cy.get('table[role=presentation]:visible tr:visible td:visible').contains(field_name)
+    cy.get(`table[role=presentation]:visible tr:visible td:visible:contains(${field_name})`).contains(field_name)
 })
 
 
