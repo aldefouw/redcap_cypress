@@ -92,7 +92,7 @@ Given('I edit the Data Collection Instrument field labeled {string}', (label) =>
  * @param {string} label - the label of the field to edit
  * @description Opens the edit window for the field with the specified label
  */
-Given('I {enter_type} Choice(s) of {string} in(to) the open "Edit Field" dialog box', (enter_type, choices) => {
+Given('I {enter_type} Choice(s) of {string} in(to) the open "{addEditField}" dialog box', (enter_type, choices) => {
     let field_choices = cy.select_field_choices()
     if(enter_type === "clear field and enter") {
         field_choices.clear()
