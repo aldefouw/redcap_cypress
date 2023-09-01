@@ -367,3 +367,23 @@ Given('I (should )see (a )table {headerOrNot}row(s) containing the following val
 Given("I {see} the pdf has loaded in the iframe", (see) => {
     cy.frameLoaded()
 })
+
+/**
+ * @module Interactions
+ * @author Adam De Fouw <aldefouw@medicine.wisc.edu>
+ * @example I select the dropdown option {string} for the Data Collection Instrument field labeled {string}
+ * @param {string} dropdown_option - option we want to select from the dropdown
+ * @param {string} field_label - the label on the field we want to select
+ * @description Clicks the dropdown option on the field specified
+ */
+Given('I should see the following {dropdown_type} options for the Data Collection Instrument field labeled {string}', (type, field_label, dropdown_options) => {
+    let all_options = ['']
+
+    for(let i = 0; i < dropdown_options['rawTable'].length; i++){
+        all_options.push(dropdown_options['rawTable'][i][0])
+    }
+
+    cy.select_field_by_label(field_label).find('option').each(($option) => {
+        expect(all_options).to.include($option[0].innerText)
+    })
+})
