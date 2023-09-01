@@ -97,6 +97,11 @@ defineParameterType({
 })
 
 defineParameterType({
+    name: 'addEditField',
+    regexp: /(Add New Field|Edit Field)/
+})
+
+defineParameterType({
     name: 'add_or_select',
     regexp: /add|select/
 })
@@ -178,7 +183,7 @@ defineParameterType({
 
 defineParameterType({
     name: 'saveButtonRouteMonitoring',
-    regexp: /| on the dialog box for the Repeatable Instruments and Events module| on the Designate Instruments for My Events page| on the Online Designer page| and cancel the confirmation window| and accept the confirmation window| in the dialog box to request a change in project status| to rename an instrument/
+    regexp: /| on the dialog box for the Repeatable Instruments and Events module| on the Designate Instruments for My Events page| on the Online Designer page| and cancel the confirmation window| and accept the confirmation window| in the dialog box to request a change in project status| to rename an instrument| in the "Add New Field" dialog box| in the "Edit Field" dialog box|/
 })
 
 defineParameterType({
@@ -193,7 +198,7 @@ defineParameterType({
 
 defineParameterType({
     name: 'tableTypes',
-    regexp: /|a|logging|browse users|file repository|administrators|reports|report data|define events|data access groups|DAGs Switcher|record status dashboard|data collection instruments|/
+    regexp: /|a|logging|browse users|file repository|administrators|reports|report data|define events|data access groups|DAGs Switcher|record status dashboard|data collection instruments|codebook|/
 })
 
 defineParameterType({
@@ -249,4 +254,9 @@ defineParameterType({
 defineParameterType({
     name: 'toDownloadFile',
     regexp: /|| to download a file|/
+})
+
+defineParameterType({
+    name: 'beforeAfter',
+    regexp: /|before|after|/
 })

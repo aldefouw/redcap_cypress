@@ -113,7 +113,7 @@ Given('I {enter_type} Choice(s) of {string} in(to) the open "Edit Field" dialog 
  * @param {string} label - the label of the field to edit
  * @description Opens the edit window for the field with the specified label
  */
-Given('I enter {string} into the Field Label of the open "Edit Field" dialog box', (field_label) => {
+Given('I enter {string} into the Field Label of the open "{addEditField}" dialog box', (field_label) => {
     cy.get('textarea#field_label').clear().type(field_label)
 })
 
@@ -124,8 +124,8 @@ Given('I enter {string} into the Field Label of the open "Edit Field" dialog box
  * @param {string} label - the label of the field to edit
  * @description Opens the edit window for the field with the specified label
  */
-Given('I enter {string} into the Field Label of the open "Edit Field" dialog box', (field_label) => {
-    cy.get('textarea#field_label').clear().type(field_label)
+Given('I enter {string} into the Variable Name of the open "{addEditField}" dialog box', (field_label) => {
+    cy.get('input#field_name').clear().type(field_label)
 })
 
 /**
@@ -135,7 +135,7 @@ Given('I enter {string} into the Field Label of the open "Edit Field" dialog box
  * @param {string} equation - the equation to enter
  * @description Enters specified equation into a Calculated Field within an open "Edit Field" dialog box
  */
-Given('I enter the equation {string} into Calculation Equation of the open "Edit Field" dialog box', (equation) => {
+Given('I enter the equation {string} into Calculation Equation of the open "{addEditField}" dialog box', (equation) => {
     cy.get('textarea#element_enum').click()
     cy.get('div.ace_content').type("{shift}{home}{del}" + equation)
     cy.get('button').contains('Update & Close Editor').click()
@@ -148,7 +148,7 @@ Given('I enter the equation {string} into Calculation Equation of the open "Edit
  * @param {string} label - the label of the field to edit
  * @description Selects option from the Field Type dropdown in open "Edit Field" dialog box
  */
-Given('I select {string} from the Field Type dropdown of the open "Edit Field" dialog box', (dropdown_option) => {
+Given('I select {string} from the Field Type dropdown of the open "{addEditField}" dialog box', (dropdown_option) => {
     cy.get('select#field_type').select(dropdown_option)
 })
 
@@ -159,7 +159,7 @@ Given('I select {string} from the Field Type dropdown of the open "Edit Field" d
  * @param {string} label - the label of the field to edit
  * @description Selects option from the Validation dropdown in open "Edit Field" dialog box
  */
-Given('I select {string} from the Validation dropdown of the open "Edit Field" dialog box', (dropdown_option) => {
+Given('I select {string} from the Validation dropdown of the open "{addEditField}" dialog box', (dropdown_option) => {
     cy.get('select#val_type').select(dropdown_option)
 })
 
@@ -421,9 +421,25 @@ Given("I drag on the field named {string} to position {int}", (field, position) 
  * @param {string} fieldAfter the field name that comes after
  * @description Visually verifies that the fieldBefore is before fieldAfter
  */
-Given("I should see a the field named {string} before field named {string}", (fieldBefore, fieldAfter) => {
-    cy.get('tr[id*=-tr]').contains(fieldBefore).parents('tr[id*=-tr]')
-        .nextAll().contains(fieldAfter)
+Given("I should see (a )(the )field named {string}", (field_name) => {
+    cy.get('table[role=presentation]:visible tr:visible td:visible').contains(field_name)
+})
+
+
+/**
+ * @module OnlineDesigner
+ * @author Tintin Nguyen <tin-tin.nguyen@nih.gov>
+ * @example I should see a the field named {string} before field named {string}
+ * @param {string} fieldBefore the field name that comes before
+ * @param {string} fieldAfter the field name that comes after
+ * @description Visually verifies that the fieldBefore is before fieldAfter
+ */
+Given("I should see (a )(the )field named {string} {beforeAfter} field named {string}", (fieldBefore, before_after, fieldAfter) => {
+    if(before_after === "before") {
+        cy.get('tr[id*=-tr]').contains(fieldBefore).parents('tr[id*=-tr]').nextAll().contains(fieldAfter)
+    } else if (before_after === "after"){
+        cy.get('tr[id*=-tr]').contains(fieldBefore).parents('tr[id*=-tr]').nextAll().contains(fieldAfter)
+    }
 })
 
 ///////////////////

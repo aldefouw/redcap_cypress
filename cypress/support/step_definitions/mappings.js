@@ -10,7 +10,8 @@ window.tableMappings = {
     'data access groups' : 'table#table-dags_table',
     'DAGs Switcher' : 'div#dag-switcher-config-container-parent table',
     'record status dashboard': 'table#record_status_table',
-    'data collection instruments': 'table#table-forms_surveys'
+    'data collection instruments': 'table#table-forms_surveys',
+    'codebook' : 'table#codebook-table'
 }
 
 window.dateFormats = {
