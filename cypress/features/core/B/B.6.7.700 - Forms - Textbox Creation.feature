@@ -62,6 +62,12 @@ Feature: Design forms Using Data Dictionary and Online Designer
     #VERIFY
     Then I should see "Variable: abc_2"
 
+    ##VERIFY_CODEBOOK
+    When I click on the link labeled "Codebook"
+    Then I should see a table header and rows containing the following values in the codebook table:
+        | Variable / Field Name | Field Label | Field Attributes |
+        | [abc_2]               | ABC#2       | text             |
+
     #VERIFY_LOG
     When I click on the link labeled "Logging"
     Then I should see a table header and rows containing the following values in the logging table:
