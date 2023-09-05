@@ -180,7 +180,8 @@ Feature: B.2.10.400 Data Access Groups-DAGs User Interface: The system shall pro
     When I click on the button labeled "Close survey"
     Then I should see "You may now close this tab/window"
 
-    Given I am still logged in to REDCap with the user "Test_User1"
+    #Verify still logged in as Test_User3
+    Given I am still logged in to REDCap with the user "Test_User3"
     When I click on the link labeled "My Projects"
     And I click on the link labeled "B.2.10.400.100"
 
