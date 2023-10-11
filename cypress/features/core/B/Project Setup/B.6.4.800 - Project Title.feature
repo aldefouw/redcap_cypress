@@ -13,7 +13,8 @@ And I click on the link labeled "Project Setup"
 #FUNCTIONAL REQUIREMENT
 ##ACTION: Modify title
 And I click on the button labeled "Modify project title, purpose, etc."
-And I enter "B.6.4.800.MODIFY" in the field labeled "Project title:"
+
+And I enter "B.6.4.800.MODIFY" into the input field labeled "Project title:"
 And I click on the button labeled "Save" in the dialog box
 Then I should see "Success! Your changes have been saved."
 ##VERIFY
