@@ -1,4 +1,5 @@
 import {Given} from "cypress-cucumber-preprocessor/steps";
+import compareVersions from "compare-versions";
 
 /**
  * @module TestSpecific/BranchingLogic
@@ -50,10 +51,13 @@ Given('I set the branching logic of the field with the variable name {string} to
         cy.get('button').contains('Save').click()
         cy.get('#branching_update_chk').check()
         cy.get('button:contains("No")').click()
-        //v11.1.5
-        cy.wait(['@builder', '@builder'])
-        //v12.4.14
-        //cy.wait(['@builder'])
+
+        if (compareVersions.compare(Cypress.env('redcap_version'), '11.1.5', '<=')) {
+            cy.wait(['@builder', '@builder'])
+        }
+        else {
+            cy.wait(['@builder'])
+        }
     }
     else {
         cy.get('button').contains('Save').click()
@@ -75,10 +79,7 @@ Given('I set the branching logic of the field with the variable name {string} to
 Given('I set the branching logic of every field to {string} excluding the fields with variable names {string}', (branchingLogicValue, excludedVariableNames) => {  
     getAllFieldsExcept(excludedVariableNames)
     .each(($variableName, index) => {
-        //v11.1.5
-        let variableNameNodeIndex = 2
-        //v12.4.14
-        //let variableNameNodeIndex = 0
+        let variableNameNodeIndex = compareVersions.compare(Cypress.env('redcap_version'), '11.1.5', '<=') ? 2 : 0
         let variableName = getElementText($variableName[0], variableNameNodeIndex).trim()
 
         setBranchingLogic(variableName, branchingLogicValue)
@@ -133,10 +134,7 @@ Given('I open the public survey', () => {
 Given('The fields shown on the public survey are {string}', (expectedFieldNames) => {
     const expectedFields = expectedFieldNames.split("|")
     const actualFields = []
-    //v11.1.5
-    const selector = "td.labelrc > label, td.labelrc.col-11"
-    //v12.4.14
-    //const selector = 'div[data-kind="field-label"]'
+    const selector = compareVersions.compare(Cypress.env('redcap_version'), '11.1.5', '<=') ? "td.labelrc > label, td.labelrc.col-11" : 'div[data-kind="field-label"]'
 
     //fields restricted with branching logic are hidden using css but are present in the DOM
     cy.get('#questiontable > tbody > tr').not(function() {
@@ -164,17 +162,19 @@ Given('The fields shown on the public survey are {string}', (expectedFieldNames)
 Given('The fields shown on the instrument are {string}', (expectedFieldNames) => {
     const expectedFields = expectedFieldNames.split("|")
     const actualFields = []
-    //v11.1.5
-    const selector = "td.labelrc tr > td:first-child, td.labelrc.col-12"
-    //v12.4.14
-    //const selector = 'div[data-kind="field-label"]'
+    const selector = compareVersions.compare(Cypress.env('redcap_version'), '11.1.5', '<=') ? "td.labelrc tr > td:first-child, td.labelrc.col-12" : 'div[data-kind="field-label"]'
 
     //fields restricted with branching logic are hidden using css but are present in the DOM
     cy.get('#questiontable > tbody > tr').not(function() {
-        return Cypress.$(this).css("display") == "none" ||
+        if (compareVersions.compare(Cypress.env('redcap_version'), '11.1.5', '<=')) {
+            return Cypress.$(this).css("display") == "none" ||
             cleanTextBefore(Cypress.$(this).text(), "?") == "Complete"
-            //v12.4.14
-            //|| getElementText(this, 0) == "Record ID"
+        }
+        else {
+            return Cypress.$(this).css("display") == "none" ||
+            cleanTextBefore(Cypress.$(this).text(), "?") == "Complete"
+            || getElementText(this, 0) == "Record ID"
+        }
     })
     .find(selector)
     .each(($fieldName) => {
@@ -308,47 +308,31 @@ function saveBranchingLogic() {
 function getAllFieldsExcept(excludedVariableNames) {
     if (excludedVariableNames != "") {
         let variableNames = excludedVariableNames.split("|")
+        let selector = compareVersions.compare(Cypress.env('redcap_version'), '11.1.5', '<=') ? 'span.designVarName' : 'span[data-kind="variable-name"]'
+        let variableNameNodeIndex = compareVersions.compare(Cypress.env('redcap_version'), '11.1.5', '<=') ? 2 : 0
 
-        //v11.1.5
-        return cy.get('span.designVarName').not(function() {
-            let variableNameNodeIndex = 2
+        return cy.get(selector).not(function() {
             let elementText = getElementText(this, variableNameNodeIndex)
             return variableNames.some((variableName) => elementText.includes(variableName))
         })
-
-        //v12.4.14
-        // return cy.get('span[data-kind="variable-name"]').not(function() {
-        //     let variableNameNodeIndex = 0
-        //     let elementText = getElementText(this, variableNameNodeIndex)
-        //     return variableNames.some((variableName) => elementText.includes(variableName))
-        // })
     }
     else {
-        //v11.1.5
-        return cy.get('span.designVarName')
-        //v12.4.14
-        //return cy.get('span[data-kind="variable-name"]')
+        return cy.get(selector)
     }
 }
 
 function assertOnBranchingLogic(branchingLogic, excludedVariableNames) {
     cy.get('.ui-dialog').should('not.be.visible')
 
-    //v11.1.5
-    let branchingLogicSelector = `span[id^="bl-label_"]:contains(${branchingLogic})`
+    let selector = compareVersions.compare(Cypress.env('redcap_version'), '11.1.5', '<=') ? 'span[id^="bl-label_"]' : 'span[data-kind="branching-logic"]'
+    let branchingLogicSelector = compareVersions.compare(Cypress.env('redcap_version'), '11.1.5', '<=') ? `span[id^="bl-label_"]:contains(${branchingLogic})`
+        : `span[data-kind="branching-logic"]:contains(${branchingLogic})`
+
     getAllFieldsExcept(excludedVariableNames).its('length').then((numFields) => {       
-        cy.get('span[id^="bl-label_"]').filter(branchingLogicSelector).its('length').then((numFieldsWithExpBranchingLogic) => {
+        cy.get(selector).filter(branchingLogicSelector).its('length').then((numFieldsWithExpBranchingLogic) => {
             expect(numFields).equal(numFieldsWithExpBranchingLogic)
         })
     })
-
-    //v12.4.14 - makes use of data-kind attributes for clearer selectors
-    // let branchingLogicSelector = `span[data-kind="branching-logic"]:contains(${branchingLogic})`
-    // getAllFieldsExcept(excludedVariableNames).its('length').then((numFields) => {
-    //     cy.get('span[data-kind="branching-logic"]').filter(branchingLogicSelector).its('length').then((numFieldsWithExpBranchingLogic) => {
-    //         expect(numFields).equal(numFieldsWithExpBranchingLogic)
-    //     })
-    // })
 }
 
 function cleanTextBefore(text, separator) {
