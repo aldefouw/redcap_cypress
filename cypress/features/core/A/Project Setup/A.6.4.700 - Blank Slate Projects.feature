@@ -1,7 +1,7 @@
 Feature: A.6.4.700 Manage project creation, deletion, and settings
 
   Manage project creation, deletion, and settings
-  User Interface  General: The system shall support the ability to create new projects from a blank slate.
+  User Interface – General: The system shall support the ability to create new projects from a blank slate.
 
   Scenario: A.6.4.700.100 Create blank new project
     Given I login to REDCap with the user "Test_User1"
