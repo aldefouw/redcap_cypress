@@ -3,7 +3,7 @@ Feature: Control Center: The system shall provide the ability to enable/disable 
 As a REDCap end user 
  I want to see that file repository is functioning as expected    
 
-Scenario: C.3.26.100.100 Enable/Disable file repository public links via Control Center    
+Scenario: A.3.26.100.100 Enable/Disable file repository public links via Control Center
 #SETUP
 Given I login to REDCap with the user "Test_Admin"
 And I create a new project named "A.3.26.100.100" by clicking on "New Project" in the menu bar, selecting "Practice / Just for fun" from the dropdown, choosing file "Project_1.xml", and clicking the "Create Project" button
