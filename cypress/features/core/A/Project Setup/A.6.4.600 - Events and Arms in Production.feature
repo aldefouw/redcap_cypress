@@ -29,7 +29,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     When I click on the link labeled "Add New Arm"
     And I enter "Arm 3" into the input field labeled "Arm name:"
     And I click on the button labeled "Save"
-    Then I should see "Arm name: Arm 3"
+    Then I should see "Arm name:  Arm 3"
 
     When I click on the link labeled "Logging"
     Then I should see table header and rows containing the following values in the logging table:
@@ -60,7 +60,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
     Given I clear field and enter "Arm 2" into the input field labeled "Arm name"
     And I click on the button labeled "Save"
-    Then I should see "Arm name: Arm 2"
+    Then I should see "Arm name:  Arm 2"
 
     When I click on the link labeled "Logging"
 
@@ -227,7 +227,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
     When I click on the link labeled "Add New Arm"
     And I enter "Arm 4" into the input field labeled "Arm name:"
     And I click on the button labeled "Save"
-    Then I should see "Arm name: Arm 4"
+    Then I should see "Arm name:  Arm 4"
     And I click on the link labeled "Arm 4"
 
     Given I add an event named "Event 1" with offset of 0 days into the currently selected arm
@@ -320,7 +320,7 @@ Feature: A.6.4.600 Manage project creation, deletion, and settings
 
     Given I clear field and enter "Arm One" into the input field labeled "Arm name"
     And I click on the button labeled "Save"
-    Then I should see "Arm name: Arm One"
+    Then I should see "Arm name:  Arm One"
 
     When I click on the link labeled "Record Status Dashboard"
     Then I should see "Arm 1: Arm One"
