@@ -21,15 +21,14 @@ Feature: Design forms Using Data Dictionary and Online Designer
     And I click on the link labeled "Designer"
     Then I should see "Data Collection Instruments"
 
-#    TODO: Not sure why we are moving to production? I am commenting out for ATS because this seems unnecessary.
-#    And I click on the button labeled "Move project to production"
-#    And I click on the radio button labeled "Keep ALL data saved so far" in the dialog box
-#    And I click on the button labeled "YES, Move to Production Status" in the dialog box
-#    Then I should see "Project Status: Production"
-#
-#    When I click on the link labeled "Designer"
-#    And I click on the button labeled "Enter Draft Mode"
-#    Then I should see "The project is now in Draft Mode"
+    And I click on the button labeled "Move project to production"
+    And I click on the radio button labeled "Keep ALL data saved so far" in the dialog box
+    And I click on the button labeled "YES, Move to Production Status" in the dialog box
+    Then I should see "Project Status: Production"
+
+    When I click on the link labeled "Designer"
+    And I click on the button labeled "Enter Draft Mode"
+    Then I should see "The project is now in Draft Mode"
 
     #FUNCTIONAL_REQUIREMENT
     ##ACTION: dropdown field creation
@@ -38,7 +37,7 @@ Feature: Design forms Using Data Dictionary and Online Designer
         | Form 1            | 1      |
     And I click on the link labeled "Form 1"
     Then I should see a field named "Record ID"
-        
+
     Given I click on the Add Field input button below the field named "Record ID"
     And I select "Multiple Choice - Drop-down List (Single Answer)" from the Field Type dropdown of the open "Add New Field" dialog box
     And I enter "Multiple Choice Dropdown Manual" into the Field Label of the open "Add New Field" dialog box
