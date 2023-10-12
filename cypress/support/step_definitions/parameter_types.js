@@ -228,7 +228,7 @@ defineParameterType({
 
 defineParameterType({
     name: 'projectStatus',
-    regexp: /|Production|Development/
+    regexp: /|Production|Development|Analysis\/Cleanup/
 })
 
 defineParameterType({
