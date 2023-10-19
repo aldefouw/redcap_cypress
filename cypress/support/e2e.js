@@ -1,5 +1,4 @@
 // Use the REDCap Cypress Test Framework configuration that is right for you!
-require('./commands')
 
 // ==== START: BASIC CONFIGURATION OPTION ===== //
 // If you decide not to use this option, comment out the line below before using a different configuration
@@ -19,7 +18,6 @@ import 'rctf'
 // ==== START: FULL CONTROL OPTION ===== //
 // Uncomment this section if you want to manage ALL the methods yourself
 // import  {
-//     load_support_files,
 //     load_core_step_definitions,
 //     load_core_commands,
 //     preserve_cookies,
@@ -28,16 +26,14 @@ import 'rctf'
 //     reset_database
 // } from 'rctf'
 //
-// load_support_files()
-//
 // before(() => {
 //     //Do whatever you want you in addition to the basic RCTF framework methods below
-//      load_core_step_definitions()
-//      load_core_commands()
-//      preserve_cookies()
-//      intercept_vanderbilt_requests()
-//      set_user_info()
-//      reset_database()
+//     load_core_step_definitions()
+//     load_core_commands()
+//     preserve_cookies()
+//     intercept_vanderbilt_requests()
+//     set_user_info()
+//     reset_database()
 // })
 // ==== END: FULL CONTROL OPTION ===== //
 
@@ -48,3 +44,5 @@ import 'rctf'
 //     //Do whatever you want you in addition to the basic RCTF framework here
 // })
 // ==== END: BEFORE EACH SCENARIO BLOCK ===== //
+
+require('./commands')
