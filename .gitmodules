@@ -1,3 +1,0 @@
-[submodule "redcap_rsvc"]
-	path = redcap_rsvc
-	url = git@github.com:aldefouw/redcap_rsvc.git
