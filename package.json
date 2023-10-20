@@ -3,7 +3,7 @@
   "version": "13.1.37",
   "description": "This repository is a template to assist you in writing **automated tests for REDCap**.",
   "dependencies": {
-    "rctf": "git://github.com/aldefouw/rctf#v1.0.1"
+    "rctf": "git://github.com/aldefouw/rctf#v1.0.2"
   },
   "devDependencies": {
     "cypress": "^11.2.0",
