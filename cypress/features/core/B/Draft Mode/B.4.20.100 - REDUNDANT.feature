@@ -1,3 +1,0 @@
-Feature: Control Center: The system shall allow production draft mode changes to be approved automatically under certain conditions.  Options are specified as follows: Never (always require an admin to approve changes) | Yes, if no existing fields were modified | Yes, if project has no records OR if has records and no existing fields were modified  |  Yes, if no critical issues exist | Yes, if project has no records OR if has records and no critical issues exist
-
-This feature test is REDUNDANT and can be viewed in A.6.4.400.300

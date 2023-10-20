@@ -1,3 +1,0 @@
-Feature: User Interface: The system shall allow the option to add or modify events and arms on the Define My Events page for longitudinal projects while in production status by providing two options:  No, only Administrators can add/modify events in production | Yes, normal users can add/modify events in production | Add new event | Designate Instruments not previously designated
-
-This feature test is REDUNDANT and can be viewed in A.6.4.600.100
