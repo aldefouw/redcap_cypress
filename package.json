@@ -2,11 +2,9 @@
   "name": "redcap_cypress",
   "version": "13.1.37",
   "description": "This repository is a template to assist you in writing **automated tests for REDCap**.",
-  "dependencies": {
-    "rctf": "git://github.com/aldefouw/rctf#v1.0.2"
-  },
   "devDependencies": {
     "cypress": "^11.2.0",
+    "rctf": "git://github.com/aldefouw/rctf#v1.0.2",
     "documentation": "git://github.com/documentationjs/documentation#97e9361",
     "redcap_cypress_doc_theme": "git://github.com/aldefouw/redcap_cypress_doc_theme#777b0a0"
   },
@@ -14,7 +12,6 @@
     "cypress": "^11.2.0"
   },
   "scripts": {
-    "rctf:install": "npm install && npm install -C node_modules/rctf",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs:build": "./node_modules/.bin/documentation build cypress/support/step_definitions/* -f html --theme node_modules/redcap_cypress_doc_theme/index.js -o docs"
   },
