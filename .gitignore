@@ -34,3 +34,5 @@ mysql-cli.zip
 
 /test_db/latest_snapshot.sql
 /test_db/latest_snapshot.info
+
+redcap_rsvc/
