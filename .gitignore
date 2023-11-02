@@ -3,14 +3,9 @@
 /node_modules
 
 test_db/structure_and_data.sql
-test_db/initial_db_seed.lock
 
 /www
 /redcap_docker
-
-/cypress/downloads
-
-cypress.config.js
 
 cypress.json
 cypress.env.json
@@ -22,17 +17,11 @@ cypress.env.json
 
 /tmp
 
+cypress/downloads
+
 /containers
 /docker
 /find
 /mysql
 
 mysql-cli.zip
-
-/.vscode
-*.code-workspace
-
-/test_db/latest_snapshot.sql
-/test_db/latest_snapshot.info
-
-redcap_rsvc/
