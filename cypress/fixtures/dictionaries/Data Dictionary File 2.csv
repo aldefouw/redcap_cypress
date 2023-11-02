@@ -1,0 +1,54 @@
+Variable / Field Name,Form Name,Section Header,Field Type,Field Label,"Choices, Calculations, OR Slider Labels",Field Note,Text Validation Type OR Show Slider Number,Text Validation Min,Text Validation Max,Identifier?,Branching Logic (Show field only if...),Required Field?,Custom Alignment,Question Number (surveys only),Matrix Group Name,Matrix Ranking?,Field Annotation
+record_id,data_types,,text,Record ID,,,,,,,,,,,,,
+radio,data_types,,radio,radio,"9..9, Choice99 | 100, Choice100 | 101, Choice101",,,,,,,,,,,,
+multiple_dropdown_manual_2,data_types,,dropdown,Multiple Choice Dropdown Manual,"5, DDChoice5 | 7, DDChoice7 | 6, DDChoice6",,,,,,,,,,,,
+required_2,data_types,,checkbox,,"1,1",,,,,,,y,,,,,
+calc_test,data_types,,calc,Calc Test,3*2,,,,,,,,,,,,
+calculated_field_2,data_types,,calc,Calculated Field,3 * 2,,,,,,,,,,,,
+notesbox2,data_types,,notes,Notes box 2,,,,,,,,,,,,,
+notesbox_2,data_types,,notes,Text BoxNotes Bbox,,,,,,,,,,,,,
+ptname,data_types,,text,Name,,,,,,,,,,,,," @DEFAULT=""[name]"""
+text2,data_types,,text,Text2,,,,,,,,,,,,," @DEFAULT=""text2"""
+textbox,data_types,,text,Text box,,,,,,,,,,,,," @DEFAULT=""text box"""
+notesbox,data_types,,notes,Notes box,,,,,,,,,,,,," @DEFAULT=""note box"""
+calculated_field,data_types,,calc,Calculated Field,3*2,,,,,,,,,,,,
+multiple_dropdown_auto,data_types,,dropdown,Multiple Choice dropdown Auto,"1, DDChoice1 | 2, DDChoice2 | 3, DDChoice3",,,,,,,,,,,," @DEFAULT=""1"""
+multiple_dropdown_manual,data_types,,dropdown,Multiple Choice Dropdown Manual,"5, DDChoice5 | 7, DDChoice6 | 6, DDChoice7",,,,,,,,,,,," @DEFAULT=""5"""
+multiple_radio_auto,data_types,,radio,Radio Button Auto,"1, Choice1 | 2, Choice2 | 3, Choice.3",,,,,,,,,,,," @DEFAULT=""1"""
+radio_button_manual,data_types,,radio,Radio Button Manual,"9..9, Choice99 | 100, Choice100 | 101, Choice101",,,,,,,,,,,," @DEFAULT=""100"""
+checkbox,data_types,,checkbox,Checkbox,"1, Checkbox1 | 2, Checkbox2 | 3, Checkbox3",,,,,,,,,,,," @DEFAULT=""1"""
+signature,data_types,,file,Signature,,,signature,,,,,,,,,,
+file_upload,data_types,,file,File Upload,,,,,,,,,,,,,
+descriptive_text_file,data_types, ,descriptive,Descriptive Text with File,,,,,,,,,,,,,
+descriptive_text,data_types,,descriptive,Descriptive Text,,,,,,,,,,,,,
+required,data_types,,text,Required,,,,,,,,y,,,,," @DEFAULT=""required"""
+identifier,data_types,,text,Identifier,,,,,,y,,,,,,," @DEFAULT=""PHI"""
+identifier_2,data_types,,text,Identifier,,,,,,y,,,,,,," @DEFAULT=""PHI2"""
+edit_field,data_types,,text,Edit Field,,,,,,,,,,,,," @DEFAULT=""Edit Field"""
+date_ymd,data_types,Date,text,date YMD,,,date_ymd,,,,,,,,,, @TODAY
+date_mdy,data_types,,text,date MDY,,,date_mdy,,,,,,,,,, @TODAY
+date_dmy,data_types,,text,date DMY,,,date_dmy,,,,,,,,,, @TODAY
+time_hhmmss,data_types,Time,text,time HH:MM:SS,,,time_hh_mm_ss,,,,,,,,,, @NOW
+time_hhmm,data_types,,text,time HH:M,,,time,,,,,,,,,, @NOW
+time_mmss,data_types,,text,time MM:SS,,,time_mm_ss,,,,,,,,,, @NOW
+datetime_ymd_hmss,data_types,DateTime,text,datetime YMD HMSS,,,datetime_seconds_ymd,,,,,,,,,, @NOW
+datetime_ymd_hm,data_types,,text,datetime YMD HM,,,datetime_ymd,8/1/23 1:01,8/31/23 1:59,,,,,,,, @DEFAULT='2023-08-01 01:02'
+datetime_mdy_hmss,data_types,,text,datetime MDY HMSS,,,datetime_seconds_mdy,,,,,,,,,, @NOW
+datetime_dmy_hmss,data_types,,text,datetime DMY HMSS,,,datetime_seconds_dmy,,,,,,,,,, @NOW
+integer,data_types,"Integer, number, and letters",text,Integer ,,,integer,0,2,,,,,,,, @DEFAULT='1'
+number,data_types,,text,Numbers,,,number,0,2,,,,,,,, @DEFAULT='1'
+number_1_period,data_types,,text,Numbers 1 decimal place - period as decimal ,,,number_1dp,0,3,,,,,,,, @DEFAULT='2.2'
+number_1_comma,data_types,,text,Numbers 1 decimal place - comma as decimal ,,,number_1dp_comma_decimal,"0,0","3,0",,,,,,,," @DEFAULT='2,0'"
+letters,data_types,,text,Letters only,,,alpha_only,,,,,,,,,, @DEFAULT='ABCxyz'
+mrn_10_digits,data_types,,text,MRN (10 Digits),,,mrn_10d,,,,,,,,,, @DEFAULT='1234567890'
+mrn,data_types,,text,MRN (generic),,,mrn_generic,,,,,,,,,, @DEFAULT='A123456789'
+ssn,data_types,,text,Social Security Number (US),,,ssn,,,,,,,,,, @DEFAULT='123-12-1234'
+phone_north_america,data_types,Phone,text,Phone (North America),,,phone,,,,,,,,,, @DEFAULT='555-867-5309'
+phone_australia,data_types,,text,Phone (Australia),,,phone_australia,,,,,,,,,, @DEFAULT='(02) 1234 5678'
+phone_uk,data_types,,text,Phone (UK),,,phone_uk,,,,,,,,,, @DEFAULT='+44 7911 123456'
+zipcode_us,data_types,Postal codes,text,Zipcode (US),,,zipcode,,,,,,,,,, @DEFAULT='90210'
+postal_5,data_types,,text,Postal code 5 (France),,,postalcode_french,,,,,,,,,, @DEFAULT='69008'
+postal_code_australia,data_types,,text,Postal Code (Australia),,,postalcode_australia,,,,,,,,,, @DEFAULT='5000'
+postal_code_canada,data_types,,text,Postal Code (Canada),,,postalcode_canada,,,,,,,,,, @DEFAULT='A0A 0A0'
+name,text_validation,,text,Name,,,,,,,,,,,,," @DEFAULT=""Name """
+email,text_validation,,text,Email,,,email,,,,,,,,,," @DEFAULT=""email@test.edu"""
