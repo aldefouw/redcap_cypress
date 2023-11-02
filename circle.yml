@@ -1,0 +1,54 @@
+version: 2.0
+
+jobs:
+  build:
+    machine:
+      image: ubuntu-2004:202201-02
+    parallelism: 6
+    steps:
+      - checkout
+      - run:
+          name: Install MySQL Client
+          command: |
+            sudo apt-get update
+            sudo apt-get install mysql-client-core-8.0
+      - run:
+          name: Build the REDCap Image
+          command: |
+            git clone --branch v9.1.3 https://github.com/aldefouw/redcap_docker
+      - run:
+          name: Get REDCap Source
+          command: |
+            git clone --branch redcap-cypress https://github.com/aldefouw/redcap_source www
+      - run:
+          name: Start Docker REDCap Container
+          command: |
+            cd /home/circleci/project/redcap_docker
+            docker-compose up -d
+      - run:
+          name: Change eDocs folder permissions
+          command: |
+            sudo chmod 777 /var/edocs
+      - run:
+          name: Configure Cypress environment
+          command: |
+            cd /home/circleci/project
+            sed s/PID/$PROJECT_ID/g cypress.json.example > cypress.json
+            mv cypress.env.json.example cypress.env.json              
+      - run:
+          name: Install Cypress
+          command: |
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use stable
+            npm install
+      - run:
+          name: Run Tests
+          command: |
+            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build:
+        context: REDCap Tests
