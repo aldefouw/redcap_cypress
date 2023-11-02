@@ -1,4 +1,0 @@
-study_id,first_name,last_name,email,telephone_1,dob
-1,,Doer,test@invalid,555-555-5555,01/01/1950
-2,Janet,Doe,janet.doe@institution.edu,INVALID PHONE NUMBER,INVALID DATE
-3,Joe,Average,joe.average@institution.edu,555-555-5555,01/01/1952

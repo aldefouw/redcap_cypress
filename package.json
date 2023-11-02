@@ -1,27 +1,29 @@
 {
-  "name": "redcap_tests",
-  "version": "1.0.0",
+  "name": "redcap_cypress",
+  "version": "13.1.37",
   "description": "This repository is a template to assist you in writing **automated tests for REDCap**.",
-  "main": "index.js",
   "devDependencies": {
-    "@4tw/cypress-drag-drop": "^1.8.0",
-    "async-csv": "^2.1.3",
-    "compare-versions": "3.6.0",
-    "cypress": "9.7.0",
-    "cypress-iframe": "1.0.1",
-    "sed-lite": "0.8.2",
-    "shelljs": "0.8.5"
+    "cypress": "^11.2.0",
+    "rctf": "git://github.com/aldefouw/rctf#v1.0.2",
+    "redcap_rsvc": "git://github.com/aldefouw/redcap_rsvc#v13.1.37",
+    "documentation": "git://github.com/documentationjs/documentation#97e9361",
+    "redcap_cypress_doc_theme": "git://github.com/aldefouw/redcap_cypress_doc_theme#777b0a0"
+  },
+  "peerDependencies": {
+    "cypress": "^11.2.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "redcap_rsvc:install": "npm install && mv node_modules/redcap_rsvc ./redcap_rsvc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs:build": "./node_modules/.bin/documentation build cypress/support/step_definitions/* -f html --theme node_modules/redcap_cypress_doc_theme/index.js -o docs"
+  },
+  "cypress-cucumber-preprocessor": {
+    "step_definitions": "cypress/support/step_definitions/"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/aldefouw/redcap_cypress.git"
   },
   "author": "Adam De Fouw",
-  "license": "MIT",
-  "dependencies": {
-    "cypress-downloadfile": "^1.2.1"
-  }
+  "license": "MIT"
 }
