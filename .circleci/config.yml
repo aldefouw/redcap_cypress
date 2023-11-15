@@ -4,6 +4,7 @@ jobs:
   build:
     machine:
       image: ubuntu-2204:2023.10.1
+      resource_class: large
     parallelism: 17
     steps:
       - checkout
