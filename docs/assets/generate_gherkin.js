@@ -73,6 +73,7 @@ const options = {
         'data collection instruments',
         'codebook'
     ],
+    toDoTableTypes: ['Pending Requests', 'Low Priority Pending Requests', 'Completed & Archived Requests'],
     addEditField: ['Add New Field', 'Edit Field'],
     addField: ['Add Field', 'Add Matrix of Fields', 'Import from Field Bank'],
     addOrSelect: ['add', 'select'],
