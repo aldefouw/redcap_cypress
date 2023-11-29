@@ -212,7 +212,7 @@ function outputStepGenerator(index){
     let str_step = ''
 
     for(let i = 0; i < countStringInstances(replacedStepDefinition); i++) {
-        let inputBox = `"<input type="text" id="string_${index}_Input${i}">"`
+        let inputBox = `"<input type="text" id="string_Input_${i}_${index}">"`
         str_step += replacedStepDefinition.split("{string}")[i] + inputBox
     }
 
@@ -222,7 +222,7 @@ function outputStepGenerator(index){
     let int_step = ''
 
     for(let i = 0; i < countIntInstances(replacedStepDefinition); i++) {
-        let intBox = `<input type="text" id="int_${index}_Input${i}">`
+        let intBox = `<input type="text" oninput="validateInteger(this)" id="int_Input_${i}_${index}"><span class="error-message" id="error_message_${i}_${index}"></span>`
         int_step += replacedStepDefinition.split("{int}")[i] + intBox
     }
 
@@ -232,7 +232,7 @@ function outputStepGenerator(index){
     for (let i = 0; i < Object.keys(placeholders).length; i++) {
         const param = placeholders[i]
         const optionalText = extractOptionalText(param);
-        const dropdown = `<select id="optional_${index}_${i}"><option value=""> </option><option value="${optionalText}">${optionalText}</option></select>`
+        const dropdown = `<select class="select2" id="optional_${index}_${i}"><option value=""> </option><option value="${optionalText}">${optionalText}</option></select>`
         replacedStepDefinition = replacedStepDefinition.replace(param, dropdown)
     }
 
@@ -241,13 +241,13 @@ function outputStepGenerator(index){
         let param = Object.keys(options)[i]
         const pattern = new RegExp(`\\{${param}\\}`, 'g');
         if(replacedStepDefinition.match(pattern)) {
-            const dropdown = `<select id="${param}_${index}">${options[param].map(option => `<option value="${option}">${option}</option>`).join('')}</select>`;
+            const dropdown = `<select class="select2" id="${param}_${index}">${options[param].map(option => `<option value="${option}">${option}</option>`).join('')}</select>`;
             replacedStepDefinition = replacedStepDefinition.replace(`{${param}}`, dropdown)
         }
     }
 
     // Display the replaced step definition in the output div
-    document.getElementById(`input${index}`).innerHTML = replacedStepDefinition
+    document.getElementById(`input${index}`).innerHTML = `<div class="step"><strong>Gherkin Generator:</strong><br />${replacedStepDefinition}</div>`
 }
 
 function generateText(index) {
@@ -265,7 +265,7 @@ function generateText(index) {
     let str_step = ''
 
     for(let i = 0; i < countStringInstances(stepDefinition); i++) {
-        stringInput[i] = document.getElementById(`string_${index}_Input${i}`).value;
+        stringInput[i] = document.getElementById(`string_Input_${i}_${index}`).value;
         str_step += `${replacedStepDefinition.split("{string}")[i]} "${stringInput[i]}"`
     }
 
@@ -274,7 +274,7 @@ function generateText(index) {
     let int_step = ''
 
     for(let i = 0; i < countIntInstances(stepDefinition); i++) {
-        intInput[i] = document.getElementById(`int_${index}_Input${i}`).value;
+        intInput[i] = document.getElementById(`int_Input_${i}_${index}`).value;
         int_step += `${replacedStepDefinition.split("{int}")[i]} ${intInput[i]} `
     }
 
@@ -297,5 +297,44 @@ function generateText(index) {
     }
 
     // Display the replaced step definition in the output div
-    document.getElementById(`output${index}`).innerHTML = `<strong>Generated Step:</strong><br />${replacedStepDefinition}`;
+    document.getElementById(`output${index}`).innerHTML = `<div class="generated_step"><strong>Generated Step:</strong><br /><button class="btn" style="background: #007bff" onclick="copyToClipboard('step_${index}')">Copy Gherkin</button><pre><code id="step_${index}">${trimMultipleSpaces(replacedStepDefinition)}</code></pre></div>`;
+}
+
+function validateInteger(inputElement) {
+    var inputValue = inputElement.value.trim();
+
+    // Regular expression to check if the input is a valid integer
+    var integerRegExp = /^\d+$/;
+
+    var parts = inputElement.id.split('_')
+    var error_id = parts.slice(2).join('_')
+
+    if (!integerRegExp.test(inputValue) && inputValue !== '') {
+        document.getElementById(`error_message_${error_id}`).innerHTML = "<= WARNING: INTEGERS ONLY"
+    } else {
+        document.getElementById(`error_message_${error_id}`).innerHTML = ""
+    }
+}
+
+function copyToClipboard(element_id) {
+    var codeBlock = document.getElementById(element_id);
+    var range = document.createRange();
+    range.selectNode(codeBlock);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+
+    try {
+        // Copy the selected text to the clipboard
+        document.execCommand('copy');
+        alert('Gherkin step copied to clipboard!');
+    } catch (error) {
+        console.error('Unable to copy to clipboard', error);
+    }
+
+    window.getSelection().removeAllRanges();
+}
+
+function trimMultipleSpaces(inputString) {
+    // Replace multiple spaces with a single space
+    return inputString.replace(/ +/g, ' ');
 }

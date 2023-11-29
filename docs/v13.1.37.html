@@ -2,15 +2,87 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset='utf-8'>
-  <title>redcap_cypress 13.1.37 | Documentation</title>
-  <meta name='description' content='This repository is a template to assist you in writing **automated tests for REDCap**.'>
-  <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <link href='assets/bass.css' rel='stylesheet'>
-  <link href='assets/style.css' rel='stylesheet'>
-  <link href='assets/github.css' rel='stylesheet'>
-  <link href='assets/split.css' rel='stylesheet'>
-  <script src="assets/generate_gherkin.js"></script>
+    <meta charset='utf-8'>
+    <title>redcap_cypress 13.1.37 | Documentation</title>
+    <meta name='description' content='This repository is a template to assist you in writing **automated tests for REDCap**.'>
+    <meta name='viewport' content='width=device-width,initial-scale=1'>
+    <link href='assets/bass.css' rel='stylesheet'>
+    <link href='assets/style.css' rel='stylesheet'>
+    <link href='assets/github.css' rel='stylesheet'>
+    <link href='assets/split.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    <script src="assets/generate_gherkin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $('.select2').select2()
+        })
+    </script>
+    <style>
+        /* Apply rounded corners to input text boxes */
+        input[type="text"] {
+            margin-top: 3px;
+            border-radius: 4px;
+            min-height: 10px;
+            border: 1px solid #ccc; /* Add a border for better visibility */
+            padding: 8px; /* Adjust padding for better appearance */
+        }
+
+        .select2 {
+            width: 200px;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            padding: 5px;
+            font-weight: bold;
+        }
+
+        .gherkin_step {
+            background: #ccc;
+            padding: 20px;
+            border: 1px solid #ccc; /* Add a border for better visibility */
+            border-radius: 5px;
+        }
+
+        .gherkin_step .step{
+            background: #eee;
+            padding: 20px;
+            border: 1px solid #ccc; /* Add a border for better visibility */
+            border-radius: 5px
+        }
+
+        .gherkin_step .generated_step{
+            background: #eee;
+            padding: 20px;
+            border: 1px solid #ccc; /* Add a border for better visibility */
+            border-radius: 5px
+        }
+
+        pre {
+            margin: 0;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
 </head>
 <body class='documentation m0'>
 
@@ -630,9 +702,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-int-rows-displayed-in-the-projects-table'>
           I (should) see {int} <span class="hljs-title function_">row</span>(s) displayed <span class="hljs-keyword">in</span> the projects table
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-int-rows-displayed-in-the-projects-table_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-int-rows-displayed-in-the-projects-table_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should) see {int} row(s) displayed in the projects table`)
           </script>
@@ -726,9 +796,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-a-row-labeled-string-in-the-projects-table'>
           I (should) see a row labeled {string} <span class="hljs-keyword">in</span> the projects table
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-a-row-labeled-string-in-the-projects-table_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-a-row-labeled-string-in-the-projects-table_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should) see a row labeled {string} in the projects table`)
           </script>
@@ -822,9 +890,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-projects-sorted-correctly-when-i-click-on-string-to-sort-in-either-direction'>
           I (should) see projects sorted correctly when I click on {string} to sort <span class="hljs-keyword">in</span> either direction
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-projects-sorted-correctly-when-i-click-on-string-to-sort-in-either-direction_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-projects-sorted-correctly-when-i-click-on-string-to-sort-in-either-direction_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should) see projects sorted correctly when I click on {string} to sort in either direction`)
           </script>
@@ -920,9 +986,7 @@
           <h2 class='fl mb0 mt0' id='i-should-be-able-to-locate-and-visit-the-control-center-link-labeled-string-and-see-the-title-string'>
           I should be able to locate and visit the <span class="hljs-title class_">Control</span> <span class="hljs-title class_">Center</span> link labeled {string} and see the title {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-be-able-to-locate-and-visit-the-control-center-link-labeled-string-and-see-the-title-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-be-able-to-locate-and-visit-the-control-center-link-labeled-string-and-see-the-title-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I should be able to locate and visit the Control Center link labeled {string} and see the title {string}`)
           </script>
@@ -1035,9 +1099,7 @@
           <h2 class='fl mb0 mt0' id='i-enabledisable-the-administrator-privilege-string-for-the-administrator-string'>
           I {enableDisable} the <span class="hljs-title class_">Administrator</span> <span class="hljs-title class_">Privilege</span> {string} <span class="hljs-keyword">for</span> the administrator {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-enabledisable-the-administrator-privilege-string-for-the-administrator-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-enabledisable-the-administrator-privilege-string-for-the-administrator-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I {enableDisable} the Administrator Privilege {string} for the administrator {string}`)
           </script>
@@ -1151,9 +1213,7 @@
           <h2 class='fl mb0 mt0' id='i-enable-the-administrator-privilege-string-for-a-new-administrator'>
           I enable the <span class="hljs-title class_">Administrator</span> <span class="hljs-title class_">Privilege</span> {string} <span class="hljs-keyword">for</span> a <span class="hljs-keyword">new</span> administrator
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-enable-the-administrator-privilege-string-for-a-new-administrator_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-enable-the-administrator-privilege-string-for-a-new-administrator_gherkin"></div>
           <script>
                 window.all_steps.push(`I enable the Administrator Privilege {string} for a new administrator`)
           </script>
@@ -1247,9 +1307,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-todotableicons-icon-for-the-todorequesttypes-request-created-for-the-project-named-string-within-the-todotabletypes-table'>
           I click on the {toDoTableIcons} icon <span class="hljs-keyword">for</span> the {toDoRequestTypes} request created <span class="hljs-keyword">for</span> the project named {string} within the {toDoTableTypes} table
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-todotableicons-icon-for-the-todorequesttypes-request-created-for-the-project-named-string-within-the-todotabletypes-table_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-todotableicons-icon-for-the-todorequesttypes-request-created-for-the-project-named-string-within-the-todotabletypes-table_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the {toDoTableIcons} icon for the {toDoRequestTypes} request created for the project named {string} within the {toDoTableTypes} table`)
           </script>
@@ -1413,9 +1471,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-the-todorequesttypes-request-created-for-the-project-named-string-within-the-todotabletypes-table'>
           I (should) see the {toDoRequestTypes} request created <span class="hljs-keyword">for</span> the project named {string} within the {toDoTableTypes} table
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-the-todorequesttypes-request-created-for-the-project-named-string-within-the-todotabletypes-table_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-the-todorequesttypes-request-created-for-the-project-named-string-within-the-todotabletypes-table_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should) see the {toDoRequestTypes} request created for the project named {string} within the {toDoTableTypes} table`)
           </script>
@@ -1555,9 +1611,7 @@
           <h2 class='fl mb0 mt0' id='i-should-have-a-csv-file-located-at-path-string-that-contains-int-rows'>
           I (should) have a <span class="hljs-variable constant_">CSV</span> file located at path {string} that contains {int} <span class="hljs-title function_">row</span>(s)
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-have-a-csv-file-located-at-path-string-that-contains-int-rows_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-have-a-csv-file-located-at-path-string-that-contains-int-rows_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should) have a CSV file located at path {string} that contains {int} row(s)`)
           </script>
@@ -1668,9 +1722,7 @@
           <h2 class='fl mb0 mt0' id='the-csv-file-at-path-string-has-the-headings-below-datatable'>
           the <span class="hljs-variable constant_">CSV</span> file at path {string} has the headings below {<span class="hljs-title class_">DataTable</span>}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="the-csv-file-at-path-string-has-the-headings-below-datatable_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="the-csv-file-at-path-string-has-the-headings-below-datatable_gherkin"></div>
           <script>
                 window.all_steps.push(`the CSV file at path {string} has the headings below {DataTable}`)
           </script>
@@ -1781,9 +1833,7 @@
           <h2 class='fl mb0 mt0' id='the-csv-file-at-path-string-has-a-value-string-for-column-string'>
           the <span class="hljs-variable constant_">CSV</span> file at path {string} has a value {string} <span class="hljs-keyword">for</span> column {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="the-csv-file-at-path-string-has-a-value-string-for-column-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="the-csv-file-at-path-string-has-a-value-string-for-column-string_gherkin"></div>
           <script>
                 window.all_steps.push(`the CSV file at path {string} has a value {string} for column {string}`)
           </script>
@@ -1911,9 +1961,7 @@
           <h2 class='fl mb0 mt0' id='i-remove-line-int-from-a-csv-file-at-path-string'>
           I remove line {int} <span class="hljs-keyword">from</span> a <span class="hljs-variable constant_">CSV</span> file at path {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-remove-line-int-from-a-csv-file-at-path-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-remove-line-int-from-a-csv-file-at-path-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I remove line {int} from a CSV file at path {string}`)
           </script>
@@ -2043,9 +2091,7 @@
           <h2 class='fl mb0 mt0' id='i-click-the-x-to-delete-the-data-access-group-named-string'>
           I click the X to <span class="hljs-keyword">delete</span> the data access group named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-the-x-to-delete-the-data-access-group-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-the-x-to-delete-the-data-access-group-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click the X to delete the data access group named {string}`)
           </script>
@@ -2139,9 +2185,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-a-table-cell-containing-the-text-string-in-the-tabletypes-table-and-clear-field-and-entertype-enter-string'>
           I click on a table cell containing the text {string} <span class="hljs-keyword">in</span> the {tableTypes} table and clear field and {enterType} enter {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-a-table-cell-containing-the-text-string-in-the-tabletypes-table-and-clear-field-and-entertype-enter-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-a-table-cell-containing-the-text-string-in-the-tabletypes-table-and-clear-field-and-entertype-enter-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on a table cell containing the text {string} in the {tableTypes} table and clear field and {enterType} enter {string}`)
           </script>
@@ -2316,9 +2360,7 @@
           <h2 class='fl mb0 mt0' id='i-clicktype-string-for-user-string-in-the-dag-switcher-baseelement'>
           I {clickType} {string} <span class="hljs-keyword">for</span> user {string} <span class="hljs-keyword">in</span> the <span class="hljs-variable constant_">DAG</span> <span class="hljs-title class_">Switcher</span> {baseElement}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-clicktype-string-for-user-string-in-the-dag-switcher-baseelement_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-clicktype-string-for-user-string-in-the-dag-switcher-baseelement_gherkin"></div>
           <script>
                 window.all_steps.push(`I {clickType} {string} for user {string} in the DAG Switcher {baseElement}`)
           </script>
@@ -2585,9 +2627,7 @@
           <h2 class='fl mb0 mt0' id='i-upload-a-string-format-file-located-at-string-by-clicking-the-button-near-string-to-browse-for-the-file-and-clicking-the-button-labeled-string-to-upload-the-file'>
           I upload a {string} format file located at {string}, by clicking the button near {string} to browse <span class="hljs-keyword">for</span> the file, and clicking the button labeled {string} to upload the file
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-upload-a-string-format-file-located-at-string-by-clicking-the-button-near-string-to-browse-for-the-file-and-clicking-the-button-labeled-string-to-upload-the-file_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-upload-a-string-format-file-located-at-string-by-clicking-the-button-near-string-to-browse-for-the-file-and-clicking-the-button-labeled-string-to-upload-the-file_gherkin"></div>
           <script>
                 window.all_steps.push(`I upload a {string} format file located at {string}, by clicking the button near {string} to browse for the file, and clicking the button labeled {string} to upload the file`)
           </script>
@@ -2732,9 +2772,7 @@
           <h2 class='fl mb0 mt0' id='i-upload-a-file-located-at-string-to-the-file-repository'>
           I upload a file located at {string} to the <span class="hljs-title class_">File</span> <span class="hljs-title class_">Repository</span>
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-upload-a-file-located-at-string-to-the-file-repository_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-upload-a-file-located-at-string-to-the-file-repository_gherkin"></div>
           <script>
                 window.all_steps.push(`I upload a file located at {string} to the File Repository`)
           </script>
@@ -2828,9 +2866,7 @@
           <h2 class='fl mb0 mt0' id='i-create-a-new-project-named-string-by-clicking-on-new-project-in-the-menu-bar-selecting-projecttype-from-the-dropdown-choosing-file-string-and-clicking-the-projectrequestlabel-button'>
           I create a <span class="hljs-keyword">new</span> project named {string} by clicking on <span class="hljs-string">&quot;New Project&quot;</span> <span class="hljs-keyword">in</span> the menu bar, selecting <span class="hljs-string">&quot;{projectType}&quot;</span> <span class="hljs-keyword">from</span> the dropdown, choosing file {string}, and clicking the <span class="hljs-string">&quot;{projectRequestLabel}&quot;</span> button
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-create-a-new-project-named-string-by-clicking-on-new-project-in-the-menu-bar-selecting-projecttype-from-the-dropdown-choosing-file-string-and-clicking-the-projectrequestlabel-button_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-create-a-new-project-named-string-by-clicking-on-new-project-in-the-menu-bar-selecting-projecttype-from-the-dropdown-choosing-file-string-and-clicking-the-projectrequestlabel-button_gherkin"></div>
           <script>
                 window.all_steps.push(`I create a new project named {string} by clicking on "New Project" in the menu bar, selecting "{projectType}" from the dropdown, choosing file {string}, and clicking the "{projectRequestLabel}" button`)
           </script>
@@ -2989,9 +3025,7 @@
           <h2 class='fl mb0 mt0' id='i-want-to-pause'>
           I want to pause
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-want-to-pause_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-want-to-pause_gherkin"></div>
           <script>
                 window.all_steps.push(`I want to pause`)
           </script>
@@ -3063,9 +3097,7 @@
           <h2 class='fl mb0 mt0' id='i-want-to-export-a-snapshot-of-this-feature-here'>
           I want to <span class="hljs-keyword">export</span> a snapshot <span class="hljs-keyword">of</span> <span class="hljs-variable language_">this</span> feature here
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-want-to-export-a-snapshot-of-this-feature-here_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-want-to-export-a-snapshot-of-this-feature-here_gherkin"></div>
           <script>
                 window.all_steps.push(`I want to export a snapshot of this feature here`)
           </script>
@@ -3139,9 +3171,7 @@
           <h2 class='fl mb0 mt0' id='i-download-a-file-by-clicking-on-the-link-labeled-string'>
           I download a file by clicking on the link labeled {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-download-a-file-by-clicking-on-the-link-labeled-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-download-a-file-by-clicking-on-the-link-labeled-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I download a file by clicking on the link labeled {string}`)
           </script>
@@ -3237,9 +3267,7 @@
           <h2 class='fl mb0 mt0' id='i-select-the-submit-option-labeled-instrumentsaveoptions-on-the-data-collection-instrument'>
           I select the submit option labeled <span class="hljs-string">&quot;{instrumentSaveOptions}&quot;</span> on the <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Collection</span> <span class="hljs-title class_">Instrument</span>
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-select-the-submit-option-labeled-instrumentsaveoptions-on-the-data-collection-instrument_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-select-the-submit-option-labeled-instrumentsaveoptions-on-the-data-collection-instrument_gherkin"></div>
           <script>
                 window.all_steps.push(`I select the submit option labeled "{instrumentSaveOptions}" on the Data Collection Instrument`)
           </script>
@@ -3346,9 +3374,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-ordinal-button-labeledexactly-string-savebuttonroutemonitoring-baseelement-iframevisibility-todownloadfile'>
           I click on (the) {ordinal} button {labeledExactly} {string} {saveButtonRouteMonitoring} {baseElement} {iframeVisibility} {toDownloadFile}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-ordinal-button-labeledexactly-string-savebuttonroutemonitoring-baseelement-iframevisibility-todownloadfile_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-ordinal-button-labeledexactly-string-savebuttonroutemonitoring-baseelement-iframevisibility-todownloadfile_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on (the) {ordinal} button {labeledExactly} {string} {saveButtonRouteMonitoring} {baseElement} {iframeVisibility} {toDownloadFile}`)
           </script>
@@ -3689,9 +3715,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-linknames-labeledexactly-string-savebuttonroutemonitoring-todownloadfile-baseelement'>
           I click on the {linkNames} {labeledExactly} {string} {saveButtonRouteMonitoring} {toDownloadFile} {baseElement}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-linknames-labeledexactly-string-savebuttonroutemonitoring-todownloadfile-baseelement_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-linknames-labeledexactly-string-savebuttonroutemonitoring-todownloadfile-baseelement_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the {linkNames} {labeledExactly} {string} {saveButtonRouteMonitoring} {toDownloadFile} {baseElement}`)
           </script>
@@ -4015,9 +4039,7 @@
           <h2 class='fl mb0 mt0' id='i-close-the-popup'>
           I close the popup
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-close-the-popup_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-close-the-popup_gherkin"></div>
           <script>
                 window.all_steps.push(`I close the popup`)
           </script>
@@ -4089,9 +4111,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-button-labeled-string-for-the-row-labeled-string'>
           I click on the button labeled {string} <span class="hljs-keyword">for</span> the row labeled {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-button-labeled-string-for-the-row-labeled-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-button-labeled-string-for-the-row-labeled-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the button labeled {string} for the row labeled {string}`)
           </script>
@@ -4202,9 +4222,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-radio-labeled-string-in-the-dialog-box-iframevisibility'>
           I click on the radio labeled {string} <span class="hljs-keyword">in</span> the dialog box {iframeVisibility}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-radio-labeled-string-in-the-dialog-box-iframevisibility_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-radio-labeled-string-in-the-dialog-box-iframevisibility_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the radio labeled {string} in the dialog box {iframeVisibility}`)
           </script>
@@ -4317,9 +4335,7 @@
           <h2 class='fl mb0 mt0' id='i-entertype-string-into-the-input-field-labeled-string-baseelement'>
           I {enterType} {string} into the input field labeled {string} {baseElement}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-entertype-string-into-the-input-field-labeled-string-baseelement_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-entertype-string-into-the-input-field-labeled-string-baseelement_gherkin"></div>
           <script>
                 window.all_steps.push(`I {enterType} {string} into the input field labeled {string} {baseElement}`)
           </script>
@@ -4566,9 +4582,7 @@
           <h2 class='fl mb0 mt0' id='i-entertype-string-into-the-textarea-field-labeled-string-baseelement'>
           I {enterType} {string} into the textarea field labeled {string} {baseElement}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-entertype-string-into-the-textarea-field-labeled-string-baseelement_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-entertype-string-into-the-textarea-field-labeled-string-baseelement_gherkin"></div>
           <script>
                 window.all_steps.push(`I {enterType} {string} into the textarea field labeled {string} {baseElement}`)
           </script>
@@ -4833,9 +4847,7 @@
           <h2 class='fl mb0 mt0' id='i-enter-string-into-the-data-entry-form-field-labeled-string'>
           I enter {string} into the data entry form field labeled {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-enter-string-into-the-data-entry-form-field-labeled-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-enter-string-into-the-data-entry-form-field-labeled-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I enter {string} into the data entry form field labeled {string}`)
           </script>
@@ -4968,9 +4980,7 @@
           <h2 class='fl mb0 mt0' id='i-clear-the-field-labeled-string'>
           I clear the field labeled {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-clear-the-field-labeled-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-clear-the-field-labeled-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I clear the field labeled {string}`)
           </script>
@@ -5064,9 +5074,7 @@
           <h2 class='fl mb0 mt0' id='i-clicktype-the-checkboxradio-labeled-string-baseelement'>
           I {clickType} the {checkBoxRadio} labeled {string} {baseElement}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-clicktype-the-checkboxradio-labeled-string-baseelement_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-clicktype-the-checkboxradio-labeled-string-baseelement_gherkin"></div>
           <script>
                 window.all_steps.push(`I {clickType} the {checkBoxRadio} labeled {string} {baseElement}`)
           </script>
@@ -5334,9 +5342,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-input-element-labeled-string'>
           I click on the input element labeled {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-input-element-labeled-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-input-element-labeled-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the input element labeled {string}`)
           </script>
@@ -5476,9 +5482,7 @@
           <h2 class='fl mb0 mt0' id='i-set-the-input-file-field-named-string-to-the-file-at-path-string'>
           I set the input file field named {string} to the file at path {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-set-the-input-file-field-named-string-to-the-file-at-path-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-set-the-input-file-field-named-string-to-the-file-at-path-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I set the input file field named {string} to the file at path {string}`)
           </script>
@@ -5721,9 +5725,7 @@
           <h2 class='fl mb0 mt0' id='i-enter-string-into-the-field-identified-by-string-for-the-label-string'>
           I enter {string} into the field identified by {string} <span class="hljs-keyword">for</span> the label {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-enter-string-into-the-field-identified-by-string-for-the-label-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-enter-string-into-the-field-identified-by-string-for-the-label-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I enter {string} into the field identified by {string} for the label {string}`)
           </script>
@@ -5851,9 +5853,7 @@
           <h2 class='fl mb0 mt0' id='for-this-scenario-i-will-confirmation-a-confirmation-window-containing-the-text-string'>
           <span class="hljs-keyword">for</span> <span class="hljs-variable language_">this</span> scenario, I will {confirmation} a confirmation <span class="hljs-variable language_">window</span> containing the text {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="for-this-scenario-i-will-confirmation-a-confirmation-window-containing-the-text-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="for-this-scenario-i-will-confirmation-a-confirmation-window-containing-the-text-string_gherkin"></div>
           <script>
                 window.all_steps.push(`for this scenario, I will {confirmation} a confirmation window containing the text {string}`)
           </script>
@@ -5967,9 +5967,7 @@
           <h2 class='fl mb0 mt0' id='i-export-all-data-in-string-format-and-expect-int-record'>
           I <span class="hljs-keyword">export</span> all data <span class="hljs-keyword">in</span> {string} format and expect {int} record
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-export-all-data-in-string-format-and-expect-int-record_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-export-all-data-in-string-format-and-expect-int-record_gherkin"></div>
           <script>
                 window.all_steps.push(`I export all data in {string} format and expect {int} record`)
           </script>
@@ -6080,9 +6078,7 @@
           <h2 class='fl mb0 mt0' id='i-click-the-element-containing-the-following-text-string'>
           I click the element containing the following <span class="hljs-attr">text</span>: {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-the-element-containing-the-following-text-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-the-element-containing-the-following-text-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click the element containing the following text: {string}`)
           </script>
@@ -6176,9 +6172,7 @@
           <h2 class='fl mb0 mt0' id='i-select-the-radio-option-string-for-the-field-labeled-string'>
           I select the radio option {string} <span class="hljs-keyword">for</span> the field labeled {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-select-the-radio-option-string-for-the-field-labeled-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-select-the-radio-option-string-for-the-field-labeled-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I select the radio option {string} for the field labeled {string}`)
           </script>
@@ -6289,9 +6283,7 @@
           <h2 class='fl mb0 mt0' id='i-select-the-dropdown-option-string-for-the-data-collection-instrument-field-labeled-string'>
           I select the dropdown option {string} <span class="hljs-keyword">for</span> the <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Collection</span> <span class="hljs-title class_">Instrument</span> field labeled {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-select-the-dropdown-option-string-for-the-data-collection-instrument-field-labeled-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-select-the-dropdown-option-string-for-the-data-collection-instrument-field-labeled-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I select the dropdown option {string} for the Data Collection Instrument field labeled {string}`)
           </script>
@@ -6402,9 +6394,7 @@
           <h2 class='fl mb0 mt0' id='i-select-the-checkbox-option-string-for-the-field-labeled-string'>
           I select the checkbox option {string} <span class="hljs-keyword">for</span> the field labeled {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-select-the-checkbox-option-string-for-the-field-labeled-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-select-the-checkbox-option-string-for-the-field-labeled-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I select the checkbox option {string} for the field labeled {string}`)
           </script>
@@ -6515,9 +6505,7 @@
           <h2 class='fl mb0 mt0' id='i-select-string-on-the-dropdowntype-field-labeled-string-baseelement'>
           I select {string} on the {dropdownType} field labeled {string} {baseElement}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-select-string-on-the-dropdowntype-field-labeled-string-baseelement_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-select-string-on-the-dropdowntype-field-labeled-string-baseelement_gherkin"></div>
           <script>
                 window.all_steps.push(`I select {string} on the {dropdownType} field labeled {string} {baseElement}`)
           </script>
@@ -6780,9 +6768,7 @@
           <h2 class='fl mb0 mt0' id='i-wait-for-another-int-timetype'>
           I wait <span class="hljs-keyword">for</span> (another) {int} {timeType}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-wait-for-another-int-timetype_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-wait-for-another-int-timetype_gherkin"></div>
           <script>
                 window.all_steps.push(`I wait for (another) {int} {timeType}`)
           </script>
@@ -6883,9 +6869,7 @@
           <h2 class='fl mb0 mt0' id='i-entertype-string-into-the-field-with-the-placeholder-text-of-string'>
           I {enterType} {string} into the field <span class="hljs-keyword">with</span> the placeholder text <span class="hljs-keyword">of</span> {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-entertype-string-into-the-field-with-the-placeholder-text-of-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-entertype-string-into-the-field-with-the-placeholder-text-of-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I {enterType} {string} into the field with the placeholder text of {string}`)
           </script>
@@ -7018,9 +7002,7 @@
           <h2 class='fl mb0 mt0' id='i-close-the-iframe-window'>
           I close the iframe <span class="hljs-variable language_">window</span>
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-close-the-iframe-window_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-close-the-iframe-window_gherkin"></div>
           <script>
                 window.all_steps.push(`I close the iframe window`)
           </script>
@@ -7092,9 +7074,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-table-heading-column-labeled-string'>
           I click on the table heading column labeled {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-table-heading-column-labeled-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-table-heading-column-labeled-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the table heading column labeled {string}`)
           </script>
@@ -7190,9 +7170,7 @@
           <h2 class='fl mb0 mt0' id='i-select-the-string-option-from-the-filter-by-username-dropdown-field'>
           I select the {string} option <span class="hljs-keyword">from</span> the <span class="hljs-title class_">Filter</span> by username dropdown field
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-select-the-string-option-from-the-filter-by-username-dropdown-field_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-select-the-string-option-from-the-filter-by-username-dropdown-field_gherkin"></div>
           <script>
                 window.all_steps.push(`I select the {string} option from the Filter by username dropdown field`)
           </script>
@@ -7286,9 +7264,7 @@
           <h2 class='fl mb0 mt0' id='i-export-all-logging-from-the-project-and-verify-the-result-against-expected-logging-results-for-this-version-of-redcap'>
           I <span class="hljs-keyword">export</span> all logging <span class="hljs-keyword">from</span> the project and verify the result against expected logging results <span class="hljs-keyword">for</span> <span class="hljs-variable language_">this</span> version <span class="hljs-keyword">of</span> <span class="hljs-title class_">REDCap</span>
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-export-all-logging-from-the-project-and-verify-the-result-against-expected-logging-results-for-this-version-of-redcap_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-export-all-logging-from-the-project-and-verify-the-result-against-expected-logging-results-for-this-version-of-redcap_gherkin"></div>
           <script>
                 window.all_steps.push(`I export all logging from the project and verify the result against expected logging results for this version of REDCap`)
           </script>
@@ -7362,9 +7338,7 @@
           <h2 class='fl mb0 mt0' id='i-login-to-redcap-with-the-user-string'>
           I login to <span class="hljs-title class_">REDCap</span> <span class="hljs-keyword">with</span> the user {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-login-to-redcap-with-the-user-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-login-to-redcap-with-the-user-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I login to REDCap with the user {string}`)
           </script>
@@ -7458,9 +7432,7 @@
           <h2 class='fl mb0 mt0' id='i-logout'>
           I logout
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-logout_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-logout_gherkin"></div>
           <script>
                 window.all_steps.push(`I logout`)
           </script>
@@ -7534,9 +7506,7 @@
           <h2 class='fl mb0 mt0' id='i-change-the-current-event-name-from-string-to-string'>
           I change the current <span class="hljs-title class_">Event</span> <span class="hljs-title class_">Name</span> <span class="hljs-keyword">from</span> {string} to {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-change-the-current-event-name-from-string-to-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-change-the-current-event-name-from-string-to-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I change the current Event Name from {string} to {string}`)
           </script>
@@ -7647,9 +7617,7 @@
           <h2 class='fl mb0 mt0' id='i-verify-i-cannot-change-the-event-name-of-string-while-in-production'>
           I verify I cannot change the <span class="hljs-title class_">Event</span> <span class="hljs-title class_">Name</span> <span class="hljs-keyword">of</span> {string} <span class="hljs-keyword">while</span> <span class="hljs-keyword">in</span> production
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-verify-i-cannot-change-the-event-name-of-string-while-in-production_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-verify-i-cannot-change-the-event-name-of-string-while-in-production_gherkin"></div>
           <script>
                 window.all_steps.push(`I verify I cannot change the Event Name of {string} while in production`)
           </script>
@@ -7743,9 +7711,7 @@
           <h2 class='fl mb0 mt0' id='i-add-an-event-named-string-with-offset-of-int-days-into-the-currently-selected-arm'>
           I add an event named {string} <span class="hljs-keyword">with</span> offset <span class="hljs-keyword">of</span> {int} <span class="hljs-title function_">day</span>(s) into the currently selected arm
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-add-an-event-named-string-with-offset-of-int-days-into-the-currently-selected-arm_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-add-an-event-named-string-with-offset-of-int-days-into-the-currently-selected-arm_gherkin"></div>
           <script>
                 window.all_steps.push(`I add an event named {string} with offset of {int} day(s) into the currently selected arm`)
           </script>
@@ -7839,9 +7805,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-editfield-image-for-the-event-named-string'>
           I click on the {editField} image <span class="hljs-keyword">for</span> the event named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-editfield-image-for-the-event-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-editfield-image-for-the-event-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the {editField} image for the event named {string}`)
           </script>
@@ -7938,9 +7902,7 @@
           <h2 class='fl mb0 mt0' id='i-should-not-see-a-data-collection-instrument-named-string-for-the-event-named-string'>
           I (should) (not) see a <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Collection</span> <span class="hljs-title class_">Instrument</span> named {string} <span class="hljs-keyword">for</span> the <span class="hljs-title class_">Event</span> named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-not-see-a-data-collection-instrument-named-string-for-the-event-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-not-see-a-data-collection-instrument-named-string-for-the-event-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should) (not) see a Data Collection Instrument named {string} for the Event named {string}`)
           </script>
@@ -8051,9 +8013,7 @@
           <h2 class='fl mb0 mt0' id='i-enable-the-data-collection-instrument-named-string-for-the-event-named-string'>
           I enable the <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Collection</span> <span class="hljs-title class_">Instrument</span> named {string} <span class="hljs-keyword">for</span> the <span class="hljs-title class_">Event</span> named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-enable-the-data-collection-instrument-named-string-for-the-event-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-enable-the-data-collection-instrument-named-string-for-the-event-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I enable the Data Collection Instrument named {string} for the Event named {string}`)
           </script>
@@ -8164,9 +8124,7 @@
           <h2 class='fl mb0 mt0' id='i-disable-the-data-collection-instrument-named-string-for-the-event-named-string'>
           I disable the <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Collection</span> <span class="hljs-title class_">Instrument</span> named {string} <span class="hljs-keyword">for</span> the <span class="hljs-title class_">Event</span> named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-disable-the-data-collection-instrument-named-string-for-the-event-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-disable-the-data-collection-instrument-named-string-for-the-event-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I disable the Data Collection Instrument named {string} for the Event named {string}`)
           </script>
@@ -8277,9 +8235,7 @@
           <h2 class='fl mb0 mt0' id='i-verify-the-data-collection-instrument-named-string-is-enabled-for-the-event-named-string'>
           I verify the <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Collection</span> <span class="hljs-title class_">Instrument</span> named {string} is enabled <span class="hljs-keyword">for</span> the <span class="hljs-title class_">Event</span> named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-verify-the-data-collection-instrument-named-string-is-enabled-for-the-event-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-verify-the-data-collection-instrument-named-string-is-enabled-for-the-event-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I verify the Data Collection Instrument named {string} is enabled for the Event named {string}`)
           </script>
@@ -8390,9 +8346,7 @@
           <h2 class='fl mb0 mt0' id='i-verify-the-data-collection-instrument-named-string-is-disabled-for-the-event-named-string'>
           I verify the <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Collection</span> <span class="hljs-title class_">Instrument</span> named {string} is disabled <span class="hljs-keyword">for</span> the <span class="hljs-title class_">Event</span> named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-verify-the-data-collection-instrument-named-string-is-disabled-for-the-event-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-verify-the-data-collection-instrument-named-string-is-disabled-for-the-event-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I verify the Data Collection Instrument named {string} is disabled for the Event named {string}`)
           </script>
@@ -8503,9 +8457,7 @@
           <h2 class='fl mb0 mt0' id='i-verify-the-data-collection-instrument-named-string-is-disabled-for-the-event-named-string'>
           I verify the <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Collection</span> <span class="hljs-title class_">Instrument</span> named {string} is disabled <span class="hljs-keyword">for</span> the <span class="hljs-title class_">Event</span> named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-verify-the-data-collection-instrument-named-string-is-disabled-for-the-event-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-verify-the-data-collection-instrument-named-string-is-disabled-for-the-event-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I verify the Data Collection Instrument named {string} is disabled for the Event named {string}`)
           </script>
@@ -8618,9 +8570,7 @@
           <h2 class='fl mb0 mt0' id='i-entertype-choices-of-string-into-the-open-addeditfield-dialog-box'>
           I {enterType} <span class="hljs-title class_">Choice</span>(s) <span class="hljs-keyword">of</span> {string} <span class="hljs-title function_">in</span>(to) the open <span class="hljs-string">&quot;{addEditField}&quot;</span> dialog box
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-entertype-choices-of-string-into-the-open-addeditfield-dialog-box_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-entertype-choices-of-string-into-the-open-addeditfield-dialog-box_gherkin"></div>
           <script>
                 window.all_steps.push(`I {enterType} Choice(s) of {string} in(to) the open "{addEditField}" dialog box`)
           </script>
@@ -8755,9 +8705,7 @@
           <h2 class='fl mb0 mt0' id='i-enter-string-into-the-field-label-of-the-open-addeditfield-dialog-box'>
           I enter {string} into the <span class="hljs-title class_">Field</span> <span class="hljs-title class_">Label</span> <span class="hljs-keyword">of</span> the open <span class="hljs-string">&quot;{addEditField}&quot;</span> dialog box
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-enter-string-into-the-field-label-of-the-open-addeditfield-dialog-box_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-enter-string-into-the-field-label-of-the-open-addeditfield-dialog-box_gherkin"></div>
           <script>
                 window.all_steps.push(`I enter {string} into the Field Label of the open "{addEditField}" dialog box`)
           </script>
@@ -8871,9 +8819,7 @@
           <h2 class='fl mb0 mt0' id='i-enter-string-into-the-variable-name-of-the-open-addeditfield-dialog-box'>
           I enter {string} into the <span class="hljs-title class_">Variable</span> <span class="hljs-title class_">Name</span> <span class="hljs-keyword">of</span> the open <span class="hljs-string">&quot;{addEditField}&quot;</span> dialog box
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-enter-string-into-the-variable-name-of-the-open-addeditfield-dialog-box_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-enter-string-into-the-variable-name-of-the-open-addeditfield-dialog-box_gherkin"></div>
           <script>
                 window.all_steps.push(`I enter {string} into the Variable Name of the open "{addEditField}" dialog box`)
           </script>
@@ -8987,9 +8933,7 @@
           <h2 class='fl mb0 mt0' id='i-enter-the-equation-string-into-calculation-equation-of-the-open-addeditfield-dialog-box'>
           I enter the equation {string} into <span class="hljs-title class_">Calculation</span> <span class="hljs-title class_">Equation</span> <span class="hljs-keyword">of</span> the open <span class="hljs-string">&quot;{addEditField}&quot;</span> dialog box
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-enter-the-equation-string-into-calculation-equation-of-the-open-addeditfield-dialog-box_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-enter-the-equation-string-into-calculation-equation-of-the-open-addeditfield-dialog-box_gherkin"></div>
           <script>
                 window.all_steps.push(`I enter the equation {string} into Calculation Equation of the open "{addEditField}" dialog box`)
           </script>
@@ -9103,9 +9047,7 @@
           <h2 class='fl mb0 mt0' id='i-select-string-from-the-field-type-dropdown-of-the-open-addeditfield-dialog-box'>
           I select {string} <span class="hljs-keyword">from</span> the <span class="hljs-title class_">Field</span> <span class="hljs-title class_">Type</span> dropdown <span class="hljs-keyword">of</span> the open <span class="hljs-string">&quot;{addEditField}&quot;</span> dialog box
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-select-string-from-the-field-type-dropdown-of-the-open-addeditfield-dialog-box_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-select-string-from-the-field-type-dropdown-of-the-open-addeditfield-dialog-box_gherkin"></div>
           <script>
                 window.all_steps.push(`I select {string} from the Field Type dropdown of the open "{addEditField}" dialog box`)
           </script>
@@ -9219,9 +9161,7 @@
           <h2 class='fl mb0 mt0' id='i-select-string-from-the-validation-dropdown-of-the-open-addeditfield-dialog-box'>
           I select {string} <span class="hljs-keyword">from</span> the <span class="hljs-title class_">Validation</span> dropdown <span class="hljs-keyword">of</span> the open <span class="hljs-string">&quot;{addEditField}&quot;</span> dialog box
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-select-string-from-the-validation-dropdown-of-the-open-addeditfield-dialog-box_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-select-string-from-the-validation-dropdown-of-the-open-addeditfield-dialog-box_gherkin"></div>
           <script>
                 window.all_steps.push(`I select {string} from the Validation dropdown of the open "{addEditField}" dialog box`)
           </script>
@@ -9335,9 +9275,7 @@
           <h2 class='fl mb0 mt0' id='i-mark-the-field-required'>
           I mark the field required
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-mark-the-field-required_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-mark-the-field-required_gherkin"></div>
           <script>
                 window.all_steps.push(`I mark the field required`)
           </script>
@@ -9409,9 +9347,7 @@
           <h2 class='fl mb0 mt0' id='i-mark-the-field-as-not-required'>
           I mark the field <span class="hljs-keyword">as</span> not required
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-mark-the-field-as-not-required_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-mark-the-field-as-not-required_gherkin"></div>
           <script>
                 window.all_steps.push(`I mark the field as not required`)
           </script>
@@ -9483,9 +9419,7 @@
           <h2 class='fl mb0 mt0' id='i-add-an-instrument-below-the-instrument-named-string'>
           I add an instrument below the instrument named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-add-an-instrument-below-the-instrument-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-add-an-instrument-below-the-instrument-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I add an instrument below the instrument named {string}`)
           </script>
@@ -9579,9 +9513,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-instrument-action-string-for-the-instrument-named-string'>
           I click on the <span class="hljs-title class_">Instrument</span> <span class="hljs-title class_">Action</span> {string} <span class="hljs-keyword">for</span> the instrument named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-instrument-action-string-for-the-instrument-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-instrument-action-string-for-the-instrument-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the Instrument Action {string} for the instrument named {string}`)
           </script>
@@ -9692,9 +9624,7 @@
           <h2 class='fl mb0 mt0' id='i-drag-on-the-instrument-named-string-to-the-position-int'>
           I drag on the instrument named {string} to the position {int}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-drag-on-the-instrument-named-string-to-the-position-int_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-drag-on-the-instrument-named-string-to-the-position-int_gherkin"></div>
           <script>
                 window.all_steps.push(`I drag on the instrument named {string} to the position {int}`)
           </script>
@@ -9805,9 +9735,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-addfield-input-button-below-the-field-named-string'>
           I click on the {addField} input button below the field named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-addfield-input-button-below-the-field-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-addfield-input-button-below-the-field-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the {addField} input button below the field named {string}`)
           </script>
@@ -9923,9 +9851,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-editfield-image-for-the-field-named-string'>
           I click on the {editField} image <span class="hljs-keyword">for</span> the field named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-editfield-image-for-the-field-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-editfield-image-for-the-field-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the {editField} image for the field named {string}`)
           </script>
@@ -10045,9 +9971,7 @@
           <h2 class='fl mb0 mt0' id='i-delete-the-field-named-string'>
           I <span class="hljs-keyword">delete</span> the field named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-delete-the-field-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-delete-the-field-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I delete the field named {string}`)
           </script>
@@ -10141,9 +10065,7 @@
           <h2 class='fl mb0 mt0' id='i-move-the-field-named-string-after-the-field-named-string'>
           I move the field named {string} after the field named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-move-the-field-named-string-after-the-field-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-move-the-field-named-string-after-the-field-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I move the field named {string} after the field named {string}`)
           </script>
@@ -10254,9 +10176,7 @@
           <h2 class='fl mb0 mt0' id='i-drag-on-the-field-named-string-to-the-position-int'>
           I drag on the field named {string} to the position {int}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-drag-on-the-field-named-string-to-the-position-int_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-drag-on-the-field-named-string-to-the-position-int_gherkin"></div>
           <script>
                 window.all_steps.push(`I drag on the field named {string} to the position {int}`)
           </script>
@@ -10367,9 +10287,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-a-field-named-string'>
           I should see a field named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-a-field-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-a-field-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see a field named {string}`)
           </script>
@@ -10480,9 +10398,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-a-field-named-string-beforeafter-field-named-string'>
           I should see a field named {string} {beforeAfter} field named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-a-field-named-string-beforeafter-field-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-a-field-named-string-beforeafter-field-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see a field named {string} {beforeAfter} field named {string}`)
           </script>
@@ -10596,9 +10512,7 @@
           <h2 class='fl mb0 mt0' id='i-add-a-new-fieldtype-field-labeled-string-with-variable-name-string'>
           I add a <span class="hljs-keyword">new</span> {fieldType} field labeled {string} <span class="hljs-keyword">with</span> variable name {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-add-a-new-fieldtype-field-labeled-string-with-variable-name-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-add-a-new-fieldtype-field-labeled-string-with-variable-name-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I add a new {fieldType} field labeled {string} with variable name {string}`)
           </script>
@@ -10734,9 +10648,7 @@
           <h2 class='fl mb0 mt0' id='i-drag-the-instrument-named-string-to-the-ordinal-row'>
           I drag the instrument named {string} to the {ordinal} row
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-drag-the-instrument-named-string-to-the-ordinal-row_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-drag-the-instrument-named-string-to-the-ordinal-row_gherkin"></div>
           <script>
                 window.all_steps.push(`I drag the instrument named {string} to the {ordinal} row`)
           </script>
@@ -10866,9 +10778,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-the-instrument-named-string-in-the-ordinal-row'>
           I (should) see the instrument named {string} <span class="hljs-keyword">in</span> the {ordinal} row
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-the-instrument-named-string-in-the-ordinal-row_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-the-instrument-named-string-in-the-ordinal-row_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should) see the instrument named {string} in the {ordinal} row`)
           </script>
@@ -10998,9 +10908,7 @@
           <h2 class='fl mb0 mt0' id='i-drag-the-field-named-string-to-the-ordinal-row'>
           I drag the field named {string} to the {ordinal} row
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-drag-the-field-named-string-to-the-ordinal-row_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-drag-the-field-named-string-to-the-ordinal-row_gherkin"></div>
           <script>
                 window.all_steps.push(`I drag the field named {string} to the {ordinal} row`)
           </script>
@@ -11132,9 +11040,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-that-repeatable-instruments-are-repeatability'>
           I (should )see that repeatable instruments are {repeatability}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-that-repeatable-instruments-are-repeatability_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-that-repeatable-instruments-are-repeatability_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should )see that repeatable instruments are {repeatability}`)
           </script>
@@ -11235,9 +11141,7 @@
           <h2 class='fl mb0 mt0' id='i-open-the-dialog-box-for-the-repeatable-instruments-and-events-module'>
           I open the dialog box <span class="hljs-keyword">for</span> the <span class="hljs-title class_">Repeatable</span> <span class="hljs-title class_">Instruments</span> and <span class="hljs-title class_">Events</span> <span class="hljs-variable language_">module</span>
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-open-the-dialog-box-for-the-repeatable-instruments-and-events-module_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-open-the-dialog-box-for-the-repeatable-instruments-and-events-module_gherkin"></div>
           <script>
                 window.all_steps.push(`I open the dialog box for the Repeatable Instruments and Events module`)
           </script>
@@ -11311,9 +11215,7 @@
           <h2 class='fl mb0 mt0' id='i-click-the-bubble-to-addorselect-a-record-for-the-string-longitudinal-instrument-on-event-stringcellaction'>
           I click the bubble to {addOrSelect} a record <span class="hljs-keyword">for</span> the {string} longitudinal instrument on event {string}{cellAction}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-the-bubble-to-addorselect-a-record-for-the-string-longitudinal-instrument-on-event-stringcellaction_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-the-bubble-to-addorselect-a-record-for-the-string-longitudinal-instrument-on-event-stringcellaction_gherkin"></div>
           <script>
                 window.all_steps.push(`I click the bubble to {addOrSelect} a record for the {string} longitudinal instrument on event {string}{cellAction}`)
           </script>
@@ -11474,9 +11376,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-bubble-for-the-string-data-collection-instrument-for-recordidevent-string'>
           I click on the bubble <span class="hljs-keyword">for</span> the {string} data collection instrument <span class="hljs-keyword">for</span> {recordIDEvent} {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-bubble-for-the-string-data-collection-instrument-for-recordidevent-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-bubble-for-the-string-data-collection-instrument-for-recordidevent-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the bubble for the {string} data collection instrument for {recordIDEvent} {string}`)
           </script>
@@ -11590,9 +11490,7 @@
           <h2 class='fl mb0 mt0' id='i-locate-the-bubble-for-the-string-instrument-on-event-string-for-record-id-stringcellaction'>
           I locate the bubble <span class="hljs-keyword">for</span> the {string} instrument on event {string} <span class="hljs-keyword">for</span> record <span class="hljs-variable constant_">ID</span> {string}{cellAction}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-locate-the-bubble-for-the-string-instrument-on-event-string-for-record-id-stringcellaction_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-locate-the-bubble-for-the-string-instrument-on-event-string-for-record-id-stringcellaction_gherkin"></div>
           <script>
                 window.all_steps.push(`I locate the bubble for the {string} instrument on event {string} for record ID {string}{cellAction}`)
           </script>
@@ -11748,9 +11646,7 @@
           <h2 class='fl mb0 mt0' id='i-select-record-id-string-from-arm-name-string-on-the-add--edit-record-page'>
           I select record <span class="hljs-variable constant_">ID</span> {string} <span class="hljs-keyword">from</span> arm name {string} on the <span class="hljs-title class_">Add</span> / <span class="hljs-title class_">Edit</span> record page
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-select-record-id-string-from-arm-name-string-on-the-add--edit-record-page_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-select-record-id-string-from-arm-name-string-on-the-add--edit-record-page_gherkin"></div>
           <script>
                 window.all_steps.push(`I select record ID {string} from arm name {string} on the Add / Edit record page`)
           </script>
@@ -11861,9 +11757,7 @@
           <h2 class='fl mb0 mt0' id='i-click-the-x-to-delete-all-data-related-to-the-event-named-string'>
           I click the X to <span class="hljs-keyword">delete</span> all data related to the event named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-the-x-to-delete-all-data-related-to-the-event-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-the-x-to-delete-all-data-related-to-the-event-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click the X to delete all data related to the event named {string}`)
           </script>
@@ -11959,9 +11853,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-the-report-with-int-rows'>
           I should see the report <span class="hljs-keyword">with</span> {int} rows
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-the-report-with-int-rows_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-the-report-with-int-rows_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see the report with {int} rows`)
           </script>
@@ -12055,9 +11947,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-the-report-with-int-distinct-records'>
           I should see the report <span class="hljs-keyword">with</span> {int} distinct records
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-the-report-with-int-distinct-records_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-the-report-with-int-distinct-records_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see the report with {int} distinct records`)
           </script>
@@ -12151,9 +12041,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-the-report-with-int-repeating-instrument-rows'>
           I should see the report <span class="hljs-keyword">with</span> {int} repeating instrument rows
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-the-report-with-int-repeating-instrument-rows_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-the-report-with-int-repeating-instrument-rows_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see the report with {int} repeating instrument rows`)
           </script>
@@ -12247,9 +12135,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-the-report-with-the-column-named-string-ordering'>
           I should see the report <span class="hljs-keyword">with</span> the column named {string} {ordering}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-the-report-with-the-column-named-string-ordering_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-the-report-with-the-column-named-string-ordering_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see the report with the column named {string} {ordering}`)
           </script>
@@ -12360,9 +12246,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-button-labeled-string-for-the-report-named-string'>
           I click on the button labeled {string} <span class="hljs-keyword">for</span> the report named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-button-labeled-string-for-the-report-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-button-labeled-string-for-the-report-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the button labeled {string} for the report named {string}`)
           </script>
@@ -12473,9 +12357,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-record-string-link-for-the-row-containing-string'>
           I click on the record {string} link <span class="hljs-keyword">for</span> the row containing {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-record-string-link-for-the-row-containing-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-record-string-link-for-the-row-containing-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the record {string} link for the row containing {string}`)
           </script>
@@ -12586,9 +12468,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-image-string-link-for-the-row-containing-string'>
           I click on the image {string} link <span class="hljs-keyword">for</span> the row containing {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-image-string-link-for-the-row-containing-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-image-string-link-for-the-row-containing-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the image {string} link for the row containing {string}`)
           </script>
@@ -12699,9 +12579,7 @@
           <h2 class='fl mb0 mt0' id='i-export-data-for-the-report-named-string-in-string-format'>
           I <span class="hljs-keyword">export</span> data <span class="hljs-keyword">for</span> the report named {string} <span class="hljs-keyword">in</span> {string} format
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-export-data-for-the-report-named-string-in-string-format_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-export-data-for-the-report-named-string-in-string-format_gherkin"></div>
           <script>
                 window.all_steps.push(`I export data for the report named {string} in {string} format`)
           </script>
@@ -12812,9 +12690,7 @@
           <h2 class='fl mb0 mt0' id='i-should-receive-a-download-to-a-string-file'>
           I should receive a download to a {string} file
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-receive-a-download-to-a-string-file_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-receive-a-download-to-a-string-file_gherkin"></div>
           <script>
                 window.all_steps.push(`I should receive a download to a {string} file`)
           </script>
@@ -12908,9 +12784,7 @@
           <h2 class='fl mb0 mt0' id='i-should-have-a-string-file-that-contains-the-headings-below'>
           I should have a {string} file that contains the headings below
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-have-a-string-file-that-contains-the-headings-below_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-have-a-string-file-that-contains-the-headings-below_gherkin"></div>
           <script>
                 window.all_steps.push(`I should have a {string} file that contains the headings below`)
           </script>
@@ -13021,9 +12895,7 @@
           <h2 class='fl mb0 mt0' id='i-should-have-a-string-file-that-contains-int-rows'>
           I should have a {string} file that contains {int} rows
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-have-a-string-file-that-contains-int-rows_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-have-a-string-file-that-contains-int-rows_gherkin"></div>
           <script>
                 window.all_steps.push(`I should have a {string} file that contains {int} rows`)
           </script>
@@ -13134,9 +13006,7 @@
           <h2 class='fl mb0 mt0' id='i-should-have-a-string-file-that-contains-int-distinct-records'>
           I should have a {string} file that contains {int} distinct records
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-have-a-string-file-that-contains-int-distinct-records_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-have-a-string-file-that-contains-int-distinct-records_gherkin"></div>
           <script>
                 window.all_steps.push(`I should have a {string} file that contains {int} distinct records`)
           </script>
@@ -13247,9 +13117,7 @@
           <h2 class='fl mb0 mt0' id='i-should-have-a-string-file-that-contains-int-repeating-instrument-rows'>
           I should have a {string} file that contains {int} repeating instrument rows
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-have-a-string-file-that-contains-int-repeating-instrument-rows_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-have-a-string-file-that-contains-int-repeating-instrument-rows_gherkin"></div>
           <script>
                 window.all_steps.push(`I should have a {string} file that contains {int} repeating instrument rows`)
           </script>
@@ -13362,9 +13230,7 @@
           <h2 class='fl mb0 mt0' id='i-enter-the-username-string-and-password-string-for-e-signature'>
           I enter the <span class="hljs-title class_">Username</span>: {string} and password {string} <span class="hljs-keyword">for</span> e-signature
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-enter-the-username-string-and-password-string-for-e-signature_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-enter-the-username-string-and-password-string-for-e-signature_gherkin"></div>
           <script>
                 window.all_steps.push(`I enter the Username: {string} and password {string} for e-signature`)
           </script>
@@ -13475,9 +13341,7 @@
           <h2 class='fl mb0 mt0' id='i-click-on-the-survey-option-label-containing-string-label-and-want-to-track-the-response-with-a-tag-of-string'>
           I click on the survey option label containing {string} label and want to track the response <span class="hljs-keyword">with</span> a tag <span class="hljs-keyword">of</span> {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-click-on-the-survey-option-label-containing-string-label-and-want-to-track-the-response-with-a-tag-of-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-click-on-the-survey-option-label-containing-string-label-and-want-to-track-the-response-with-a-tag-of-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I click on the survey option label containing {string} label and want to track the response with a tag of {string}`)
           </script>
@@ -13590,9 +13454,7 @@
           <h2 class='fl mb0 mt0' id='i-assign-an-expiration-date-to-user-string-with-username-of-string'>
           I assign an expiration date to user {string} <span class="hljs-keyword">with</span> username <span class="hljs-keyword">of</span> {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-assign-an-expiration-date-to-user-string-with-username-of-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-assign-an-expiration-date-to-user-string-with-username-of-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I assign an expiration date to user {string} with username of {string}`)
           </script>
@@ -13703,9 +13565,7 @@
           <h2 class='fl mb0 mt0' id='i-remove-the-expired-expiration-date-to-user-string-with-username-of-string'>
           I remove the expired expiration date to user {string} <span class="hljs-keyword">with</span> username <span class="hljs-keyword">of</span> {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-remove-the-expired-expiration-date-to-user-string-with-username-of-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-remove-the-expired-expiration-date-to-user-string-with-username-of-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I remove the expired expiration date to user {string} with username of {string}`)
           </script>
@@ -13816,9 +13676,7 @@
           <h2 class='fl mb0 mt0' id='i-check-the-user-right-named-string'>
           I check the <span class="hljs-title class_">User</span> <span class="hljs-title class_">Right</span> named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-check-the-user-right-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-check-the-user-right-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I check the User Right named {string}`)
           </script>
@@ -13912,9 +13770,7 @@
           <h2 class='fl mb0 mt0' id='i-uncheck-the-user-right-named-string'>
           I uncheck the <span class="hljs-title class_">User</span> <span class="hljs-title class_">Right</span> named {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-uncheck-the-user-right-named-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-uncheck-the-user-right-named-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I uncheck the User Right named {string}`)
           </script>
@@ -14008,9 +13864,7 @@
           <h2 class='fl mb0 mt0' id='i-select-the-user-right-named-string-and-choose-string'>
           I select the <span class="hljs-title class_">User</span> <span class="hljs-title class_">Right</span> named {string} and choose {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-select-the-user-right-named-string-and-choose-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-select-the-user-right-named-string-and-choose-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I select the User Right named {string} and choose {string}`)
           </script>
@@ -14121,9 +13975,7 @@
           <h2 class='fl mb0 mt0' id='i-save-changes-within-the-context-of-user-rights'>
           I save changes within the context <span class="hljs-keyword">of</span> <span class="hljs-title class_">User</span> <span class="hljs-title class_">Rights</span>
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-save-changes-within-the-context-of-user-rights_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-save-changes-within-the-context-of-user-rights_gherkin"></div>
           <script>
                 window.all_steps.push(`I save changes within the context of User Rights`)
           </script>
@@ -14195,9 +14047,7 @@
           <h2 class='fl mb0 mt0' id='i-userrightaction-all-basic-rights-within-the-open-user-rights-dialog-box'>
           I {userRightAction} all <span class="hljs-title class_">Basic</span> <span class="hljs-title class_">Rights</span> within the open <span class="hljs-title class_">User</span> <span class="hljs-title class_">Rights</span> dialog box
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-userrightaction-all-basic-rights-within-the-open-user-rights-dialog-box_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-userrightaction-all-basic-rights-within-the-open-user-rights-dialog-box_gherkin"></div>
           <script>
                 window.all_steps.push(`I {userRightAction} all Basic Rights within the open User Rights dialog box`)
           </script>
@@ -14294,9 +14144,7 @@
           <h2 class='fl mb0 mt0' id='i-set-data-viewing-rights-to-dataviewingrightseditsurveyrights-for-the-instrument-string'>
           I set <span class="hljs-title class_">Data</span> <span class="hljs-title class_">Viewing</span> <span class="hljs-title class_">Rights</span> to {dataViewingRights}{editSurveyRights} <span class="hljs-keyword">for</span> the instrument {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-set-data-viewing-rights-to-dataviewingrightseditsurveyrights-for-the-instrument-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-set-data-viewing-rights-to-dataviewingrightseditsurveyrights-for-the-instrument-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I set Data Viewing Rights to {dataViewingRights}{editSurveyRights} for the instrument {string}`)
           </script>
@@ -14440,9 +14288,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-the-stringiframevisibilitybaseelement'>
           I (should )see (the ){string}{iframeVisibility}{baseElement}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-the-stringiframevisibilitybaseelement_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-the-stringiframevisibilitybaseelement_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should )see (the ){string}{iframeVisibility}{baseElement}`)
           </script>
@@ -14688,9 +14534,7 @@
           <h2 class='fl mb0 mt0' id='i-should-not-see-stringbaseelement'>
           I should <span class="hljs-variable constant_">NOT</span> see {string}{baseElement}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-not-see-stringbaseelement_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-not-see-stringbaseelement_gherkin"></div>
           <script>
                 window.all_steps.push(`I should NOT see {string}{baseElement}`)
           </script>
@@ -14916,9 +14760,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-string-in-the-title'>
           I should see {string} <span class="hljs-keyword">in</span> the title
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-string-in-the-title_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-string-in-the-title_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see {string} in the title`)
           </script>
@@ -15012,9 +14854,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-the-dropdowntype-field-labeled-string-with-the-option-string-selectedbaseelement'>
           I should see the {dropdownType} field labeled {string} <span class="hljs-keyword">with</span> the option {string} selected{baseElement}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-the-dropdowntype-field-labeled-string-with-the-option-string-selectedbaseelement_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-the-dropdowntype-field-labeled-string-with-the-option-string-selectedbaseelement_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see the {dropdownType} field labeled {string} with the option {string} selected{baseElement}`)
           </script>
@@ -15277,9 +15117,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-the-dropdowntype-field-labeled-string-with-the-options-below'>
           I should see the {dropdownType} field labeled {string} <span class="hljs-keyword">with</span> the options below
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-the-dropdowntype-field-labeled-string-with-the-options-below_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-the-dropdowntype-field-labeled-string-with-the-options-below_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see the {dropdownType} field labeled {string} with the options below`)
           </script>
@@ -15410,9 +15248,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-a-checkbox-labeled-string-that-is-check'>
           I should see a checkbox labeled {string} that is {check}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-a-checkbox-labeled-string-that-is-check_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-a-checkbox-labeled-string-that-is-check_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see a checkbox labeled {string} that is {check}`)
           </script>
@@ -15526,9 +15362,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-the-radio-labeled-string-with-option-string-select'>
           I should see the radio labeled {string} <span class="hljs-keyword">with</span> option {string} {select}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-the-radio-labeled-string-with-option-string-select_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-the-radio-labeled-string-with-option-string-select_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see the radio labeled {string} with option {string} {select}`)
           </script>
@@ -15642,9 +15476,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-a-dialog-containing-the-following-text-string'>
           I (should )see a dialog containing the following <span class="hljs-attr">text</span>: {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-a-dialog-containing-the-following-text-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-a-dialog-containing-the-following-text-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should )see a dialog containing the following text: {string}`)
           </script>
@@ -15738,9 +15570,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-a-the-labeledelement-labeled-stringbaseelement'>
           I should <span class="hljs-title function_">see</span>( a)( the) {labeledElement} labeled {string}{baseElement}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-a-the-labeledelement-labeled-stringbaseelement_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-a-the-labeledelement-labeled-stringbaseelement_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see( a)( the) {labeledElement} labeled {string}{baseElement}`)
           </script>
@@ -15986,9 +15816,7 @@
           <h2 class='fl mb0 mt0' id='i-should-not-see-a-labeledelement-labeled-stringbaseelement'>
           I should <span class="hljs-variable constant_">NOT</span> see a {labeledElement} labeled {string}{baseElement}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-not-see-a-labeledelement-labeled-stringbaseelement_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-not-see-a-labeledelement-labeled-stringbaseelement_gherkin"></div>
           <script>
                 window.all_steps.push(`I should NOT see a {labeledElement} labeled {string}{baseElement}`)
           </script>
@@ -16234,9 +16062,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-string-in-the-data-entry-form-field-labeled-string'>
           I should see {string} <span class="hljs-keyword">in</span> the data entry form field labeled {string}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-string-in-the-data-entry-form-field-labeled-string_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-string-in-the-data-entry-form-field-labeled-string_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see {string} in the data entry form field labeled {string}`)
           </script>
@@ -16347,9 +16173,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-a-an-string-within-the-string-row-of-the-column-labeled-stringtablename'>
           I (should )see (a )(an ){string} within the {string} row <span class="hljs-keyword">of</span> the column labeled {string}{tableName}
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-a-an-string-within-the-string-row-of-the-column-labeled-stringtablename_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-a-an-string-within-the-string-row-of-the-column-labeled-stringtablename_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should )see (a )(an ){string} within the {string} row of the column labeled {string}{tableName}`)
           </script>
@@ -16499,9 +16323,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-string-in-the-tabletypes-table'>
           I should see {string} <span class="hljs-keyword">in</span> (the ){tableTypes} table
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-string-in-the-tabletypes-table_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-string-in-the-tabletypes-table_gherkin"></div>
           <script>
                 window.all_steps.push(`I should see {string} in (the ){tableTypes} table`)
           </script>
@@ -16637,9 +16459,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-project-status-projectstatus'>
           I (should )see <span class="hljs-title class_">Project</span> <span class="hljs-attr">status</span>: <span class="hljs-string">&quot;{projectStatus}&quot;</span>
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-project-status-projectstatus_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-project-status-projectstatus_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should )see Project status: "{projectStatus}"`)
           </script>
@@ -16738,9 +16558,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-a-table-headerornotrows-containing-the-following-values-in-the-tabletypes-table'>
           I (should )see (a )table {headerOrNot}<span class="hljs-title function_">row</span>(s) containing the following values <span class="hljs-keyword">in</span> (the ){tableTypes} <span class="hljs-attr">table</span>:
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-a-table-headerornotrows-containing-the-following-values-in-the-tabletypes-table_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-a-table-headerornotrows-containing-the-following-values-in-the-tabletypes-table_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should )see (a )table {headerOrNot}row(s) containing the following values in (the ){tableTypes} table:`)
           </script>
@@ -16877,9 +16695,7 @@
           <h2 class='fl mb0 mt0' id='i-should-see-the-pdf-has-loaded-in-the-iframe'>
           I (should )see the pdf has loaded <span class="hljs-keyword">in</span> the iframe
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-should-see-the-pdf-has-loaded-in-the-iframe_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-should-see-the-pdf-has-loaded-in-the-iframe_gherkin"></div>
           <script>
                 window.all_steps.push(`I (should )see the pdf has loaded in the iframe`)
           </script>
@@ -16953,9 +16769,7 @@
           <h2 class='fl mb0 mt0' id='i-visit-the-redcap-login-page'>
           I visit the <span class="hljs-title class_">REDCap</span> login page
           </h2>
-          <hr />
-          <div class="mb2 mt2" id="i-visit-the-redcap-login-page_gherkin"></div>
-          <hr />
+          <div class="gherkin_step" id="i-visit-the-redcap-login-page_gherkin"></div>
           <script>
                 window.all_steps.push(`I visit the REDCap login page`)
           </script>
