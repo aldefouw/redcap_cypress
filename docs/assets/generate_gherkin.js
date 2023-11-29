@@ -1,216 +1,3 @@
-const options = {
-    baseElement: ['',
-        ' on the tooltip',
-        ' in the tooltip',
-        ' on the role selector dropdown',
-        ' in the role selector dropdown',
-        ' on the dialog box',
-        ' in the dialog box',
-        ' within the data collection instrument list',
-        ' on the action popup',
-        ' in the action popup',
-        ' in the "Main project settings" section',
-        ' in the "Use surveys in this project?" row in the "Main project settings" section',
-        ' in the "Use longitudinal data collection with defined events?" row in the "Main project settings" section',
-        ' in the "Use the MyCap participant-facing mobile app?" row in the "Main project settings" section',
-        ' in the "Enable optional modules and customizations" section',
-        ' in the "Repeating instruments and events" row in the "Enable optional modules and customizations" section',
-        ' in the "Auto-numbering for records" row in the "Enable optional modules and customizations" section',
-        ' in the "Scheduling module (longitudinal only)" row in the "Enable optional modules and customizations" section',
-        ' in the "Randomization module" row in the "Enable optional modules and customizations" section',
-        ' in the "Designate an email field for communications (including survey invitations and alerts)" row in the "Enable optional modules and customizations" section',
-        ' in the "Twilio SMS and Voice Call services for surveys and alerts" row in the "Enable optional modules and customizations" section',
-        ' in the "SendGrid Template email services for Alerts & Notifications" row in the "Enable optional modules and customizations" section',
-        ' in the validation row labeled "Code Postal 5 caracteres (France)"',
-        ' in the validation row labeled "Date (D-M-Y)"',
-        ' in the validation row labeled "Date (M-D-Y)"',
-        ' in the validation row labeled "Date (Y-M-D)"',
-        ' in the validation row labeled "Datetime (D-M-Y H:M)"',
-        ' in the validation row labeled "Datetime (M-D-Y H:M)"',
-        ' in the validation row labeled "Datetime (Y-M-D H:M)"',
-        ' in the validation row labeled "Datetime w/ seconds (D-M-Y H:M:S)"',
-        ' in the validation row labeled "Datetime w/ seconds (M-D-Y H:M:S)"',
-        ' in the validation row labeled "Datetime w/ seconds (Y-M-D H:M:S)"',
-        ' in the validation row labeled "Email"',
-        ' in the validation row labeled "Integer"',
-        ' in the validation row labeled "Letters only"',
-        ' in the validation row labeled "MRN (10 digits)"',
-        ' in the validation row labeled "MRN (generic)"',
-        ' in the validation row labeled "Number"',
-        ' in the validation row labeled "Number (1 decimal place - comma as decimal)"',
-        ' in the validation row labeled "Number (1 decimal place)"',
-        ' in the validation row labeled "Number (2 decimal places - comma as decimal)"',
-        ' in the validation row labeled "Number (2 decimal places)"',
-        ' in the validation row labeled "Number (3 decimal places - comma as decimal)"',
-        ' in the validation row labeled "Number (3 decimal places)"',
-        ' in the validation row labeled "Number (4 decimal places - comma as decimal)"',
-        ' in the validation row labeled "Number (4 decimal places)"',
-        ' in the validation row labeled "Number (comma as decimal)"',
-        ' in the validation row labeled "Phone (Australia)"',
-        ' in the validation row labeled "Phone (North America)"',
-        ' in the validation row labeled "Phone (UK)"',
-        ' in the validation row labeled "Postal Code (Australia)"',
-        ' in the validation row labeled "Postal Code (Canada)"',
-        ' in the validation row labeled "Postal Code (Germany)"',
-        ' in the validation row labeled "Social Security Number (U.S.)"',
-        ' in the validation row labeled "Time (HH:MM:SS)"',
-        ' in the validation row labeled "Time (HH:MM)"',
-        ' in the validation row labeled "Time (MM:SS)"',
-        ' in the validation row labeled "Vanderbilt MRN"',
-        ' in the validation row labeled "Zipcode (U.S.)"'],
-    tableTypes :[
-        'a',
-        'logging',
-        'browse users',
-        'file repository',
-        'administrators',
-        'reports',
-        'report data',
-        'define events',
-        'data access groups',
-        'DAGs Switcher',
-        'record status dashboard',
-        'data collection instruments',
-        'codebook'
-    ],
-
-    userRightsChecks : ['Project Setup & Design',
-    'User Rights' ,
-    'Data Access Groups' ,
-    'Stats & Charts' ,
-    'Create Records' ,
-    'Survey Distribution Tools',
-    'Add/Edit/Organize Reports',
-    'Alerts & Notifications' ,
-    'Rename Records' ,
-    'Delete Records' ,
-    'Calendar' ,
-    'Data Import Tool',
-    'Data Comparison Tool',
-    'Logging' ,
-    'File Repository',
-    'Record Locking Customization',
-    'Lock/Unlock *Entire* Records' ,
-    'Lock/Unlock *Entire* Records (record level)',
-    'Data Quality - Create & edit rules' ,
-    'Data Quality - Execute rules' ,
-    'API Export' ,
-    'API Import/Update',
-    'REDCap Mobile App',
-    'REDCap Mobile App - Allow user to download data for all records to the app?'],
-
-    toDoTableTypes: ['Pending Requests', 'Low Priority Pending Requests', 'Completed & Archived Requests'],
-    addEditField: ['Add New Field', 'Edit Field'],
-    addField: ['Add Field', 'Add Matrix of Fields', 'Import from Field Bank'],
-    addOrSelect: ['add', 'select'],
-    beforeAfter: ['before', 'after'],
-    cellAction: [
-        ' and click the new instance link',
-        ' and click on the bubble',
-        ' and click the repeating instrument bubble for the first instance',
-        ' and click the repeating instrument bubble for the second instance',
-        ' and click the repeating instrument bubble for the third instance',
-        '',
-    ],
-    check: ['checked', 'unchecked'],
-    checkBoxRadio: ['checkbox', 'radio'],
-    clickType: ['click on', 'check', 'uncheck'],
-    confirmation: ['accept', 'cancel'],
-    dataViewingRights: ['No Access', 'Read Only', 'View & Edit', 'Edit survey responses'],
-    dropdownType: ['dropdown', 'multiselect'],
-    editEvent: ['Edit', 'Delete'],
-    editField: ['Edit', 'Branching Logic', 'Copy', 'Move', 'Delete Field'],
-    editSurveyRights: [
-        '',
-        ' with Edit survey responses checked',
-        ' with Edit survey responses unchecked',
-        '',
-    ],
-    enableDisable: ['enable', 'disable'],
-    elmType: ['input', 'list item', 'checkbox', 'span'],
-    enterType: ['verify', 'enter', 'clear field and enter'],
-    fieldType: [
-        'Text Box',
-        'Notes Box',
-        'Drop-down List',
-        'Radio Buttons',
-        'Checkboxes',
-        'Yes - No',
-        'True - False',
-        'Signature',
-        'File Upload',
-        'Slider',
-        'Descriptive Text',
-        'Begin New Section',
-        'Calculated Field',
-    ],
-    headerOrNot: ['header and '],
-    iframeVisibility: ['', ' in the iframe'],
-    instrumentSaveOptions: [
-        'Save & Stay',
-        'Save & Exit Record',
-        'Save & Go To Next Record',
-        'Save & Exit Form',
-        'Save & Go To Next Form',
-        'Save & Go To Next Instance',
-        'Save & Add New Instance',
-    ],
-    labeledElement: ['button', 'link'],
-    labeledExactly: ['labeled', 'labeled exactly'],
-    linkNames: ['link', 'tab', 'instrument'],
-    projectRequestLabel: ['Create Project', 'Send Request'],
-    notSee: ['not '],
-    ordering: ['ascending', 'descending'],
-    projectStatus: ['Production', 'Development', 'Analysis/Cleanup'],
-    projectType: [
-        'Practice / Just for fun',
-        'Operational Support',
-        'Research',
-        'Quality Improvement',
-        'Other',
-    ],
-    recordIDEvent: ['record ID', 'event'],
-    repeatability: ['enabled', 'disabled', 'modifiable', 'unchangeable'],
-    saveButtonRouteMonitoring: [
-        '',
-        ' on the dialog box for the Repeatable Instruments and Events module',
-        ' on the Designate Instruments for My Events page',
-        ' on the Online Designer page',
-        ' and cancel the confirmation window',
-        ' and accept the confirmation window',
-        ' in the dialog box to request a change in project status',
-        ' to rename an instrument',
-        ' in the "Add New Field" dialog box',
-        ' in the "Edit Field" dialog box',
-        '',
-    ],
-    select: ['selected', 'unselected'],
-    tableName: ['', ' of the User Rights table', ' of the Reports table'],
-    timeType: ['seconds', 'second', 'minutes', 'minute'],
-    toDoRequestTypes: ['Move to prod', 'Approve draft changes', 'Copy project'],
-    toDoTableIcons: [
-        'process request',
-        'get more information',
-        'add or edit a comment',
-        'Move to low priority section',
-        'archive request notification',
-    ],
-    toDownloadFile: [' to download a file'],
-    userRightAction: ['add', 'remove'],
-    ordinal: [
-                'first',
-                'second',
-                'third',
-                'fourth',
-                'fifth',
-                'sixth',
-                'seventh',
-                'eighth',
-                'ninth',
-                'last',
-    ]
-}
-
 function countStringInstances(gherkinStep) {
     const regex = /\{string\}/g;
     const matches = gherkinStep.match(regex);
@@ -258,16 +45,16 @@ function outputStepGenerator(index){
     for (let i = 0; i < Object.keys(placeholders).length; i++) {
         const param = placeholders[i]
         const optionalText = extractOptionalText(param);
-        const dropdown = `<select class="select2" id="optional_${index}_${i}"><option value=""> </option><option value="${optionalText}">${optionalText}</option></select>`
+        const dropdown = `<select class="select2" id="optional_${index}_${i}"><option value="">&nbsp;</option><option value="${optionalText}">${optionalText}</option></select>`
         replacedStepDefinition = replacedStepDefinition.replace(param, dropdown)
     }
 
     // Replace each placeholder with a dropdown menu
-    for (let i = 0; i < Object.keys(options).length; i++) {
-        let param = Object.keys(options)[i]
+    for (let i = 0; i < Object.keys(window.parameterTypes).length; i++) {
+        let param = Object.keys(window.parameterTypes)[i]
         const pattern = new RegExp(`\\{${param}\\}`, 'g');
         if(replacedStepDefinition.match(pattern)) {
-            const dropdown = `<select class="select2" id="${param}_${index}">${options[param].map(option => `<option value="${option}">${option}</option>`).join('')}</select>`;
+            const dropdown = `<select class="select2" id="${param}_${index}"><option value="">&nbsp;</option>${window.parameterTypes[param].map(option => `<option value="${option}">${option}</option>`).join('')}</select>`;
             replacedStepDefinition = replacedStepDefinition.replace(`{${param}}`, dropdown)
         }
     }
@@ -306,13 +93,18 @@ function generateText(index) {
 
     replacedStepDefinition = `${int_step} ${replacedStepDefinition.split("{int}")[countIntInstances(replacedStepDefinition)]}`
 
-    for (let i = 0; i < Object.keys(options).length; i++) {
-        let param = Object.keys(options)[i]
+    for (let i = 0; i < Object.keys(window.parameterTypes).length; i++) {
+        let param = Object.keys(window.parameterTypes)[i]
         const pattern = new RegExp(`\\{${param}\\}`, 'g');
         if(replacedStepDefinition.match(pattern)) {
             let dropdown = document.getElementById(`${param}_${index}`);
             selectedValues[param] = dropdown.options[dropdown.selectedIndex].text;
-            replacedStepDefinition = replacedStepDefinition.replace(`{${param}}`, selectedValues[param]);
+            if(dropdown.options[dropdown.selectedIndex].value === ""){
+                replacedStepDefinition = replacedStepDefinition.replace(`{${param}}`, '')
+            } else {
+                replacedStepDefinition = replacedStepDefinition.replace(`{${param}}`, selectedValues[param])
+            }
+
         }
     }
 
