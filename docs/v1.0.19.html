@@ -16,9 +16,11 @@
     <script src="assets/mappings.js"></script>
     <script src="assets/all_mappings.js"></script>
     <script src="assets/generate_gherkin.js"></script>
+    <script src="assets/rctf_versions.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             $('.select2').select2()
+            document.getElementById('rctf_versions').innerHTML = window.versions
         })
     </script>
     <style>
@@ -94,14 +96,8 @@
           <h3 class='mb0 no-anchor'>redcap_cypress</h3>
           <div class='mb1'><code>v13.1.37</code></div>
             <div>
-              <span class="mb0">Step Definition Versions:</span>
-              <ul class='mt0'>
-              
-                  <li><a href="v1.0.18.html">v1.0.18</a></li>
-              
-                  <li><a href="v13.1.37.html">v13.1.37</a></li>
-              
-              </ul>
+                <span class="mb0">Step Definition Versions:</span>
+                <ul id="rctf_versions" class='mt0'></ul>
             </div>
           <input
             placeholder='Filter'
