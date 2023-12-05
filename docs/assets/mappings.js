@@ -152,7 +152,8 @@ window.elementChoices = {
     ' in the dialog box' : 'div[role=dialog]:visible',
     ' within the data collection instrument list' : 'table#table-forms_surveys',
     ' on the action popup' : '[id=formActionDropdown]',
-    ' in the action popup' : '[id=formActionDropdown]'
+    ' in the action popup' : '[id=formActionDropdown]',
+    ' in the Edit survey responses column' : 'table#form_rights'
 }
 
 //IMPORTANT: Programmatically add the projectModules as element choices
@@ -191,7 +192,18 @@ window.ordinalChoices = {
 }
 
 window.toDoListTables = {
-    'Pending Requests' : 'pending-container',
-    'Low Priority Pending Requests' : 'complete-ignore-container',
-    'Completed & Archived Requests' : 'archived-container',
+    'Pending Requests': 'pending-container',
+    'Low Priority Pending Requests': 'complete-ignore-container',
+    'Completed & Archived Requests': 'archived-container',
+}
+
+window.recordStatusIcons = {
+    'Incomplete' : `img[src*=circle_red]`,
+    'Unverified' : `img[src*=circle_yellow]`,
+    'Complete' : `img[src*=circle_green]`,
+    'Many statuses (mixed)' : `img[src*=circle_blue_stack]`,
+    'Incomplete (no data saved)' : `img[src*=circle_gray]`,
+    'Partial Survey Response' : `img[src*=circle_orange_tick]`,
+    'Completed Survey Response' : `img[src*=circle_green_tick]`,
+    'Many statuses (all same)' : `img[src*=_stack]`
 }
