@@ -153,7 +153,7 @@ window.elementChoices = {
     ' within the data collection instrument list' : 'table#table-forms_surveys',
     ' on the action popup' : '[id=formActionDropdown]',
     ' in the action popup' : '[id=formActionDropdown]',
-    ' in the Edit survey responses column' : 'table#form_rights'
+    ' in the Edit survey responses column' : 'table#form_rights:visible'
 }
 
 //IMPORTANT: Programmatically add the projectModules as element choices
@@ -206,4 +206,9 @@ window.recordStatusIcons = {
     'Partial Survey Response' : `img[src*=circle_orange_tick]`,
     'Completed Survey Response' : `img[src*=circle_green_tick]`,
     'Many statuses (all same)' : `img[src*=_stack]`
+}
+
+window.fileRepoIcons = {
+    'File Share' : `i[class*=fa-arrow-up]`,
+    'Delete' : `i[class*=fa-times]`
 }
