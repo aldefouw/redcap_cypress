@@ -54,7 +54,7 @@ function outputStepGenerator(index){
         let param = Object.keys(window.parameterTypes)[i]
         const pattern = new RegExp(`\\{${param}\\}`, 'g');
         if(replacedStepDefinition.match(pattern)) {
-            const dropdown = `<select class="select2" id="${param}_${index}"><option value="">&nbsp;</option>${window.parameterTypes[param].map(option => `<option value="${option}">${option}</option>`).join('')}</select>`;
+            const dropdown = `<select class="select2" id="${param}_${index}"><option value="">&nbsp;</option>${window.parameterTypes[param].map(option => `<option value="${option.replace(/"/g, "&quot;")}">${option}</option>`).join('')}</select>`;
             replacedStepDefinition = replacedStepDefinition.replace(`{${param}}`, dropdown)
         }
     }
