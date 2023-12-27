@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redcap="https://projectredcap.org" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.3 schema/odm/ODM1-3-1.xsd" ODMVersion="1.3.1" FileOID="000-00-0000" FileType="Snapshot" Description="3.14 XML UPDATE" AsOfDateTime="2023-08-01T14:48:54" CreationDateTime="2023-08-01T14:48:54" SourceSystem="REDCap" SourceSystemVersion="13.1.37">
+<Study OID="Project.314XMLUPDATE">
+<GlobalVariables>
+	<StudyName>3.14 XML UPDATE</StudyName>
+	<StudyDescription>This file contains the metadata, events, and data for REDCap project "3.14 XML UPDATE".</StudyDescription>
+	<ProtocolName>3.14 XML UPDATE</ProtocolName>
+	<redcap:RecordAutonumberingEnabled>1</redcap:RecordAutonumberingEnabled>
+	<redcap:CustomRecordLabel>[user-dag-label]</redcap:CustomRecordLabel>
+	<redcap:SecondaryUniqueField></redcap:SecondaryUniqueField>
+	<redcap:SchedulingEnabled>1</redcap:SchedulingEnabled>
+	<redcap:SurveysEnabled>1</redcap:SurveysEnabled>
+	<redcap:SurveyInvitationEmailField>email</redcap:SurveyInvitationEmailField>
+	<redcap:DisplayTodayNowButton>1</redcap:DisplayTodayNowButton>
+	<redcap:PreventBranchingEraseValues>0</redcap:PreventBranchingEraseValues>
+	<redcap:RequireChangeReason>0</redcap:RequireChangeReason>
+	<redcap:DataHistoryPopup>1</redcap:DataHistoryPopup>
+	<redcap:OrderRecordsByField></redcap:OrderRecordsByField>
+	<redcap:MyCapEnabled>0</redcap:MyCapEnabled>
+	<redcap:Purpose>0</redcap:Purpose>
+	<redcap:PurposeOther></redcap:PurposeOther>
+	<redcap:ProjectNotes></redcap:ProjectNotes>
+	<redcap:MissingDataCodes></redcap:MissingDataCodes>
+	<redcap:ProtectedEmailMode>0</redcap:ProtectedEmailMode>
+	<redcap:ProtectedEmailModeCustomText>REDCap Secure Messaging</redcap:ProtectedEmailModeCustomText>
+	<redcap:ProtectedEmailModeTrigger>ALL</redcap:ProtectedEmailModeTrigger>
+	<redcap:ProtectedEmailModeLogo></redcap:ProtectedEmailModeLogo>
+	<redcap:RepeatingInstrumentsAndEvents>
+		<redcap:RepeatingEvent redcap:UniqueEventName="event_2_arm_1"/>
+		<redcap:RepeatingInstruments>
+			<redcap:RepeatingInstrument redcap:UniqueEventName="event_1_arm_1" redcap:RepeatInstrument="data_types" redcap:CustomLabel=""/>
+		</redcap:RepeatingInstruments>
+	</redcap:RepeatingInstrumentsAndEvents>
+	<redcap:DataAccessGroupsGroup>
+		<redcap:DataAccessGroups group_name="TestGroup1"/>
+		<redcap:DataAccessGroups group_name="TestGroup2"/>
+	</redcap:DataAccessGroupsGroup>
+	<redcap:SurveysGroup>
+		<redcap:Surveys form_name="survey" title="Survey" instructions="&lt;p&gt;&lt;strong&gt;Please complete the survey below.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Thank you!&lt;/p&gt;" offline_instructions="" acknowledgement="&lt;p&gt;&lt;strong&gt;Thank you for taking the survey.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Have a nice day!&lt;/p&gt;" stop_action_acknowledgement="" stop_action_delete_response="0" question_by_section="0" display_page_number="0" question_auto_numbering="1" survey_enabled="1" save_and_return="0" save_and_return_code_bypass="0" logo="" hide_title="0" view_results="0" min_responses_view_results="10" check_diversity_view_results="0" end_survey_redirect_url="" survey_expiration="" promis_skip_question="0" survey_auth_enabled_single="0" edit_completed_response="0" hide_back_button="0" show_required_field_text="1" confirmation_email_subject="" confirmation_email_content="" confirmation_email_from="" confirmation_email_from_display="" confirmation_email_attach_pdf="0" confirmation_email_attachment="" text_to_speech="0" text_to_speech_language="en" end_survey_redirect_next_survey="0" end_survey_redirect_next_survey_logic="" theme="" text_size="1" font_family="16" theme_text_buttons="" theme_bg_page="" theme_text_title="" theme_bg_title="" theme_text_sectionheader="" theme_bg_sectionheader="" theme_text_question="" theme_bg_question="" enhanced_choices="0" repeat_survey_enabled="0" repeat_survey_btn_text="" repeat_survey_btn_location="BEFORE_SUBMIT" response_limit="" response_limit_include_partials="1" response_limit_custom_text="&lt;p&gt;Thank you for your interest; however, the survey is closed because the maximum number of responses has been reached.&lt;/p&gt;" survey_time_limit_days="" survey_time_limit_hours="" survey_time_limit_minutes="" email_participant_field="" end_of_survey_pdf_download="0" pdf_save_to_field="" pdf_save_to_event_id="" pdf_save_translated="0" pdf_auto_archive="1" pdf_econsent_version="" pdf_econsent_type="" pdf_econsent_firstname_field="" pdf_econsent_firstname_event_id="" pdf_econsent_lastname_field="" pdf_econsent_lastname_event_id="" pdf_econsent_dob_field="" pdf_econsent_dob_event_id="" pdf_econsent_allow_edit="1" pdf_econsent_signature_field1="" pdf_econsent_signature_field2="" pdf_econsent_signature_field3="" pdf_econsent_signature_field4="" pdf_econsent_signature_field5="" survey_width_percent="" survey_show_font_resize="1" survey_btn_text_prev_page="" survey_btn_text_next_page="" survey_btn_text_submit="" survey_btn_hide_submit="0" survey_btn_hide_submit_logic=""/>
+		<redcap:Surveys form_name="consent" title="Consent" instructions="&lt;p&gt;&lt;strong&gt;Please complete the survey below.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Thank you!&lt;/p&gt;" offline_instructions="" acknowledgement="&lt;p&gt;&lt;strong&gt;Thank you for taking the survey.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Have a nice day!&lt;/p&gt;" stop_action_acknowledgement="" stop_action_delete_response="0" question_by_section="0" display_page_number="0" question_auto_numbering="1" survey_enabled="1" save_and_return="0" save_and_return_code_bypass="0" logo="" hide_title="0" view_results="0" min_responses_view_results="10" check_diversity_view_results="0" end_survey_redirect_url="" survey_expiration="" promis_skip_question="0" survey_auth_enabled_single="0" edit_completed_response="0" hide_back_button="0" show_required_field_text="1" confirmation_email_subject="test consent" confirmation_email_content="&lt;p&gt;test consent&lt;/p&gt;" confirmation_email_from="teresa.bosler@vumc.org" confirmation_email_from_display="" confirmation_email_attach_pdf="1" confirmation_email_attachment="" text_to_speech="0" text_to_speech_language="en" end_survey_redirect_next_survey="0" end_survey_redirect_next_survey_logic="" theme="" text_size="1" font_family="16" theme_text_buttons="" theme_bg_page="" theme_text_title="" theme_bg_title="" theme_text_sectionheader="" theme_bg_sectionheader="" theme_text_question="" theme_bg_question="" enhanced_choices="0" repeat_survey_enabled="0" repeat_survey_btn_text="" repeat_survey_btn_location="BEFORE_SUBMIT" response_limit="" response_limit_include_partials="1" response_limit_custom_text="&lt;p&gt;Thank you for your interest; however, the survey is closed because the maximum number of responses has been reached.&lt;/p&gt;" survey_time_limit_days="" survey_time_limit_hours="" survey_time_limit_minutes="" email_participant_field="" end_of_survey_pdf_download="0" pdf_save_to_field="" pdf_save_to_event_id="" pdf_save_translated="0" pdf_auto_archive="2" pdf_econsent_version="test" pdf_econsent_type="test" pdf_econsent_firstname_field="name" pdf_econsent_firstname_event_id="event_1_arm_1" pdf_econsent_lastname_field="email" pdf_econsent_lastname_event_id="event_1_arm_1" pdf_econsent_dob_field="dob" pdf_econsent_dob_event_id="event_1_arm_1" pdf_econsent_allow_edit="1" pdf_econsent_signature_field1="" pdf_econsent_signature_field2="" pdf_econsent_signature_field3="" pdf_econsent_signature_field4="" pdf_econsent_signature_field5="" survey_width_percent="" survey_show_font_resize="1" survey_btn_text_prev_page="" survey_btn_text_next_page="" survey_btn_text_submit="" survey_btn_hide_submit="0" survey_btn_hide_submit_logic=""/>
+	</redcap:SurveysGroup>
+	<redcap:UserRolesGroup>
+		<redcap:UserRoles role_name="1_FullRights" unique_role_name="U-641DLAC49L" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[text_validation,1][data_types,1][survey,1][consent,1][demo_branching2,1][data_dictionary_form,1][text_validation_2,1]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[text_validation,1][data_types,1][survey,3][consent,3][demo_branching2,1][data_dictionary_form,1][text_validation_2,1]" api_export="0" api_import="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+		<redcap:UserRoles role_name="2_Edit_RemoveID" unique_role_name="U-8349LFKRRM" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[text_validation,3][data_types,3][survey,3][consent,3][demo_branching2,1]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[text_validation,1][data_types,1][survey,3][consent,3][demo_branching2,1]" api_export="0" api_import="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+		<redcap:UserRoles role_name="3_ReadOnly_Deidentified" unique_role_name="U-378T4PJ39L" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[text_validation,2][data_types,2][survey,2][consent,2][demo_branching2,1]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[text_validation,2][data_types,2][survey,2][consent,2][demo_branching2,1]" api_export="0" api_import="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+		<redcap:UserRoles role_name="4_NoAccess_Noexport" unique_role_name="U-817YYNT9RM" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[text_validation,0][data_types,0][survey,0][consent,0][demo_branching2,1]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[text_validation,0][data_types,0][survey,0][consent,0][demo_branching2,1]" api_export="0" api_import="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+		<redcap:UserRoles role_name="TestRole" unique_role_name="U-523YNH3DEY" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[text_validation,1][data_types,1][survey,1][consent,1][demo_branching2,1]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[text_validation,1][data_types,1][demo_branching2,1]" api_export="0" api_import="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+	</redcap:UserRolesGroup>
+	<redcap:ReportsGroup>
+		<redcap:Reports title="Test Report" unique_report_name="R-153R3EA4W3" report_order="1" user_access="ALL" user_edit_access="ALL" description="" combine_checkbox_values="0" output_dags="0" output_survey_fields="0" output_missing_data_codes="0" remove_line_breaks_in_values="1" orderby_field1="record_id" orderby_sort1="ASC" orderby_field2="" orderby_sort2="" orderby_field3="" orderby_sort3="" advanced_logic="" filter_type="RECORD" dynamic_filter1="" dynamic_filter2="" dynamic_filter3="" hash="" short_url="" is_public="0" report_display_include_repeating_fields="1" report_display_header="BOTH" report_display_data="BOTH" limiter_logic="" redcap_reports_fields="record_id,email_v2,text_validation_complete,checkbox,signature,file_upload,required,data_types_complete" redcap_reports_filter_dags="" redcap_reports_filter_events="" ID="32e9d389ede4a021467f51eea81dc2bde15a33ad"/>
+	</redcap:ReportsGroup>
+</GlobalVariables>
+<MetaDataVersion OID="Metadata.314XMLUPDATE_2023-08-01_1448" Name="3.14 XML UPDATE" redcap:RecordIdField="record_id">
+	<Protocol>
+		<StudyEventRef StudyEventOID="Event.event_1_arm_1" OrderNumber="1" Mandatory="No"/>
+		<StudyEventRef StudyEventOID="Event.event_2_arm_1" OrderNumber="2" Mandatory="No"/>
+		<StudyEventRef StudyEventOID="Event.event_three_arm_1" OrderNumber="3" Mandatory="No"/>
+		<StudyEventRef StudyEventOID="Event.event_1_arm_2" OrderNumber="4" Mandatory="No"/>
+	</Protocol>
+	<StudyEventDef OID="Event.event_1_arm_1" Name="Event 1 (Arm 1: Arm 1)" Type="Common" Repeating="No" redcap:EventName="Event 1" redcap:CustomEventLabel="" redcap:UniqueEventName="event_1_arm_1" redcap:ArmNum="1" redcap:ArmName="Arm 1" redcap:DayOffset="1" redcap:OffsetMin="0" redcap:OffsetMax="0">
+		<FormRef FormOID="Form.text_validation" OrderNumber="1" Mandatory="No" redcap:FormName="text_validation"/>
+		<FormRef FormOID="Form.data_types" OrderNumber="2" Mandatory="No" redcap:FormName="data_types"/>
+		<FormRef FormOID="Form.consent" OrderNumber="3" Mandatory="No" redcap:FormName="consent"/>
+	</StudyEventDef>
+	<StudyEventDef OID="Event.event_2_arm_1" Name="Event 2 (Arm 1: Arm 1)" Type="Common" Repeating="No" redcap:EventName="Event 2" redcap:CustomEventLabel="" redcap:UniqueEventName="event_2_arm_1" redcap:ArmNum="1" redcap:ArmName="Arm 1" redcap:DayOffset="2" redcap:OffsetMin="0" redcap:OffsetMax="0">
+		<FormRef FormOID="Form.text_validation" OrderNumber="1" Mandatory="No" redcap:FormName="text_validation"/>
+		<FormRef FormOID="Form.data_types" OrderNumber="2" Mandatory="No" redcap:FormName="data_types"/>
+	</StudyEventDef>
+	<StudyEventDef OID="Event.event_three_arm_1" Name="Event Three (Arm 1: Arm 1)" Type="Common" Repeating="No" redcap:EventName="Event Three" redcap:CustomEventLabel="" redcap:UniqueEventName="event_three_arm_1" redcap:ArmNum="1" redcap:ArmName="Arm 1" redcap:DayOffset="3" redcap:OffsetMin="0" redcap:OffsetMax="0">
+		<FormRef FormOID="Form.survey" OrderNumber="1" Mandatory="No" redcap:FormName="survey"/>
+		<FormRef FormOID="Form.consent" OrderNumber="2" Mandatory="No" redcap:FormName="consent"/>
+	</StudyEventDef>
+	<StudyEventDef OID="Event.event_1_arm_2" Name="Event 1 (Arm 2: Arm Two)" Type="Common" Repeating="No" redcap:EventName="Event 1" redcap:CustomEventLabel="" redcap:UniqueEventName="event_1_arm_2" redcap:ArmNum="2" redcap:ArmName="Arm Two" redcap:DayOffset="1" redcap:OffsetMin="0" redcap:OffsetMax="0">
+		<FormRef FormOID="Form.data_types" OrderNumber="1" Mandatory="No" redcap:FormName="data_types"/>
+	</StudyEventDef>
+	<FormDef OID="Form.text_validation" Name="Text Validation" Repeating="No" redcap:FormName="text_validation">
+		<ItemGroupRef ItemGroupOID="text_validation.record_id" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="text_validation.text_validation_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.data_types" Name="Data Types" Repeating="No" redcap:FormName="data_types">
+		<ItemGroupRef ItemGroupOID="data_types.radio" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="data_types.data_types_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.survey" Name="Survey" Repeating="No" redcap:FormName="survey">
+		<ItemGroupRef ItemGroupOID="survey.name_survey" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="survey.survey_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.consent" Name="Consent" Repeating="No" redcap:FormName="consent">
+		<ItemGroupRef ItemGroupOID="consent.name_consent" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="consent.consent_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.data_dictionary_form" Name="Data Dictionary Form" Repeating="No" redcap:FormName="data_dictionary_form">
+		<ItemGroupRef ItemGroupOID="data_dictionary_form.dd_form" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="data_dictionary_form.data_dictionary_form_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.text_validation_2" Name="Text Validation 2" Repeating="No" redcap:FormName="text_validation_2">
+		<ItemGroupRef ItemGroupOID="text_validation_2.name_v2" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="text_validation_2.text_validation_2_complete" Mandatory="No"/>
+	</FormDef>
+	<ItemGroupDef OID="text_validation.record_id" Name="Text Validation" Repeating="No">
+		<ItemRef ItemOID="record_id" Mandatory="No" redcap:Variable="record_id"/>
+		<ItemRef ItemOID="redcap_data_access_group" Mandatory="No" redcap:Variable="redcap_data_access_group"/>
+		<ItemRef ItemOID="name" Mandatory="No" redcap:Variable="name"/>
+		<ItemRef ItemOID="email" Mandatory="No" redcap:Variable="email"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="text_validation.text_validation_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="text_validation_complete" Mandatory="No" redcap:Variable="text_validation_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="data_types.radio" Name="Data Types" Repeating="No">
+		<ItemRef ItemOID="radio" Mandatory="No" redcap:Variable="radio"/>
+		<ItemRef ItemOID="multiple_dropdown_manual_2" Mandatory="No" redcap:Variable="multiple_dropdown_manual_2"/>
+		<ItemRef ItemOID="notesbox2" Mandatory="No" redcap:Variable="notesbox2"/>
+		<ItemRef ItemOID="checkbox___1" Mandatory="No" redcap:Variable="checkbox"/>
+		<ItemRef ItemOID="checkbox___2" Mandatory="No" redcap:Variable="checkbox"/>
+		<ItemRef ItemOID="checkbox___3" Mandatory="No" redcap:Variable="checkbox"/>
+		<ItemRef ItemOID="signature" Mandatory="No" redcap:Variable="signature"/>
+		<ItemRef ItemOID="file_upload" Mandatory="No" redcap:Variable="file_upload"/>
+		<ItemRef ItemOID="tf" Mandatory="No" redcap:Variable="tf"/>
+		<ItemRef ItemOID="yn" Mandatory="No" redcap:Variable="yn"/>
+		<ItemRef ItemOID="slider" Mandatory="No" redcap:Variable="slider"/>
+		<ItemRef ItemOID="required" Mandatory="Yes" redcap:Variable="required"/>
+		<ItemRef ItemOID="calc_test" Mandatory="No" redcap:Variable="calc_test"/>
+		<ItemRef ItemOID="date_ymd" Mandatory="No" redcap:Variable="date_ymd"/>
+		<ItemRef ItemOID="time_hhmmss" Mandatory="No" redcap:Variable="time_hhmmss"/>
+		<ItemRef ItemOID="datetime_ymd_hmss" Mandatory="No" redcap:Variable="datetime_ymd_hmss"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="data_types.data_types_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="data_types_complete" Mandatory="No" redcap:Variable="data_types_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="survey.name_survey" Name="Survey" Repeating="No">
+		<ItemRef ItemOID="name_survey" Mandatory="No" redcap:Variable="name_survey"/>
+		<ItemRef ItemOID="email_survey" Mandatory="No" redcap:Variable="email_survey"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="survey.survey_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="survey_complete" Mandatory="No" redcap:Variable="survey_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="consent.name_consent" Name="Consent" Repeating="No">
+		<ItemRef ItemOID="name_consent" Mandatory="No" redcap:Variable="name_consent"/>
+		<ItemRef ItemOID="email_consent" Mandatory="No" redcap:Variable="email_consent"/>
+		<ItemRef ItemOID="dob" Mandatory="No" redcap:Variable="dob"/>
+		<ItemRef ItemOID="signature_consent" Mandatory="No" redcap:Variable="signature_consent"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="consent.consent_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="consent_complete" Mandatory="No" redcap:Variable="consent_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="data_dictionary_form.dd_form" Name="Data Dictionary Form" Repeating="No">
+		<ItemRef ItemOID="dd_form" Mandatory="No" redcap:Variable="dd_form"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="data_dictionary_form.data_dictionary_form_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="data_dictionary_form_complete" Mandatory="No" redcap:Variable="data_dictionary_form_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="text_validation_2.name_v2" Name="Text Validation 2" Repeating="No">
+		<ItemRef ItemOID="name_v2" Mandatory="No" redcap:Variable="name_v2"/>
+		<ItemRef ItemOID="email_v2" Mandatory="No" redcap:Variable="email_v2"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="text_validation_2.text_validation_2_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="text_validation_2_complete" Mandatory="No" redcap:Variable="text_validation_2_complete"/>
+	</ItemGroupDef>
+	<ItemDef OID="record_id" Name="record_id" DataType="text" Length="999" redcap:Variable="record_id" redcap:FieldType="text">
+		<Question><TranslatedText>Record ID</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="redcap_data_access_group" Name="redcap_data_access_group" DataType="text" Length="999" redcap:Variable="redcap_data_access_group">
+		<Question><TranslatedText>Data Access Group</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="name" Name="name" DataType="text" Length="999" redcap:Variable="name" redcap:FieldType="text">
+		<Question><TranslatedText>Name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="email" Name="email" DataType="text" Length="999" redcap:Variable="email" redcap:FieldType="text" redcap:TextValidationType="email">
+		<Question><TranslatedText>Email</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="text_validation_complete" Name="text_validation_complete" DataType="text" Length="1" redcap:Variable="text_validation_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="text_validation_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="radio" Name="radio" DataType="text" Length="4" redcap:Variable="radio" redcap:FieldType="radio">
+		<Question><TranslatedText>radio</TranslatedText></Question>
+		<CodeListRef CodeListOID="radio.choices"/>
+	</ItemDef>
+	<ItemDef OID="multiple_dropdown_manual_2" Name="multiple_dropdown_manual_2" DataType="text" Length="1" redcap:Variable="multiple_dropdown_manual_2" redcap:FieldType="select">
+		<Question><TranslatedText>Multiple Choice Dropdown Manual</TranslatedText></Question>
+		<CodeListRef CodeListOID="multiple_dropdown_manual_2.choices"/>
+	</ItemDef>
+	<ItemDef OID="notesbox2" Name="notesbox2" DataType="text" Length="999" redcap:Variable="notesbox2" redcap:FieldType="textarea">
+		<Question><TranslatedText>Notes box 2</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="checkbox___1" Name="checkbox___1" DataType="boolean" Length="1" redcap:Variable="checkbox" redcap:FieldType="checkbox" redcap:FieldAnnotation="@DEFAULT=&quot;1&quot;">
+		<Question><TranslatedText>Checkbox</TranslatedText></Question>
+		<CodeListRef CodeListOID="checkbox___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="checkbox___2" Name="checkbox___2" DataType="boolean" Length="1" redcap:Variable="checkbox" redcap:FieldType="checkbox" redcap:FieldAnnotation="@DEFAULT=&quot;1&quot;">
+		<Question><TranslatedText>Checkbox</TranslatedText></Question>
+		<CodeListRef CodeListOID="checkbox___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="checkbox___3" Name="checkbox___3" DataType="boolean" Length="1" redcap:Variable="checkbox" redcap:FieldType="checkbox" redcap:FieldAnnotation="@DEFAULT=&quot;1&quot;">
+		<Question><TranslatedText>Checkbox</TranslatedText></Question>
+		<CodeListRef CodeListOID="checkbox___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="signature" Name="signature" DataType="text" Length="999" redcap:Variable="signature" redcap:FieldType="file" redcap:TextValidationType="signature">
+		<Question><TranslatedText>Signature</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="file_upload" Name="file_upload" DataType="text" Length="999" redcap:Variable="file_upload" redcap:FieldType="file">
+		<Question><TranslatedText>File Upload</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="tf" Name="tf" DataType="boolean" Length="1" redcap:Variable="tf" redcap:FieldType="truefalse">
+		<Question><TranslatedText>True/False</TranslatedText></Question>
+		<CodeListRef CodeListOID="tf.choices"/>
+	</ItemDef>
+	<ItemDef OID="yn" Name="yn" DataType="boolean" Length="1" redcap:Variable="yn" redcap:FieldType="yesno">
+		<Question><TranslatedText>Yes/No</TranslatedText></Question>
+		<CodeListRef CodeListOID="yn.choices"/>
+	</ItemDef>
+	<ItemDef OID="slider" Name="slider" DataType="integer" Length="999" redcap:Variable="slider" redcap:FieldType="slider" redcap:TextValidationType="number" redcap:SliderLabels="0 | 50 | 100" redcap:CustomAlignment="RH">
+		<Question><TranslatedText>Slider</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="required" Name="required" DataType="text" Length="999" redcap:Variable="required" redcap:FieldType="text" redcap:RequiredField="y" redcap:FieldAnnotation="@DEFAULT=&quot;required&quot;">
+		<Question><TranslatedText>Required</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="calc_test" Name="calc_test" DataType="float" Length="999" redcap:Variable="calc_test" redcap:FieldType="calc" redcap:Calculation="3*2">
+		<Question><TranslatedText>Calc Test</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="date_ymd" Name="date_ymd" DataType="date" Length="999" redcap:Variable="date_ymd" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>date YMD</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="time_hhmmss" Name="time_hhmmss" DataType="text" Length="999" redcap:Variable="time_hhmmss" redcap:FieldType="text" redcap:TextValidationType="time_hh_mm_ss">
+		<Question><TranslatedText>time HH:MM:SS</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="datetime_ymd_hmss" Name="datetime_ymd_hmss" DataType="datetime" Length="999" redcap:Variable="datetime_ymd_hmss" redcap:FieldType="text" redcap:TextValidationType="datetime_seconds_ymd">
+		<Question><TranslatedText>datetime YMD HMSS</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="data_types_complete" Name="data_types_complete" DataType="text" Length="1" redcap:Variable="data_types_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="data_types_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="name_survey" Name="name_survey" DataType="text" Length="999" redcap:Variable="name_survey" redcap:FieldType="text" redcap:FieldAnnotation="@DEFAULT=&quot;Name &quot;">
+		<Question><TranslatedText>Name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="email_survey" Name="email_survey" DataType="text" Length="999" redcap:Variable="email_survey" redcap:FieldType="text" redcap:TextValidationType="email" redcap:FieldAnnotation="@DEFAULT=&quot;email@test.edu&quot;">
+		<Question><TranslatedText>Email</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="survey_complete" Name="survey_complete" DataType="text" Length="1" redcap:Variable="survey_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="survey_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="name_consent" Name="name_consent" DataType="text" Length="999" redcap:Variable="name_consent" redcap:FieldType="text" redcap:FieldAnnotation="@DEFAULT=&quot;Name &quot;">
+		<Question><TranslatedText>Name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="email_consent" Name="email_consent" DataType="text" Length="999" redcap:Variable="email_consent" redcap:FieldType="text" redcap:TextValidationType="email" redcap:FieldAnnotation="@DEFAULT=&quot;email@test.edu&quot;">
+		<Question><TranslatedText>Email</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="dob" Name="dob" DataType="date" Length="999" redcap:Variable="dob" redcap:FieldType="text" redcap:TextValidationType="date_ymd" redcap:FieldAnnotation="@TODAY">
+		<Question><TranslatedText>DOB</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="signature_consent" Name="signature_consent" DataType="text" Length="999" redcap:Variable="signature_consent" redcap:FieldType="file" redcap:TextValidationType="signature">
+		<Question><TranslatedText>Signature </TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="consent_complete" Name="consent_complete" DataType="text" Length="1" redcap:Variable="consent_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="consent_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="dd_form" Name="dd_form" DataType="text" Length="999" redcap:Variable="dd_form" redcap:FieldType="text">
+		<Question><TranslatedText>Testing dd upload</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="data_dictionary_form_complete" Name="data_dictionary_form_complete" DataType="text" Length="1" redcap:Variable="data_dictionary_form_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="data_dictionary_form_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="name_v2" Name="name_v2" DataType="text" Length="999" redcap:Variable="name_v2" redcap:FieldType="text" redcap:FieldAnnotation="@DEFAULT=&quot;Name &quot;">
+		<Question><TranslatedText>Name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="email_v2" Name="email_v2" DataType="text" Length="999" redcap:Variable="email_v2" redcap:FieldType="text" redcap:TextValidationType="email" redcap:FieldAnnotation="@DEFAULT=&quot;email@test.edu&quot;">
+		<Question><TranslatedText>Email</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="text_validation_2_complete" Name="text_validation_2_complete" DataType="text" Length="1" redcap:Variable="text_validation_2_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="text_validation_2_complete.choices"/>
+	</ItemDef>
+	<CodeList OID="text_validation_complete.choices" Name="text_validation_complete" DataType="text" redcap:Variable="text_validation_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="radio.choices" Name="radio" DataType="text" redcap:Variable="radio">
+		<CodeListItem CodedValue="9..9"><Decode><TranslatedText>Choice99</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="100"><Decode><TranslatedText>Choice100</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="101"><Decode><TranslatedText>Choice101</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="multiple_dropdown_manual_2.choices" Name="multiple_dropdown_manual_2" DataType="text" redcap:Variable="multiple_dropdown_manual_2">
+		<CodeListItem CodedValue="5"><Decode><TranslatedText>DDChoice5</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="7"><Decode><TranslatedText>DDChoice7</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="6"><Decode><TranslatedText>DDChoice6</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="checkbox___1.choices" Name="checkbox___1" DataType="boolean" redcap:Variable="checkbox" redcap:CheckboxChoices="1, Checkbox1|2, Checkbox2|3, Checkbox3">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="checkbox___2.choices" Name="checkbox___2" DataType="boolean" redcap:Variable="checkbox" redcap:CheckboxChoices="1, Checkbox1|2, Checkbox2|3, Checkbox3">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="checkbox___3.choices" Name="checkbox___3" DataType="boolean" redcap:Variable="checkbox" redcap:CheckboxChoices="1, Checkbox1|2, Checkbox2|3, Checkbox3">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="tf.choices" Name="tf" DataType="boolean" redcap:Variable="tf">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>True</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>False</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="yn.choices" Name="yn" DataType="boolean" redcap:Variable="yn">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="data_types_complete.choices" Name="data_types_complete" DataType="text" redcap:Variable="data_types_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="survey_complete.choices" Name="survey_complete" DataType="text" redcap:Variable="survey_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="consent_complete.choices" Name="consent_complete" DataType="text" redcap:Variable="consent_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="data_dictionary_form_complete.choices" Name="data_dictionary_form_complete" DataType="text" redcap:Variable="data_dictionary_form_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="text_validation_2_complete.choices" Name="text_validation_2_complete" DataType="text" redcap:Variable="text_validation_2_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+</MetaDataVersion>
+</Study>
+<ClinicalData StudyOID="Project.314XMLUPDATE" MetaDataVersionOID="Metadata.314XMLUPDATE_2023-08-01_1448">
+	<SubjectData SubjectKey="1" redcap:RecordIdField="record_id">
+		<StudyEventData StudyEventOID="Event.event_1_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_1_arm_1">
+			<FormData FormOID="Form.text_validation" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="text_validation.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="1"/>
+					<ItemData ItemOID="email" Value="email@test.edu"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="text_validation.text_validation_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="text_validation_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.consent" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="consent.name_consent" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="name_consent" Value="Name "/>
+					<ItemData ItemOID="email_consent" Value="email@test.edu"/>
+					<ItemData ItemOID="dob" Value="2023-04-14"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="consent.consent_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="consent_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+		<StudyEventData StudyEventOID="Event.event_three_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_three_arm_1">
+			<FormData FormOID="Form.survey" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="survey.name_survey" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="name_survey" Value="Name "/>
+					<ItemData ItemOID="email_survey" Value="email@test.edu"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="survey.survey_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="survey_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.consent" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="consent.name_consent" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="name_consent" Value="Name "/>
+					<ItemData ItemOID="email_consent" Value="email@test.edu"/>
+					<ItemData ItemOID="dob" Value="2023-04-14"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="consent.consent_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="consent_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+		<StudyEventData StudyEventOID="Event.event_1_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_1_arm_1">
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="checkbox___1" Value="0"/>
+					<ItemData ItemOID="checkbox___2" Value="0"/>
+					<ItemData ItemOID="checkbox___3" Value="0"/>
+					<ItemData ItemOID="calc_test" Value="6"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+		<StudyEventData StudyEventOID="Event.event_2_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_2_arm_1">
+			<FormData FormOID="Form.text_validation" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="text_validation.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="1"/>
+					<ItemData ItemOID="name" Value="Name "/>
+					<ItemData ItemOID="email" Value="email@test.edu"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="text_validation.text_validation_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="text_validation_complete" Value="1"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="checkbox___1" Value="0"/>
+					<ItemData ItemOID="checkbox___2" Value="0"/>
+					<ItemData ItemOID="checkbox___3" Value="0"/>
+					<ItemData ItemOID="calc_test" Value="6"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+		<StudyEventData StudyEventOID="Event.event_2_arm_1" StudyEventRepeatKey="2" redcap:UniqueEventName="event_2_arm_1">
+			<FormData FormOID="Form.text_validation" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="text_validation.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="1"/>
+					<ItemData ItemOID="name" Value="Name "/>
+					<ItemData ItemOID="email" Value="email@test.edu"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="text_validation.text_validation_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="text_validation_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="checkbox___1" Value="0"/>
+					<ItemData ItemOID="checkbox___2" Value="0"/>
+					<ItemData ItemOID="checkbox___3" Value="0"/>
+					<ItemData ItemOID="calc_test" Value="6"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+	</SubjectData>
+	<SubjectData SubjectKey="2" redcap:RecordIdField="record_id">
+		<StudyEventData StudyEventOID="Event.event_1_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_1_arm_1">
+			<FormData FormOID="Form.text_validation" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="text_validation.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="2"/>
+					<ItemData ItemOID="name" Value="Name "/>
+					<ItemData ItemOID="email" Value="email@test.edu"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="text_validation.text_validation_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="text_validation_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="checkbox___1" Value="1"/>
+					<ItemData ItemOID="checkbox___2" Value="0"/>
+					<ItemData ItemOID="checkbox___3" Value="0"/>
+					<ItemData ItemOID="required" Value="required"/>
+					<ItemData ItemOID="calc_test" Value="6"/>
+					<ItemData ItemOID="date_ymd" Value="2023-04-14"/>
+					<ItemData ItemOID="time_hhmmss" Value="20:20:41"/>
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-04-14T20:20:37"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.data_types" FormRepeatKey="2">
+				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="checkbox___1" Value="1"/>
+					<ItemData ItemOID="checkbox___2" Value="0"/>
+					<ItemData ItemOID="checkbox___3" Value="0"/>
+					<ItemData ItemOID="required" Value="required"/>
+					<ItemData ItemOID="calc_test" Value="6"/>
+					<ItemData ItemOID="date_ymd" Value="2023-04-14"/>
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-04-14T20:23:18"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+	</SubjectData>
+	<SubjectData SubjectKey="3" redcap:RecordIdField="record_id">
+		<StudyEventData StudyEventOID="Event.event_1_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_1_arm_1">
+			<FormData FormOID="Form.text_validation" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="text_validation.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="3"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="checkbox___1" Value="1"/>
+					<ItemData ItemOID="checkbox___2" Value="0"/>
+					<ItemData ItemOID="checkbox___3" Value="0"/>
+					<ItemData ItemOID="required" Value="required"/>
+					<ItemData ItemOID="calc_test" Value="6"/>
+					<ItemData ItemOID="date_ymd" Value="2023-04-14"/>
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-04-14T20:23:34"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.data_types" FormRepeatKey="2">
+				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="checkbox___1" Value="1"/>
+					<ItemData ItemOID="checkbox___2" Value="0"/>
+					<ItemData ItemOID="checkbox___3" Value="0"/>
+					<ItemData ItemOID="required" Value="required"/>
+					<ItemData ItemOID="calc_test" Value="6"/>
+					<ItemData ItemOID="date_ymd" Value="2023-04-14"/>
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-04-14T20:23:40"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+	</SubjectData>
+	<SubjectData SubjectKey="4" redcap:RecordIdField="record_id">
+		<StudyEventData StudyEventOID="Event.event_1_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_1_arm_1">
+			<FormData FormOID="Form.text_validation" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="text_validation.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="4"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="checkbox___1" Value="1"/>
+					<ItemData ItemOID="checkbox___2" Value="0"/>
+					<ItemData ItemOID="checkbox___3" Value="0"/>
+					<ItemData ItemOID="required" Value="required"/>
+					<ItemData ItemOID="calc_test" Value="6"/>
+					<ItemData ItemOID="date_ymd" Value="2023-04-14"/>
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-04-14T20:23:54"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.data_types" FormRepeatKey="2">
+				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="checkbox___1" Value="1"/>
+					<ItemData ItemOID="checkbox___2" Value="0"/>
+					<ItemData ItemOID="checkbox___3" Value="0"/>
+					<ItemData ItemOID="required" Value="required"/>
+					<ItemData ItemOID="calc_test" Value="6"/>
+					<ItemData ItemOID="date_ymd" Value="2023-04-14"/>
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-04-14T20:24:00"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="1"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.data_types" FormRepeatKey="3">
+				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="checkbox___1" Value="1"/>
+					<ItemData ItemOID="checkbox___2" Value="0"/>
+					<ItemData ItemOID="checkbox___3" Value="0"/>
+					<ItemData ItemOID="required" Value="required"/>
+					<ItemData ItemOID="calc_test" Value="6"/>
+					<ItemData ItemOID="date_ymd" Value="2023-04-14"/>
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-04-14T20:24:06"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+	</SubjectData>
+	<SubjectData SubjectKey="5" redcap:RecordIdField="record_id">
+		<StudyEventData StudyEventOID="Event.event_1_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_1_arm_1">
+			<FormData FormOID="Form.text_validation" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="text_validation.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="5"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="data_types.radio" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="radio" Value="9..9"/>
+					<ItemData ItemOID="multiple_dropdown_manual_2" Value="7"/>
+					<ItemData ItemOID="notesbox2" Value="fdfdf"/>
+					<ItemData ItemOID="checkbox___1" Value="1"/>
+					<ItemData ItemOID="checkbox___2" Value="0"/>
+					<ItemData ItemOID="checkbox___3" Value="0"/>
+					<ItemData ItemOID="required" Value="required"/>
+					<ItemData ItemOID="calc_test" Value="6"/>
+					<ItemData ItemOID="date_ymd" Value="2023-07-25"/>
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-07-25T08:54:48"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+	</SubjectData>
+	<SubjectData SubjectKey="6" redcap:RecordIdField="record_id">
+		<StudyEventData StudyEventOID="Event.event_1_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_1_arm_1">
+			<FormData FormOID="Form.text_validation" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="text_validation.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="6"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="text_validation.text_validation_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="text_validation_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+		<StudyEventData StudyEventOID="Event.event_2_arm_1" StudyEventRepeatKey="1" redcap:UniqueEventName="event_2_arm_1">
+			<FormData FormOID="Form.text_validation" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="text_validation.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="6"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="text_validation.text_validation_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="text_validation_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="checkbox___1" Value="0"/>
+					<ItemData ItemOID="checkbox___2" Value="0"/>
+					<ItemData ItemOID="checkbox___3" Value="0"/>
+					<ItemData ItemOID="calc_test" Value="6"/>
+				</ItemGroupData>
+			</FormData>
+		</StudyEventData>
+	</SubjectData>
+</ClinicalData>
+</ODM>
