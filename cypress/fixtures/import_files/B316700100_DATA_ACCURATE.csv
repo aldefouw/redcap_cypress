@@ -1,0 +1,17 @@
+record_id,redcap_event_name,redcap_repeat_instrument,redcap_repeat_instance,redcap_data_access_group,redcap_survey_identifier,name,email,text_validation_complete,ptname,textbox,text2,radio,notesbox,multiple_dropdown_manual,multiple_dropdown_auto,multiple_radio_auto,radio_button_manual,checkbox___1,checkbox___2,checkbox___3,calc_test,calculated_field,signature,file_upload,required,identifier,identifier_2,edit_field,date_ymd,date_mdy,date_dmy,time_hhmmss,time_hhmm,time_mmss,datetime_ymd_hmss,datetime_ymd_hm,datetime_mdy_hmss,datetime_dmy_hmss,integer,number,number_1_period,number_1_comma,letters,mrn_10_digits,mrn,ssn,phone_north_america,phone_australia,phone_uk,zipcode_us,postal_5,postal_code_australia,postal_code_canada,data_types_complete,survey_timestamp,name_survey,email_survey,survey_complete,consent_timestamp,name_consent,email_consent,dob,signature_consent,consent_complete
+1,event_1_arm_1,,,,,,email@test.edu,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Name ,email@test.edu,4/14/2023,,2
+1,event_three_arm_1,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,Name ,email@test.edu,0,,Name ,email@test.edu,4/14/2023,,0
+1,event_1_arm_1,data_types,1,,,,,,,text box,text2,,note box,5,1,1,100,1,0,0,6,6,,,required,PHI,PHI2,Edit Field,7/31/2023,7/31/2023,7/31/2023,14:49:07,14:49,14:49,7/31/2023 14:49,,7/31/2023 14:49,7/31/2023 14:49,1,1,2.2,"2,0",ABCxyz,1234567890,A123456789,123-12-1234,555-867-5309,(02) 1234 5678, +44 7911 123456,90210,69008,5000,A0A 0A0,0,,,,,,,,,,
+1,event_2_arm_1,,1,,,Name ,email@test.edu,1,,,,,,,,,,0,0,0,6,6,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,,,,,,,,,,
+1,event_2_arm_1,,2,,,Name ,email@test.edu,2,,,,,,,,,,0,0,0,6,6,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,,,,,,,,,,
+2,event_1_arm_1,,,,,Name ,email@test.edu,2,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0
+2,event_1_arm_1,data_types,1,,,,,,Name ,text box,text2,,note box,5,1,1,100,1,0,0,6,6,,,required,PHI,PHI2,Edit Field,4/14/2023,,,20:20:41,,,4/14/2023 20:20,,,,,,,,,,,,,,,,,,,0,,,,,,,,,,
+2,event_1_arm_1,data_types,2,,,,,,Name ,text box,text2,,note box,5,1,1,100,1,0,0,6,6,,,required,PHI,PHI2,Edit Field,4/14/2023,,,,,,4/14/2023 20:23,,,,,,,,,,,,,,,,,,,0,,,,,,,,,,
+3,event_1_arm_1,,,,,,,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0
+3,event_1_arm_1,data_types,1,,,,,,,text box,text2,,note box,5,1,1,100,1,0,0,6,6,,,required,PHI,PHI2,Edit Field,4/14/2023,,,,,,4/14/2023 20:23,,,,,,,,,,,,,,,,,,,2,,,,,,,,,,
+3,event_1_arm_1,data_types,2,,,,,,,text box,text2,,note box,5,1,1,100,1,0,0,6,6,,,required,PHI,PHI2,Edit Field,4/14/2023,,,,,,4/14/2023 20:23,,,,,,,,,,,,,,,,,,,2,,,,,,,,,,
+4,event_1_arm_1,,,,,,,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0
+4,event_1_arm_1,data_types,1,,,,,,,text box,text2,,note box,5,1,1,100,1,0,0,6,6,,,required,PHI,PHI2,Edit Field,4/14/2023,,,,,,4/14/2023 20:23,,,,,,,,,,,,,,,,,,,2,,,,,,,,,,
+4,event_1_arm_1,data_types,2,,,,,,,text box,text2,,note box,5,1,1,100,1,0,0,6,6,,,required,PHI,PHI2,Edit Field,4/14/2023,,,,,,4/14/2023 20:24,,,,,,,,,,,,,,,,,,,1,,,,,,,,,,
+4,event_1_arm_1,data_types,3,,,,,,,text box,text2,,note box,5,1,1,100,1,0,0,6,6,,,required,PHI,PHI2,Edit Field,4/14/2023,,,,,,4/14/2023 20:24,,,,,,,,,,,,,,,,,,,0,,,,,,,,,,
+5,event_1_arm_1,,,,,JoeSchmoe,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
