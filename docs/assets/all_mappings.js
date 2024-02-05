@@ -10,10 +10,13 @@ window.parameterTypes = {
     ordinal: transformKeysToRegExp(window.ordinalChoices),
     recordStatusIcons: transformKeysToRegExp(window.recordStatusIcons),
     fileRepoIcons: transformKeysToRegExp(window.fileRepoIcons),
+    onlineDesignerFieldIcons: transformKeysToRegExp(window.onlineDesignerFieldIcons),
+    participantListIcons: transformKeysToRegExp(window.participantListIcons),
     addEditField: ['Add New Field', 'Edit Field'],
     addField: ['Add Field', 'Add Matrix of Fields', 'Import from Field Bank'],
     addOrSelect: ['add', 'select'],
     articleType: ['a', 'the'],
+    aboveBelow: ['above', 'below'],
     beforeAfter: ['before', 'after'],
     cellAction: [
         ' and click the new instance link',
@@ -27,7 +30,8 @@ window.parameterTypes = {
     clickType: ['click on', 'check', 'uncheck'],
     confirmation: ['accept', 'cancel'],
     dataViewingRights: ['No Access', 'Read Only', 'View & Edit', 'Edit survey responses'],
-    dropdownType: ['dropdown', 'multiselect'],
+    disabled: ['is disabled'],
+    dropdownType: ['dropdown', 'multiselect', 'checkboxes', 'radio'],
     editEvent: ['Edit', 'Delete'],
     editField: ['Edit', 'Branching Logic', 'Copy', 'Move', 'Delete Field'],
     editSurveyRights: [
@@ -36,7 +40,7 @@ window.parameterTypes = {
     ],
     enableDisable: ['enable', 'disable'],
     elmType: ['input', 'list item', 'checkbox', 'span'],
-    enterType: ['verify', 'enter', 'clear field and enter'],
+    enterType: ['verify', 'enter', 'clear field and enter', 'click on'],
     fieldType: [
         'Text Box',
         'Notes Box',
@@ -52,7 +56,7 @@ window.parameterTypes = {
         'Begin New Section',
         'Calculated Field',
     ],
-    headerOrNot: ['header and '],
+    headerOrNot: ['header and', 'header'],
     iframeVisibility: ['', ' in the iframe'],
     instrumentSaveOptions: [
         'Save & Stay',
@@ -63,13 +67,13 @@ window.parameterTypes = {
         'Save & Go To Next Instance',
         'Save & Add New Instance',
     ],
-    labeledElement: ['button', 'link'],
-    labeledExactly: ['labeled', 'labeled exactly', 'in the row labeled', 'for the instrument row labeled', 'for the File Repository file named'],
+    labeledElement: ['button', 'link', 'field', 'section break'],
+    labeledExactly: ['labeled', 'labeled exactly', 'in the row labeled', 'for the instrument row labeled', 'for the variable', 'for the File Repository file named'],
     linkNames: ['link', 'tab', 'instrument', 'icon'],
     projectRequestLabel: ['Create Project', 'Send Request'],
     notSee: ['not '],
     ordering: ['ascending', 'descending'],
-    onlineDesignerButtons: ['"Enable"', '"Disable"', '"Choose action"', '"Survey settings"', '"Automated Invitations"'],
+    onlineDesignerButtons: ['"Enable"', '"Disable"', '"Choose action"', '"Survey settings"', '"Automated Invitations"', 'enabled survey icon', '"View Report"'],
     projectStatus: ['Production', 'Development', 'Analysis/Cleanup'],
     projectType: [
         'Practice / Just for fun',
@@ -89,10 +93,11 @@ window.parameterTypes = {
         ' in the dialog box to request a change in project status',
         ' to rename an instrument',
         ' in the "Add New Field" dialog box',
-        ' in the "Edit Field" dialog box'
+        ' in the "Edit Field" dialog box',
+        ' and will leave the tab open when I return to the REDCap project'
     ],
     select: ['selected', 'unselected'],
-    tableName: ['', ' of the User Rights table', ' of the Reports table'],
+    tableName: ['', ' of the User Rights table', ' of the Reports table', ' of the Participant List table'],
     timeType: ['seconds', 'second', 'minutes', 'minute'],
     toDoRequestTypes: ['Move to prod', 'Approve draft changes', 'Copy project'],
     toDoTableIcons: [

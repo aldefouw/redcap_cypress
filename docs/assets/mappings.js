@@ -46,13 +46,15 @@ window.tableMappings = {
     'file repository' : 'table#file-repository-table',
     'administrators' : 'table#admin-rights-table',
     'reports' : 'table#table-report_list',
-    'report data' : ['div.dataTables_scrollHeadInner table', 'table#report_table'],
+    'report data' : ['table.dataTable', 'table#report_table'],
     'define events' : 'table#event_table',
     'data access groups' : 'table#table-dags_table',
     'DAGs Switcher' : 'div#dag-switcher-config-container-parent table',
     'record status dashboard': 'table#record_status_table',
     'data collection instruments': 'table#table-forms_surveys',
-    'codebook' : 'table#codebook-table'
+    'codebook' : 'table#codebook-table',
+    'import data display' : 'table#comptable',
+    'participant list' : ['div#partlist_outerdiv table', 'table#table-participant_table']
 }
 
 window.dateFormats = {
@@ -150,10 +152,13 @@ window.elementChoices = {
     ' in the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
     ' on the dialog box' : 'div[role=dialog]:visible',
     ' in the dialog box' : 'div[role=dialog]:visible',
+    ' on the Add/Edit Branching Logic dialog box' : 'div[role=dialog]:visible',
+    ' in the Add/Edit Branching Logic dialog box' : 'div[role=dialog]:visible',
     ' within the data collection instrument list' : 'table#table-forms_surveys',
     ' on the action popup' : '[id=formActionDropdown]',
     ' in the action popup' : '[id=formActionDropdown]',
-    ' in the Edit survey responses column' : 'table#form_rights:visible'
+    ' in the Edit survey responses column' : 'table#form_rights:visible',
+    ' in the open date picker widget' : 'div.ui-datepicker'
 }
 
 //IMPORTANT: Programmatically add the projectModules as element choices
@@ -168,9 +173,10 @@ for (const category in window.projectModules) {
 }
 
 window.icons = {
-    'disabled icon'      : `img[src*=delete]:visible`,
-    'checkmark icon'     : `img[src*=tick]:visible`,
-    'x icon'             : `img[src*=cross]:visible`
+    'enabled survey icon'   : 'img[src*=tick_shield]:visible',
+    'disabled icon'         : `img[src*=delete]:visible`,
+    'checkmark icon'        : `img[src*=tick]:visible`,
+    'x icon'                : `img[src*=cross]:visible`
 }
 
 //IMPORTANT: Programmatically add the validationTypes as element choices
@@ -211,4 +217,18 @@ window.recordStatusIcons = {
 window.fileRepoIcons = {
     'File Share' : `i[class*=fa-arrow-up]`,
     'Delete' : `i[class*=fa-times]`
+}
+
+window.onlineDesignerFieldIcons = {
+    'Edit' : `img[src*=pencil]`,
+    'Branching Logic': `img[src*=branch]`,
+    'Copy' : `img[src*=copy]`,
+    'Move' : `img[src*=move]`,
+    'Stop' : 'img[src*=stop]',
+    'Delete Field': `img[src*=cross]`
+}
+
+window.participantListIcons = {
+    'green checkmark' : `img[src*=circle_green_tick]`,
+    'gray bubble': `img[src*=stop_gray]`
 }
