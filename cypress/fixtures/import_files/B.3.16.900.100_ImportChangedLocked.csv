@@ -1,0 +1,2 @@
+record_id,redcap_event_name,name,email,text_validation_complete,ptname
+1,event_1_arm_1,Name Locked,email@test.edu,,
