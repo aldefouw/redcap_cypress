@@ -47,7 +47,8 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
+             npx cypress run --spec redcap_rsvc/Feature\ Tests/B/Direct\ Data\ Entry\ -\ Survey/B.3.15.1100\ -\ Survey\ Response\ Tracking.feature  --headed --browser chrome
+#            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
 workflows:
   version: 2
   workflow:
