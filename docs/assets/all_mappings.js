@@ -68,7 +68,7 @@ window.parameterTypes = {
         'Save & Add New Instance',
     ],
     labeledElement: ['button', 'link', 'field', 'section break'],
-    labeledExactly: ['labeled', 'labeled exactly', 'in the row labeled', 'for the instrument row labeled', 'for the variable', 'for the File Repository file named'],
+    labeledExactly: ['labeled', 'labeled exactly', 'in the row labeled', 'for the instrument row labeled', 'for the variable', 'for the File Repository file named', 'for Data Quality Rule #'],
     linkNames: ['link', 'tab', 'instrument', 'icon'],
     projectRequestLabel: ['Create Project', 'Send Request'],
     notSee: ['not '],

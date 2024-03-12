@@ -237,7 +237,8 @@ window.onlineDesignerFieldIcons = {
     'Copy' : `img[src*=copy]`,
     'Move' : `img[src*=move]`,
     'Stop' : 'img[src*=stop]',
-    'Delete Field': `img[src*=cross]`
+    'Delete Field': `img[src*=cross]`,
+    'Delete': `img[src*=cross]`
 }
 
 window.participantListIcons = {
