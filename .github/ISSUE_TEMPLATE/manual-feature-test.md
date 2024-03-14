@@ -1,16 +1,18 @@
 ---
-name: Core feature test
+name: Manual feature test
 about: Used to manage core features. Before completion, the check list must be completed
 title: "[Feature name and number]"
-labels: core feature
+labels: non-core feature
 assignees: ''
 
 ---
 
-Permalink: 
+Permalink:
 
-Review:
-
+Pre Review:
 - [ ] The script targets the correct feature sufficiently
-- [ ] The script matches the source manual script
+- [ ] The user requirements are met
+
+Post Review:
+- [ ] The script targets the correct feature sufficiently
 - [ ] The script appropriately tests the feature
