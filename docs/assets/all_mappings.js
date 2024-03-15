@@ -68,12 +68,12 @@ window.parameterTypes = {
         'Save & Add New Instance',
     ],
     labeledElement: ['button', 'link', 'field', 'section break'],
-    labeledExactly: ['labeled', 'labeled exactly', 'in the row labeled', 'for the instrument row labeled', 'for the variable', 'for the File Repository file named'],
+    labeledExactly: ['labeled', 'labeled exactly', 'in the row labeled', 'for the instrument row labeled', 'for the variable', 'for the File Repository file named', 'for Data Quality Rule #'],
     linkNames: ['link', 'tab', 'instrument', 'icon'],
     projectRequestLabel: ['Create Project', 'Send Request'],
     notSee: ['not '],
     ordering: ['ascending', 'descending'],
-    onlineDesignerButtons: ['"Enable"', '"Disable"', '"Choose action"', '"Survey settings"', '"Automated Invitations"', 'enabled survey icon', '"View Report"'],
+    onlineDesignerButtons: ['"Enable"', '"Disable"', '"Choose action"', '"Survey settings"', '"Automated Invitations"', 'enabled survey icon', '"View Report"', '"Execute"'],
     projectStatus: ['Production', 'Development', 'Analysis/Cleanup'],
     projectType: [
         'Practice / Just for fun',
@@ -107,6 +107,6 @@ window.parameterTypes = {
         'Move to low priority section',
         'archive request notification',
     ],
-    toDownloadFile: [' to download a file'],
+    toDownloadFile: [' to download a file', ' near "with records in rows" to download a file', ' near "with records in columns" to download a file'],
     userRightAction: ['add', 'remove']
 }

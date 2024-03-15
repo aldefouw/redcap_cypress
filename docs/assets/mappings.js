@@ -48,31 +48,32 @@ window.tableMappings = {
     'reports' : 'table#table-report_list',
     'report data' : ['table.dataTable', 'table#report_table'],
     'define events' : 'table#event_table',
-    'data access groups' : 'table#table-dags_table',
+    'data access groups' : ['div#dags_table table', 'table#table-dags_table'],
     'DAGs Switcher' : 'div#dag-switcher-config-container-parent table',
     'record status dashboard': 'table#record_status_table',
     'data collection instruments': 'table#table-forms_surveys',
     'codebook' : 'table#codebook-table',
     'import data display' : 'table#comptable',
-    'participant list' : ['div#partlist_outerdiv table', 'table#table-participant_table']
+    'participant list' : ['div#partlist_outerdiv table', 'table#table-participant_table'],
+    'user rights' : ['div#user_rights_roles_table table', 'table#table-user_rights_roles_table']
 }
 
 window.dateFormats = {
     'mm-dd-yyyy': /\d{2}-\d{2}-\d{4}/,
     'yyyy-mm-dd': /\d{4}-\d{2}-\d{2}/,
-    'mm-dd-yyyy hh:mm': /\d{2}-\d{2}-\d{4} \d{1,2}:\d{2}(?:am|pm)/,
-    'yyyy-mm-dd hh:mm': /\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}(?:am|pm)/,
-    'mm-dd-yyyy hh:mm:ss': /\d{2}-\d{2}-\d{4} \d{1,2}:\d{2}:\d{2}(?:am|pm)/,
-    'yyyy-mm-dd hh:mm:ss': /\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}(?:am|pm)/,
+    'mm-dd-yyyy hh:mm': /\d{2}-\d{2}-\d{4} \d{1,2}:\d{2}(?:am|pm)?$/,
+    'yyyy-mm-dd hh:mm': /\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}(?:am|pm)?$/,
+    'mm-dd-yyyy hh:mm:ss': /\d{2}-\d{2}-\d{4} \d{1,2}:\d{2}:\d{2}(?:am|pm)?$/,
+    'yyyy-mm-dd hh:mm:ss': /\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}(?:am|pm)?$/,
     'mm/dd/yyyy': /\d{2}\/\d{2}\/\d{4}/,
     'yyyy/mm/dd': /\d{4}\/\d{2}\/\d{2}/,
-    'mm/dd/yyyy hh:mm': /\d{2}\/\d{2}\/\d{4} \d{1,2}:\d{2}(?:am|pm)/,
-    'yyyy/mm/dd hh:mm': /\d{4}\/\d{2}\/\d{2} \d{1,2}:\d{2}(?:am|pm)/,
-    'mm/dd/yyyy hh:mm:ss': /\d{2}\/\d{2}\/\d{4} \d{1,2}:\d{2}:\d{2}(?:am|pm)/,
-    'yyyy/mm/dd hh:mm:ss': /\d{4}\/\d{2}\/\d{2} \d{1,2}:\d{2}:\d{2}(?:am|pm)/,
-    'hh:mm': /\d{1,2}:\d{2}(?:am|pm)/,
-    'hh:mm:ss': /\d{1,2}:\d{2}:\d{2}(?:am|pm)/,
-    'hh:mm:ss.ms': /\d{1,2}:\d{2}:\d{2}\.\d{3}(?:am|pm)/,
+    'mm/dd/yyyy hh:mm': /\d{2}\/\d{2}\/\d{4} \d{1,2}:\d{2}(?:am|pm)?$/,
+    'yyyy/mm/dd hh:mm': /\d{4}\/\d{2}\/\d{2} \d{1,2}:\d{2}(?:am|pm)?$/,
+    'mm/dd/yyyy hh:mm:ss': /\d{2}\/\d{2}\/\d{4} \d{1,2}:\d{2}:\d{2}(?:am|pm)?$/,
+    'yyyy/mm/dd hh:mm:ss': /\d{4}\/\d{2}\/\d{2} \d{1,2}:\d{2}:\d{2}(?:am|pm)?$/,
+    'hh:mm': /\d{1,2}:\d{2}(?:am|pm)?$/,
+    'hh:mm:ss': /\d{1,2}:\d{2}:\d{2}(?:am|pm)?$/,
+    'hh:mm:ss.ms': /\d{1,2}:\d{2}:\d{2}\.\d{3}(?:am|pm)?$/
 }
 
 window.exportMappings = {
@@ -194,6 +195,17 @@ window.ordinalChoices = {
     seventh: 6,
     eighth: 7,
     ninth: 8,
+    tenth: 9,
+    eleventh: 10,
+    twelfth: 11,
+    thirteenth: 12,
+    fourteenth: 13,
+    fifteenth: 14,
+    sixteenth: 15,
+    seventeenth: 16,
+    eighteenth: 17,
+    nineteenth: 18,
+    twentieth: 19,
     last: -1
 }
 
@@ -225,10 +237,18 @@ window.onlineDesignerFieldIcons = {
     'Copy' : `img[src*=copy]`,
     'Move' : `img[src*=move]`,
     'Stop' : 'img[src*=stop]',
-    'Delete Field': `img[src*=cross]`
+    'Delete Field': `img[src*=cross]`,
+    'Delete': `img[src*=cross]`
 }
 
 window.participantListIcons = {
     'green checkmark' : `img[src*=circle_green_tick]`,
     'gray bubble': `img[src*=stop_gray]`
+}
+
+window.tableHtmlElements = {
+    '[icon]': { selector: 'img', condition: 'exist'},
+    '[button]': { selector: 'button', condition: 'exist'},
+    '[✓]': { selector: 'input[type=checkbox]:checked', condition: 'be.checked'},
+    '[ ]': { selector: 'input[type=checkbox]', condition: 'not.be.checked'},
 }
