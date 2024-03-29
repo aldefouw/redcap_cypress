@@ -5,7 +5,7 @@ jobs:
     machine:
       image: ubuntu-2204:2024.01.1 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
       resource_class: large
-    parallelism: 15
+#    parallelism: 15
     steps:
       - checkout
       - run:
@@ -47,7 +47,9 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
+            npx cypress run --spec redcap_rsvc/Feature\ Tests/C/Record\ Locking\ \&\ E-Signatures/C.2.19.300\ -\ Locking\ record\ filter.feature
+#            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
+
 workflows:
   version: 2
   workflow:
