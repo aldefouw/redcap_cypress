@@ -55,25 +55,26 @@ window.tableMappings = {
     'codebook' : 'table#codebook-table',
     'import data display' : 'table#comptable',
     'participant list' : ['div#partlist_outerdiv table', 'table#table-participant_table'],
-    'user rights' : ['div#user_rights_roles_table table', 'table#table-user_rights_roles_table']
+    'user rights' : ['div#user_rights_roles_table table', 'table#table-user_rights_roles_table'], 
+    'record locking' : 'table#part11_forms'
 }
 
 window.dateFormats = {
     'mm-dd-yyyy': /\d{2}-\d{2}-\d{4}/,
     'yyyy-mm-dd': /\d{4}-\d{2}-\d{2}/,
-    'mm-dd-yyyy hh:mm': /\d{2}-\d{2}-\d{4} \d{1,2}:\d{2}(?:am|pm)?$/,
-    'yyyy-mm-dd hh:mm': /\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}(?:am|pm)?$/,
-    'mm-dd-yyyy hh:mm:ss': /\d{2}-\d{2}-\d{4} \d{1,2}:\d{2}:\d{2}(?:am|pm)?$/,
-    'yyyy-mm-dd hh:mm:ss': /\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}(?:am|pm)?$/,
+    'mm-dd-yyyy hh:mm': /\d{2}-\d{2}-\d{4} \d{1,2}:\d{2}(?:am|pm)?/,
+    'yyyy-mm-dd hh:mm': /\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}(?:am|pm)?/,
+    'mm-dd-yyyy hh:mm:ss': /\d{2}-\d{2}-\d{4} \d{1,2}:\d{2}:\d{2}(?:am|pm)?/,
+    'yyyy-mm-dd hh:mm:ss': /\d{4}-\d{2}-\d{2} \d{1,2}:\d{2}:\d{2}(?:am|pm)?/,
     'mm/dd/yyyy': /\d{2}\/\d{2}\/\d{4}/,
     'yyyy/mm/dd': /\d{4}\/\d{2}\/\d{2}/,
-    'mm/dd/yyyy hh:mm': /\d{2}\/\d{2}\/\d{4} \d{1,2}:\d{2}(?:am|pm)?$/,
-    'yyyy/mm/dd hh:mm': /\d{4}\/\d{2}\/\d{2} \d{1,2}:\d{2}(?:am|pm)?$/,
-    'mm/dd/yyyy hh:mm:ss': /\d{2}\/\d{2}\/\d{4} \d{1,2}:\d{2}:\d{2}(?:am|pm)?$/,
-    'yyyy/mm/dd hh:mm:ss': /\d{4}\/\d{2}\/\d{2} \d{1,2}:\d{2}:\d{2}(?:am|pm)?$/,
-    'hh:mm': /\d{1,2}:\d{2}(?:am|pm)?$/,
-    'hh:mm:ss': /\d{1,2}:\d{2}:\d{2}(?:am|pm)?$/,
-    'hh:mm:ss.ms': /\d{1,2}:\d{2}:\d{2}\.\d{3}(?:am|pm)?$/
+    'mm/dd/yyyy hh:mm': /\d{2}\/\d{2}\/\d{4} \d{1,2}:\d{2}(?:am|pm)?/,
+    'yyyy/mm/dd hh:mm': /\d{4}\/\d{2}\/\d{2} \d{1,2}:\d{2}(?:am|pm)?/,
+    'mm/dd/yyyy hh:mm:ss': /\d{2}\/\d{2}\/\d{4} \d{1,2}:\d{2}:\d{2}(?:am|pm)?/,
+    'yyyy/mm/dd hh:mm:ss': /\d{4}\/\d{2}\/\d{2} \d{1,2}:\d{2}:\d{2}(?:am|pm)?/,
+    'hh:mm': /\d{1,2}:\d{2}(?:am|pm)?/,
+    'hh:mm:ss': /\d{1,2}:\d{2}:\d{2}(?:am|pm)?/,
+    'hh:mm:ss.ms': /\d{1,2}:\d{2}:\d{2}\.\d{3}(?:am|pm)?/
 }
 
 window.exportMappings = {
@@ -228,7 +229,9 @@ window.recordStatusIcons = {
 
 window.fileRepoIcons = {
     'File Share' : `i[class*=fa-arrow-up]`,
-    'Delete' : `i[class*=fa-times]`
+    'Restore' : `i[class*=fa-file-circle-plus]`,
+    'Delete' : `i[class*=fa-times]`,
+    'Delete Permanently' : `i[class*=fa-trash-can]`
 }
 
 window.onlineDesignerFieldIcons = {
@@ -248,7 +251,9 @@ window.participantListIcons = {
 
 window.tableHtmlElements = {
     '[icon]': { selector: 'img', condition: 'exist'},
-    '[button]': { selector: 'button', condition: 'exist'},
+    '[button]': { selector: 'button,input[type=button]', condition: 'exist'},
     '[✓]': { selector: 'input[type=checkbox]:checked', condition: 'be.checked'},
     '[ ]': { selector: 'input[type=checkbox]', condition: 'not.be.checked'},
+    '[text box]': { selector: 'textarea', condition: 'exist'},
+    '[lock icon]': { selector: 'img[src*=lock]', condition: 'exist' }
 }
