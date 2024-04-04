@@ -99,7 +99,7 @@ window.parameterTypes = {
     select: ['selected', 'unselected'],
     tableName: ['', ' of the User Rights table', ' of the Reports table', ' of the Participant List table'],
     timeType: ['seconds', 'second', 'minutes', 'minute'],
-    toDoRequestTypes: ['Move to prod', 'Approve draft changes', 'Copy project'],
+    toDoRequestTypes: ['Move to prod', 'Approve draft changes', 'Copy project', 'Delete project'],
     toDoTableIcons: [
         'process request',
         'get more information',
