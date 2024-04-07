@@ -1,11 +1,11 @@
 {
   "name": "redcap_cypress",
-  "version": "13.1.37",
+  "version": "13.7.15",
   "description": "This repository is a template to assist you in writing **automated tests for REDCap**.",
   "devDependencies": {
     "cypress": "^11.2.0",
-    "rctf": "git://github.com/aldefouw/rctf#v1.0.53",
-    "redcap_rsvc": "git://github.com/aldefouw/redcap_rsvc#v13.1.37",
+    "rctf": "git://github.com/aldefouw/rctf#v1.0.54",
+    "redcap_rsvc": "git://github.com/aldefouw/redcap_rsvc#v13.7.15",
     "documentation": "git://github.com/documentationjs/documentation#97e9361",
     "redcap_cypress_doc_theme": "git://github.com/aldefouw/redcap_cypress_doc_theme#bf84bfa"
   },
