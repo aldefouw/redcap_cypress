@@ -1,6 +1,6 @@
 version: 2.0
 
-jobs: 
+jobs:
   run-tests:
     machine:
       image: ubuntu-2204:2024.01.2 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
@@ -72,21 +72,21 @@ jobs:
           name: Debug Workspace Contents
           command: ls -l /home/circleci/project/coverage-report/
 
-    combine-reports:
-      docker:
-        - image: node:14
-      steps:
-        - attach_workspace:
-            at: /home/circleci/project/coverage-report/
-        - run:
-            name: Merge Clover XML reports
-            command: |
-              npm install -g clover-merge
-              cd /home/circleci/project/coverage-report
-              clover-merge merged-coverage-*.xml merged-coverage.xml
-        - store_artifacts:
-            path:
-              - merged-coverage.xml
+  combine-reports:
+    docker:
+      - image: node:14
+    steps:
+      - attach_workspace:
+          at: /home/circleci/project/coverage-report/
+      - run:
+          name: Merge Clover XML reports
+          command: |
+            npm install -g clover-merge
+            cd /home/circleci/project/coverage-report
+            clover-merge merged-coverage-*.xml merged-coverage.xml
+      - store_artifacts:
+          path:
+            - /home/circleci/project/coverage-report/merged-coverage.xml
 
 workflows:
   version: 2
@@ -97,5 +97,5 @@ workflows:
           context: REDCap Tests
       - combine-reports:
           context: Combine Reports
-          requires: 
+          requires:
             - run-tests
