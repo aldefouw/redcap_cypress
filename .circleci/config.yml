@@ -26,14 +26,19 @@ jobs:
           command: |
             cd /home/circleci/project/redcap_docker
             docker-compose up -d
-      # - run:
-      #     name: Wait for REDCap to be ready
-      #     command: |
-      #       dockerize -wait tcp://localhost:8080 -timeout 1m 
       - run:
           name: Install composer dependencies
           command: |
             docker exec -it redcap_docker-app-1 sh -c "cd /var/www/html/ && composer install"
+            cd /home/circleci/project/redcap_docker
+      - run:
+          name: Reload REDCap
+          command: |
+            docker-compose down && docker-compose up -d
+      - run:
+          name: Permissions on coverage files
+          command: |
+            docker exec -it redcap_docker-app-1 sh -c "chmod 777 /tmp/path/coverage"  
       - run:
           name: Change eDocs folder permissions
           command: |
