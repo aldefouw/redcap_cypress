@@ -33,7 +33,7 @@ jobs:
       - run:
           name: Install composer dependencies
           command: |
-            docker exec -it redcap_docker-app-1 sh -c "cd /var/www/html/redcap_v14.0.6 && composer install"
+            docker exec -it redcap_docker-app-1 sh -c "cd /var/www/html/ && composer install"
       - run:
           name: Change eDocs folder permissions
           command: |
