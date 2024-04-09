@@ -28,10 +28,12 @@ jobs:
             docker-compose up -d
        - run:
           name: Wait for REDCap to be ready
-          command: dockerize -wait tcp://localhost:8080 -timeout 1m 
+          command: |
+             dockerize -wait tcp://localhost:8080 -timeout 1m 
       - run:
           name: Install composer dependencies
-            docker exec -it redcap_docker-app-1 sh -c "cd /var/www/html/redcap_v14.0.6 && composer install"
+          command: |
+             docker exec -it redcap_docker-app-1 sh -c "cd /var/www/html/redcap_v14.0.6 && composer install"
       - run:
           name: Change eDocs folder permissions
           command: |
