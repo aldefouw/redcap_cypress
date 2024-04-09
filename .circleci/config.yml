@@ -71,9 +71,9 @@ jobs:
           name: Debug Workspace Contents
           command: ls -l /home/circleci/project/coverage-report/
       - persist_to_workspace:
-          root: /home/circleci/project/coverage-report/
+          root: .
           paths:
-            - /home/circleci/project/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml
+            - coverage-report
           
   combine-reports:
     docker:
@@ -88,8 +88,7 @@ jobs:
             cd /home/circleci/project/coverage-report
             clover-merge merged-coverage-*.xml merged-coverage.xml
       - store_artifacts:
-          path:
-            - /home/circleci/project/coverage-report/merged-coverage.xml
+          path: /home/circleci/project/coverage-report
 
 workflows:
   version: 2
