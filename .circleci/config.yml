@@ -72,6 +72,8 @@ jobs:
           command: ls -l /home/circleci/project/coverage-report/
       - persist_to_workspace:
           root: /home/circleci/project/coverage-report/
+          paths:
+            - /home/circleci/project/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml
           
   combine-reports:
     docker:
