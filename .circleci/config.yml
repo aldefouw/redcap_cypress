@@ -70,13 +70,13 @@ jobs:
       - persist_to_workspace:
           root: /home/circleci/project/coverage-report/
           paths:
-            - coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml
+            - /home/circleci/project/coverage-report//merged-coverage-${CIRCLE_NODE_INDEX}.xml
     merge-reports:
       docker:
         - image: node:14
       steps:
         - attach_workspace:
-            at: /home/circleci/project/
+            at: /home/circleci/project/coverage-report/
         - run:
             name: Merge Clover XML reports
             command: |
