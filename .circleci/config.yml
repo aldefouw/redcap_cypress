@@ -40,9 +40,10 @@ jobs:
           command: |
             docker exec -it redcap_docker-app-1 sh -c "chmod 777 /tmp/path/coverage"  
       - run:
-          name: Change eDocs folder permissions
+          name: Change eDocs & Temp folder permissions
           command: |
             sudo chmod 777 /home/circleci/project/edocs
+            sudo chmod 777 /home/circleci/project/tmp
       - run:
           name: Configure Cypress environment
           command: |
