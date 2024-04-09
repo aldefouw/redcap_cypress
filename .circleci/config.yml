@@ -5,6 +5,7 @@ jobs:
     machine:
       image: ubuntu-2204:2024.01.2 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
       resource_class: large
+    parallelism: 5
     steps:
       - checkout
       - run:
@@ -37,7 +38,7 @@ jobs:
       - run:
           name: Permissions on coverage files
           command: |
-            docker exec -it redcap_docker-app-1 sh -c "chmod 777 /tmp/path/coverage"  
+            docker exec -it redcap_docker-app-1 sh -c "chmod 777 /tmp/path/coverage"
       - run:
           name: Change eDocs & Temp folder permissions
           command: |
@@ -93,7 +94,6 @@ workflows:
   workflow:
     jobs:
       - run-tests:
-          parallelism: 5
           context: REDCap Tests
       - combine-reports:
           context: Combine Reports
