@@ -69,18 +69,18 @@ jobs:
       - persist_to_workspace:
           root: .  # Set the workspace root directory
           paths:
-            - coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml
+            - /home/circleci/project/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml
     merge-reports:
       docker:
         - image: node:14
       steps:
         - attach_workspace:
-            at: /
+            at: /home/circleci/project/
         - run:
             name: Merge Clover XML reports
             command: |
               npm install -g clover-merge
-              cd coverage-report
+              cd /home/circleci/project/coverage-report
               clover-merge merged-coverage-*.xml merged-coverage.xml
         - store_artifacts:
             path:
