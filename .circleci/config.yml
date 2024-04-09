@@ -30,10 +30,10 @@ jobs:
           name: Install composer dependencies
           command: |
             docker exec -it redcap_docker-app-1 sh -c "cd /var/www/html/ && composer install"
-            cd /home/circleci/project/redcap_docker
       - run:
           name: Reload REDCap
           command: |
+            cd /home/circleci/project/redcap_docker
             docker-compose down && docker-compose up -d
       - run:
           name: Permissions on coverage files
