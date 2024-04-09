@@ -67,9 +67,9 @@ jobs:
           command: |
             docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --xml /tmp/path/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
       - persist_to_workspace:
-          root: .  # Set the workspace root directory
+          root: /home/circleci/project  # Set the workspace root directory
           paths:
-            - /home/circleci/project/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml
+            - coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml
     merge-reports:
       docker:
         - image: node:14
