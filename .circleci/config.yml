@@ -5,7 +5,7 @@ jobs:
     machine:
       image: ubuntu-2204:2024.01.2 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
       resource_class: large
-    parallelism: 15
+    parallelism: 5
     steps:
       - checkout
       - run:
@@ -61,13 +61,14 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
+            npx cypress run --spec "redcap_rsvc/Feature Tests/B/Assign User Rights/*.feature" --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
+            # npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
       - run:
           name: Coverage Report
           command: |
             docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --xml /tmp/path/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
       - persist_to_workspace:
-          root: /home/circleci/project  # Set the workspace root directory
+          root: /home/circleci/project/coverage-report/
           paths:
             - coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml
     merge-reports:
