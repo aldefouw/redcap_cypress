@@ -48,6 +48,7 @@ jobs:
           name: Run Tests
           command: |
             npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
+
 workflows:
   version: 2
   workflow:
