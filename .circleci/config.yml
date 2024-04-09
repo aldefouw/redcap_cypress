@@ -1,9 +1,9 @@
-version: 2.0
+version: 2.1
 
 jobs:
   build:
     machine:
-      image: ubuntu-2204:2024.01.1 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
+      image: ubuntu-2204:2024.01.2 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
       resource_class: large
     parallelism: 15
     steps:
@@ -16,11 +16,11 @@ jobs:
       - run:
           name: Build the REDCap Image
           command: |
-            git clone --branch v11.1.29 https://github.com/aldefouw/redcap_docker
+            git clone --branch xdebug https://github.com/aldefouw/redcap_docker
       - run:
           name: Get REDCap Source
           command: |
-            git clone --branch redcap-cypress https://github.com/aldefouw/redcap_source www
+            git clone --branch redcap-cypress https://github.com/aldefouw/redcap_source
       - run:
           name: Start Docker REDCap Container
           command: |
@@ -48,6 +48,29 @@ jobs:
           name: Run Tests
           command: |
             npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
+      - run:
+          name: Coverage Report
+          command: |
+            docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --xml /tmp/path/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
+      - persist_to_workspace:
+          root: .  # Set the workspace root directory
+          paths:
+            - coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml
+    merge-reports:
+      docker:
+        - image: node:14
+      steps:
+        - attach_workspace:
+            at: /
+        - run:
+            name: Merge Clover XML reports
+            command: |
+              npm install -g clover-merge
+              cd coverage-report
+              clover-merge merged-coverage-*.xml merged-coverage.xml
+        - store_artifacts:
+            path:
+              - merged-coverage.xml
 
 workflows:
   version: 2
