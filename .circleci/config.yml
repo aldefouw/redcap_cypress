@@ -69,8 +69,7 @@ jobs:
             docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --xml /tmp/path/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
       - persist_to_workspace:
           root: /home/circleci/project/coverage-report/
-          paths:
-            - /home/circleci/project/coverage-report//merged-coverage-${CIRCLE_NODE_INDEX}.xml
+
     merge-reports:
       docker:
         - image: node:14
