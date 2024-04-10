@@ -77,7 +77,7 @@ jobs:
           
   combine-reports:
     docker:
-      - image: circleci/php:7.4-node-browsers
+      - image: circleci/php:8.3
     steps:
       - checkout
       - run:
