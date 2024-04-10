@@ -80,17 +80,18 @@ jobs:
       - image: circleci/php:7.4-node-browsers
     steps:
       - checkout
-      
-      # Install PHPUnit
       - run:
           name: Install PHPUnit
           command: composer require --dev phpunit/phpunit
-
-      # Merge Clover XML reports
+      - run:
+          name: Install PHPCov
+          command: |
+            wget https://phar.phpunit.de/phpcov.phar
+            php phpcov.phar --version
       - run:
           name: Merge Clover XML reports
           command: |
-            ./vendor/bin/phpcov merge --clover /tmp/merged-clover.xml /home/circleci/project/coverage-report/*.xml
+            php phpcov.phar merge --clover /tmp/merged-clover.xml /home/circleci/project/coverage-report/*.xml
       - store_artifacts:
           path: /tmp/
 
