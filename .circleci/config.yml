@@ -78,7 +78,7 @@ jobs:
           
   combine-reports:
     docker:
-      - image: cimg/php:7.4.33-node
+      - image: d0x2f/clover-merge:latest
     steps:
       - checkout
       - attach_workspace:
@@ -86,12 +86,28 @@ jobs:
       - run: 
           name: Clover Merge
           command: |
-            git clone https://github.com/d0x2f/CloverMerge.git
-            cd CloverMerge
-            composer install --ignore-platform-reqs
-            ./clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
+            clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
       - store_artifacts:
           path: /home/circleci/project/coverage-report
+  
+  # combine-reports:
+  #   docker:
+  #     - image: cimg/php:7.4.33-node
+  #   steps:
+  #     - checkout
+  #     - attach_workspace:
+  #         at: /home/circleci/project/
+  #     - run: 
+  #         name: Clover Merge
+  #         command: |
+  #           git clone https://github.com/d0x2f/CloverMerge.git
+  #           cd CloverMerge
+  #           composer install --ignore-platform-reqs
+  #           ./clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
+  #     - store_artifacts:
+  #         path: /home/circleci/project/coverage-report
+
+          
       # - run:
       #     name: Install PHPUnit
       #     command: composer require --dev phpunit/phpunit
