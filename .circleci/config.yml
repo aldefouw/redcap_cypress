@@ -78,7 +78,7 @@ jobs:
           
   combine-reports:
     docker:
-      - image: cimg/php:8.3.5-node
+      - image: cimg/php:7.4.33-node
     steps:
       - checkout
       - attach_workspace:
