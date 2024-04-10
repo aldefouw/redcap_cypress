@@ -90,9 +90,7 @@ jobs:
             composer install
             ./clover-merge -o /tmp/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
       - store_artifacts:
-          root: .
-          paths:
-          - coverage-report     
+          path: /home/circleci/project/coverage-report
       # - run:
       #     name: Install PHPUnit
       #     command: composer require --dev phpunit/phpunit
