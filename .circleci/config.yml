@@ -88,8 +88,9 @@ jobs:
           command: |
             git clone https://github.com/d0x2f/CloverMerge.git
             cd CloverMerge
+            composer update
             composer install
-            ./clover-merge -o /tmp/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
+            ./clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
       - store_artifacts:
           path: /home/circleci/project/coverage-report
       # - run:
