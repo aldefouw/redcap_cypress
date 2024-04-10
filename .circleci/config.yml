@@ -96,7 +96,8 @@ jobs:
       - run:
           name: Merge Clover XML reports
           command: |
-            php phpcov.phar merge --clover /tmp/merged-clover.xml /home/circleci/project/coverage-report/
+            php phpcov.phar merge --clover /tmp/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
+
       - store_artifacts:
           path: /tmp/
 
