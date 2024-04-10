@@ -89,10 +89,12 @@ jobs:
           command: |
             wget https://phar.phpunit.de/phpcov.phar
             php phpcov.phar --version
+            pwd
+            ls -l /home/circleci/project/coverage-report/
       - run:
           name: Merge Clover XML reports
           command: |
-            php phpcov.phar merge --clover /tmp/merged-clover.xml /home/circleci/project/coverage-report/*.xml
+            php phpcov.phar merge --clover /tmp/merged-clover.xml /home/circleci/project/coverage-report/
       - store_artifacts:
           path: /tmp/
 
