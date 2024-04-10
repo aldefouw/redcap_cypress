@@ -64,10 +64,10 @@ jobs:
             npx cypress run --spec "redcap_rsvc/Feature Tests/B/Export Data/B.5.21.300 - Export All Fields.feature" --record --key $RECORD_KEY --group core-tests --browser chrome
             # npx cypress run --spec "redcap_rsvc/Feature Tests/B/Assign User Rights/*.feature" --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
             # npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
-      - run:
-          name: Coverage Report
-          command: |
-            docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --xml /tmp/path/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
+      # - run:
+      #     name: Coverage Report
+      #     command: |
+      #       docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --xml /tmp/path/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
       - run:
           name: Debug Workspace Contents
           command: ls -l /home/circleci/project/coverage-report/
@@ -75,6 +75,8 @@ jobs:
           root: .
           paths:
             - coverage-report
+      - store_artifacts:
+          path: /home/circleci/project/coverage-report
           
   combine-reports:
     docker:
@@ -90,7 +92,7 @@ jobs:
       - run: 
           name: Clover Merge
           command: |
-            clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
+            ./clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
       - store_artifacts:
           path: /home/circleci/project/coverage-report
   
