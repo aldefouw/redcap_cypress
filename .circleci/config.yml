@@ -70,13 +70,13 @@ jobs:
       #       docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --xml /tmp/path/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
       - run:
           name: Debug Workspace Contents
-          command: ls -l /home/circleci/project/coverage-report/
+          command: ls -l /home/circleci/project/coverage
       - persist_to_workspace:
           root: .
           paths:
-            - coverage-report
+            - coverage
       - store_artifacts:
-          path: /home/circleci/project/coverage-report
+          path: /home/circleci/project/coverage
           
   combine-reports:
     docker:
@@ -92,9 +92,9 @@ jobs:
       - run: 
           name: Clover Merge
           command: |
-            ./clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
+            ./clover-merge -o /home/circleci/project/coverage/merged-clover.xml $(ls /home/circleci/project/coverage/*.xml)
       - store_artifacts:
-          path: /home/circleci/project/coverage-report
+          path: /home/circleci/project/coverage
   
   # combine-reports:
   #   docker:
