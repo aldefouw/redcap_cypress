@@ -84,6 +84,10 @@ jobs:
       - attach_workspace:
           at: /home/circleci/project/
       - run: 
+        name: Install Bash
+        command: |
+           apk add --no-cache bash
+      - run: 
           name: Clover Merge
           command: |
             clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
