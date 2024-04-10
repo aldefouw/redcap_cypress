@@ -89,6 +89,10 @@ jobs:
               git clone https://github.com/d0x2f/CloverMerge.git
               composer install
               ./clover-merge -o /tmp/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
+        - store_artifacts:
+          root: .
+          paths:
+            - coverage-report        
       # - run:
       #     name: Install PHPUnit
       #     command: composer require --dev phpunit/phpunit
@@ -104,10 +108,7 @@ jobs:
       #     command: |
       #       php phpcov.phar merge --clover /tmp/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
 
-      - store_artifacts:
-          root: .
-          paths:
-            - coverage-report
+
 
     # docker:
     #   - image: node:14
