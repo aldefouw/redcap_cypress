@@ -3,7 +3,7 @@ version: 2.0
 orbs:
   codecov: codecov/codecov@4.0.1
 
-workflows:
+workflow:
   version: 2
   workflows:
     jobs:
@@ -13,13 +13,11 @@ workflows:
           context: Combine Reports
           requires:
             - run-tests
-    upload-to-codecov:
-      requires:
-              - combine-reports
-      jobs:
-        - checkout 
-        - codecov/upload 
-
+      - upload-to-codecov:
+          context: Upload to CodeCov
+          requires:
+            - combine-reports
+            
 jobs:
   run-tests:
     machine:
@@ -116,3 +114,10 @@ jobs:
             ./clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
       - store_artifacts:
           path: /home/circleci/project
+
+   upload-to-codecov:
+     steps:
+       - checkout
+       - attach_workspace:
+          at: /home/circleci/project/coverage-report
+       - codecov/upload       
