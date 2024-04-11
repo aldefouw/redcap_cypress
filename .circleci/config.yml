@@ -1,5 +1,25 @@
 version: 2.0
 
+orbs:
+  codecov: codecov/codecov@4.0.1
+
+workflows:
+  version: 2
+  workflows:
+    jobs:
+      - run-tests:
+          context: REDCap Tests
+      - combine-reports:
+          context: Combine Reports
+          requires:
+            - run-tests
+    upload-to-codecov:
+      requires:
+              - combine-reports
+      jobs:
+        - checkout 
+        - codecov/upload 
+
 jobs:
   run-tests:
     machine:
@@ -96,64 +116,3 @@ jobs:
             ./clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
       - store_artifacts:
           path: /home/circleci/project
-  
-  # combine-reports:
-  #   docker:
-  #     - image: cimg/php:7.4.33-node
-  #   steps:
-  #     - checkout
-  #     - attach_workspace:
-  #         at: /home/circleci/project/
-  #     - run: 
-  #         name: Clover Merge
-  #         command: |
-  #           git clone https://github.com/d0x2f/CloverMerge.git
-  #           cd CloverMerge
-  #           composer install --ignore-platform-reqs
-  #           ./clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
-  #     - store_artifacts:
-  #         path: /home/circleci/project/coverage-report
-
-          
-      # - run:
-      #     name: Install PHPUnit
-      #     command: composer require --dev phpunit/phpunit
-      # - run:
-      #     name: Install PHPCov
-      #     command: |
-      #       wget https://phar.phpunit.de/phpcov.phar
-      #       php phpcov.phar --version
-      #       pwd
-      #       ls -l /home/circleci/project/coverage-report/
-      # - run:
-      #     name: Merge Clover XML reports
-      #     command: |
-      #       php phpcov.phar merge --clover /tmp/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
-
-
-
-    # docker:
-    #   - image: node:14
-    # steps:
-    #   - attach_workspace:
-    #       at: /home/circleci/project/coverage-report/
-    #   - run:
-    #       name: Merge Clover XML reports
-    #       command: |
-    #         ls -la /home/circleci/project/coverage-report
-    #         npm install -g clover-merge
-    #         cd /home/circleci/project/coverage-report
-    #         clover-merge merged-coverage-*.xml merged-coverage.xml
-    #   - store_artifacts:
-    #       path: /home/circleci/project/coverage-report
-
-workflows:
-  version: 2
-  workflow:
-    jobs:
-      - run-tests:
-          context: REDCap Tests
-      - combine-reports:
-          context: Combine Reports
-          requires:
-            - run-tests
