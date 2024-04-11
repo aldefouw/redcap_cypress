@@ -92,6 +92,7 @@ jobs:
       - run: 
           name: Clover Merge
           command: |
+            cd /
             ./clover-merge -o /home/circleci/project/coverage/merged-clover.xml $(ls /home/circleci/project/coverage/*.xml)
       - store_artifacts:
           path: /home/circleci/project
