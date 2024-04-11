@@ -115,6 +115,10 @@ jobs:
           command: |
             cd /
             ./clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
+      - run:
+          name: Move the Merged Clover file
+          mv /home/circleci/project/coverage-report/merged-clover.xml /tmp/merged-clover.xml
+          cd /tmp/
       - codecov/upload       
       - store_artifacts:
           path: /home/circleci/project
