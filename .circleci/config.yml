@@ -3,7 +3,7 @@ version: 2.0
 orbs:
   codecov: codecov/codecov@4.0.1
 
-workflow:
+workflows:
   version: 2
   workflows:
     jobs:
@@ -115,9 +115,9 @@ jobs:
       - store_artifacts:
           path: /home/circleci/project
 
-   upload-to-codecov:
-     steps:
-       - checkout
-       - attach_workspace:
-          at: /home/circleci/project/coverage-report
-       - codecov/upload       
+  upload-to-codecov:
+   steps:
+     - checkout
+     - attach_workspace:
+        at: /home/circleci/project/coverage-report
+     - codecov/upload      
