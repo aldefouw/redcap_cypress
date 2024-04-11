@@ -61,22 +61,22 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            npx cypress run --spec "redcap_rsvc/Feature Tests/B/Export Data/B.5.21.300 - Export All Fields.feature" --record --key $RECORD_KEY --group core-tests --browser chrome
+            # npx cypress run --spec "redcap_rsvc/Feature Tests/B/Export Data/B.5.21.300 - Export All Fields.feature" --record --key $RECORD_KEY --group core-tests --browser chrome
             # npx cypress run --spec "redcap_rsvc/Feature Tests/B/Assign User Rights/*.feature" --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
-            # npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
+            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
       - run:
           name: Coverage Report
           command: |
-            docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --clover /tmp/path/coverage/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
+            docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --clover /tmp/path/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
       - run:
           name: Debug Workspace Contents
-          command: ls -l /home/circleci/project/coverage
+          command: ls -l /home/circleci/project/coverage-report
       - persist_to_workspace:
           root: .
           paths:
-            - coverage
+            - coverage-report
       - store_artifacts:
-          path: /home/circleci/project/coverage
+          path: /home/circleci/project/coverage-report
           
   combine-reports:
     docker:
@@ -93,7 +93,7 @@ jobs:
           name: Clover Merge
           command: |
             cd /
-            ./clover-merge -o /home/circleci/project/coverage/merged-clover.xml $(ls /home/circleci/project/coverage/*.xml)
+            ./clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
       - store_artifacts:
           path: /home/circleci/project
   
