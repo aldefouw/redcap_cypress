@@ -13,17 +13,17 @@ workflows:
           context: Combine Reports
           requires:
             - run-tests
-      - upload-to-codecov:
-          context: Upload to CodeCov
-          requires:
-            - combine-reports
+      # - upload-to-codecov:
+      #     context: Upload to CodeCov
+      #     requires:
+      #       - combine-reports
             
 jobs:
   run-tests:
     machine:
       image: ubuntu-2204:2024.01.2 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
       resource_class: large
-    parallelism: 15
+    parallelism: 1
     steps:
       - checkout
       - run:
@@ -79,9 +79,9 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            # npx cypress run --spec "redcap_rsvc/Feature Tests/B/Export Data/B.5.21.300 - Export All Fields.feature" --record --key $RECORD_KEY --group core-tests --browser chrome
+            npx cypress run --spec "redcap_rsvc/Feature Tests/B/Export Data/B.5.21.300 - Export All Fields.feature" --record --key $RECORD_KEY --group core-tests --browser chrome
             # npx cypress run --spec "redcap_rsvc/Feature Tests/B/Assign User Rights/*.feature" --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
-            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
+            # npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
       - run:
           name: Coverage Report
           command: |
@@ -112,12 +112,13 @@ jobs:
           command: |
             cd /
             ./clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
+      - codecov/upload       
       - store_artifacts:
           path: /home/circleci/project
 
-  upload-to-codecov:
-   steps:
-     - checkout
-     - attach_workspace:
-        at: /home/circleci/project/coverage-report
-     - codecov/upload      
+  # upload-to-codecov:
+  #  steps:
+  #    - checkout
+  #    - attach_workspace:
+  #       at: /home/circleci/project/coverage-report
+  #    - codecov/upload      
