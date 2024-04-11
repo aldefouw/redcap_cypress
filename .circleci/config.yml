@@ -104,9 +104,12 @@ jobs:
       - attach_workspace:
           at: /home/circleci/project/
       - run: 
-           name: Install Bash
+           name: Install Bash & GPG
            command: |
              apk add --no-cache bash
+             apk update
+             apk add gnupg
+             gpg --version
       - run: 
           name: Clover Merge
           command: |
