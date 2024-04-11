@@ -67,7 +67,7 @@ jobs:
       - run:
           name: Coverage Report
           command: |
-            docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --format clover /tmp/path/coverage/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
+            docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --clover /tmp/path/coverage/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
       - run:
           name: Debug Workspace Contents
           command: ls -l /home/circleci/project/coverage
