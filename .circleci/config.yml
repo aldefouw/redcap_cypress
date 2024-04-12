@@ -23,7 +23,7 @@ jobs:
     machine:
       image: ubuntu-2204:2024.01.2 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
       resource_class: large
-    parallelism: 15
+    parallelism: 24
     steps:
       - checkout
       - run:
@@ -79,8 +79,6 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            # npx cypress run --spec "redcap_rsvc/Feature Tests/B/Export Data/B.5.21.300 - Export All Fields.feature" --record --key $RECORD_KEY --group core-tests --browser chrome
-            # npx cypress run --spec "redcap_rsvc/Feature Tests/B/Assign User Rights/*.feature" --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
             npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
       - run:
           name: Coverage Report
@@ -93,8 +91,6 @@ jobs:
           root: .
           paths:
             - coverage-report
-      # - store_artifacts:
-      #     path: /home/circleci/project/coverage-report
           
   combine-reports:
     docker:
@@ -133,13 +129,10 @@ jobs:
             mkdir -p /home/circleci/project/coverage
             mv /home/circleci/project/coverage-report/coverage-report/merged-clover.xml /home/circleci/project/coverage/coverage.xml
             chmod 777 /home/circleci/project/coverage/coverage.xml
-
-      # Ensure the coverage report file is available before uploading
       - run:
           name: Check Coverage Report File
           command: |
             ls /home/circleci/project/coverage/coverage.xml
-      # Upload coverage report to Codecov
       - run:
           name: Upload to CodeCov
           command: |
