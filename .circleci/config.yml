@@ -138,7 +138,6 @@ jobs:
             mv /home/circleci/project/coverage-report/coverage-report/merged-clover.xml /home/circleci/project/coverage/merged-clover.xml
             cd /home/circleci/project/coverage
       - codecov/upload   
-          token: $CODECOV_TOKEN
           file: /home/circleci/project/coverage/merged-clover.xml
       - store_artifacts:
           path: /home/circleci/project/coverage
