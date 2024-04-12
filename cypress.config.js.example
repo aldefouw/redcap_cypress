@@ -26,7 +26,7 @@ module.exports = defineConfig({
       return config;
     },
     baseUrl: 'http://localhost:8080',
-    specPattern: ['cypress/features/*.feature', 'redcap_rsvc/*/[B]/*/*.feature'],
+    specPattern: ['cypress/features/*.feature', 'redcap_rsvc/*/[ABC]/*/*.feature'],
     experimentalSessionAndOrigin: false
   },
 })
