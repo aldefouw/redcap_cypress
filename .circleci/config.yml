@@ -123,7 +123,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - coverage-report
+            - home/circleci/project/coverage-report
   upload-to-codecov:
     docker:
       - image: python:3.11
