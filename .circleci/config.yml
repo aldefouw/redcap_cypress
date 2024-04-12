@@ -121,7 +121,7 @@ jobs:
       #        mv /home/circleci/project/coverage-report/merged-clover.xml /tmp/merged-clover.xml
       #        cd /tmp/
       - persist_to_workspace:
-          root: .
+          root: /home/circleci/project
           paths:
             - coverage-report
   upload-to-codecov:
