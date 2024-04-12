@@ -121,9 +121,8 @@ jobs:
       #        mv /home/circleci/project/coverage-report/merged-clover.xml /tmp/merged-clover.xml
       #        cd /tmp/
       - persist_to_workspace:
-          root: .
           paths:
-            - home/circleci/project/coverage-report
+            - /home/circleci/project/coverage-report
   upload-to-codecov:
     docker:
       - image: python:3.11
