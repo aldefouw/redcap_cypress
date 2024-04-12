@@ -132,14 +132,27 @@ jobs:
       - attach_workspace:
           at: /home/circleci/project/coverage-report
       - run:
-          name: Change to Report Folder
-          command: |    
-            mkdir /home/circleci/project/coverage
+          name: Move and Rename Coverage Report File
+          command: |
+            mkdir -p /home/circleci/project/coverage
             mv /home/circleci/project/coverage-report/coverage-report/merged-clover.xml /home/circleci/project/coverage/coverage.xml
-            cd /home/circleci/project/coverage
-            chmod 777 coverage.xml
-      - codecov/upload:  
-         file: /home/circleci/project/coverage/coverage.xml
+            chmod 777 /home/circleci/project/coverage/coverage.xml
+
+      # Wait for file operations to complete
+      - run:
+          name: Wait for File Operations
+          command: sleep 3  # Adjust the wait time as needed
+
+      # Ensure the coverage report file is available before uploading
+      - run:
+          name: Check Coverage Report File
+          command: ls /home/circleci/project/coverage/coverage.xml
+
+      # Upload coverage report to Codecov
+      - codecov/upload:
+          file: /home/circleci/project/coverage/coverage.xml
+
+      # Store coverage report files as artifacts
       - store_artifacts:
           path: /home/circleci/project/coverage
 
