@@ -13,10 +13,10 @@ workflows:
           context: Combine Reports
           requires:
             - run-tests
-      # - upload-to-codecov:
-      #     context: Upload to CodeCov
-      #     requires:
-      #       - combine-reports
+      - upload-to-codecov:
+          context: Upload to CodeCov
+          requires:
+            - combine-reports
             
 jobs:
   run-tests:
@@ -115,14 +115,29 @@ jobs:
           command: |
             cd /
             ./clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
-      - run:
-          name: Move the Merged Clover file
-          command: |
-             mv /home/circleci/project/coverage-report/merged-clover.xml /tmp/merged-clover.xml
-             cd /tmp/
+      # - run:
+      #     name: Move the Merged Clover file
+      #     command: |
+      #        mv /home/circleci/project/coverage-report/merged-clover.xml /tmp/merged-clover.xml
+      #        cd /tmp/
+      - store_artifacts:
+          path: /home/circleci/project/coverage-report
+  upload-to-codecov:
+    docker:
+      - image: python:3.11-slim
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /home/circleci/project/coverage-report
+     - run:
+        name: Change to Report Folder
+        command: |    
+          mkdir /home/circleci/project/coverage
+          mv /home/circleci/project/coverage-report/merged-clover.xml /home/circleci/project/coverage/merged-clover.xml
+          cd /home/circleci/project/coverage
       - codecov/upload       
       - store_artifacts:
-          path: /home/circleci/project
+          path: /home/circleci/project/coverage-report
 
   # upload-to-codecov:
   #  steps:
