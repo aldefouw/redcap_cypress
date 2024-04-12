@@ -141,17 +141,19 @@ jobs:
       # Ensure the coverage report file is available before uploading
       - run:
           name: Check Coverage Report File
-          command: ls /home/circleci/project/coverage/coverage.xml
+          command: |
+            ls /home/circleci/project/coverage/coverage.xml
 
       # Upload coverage report to Codecov
       - run:
           name: Upload to CodeCov
           command: |
-              wget https://cli.codecov.io/latest/linux/codecov
-              chmod 777 codecov
-              ./codecov  create-commit -t $CODECOV_TOKEN --git-service github
-              ./codecov  create-report -t $CODECOV_TOKEN --git-service github  
-              ./codecov  do-upload -t $CODECOV_TOKEN --git-service github -n "$CIRCLE_BUILD_NUM" -f /home/circleci/project/coverage/coverage.xml
+            cd /home/circleci/project/coverage/
+            wget https://cli.codecov.io/latest/linux/codecov
+            chmod 777 codecov
+            ./codecov  create-commit -t $CODECOV_TOKEN --git-service github
+            ./codecov  create-report -t $CODECOV_TOKEN --git-service github  
+            ./codecov  do-upload -t $CODECOV_TOKEN --git-service github -n "$CIRCLE_BUILD_NUM" -f /home/circleci/project/coverage/coverage.xml
 
       # # Store coverage report files as artifacts
       - store_artifacts:
