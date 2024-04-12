@@ -11,8 +11,6 @@ workflows:
           context: REDCap Tests
       - combine-reports:
           context: Combine Reports
-          requires:
-            - run-tests
       - upload-to-codecov:
           context: Upload to CodeCov
           requires:
