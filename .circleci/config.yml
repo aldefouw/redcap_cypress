@@ -121,10 +121,10 @@ jobs:
       #        mv /home/circleci/project/coverage-report/merged-clover.xml /tmp/merged-clover.xml
       #        cd /tmp/
       - store_artifacts:
-          path: /home/circleci/project/coverage-report
+          path: /home/circleci/project/
   upload-to-codecov:
     docker:
-      - image: python:3.11-slim
+      - image: python:3.11
     steps:
       - checkout
       - attach_workspace:
