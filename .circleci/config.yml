@@ -23,7 +23,7 @@ jobs:
     machine:
       image: ubuntu-2204:2024.01.2 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
       resource_class: large
-    parallelism: 1
+    parallelism: 15
     steps:
       - checkout
       - run:
@@ -79,9 +79,9 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            npx cypress run --spec "redcap_rsvc/Feature Tests/B/Export Data/B.5.21.300 - Export All Fields.feature" --record --key $RECORD_KEY --group core-tests --browser chrome
+            # npx cypress run --spec "redcap_rsvc/Feature Tests/B/Export Data/B.5.21.300 - Export All Fields.feature" --record --key $RECORD_KEY --group core-tests --browser chrome
             # npx cypress run --spec "redcap_rsvc/Feature Tests/B/Assign User Rights/*.feature" --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
-            # npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
+            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
       - run:
           name: Coverage Report
           command: |
@@ -139,29 +139,13 @@ jobs:
           name: Check Coverage Report File
           command: |
             ls /home/circleci/project/coverage/coverage.xml
-            cd /home/circleci/project/coverage/
-
-      - codecov/upload:
-          file: /home/circleci/project/coverage/coverage.xml
-
       # Upload coverage report to Codecov
-      # - run:
-      #     name: Upload to CodeCov
-      #     command: |
-      #       cd /home/circleci/project/coverage/
-      #       wget https://cli.codecov.io/latest/linux/codecov
-      #       chmod 777 codecov
-      #       ./codecov  create-commit -t $CODECOV_TOKEN --git-service github
-      #       ./codecov  create-report -t $CODECOV_TOKEN --git-service github  
-      #       ./codecov  do-upload -t $CODECOV_TOKEN --git-service github -n "$CIRCLE_BUILD_NUM" -f /home/circleci/project/coverage/coverage.xml
-
-      # # Store coverage report files as artifacts
-      # - store_artifacts:
-      #     path: /home/circleci/project/coverage
-
-  # upload-to-codecov:
-  #  steps:
-  #    - checkout
-  #    - attach_workspace:
-  #       at: /home/circleci/project/coverage-report
-  #    - codecov/upload      
+      - run:
+          name: Upload to CodeCov
+          command: |
+            cd /home/circleci/project/coverage/
+            wget https://cli.codecov.io/latest/linux/codecov
+            chmod 777 codecov
+            ./codecov  create-commit -t $CODECOV_TOKEN --git-service github
+            ./codecov  create-report -t $CODECOV_TOKEN --git-service github  
+            ./codecov  do-upload -t $CODECOV_TOKEN --git-service github -n "$CIRCLE_BUILD_NUM" -f /home/circleci/project/coverage/coverage.xml
