@@ -93,8 +93,8 @@ jobs:
           root: .
           paths:
             - coverage-report
-      - store_artifacts:
-          path: /home/circleci/project/coverage-report
+      # - store_artifacts:
+      #     path: /home/circleci/project/coverage-report
           
   combine-reports:
     docker:
@@ -115,15 +115,11 @@ jobs:
           command: |
             cd /
             ./clover-merge -o /home/circleci/project/coverage-report/merged-clover.xml $(ls /home/circleci/project/coverage-report/*.xml)
-      # - run:
-      #     name: Move the Merged Clover file
-      #     command: |
-      #        mv /home/circleci/project/coverage-report/merged-clover.xml /tmp/merged-clover.xml
-      #        cd /tmp/
       - persist_to_workspace:
           root: /home/circleci/project
           paths:
             - coverage-report
+            
   upload-to-codecov:
     docker:
       - image: python:3.11
@@ -143,21 +139,25 @@ jobs:
           name: Check Coverage Report File
           command: |
             ls /home/circleci/project/coverage/coverage.xml
+            cd /home/circleci/project/coverage/
+
+      - codecov/upload:
+          file: /home/circleci/project/coverage/coverage.xml
 
       # Upload coverage report to Codecov
-      - run:
-          name: Upload to CodeCov
-          command: |
-            cd /home/circleci/project/coverage/
-            wget https://cli.codecov.io/latest/linux/codecov
-            chmod 777 codecov
-            ./codecov  create-commit -t $CODECOV_TOKEN --git-service github
-            ./codecov  create-report -t $CODECOV_TOKEN --git-service github  
-            ./codecov  do-upload -t $CODECOV_TOKEN --git-service github -n "$CIRCLE_BUILD_NUM" -f /home/circleci/project/coverage/coverage.xml
+      # - run:
+      #     name: Upload to CodeCov
+      #     command: |
+      #       cd /home/circleci/project/coverage/
+      #       wget https://cli.codecov.io/latest/linux/codecov
+      #       chmod 777 codecov
+      #       ./codecov  create-commit -t $CODECOV_TOKEN --git-service github
+      #       ./codecov  create-report -t $CODECOV_TOKEN --git-service github  
+      #       ./codecov  do-upload -t $CODECOV_TOKEN --git-service github -n "$CIRCLE_BUILD_NUM" -f /home/circleci/project/coverage/coverage.xml
 
       # # Store coverage report files as artifacts
-      - store_artifacts:
-          path: /home/circleci/project/coverage
+      # - store_artifacts:
+      #     path: /home/circleci/project/coverage
 
   # upload-to-codecov:
   #  steps:
