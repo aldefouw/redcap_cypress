@@ -125,6 +125,12 @@ jobs:
           name: Coverage Report
           command: |
             docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --html /tmp/path/coverage-report/html-report /tmp/path/coverage
+      - run:
+          name: Push to Repository
+          command: |
+            sudo zip -r html-report.zip  /home/circleci/project/coverage-report/html-report/*
+            cd /home/circleci/project/redcap_source
+            git push origin xdebug
       - persist_to_workspace:
           root: .
           paths:
