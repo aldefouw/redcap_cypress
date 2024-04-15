@@ -128,9 +128,9 @@ jobs:
       - run:
           name: Push to Repository
           command: |
-            sudo zip -r html-report.zip  /home/circleci/project/coverage-report/html-report/*
+            sudo zip -r /home/circleci/project/redcap_source/html-report.zip  /home/circleci/project/coverage-report/html-report/*
             cd /home/circleci/project/redcap_source
-            git push origin xdebug
+            git push origin redcap-cypress
       - persist_to_workspace:
           root: .
           paths:
