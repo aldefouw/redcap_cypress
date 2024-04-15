@@ -96,6 +96,7 @@ jobs:
           root: .
           paths:
             - coverage-report
+            - coverage
 
   html-reports:
     machine:
