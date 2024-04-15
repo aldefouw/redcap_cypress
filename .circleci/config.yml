@@ -27,7 +27,7 @@ jobs:
     machine:
       image: ubuntu-2204:2024.01.2 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
       resource_class: large
-      parallelism: 24
+    parallelism: 24
     steps:
       - checkout
       - run:
@@ -83,8 +83,8 @@ jobs:
       - run:
           name: Run Tests
           command: |
-          #  npx cypress run --spec "redcap_rsvc/Feature Tests/B/Export Data/B.5.21.300 - Export All Fields.feature" --record --key $RECORD_KEY --group core-tests --browser chrome
-           npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
+             npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
+             #npx cypress run --spec "redcap_rsvc/Feature Tests/B/Export Data/B.5.21.300 - Export All Fields.feature" --record --key $RECORD_KEY --group core-tests --browser chrome
       - run:
           name: Coverage Report
           command: |
