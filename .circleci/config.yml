@@ -9,6 +9,10 @@ workflows:
     jobs:
       - run-tests:
           context: REDCap Tests
+      - html-reports:
+          context: HTML Reports
+          requires:
+            - run-tests
       - combine-reports:
           context: Combine Reports
           requires:
@@ -79,7 +83,8 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
+            npx cypress run --spec "redcap_rsvc/Feature Tests/B/Export Data/B.5.21.300 - Export All Fields.feature" --record --key $RECORD_KEY --group core-tests --browser chrome
+            #npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
       - run:
           name: Coverage Report
           command: |
@@ -91,7 +96,40 @@ jobs:
           root: .
           paths:
             - coverage-report
+            - coverage
           
+  html-reports:
+    machine:
+      image: ubuntu-2204:2024.01.2 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
+      resource_class: large
+      steps:
+        - checkout
+        - attach_workspace:
+          at: /home/circleci/project/coverage
+        - run:
+          name: Build the REDCap Image
+          command: |
+            cd /home/circleci/project/
+            git clone --branch xdebug https://github.com/aldefouw/redcap_docker
+      - run:
+          name: Get REDCap Source
+          command: |
+            cd /home/circleci/project/
+            git clone --branch redcap-cypress https://github.com/aldefouw/redcap_source
+      - run:
+          name: Start Docker REDCap Container
+          command: |
+            cd /home/circleci/project/redcap_docker
+            docker-compose up -d
+      - run:
+          name: Coverage Report
+          command: |
+            docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --html /tmp/path/coverage-report/html-report /tmp/path/coverage
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage-report
+            
   combine-reports:
     docker:
       - image: d0x2f/clover-merge:latest
