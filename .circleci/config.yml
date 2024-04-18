@@ -27,9 +27,10 @@ jobs:
             cd /home/circleci/project/redcap_docker
             docker-compose up -d
       - run:
-          name: Change eDocs folder permissions
+          name: Change eDocs & Temp folder permissions
           command: |
-            sudo chmod 777 /var/edocs
+            sudo chmod 777 /home/circleci/project/edocs
+            sudo chmod 777 /home/circleci/project/tmp
       - run:
           name: Configure Cypress environment
           command: |
