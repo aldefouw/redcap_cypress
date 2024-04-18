@@ -16,11 +16,11 @@ jobs:
       - run:
           name: Build the REDCap Image
           command: |
-            git clone --branch v11.1.29 https://github.com/aldefouw/redcap_docker
+            git clone --branch main https://github.com/aldefouw/redcap_docker
       - run:
           name: Get REDCap Source
           command: |
-            git clone --branch redcap-cypress https://github.com/aldefouw/redcap_source www
+            git clone --branch redcap-cypress https://github.com/aldefouw/redcap_source
       - run:
           name: Start Docker REDCap Container
           command: |
