@@ -72,9 +72,9 @@ jobs:
             npm run redcap_rsvc:install
       - run:
           name: Run Tests
+          no_output_timeout: 20m
           command: |
              npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
-             #npx cypress run --spec "redcap_rsvc/Feature Tests/B/Export Data/B.5.21.300 - Export All Fields.feature" --record --key $RECORD_KEY --group core-tests --browser chrome
       - run:
           name: Coverage Report
           command: |
