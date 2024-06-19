@@ -15,7 +15,7 @@ workflows:
 jobs:
   run-tests:
     machine:
-      image: ubuntu-2204:2024.04.4 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
+      image: ubuntu-2204:2024.05.1 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
       resource_class: large
     parallelism: 26
     steps:
