@@ -160,7 +160,9 @@ window.elementChoices = {
     ' on the action popup' : '[id=formActionDropdown]',
     ' in the action popup' : '[id=formActionDropdown]',
     ' in the Edit survey responses column' : 'table#form_rights:visible',
-    ' in the open date picker widget' : 'div.ui-datepicker'
+    ' in the open date picker widget' : 'div.ui-datepicker',
+    ' in the File Repository breadcrumb' : '#file-repository-table-parent:visible',
+    ' in the File Repository table' : '#file-repository-table:visible'
 }
 
 //IMPORTANT: Programmatically add the projectModules as element choices
@@ -241,7 +243,9 @@ window.onlineDesignerFieldIcons = {
     'Move' : `img[src*=move]`,
     'Stop' : 'img[src*=stop]',
     'Delete Field': `img[src*=cross]`,
-    'Delete': `img[src*=cross]`
+    'Delete': `img[src*=cross]`,
+    'view' : 'a:visible:contains(view)',
+    'export' : 'a:visible:contains(export)'
 }
 
 window.participantListIcons = {
