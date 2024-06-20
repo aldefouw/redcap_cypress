@@ -16,7 +16,7 @@ jobs:
   run-tests:
     machine:
       image: ubuntu-2404:2024.05.1 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
-      resource_class: large
+      resource_class: arm.large
     parallelism: 26
     steps:
       - checkout
