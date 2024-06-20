@@ -7,10 +7,10 @@ workflows:
     jobs:
       - run-tests:
           context: REDCap Tests
-      - html-reports:
-          context: HTML Reports
-          requires:
-            - run-tests    
+#      - html-reports:
+#          context: HTML Reports
+#          requires:
+#            - run-tests    
             
 jobs:
   run-tests:
@@ -38,19 +38,19 @@ jobs:
           command: |
             cd /home/circleci/project/redcap_docker
             docker-compose up -d
-      - run:
-          name: Install composer dependencies
-          command: |
-            docker exec -it redcap_docker-app-1 sh -c "cd /var/www/html/redcap_v13.1.37 && COMPOSER_DISABLE_XDEBUG_WARN=1 composer install"
+#      - run:
+#          name: Install composer dependencies
+#          command: |
+#            docker exec -it redcap_docker-app-1 sh -c "cd /var/www/html/redcap_v13.1.37 && COMPOSER_DISABLE_XDEBUG_WARN=1 composer install"
       - run:
           name: Reload REDCap
           command: |
             cd /home/circleci/project/redcap_docker
             docker-compose down && docker-compose up -d
-      - run:
-          name: Permissions on coverage files
-          command: |
-            docker exec -it redcap_docker-app-1 sh -c "chmod 777 /tmp/path/coverage"
+#      - run:
+#          name: Permissions on coverage files
+#          command: |
+#            docker exec -it redcap_docker-app-1 sh -c "chmod 777 /tmp/path/coverage"
       - run:
           name: Change eDocs & Temp folder permissions
           command: |
@@ -76,18 +76,18 @@ jobs:
           command: |
             npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
             
-      - run:
-          name: Coverage Report
-          command: |
-            docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --clover /tmp/path/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
-      - run:
-          name: Debug Workspace Contents
-          command: ls -l /home/circleci/project/coverage-report
-      - persist_to_workspace:
-          root: .
-          paths:
-            - coverage-report
-            - coverage
+#      - run:
+#          name: Coverage Report
+#          command: |
+#            docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --clover /tmp/path/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
+#      - run:
+#          name: Debug Workspace Contents
+#          command: ls -l /home/circleci/project/coverage-report
+#      - persist_to_workspace:
+#          root: .
+#          paths:
+#            - coverage-report
+#            - coverage
 
   html-reports:
     machine:
