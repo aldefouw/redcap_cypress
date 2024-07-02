@@ -2,7 +2,7 @@ const { defineConfig } = require("cypress")
 
 module.exports = defineConfig({
     trashAssetsBeforeRuns: true,
-    video: true,
+    video: false,
     projectId: 'PID',
     defaultCommandTimeout: 60000,
     responseTimeout: 60000,
