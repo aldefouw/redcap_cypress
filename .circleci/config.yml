@@ -75,7 +75,7 @@ jobs:
             npm run redcap_rsvc:install
       - run:
           name: Run Tests
-          no_output_timeout: 20m
+#          no_output_timeout: 20m
           command: |
             npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome --reporter mochawesome --reporter-options reportDir=cypress/results,overwrite=false,html=false,json=true
       - run:
