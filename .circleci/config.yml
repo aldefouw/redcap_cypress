@@ -7,10 +7,10 @@ workflows:
     jobs:
       - run-tests:
           context: REDCap Tests
-#      - html-reports:
-#          context: HTML Reports
-#          requires:
-#            - run-tests
+      - html-reports:
+          context: HTML Reports
+          requires:
+            - run-tests
             
 jobs:
   run-tests:
