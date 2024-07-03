@@ -60,6 +60,7 @@ jobs:
           command: |
             sudo chmod 777 /home/circleci/project/edocs
             sudo chmod 777 /home/circleci/project/tmp
+            sudo chmod 777 /home/circleci/project/cypress/results
       - run:
           name: Configure Cypress environment
           command: |
