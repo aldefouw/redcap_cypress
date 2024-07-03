@@ -60,7 +60,6 @@ jobs:
           command: |
             sudo chmod 777 /home/circleci/project/edocs
             sudo chmod 777 /home/circleci/project/tmp
-            sudo chmod 777 /home/circleci/project/cypress/results
       - run:
           name: Configure Cypress environment
           command: |
@@ -78,7 +77,7 @@ jobs:
           name: Run Tests
           no_output_timeout: 20m
           command: |
-            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
+            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome --reporter mochawesome --reporter-options reportDir=cypress/results,overwrite=false,html=false,json=true
       - run:
           name: Save Failed Specs
           command: |
