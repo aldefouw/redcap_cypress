@@ -19,7 +19,7 @@ function readFailedSpecs() {
 }
 
 if (process.argv[2] === 'write') {
-    const results = JSON.parse(fs.readFileSync(`${resultsDir}/report.json`))
+    const results = JSON.parse(fs.readFileSync(`${resultsDir}/mochawesome.json`))
     writeFailedSpecs(results)
 } else if (process.argv[2] === 'read') {
     const failedSpecs = readFailedSpecs()
