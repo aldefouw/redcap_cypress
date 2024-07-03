@@ -74,7 +74,7 @@ jobs:
           name: Run Tests
           no_output_timeout: 20m
           command: |
-            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
+            CYPRESS_prettyEnabled=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
 #           npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome --spec redcap_rsvc/Feature\ Tests/C/File\ Repository/C.3.26.200\ -\ View\ Access\ \&\ User\ Rights.feature
 
       - run:
