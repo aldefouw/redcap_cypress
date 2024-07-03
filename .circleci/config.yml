@@ -4,24 +4,20 @@ orbs:
 workflows:
   version: 2
   workflows:
-      jobs:
-        - run-tests:
-            context: REDCap Tests
-        - rerun-failed-tests:
-            context: REDCap Tests
-            requires:
-              - run-tests
-        - html-reports:
-            context: HTML Reports
-            requires:
-              - run-tests
-
+    jobs:
+      - run-tests:
+          context: REDCap Tests
+      - html-reports:
+          context: HTML Reports
+          requires:
+            - run-tests
+            
 jobs:
   run-tests:
     machine:
       image: ubuntu-2404:2024.05.1 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2404
       resource_class: large
-    parallelism: 26
+    parallelism: 28
     steps:
       - checkout
       - run:
@@ -66,6 +62,7 @@ jobs:
             cd /home/circleci/project
             sed s/PID/$PROJECT_ID/g cypress.config.js.example > cypress.config.js
             mv cypress.env.json.example cypress.env.json
+
       - run:
           name: Install Cypress
           command: |
@@ -75,38 +72,18 @@ jobs:
             npm run redcap_rsvc:install
       - run:
           name: Run Tests
-#          no_output_timeout: 20m
+          no_output_timeout: 20m
           command: |
-            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome --reporter mochawesome --reporter-options reportDir=cypress/results,overwrite=false,html=false,json=true
-      - run:
-          name: Save Failed Specs
-          command: |
-            node scripts/track-failed-specs.js write
-      - persist_to_workspace:
-          root: .
-          paths:
-            - failed_specs.json
-            - cypress/results
+            npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
+#           npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome --spec redcap_rsvc/Feature\ Tests/C/File\ Repository/C.3.26.200\ -\ View\ Access\ \&\ User\ Rights.feature
 
-  rerun-failed-tests:
-    machine:
-      image: ubuntu-2404:2024.05.1 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2404
-      resource_class: large
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
       - run:
-          name: Rerun Failed Tests
+          name: Coverage Report
           command: |
-            FAILED_SPECS=$(node scripts/track-failed-specs.js read)
-            if [ -n "$FAILED_SPECS" ]; then
-              npx cypress run --record --key $RECORD_KEY --parallel --group retry-tests --browser chrome --spec $FAILED_SPECS
-            fi
+            docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --clover /tmp/path/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
       - run:
-          name: Save Final Results
-          command: |
-            node scripts/track-failed-specs.js write
+          name: Debug Workspace Contents
+          command: ls -l /home/circleci/project/coverage-report
       - persist_to_workspace:
           root: .
           paths:
