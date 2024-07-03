@@ -4,7 +4,6 @@ orbs:
 workflows:
   version: 2
   workflows:
-    test-and-retry:
       jobs:
         - run-tests:
             context: REDCap Tests
