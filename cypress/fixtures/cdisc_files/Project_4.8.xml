@@ -154,6 +154,7 @@
 		<ItemRef ItemOID="time_hhmm" Mandatory="No" redcap:Variable="time_hhmm"/>
 		<ItemRef ItemOID="time_mm_ss" Mandatory="No" redcap:Variable="time_mm_ss"/>
 		<ItemRef ItemOID="time_hhmmss" Mandatory="No" redcap:Variable="time_hhmmss"/>
+		<ItemRef ItemOID="email_data_types" Mandatory="No" redcap:Variable="email_data_types"/>
 	</ItemGroupDef>
 	<ItemGroupDef OID="data_types.data_types_complete" Name="Form Status" Repeating="No">
 		<ItemRef ItemOID="data_types_complete" Mandatory="No" redcap:Variable="data_types_complete"/>
@@ -404,6 +405,9 @@
 			<CheckValue>23:00:00</CheckValue>
 			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range (08:01:01 - 23:00:00). This value is admissible, but you may wish to double check it.</TranslatedText></ErrorMessage>
 		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="email_data_types" Name="email_data_types" DataType="text" Length="999" redcap:Variable="email_data_types" redcap:FieldType="text" redcap:TextValidationType="email">
+		<Question><TranslatedText>Email</TranslatedText></Question>
 	</ItemDef>
 	<ItemDef OID="data_types_complete" Name="data_types_complete" DataType="text" Length="1" redcap:Variable="data_types_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
 		<Question><TranslatedText>Complete?</TranslatedText></Question>
