@@ -69,7 +69,7 @@ window.tableMappings = {
     'reports' : 'table#table-report_list',
     'report data' : ['div.dataTables_scrollHeadInner table', 'table#report_table'],
     'define events' : 'table#event_table',
-    'data access groups' : 'table#table-dags_table',
+    'data access groups' : ['div#dags_table table:first', 'div#dags_table table#table-dags_table'],
     'DAGs Switcher' : 'div#dag-switcher-config-container-parent table',
     'record status dashboard': 'table#record_status_table',
     'data collection instruments': 'table#table-forms_surveys',
@@ -173,7 +173,9 @@ window.elementChoices = {
     ' in the dialog box' : 'div[role=dialog]:visible',
     ' within the data collection instrument list' : 'table#table-forms_surveys',
     ' on the action popup' : '[id=formActionDropdown]',
-    ' in the action popup' : '[id=formActionDropdown]'
+    ' in the action popup' : '[id=formActionDropdown]',
+    ' in the View Access section of User Access' : 'td[class=labelrc]:contains("View Access")',
+    ' in the Edit Access section of User Access' : 'td[class=labelrc]:contains("Edit Access")'
 }
 
 //IMPORTANT: Programmatically add the projectModules as element choices
