@@ -29,6 +29,7 @@ window.parameterTypes = {
     checkBoxRadio: ['checkbox', 'radio'],
     clickType: ['click on', 'check', 'uncheck'],
     confirmation: ['accept', 'cancel'],
+    dateTimeType: ['timestamp', 'date', 'datetime'],
     dataViewingRights: ['No Access', 'Read Only', 'View & Edit', 'Edit survey responses'],
     disabled: ['is disabled'],
     dropdownType: ['dropdown', 'multiselect', 'checkboxes', 'radio'],
@@ -70,10 +71,12 @@ window.parameterTypes = {
     labeledElement: ['button', 'link', 'field', 'section break'],
     labeledExactly: ['labeled', 'labeled exactly', 'in the row labeled', 'for the instrument row labeled', 'for the variable', 'for the File Repository file named', 'for Data Quality Rule #', 'within the Record Locking Customization table for the Data Collection Instrument named', 'the enabled survey icon link for the instrument row', 'the enabled survey icon link for the instrument row'],
     linkNames: ['link', 'tab', 'instrument', 'icon'],
+    loginTypes: ['attempt to login', 'am still logged in', 'login', 'successfully login'],
     projectRequestLabel: ['Create Project', 'Send Request'],
-    notSee: ['not'],
+    notSeeDC: ['should see a Data Collection Instrument named', 'should NOT see a Data Collection Instrument named', 'should no longer see a Data Collection Instrument named'],
+    notSee: ['', 'should NOT', 'should no longer', 'no longer'],
     ordering: ['ascending', 'descending'],
-    onlineDesignerButtons: ['"Enable"', '"Disable"', '"Choose action"', '"Survey settings"', '"Automated Invitations"', 'enabled survey icon', '"View Report"', '"Execute"', '"Save"'],
+    onlineDesignerButtons: ['"Enable"', '"Disable"', '"Choose action"', '"Survey settings"', '"Automated Invitations"', 'enabled survey icon', '"View Report"', '"Export Data"', '"Stats & Charts"', '"Execute"', '"Save"'],
     projectStatus: ['Production', 'Development', 'Analysis/Cleanup'],
     projectType: [
         'Practice / Just for fun',
@@ -94,7 +97,8 @@ window.parameterTypes = {
         ' to rename an instrument',
         ' in the "Add New Field" dialog box',
         ' in the "Edit Field" dialog box',
-        ' and will leave the tab open when I return to the REDCap project'
+        ' and will leave the tab open when I return to the REDCap project',
+        ' on the active Data Quality rule'
     ],
     select: ['selected', 'unselected'],
     tableName: ['', ' of the User Rights table', ' of the Reports table', ' of the Participant List table'],

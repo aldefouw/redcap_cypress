@@ -48,7 +48,7 @@ window.tableMappings = {
     'reports' : 'table#table-report_list',
     'report data' : ['table.dataTable', 'table#report_table'],
     'define events' : 'table#event_table',
-    'data access groups' : ['div#dags_table table', 'table#table-dags_table'],
+    'data access groups' : ['div#dags_table table:first', 'div#dags_table table#table-dags_table'],
     'DAGs Switcher' : 'div#dag-switcher-config-container-parent table',
     'record status dashboard': 'table#record_status_table',
     'data collection instruments': 'table#table-forms_surveys',
@@ -56,7 +56,8 @@ window.tableMappings = {
     'import data display' : 'table#comptable',
     'participant list' : ['div#partlist_outerdiv table', 'table#table-participant_table'],
     'user rights' : ['div#user_rights_roles_table table', 'table#table-user_rights_roles_table'], 
-    'record locking' : 'table#part11_forms'
+    'record locking' : 'table#part11_forms',
+    'e-signature and locking management' : 'table#esignLockList'
 }
 
 window.dateFormats = {
@@ -162,7 +163,9 @@ window.elementChoices = {
     ' in the Edit survey responses column' : 'table#form_rights:visible',
     ' in the open date picker widget' : 'div.ui-datepicker',
     ' in the File Repository breadcrumb' : '#file-repository-table-parent:visible',
-    ' in the File Repository table' : '#file-repository-table:visible'
+    ' in the File Repository table' : '#file-repository-table:visible',
+    ' in the View Access section of User Access' : 'td[class=labelrc]:contains("View Access")',
+    ' in the Edit Access section of User Access' : 'td[class=labelrc]:contains("Edit Access")'
 }
 
 //IMPORTANT: Programmatically add the projectModules as element choices
