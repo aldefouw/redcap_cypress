@@ -247,8 +247,10 @@ window.onlineDesignerFieldIcons = {
     'Stop' : 'img[src*=stop]',
     'Delete Field': `img[src*=cross]`,
     'Delete': `img[src*=cross]`,
-    'view' : 'a:visible:contains(view)',
-    'export' : 'a:visible:contains(export)'
+    '"view"' : 'a:visible:contains(view)',
+    '"export"' : 'a:visible:contains(export)',
+    '"exclude"' : 'a:visible:contains(exclude)',
+    '"remove exclusion"' : 'a:visible:contains(remove exclusion)'
 }
 
 window.participantListIcons = {
