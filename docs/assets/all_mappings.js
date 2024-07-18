@@ -59,6 +59,7 @@ window.parameterTypes = {
     ],
     headerOrNot: ['header and', 'header'],
     iframeVisibility: ['', ' in the iframe'],
+    inputType: ['input', 'password'],
     instrumentSaveOptions: [
         'Save & Stay',
         'Save & Exit Record',
@@ -68,8 +69,8 @@ window.parameterTypes = {
         'Save & Go To Next Instance',
         'Save & Add New Instance',
     ],
-    labeledElement: ['button', 'link', 'field', 'section break'],
-    labeledExactly: ['labeled', 'labeled exactly', 'in the row labeled', 'for the instrument row labeled', 'for the variable', 'for the File Repository file named', 'for Data Quality Rule #', 'within the Record Locking Customization table for the Data Collection Instrument named', 'the enabled survey icon link for the instrument row', 'the enabled survey icon link for the instrument row', 'for the Discrepant field labeled'],
+    labeledElement: ['button', 'link', 'field', 'section break', 'checkbox'],
+    labeledExactly: ['labeled', 'labeled exactly', 'in the row labeled', 'for the instrument row labeled', 'for the variable', 'for the File Repository file named', 'for Data Quality Rule #', 'within the Record Locking Customization table for the Data Collection Instrument named', 'the enabled survey icon link for the instrument row', 'the enabled survey icon link for the instrument row', 'for the Discrepant field labeled', 'within the Record Locking Customization table for the Data Collection Instrument named'],
     linkNames: ['link', 'tab', 'instrument', 'icon'],
     loginTypes: ['attempt to login', 'am still logged in', 'login', 'successfully login'],
     projectRequestLabel: ['Create Project', 'Send Request'],

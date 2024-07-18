@@ -175,7 +175,8 @@ window.elementChoices = {
     ' on the action popup' : '[id=formActionDropdown]',
     ' in the action popup' : '[id=formActionDropdown]',
     ' in the View Access section of User Access' : 'td[class=labelrc]:contains("View Access")',
-    ' in the Edit Access section of User Access' : 'td[class=labelrc]:contains("Edit Access")'
+    ' in the Edit Access section of User Access' : 'td[class=labelrc]:contains("Edit Access")',
+    ' in the Lock Record Custom Text'
 }
 
 //IMPORTANT: Programmatically add the projectModules as element choices
@@ -270,6 +271,7 @@ window.parameterTypes = {
     ],
     headerOrNot: ['header and '],
     iframeVisibility: ['', ' in the iframe'],
+    inputType: ['input', 'password'],
     instrumentSaveOptions: [
         'Save & Stay',
         'Save & Exit Record',
