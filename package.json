@@ -7,7 +7,7 @@
     "documentation": "git://github.com/documentationjs/documentation#97e9361",
     "rctf": "git://github.com/aldefouw/rctf#v1.0.92",
     "redcap_cypress_doc_theme": "git://github.com/aldefouw/redcap_cypress_doc_theme#bf84bfa",
-    "redcap_rsvc": "git://github.com/aldefouw/redcap_rsvc#v13.1.37"
+    "redcap_rsvc": "git://github.com/aldefouw/redcap_rsvc#13_mintoo_merge"
   },
   "peerDependencies": {
     "cypress": "^13.13.0"
