@@ -24,6 +24,21 @@ https://github.com/aldefouw/redcap_cypress_docker
 The Developer Toolkit is the best way to get Cypress up and running on your developer machine.
 
 ---
+
+# !!!! WARNING !!!! 
+
+<span style="color:red"> **Please do NOT configure `cypress.config.js` or `cypress.env.json` with values from your production environment!** </span> 
+
+<span style="color:red"> **If you configure the `mysql` section of `cypress.env.json` with values from your production database, YOU WILL ERASE YOUR PRODUCTION DATABASE!** </span> 
+
+**Key facts:**
+
+* This framework resets database state to a basic installation of a specific version you specify of REDCap.  Learn more about this in [Database Strategy](#database-strategy)
+
+* We recommend testing your REDCap instance by configuring an environment (close to) identical to production somewhere else.  See [How to Install](#how-to-install) for a Developer Toolkit with a preconfigured Docker container.
+
+---
+
 ## Defining Your Test Environment
 
 ### Environment Variables
@@ -76,6 +91,8 @@ The JSON array that contains several keys, which are critical for your database 
 ---
 ### mysq['host'] ### 
 The hostname or IP address of your MySQL database host.
+
+**DO NOT CONFIGURE YOUR PRODUCTION DATABASE!  The database is reset / deleted before each feature is run.**
 
 For many of us, this will likely be either `localhost`,  `127.0.0.1`, or a reference to a Docker container via `db`.  Keep in mind that there are subtle nuances between `localhost` and `127.0.0.1`.  Thus, you need to choose the option best-suited to your environment.
 
