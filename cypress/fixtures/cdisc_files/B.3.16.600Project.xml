@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redcap="https://projectredcap.org" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.3 schema/odm/ODM1-3-1.xsd" ODMVersion="1.3.1" FileOID="000-00-0000" FileType="Snapshot" Description="P3 600 test" AsOfDateTime="2023-08-18T13:08:26" CreationDateTime="2023-08-18T13:08:26" SourceSystem="REDCap" SourceSystemVersion="13.1.37">
+<Study OID="Project.P3600Test">
+<GlobalVariables>
+	<StudyName>P3 600 test</StudyName>
+	<StudyDescription>This file contains the metadata, events, and data for REDCap project "P3 600 test".</StudyDescription>
+	<ProtocolName>P3 600 test</ProtocolName>
+	<redcap:RecordAutonumberingEnabled>1</redcap:RecordAutonumberingEnabled>
+	<redcap:CustomRecordLabel>[user-dag-label]</redcap:CustomRecordLabel>
+	<redcap:SecondaryUniqueField></redcap:SecondaryUniqueField>
+	<redcap:SchedulingEnabled>1</redcap:SchedulingEnabled>
+	<redcap:SurveysEnabled>1</redcap:SurveysEnabled>
+	<redcap:SurveyInvitationEmailField>email</redcap:SurveyInvitationEmailField>
+	<redcap:DisplayTodayNowButton>1</redcap:DisplayTodayNowButton>
+	<redcap:PreventBranchingEraseValues>0</redcap:PreventBranchingEraseValues>
+	<redcap:RequireChangeReason>0</redcap:RequireChangeReason>
+	<redcap:DataHistoryPopup>1</redcap:DataHistoryPopup>
+	<redcap:OrderRecordsByField></redcap:OrderRecordsByField>
+	<redcap:MyCapEnabled>0</redcap:MyCapEnabled>
+	<redcap:Purpose>0</redcap:Purpose>
+	<redcap:PurposeOther></redcap:PurposeOther>
+	<redcap:ProjectNotes></redcap:ProjectNotes>
+	<redcap:MissingDataCodes></redcap:MissingDataCodes>
+	<redcap:ProtectedEmailMode>0</redcap:ProtectedEmailMode>
+	<redcap:ProtectedEmailModeCustomText>REDCap Secure Messaging</redcap:ProtectedEmailModeCustomText>
+	<redcap:ProtectedEmailModeTrigger>ALL</redcap:ProtectedEmailModeTrigger>
+	<redcap:ProtectedEmailModeLogo></redcap:ProtectedEmailModeLogo>
+	<redcap:SurveysGroup>
+		<redcap:Surveys form_name="data_types" title="Data Types" instructions="&lt;p&gt;&lt;strong&gt;Please complete the survey below.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Thank you!&lt;/p&gt;" offline_instructions="" acknowledgement="&lt;p&gt;&lt;strong&gt;Thank you for taking the survey.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Have a nice day!&lt;/p&gt;" stop_action_acknowledgement="" stop_action_delete_response="0" question_by_section="0" display_page_number="0" question_auto_numbering="1" survey_enabled="1" save_and_return="0" save_and_return_code_bypass="0" logo="" hide_title="0" view_results="0" min_responses_view_results="10" check_diversity_view_results="0" end_survey_redirect_url="" survey_expiration="" promis_skip_question="0" survey_auth_enabled_single="0" edit_completed_response="0" hide_back_button="0" show_required_field_text="1" confirmation_email_subject="" confirmation_email_content="" confirmation_email_from="" confirmation_email_from_display="" confirmation_email_attach_pdf="0" confirmation_email_attachment="" text_to_speech="0" text_to_speech_language="en" end_survey_redirect_next_survey="0" end_survey_redirect_next_survey_logic="" theme="" text_size="1" font_family="16" theme_text_buttons="" theme_bg_page="" theme_text_title="" theme_bg_title="" theme_text_sectionheader="" theme_bg_sectionheader="" theme_text_question="" theme_bg_question="" enhanced_choices="0" repeat_survey_enabled="0" repeat_survey_btn_text="" repeat_survey_btn_location="BEFORE_SUBMIT" response_limit="" response_limit_include_partials="1" response_limit_custom_text="Thank you for your interest; however, the survey is closed because the maximum number of responses has been reached." survey_time_limit_days="" survey_time_limit_hours="" survey_time_limit_minutes="" email_participant_field="" end_of_survey_pdf_download="0" pdf_save_to_field="" pdf_save_to_event_id="" pdf_save_translated="0" pdf_auto_archive="0" pdf_econsent_version="" pdf_econsent_type="" pdf_econsent_firstname_field="" pdf_econsent_firstname_event_id="" pdf_econsent_lastname_field="" pdf_econsent_lastname_event_id="" pdf_econsent_dob_field="" pdf_econsent_dob_event_id="" pdf_econsent_allow_edit="1" pdf_econsent_signature_field1="" pdf_econsent_signature_field2="" pdf_econsent_signature_field3="" pdf_econsent_signature_field4="" pdf_econsent_signature_field5="" survey_width_percent="" survey_show_font_resize="1" survey_btn_text_prev_page="" survey_btn_text_next_page="" survey_btn_text_submit="" survey_btn_hide_submit="0" survey_btn_hide_submit_logic=""/>
+	</redcap:SurveysGroup>
+	<redcap:UserRolesGroup>
+		<redcap:UserRoles role_name="1_FullRights" unique_role_name="U-641DLAC49L" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[data_types,1]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[data_types,1]" api_export="0" api_import="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+		<redcap:UserRoles role_name="2_Edit_RemoveID" unique_role_name="U-8349LFKRRM" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[data_types,3]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[data_types,1]" api_export="0" api_import="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+		<redcap:UserRoles role_name="3_ReadOnly_Deidentified" unique_role_name="U-378T4PJ39L" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[data_types,2]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[data_types,2]" api_export="0" api_import="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+		<redcap:UserRoles role_name="4_NoAccess_Noexport" unique_role_name="U-817YYNT9RM" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[data_types,0]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[data_types,0]" api_export="0" api_import="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+		<redcap:UserRoles role_name="TestRole" unique_role_name="U-523YNH3DEY" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[data_types,1]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[data_types,1]" api_export="0" api_import="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+	</redcap:UserRolesGroup>
+	<redcap:ReportsGroup>
+		<redcap:Reports title="Test Report" unique_report_name="R-153R3EA4W3" report_order="1" user_access="ALL" user_edit_access="ALL" description="" combine_checkbox_values="0" output_dags="0" output_survey_fields="0" output_missing_data_codes="0" remove_line_breaks_in_values="1" orderby_field1="record_id" orderby_sort1="ASC" orderby_field2="" orderby_sort2="" orderby_field3="" orderby_sort3="" advanced_logic="" filter_type="RECORD" dynamic_filter1="" dynamic_filter2="" dynamic_filter3="" hash="WJA7MYMTLMMRRLFM" short_url="" is_public="0" report_display_include_repeating_fields="1" report_display_header="BOTH" report_display_data="BOTH" limiter_logic="" redcap_reports_fields="record_id,ptname,textbox,notesbox,identifier,identifier_2,data_types_complete" redcap_reports_filter_dags="" redcap_reports_filter_events="" ID="dcdee608f07355c48e6f028cb5790c7c436fc3be"/>
+	</redcap:ReportsGroup>
+</GlobalVariables>
+<MetaDataVersion OID="Metadata.P3600Test_2023-08-18_1308" Name="P3 600 test" redcap:RecordIdField="record_id">
+	<FormDef OID="Form.data_types" Name="Data Types" Repeating="No" redcap:FormName="data_types">
+		<ItemGroupRef ItemGroupOID="data_types.record_id" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="data_types.data_types_timestamp" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="data_types.date_ymd" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="data_types.datetime_ymd_hmss" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="data_types.data_types_complete" Mandatory="No"/>
+	</FormDef>
+	<ItemGroupDef OID="data_types.record_id" Name="Data Types" Repeating="No">
+		<ItemRef ItemOID="record_id" Mandatory="No" redcap:Variable="record_id"/>
+		<ItemRef ItemOID="redcap_survey_identifier" Mandatory="No" redcap:Variable="redcap_survey_identifier"/>
+		<ItemRef ItemOID="data_types_timestamp" Mandatory="No" redcap:Variable="data_types_timestamp"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="data_types.data_types_timestamp" Name="Data Types" Repeating="No">
+		<ItemRef ItemOID="data_types_timestamp" Mandatory="No" redcap:Variable="data_types_timestamp"/>
+		<ItemRef ItemOID="ptname" Mandatory="No" redcap:Variable="ptname"/>
+		<ItemRef ItemOID="textbox" Mandatory="No" redcap:Variable="textbox"/>
+		<ItemRef ItemOID="radio" Mandatory="No" redcap:Variable="radio"/>
+		<ItemRef ItemOID="notesbox" Mandatory="No" redcap:Variable="notesbox"/>
+		<ItemRef ItemOID="identifier" Mandatory="No" redcap:Variable="identifier"/>
+		<ItemRef ItemOID="identifier_2" Mandatory="No" redcap:Variable="identifier_2"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="data_types.date_ymd" Name="Date" Repeating="No">
+		<ItemRef ItemOID="date_ymd" Mandatory="No" redcap:Variable="date_ymd"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="data_types.datetime_ymd_hmss" Name="Data Types" Repeating="No">
+		<ItemRef ItemOID="datetime_ymd_hmss" Mandatory="No" redcap:Variable="datetime_ymd_hmss"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="data_types.data_types_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="data_types_complete" Mandatory="No" redcap:Variable="data_types_complete"/>
+	</ItemGroupDef>
+	<ItemDef OID="record_id" Name="record_id" DataType="text" Length="999" redcap:Variable="record_id" redcap:FieldType="text">
+		<Question><TranslatedText>Record ID</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="redcap_survey_identifier" Name="redcap_survey_identifier" DataType="text" Length="999" redcap:Variable="redcap_survey_identifier">
+		<Question><TranslatedText>Survey Identifier</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="data_types_timestamp" Name="data_types_timestamp" DataType="datetime" Length="999" redcap:Variable="data_types_timestamp">
+		<Question><TranslatedText>Survey Timestamp</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="data_types_timestamp" Name="data_types_timestamp" DataType="datetime" Length="999" redcap:Variable="data_types_timestamp">
+		<Question><TranslatedText>Survey Timestamp</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="ptname" Name="ptname" DataType="text" Length="999" redcap:Variable="ptname" redcap:FieldType="text" redcap:FieldAnnotation="@DEFAULT=&quot;[name]&quot;">
+		<Question><TranslatedText>Name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="textbox" Name="textbox" DataType="text" Length="999" redcap:Variable="textbox" redcap:FieldType="text" redcap:FieldAnnotation="@DEFAULT=&quot;text box&quot;">
+		<Question><TranslatedText>Text box</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="radio" Name="radio" DataType="text" Length="3" redcap:Variable="radio" redcap:FieldType="radio" redcap:Identifier="y">
+		<Question><TranslatedText>radio</TranslatedText></Question>
+		<CodeListRef CodeListOID="radio.choices"/>
+	</ItemDef>
+	<ItemDef OID="notesbox" Name="notesbox" DataType="text" Length="999" redcap:Variable="notesbox" redcap:FieldType="textarea" redcap:FieldAnnotation="@DEFAULT=&quot;note box&quot;">
+		<Question><TranslatedText>Notes box</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="identifier" Name="identifier" DataType="text" Length="999" redcap:Variable="identifier" redcap:FieldType="text" redcap:Identifier="y" redcap:FieldAnnotation="@DEFAULT=&quot;PHI&quot;">
+		<Question><TranslatedText>Identifier</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="identifier_2" Name="identifier_2" DataType="text" Length="999" redcap:Variable="identifier_2" redcap:FieldType="text" redcap:Identifier="y" redcap:FieldAnnotation="@DEFAULT=&quot;PHI2&quot;">
+		<Question><TranslatedText>Identifier 2</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="date_ymd" Name="date_ymd" DataType="date" Length="999" redcap:Variable="date_ymd" redcap:FieldType="text" redcap:TextValidationType="date_ymd" redcap:SectionHeader="Date" redcap:FieldAnnotation="@TODAY">
+		<Question><TranslatedText>date YMD</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="datetime_ymd_hmss" Name="datetime_ymd_hmss" DataType="datetime" Length="999" redcap:Variable="datetime_ymd_hmss" redcap:FieldType="text" redcap:TextValidationType="datetime_seconds_ymd" redcap:FieldAnnotation="@NOW">
+		<Question><TranslatedText>datetime YMD HMSS</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="data_types_complete" Name="data_types_complete" DataType="text" Length="1" redcap:Variable="data_types_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="data_types_complete.choices"/>
+	</ItemDef>
+	<CodeList OID="radio.choices" Name="radio" DataType="text" redcap:Variable="radio">
+		<CodeListItem CodedValue="99"><Decode><TranslatedText>Choice99</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="100"><Decode><TranslatedText>Choice100</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="101"><Decode><TranslatedText>Choice101</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="data_types_complete.choices" Name="data_types_complete" DataType="text" redcap:Variable="data_types_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+</MetaDataVersion>
+</Study>
+<ClinicalData StudyOID="Project.P3600Test" MetaDataVersionOID="Metadata.P3600Test_2023-08-18_1308">
+	<SubjectData SubjectKey="1" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="data_types.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="1"/>
+					<ItemData ItemOID="data_types_timestamp" Value="2023-08-18 12:53:25"/>
+					<ItemData ItemOID="ptname" Value="My Name"/>
+					<ItemData ItemOID="textbox" Value="text box1"/>
+					<ItemData ItemOID="radio" Value="99"/>
+					<ItemData ItemOID="notesbox" Value="note box1"/>
+					<ItemData ItemOID="identifier" Value="PHI"/>
+					<ItemData ItemOID="identifier_2" Value="PHI2"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.date_ymd" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="date_ymd" Value="2023-08-18"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.datetime_ymd_hmss" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-08-18T12:53:00"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="2" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="data_types.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="2"/>
+					<ItemData ItemOID="data_types_timestamp" Value="2023-08-18 12:54:01"/>
+					<ItemData ItemOID="ptname" Value="Your Name"/>
+					<ItemData ItemOID="textbox" Value="text box2"/>
+					<ItemData ItemOID="radio" Value="100"/>
+					<ItemData ItemOID="notesbox" Value="note box2"/>
+					<ItemData ItemOID="identifier" Value="PHI"/>
+					<ItemData ItemOID="identifier_2" Value="PHI2"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.date_ymd" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="date_ymd" Value="2023-08-18"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.datetime_ymd_hmss" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-08-18T12:53:00"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="3" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="data_types.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="3"/>
+					<ItemData ItemOID="data_types_timestamp" Value="2023-08-18 12:54:35"/>
+					<ItemData ItemOID="ptname" Value="That name"/>
+					<ItemData ItemOID="textbox" Value="text box3"/>
+					<ItemData ItemOID="radio" Value="101"/>
+					<ItemData ItemOID="notesbox" Value="note box3"/>
+					<ItemData ItemOID="identifier" Value="PHI"/>
+					<ItemData ItemOID="identifier_2" Value="PHI2"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.date_ymd" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="date_ymd" Value="2023-08-18"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.datetime_ymd_hmss" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-08-18T12:54:00"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="4" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="data_types.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="4"/>
+					<ItemData ItemOID="ptname" Value="My Name"/>
+					<ItemData ItemOID="textbox" Value="text box1"/>
+					<ItemData ItemOID="radio" Value="99"/>
+					<ItemData ItemOID="notesbox" Value="note box1"/>
+					<ItemData ItemOID="identifier" Value="PHI"/>
+					<ItemData ItemOID="identifier_2" Value="PHI2"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.date_ymd" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="date_ymd" Value="2023-08-18"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.datetime_ymd_hmss" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-08-18T12:53:00"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="5" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="data_types.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="5"/>
+					<ItemData ItemOID="ptname" Value="Your Name"/>
+					<ItemData ItemOID="textbox" Value="text box2"/>
+					<ItemData ItemOID="radio" Value="100"/>
+					<ItemData ItemOID="notesbox" Value="note box2"/>
+					<ItemData ItemOID="identifier" Value="PHI"/>
+					<ItemData ItemOID="identifier_2" Value="PHI2"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.date_ymd" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="date_ymd" Value="2023-08-18"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.datetime_ymd_hmss" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-08-18T12:53:00"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+	<SubjectData SubjectKey="6" redcap:RecordIdField="record_id">
+			<FormData FormOID="Form.data_types" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="data_types.record_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="record_id" Value="6"/>
+					<ItemData ItemOID="ptname" Value="That name"/>
+					<ItemData ItemOID="textbox" Value="text box3"/>
+					<ItemData ItemOID="radio" Value="101"/>
+					<ItemData ItemOID="notesbox" Value="note box3"/>
+					<ItemData ItemOID="identifier" Value="PHI"/>
+					<ItemData ItemOID="identifier_2" Value="PHI2"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.date_ymd" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="date_ymd" Value="2023-08-18"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.datetime_ymd_hmss" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="datetime_ymd_hmss" Value="2023-08-18T12:54:00"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="data_types.data_types_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="data_types_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+</ClinicalData>
+</ODM>

@@ -1,0 +1,2 @@
+rule_name,rule_logic,real_time_execution
+Integer,[integer]<>'1999',
