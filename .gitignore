@@ -2,7 +2,7 @@
 
 /node_modules
 
-test_db/structure_and_data.sql
+test_db/*
 
 /www
 /redcap_docker
@@ -16,8 +16,11 @@ cypress.env.json
 *.png
 
 /tmp
+/redcap_rsvc
 
+cypress.config.js
 cypress/downloads
+cypress/results
 
 /containers
 /docker
