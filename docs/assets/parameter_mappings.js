@@ -37,6 +37,7 @@ window.userRightChecks = {
     'File Repository' : 'file_repository',
     'Record Locking Customization' : 'lock_record_customize',
     'Lock/Unlock *Entire* Records' : 'lock_record_multiform',
+    'Lock/Unlock *Entire* Records (instrument level)' : 'lock_record_multiform',
     'Lock/Unlock *Entire* Records (record level)' : 'lock_record_multiform',
     'Data Quality - Create & edit rules' : 'data_quality_design',
     'Data Quality - Execute rules' : 'data_quality_execute',
@@ -73,7 +74,8 @@ window.tableMappings = {
     'DAGs Switcher' : 'div#dag-switcher-config-container-parent table',
     'record status dashboard': 'table#record_status_table',
     'data collection instruments': 'table#table-forms_surveys',
-    'codebook' : 'table#codebook-table'
+    'codebook' : 'table#codebook-table',
+    'record home page' : 'table#event_grid_table'
 }
 
 window.dateFormats = {
@@ -175,7 +177,8 @@ window.elementChoices = {
     ' on the action popup' : '[id=formActionDropdown]',
     ' in the action popup' : '[id=formActionDropdown]',
     ' in the View Access section of User Access' : 'td[class=labelrc]:contains("View Access")',
-    ' in the Edit Access section of User Access' : 'td[class=labelrc]:contains("Edit Access")'
+    ' in the Edit Access section of User Access' : 'td[class=labelrc]:contains("Edit Access")',
+    ' in the Lock Record Custom Text'
 }
 
 //IMPORTANT: Programmatically add the projectModules as element choices
@@ -270,6 +273,7 @@ window.parameterTypes = {
     ],
     headerOrNot: ['header and '],
     iframeVisibility: ['', ' in the iframe'],
+    inputType: ['input', 'password'],
     instrumentSaveOptions: [
         'Save & Stay',
         'Save & Exit Record',
