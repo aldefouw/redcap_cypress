@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Install composer dependencies
           command: |
-            docker exec -it redcap_docker-app-1 sh -c "cd /var/www/html/redcap_v13.7.15 && COMPOSER_DISABLE_XDEBUG_WARN=1 composer install"
+            docker exec -it redcap_docker-app-1 sh -c "cd /var/www/html/redcap_v13.1.37 && COMPOSER_DISABLE_XDEBUG_WARN=1 composer install"
       - run:
           name: Reload REDCap
           command: |
