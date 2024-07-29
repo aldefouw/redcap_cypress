@@ -112,7 +112,7 @@ This is typically `root` on local instances of MySQL or local Docker containers.
 ---
 
 ### Database Strategy
-To create non-deterministic tests, the REDCap Cypress Test Framework resets the database to a known state before each feature is run.
+In the aim for deterministic feature tests, the REDCap Cypress Test Framework resets the database to a known state before each feature is run.
 
 Before the test suite is run, the appropriate tables for your specified REDCap version are installed into your MySQL database.  To achieve this, the framework needs to know about where your REDCap source code is located.
 
