@@ -29,6 +29,7 @@ window.parameterTypes = {
     checkBoxRadio: ['checkbox', 'radio'],
     clickType: ['click on', 'check', 'uncheck'],
     confirmation: ['accept', 'cancel'],
+    dateTimeType: ['timestamp', 'date', 'datetime'],
     dataViewingRights: ['No Access', 'Read Only', 'View & Edit', 'Edit survey responses'],
     disabled: ['is disabled'],
     dropdownType: ['dropdown', 'multiselect', 'checkboxes', 'radio'],
@@ -58,6 +59,7 @@ window.parameterTypes = {
     ],
     headerOrNot: ['header and', 'header'],
     iframeVisibility: ['', ' in the iframe'],
+    inputType: ['input', 'password'],
     instrumentSaveOptions: [
         'Save & Stay',
         'Save & Exit Record',
@@ -67,13 +69,15 @@ window.parameterTypes = {
         'Save & Go To Next Instance',
         'Save & Add New Instance',
     ],
-    labeledElement: ['button', 'link', 'field', 'section break'],
-    labeledExactly: ['labeled', 'labeled exactly', 'in the row labeled', 'for the instrument row labeled', 'for the variable', 'for the File Repository file named', 'for Data Quality Rule #', "within the Record Locking Customization table for the Data Collection Instrument named"],
+    labeledElement: ['button', 'link', 'field', 'section break', 'checkbox'],
+    labeledExactly: ['labeled', 'labeled exactly', 'in the row labeled', 'for the instrument row labeled', 'for the variable', 'for the File Repository file named', 'for Data Quality Rule #', 'within the Record Locking Customization table for the Data Collection Instrument named', 'the enabled survey icon link for the instrument row', 'the enabled survey icon link for the instrument row', 'for the Discrepant field labeled', 'within the Record Locking Customization table for the Data Collection Instrument named'],
     linkNames: ['link', 'tab', 'instrument', 'icon'],
+    loginTypes: ['attempt to login to REDCap with', 'am still logged in to REDCap with', 'login to REDCap with', 'successfully login to REDCap with', 'provide E-Signature credentials for'],
     projectRequestLabel: ['Create Project', 'Send Request'],
-    notSee: ['not '],
+    notSeeDC: ['should see a Data Collection Instrument named', 'should NOT see a Data Collection Instrument named', 'should no longer see a Data Collection Instrument named'],
+    notSee: ['', 'should NOT', 'should no longer', 'no longer'],
     ordering: ['ascending', 'descending'],
-    onlineDesignerButtons: ['"Enable"', '"Disable"', '"Choose action"', '"Survey settings"', '"Automated Invitations"', 'enabled survey icon', '"View Report"', '"Execute"', '"Save"'],
+    onlineDesignerButtons: ['"Enable"', '"Disable"', '"Choose action"', '"Survey settings"', '"Automated Invitations"', 'enabled survey icon', '"View Report"', '"Export Data"', '"Stats & Charts"', '"Execute"', '"Save"'],
     projectStatus: ['Production', 'Development', 'Analysis/Cleanup'],
     projectType: [
         'Practice / Just for fun',
@@ -94,12 +98,13 @@ window.parameterTypes = {
         ' to rename an instrument',
         ' in the "Add New Field" dialog box',
         ' in the "Edit Field" dialog box',
-        ' and will leave the tab open when I return to the REDCap project'
+        ' and will leave the tab open when I return to the REDCap project',
+        ' on the active Data Quality rule'
     ],
     select: ['selected', 'unselected'],
     tableName: ['', ' of the User Rights table', ' of the Reports table', ' of the Participant List table'],
     timeType: ['seconds', 'second', 'minutes', 'minute'],
-    toDoRequestTypes: ['Move to prod', 'Approve draft changes', 'Copy project'],
+    toDoRequestTypes: ['Move to prod', 'Approve draft changes', 'Copy project', 'Delete project'],
     toDoTableIcons: [
         'process request',
         'get more information',
@@ -108,5 +113,6 @@ window.parameterTypes = {
         'archive request notification',
     ],
     toDownloadFile: [' to download a file', ' near "with records in rows" to download a file', ' near "with records in columns" to download a file'],
-    userRightAction: ['add', 'remove']
+    userRightAction: ['add', 'remove'],
+    visibilityPrefix: ['an alert box with the following text:', 'a field named', 'a downloaded file named', 'Project status:', 'the exact time in the', "today's date in the"]
 }
