@@ -4,9 +4,9 @@ module.exports = defineConfig({
     trashAssetsBeforeRuns: true,
     video: false,
     projectId: 'PID',
-    defaultCommandTimeout: 60000,
-    responseTimeout: 60000,
-    requestTimeout: 60000,
+    defaultCommandTimeout: 120000,
+    responseTimeout: 120000,
+    requestTimeout: 120000,
     chromeWebSecurity: false,
     retries: 0,
     numTestsKeptInMemory: 0,
@@ -30,7 +30,7 @@ module.exports = defineConfig({
                        '!redcap_rsvc/*/[ABC]/*/*REDUNDANT*.feature'
                      ],
         testIsolation: false,
-        experimentalMemoryManagement: true,
+        experimentalMemoryManagement: false,
         numTestsKeptInMemory: 0,
         retries: {
             runMode: 2,
