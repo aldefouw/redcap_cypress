@@ -122,11 +122,12 @@ jobs:
       - run:
           name: Push to Repository
           command: |
-            sudo zip -r /home/circleci/project/redcap_source/html-report.zip  /home/circleci/project/coverage-report/html-report/*
+            sudo zip -r "/home/circleci/project/redcap_source/html-report-${REDCAP_VERSION}.zip" /home/circleci/project/coverage-report/html-report/*
             cd /home/circleci/project/redcap_source
-            git add html-report.zip
-            git commit -m "Add latest HTML Report"
+            git add "html-report-${REDCAP_VERSION}.zip"
+            git commit -m "Add latest HTML Report for version ${REDCAP_VERSION}"
             git push origin redcap-cypress
+
       - persist_to_workspace:
           root: .
           paths:
