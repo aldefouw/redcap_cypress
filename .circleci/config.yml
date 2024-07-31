@@ -75,12 +75,15 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            CYPRESS_VIDEO=true CYPRESS_VIDEO_COMPRESSION=false CYPRESS_PRETTY_ENABLED=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
+            CYPRESS_PRETTY_ENABLED=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
 
       - run:
           name: Coverage Report
           command: |
             docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --clover /tmp/path/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
+      - store_artifacts:
+          path: cypress/videos
+          destination: cypress/videos
       - run:
           name: Debug Workspace Contents
           command: ls -l /home/circleci/project/coverage-report
@@ -89,6 +92,7 @@ jobs:
           paths:
             - coverage-report
             - coverage
+            - cypress/videos
 
   html-reports:
     machine:

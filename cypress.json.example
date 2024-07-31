@@ -1,7 +1,8 @@
 {
   "baseUrl": "http://localhost:8080",
   "trashAssetsBeforeRuns": true,
-  "video": false,
+  "video": true,
+  "videoCompression": false
   "projectId": "PID",
   "defaultCommandTimeout" : 10000,
   "responseTimeout": 10000,
@@ -12,6 +13,6 @@
   "testFiles": "**/*.{feature,features,js}",
   "nonGlobalStepDefinitions": false,
   "step_definitions": "cypress/support/step_definitions/",
-  "viewportWidth": 1400,
-  "viewportHeight": 1000
+  "viewportWidth": 1600,
+  "viewportHeight": 1200  
 }
