@@ -75,18 +75,17 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            CYPRESS_PRETTY_ENABLED=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
-
+            CYPRESS_prettyEnabled=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
       - run:
           name: Coverage Report
           command: |
             docker exec -i redcap_docker-app-1 php /var/www/html/phpcov.phar merge --clover /tmp/path/coverage-report/merged-coverage-${CIRCLE_NODE_INDEX}.xml /tmp/path/coverage
-      - store_artifacts:
-          path: cypress/videos
-          destination: cypress/videos
       - run:
           name: Debug Workspace Contents
           command: ls -l /home/circleci/project/coverage-report
+      - run:
+          name: Debug Cypress Videos
+          command: ls -l /home/circleci/project/cypress/videos
       - persist_to_workspace:
           root: .
           paths:
@@ -131,6 +130,10 @@ jobs:
             git add "html-report-${REDCAP_VERSION}.zip"
             git commit -m "Add latest HTML Report for version ${REDCAP_VERSION}"
             git push origin redcap-cypress
+
+      - store_artifacts:
+          path: /home/circleci/project/cypress/videos
+          destination: /home/circleci/project/cypress/videos
 
       - persist_to_workspace:
           root: .
