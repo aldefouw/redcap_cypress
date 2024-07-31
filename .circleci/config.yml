@@ -11,7 +11,7 @@ workflows:
           context: HTML Reports
           requires:
             - run-tests
-
+            
 jobs:
   run-tests:
     machine:
@@ -76,9 +76,6 @@ jobs:
           name: Run Tests
           command: |
             CYPRESS_prettyEnabled=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
-      #           npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
-      #           npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome --spec redcap_rsvc/Feature\ Tests/C/File\ Repository/C.3.26.200\ -\ View\ Access\ \&\ User\ Rights.feature
-
       - run:
           name: Coverage Report
           command: |
@@ -86,15 +83,19 @@ jobs:
       - run:
           name: Debug Workspace Contents
           command: ls -l /home/circleci/project/coverage-report
+      - run:
+          name: Debug Cypress Videos
+          command: ls -l /home/circleci/project/cypress/videos
       - persist_to_workspace:
           root: .
           paths:
             - coverage-report
             - coverage
+            - cypress/videos
 
   html-reports:
     machine:
-      image: ubuntu-2204:2024.01.2 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
+      image: ubuntu-2404:2024.05.1 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2404
       resource_class: large
     environment:
       REDCAP_VERSION: "13.7.15"
@@ -129,6 +130,10 @@ jobs:
             git add "html-report-${REDCAP_VERSION}.zip"
             git commit -m "Add latest HTML Report for version ${REDCAP_VERSION}"
             git push origin redcap-cypress
+
+      - store_artifacts:
+          path: /home/circleci/project/coverage/cypress/videos
+          destination: /home/circleci/project/coverage/cypress/videos
 
       - persist_to_workspace:
           root: .
