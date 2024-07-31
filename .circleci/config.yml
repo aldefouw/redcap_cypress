@@ -75,9 +75,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            CYPRESS_prettyEnabled=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
-#           npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome
-#           npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome --spec redcap_rsvc/Feature\ Tests/C/File\ Repository/C.3.26.200\ -\ View\ Access\ \&\ User\ Rights.feature
+            CYPRESS_VIDEO=true CYPRESS_PRETTY_ENABLED=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
 
       - run:
           name: Coverage Report
@@ -94,7 +92,7 @@ jobs:
 
   html-reports:
     machine:
-      image: ubuntu-2204:2024.01.2 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2204
+      image: ubuntu-2404:2024.05.1 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2404
       resource_class: large
     environment:
       REDCAP_VERSION: "13.1.37"
