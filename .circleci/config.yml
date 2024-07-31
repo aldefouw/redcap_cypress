@@ -75,7 +75,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            CYPRESS_VIDEO=true CYPRESS_PRETTY_ENABLED=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
+            CYPRESS_VIDEO=true CYPRESS_VIDEO_COMPRESSION=false CYPRESS_PRETTY_ENABLED=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
 
       - run:
           name: Coverage Report
