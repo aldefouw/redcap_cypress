@@ -132,8 +132,8 @@ jobs:
             git push origin redcap-cypress
 
       - store_artifacts:
-          path: /home/circleci/project/cypress/videos
-          destination: /home/circleci/project/cypress/videos
+          path: /home/circleci/project/coverage/cypress/videos
+          destination: /home/circleci/project/coverage/cypress/videos
 
       - persist_to_workspace:
           root: .
