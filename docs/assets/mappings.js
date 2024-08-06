@@ -16,7 +16,6 @@ window.userRightChecks = {
     'File Repository' : 'file_repository',
     'Record Locking Customization' : 'lock_record_customize',
     'Lock/Unlock *Entire* Records' : 'lock_record_multiform',
-    'Lock/Unlock *Entire* Records (instrument level)' : 'lock_record_multiform',
     'Lock/Unlock *Entire* Records (record level)' : 'lock_record_multiform',
     'Data Quality - Create & edit rules' : 'data_quality_design',
     'Data Quality - Execute rules' : 'data_quality_execute',
@@ -252,7 +251,8 @@ window.onlineDesignerFieldIcons = {
     '"view"' : 'a:visible:contains(view)',
     '"export"' : 'a:visible:contains(export)',
     '"exclude"' : 'a:visible:contains(exclude)',
-    '"remove exclusion"' : 'a:visible:contains(remove exclusion)'
+    '"remove exclusion"' : 'a:visible:contains(remove exclusion)',
+    '"Add signature"' : 'a:visible:contains("Add signature")'
 }
 
 window.participantListIcons = {
