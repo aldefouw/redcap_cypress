@@ -55,28 +55,62 @@ To get you started, an example file named `cypress.env.json.example` is included
 
 Here is an example environment variable setup:
 
-    {
-      "users": {
-        "admin": {
-          "user": "admin_user",
-          "pass": "Testing123"
-        },
-        "standard": {
-          "user": "test_user",
-          "pass": "Testing123"
-        }
-      },
-      "redcap_version": "13.1.7",
-      "redcap_source_path": "../redcap-source",
-      "mysql": {
-        "host": "docker exec -i redcap_docker-app-1 mysql",
-        "path": "mysql",
-        "port": "3306",
-        "db_name": "redcap",
-        "db_user": "root",
-        "db_pass": "root"
-      }
+```
+{
+  "users": {
+    "standard": {
+      "user": "test_user",
+      "pass": "Testing123"
+    },
+    "admin": {
+      "user": "test_admin",
+      "pass": "Testing123"
+    },
+    "Test_Admin": {
+      "user": "Test_Admin",
+      "pass": "Testing123"
+    },
+    "Test_User1": {
+      "user": "Test_User1",
+      "pass": "Testing123"
+    },
+    "Test_User2": {
+      "user": "Test_User2",
+      "pass": "Testing123"
+    },
+    "Test_User3": {
+      "user": "Test_User3",
+      "pass": "Testing123"
+    },
+    "Test_User4": {
+      "user": "Test_User4",
+      "pass": "Testing123"
     }
+  },
+  "redcap_version": "13.1.37",
+  "language": "English",
+  "redcap_hooks_path": "/var/www/html/hook_functions.php",
+  "redcap_source_path": "../redcap_source",
+  "temp_folder": "/var/www/html/temp",
+  "mysql": {
+    "host": "db",
+    "path": "docker exec -i redcap_docker-app-1 mysql",
+    "port": "3306",
+    "db_name": "redcap",
+    "db_user": "root",
+    "db_pass": "root"
+  },
+  "timezone_override": "America/Chicago",
+  "bootstrap_settings": {
+    "core": true,
+    "hooks": false,
+    "modules": false,
+    "plugins": false,
+    "projects" : false
+  }
+}
+```
+
 
 Below are descriptions of the configuration variables shown above.
 
