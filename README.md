@@ -212,6 +212,8 @@ https://github.com/aldefouw/redcap_rsvc
 
 2. ### Gherkin Step Builder 
 
+[<img src="https://github.com/aldefouw/redcap_cypress/blob/master/GherkinStepBuilder.png" alt="Gherkin Step Builder">](https://aldefouw.github.io/redcap_cypress/)
+
 All REDCap feature tests run through this repository are powered by Step Definitions defined in the [RCTF](https://github.com/aldefouw/rctf) node package.   
 
 Hundreds of steps are available, and we built a [Gherkin Step Builder](https://aldefouw.github.io/redcap_cypress/) tool to help you generate your own syntactically valid Steps in your Feature Tests.
