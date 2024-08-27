@@ -203,6 +203,8 @@ We have two suggested methods to learn how to write REDCap-specific feature test
 
 1. ### Review Regulatory and Software Validation Committee (RSVC) Feature Tests
 
+[<img src="https://github.com/aldefouw/redcap_cypress/blob/master/RSVCFeatureTestExample.png" alt="RSVC Feature Test Example">](https://github.com/aldefouw/redcap_rsvc)
+
 RSVC has created hundreds of automated feature tests that test the functional requirements of REDCap.  
 
 Reviewing these feature tests is useful because they serve as a template for testing many aspects of REDCap.
