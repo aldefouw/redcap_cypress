@@ -15,6 +15,7 @@ Core REDCap features, written in Gherkin, are posted to a repository guided by t
 - [Defining Your Test Environment](#defining-your-test-environment)
 - [Database Strategy](#database-strategy)
 - [Running Your Tests](#running-your-tests)
+- [Writing Gherkin](#writing-gherkin)
 
 # How to Install
 
@@ -195,3 +196,25 @@ After your test suite is mature, it will be faster to run your tests in headless
 `npx cypress run`
 
 ---
+
+# Writing Gherkin Feature Tests
+
+We have two suggested methods to learn how to write REDCap-specific feature tests compatible with the REDCap Cypress Test Framework.
+
+1. ### Review Regulatory and Software Validation Committee (RSVC) Feature Tests
+
+RSVC has created hundreds of automated feature tests that test the functional requirements of REDCap.  
+
+Reviewing these feature tests is useful because they serve as a template for testing many aspects of REDCap.
+
+RSVC Feature Tests are availble to review here:
+https://github.com/aldefouw/redcap_rsvc
+
+2. ### Gherkin Step Builder 
+
+All REDCap feature tests run through this repository are powered by Step Definitions defined in the [RCTF](https://github.com/aldefouw/rctf) node package.   
+
+Hundreds of steps are available, and we built a [Gherkin Step Builder](https://aldefouw.github.io/redcap_cypress/) tool to help you generate your own syntactically valid Steps in your Feature Tests.
+
+The Gherkin Step Builder is located here:
+https://aldefouw.github.io/redcap_cypress/
