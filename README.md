@@ -15,7 +15,7 @@ Core REDCap features, written in Gherkin, are posted to a repository guided by t
 - [Defining Your Test Environment](#defining-your-test-environment)
 - [Database Strategy](#database-strategy)
 - [Running Your Tests](#running-your-tests)
-- [Writing Gherkin](#writing-gherkin)
+- [Writing Gherkin](#writing-gherkin-feature-tests)
 
 # How to Install
 
