@@ -6,7 +6,7 @@
 
 This repository is a template to enable **REDCap Automated Testing** within the [Cypress testing tool](https://www.cypress.io/) against a **REDCap Test Environment**.
 
-Powered by the **REDCap Cypress Test Framework (RCTF)**, feature test files, written in Gherkin domain-specific language, may use:
+Powered by the **REDCap Cypress Test Framework ([RCTF](https://github.com/aldefouw/rctf/))**, feature test files, written in Gherkin domain-specific language, may use:
 
 1. **Built-in Gherkin Steps** - documented in the [Gherkin Step Builder](https://aldefouw.github.io/redcap_cypress/)
 2. **Custom Gherkin Steps** - by creating your own step definitions in the **/support/step_definitions/** folder.
