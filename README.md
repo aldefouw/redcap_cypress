@@ -52,11 +52,9 @@ https://github.com/aldefouw/redcap_rsvc
 
 Check the [Releases Page](https://github.com/aldefouw/redcap_rsvc/releases) to see what versions of REDCap are available.
 
-***To install***
+**To Install Feature Tests**
 
-1. Point the redcap_rsvc package at the appropriate tag - ensure tag release tag exists on the [Releases Page](https://github.com/aldefouw/redcap_rsvc/releases)!
-
-Example: 
+1. Point the **redcap_rsvc** repository in **package.json** at the appropriate tag - ensure tag release tag exists on the [Releases Page](https://github.com/aldefouw/redcap_rsvc/releases)! 
 ```
 "redcap_rsvc": "git://github.com/aldefouw/redcap_rsvc#v13.1.37-ABC"
 ```
