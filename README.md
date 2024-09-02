@@ -1,17 +1,22 @@
 [![CircleCI](https://circleci.com/gh/aldefouw/redcap_cypress/tree/master.svg?style=svg)](https://circleci.com/gh/aldefouw/redcap_cypress/tree/master)
 
-# REDCap Cypress Test Framework
+# REDCap Cypress Test Suite
 
-The REDcap Cypress Test Framework enables **automated feature testing for REDCap**.
+*Please ensure you read our [How to Install](#how-to-install) guide if you are just getting started.*
 
-This repository serves as a starting point for running and writing your own automated feature and regression tests, which can be used to validate the features and functionality of your REDCap environment.
+This repository is a template to enable **REDCap Automated Testing** within the [Cypress testing tool](https://www.cypress.io/) against a **REDCap Test Environment**.
 
-Features are written using the Gherkin domain-specific language.
+Powered by the **REDCap Cypress Test Framework (RCTF)**, feature test files, written in Gherkin domain-specific language, may use:
 
-Core REDCap features, written in Gherkin, are posted to a repository guided by the Regulatory & Software Validation committee: https://github.com/aldefouw/redcap_rsvc
+1. **Built-in Gherkin Steps** - documented in the [Gherkin Step Builder](https://aldefouw.github.io/redcap_cypress/)
+2. **Custom Gherkin Steps** - by creating your own step definitions in the **/support/step_definitions/** folder.
+
+
 
 # Overview
 - [How to Install](#how-to-install)
+- [!!! WARNING !!!](#-warning-)
+- [RSVC Automated Feature Tests](#rsvc-automated-feature-tests)
 - [Defining Your Test Environment](#defining-your-test-environment)
 - [Database Strategy](#database-strategy)
 - [Running Your Tests](#running-your-tests)
@@ -39,6 +44,28 @@ The Developer Toolkit is the best way to get Cypress up and running on your deve
 * We recommend testing your REDCap instance by configuring an environment (close to) identical to production somewhere else.  See [How to Install](#how-to-install) for a Developer Toolkit with a preconfigured Docker container.
 
 ---
+
+# RSVC Automated Feature Tests
+
+Validated versions of core Feature Tests for REDCap LTS are posted to a GitHub repository guided by the Regulatory & Software Validation committee: 
+https://github.com/aldefouw/redcap_rsvc
+
+Check the [Releases Page](https://github.com/aldefouw/redcap_rsvc/releases) to see what versions of REDCap are available.
+
+***To install***
+
+1. Point the redcap_rsvc package at the appropriate tag - ensure tag release tag exists on the [Releases Page](https://github.com/aldefouw/redcap_rsvc/releases)!
+
+Example: 
+```
+"redcap_rsvc": "git://github.com/aldefouw/redcap_rsvc#v13.1.37-ABC"
+```
+
+2. Run the install command:
+```
+npm run redcap_rsvc:install
+```
+
 
 ## Defining Your Test Environment
 
