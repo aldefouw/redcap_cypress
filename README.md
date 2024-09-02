@@ -11,7 +11,7 @@ Powered by the **REDCap Cypress Test Framework (RCTF)**, feature test files, wri
 1. **Built-in Gherkin Steps** - documented in the [Gherkin Step Builder](https://aldefouw.github.io/redcap_cypress/)
 2. **Custom Gherkin Steps** - by creating your own step definitions in the **/support/step_definitions/** folder.
 
-
+*[RSVC Automated Feature Tests](#rsvc-automated-feature-tests) only use [built-in Gherkin Steps](https://aldefouw.github.io/redcap_cypress/), but you may add your own for institution-specific feature tests.*
 
 # Overview
 - [How to Install](#how-to-install)
@@ -23,6 +23,9 @@ Powered by the **REDCap Cypress Test Framework (RCTF)**, feature test files, wri
 - [Writing Gherkin Feature Tests](#writing-gherkin-feature-tests)
 
 # How to Install
+
+[![REDCap Cypress Developer Toolkit](https://raw.githubusercontent.com/aldefouw/redcap_cypress_docker/main/tutorial-windows.png)](https://github.com/aldefouw/redcap_cypress_docker)
+
 
 If you are a developer, please start by visiting the [REDCap Cypress Developer Toolkit](https://github.com/aldefouw/redcap_cypress_docker), located here:
 https://github.com/aldefouw/redcap_cypress_docker
