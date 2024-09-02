@@ -32,6 +32,10 @@ https://github.com/aldefouw/redcap_cypress_docker
 
 The Developer Toolkit is the best way to get Cypress up and running on your developer machine.
 
+**Want to run the automated feature tests in CI / CD pipelines?** 
+
+Take a peek at our [Circle CI YML](https://github.com/aldefouw/redcap_cypress/blob/master/.circleci/config.yml) file as an example.
+
 ---
 
 # !!!! WARNING !!!! 
