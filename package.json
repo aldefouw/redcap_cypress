@@ -5,7 +5,7 @@
   "devDependencies": {
     "cypress": "^13.15.0",
     "rctf": "git://github.com/aldefouw/rctf#v1.0.97",
-    "redcap_rsvc": "git://github.com/aldefouw/redcap_rsvc#v13.1.37"
+    "redcap_rsvc": "git://github.com/CCTC-team/redcap_rsvc#MX_v13.1.37"
   },
   "optionalDependencies": {
     "redcap_cypress_doc_theme": "git://github.com/aldefouw/redcap_cypress_doc_theme#bf84bfa"
