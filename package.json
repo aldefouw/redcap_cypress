@@ -20,7 +20,7 @@
     "reflect-metadata": "0.2.2"
   },
   "scripts": {
-    "clean": "del-cli node_modules/redcap_rsvc redcap_rsvc package-lock.json",
+    "clean": "npm install && del-cli node_modules/redcap_rsvc redcap_rsvc package-lock.json",
     "redcap_rsvc:install": "npm run clean && npm install && move-cli node_modules/redcap_rsvc ./redcap_rsvc",
     "redcap_rsvc:move_files": "del-cli ./cypress/fixtures && move-cli ./redcap_rsvc/Files ./cypress/fixtures",
     "test": "echo \"Error: no test specified\" && exit 1",
