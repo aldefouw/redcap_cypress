@@ -72,6 +72,7 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use stable
             npm run redcap_rsvc:install
+            npm run redcap_rsvc:move_files
       - run:
           name: Run Tests
           command: |
