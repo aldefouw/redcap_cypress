@@ -12,11 +12,15 @@ const BASE_DIR = path.join(__dirname, 'redcap_rsvc'); // Base directory path
 const GLOB_PATTERN = '**/*.feature'; // Glob pattern for .feature files
 
 // Function to validate a single feature file
-function validateFeatureFile(filePath) {
+function validateFeatureFile(file) {
+    const filePath = path.join(BASE_DIR, file); // Get full file path
+
     try {
         parser.convertFeatureFileToJSON(filePath)
     } catch (error) {
-        console.error(`${filePath} is invalid - contains PARSE ERRORS.`);
+        console.error('Failed to parse:', `"${file}"`)
+        console.error(error.message);
+        console.error('');
     }
 }
 
@@ -35,7 +39,6 @@ if (files.length === 0) {
 } else {
     // Validate each found feature file
     files.forEach(file => {
-        const filePath = path.join(BASE_DIR, file); // Get full file path
-        validateFeatureFile(filePath);
+        validateFeatureFile(file);
     });
 }
