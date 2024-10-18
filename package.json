@@ -5,7 +5,7 @@
   "devDependencies": {
     "cypress": "^13.15.0",
     "rctf": "git://github.com/aldefouw/rctf#v1.0.99",
-    "redcap_rsvc": "git://github.com/4bbakers/redcap_rsvc#v14.5.5",
+    "redcap_rsvc": "git://github.com/4bbakers/redcap_rsvc#v14.7.0",
     "del-cli": "^5.1.0",
     "move-cli": "^2.0.0"
   },
@@ -25,6 +25,8 @@
     "redcap_rsvc:move_files": "del-cli ./cypress/fixtures && move-cli ./redcap_rsvc/Files ./cypress/fixtures",
     "redcap_rsvc:prepare_run": "npm run redcap_rsvc:install && npm run redcap_rsvc:move_files",
     "redcap_rsvc:validate_features" : "npm install gherkin-parse glob-fs --no-save --silent --ignore-scripts && node validate_feature_files.js",
+    "rctf:test_server" : "npm install http-server --no-save --silent && npx http-server node_modules/rctf/tests/static/ -p 6060 &",
+    "rctf:run_tests" : "CYPRESS_baseUrl=http://localhost:6060 npx cypress open --env testMode=true --config specPattern=./cypress/features/*/*.spec.feature",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs:build": "npm install git://github.com/documentationjs/documentation#97e9361 --no-save && ./node_modules/.bin/documentation build ./node_modules/rctf/step_definitions/* ./node_modules/rctf/step_definitions/support/* -f html --theme node_modules/redcap_cypress_doc_theme/index.js -o docs"
   },
