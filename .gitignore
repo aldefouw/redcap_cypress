@@ -21,6 +21,7 @@ cypress.env.json
 cypress.config.js
 cypress/downloads
 cypress/results
+cypress/features/tests/*
 
 /containers
 /docker
