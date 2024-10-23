@@ -1,17 +1,5 @@
 {
   "report-dir": "./step-coverage/",
-  "include": [
-    "./node_modules/rctf/**/*.js"
-  ],
-  "exclude": [
-      "**/cypress/**",
-      "cypress/**",
-      "**/*.spec.js",
-      "**/node_modules/**",
-      "**/tests/**",
-      "**/support/**",
-      "../redcap_cypress/cypress/**"
-    ],
   "extension": [".js"],
   "reporter": ["text", "html"]
 }
