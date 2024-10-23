@@ -23,6 +23,8 @@ cypress/downloads
 cypress/results
 cypress/features/tests/*
 
+step-coverage/*
+
 /containers
 /docker
 /find
