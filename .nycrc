@@ -2,8 +2,8 @@
   "report-dir": "./step-coverage/",
   "include": [
     "**/node_modules/**",
+    "*.js"
   ],
-  "all": true,
   "extension": [".js"],
   "reporter": ["text", "html"]
 }
