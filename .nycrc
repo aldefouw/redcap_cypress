@@ -1,5 +1,8 @@
 {
   "report-dir": "./step-coverage/",
+  "include": [
+    "*.js"
+  ]
   "extension": [".js"],
   "reporter": ["text", "html"]
 }
