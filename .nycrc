@@ -1,7 +1,7 @@
 {
   "report-dir": "./step-coverage/",
   "include": [
-    "*.js"
+    "**/node_modules/**",
   ],
   "all": true,
   "extension": [".js"],
