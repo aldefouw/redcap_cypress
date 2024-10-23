@@ -25,7 +25,7 @@
     "redcap_rsvc:move_files": "del-cli ./cypress/fixtures && move-cli node_modules/redcap_rsvc ./redcap_rsvc && move-cli ./redcap_rsvc/Files ./cypress/fixtures",
     "redcap_rsvc:prepare_run": "npm run redcap_rsvc:install && npm run redcap_rsvc:move_files",
     "redcap_rsvc:validate_features": "npm install gherkin-parse glob-fs --no-save --silent --ignore-scripts && node validate_feature_files.js",
-    "rctf:test_server": "npm install http-server --no-save --silent && nohup npx http-server node_modules/rctf/tests/static/ -p 6060 > http-server.log 2>&1 &",
+    "rctf:test_server": "npm install http-server --no-save --silent && npx http-server node_modules/rctf/tests/static/ -p 6060 > http-server.log 2>&1 &",
     "rctf:get_step_features": "del-cli cypress/features/tests && cp -R ./node_modules/rctf/tests/step_features cypress/features/tests",
     "rctf:run_step_tests": "npm run rctf:get_step_features && npm run rctf:launch_tests",
     "rctf:launch_tests": "CYPRESS_prettyEnabled=true CYPRESS_baseUrl=http://localhost:6060 npx cypress run --env testMode=true --config specPattern=./cypress/features/tests/*/*.spec.feature --browser chrome",
