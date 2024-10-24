@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redcap="https://projectredcap.org" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.3 schema/odm/ODM1-3-1.xsd" ODMVersion="1.3.1" FileOID="000-00-0000" FileType="Snapshot" Description="24 eConsent no setup" AsOfDateTime="2024-05-31T11:33:30" CreationDateTime="2024-05-31T11:33:30" SourceSystem="REDCap" SourceSystemVersion="14.4.0">
+<Study OID="Project.24EConsentNoSetup">
+<GlobalVariables>
+	<StudyName>24 eConsent no setup</StudyName>
+	<StudyDescription>This file contains the metadata, events, and data for REDCap project "24 eConsent no setup".</StudyDescription>
+	<ProtocolName>24 eConsent no setup</ProtocolName>
+	<redcap:RecordAutonumberingEnabled>1</redcap:RecordAutonumberingEnabled>
+	<redcap:CustomRecordLabel>[user-dag-label]</redcap:CustomRecordLabel>
+	<redcap:SecondaryUniqueField></redcap:SecondaryUniqueField>
+	<redcap:SecondaryUniqueFieldDisplayValue>1</redcap:SecondaryUniqueFieldDisplayValue>
+	<redcap:SecondaryUniqueFieldDisplayLabel>1</redcap:SecondaryUniqueFieldDisplayLabel>
+	<redcap:SchedulingEnabled>1</redcap:SchedulingEnabled>
+	<redcap:SurveysEnabled>1</redcap:SurveysEnabled>
+	<redcap:SurveyInvitationEmailField>email</redcap:SurveyInvitationEmailField>
+	<redcap:DisplayTodayNowButton>1</redcap:DisplayTodayNowButton>
+	<redcap:PreventBranchingEraseValues>0</redcap:PreventBranchingEraseValues>
+	<redcap:RequireChangeReason>0</redcap:RequireChangeReason>
+	<redcap:DataHistoryPopup>1</redcap:DataHistoryPopup>
+	<redcap:OrderRecordsByField></redcap:OrderRecordsByField>
+	<redcap:MyCapEnabled>0</redcap:MyCapEnabled>
+	<redcap:Purpose>0</redcap:Purpose>
+	<redcap:PurposeOther></redcap:PurposeOther>
+	<redcap:ProjectNotes></redcap:ProjectNotes>
+	<redcap:SurveyAuthEnabled>0</redcap:SurveyAuthEnabled>
+	<redcap:SurveyAuthField1></redcap:SurveyAuthField1>
+	<redcap:SurveyAuthEvent1></redcap:SurveyAuthEvent1>
+	<redcap:SurveyAuthField2></redcap:SurveyAuthField2>
+	<redcap:SurveyAuthEvent2></redcap:SurveyAuthEvent2>
+	<redcap:SurveyAuthField3></redcap:SurveyAuthField3>
+	<redcap:SurveyAuthEvent3></redcap:SurveyAuthEvent3>
+	<redcap:SurveyAuthMinFields></redcap:SurveyAuthMinFields>
+	<redcap:SurveyAuthApplyAllSurveys>1</redcap:SurveyAuthApplyAllSurveys>
+	<redcap:SurveyAuthCustomMessage></redcap:SurveyAuthCustomMessage>
+	<redcap:SurveyAuthFailLimit></redcap:SurveyAuthFailLimit>
+	<redcap:SurveyAuthFailWindow></redcap:SurveyAuthFailWindow>
+	<redcap:MissingDataCodes></redcap:MissingDataCodes>
+	<redcap:ProtectedEmailMode>0</redcap:ProtectedEmailMode>
+	<redcap:ProtectedEmailModeCustomText>REDCap Secure Messaging</redcap:ProtectedEmailModeCustomText>
+	<redcap:ProtectedEmailModeTrigger>ALL</redcap:ProtectedEmailModeTrigger>
+	<redcap:ProtectedEmailModeLogo></redcap:ProtectedEmailModeLogo>
+	<redcap:RepeatingInstrumentsAndEvents>
+		<redcap:RepeatingEvent redcap:UniqueEventName="event_2_arm_1"/>
+	</redcap:RepeatingInstrumentsAndEvents>
+	<redcap:DataAccessGroupsGroup>
+		<redcap:DataAccessGroups group_name="TestGroup1"/>
+		<redcap:DataAccessGroups group_name="TestGroup2"/>
+	</redcap:DataAccessGroupsGroup>
+	<redcap:SurveysGroup>
+		<redcap:Surveys form_name="participant_consent" title="Participant Consent" instructions="&lt;p&gt;&lt;strong&gt;Please complete the survey below.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Thank you!&lt;/p&gt;" offline_instructions="" acknowledgement="&lt;p&gt;&lt;strong&gt;Thank you for taking the survey.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Have a nice day!&lt;/p&gt;" stop_action_acknowledgement="" stop_action_delete_response="0" question_by_section="0" display_page_number="0" question_auto_numbering="1" survey_enabled="1" save_and_return="0" save_and_return_code_bypass="0" logo="" hide_title="0" view_results="0" min_responses_view_results="10" check_diversity_view_results="0" end_survey_redirect_url="" survey_expiration="" promis_skip_question="0" survey_auth_enabled_single="0" edit_completed_response="0" hide_back_button="0" show_required_field_text="1" confirmation_email_subject="" confirmation_email_content="" confirmation_email_from="" confirmation_email_from_display="" confirmation_email_attach_pdf="0" confirmation_email_attachment="" text_to_speech="0" text_to_speech_language="en" end_survey_redirect_next_survey="0" end_survey_redirect_next_survey_logic="" theme="" text_size="1" font_family="16" theme_text_buttons="" theme_bg_page="" theme_text_title="" theme_bg_title="" theme_text_sectionheader="" theme_bg_sectionheader="" theme_text_question="" theme_bg_question="" enhanced_choices="0" repeat_survey_enabled="0" repeat_survey_btn_text="" repeat_survey_btn_location="BEFORE_SUBMIT" response_limit="" response_limit_include_partials="1" response_limit_custom_text="&lt;p&gt;Thank you for your interest; however, the survey is closed because the maximum number of responses has been reached.&lt;/p&gt;" survey_time_limit_days="" survey_time_limit_hours="" survey_time_limit_minutes="" email_participant_field="" end_of_survey_pdf_download="0" pdf_save_to_field="" pdf_save_to_event_id="" pdf_save_translated="0" pdf_auto_archive="0" pdf_econsent_version="" pdf_econsent_type="" pdf_econsent_firstname_field="" pdf_econsent_firstname_event_id="" pdf_econsent_lastname_field="" pdf_econsent_lastname_event_id="" pdf_econsent_dob_field="" pdf_econsent_dob_event_id="" pdf_econsent_allow_edit="0" pdf_econsent_signature_field1="" pdf_econsent_signature_field2="" pdf_econsent_signature_field3="" pdf_econsent_signature_field4="" pdf_econsent_signature_field5="" survey_width_percent="" survey_show_font_resize="1" survey_btn_text_prev_page="" survey_btn_text_next_page="" survey_btn_text_submit="" survey_btn_hide_submit="0" survey_btn_hide_submit_logic=""/>
+		<redcap:Surveys form_name="coordinator_signature" title="Coordinator Signature" instructions="&lt;p&gt;&lt;strong&gt;Please complete the survey below.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Thank you!&lt;/p&gt;" offline_instructions="" acknowledgement="&lt;p&gt;&lt;strong&gt;Thank you for taking the survey.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Have a nice day!&lt;/p&gt;" stop_action_acknowledgement="" stop_action_delete_response="0" question_by_section="0" display_page_number="0" question_auto_numbering="1" survey_enabled="1" save_and_return="0" save_and_return_code_bypass="0" logo="" hide_title="0" view_results="0" min_responses_view_results="10" check_diversity_view_results="0" end_survey_redirect_url="" survey_expiration="" promis_skip_question="0" survey_auth_enabled_single="0" edit_completed_response="0" hide_back_button="0" show_required_field_text="1" confirmation_email_subject="" confirmation_email_content="" confirmation_email_from="" confirmation_email_from_display="" confirmation_email_attach_pdf="0" confirmation_email_attachment="" text_to_speech="0" text_to_speech_language="en" end_survey_redirect_next_survey="0" end_survey_redirect_next_survey_logic="" theme="" text_size="1" font_family="16" theme_text_buttons="" theme_bg_page="" theme_text_title="" theme_bg_title="" theme_text_sectionheader="" theme_bg_sectionheader="" theme_text_question="" theme_bg_question="" enhanced_choices="0" repeat_survey_enabled="0" repeat_survey_btn_text="" repeat_survey_btn_location="BEFORE_SUBMIT" response_limit="" response_limit_include_partials="1" response_limit_custom_text="&lt;p&gt;Thank you for your interest; however, the survey is closed because the maximum number of responses has been reached.&lt;/p&gt;" survey_time_limit_days="" survey_time_limit_hours="" survey_time_limit_minutes="" email_participant_field="" end_of_survey_pdf_download="0" pdf_save_to_field="" pdf_save_to_event_id="" pdf_save_translated="0" pdf_auto_archive="0" pdf_econsent_version="" pdf_econsent_type="" pdf_econsent_firstname_field="" pdf_econsent_firstname_event_id="" pdf_econsent_lastname_field="" pdf_econsent_lastname_event_id="" pdf_econsent_dob_field="" pdf_econsent_dob_event_id="" pdf_econsent_allow_edit="0" pdf_econsent_signature_field1="" pdf_econsent_signature_field2="" pdf_econsent_signature_field3="" pdf_econsent_signature_field4="" pdf_econsent_signature_field5="" survey_width_percent="" survey_show_font_resize="1" survey_btn_text_prev_page="" survey_btn_text_next_page="" survey_btn_text_submit="" survey_btn_hide_submit="0" survey_btn_hide_submit_logic=""/>
+	</redcap:SurveysGroup>
+	<redcap:UserRolesGroup>
+		<redcap:UserRoles role_name="1_FullRights" unique_role_name="U-641DLAC49L" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[text_validation,1][data_types,1][survey,1][consent,1][consent_2,1]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[text_validation,1][data_types,1][survey,3][consent,3][consent_2,1]" api_export="0" api_import="0" api_modules="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+		<redcap:UserRoles role_name="2_Edit_RemoveID" unique_role_name="U-8349LFKRRM" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[text_validation,3][data_types,3][survey,3][consent,3]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[text_validation,1][data_types,1][survey,3][consent,3]" api_export="0" api_import="0" api_modules="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+		<redcap:UserRoles role_name="3_ReadOnly_Deidentified" unique_role_name="U-378T4PJ39L" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[text_validation,2][data_types,2][survey,2][consent,2]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[text_validation,2][data_types,2][survey,2][consent,2]" api_export="0" api_import="0" api_modules="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+		<redcap:UserRoles role_name="4_NoAccess_Noexport" unique_role_name="U-817YYNT9RM" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[text_validation,0][data_types,0][survey,0][consent,0]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[text_validation,0][data_types,0][survey,0][consent,0]" api_export="0" api_import="0" api_modules="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+		<redcap:UserRoles role_name="TestRole" unique_role_name="U-523YNH3DEY" lock_record="0" lock_record_multiform="0" lock_record_customize="1" data_export_tool="" data_export_instruments="[text_validation,1][data_types,1][survey,1][consent,1]" data_import_tool="1" data_comparison_tool="1" data_logging="1" file_repository="1" double_data="0" user_rights="1" data_access_groups="1" graphical="1" reports="1" design="1" alerts="1" calendar="1" data_entry="[text_validation,1][data_types,1]" api_export="0" api_import="0" api_modules="0" mobile_app="0" mobile_app_download_data="0" record_create="1" record_rename="1" record_delete="1" dts="0" participants="1" data_quality_design="1" data_quality_execute="1" data_quality_resolution="1" random_setup="1" random_dashboard="1" random_perform="1" realtime_webservice_mapping="0" realtime_webservice_adjudicate="0" external_module_config="" mycap_participants="1"/>
+	</redcap:UserRolesGroup>
+	<redcap:ReportsGroup>
+		<redcap:Reports title="Test Report" unique_report_name="R-153R3EA4W3" report_order="1" user_access="ALL" user_edit_access="ALL" description="" combine_checkbox_values="0" output_dags="0" output_survey_fields="0" output_missing_data_codes="0" remove_line_breaks_in_values="1" orderby_field1="record_id" orderby_sort1="ASC" orderby_field2="" orderby_sort2="" orderby_field3="" orderby_sort3="" advanced_logic="" filter_type="RECORD" dynamic_filter1="" dynamic_filter2="" dynamic_filter3="" hash="" short_url="" is_public="0" report_display_include_repeating_fields="1" report_display_header="BOTH" report_display_data="BOTH" limiter_logic="" redcap_reports_fields="record_id" redcap_reports_filter_dags="" redcap_reports_filter_events="" ID="d0a54d25d6d76d15daa175979eda75cd9fd411b3"/>
+	</redcap:ReportsGroup>
+</GlobalVariables>
+<MetaDataVersion OID="Metadata.24EConsentNoSetup_2024-05-31_1133" Name="24 eConsent no setup" redcap:RecordIdField="record_id">
+	<Protocol>
+		<StudyEventRef StudyEventOID="Event.event_1_arm_1" OrderNumber="1" Mandatory="No"/>
+		<StudyEventRef StudyEventOID="Event.event_2_arm_1" OrderNumber="2" Mandatory="No"/>
+		<StudyEventRef StudyEventOID="Event.event_three_arm_1" OrderNumber="3" Mandatory="No"/>
+		<StudyEventRef StudyEventOID="Event.event_1_arm_2" OrderNumber="4" Mandatory="No"/>
+	</Protocol>
+	<StudyEventDef OID="Event.event_1_arm_1" Name="Event 1 (Arm 1: Arm 1)" Type="Common" Repeating="No" redcap:EventName="Event 1" redcap:CustomEventLabel="" redcap:UniqueEventName="event_1_arm_1" redcap:ArmNum="1" redcap:ArmName="Arm 1" redcap:DayOffset="1" redcap:OffsetMin="0" redcap:OffsetMax="0">
+		<FormRef FormOID="Form.participant_consent" OrderNumber="1" Mandatory="No" redcap:FormName="participant_consent"/>
+		<FormRef FormOID="Form.coordinator_signature" OrderNumber="2" Mandatory="No" redcap:FormName="coordinator_signature"/>
+		<FormRef FormOID="Form.pdfs_and_combined_signatures_pdf" OrderNumber="3" Mandatory="No" redcap:FormName="pdfs_and_combined_signatures_pdf"/>
+	</StudyEventDef>
+	<StudyEventDef OID="Event.event_2_arm_1" Name="Event 2 (Arm 1: Arm 1)" Type="Common" Repeating="Yes" redcap:EventName="Event 2" redcap:CustomEventLabel="" redcap:UniqueEventName="event_2_arm_1" redcap:ArmNum="1" redcap:ArmName="Arm 1" redcap:DayOffset="2" redcap:OffsetMin="0" redcap:OffsetMax="0">
+	</StudyEventDef>
+	<StudyEventDef OID="Event.event_three_arm_1" Name="Event Three (Arm 1: Arm 1)" Type="Common" Repeating="No" redcap:EventName="Event Three" redcap:CustomEventLabel="" redcap:UniqueEventName="event_three_arm_1" redcap:ArmNum="1" redcap:ArmName="Arm 1" redcap:DayOffset="3" redcap:OffsetMin="0" redcap:OffsetMax="0">
+		<FormRef FormOID="Form.participant_consent" OrderNumber="1" Mandatory="No" redcap:FormName="participant_consent"/>
+		<FormRef FormOID="Form.coordinator_signature" OrderNumber="2" Mandatory="No" redcap:FormName="coordinator_signature"/>
+		<FormRef FormOID="Form.pdfs_and_combined_signatures_pdf" OrderNumber="3" Mandatory="No" redcap:FormName="pdfs_and_combined_signatures_pdf"/>
+	</StudyEventDef>
+	<StudyEventDef OID="Event.event_1_arm_2" Name="Event 1 (Arm 2: Arm Two)" Type="Common" Repeating="No" redcap:EventName="Event 1" redcap:CustomEventLabel="" redcap:UniqueEventName="event_1_arm_2" redcap:ArmNum="2" redcap:ArmName="Arm Two" redcap:DayOffset="1" redcap:OffsetMin="0" redcap:OffsetMax="0">
+	</StudyEventDef>
+	<FormDef OID="Form.participant_consent" Name="Participant Consent" Repeating="No" redcap:FormName="participant_consent">
+		<ItemGroupRef ItemGroupOID="participant_consent.record_id" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="participant_consent.participant_consent_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.coordinator_signature" Name="Coordinator Signature" Repeating="No" redcap:FormName="coordinator_signature">
+		<ItemGroupRef ItemGroupOID="coordinator_signature.note" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="coordinator_signature.coordinator_signature_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.pdfs_and_combined_signatures_pdf" Name="Pdfs And Combined Signatures Pdf" Repeating="No" redcap:FormName="pdfs_and_combined_signatures_pdf">
+		<ItemGroupRef ItemGroupOID="pdfs_and_combined_signatures_pdf.participant_file" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="pdfs_and_combined_signatures_pdf.pdfs_and_combined_signatures_pdf_complete" Mandatory="No"/>
+	</FormDef>
+	<ItemGroupDef OID="participant_consent.record_id" Name="Participant Consent" Repeating="No">
+		<ItemRef ItemOID="record_id" Mandatory="No" redcap:Variable="record_id"/>
+		<ItemRef ItemOID="date" Mandatory="No" redcap:Variable="date"/>
+		<ItemRef ItemOID="f_name" Mandatory="No" redcap:Variable="f_name"/>
+		<ItemRef ItemOID="l_name" Mandatory="No" redcap:Variable="l_name"/>
+		<ItemRef ItemOID="dob" Mandatory="No" redcap:Variable="dob"/>
+		<ItemRef ItemOID="email" Mandatory="No" redcap:Variable="email"/>
+		<ItemRef ItemOID="who" Mandatory="No" redcap:Variable="who"/>
+		<ItemRef ItemOID="consent_file" Mandatory="No" redcap:Variable="consent_file"/>
+		<ItemRef ItemOID="type_sign1" Mandatory="Yes" redcap:Variable="type_sign1"/>
+		<ItemRef ItemOID="part_sign" Mandatory="Yes" redcap:Variable="part_sign"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="participant_consent.participant_consent_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="participant_consent_complete" Mandatory="No" redcap:Variable="participant_consent_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="coordinator_signature.note" Name="Coordinator Signature" Repeating="No">
+		<ItemRef ItemOID="note" Mandatory="No" redcap:Variable="note"/>
+		<ItemRef ItemOID="type_sign_2" Mandatory="Yes" redcap:Variable="type_sign_2"/>
+		<ItemRef ItemOID="coo_sign1" Mandatory="Yes" redcap:Variable="coo_sign1"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="coordinator_signature.coordinator_signature_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="coordinator_signature_complete" Mandatory="No" redcap:Variable="coordinator_signature_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="pdfs_and_combined_signatures_pdf.participant_file" Name="Pdfs And Combined Signatures Pdf" Repeating="No">
+		<ItemRef ItemOID="participant_file" Mandatory="No" redcap:Variable="participant_file"/>
+		<ItemRef ItemOID="coo_sign" Mandatory="No" redcap:Variable="coo_sign"/>
+		<ItemRef ItemOID="combo_file" Mandatory="No" redcap:Variable="combo_file"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="pdfs_and_combined_signatures_pdf.pdfs_and_combined_signatures_pdf_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="pdfs_and_combined_signatures_pdf_complete" Mandatory="No" redcap:Variable="pdfs_and_combined_signatures_pdf_complete"/>
+	</ItemGroupDef>
+	<ItemDef OID="record_id" Name="record_id" DataType="text" Length="999" redcap:Variable="record_id" redcap:FieldType="text">
+		<Question><TranslatedText>Record ID</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="date" Name="date" DataType="date" Length="999" redcap:Variable="date" redcap:FieldType="text" redcap:TextValidationType="date_ymd" redcap:FieldAnnotation="@TODAY">
+		<Question><TranslatedText>date</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="f_name" Name="f_name" DataType="text" Length="999" redcap:Variable="f_name" redcap:FieldType="text">
+		<Question><TranslatedText>f name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="l_name" Name="l_name" DataType="text" Length="999" redcap:Variable="l_name" redcap:FieldType="text">
+		<Question><TranslatedText>l name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="dob" Name="dob" DataType="date" Length="999" redcap:Variable="dob" redcap:FieldType="text" redcap:TextValidationType="date_dmy" redcap:FieldAnnotation="@TODAY">
+		<Question><TranslatedText>Date of Birth</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="email" Name="email" DataType="text" Length="999" redcap:Variable="email" redcap:FieldType="text" redcap:TextValidationType="email" redcap:FieldAnnotation="@DEFAULT=&quot;email@test.edu&quot;">
+		<Question><TranslatedText>email</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="who" Name="who" DataType="text" Length="1" redcap:Variable="who" redcap:FieldType="radio">
+		<Question><TranslatedText>Who is Signing</TranslatedText></Question>
+		<CodeListRef CodeListOID="who.choices"/>
+	</ItemDef>
+	<ItemDef OID="consent_file" Name="consent_file" DataType="text" Length="999" redcap:Variable="consent_file" redcap:FieldType="descriptive">
+		<Question><TranslatedText>Consent file</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="type_sign1" Name="type_sign1" DataType="text" Length="999" redcap:Variable="type_sign1" redcap:FieldType="text" redcap:RequiredField="y" redcap:FieldAnnotation="DEFAULT=&#039;MyName&#039;">
+		<Question><TranslatedText>Participant&#039;s Name Typed</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="part_sign" Name="part_sign" DataType="text" Length="999" redcap:Variable="part_sign" redcap:FieldType="file" redcap:TextValidationType="signature" redcap:RequiredField="y">
+		<Question><TranslatedText>Participant signature field</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="participant_consent_complete" Name="participant_consent_complete" DataType="text" Length="1" redcap:Variable="participant_consent_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="participant_consent_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="note" Name="note" DataType="text" Length="999" redcap:Variable="note" redcap:FieldType="textarea">
+		<Question><TranslatedText>note</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="type_sign_2" Name="type_sign_2" DataType="text" Length="999" redcap:Variable="type_sign_2" redcap:FieldType="text" redcap:RequiredField="y">
+		<Question><TranslatedText>Coordinator&#039;s Name Typed</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="coo_sign1" Name="coo_sign1" DataType="text" Length="999" redcap:Variable="coo_sign1" redcap:FieldType="file" redcap:TextValidationType="signature" redcap:Identifier="y" redcap:RequiredField="y">
+		<Question><TranslatedText>Coordinator&#039;s Signature</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="coordinator_signature_complete" Name="coordinator_signature_complete" DataType="text" Length="1" redcap:Variable="coordinator_signature_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="coordinator_signature_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="participant_file" Name="participant_file" DataType="text" Length="999" redcap:Variable="participant_file" redcap:FieldType="file">
+		<Question><TranslatedText>Participant Consent file</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="coo_sign" Name="coo_sign" DataType="text" Length="999" redcap:Variable="coo_sign" redcap:FieldType="file">
+		<Question><TranslatedText>Coordinator Signature file</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="combo_file" Name="combo_file" DataType="text" Length="999" redcap:Variable="combo_file" redcap:FieldType="file">
+		<Question><TranslatedText>Combine both files together</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="pdfs_and_combined_signatures_pdf_complete" Name="pdfs_and_combined_signatures_pdf_complete" DataType="text" Length="1" redcap:Variable="pdfs_and_combined_signatures_pdf_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="pdfs_and_combined_signatures_pdf_complete.choices"/>
+	</ItemDef>
+	<CodeList OID="who.choices" Name="who" DataType="text" redcap:Variable="who">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>participant</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>parent</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="participant_consent_complete.choices" Name="participant_consent_complete" DataType="text" redcap:Variable="participant_consent_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="coordinator_signature_complete.choices" Name="coordinator_signature_complete" DataType="text" redcap:Variable="coordinator_signature_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="pdfs_and_combined_signatures_pdf_complete.choices" Name="pdfs_and_combined_signatures_pdf_complete" DataType="text" redcap:Variable="pdfs_and_combined_signatures_pdf_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+</MetaDataVersion>
+</Study>
+</ODM>
