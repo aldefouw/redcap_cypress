@@ -32,7 +32,7 @@
     "rctf:run_step_tests": "npm run rctf:get_step_features && npm run rctf:launch_tests",
     "rctf:run_official_step_tests": "npm run rctf:get_step_features && npm run rctf:official_tests",
     "rctf:launch_tests": "CYPRESS_prettyEnabled=true CYPRESS_baseUrl=http://localhost:6060 npx cypress run --env testMode=true --config specPattern=./cypress/features/tests/*/*.spec.feature --browser chrome",
-    "rctf:official_tests": "CYPRESS_VIDEO=false CYPRESS_prettyEnabled=true CYPRESS_baseUrl=http://localhost:6060 npx cypress run --env testMode=true --config specPattern=./cypress/features/tests/*/*.spec.feature --record --key $RECORD_KEY --parallel --group rctf_steps --browser chrome",
+    "rctf:official_tests": "npm run rctf:get_step_features && CYPRESS_VIDEO=false CYPRESS_prettyEnabled=true CYPRESS_baseUrl=http://localhost:6060 npx cypress run --env testMode=true --config specPattern=./cypress/features/tests/*/*.spec.feature  --browser chrome",
     "rctf:write_step_tests": "npm run rctf:get_step_features && CYPRESS_baseUrl=http://localhost:6060 npx cypress open --env testMode=true --config specPattern=./cypress/features/tests/*/*.spec.feature",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs:build": "npm install git://github.com/documentationjs/documentation#97e9361 --no-save && ./node_modules/.bin/documentation build ./node_modules/rctf/step_definitions/* ./node_modules/rctf/step_definitions/support/* -f html --theme node_modules/redcap_cypress_doc_theme/index.js -o docs"
