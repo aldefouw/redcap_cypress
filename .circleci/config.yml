@@ -77,6 +77,7 @@ jobs:
           command: |
             mv node_modules/rctf/ rctf/
             cd rctf
+            npm install
             npm link
             cd ..
             npm link rctf
