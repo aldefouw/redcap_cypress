@@ -72,6 +72,11 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use stable
             npm run redcap_rsvc:install
+            mv node_modules/rctf/ rctf/
+            cd rctf
+            npm link
+            cd ..
+            npm link rctf
       - run:
           name: Run Tests
           command: |
