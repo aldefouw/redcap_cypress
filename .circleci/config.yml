@@ -72,14 +72,14 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use stable
             npm run redcap_rsvc:install
+      - run:
+          name: Run Tests
+          command: |
             mv node_modules/rctf/ rctf/
             cd rctf
             npm link
             cd ..
             npm link rctf
-      - run:
-          name: Run Tests
-          command: |
             CYPRESS_prettyEnabled=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
       - run:
           name: Coverage Report
