@@ -6,8 +6,8 @@
     "cypress": "^13.14.1",
     "del-cli": "^5.1.0",
     "move-cli": "^2.0.0",
-    "rctf": "github:schatto1/rctf",
-    "redcap_rsvc": "git://github.com/schatto1/redcap_rsvc/tree/v14.7.0"
+    "rctf": "github:schatto1/rctf#utah-v14.5.5",
+    "redcap_rsvc": "git://github.com/schatto1/redcap_rsvc/tree/utah-v14.5.5"
   },
   "optionalDependencies": {
     "redcap_cypress_doc_theme": "git://github.com/aldefouw/redcap_cypress_doc_theme#bf84bfa"
