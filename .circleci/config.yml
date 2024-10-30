@@ -83,6 +83,7 @@ jobs:
             npm link rctf
             npm run redcap_rsvc:single_test
 #           npm run rctf:run_official_step_tests
+            npm run redcap_rsvc:run_official_tests
       - run:
           name: Coverage Report
           command: |
