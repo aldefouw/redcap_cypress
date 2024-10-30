@@ -81,6 +81,9 @@ jobs:
             npm link
             cd ..
             npm link rctf
+            npm run rctf:test_server
+            npm run rctf:run_official_step_tests
+            rm .nyc_output/out.json
             npm run redcap_rsvc:single_test
 #           npm run redcap_rsvc:run_official_tests
       - run:
