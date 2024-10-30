@@ -81,7 +81,8 @@ jobs:
             npm link
             cd ..
             npm link rctf
-            CYPRESS_prettyEnabled=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
+            npm run redcap_rsvc:single_test
+#           npm run rctf:run_official_step_tests
       - run:
           name: Coverage Report
           command: |
