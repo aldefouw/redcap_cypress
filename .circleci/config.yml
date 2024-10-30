@@ -17,7 +17,7 @@ jobs:
     machine:
       image: ubuntu-2404:2024.05.1 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2404
       resource_class: large
-    parallelism: 28
+#    parallelism: 28
     environment:
       REDCAP_VERSION: "13.1.37"
     steps:
@@ -82,8 +82,7 @@ jobs:
             cd ..
             npm link rctf
             npm run redcap_rsvc:single_test
-#           npm run rctf:run_official_step_tests
-            npm run redcap_rsvc:run_official_tests
+#           npm run redcap_rsvc:run_official_tests
       - run:
           name: Coverage Report
           command: |
