@@ -3,9 +3,11 @@
   "version": "13.1.37",
   "description": "This repository is a template to assist you in writing **automated tests for REDCap**.",
   "devDependencies": {
-    "cypress": "^13.13.1",
-    "rctf": "git://github.com/aldefouw/rctf#v1.0.94",
-    "redcap_rsvc": "git://github.com/aldefouw/redcap_rsvc#v13.1.37"
+    "cypress": "^13.14.1",
+    "del-cli": "^5.1.0",
+    "move-cli": "^2.0.0",
+    "rctf": "github:aldefouw/rctf#v1.0.98",
+    "redcap_rsvc": "git://github.com/aldefouw/redcap_rsvc#v13.1.37-ABC"
   },
   "optionalDependencies": {
     "redcap_cypress_doc_theme": "git://github.com/aldefouw/redcap_cypress_doc_theme#bf84bfa"
@@ -18,7 +20,13 @@
     "reflect-metadata": "0.2.2"
   },
   "scripts": {
-    "redcap_rsvc:install": "npm install && mv node_modules/redcap_rsvc ./redcap_rsvc",
+    "clean": "npm install && del-cli node_modules/redcap_rsvc redcap_rsvc package-lock.json",
+    "redcap_rsvc:install": "npm run clean && npm install && move-cli node_modules/redcap_rsvc ./redcap_rsvc",
+    "redcap_rsvc:move_files": "del-cli ./cypress/fixtures && move-cli ./redcap_rsvc/Files ./cypress/fixtures",
+    "redcap_rsvc:prepare_run": "npm run redcap_rsvc:install && npm run redcap_rsvc:move_files",
+    "redcap_rsvc:validate_features" : "npm install gherkin-parse glob-fs --no-save --silent --ignore-scripts && node validate_feature_files.js",
+    "rctf:test_server" : "npm install http-server --no-save --silent && npx http-server node_modules/rctf/tests/static/ -p 6060 &",
+    "rctf:run_tests" : "CYPRESS_baseUrl=http://localhost:6060 npx cypress open --env testMode=true --config specPattern=./cypress/features/*/*.spec.feature",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs:build": "npm install git://github.com/documentationjs/documentation#97e9361 --no-save && ./node_modules/.bin/documentation build ./node_modules/rctf/step_definitions/* ./node_modules/rctf/step_definitions/support/* -f html --theme node_modules/redcap_cypress_doc_theme/index.js -o docs"
   },
