@@ -11,7 +11,7 @@ workflows:
           context: HTML Reports
           requires:
             - run-tests
-            
+
 jobs:
   run-tests:
     machine:
@@ -71,6 +71,7 @@ jobs:
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use stable
+            npm install
             npm run redcap_rsvc:install
       - run:
           name: Run Tests
