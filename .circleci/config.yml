@@ -19,7 +19,7 @@ jobs:
       resource_class: large
     parallelism: 28
     environment:
-      REDCAP_VERSION: "14.7.0"
+      REDCAP_VERSION: "13.1.37"
     steps:
       - checkout
       - run:
