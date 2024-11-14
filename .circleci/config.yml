@@ -17,9 +17,9 @@ jobs:
     machine:
       image: ubuntu-2404:2024.05.1 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2404
       resource_class: large
-#    parallelism: 28
+    parallelism: 28
     environment:
-      REDCAP_VERSION: "13.1.37"
+      REDCAP_VERSION: "14.7.0"
     steps:
       - checkout
       - run:
@@ -71,21 +71,12 @@ jobs:
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm use stable
+            npm install
             npm run redcap_rsvc:install
       - run:
           name: Run Tests
           command: |
-            mv node_modules/rctf/ rctf/
-            cd rctf
-            npm install
-            npm link
-            cd ..
-            npm link rctf
-            npm run rctf:test_server
-            npm run rctf:run_official_step_tests
-            rm .nyc_output/out.json
-            npm run redcap_rsvc:single_test
-#           npm run redcap_rsvc:run_official_tests
+            CYPRESS_prettyEnabled=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
       - run:
           name: Coverage Report
           command: |
