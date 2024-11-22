@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redcap="https://projectredcap.org" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.3 schema/odm/ODM1-3-1.xsd" ODMVersion="1.3.1" FileOID="000-00-0000" FileType="Snapshot" Description="Big Data Test Project" AsOfDateTime="2023-06-02T10:05:09" CreationDateTime="2023-06-02T10:05:09" SourceSystem="REDCap" SourceSystemVersion="13.4.8">
+<Study OID="Project.BigDataTestProject">
+<GlobalVariables>
+	<StudyName>Big Data Test Project</StudyName>
+	<StudyDescription>This file contains the metadata, events, and data for REDCap project "Big Data Test Project".</StudyDescription>
+	<ProtocolName>Big Data Test Project</ProtocolName>
+	<redcap:RecordAutonumberingEnabled>1</redcap:RecordAutonumberingEnabled>
+	<redcap:CustomRecordLabel></redcap:CustomRecordLabel>
+	<redcap:SecondaryUniqueField></redcap:SecondaryUniqueField>
+	<redcap:SchedulingEnabled>0</redcap:SchedulingEnabled>
+	<redcap:SurveysEnabled>0</redcap:SurveysEnabled>
+	<redcap:SurveyInvitationEmailField></redcap:SurveyInvitationEmailField>
+	<redcap:DisplayTodayNowButton>1</redcap:DisplayTodayNowButton>
+	<redcap:PreventBranchingEraseValues>0</redcap:PreventBranchingEraseValues>
+	<redcap:RequireChangeReason>0</redcap:RequireChangeReason>
+	<redcap:DataHistoryPopup>1</redcap:DataHistoryPopup>
+	<redcap:OrderRecordsByField></redcap:OrderRecordsByField>
+	<redcap:MyCapEnabled>0</redcap:MyCapEnabled>
+	<redcap:Purpose>0</redcap:Purpose>
+	<redcap:PurposeOther></redcap:PurposeOther>
+	<redcap:ProjectNotes></redcap:ProjectNotes>
+	<redcap:MissingDataCodes></redcap:MissingDataCodes>
+	<redcap:ProtectedEmailMode>0</redcap:ProtectedEmailMode>
+	<redcap:ProtectedEmailModeCustomText></redcap:ProtectedEmailModeCustomText>
+	<redcap:ProtectedEmailModeTrigger>ALL</redcap:ProtectedEmailModeTrigger>
+	<redcap:ProtectedEmailModeLogo></redcap:ProtectedEmailModeLogo>
+</GlobalVariables>
+<MetaDataVersion OID="Metadata.BigDataTestProject_2023-06-02_1005" Name="Big Data Test Project" redcap:RecordIdField="record_id">
+	<FormDef OID="Form.form_1" Name="Form 1" Repeating="No" redcap:FormName="form_1">
+		<ItemGroupRef ItemGroupOID="form_1.record_id" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="form_1.form_1_complete" Mandatory="No"/>
+	</FormDef>
+	<ItemGroupDef OID="form_1.record_id" Name="Form 1" Repeating="No">
+		<ItemRef ItemOID="record_id" Mandatory="No" redcap:Variable="record_id"/>
+		<ItemRef ItemOID="field_1" Mandatory="No" redcap:Variable="field_1"/>
+		<ItemRef ItemOID="field_2" Mandatory="No" redcap:Variable="field_2"/>
+		<ItemRef ItemOID="field_3" Mandatory="No" redcap:Variable="field_3"/>
+		<ItemRef ItemOID="field_4" Mandatory="No" redcap:Variable="field_4"/>
+		<ItemRef ItemOID="field_5" Mandatory="No" redcap:Variable="field_5"/>
+		<ItemRef ItemOID="field_6" Mandatory="No" redcap:Variable="field_6"/>
+		<ItemRef ItemOID="field_7" Mandatory="No" redcap:Variable="field_7"/>
+		<ItemRef ItemOID="field_8" Mandatory="No" redcap:Variable="field_8"/>
+		<ItemRef ItemOID="field_9" Mandatory="No" redcap:Variable="field_9"/>
+		<ItemRef ItemOID="field_10" Mandatory="No" redcap:Variable="field_10"/>
+		<ItemRef ItemOID="field_11" Mandatory="No" redcap:Variable="field_11"/>
+		<ItemRef ItemOID="field_12" Mandatory="No" redcap:Variable="field_12"/>
+		<ItemRef ItemOID="field_13" Mandatory="No" redcap:Variable="field_13"/>
+		<ItemRef ItemOID="field_14" Mandatory="No" redcap:Variable="field_14"/>
+		<ItemRef ItemOID="field_15" Mandatory="No" redcap:Variable="field_15"/>
+		<ItemRef ItemOID="field_16" Mandatory="No" redcap:Variable="field_16"/>
+		<ItemRef ItemOID="field_17" Mandatory="No" redcap:Variable="field_17"/>
+		<ItemRef ItemOID="field_18" Mandatory="No" redcap:Variable="field_18"/>
+		<ItemRef ItemOID="field_19" Mandatory="No" redcap:Variable="field_19"/>
+		<ItemRef ItemOID="field_20" Mandatory="No" redcap:Variable="field_20"/>
+		<ItemRef ItemOID="field_21" Mandatory="No" redcap:Variable="field_21"/>
+		<ItemRef ItemOID="field_22" Mandatory="No" redcap:Variable="field_22"/>
+		<ItemRef ItemOID="field_23" Mandatory="No" redcap:Variable="field_23"/>
+		<ItemRef ItemOID="field_24" Mandatory="No" redcap:Variable="field_24"/>
+		<ItemRef ItemOID="field_25" Mandatory="No" redcap:Variable="field_25"/>
+		<ItemRef ItemOID="field_26" Mandatory="No" redcap:Variable="field_26"/>
+		<ItemRef ItemOID="field_27" Mandatory="No" redcap:Variable="field_27"/>
+		<ItemRef ItemOID="field_28" Mandatory="No" redcap:Variable="field_28"/>
+		<ItemRef ItemOID="field_29" Mandatory="No" redcap:Variable="field_29"/>
+		<ItemRef ItemOID="field_30" Mandatory="No" redcap:Variable="field_30"/>
+		<ItemRef ItemOID="field_31" Mandatory="No" redcap:Variable="field_31"/>
+		<ItemRef ItemOID="field_32" Mandatory="No" redcap:Variable="field_32"/>
+		<ItemRef ItemOID="field_33" Mandatory="No" redcap:Variable="field_33"/>
+		<ItemRef ItemOID="field_34" Mandatory="No" redcap:Variable="field_34"/>
+		<ItemRef ItemOID="field_35" Mandatory="No" redcap:Variable="field_35"/>
+		<ItemRef ItemOID="field_36" Mandatory="No" redcap:Variable="field_36"/>
+		<ItemRef ItemOID="field_37" Mandatory="No" redcap:Variable="field_37"/>
+		<ItemRef ItemOID="field_38" Mandatory="No" redcap:Variable="field_38"/>
+		<ItemRef ItemOID="field_39" Mandatory="No" redcap:Variable="field_39"/>
+		<ItemRef ItemOID="field_40" Mandatory="No" redcap:Variable="field_40"/>
+		<ItemRef ItemOID="field_41" Mandatory="No" redcap:Variable="field_41"/>
+		<ItemRef ItemOID="field_42" Mandatory="No" redcap:Variable="field_42"/>
+		<ItemRef ItemOID="field_43" Mandatory="No" redcap:Variable="field_43"/>
+		<ItemRef ItemOID="field_44" Mandatory="No" redcap:Variable="field_44"/>
+		<ItemRef ItemOID="field_45" Mandatory="No" redcap:Variable="field_45"/>
+		<ItemRef ItemOID="field_46" Mandatory="No" redcap:Variable="field_46"/>
+		<ItemRef ItemOID="field_47" Mandatory="No" redcap:Variable="field_47"/>
+		<ItemRef ItemOID="field_48" Mandatory="No" redcap:Variable="field_48"/>
+		<ItemRef ItemOID="field_49" Mandatory="No" redcap:Variable="field_49"/>
+		<ItemRef ItemOID="field_50" Mandatory="No" redcap:Variable="field_50"/>
+		<ItemRef ItemOID="field_51" Mandatory="No" redcap:Variable="field_51"/>
+		<ItemRef ItemOID="field_52" Mandatory="No" redcap:Variable="field_52"/>
+		<ItemRef ItemOID="field_53" Mandatory="No" redcap:Variable="field_53"/>
+		<ItemRef ItemOID="field_54" Mandatory="No" redcap:Variable="field_54"/>
+		<ItemRef ItemOID="field_55" Mandatory="No" redcap:Variable="field_55"/>
+		<ItemRef ItemOID="field_56" Mandatory="No" redcap:Variable="field_56"/>
+		<ItemRef ItemOID="field_57" Mandatory="No" redcap:Variable="field_57"/>
+		<ItemRef ItemOID="field_58" Mandatory="No" redcap:Variable="field_58"/>
+		<ItemRef ItemOID="field_59" Mandatory="No" redcap:Variable="field_59"/>
+		<ItemRef ItemOID="field_60" Mandatory="No" redcap:Variable="field_60"/>
+		<ItemRef ItemOID="field_61" Mandatory="No" redcap:Variable="field_61"/>
+		<ItemRef ItemOID="field_62" Mandatory="No" redcap:Variable="field_62"/>
+		<ItemRef ItemOID="field_63" Mandatory="No" redcap:Variable="field_63"/>
+		<ItemRef ItemOID="field_64" Mandatory="No" redcap:Variable="field_64"/>
+		<ItemRef ItemOID="field_65" Mandatory="No" redcap:Variable="field_65"/>
+		<ItemRef ItemOID="field_66" Mandatory="No" redcap:Variable="field_66"/>
+		<ItemRef ItemOID="field_67" Mandatory="No" redcap:Variable="field_67"/>
+		<ItemRef ItemOID="field_68" Mandatory="No" redcap:Variable="field_68"/>
+		<ItemRef ItemOID="field_69" Mandatory="No" redcap:Variable="field_69"/>
+		<ItemRef ItemOID="field_70" Mandatory="No" redcap:Variable="field_70"/>
+		<ItemRef ItemOID="field_71" Mandatory="No" redcap:Variable="field_71"/>
+		<ItemRef ItemOID="field_72" Mandatory="No" redcap:Variable="field_72"/>
+		<ItemRef ItemOID="field_73" Mandatory="No" redcap:Variable="field_73"/>
+		<ItemRef ItemOID="field_74" Mandatory="No" redcap:Variable="field_74"/>
+		<ItemRef ItemOID="field_75" Mandatory="No" redcap:Variable="field_75"/>
+		<ItemRef ItemOID="field_76" Mandatory="No" redcap:Variable="field_76"/>
+		<ItemRef ItemOID="field_77" Mandatory="No" redcap:Variable="field_77"/>
+		<ItemRef ItemOID="field_78" Mandatory="No" redcap:Variable="field_78"/>
+		<ItemRef ItemOID="field_79" Mandatory="No" redcap:Variable="field_79"/>
+		<ItemRef ItemOID="field_80" Mandatory="No" redcap:Variable="field_80"/>
+		<ItemRef ItemOID="field_81" Mandatory="No" redcap:Variable="field_81"/>
+		<ItemRef ItemOID="field_82" Mandatory="No" redcap:Variable="field_82"/>
+		<ItemRef ItemOID="field_83" Mandatory="No" redcap:Variable="field_83"/>
+		<ItemRef ItemOID="field_84" Mandatory="No" redcap:Variable="field_84"/>
+		<ItemRef ItemOID="field_85" Mandatory="No" redcap:Variable="field_85"/>
+		<ItemRef ItemOID="field_86" Mandatory="No" redcap:Variable="field_86"/>
+		<ItemRef ItemOID="field_87" Mandatory="No" redcap:Variable="field_87"/>
+		<ItemRef ItemOID="field_88" Mandatory="No" redcap:Variable="field_88"/>
+		<ItemRef ItemOID="field_89" Mandatory="No" redcap:Variable="field_89"/>
+		<ItemRef ItemOID="field_90" Mandatory="No" redcap:Variable="field_90"/>
+		<ItemRef ItemOID="field_91" Mandatory="No" redcap:Variable="field_91"/>
+		<ItemRef ItemOID="field_92" Mandatory="No" redcap:Variable="field_92"/>
+		<ItemRef ItemOID="field_93" Mandatory="No" redcap:Variable="field_93"/>
+		<ItemRef ItemOID="field_94" Mandatory="No" redcap:Variable="field_94"/>
+		<ItemRef ItemOID="field_95" Mandatory="No" redcap:Variable="field_95"/>
+		<ItemRef ItemOID="field_96" Mandatory="No" redcap:Variable="field_96"/>
+		<ItemRef ItemOID="field_97" Mandatory="No" redcap:Variable="field_97"/>
+		<ItemRef ItemOID="field_98" Mandatory="No" redcap:Variable="field_98"/>
+		<ItemRef ItemOID="field_99" Mandatory="No" redcap:Variable="field_99"/>
+		<ItemRef ItemOID="field_100" Mandatory="No" redcap:Variable="field_100"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="form_1.form_1_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="form_1_complete" Mandatory="No" redcap:Variable="form_1_complete"/>
+	</ItemGroupDef>
+	<ItemDef OID="record_id" Name="record_id" DataType="text" Length="999" redcap:Variable="record_id" redcap:FieldType="text">
+		<Question><TranslatedText>Record ID</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_1" Name="field_1" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="field_1" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Field 1 (number)</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_2" Name="field_2" DataType="boolean" Length="1" redcap:Variable="field_2" redcap:FieldType="yesno">
+		<Question><TranslatedText>Field 2 (yes/no)</TranslatedText></Question>
+		<CodeListRef CodeListOID="field_2.choices"/>
+	</ItemDef>
+	<ItemDef OID="field_3" Name="field_3" DataType="text" Length="999" redcap:Variable="field_3" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 3</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_4" Name="field_4" DataType="text" Length="999" redcap:Variable="field_4" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 4</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_5" Name="field_5" DataType="text" Length="999" redcap:Variable="field_5" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 5</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_6" Name="field_6" DataType="text" Length="999" redcap:Variable="field_6" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 6</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_7" Name="field_7" DataType="text" Length="999" redcap:Variable="field_7" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 7</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_8" Name="field_8" DataType="text" Length="999" redcap:Variable="field_8" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 8</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_9" Name="field_9" DataType="text" Length="999" redcap:Variable="field_9" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 9</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_10" Name="field_10" DataType="text" Length="999" redcap:Variable="field_10" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 10</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_11" Name="field_11" DataType="text" Length="999" redcap:Variable="field_11" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 11</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_12" Name="field_12" DataType="text" Length="999" redcap:Variable="field_12" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 12</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_13" Name="field_13" DataType="text" Length="999" redcap:Variable="field_13" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 13</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_14" Name="field_14" DataType="text" Length="999" redcap:Variable="field_14" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 14</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_15" Name="field_15" DataType="text" Length="999" redcap:Variable="field_15" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 15</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_16" Name="field_16" DataType="text" Length="999" redcap:Variable="field_16" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 16</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_17" Name="field_17" DataType="text" Length="999" redcap:Variable="field_17" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 17</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_18" Name="field_18" DataType="text" Length="999" redcap:Variable="field_18" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 18</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_19" Name="field_19" DataType="text" Length="999" redcap:Variable="field_19" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 19</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_20" Name="field_20" DataType="text" Length="999" redcap:Variable="field_20" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 20</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_21" Name="field_21" DataType="text" Length="999" redcap:Variable="field_21" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 21</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_22" Name="field_22" DataType="text" Length="999" redcap:Variable="field_22" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 22</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_23" Name="field_23" DataType="text" Length="999" redcap:Variable="field_23" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 23</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_24" Name="field_24" DataType="text" Length="999" redcap:Variable="field_24" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 24</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_25" Name="field_25" DataType="text" Length="999" redcap:Variable="field_25" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 25</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_26" Name="field_26" DataType="text" Length="999" redcap:Variable="field_26" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 26</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_27" Name="field_27" DataType="text" Length="999" redcap:Variable="field_27" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 27</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_28" Name="field_28" DataType="text" Length="999" redcap:Variable="field_28" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 28</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_29" Name="field_29" DataType="text" Length="999" redcap:Variable="field_29" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 29</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_30" Name="field_30" DataType="text" Length="999" redcap:Variable="field_30" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 30</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_31" Name="field_31" DataType="text" Length="999" redcap:Variable="field_31" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 31</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_32" Name="field_32" DataType="text" Length="999" redcap:Variable="field_32" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 32</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_33" Name="field_33" DataType="text" Length="999" redcap:Variable="field_33" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 33</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_34" Name="field_34" DataType="text" Length="999" redcap:Variable="field_34" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 34</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_35" Name="field_35" DataType="text" Length="999" redcap:Variable="field_35" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 35</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_36" Name="field_36" DataType="text" Length="999" redcap:Variable="field_36" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 36</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_37" Name="field_37" DataType="text" Length="999" redcap:Variable="field_37" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 37</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_38" Name="field_38" DataType="text" Length="999" redcap:Variable="field_38" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 38</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_39" Name="field_39" DataType="text" Length="999" redcap:Variable="field_39" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 39</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_40" Name="field_40" DataType="text" Length="999" redcap:Variable="field_40" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 40</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_41" Name="field_41" DataType="text" Length="999" redcap:Variable="field_41" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 41</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_42" Name="field_42" DataType="text" Length="999" redcap:Variable="field_42" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 42</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_43" Name="field_43" DataType="text" Length="999" redcap:Variable="field_43" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 43</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_44" Name="field_44" DataType="text" Length="999" redcap:Variable="field_44" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 44</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_45" Name="field_45" DataType="text" Length="999" redcap:Variable="field_45" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 45</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_46" Name="field_46" DataType="text" Length="999" redcap:Variable="field_46" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 46</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_47" Name="field_47" DataType="text" Length="999" redcap:Variable="field_47" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 47</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_48" Name="field_48" DataType="text" Length="999" redcap:Variable="field_48" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 48</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_49" Name="field_49" DataType="text" Length="999" redcap:Variable="field_49" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 49</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_50" Name="field_50" DataType="text" Length="999" redcap:Variable="field_50" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 50</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_51" Name="field_51" DataType="text" Length="999" redcap:Variable="field_51" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 51</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_52" Name="field_52" DataType="text" Length="999" redcap:Variable="field_52" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 52</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_53" Name="field_53" DataType="text" Length="999" redcap:Variable="field_53" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 53</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_54" Name="field_54" DataType="text" Length="999" redcap:Variable="field_54" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 54</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_55" Name="field_55" DataType="text" Length="999" redcap:Variable="field_55" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 55</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_56" Name="field_56" DataType="text" Length="999" redcap:Variable="field_56" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 56</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_57" Name="field_57" DataType="text" Length="999" redcap:Variable="field_57" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 57</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_58" Name="field_58" DataType="text" Length="999" redcap:Variable="field_58" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 58</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_59" Name="field_59" DataType="text" Length="999" redcap:Variable="field_59" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 59</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_60" Name="field_60" DataType="text" Length="999" redcap:Variable="field_60" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 60</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_61" Name="field_61" DataType="text" Length="999" redcap:Variable="field_61" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 61</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_62" Name="field_62" DataType="text" Length="999" redcap:Variable="field_62" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 62</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_63" Name="field_63" DataType="text" Length="999" redcap:Variable="field_63" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 63</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_64" Name="field_64" DataType="text" Length="999" redcap:Variable="field_64" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 64</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_65" Name="field_65" DataType="text" Length="999" redcap:Variable="field_65" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 65</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_66" Name="field_66" DataType="text" Length="999" redcap:Variable="field_66" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 66</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_67" Name="field_67" DataType="text" Length="999" redcap:Variable="field_67" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 67</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_68" Name="field_68" DataType="text" Length="999" redcap:Variable="field_68" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 68</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_69" Name="field_69" DataType="text" Length="999" redcap:Variable="field_69" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 69</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_70" Name="field_70" DataType="text" Length="999" redcap:Variable="field_70" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 70</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_71" Name="field_71" DataType="text" Length="999" redcap:Variable="field_71" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 71</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_72" Name="field_72" DataType="text" Length="999" redcap:Variable="field_72" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 72</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_73" Name="field_73" DataType="text" Length="999" redcap:Variable="field_73" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 73</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_74" Name="field_74" DataType="text" Length="999" redcap:Variable="field_74" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 74</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_75" Name="field_75" DataType="text" Length="999" redcap:Variable="field_75" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 75</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_76" Name="field_76" DataType="text" Length="999" redcap:Variable="field_76" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 76</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_77" Name="field_77" DataType="text" Length="999" redcap:Variable="field_77" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 77</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_78" Name="field_78" DataType="text" Length="999" redcap:Variable="field_78" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 78</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_79" Name="field_79" DataType="text" Length="999" redcap:Variable="field_79" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 79</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_80" Name="field_80" DataType="text" Length="999" redcap:Variable="field_80" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 80</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_81" Name="field_81" DataType="text" Length="999" redcap:Variable="field_81" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 81</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_82" Name="field_82" DataType="text" Length="999" redcap:Variable="field_82" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 82</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_83" Name="field_83" DataType="text" Length="999" redcap:Variable="field_83" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 83</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_84" Name="field_84" DataType="text" Length="999" redcap:Variable="field_84" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 84</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_85" Name="field_85" DataType="text" Length="999" redcap:Variable="field_85" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 85</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_86" Name="field_86" DataType="text" Length="999" redcap:Variable="field_86" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 86</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_87" Name="field_87" DataType="text" Length="999" redcap:Variable="field_87" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 87</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_88" Name="field_88" DataType="text" Length="999" redcap:Variable="field_88" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 88</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_89" Name="field_89" DataType="text" Length="999" redcap:Variable="field_89" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 89</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_90" Name="field_90" DataType="text" Length="999" redcap:Variable="field_90" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 90</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_91" Name="field_91" DataType="text" Length="999" redcap:Variable="field_91" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 91</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_92" Name="field_92" DataType="text" Length="999" redcap:Variable="field_92" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 92</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_93" Name="field_93" DataType="text" Length="999" redcap:Variable="field_93" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 93</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_94" Name="field_94" DataType="text" Length="999" redcap:Variable="field_94" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 94</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_95" Name="field_95" DataType="text" Length="999" redcap:Variable="field_95" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 95</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_96" Name="field_96" DataType="text" Length="999" redcap:Variable="field_96" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 96</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_97" Name="field_97" DataType="text" Length="999" redcap:Variable="field_97" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 97</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_98" Name="field_98" DataType="text" Length="999" redcap:Variable="field_98" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 98</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_99" Name="field_99" DataType="text" Length="999" redcap:Variable="field_99" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 99</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="field_100" Name="field_100" DataType="text" Length="999" redcap:Variable="field_100" redcap:FieldType="textarea">
+		<Question><TranslatedText>Field 100</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="form_1_complete" Name="form_1_complete" DataType="text" Length="1" redcap:Variable="form_1_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="form_1_complete.choices"/>
+	</ItemDef>
+	<CodeList OID="field_2.choices" Name="field_2" DataType="boolean" redcap:Variable="field_2">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="form_1_complete.choices" Name="form_1_complete" DataType="text" redcap:Variable="form_1_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+</MetaDataVersion>
+</Study>
+</ODM>
