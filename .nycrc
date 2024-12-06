@@ -1,0 +1,13 @@
+{
+  "report-dir": "./step-coverage/",
+  "include": [
+    "cypress/**/*.js",
+    "node_modules/rctf/**/*.js"
+  ],
+  "exclude": [
+    "**/*.spec.js",
+    "**/node_modules/**"
+  ],
+  "extension": [".js"],
+  "reporter": ["text", "html"]
+}
