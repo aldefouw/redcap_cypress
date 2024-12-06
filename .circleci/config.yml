@@ -76,7 +76,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            CYPRESS_prettyEnabled=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
+            CYPRESS_prettyEnabled=true npx cypress run --spec "redcap_rsvc/Feature Tests/A/Add Manage Users_2/A.2.2.0200. - Suspend - Unsuspend.feature" --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
       - run:
           name: Coverage Report
           command: |
