@@ -1,27 +1,40 @@
 [![CircleCI](https://circleci.com/gh/aldefouw/redcap_cypress/tree/master.svg?style=svg)](https://circleci.com/gh/aldefouw/redcap_cypress/tree/master)
 
-# REDCap Cypress Test Framework
+# REDCap Cypress Test Suite
 
-The REDcap Cypress Test Framework enables **automated feature testing for REDCap**.
+*Please ensure you read our [How to Install](#how-to-install) guide if you are just getting started.*
 
-This repository serves as a starting point for running and writing your own automated feature and regression tests, which can be used to validate the features and functionality of your REDCap environment.
+This repository is a template to enable **REDCap Automated Testing** within the [Cypress testing tool](https://www.cypress.io/) against a **REDCap Test Environment**.
 
-Features are written using the Gherkin domain-specific language.
+Powered by the **REDCap Cypress Test Framework ([RCTF](https://github.com/aldefouw/rctf/))**, feature test files, written in Gherkin domain-specific language, may use:
 
-Core REDCap features, written in Gherkin, are posted to a repository guided by the Regulatory & Software Validation committee: https://github.com/aldefouw/redcap_rsvc
+1. **Built-in Gherkin Steps** - documented in the [Gherkin Step Builder](https://aldefouw.github.io/redcap_cypress/)
+2. **Custom Gherkin Steps** - by creating your own step definitions in the **/support/step_definitions/** folder.
+
+*[RSVC Automated Feature Tests](#rsvc-automated-feature-tests) only use [built-in Gherkin Steps](https://aldefouw.github.io/redcap_cypress/), but you may add your own if you [write institution-specific feature tests](#writing-gherkin-feature-tests).*
 
 # Overview
 - [How to Install](#how-to-install)
-- [Defining Your Test Environment](#defining-your-test-environment-variables)
+- [!!! WARNING !!!](#-warning-)
+- [RSVC Automated Feature Tests](#rsvc-automated-feature-tests)
+- [Defining Your Test Environment](#defining-your-test-environment)
 - [Database Strategy](#database-strategy)
 - [Running Your Tests](#running-your-tests)
+- [Writing Gherkin Feature Tests](#writing-gherkin-feature-tests)
 
 # How to Install
+
+[![REDCap Cypress Developer Toolkit](https://raw.githubusercontent.com/aldefouw/redcap_cypress_docker/main/tutorial-windows.png)](https://github.com/aldefouw/redcap_cypress_docker)
+
 
 If you are a developer, please start by visiting the [REDCap Cypress Developer Toolkit](https://github.com/aldefouw/redcap_cypress_docker), located here:
 https://github.com/aldefouw/redcap_cypress_docker
 
 The Developer Toolkit is the best way to get Cypress up and running on your developer machine.
+
+**Want to run the automated feature tests in CI / CD pipelines?** 
+
+Take a peek at our [Circle CI YML](https://github.com/aldefouw/redcap_cypress/blob/master/.circleci/config.yml) file as an example.
 
 ---
 
@@ -39,6 +52,26 @@ The Developer Toolkit is the best way to get Cypress up and running on your deve
 
 ---
 
+# RSVC Automated Feature Tests
+
+Validated versions of core Feature Tests for REDCap LTS are posted to a GitHub repository guided by the Regulatory & Software Validation committee: 
+https://github.com/aldefouw/redcap_rsvc
+
+Check the [Releases Page](https://github.com/aldefouw/redcap_rsvc/releases) to see what versions of REDCap are available.
+
+**To Install Feature Tests**
+
+1. Point the **redcap_rsvc** repository in **package.json** at the appropriate tag - ensure tag release tag exists on the [Releases Page](https://github.com/aldefouw/redcap_rsvc/releases)! 
+```
+"redcap_rsvc": "git://github.com/aldefouw/redcap_rsvc#v13.1.37-ABC"
+```
+
+2. Run the install command:
+```
+npm run redcap_rsvc:install
+```
+
+
 ## Defining Your Test Environment
 
 ### Environment Variables
@@ -55,28 +88,62 @@ To get you started, an example file named `cypress.env.json.example` is included
 
 Here is an example environment variable setup:
 
-    {
-      "users": {
-        "admin": {
-          "user": "admin_user",
-          "pass": "Testing123"
-        },
-        "standard": {
-          "user": "test_user",
-          "pass": "Testing123"
-        }
-      },
-      "redcap_version": "13.1.7",
-      "redcap_source_path": "../redcap-source",
-      "mysql": {
-        "host": "docker exec -i redcap_docker-app-1 mysql",
-        "path": "mysql",
-        "port": "3306",
-        "db_name": "redcap",
-        "db_user": "root",
-        "db_pass": "root"
-      }
+```
+{
+  "users": {
+    "standard": {
+      "user": "test_user",
+      "pass": "Testing123"
+    },
+    "admin": {
+      "user": "test_admin",
+      "pass": "Testing123"
+    },
+    "Test_Admin": {
+      "user": "Test_Admin",
+      "pass": "Testing123"
+    },
+    "Test_User1": {
+      "user": "Test_User1",
+      "pass": "Testing123"
+    },
+    "Test_User2": {
+      "user": "Test_User2",
+      "pass": "Testing123"
+    },
+    "Test_User3": {
+      "user": "Test_User3",
+      "pass": "Testing123"
+    },
+    "Test_User4": {
+      "user": "Test_User4",
+      "pass": "Testing123"
     }
+  },
+  "redcap_version": "13.1.37",
+  "language": "English",
+  "redcap_hooks_path": "/var/www/html/hook_functions.php",
+  "redcap_source_path": "../redcap_source",
+  "temp_folder": "/var/www/html/temp",
+  "mysql": {
+    "host": "db",
+    "path": "docker exec -i redcap_docker-app-1 mysql",
+    "port": "3306",
+    "db_name": "redcap",
+    "db_user": "root",
+    "db_pass": "root"
+  },
+  "timezone_override": "America/Chicago",
+  "bootstrap_settings": {
+    "core": true,
+    "hooks": false,
+    "modules": false,
+    "plugins": false,
+    "projects" : false
+  }
+}
+```
+
 
 Below are descriptions of the configuration variables shown above.
 
@@ -161,3 +228,29 @@ After your test suite is mature, it will be faster to run your tests in headless
 `npx cypress run`
 
 ---
+
+# Writing Gherkin Feature Tests
+
+We have two suggested methods to learn how to write REDCap-specific feature tests compatible with the REDCap Cypress Test Framework.
+
+1. ### Review Regulatory and Software Validation Committee (RSVC) Feature Tests
+
+[<img src="https://github.com/aldefouw/redcap_cypress/blob/master/RSVCFeatureTestExample.png" alt="RSVC Feature Test Example">](https://github.com/aldefouw/redcap_rsvc)
+
+RSVC has created hundreds of automated feature tests that test the functional requirements of REDCap.  
+
+Reviewing these feature tests is useful because they serve as a template for testing many aspects of REDCap.
+
+RSVC Feature Tests are availble to review here:
+https://github.com/aldefouw/redcap_rsvc
+
+2. ### Gherkin Step Builder 
+
+[<img src="https://github.com/aldefouw/redcap_cypress/blob/master/GherkinStepBuilder.png" alt="Gherkin Step Builder">](https://aldefouw.github.io/redcap_cypress/)
+
+All REDCap feature tests run through this repository are powered by Step Definitions defined in the [RCTF](https://github.com/aldefouw/rctf) node package.   
+
+Hundreds of steps are available, and we built a [Gherkin Step Builder](https://aldefouw.github.io/redcap_cypress/) tool to help you generate your own syntactically valid Steps in your Feature Tests.
+
+The Gherkin Step Builder is located here:
+https://aldefouw.github.io/redcap_cypress/

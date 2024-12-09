@@ -20,6 +20,7 @@
     "reflect-metadata": "0.2.2"
   },
   "scripts": {
+    "about-these-scripts": "These scripts are intended for a cloud environment, and do not currently make sense for local development where redcap_rsvc is a git checkout rather than a copy from node_modules.",
     "clean": "npm install && del-cli node_modules redcap_rsvc package-lock.json && npm install",
     "redcap_rsvc:install": "npm run clean && npm run redcap_rsvc:move_files",
     "redcap_rsvc:move_files": "del-cli cypress/fixtures/cdisc_files && del-cli cypress/fixtures/dictionaries && del-cli cypress/fixtures/import_files && move-cli node_modules/redcap_rsvc redcap_rsvc && cp -a redcap_rsvc/Files/* cypress/fixtures/",
