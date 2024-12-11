@@ -1,13 +1,13 @@
 {
   "name": "redcap_cypress",
-  "version": "14.5.5",
+  "version": "14.7.0",
   "description": "This repository is a template to assist you in writing **automated tests for REDCap**.",
   "devDependencies": {
-    "cypress": "^13.14.1",
+    "cypress": "^13.15.0",
     "del-cli": "^5.1.0",
     "move-cli": "^2.0.0",
-    "rctf": "github:schatto1/rctf",
-    "redcap_rsvc": "git://github.com/schatto1/redcap_rsvc/tree/v14.5.5"
+    "rctf": "git://github.com/aldefouw/rctf#v1.0.101",
+    "redcap_rsvc": "git://github.com/4bbakers/redcap_rsvc#v14.7.0"
   },
   "optionalDependencies": {
     "redcap_cypress_doc_theme": "git://github.com/aldefouw/redcap_cypress_doc_theme#bf84bfa"
@@ -20,13 +20,23 @@
     "reflect-metadata": "0.2.2"
   },
   "scripts": {
-    "clean": "npm install && del-cli node_modules/redcap_rsvc redcap_rsvc package-lock.json",
-    "redcap_rsvc:install": "npm run clean && npm install && move-cli node_modules/redcap_rsvc ./redcap_rsvc",
-    "redcap_rsvc:move_files": "del-cli ./cypress/fixtures && move-cli ./redcap_rsvc/Files ./cypress/fixtures",
-    "redcap_rsvc:prepare_run": "npm run redcap_rsvc:install && npm run redcap_rsvc:move_files",
-    "redcap_rsvc:validate_features" : "npm install gherkin-parse glob-fs --no-save --silent --ignore-scripts && node validate_feature_files.js",
-    "rctf:test_server" : "npm install http-server --no-save --silent && npx http-server node_modules/rctf/tests/static/ -p 6060 &",
-    "rctf:run_tests" : "CYPRESS_baseUrl=http://localhost:6060 npx cypress open --env testMode=true --config specPattern=./cypress/features/*/*.spec.feature",
+    "about-these-scripts": "These scripts are intended for a cloud environment, and do not currently make sense for local development where redcap_rsvc is a git checkout rather than a copy from node_modules.",
+    "clean": "npm install && del-cli node_modules redcap_rsvc package-lock.json && npm install",
+    "redcap_rsvc:install": "npm run clean && npm run redcap_rsvc:move_files",
+    "redcap_rsvc:move_files": "del-cli cypress/fixtures/cdisc_files && del-cli cypress/fixtures/dictionaries && del-cli cypress/fixtures/import_files && move-cli node_modules/redcap_rsvc redcap_rsvc && cp -a redcap_rsvc/Files/* cypress/fixtures/",
+    "redcap_rsvc:validate_features": "npm install gherkin-parse glob-fs --no-save --silent --ignore-scripts && node validate_feature_files.js",
+    "redcap_rsvc:single_test": "CYPRESS_prettyEnabled=true npx cypress run --spec redcap_rsvc/Feature\\ Tests/A/Configuration\\ Check_1/A.1.1.0100.\\ -\\ Run\\ Configuration\\ Check.feature --browser chrome",
+    "redcap_rsvc:all_tests": "CYPRESS_prettyEnabled=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome",
+    "redcap_rsvc:run_official_tests": "npm run redcap_rsvc:all_tests || true",
+    "rctf:install_server": "npm install http-server --no-save --silent",
+    "rctf:run_server": "npx http-server node_modules/rctf/tests/static/ -p 6060 > http-server.log 2>&1 &",
+    "rctf:test_server": "npm run rctf:install_server && npm run rctf:run_server",
+    "rctf:get_step_features": "del-cli cypress/features/tests && cp -R ./node_modules/rctf/tests/step_features cypress/features/tests",
+    "rctf:run_step_tests": "npm run rctf:get_step_features && npm run rctf:launch_tests",
+    "rctf:run_official_step_tests": "npm run rctf:get_step_features && npm run rctf:official_tests",
+    "rctf:launch_tests": "CYPRESS_prettyEnabled=true CYPRESS_baseUrl=http://localhost:6060 npx cypress run --env testMode=true --config specPattern=./cypress/features/tests/*/*.spec.feature --browser chrome",
+    "rctf:official_tests": "npm run rctf:get_step_features && CYPRESS_VIDEO=false CYPRESS_prettyEnabled=true CYPRESS_baseUrl=http://localhost:6060 npx cypress run --env testMode=true --config specPattern=./cypress/features/tests/*/*.spec.feature --record --key $RECORD_KEY --group rctf-tests --browser chrome",
+    "rctf:write_step_tests": "npm run rctf:get_step_features && CYPRESS_baseUrl=http://localhost:6060 npx cypress open --env testMode=true --config specPattern=./cypress/features/tests/*/*.spec.feature",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs:build": "npm install git://github.com/documentationjs/documentation#97e9361 --no-save && ./node_modules/.bin/documentation build ./node_modules/rctf/step_definitions/* ./node_modules/rctf/step_definitions/support/* -f html --theme node_modules/redcap_cypress_doc_theme/index.js -o docs"
   },
