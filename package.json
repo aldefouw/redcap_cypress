@@ -3,8 +3,8 @@
   "version": "13.1.37",
   "description": "This repository is a template to assist you in writing **automated tests for REDCap**.",
   "devDependencies": {
-    "cypress": "^13.13.1",
-    "rctf": "git://github.com/schatto1/rctf#new-field-v14-support ",
+    "cypress": "^13.16.1",
+    "rctf": "git://github.com/mmcev106/rctf#outstanding-pull-requests",
     "redcap_rsvc": "git://github.com/aldefouw/redcap_rsvc#v13.1.37"
   },
   "optionalDependencies": {
