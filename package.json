@@ -4,7 +4,7 @@
   "description": "This repository is a template to assist you in writing **automated tests for REDCap**.",
   "devDependencies": {
     "cypress": "^13.13.1",
-    "rctf": "git://github.com/aldefouw/rctf#v1.0.94",
+    "rctf": "git://github.com/schatto1/rctf#new-field-v14-support ",
     "redcap_rsvc": "git://github.com/aldefouw/redcap_rsvc#v13.1.37"
   },
   "optionalDependencies": {
