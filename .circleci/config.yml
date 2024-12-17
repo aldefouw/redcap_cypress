@@ -17,7 +17,7 @@ jobs:
     machine:
       image: ubuntu-2404:2024.05.1 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2404
       resource_class: large
-    parallelism: 1
+    parallelism: 28
     environment:
       REDCAP_VERSION: "13.1.37"
     steps:
@@ -76,7 +76,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            CYPRESS_prettyEnabled=true npx cypress run --spec redcap_rsvc/Feature\ Tests/B/Branching\ Logic_9/B.4.9.0100.\ -\ Branching\ Logic.feature --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
+            CYPRESS_prettyEnabled=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
       - run:
           name: Coverage Report
           command: |
