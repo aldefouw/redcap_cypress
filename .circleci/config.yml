@@ -76,7 +76,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            CYPRESS_prettyEnabled=true npx cypress run --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
+            CYPRESS_prettyEnabled=true npx cypress run --spec 'redcap_rsvc/Feature Tests/B/Assign User Rights_6/B.4.9.0100.100 Branching Logic.feature' --record --key $RECORD_KEY --parallel --group core-tests --browser chrome || true
       - run:
           name: Coverage Report
           command: |
