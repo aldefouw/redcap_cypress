@@ -13,8 +13,9 @@ module.exports = defineConfig({
         baseUrl: 'http://localhost:8080',
         stepDefinitions: 'cypress/support/step_definitions',
         specPattern: [ 'cypress/features/*.feature',
-                       'redcap_rsvc/*/[ABC]/*/A.3.14.1300*.feature',
-                       'redcap_rsvc/*/[ABC]/*/B.3.14.0100*.feature',
+                       'redcap_rsvc/*/[ABC]/*/*3.14.*.feature',
+                       'redcap_rsvc/*/[ABC]/Direct Data Entry*/*.feature',
+                       'redcap_rsvc/*/[ABC]/*Data Collection Instrument/*.feature',
                        '!redcap_rsvc/*/[ABC]/*/*REDUNDANT*.feature'
                      ],
         testIsolation: false,
