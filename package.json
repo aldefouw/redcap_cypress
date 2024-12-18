@@ -3,10 +3,10 @@
   "version": "14.7.0",
   "description": "This repository is a template to assist you in writing **automated tests for REDCap**.",
   "devDependencies": {
-    "cypress": "^13.15.0",
+    "cypress": "^13.16.1",
     "del-cli": "^5.1.0",
     "move-cli": "^2.0.0",
-    "rctf": "git://github.com/aldefouw/rctf#v1.0.101",
+    "rctf": "git://github.com/aldefouw/rctf#v1.0.102",
     "redcap_rsvc": "git://github.com/4bbakers/redcap_rsvc#v14.7.0"
   },
   "optionalDependencies": {
