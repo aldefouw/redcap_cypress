@@ -14,6 +14,7 @@ module.exports = defineConfig({
         stepDefinitions: 'cypress/support/step_definitions',
         specPattern: [ 'cypress/features/*.feature',
                        'redcap_rsvc/*/[ABC]/*/B.3.14*.feature',
+                       'redcap_rsvc/*/[ABC]/*/B.3.16*.feature',
                        '!redcap_rsvc/*/[ABC]/*/*REDUNDANT*.feature'
                      ],
         testIsolation: false,
