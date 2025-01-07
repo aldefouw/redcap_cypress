@@ -21,7 +21,9 @@ cypress.env.json
 cypress.config.js
 cypress/downloads
 cypress/results
-cypress/features/tests/*
+cypress/fixtures/cdisc_files
+cypress/fixtures/dictionaries
+cypress/fixtures/import_files
 
 step-coverage/*
 .nyc_output/*
