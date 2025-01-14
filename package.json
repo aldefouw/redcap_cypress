@@ -7,7 +7,7 @@
     "del-cli": "^5.1.0",
     "move-cli": "^2.0.0",
     "rctf": "github:aldefouw/rctf#v1.0.114",
-    "redcap_rsvc": "git://github.com/4bbakers/redcap_rsvc#A.3.24.0900"
+    "redcap_rsvc": "git://github.com/4bbakers/redcap_rsvc#ae09e2a"
   },
   "optionalDependencies": {
     "redcap_cypress_doc_theme": "git://github.com/aldefouw/redcap_cypress_doc_theme#bf84bfa"
