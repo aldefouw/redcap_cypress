@@ -10,7 +10,7 @@ executors:
       resource_class: large
     environment:
       REDCAP_VERSION: "15.0.1"
-            
+
 workflows:
   version: 2
   workflows:
@@ -40,7 +40,7 @@ commands:
           command: |
             cd << parameters.dir >>
             GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa" git clone --branch redcap-cypress --depth=1 https://github.com/aldefouw/redcap_source
-            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_042ee976ef53cbd6ec78fbf9742292ca" git clone --branch ${REDCAP_VERSION} --depth=1 git@github.com:vanderbilt-redcap/REDCap.git redcap_source/redcap_v${REDCAP_VERSION}
+            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_042ee976ef53cbd6ec78fbf9742292ca" git clone --depth=1 git@github.com:vanderbilt-redcap/REDCap.git redcap_source/redcap_v${REDCAP_VERSION}
 
 jobs:
   run-tests:
