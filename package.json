@@ -6,7 +6,7 @@
     "cypress": "^13.17.0",
     "del-cli": "^5.1.0",
     "move-cli": "^2.0.0",
-    "rctf": "git://github.com/aldefouw/rctf#v1.0.115",
+    "rctf": "git://github.com/aldefouw/rctf#v1.0.116",
     "redcap_rsvc": "git://github.com/4bbakers/redcap_rsvc#ae09e2a"
   },
   "optionalDependencies": {
