@@ -274,8 +274,17 @@ window.tableHtmlElements = {
 
 window.fieldAction = {
     'edit': 'edit-field',
+    'edit matrix': 'edit-matrix',
     'branching logic': 'branchinglogic',
     'copy': 'copy-field',
     'move': 'move-field',
-    'delete': 'delete-field'
+    'delete field': 'delete-field'
+}
+
+window.checkBoxAliases = {
+    'in the enabled state': 'checked',
+    'in the disabled state': 'unchecked',
+    'toggle button': 'checkbox',
+    enable: 'check',
+    disable: 'uncheck'
 }
