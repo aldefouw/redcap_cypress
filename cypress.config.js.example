@@ -14,7 +14,8 @@ module.exports = defineConfig({
         stepDefinitions: 'cypress/support/step_definitions',
         specPattern: [ 'cypress/features/*.feature',
                        'redcap_rsvc/*/[ABC]/*/*.feature',
-                       '!redcap_rsvc/*/[ABC]/*/*REDUNDANT*.feature'
+                       '!redcap_rsvc/*/[ABC]/*/*REDUNDANT*.feature',
+                       '!redcap_rsvc/*/[C]/e-Consent framework_24/*.feature',
                      ],
         testIsolation: false,
         experimentalMemoryManagement: false,

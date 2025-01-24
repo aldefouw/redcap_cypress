@@ -45,7 +45,7 @@ commands:
 jobs:
   run-tests:
     executor: shared-executor
-    parallelism: 28
+    parallelism: 26
     environment:
       BOOTSTRAPPING_REDCAP_VERSION: "13.1.37" # Do not change this
     steps:
