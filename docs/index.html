@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset='utf-8'>
-    <title>redcap_cypress 14.7.0 | Documentation</title>
+    <title>redcap_cypress 15.0.1 | Documentation</title>
     <meta name='description' content='This repository is a template to assist you in writing **automated tests for REDCap**.'>
     <meta name='viewport' content='width=device-width,initial-scale=1'>
     <link href='assets/bass.css' rel='stylesheet'>
@@ -98,7 +98,9 @@
               <ul class='mt0'>
               
                   <li><a href="v1.0.102.html">v1.0.102</a></li>
-
+              
+                  <li><a href="v14.7.0.html">v14.7.0</a></li>
+              
               </ul>
             </div>
           <input
@@ -283,7 +285,7 @@
                     
               
                     
-                    <li><a href='#i-select-the-radio-option-string-for-the-field-labeled-stringbaseelement'>I select the radio option {string} for the field labeled {string}{baseElement}</a></li>
+                    <li><a href='#i-select-the-radio-option-string-for-the-field-labeled-string'>I select the radio option {string} for the field labeled {string}</a></li>
                     
               
                     
@@ -734,6 +736,10 @@
                       <h2 class="mt1 mb1">Visit Page</h2>
                     
                     <li><a href='#i-visit-the-redcap-login-page'>I visit the REDCap login page</a></li>
+                    
+              
+                    
+                    <li><a href='#i-wait-for-background-processes-to-finish'>I wait for background processes to finish</a></li>
                     
               
             </ul>
@@ -2486,6 +2492,10 @@
                           <li><code>&#39;check&#39;</code></li>
                         
                           <li><code>&#39;uncheck&#39;</code></li>
+                        
+                          <li><code>&#39;enable&#39;</code></li>
+                        
+                          <li><code>&#39;disable&#39;</code></li>
                         
                       </ul>
                     </div>
@@ -5383,6 +5393,10 @@
                         
                           <li><code>&#39;uncheck&#39;</code></li>
                         
+                          <li><code>&#39;enable&#39;</code></li>
+                        
+                          <li><code>&#39;disable&#39;</code></li>
+                        
                       </ul>
                     </div>
                   
@@ -5402,6 +5416,8 @@
                           <li><code>&#39;checkbox&#39;</code></li>
                         
                           <li><code>&#39;radio&#39;</code></li>
+                        
+                          <li><code>&#39;toggle button&#39;</code></li>
                         
                       </ul>
                     </div>
@@ -6442,12 +6458,12 @@
       
         
           
-          <h2 class='fl mb0 mt0' id='i-select-the-radio-option-string-for-the-field-labeled-stringbaseelement'>
-          I select the radio option {string} <span class="hljs-keyword">for</span> the field labeled {string}{baseElement}
+          <h2 class='fl mb0 mt0' id='i-select-the-radio-option-string-for-the-field-labeled-string'>
+          I select the radio option {string} <span class="hljs-keyword">for</span> the field labeled {string}
           </h2>
-          <div class="gherkin_step" id="i-select-the-radio-option-string-for-the-field-labeled-stringbaseelement_gherkin"></div>
+          <div class="gherkin_step" id="i-select-the-radio-option-string-for-the-field-labeled-string_gherkin"></div>
           <script>
-                window.all_steps.push(`I select the radio option {string} for the field labeled {string}{baseElement}`)
+                window.all_steps.push(`I select the radio option {string} for the field labeled {string}`)
           </script>
         
       
@@ -6456,7 +6472,7 @@
       
           
               <script>
-                  document.getElementById(`i-select-the-radio-option-string-for-the-field-labeled-stringbaseelement_gherkin`).innerHTML = `<div id="input39"></div><button onclick="generateText(39)" class="btn">Generate Step</button><br /><br /><div id="output39"></div>`
+                  document.getElementById(`i-select-the-radio-option-string-for-the-field-labeled-string_gherkin`).innerHTML = `<div id="input39"></div><button onclick="generateText(39)" class="btn">Generate Step</button><br /><br /><div id="output39"></div>`
                   outputStepGenerator(39)
               </script>
           
@@ -11551,6 +11567,8 @@
                       <ul style="margin: 0 0 0 0;">
                         
                           <li><code>&#39;Edit&#39;</code></li>
+                        
+                          <li><code>&#39;Edit Matrix&#39;</code></li>
                         
                           <li><code>&#39;Branching Logic&#39;</code></li>
                         
@@ -16835,6 +16853,10 @@
                         
                           <li><code>&#39;unchecked&#39;</code></li>
                         
+                          <li><code>&#39;in the enabled state&#39;</code></li>
+                        
+                          <li><code>&#39;in the disabled state&#39;</code></li>
+                        
                       </ul>
                     </div>
                   
@@ -17256,6 +17278,8 @@
                           <li><code>&#39;section break&#39;</code></li>
                         
                           <li><code>&#39;checkbox&#39;</code></li>
+                        
+                          <li><code>&#39;toggle button&#39;</code></li>
                         
                       </ul>
                     </div>
@@ -18872,6 +18896,78 @@
   
   
   <p class='mb0'><strong>Author:</strong> <a href="mailto:aldefouw@medicine.wisc.edu">Adam De Fouw</a></p>
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+            
+        
+            
+
+            
+<section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+
+      
+        
+          
+          <h2 class='fl mb0 mt0' id='i-wait-for-background-processes-to-finish'>
+          I wait <span class="hljs-keyword">for</span> background processes to finish
+          </h2>
+          <div class="gherkin_step" id="i-wait-for-background-processes-to-finish_gherkin"></div>
+          <script>
+                window.all_steps.push(`I wait for background processes to finish`)
+          </script>
+        
+      
+
+
+      
+          
+              <script>
+                  document.getElementById(`i-wait-for-background-processes-to-finish_gherkin`).innerHTML = `<div id="input146"></div><button onclick="generateText(146)" class="btn">Generate Step</button><br /><br /><div id="output146"></div>`
+                  outputStepGenerator(146)
+              </script>
+          
+      
+    
+
+    
+  </div>
+  
+
+  
+
+
+  <p>Executes REDCap's crons and returns to the previous page</p>
+
+
+  
+  
+
+  
+  
+  
+  <p class='mb0'><strong>Author:</strong> <a href="mailto:mark.mcever@vumc.org">Mark McEver</a></p>
   
   
 

@@ -22,7 +22,9 @@ window.userRightChecks = {
     'API Export' : 'api_export',
     'API Import/Update' : 'api_import',
     'REDCap Mobile App - Allow users to collect data offline in the mobile app' : 'mobile_app',
-    'REDCap Mobile App - Allow user to download data for all records to the app?' : 'mobile_app_download_data'
+    'REDCap Mobile App - Allow user to download data for all records to the app?' : 'mobile_app_download_data',
+    'Calendar & Scheduling' : 'calendar',
+    'Email Logging' : 'email_logging'
 }
 
 window.singleChoiceMappings = {
@@ -150,10 +152,10 @@ window.projectModules = {
 //Make sure to keep the blank choice - we want to default to first option
 window.elementChoices = {
     '' : 'html',
-    ' on the tooltip' : 'div[class*=tooltip]:visible',
-    ' in the tooltip' : 'div[class*=tooltip]:visible',
-    ' on the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
-    ' in the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible',
+    ' on the tooltip' : 'div[class*=tooltip]:visible,div[id*=Tooltip]:visible',
+    ' in the tooltip' : 'div[class*=tooltip]:visible,div[id*=Tooltip]:visible',
+    ' on the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible,div[id=userClickTooltip]:visible',
+    ' in the role selector dropdown' : 'div[id=assignUserDropdownDiv]:visible,div[id=userClickTooltip]:visible',
     ' on the dialog box' : 'div[role=dialog]:visible',
     ' in the dialog box' : 'div[role=dialog]:visible',
     ' on the Add/Edit Branching Logic dialog box' : 'div[role=dialog]:visible',
@@ -241,13 +243,13 @@ window.fileRepoIcons = {
 }
 
 window.onlineDesignerFieldIcons = {
-    'Edit' : `img[src*=pencil]`,
-    'Branching Logic': `img[src*=branch]`,
-    'Copy' : `img[src*=copy]`,
-    'Move' : `img[src*=move]`,
-    'Stop' : 'img[src*=stop]',
-    'Delete Field': `img[src*=cross]`,
-    'Delete': `img[src*=cross]`,
+    'Edit' : `a[data-field-action=edit-field],img[src*=pencil]`,
+    'Branching Logic': `a[data-field-action=branchinglogic],img[src*=branch]`,
+    'Copy' : `a[data-field-action=copy-field],img[src*=copy]`,
+    'Move' : `a[data-field-action=move-field],img[src*=move]`,
+    'Stop' : 'a[data-field-action=stopaction],img[src*=stop]',
+    'Delete Field': `a[data-field-action=delete-field],img[src*=cross]`,
+    'Delete': `a[data-field-action=delete-field],img[src*=cross]`,
     '"view"' : 'a:visible:contains(view)',
     '"export"' : 'a:visible:contains(export)',
     '"exclude"' : 'a:visible:contains(exclude)',
@@ -268,4 +270,21 @@ window.tableHtmlElements = {
     '[text box]': { selector: 'textarea', condition: 'exist'},
     '[lock icon]': { selector: 'img[src*=lock]', condition: 'exist' },
     '[e-signed icon]': { selector: 'img[src*=shield]', condition: 'exist' }
+}
+
+window.fieldAction = {
+    'edit': 'edit-field',
+    'edit matrix': 'edit-matrix',
+    'branching logic': 'branchinglogic',
+    'copy': 'copy-field',
+    'move': 'move-field',
+    'delete field': 'delete-field'
+}
+
+window.checkBoxAliases = {
+    'in the enabled state': 'checked',
+    'in the disabled state': 'unchecked',
+    'toggle button': 'checkbox',
+    enable: 'check',
+    disable: 'uncheck'
 }
