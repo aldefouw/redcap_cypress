@@ -114,6 +114,7 @@ jobs:
             - coverage-report
             - coverage
             - cypress/videos
+            - redcap_rsvc
 
   html-reports:
     executor: shared-executor
@@ -123,6 +124,11 @@ jobs:
           at: /home/circleci/project/coverage
       - setup-redcap:
           dir: "/home/circleci/project/"
+      - run:
+          name: Push PASSED Videos to VUMC REDCap project
+          command: |
+            cd /home/circleci/project/redcap_rsvc/
+            node upload_videos_vumc_redcap.js $REDCAP_API_TOKEN $PROJECT_ID
       - run:
           name: Start Docker REDCap Container
           command: |
