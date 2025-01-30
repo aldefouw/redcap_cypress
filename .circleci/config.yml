@@ -128,7 +128,7 @@ jobs:
           name: Push PASSED Videos to VUMC REDCap project
           command: |
             cd /home/circleci/project/coverage/redcap_rsvc
-            node upload_videos_vumc_redcap.js $REDCAP_API_TOKEN $PROJECT_ID
+            node upload_videos_to_redcap_project.js $REDCAP_API_TOKEN $PROJECT_ID $REDCAP_API_URL
       - run:
           name: Start Docker REDCap Container
           command: |
