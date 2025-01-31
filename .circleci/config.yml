@@ -6,11 +6,11 @@ orbs:
 executors:
   shared-executor:
     machine:
-      image: ubuntu-2404:2024.05.1 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2404
+      image: ubuntu-2404:2024.11.1 # Machine image updates: https://circleci.com/developer/machine/image/ubuntu-2404
       resource_class: large
     environment:
-      REDCAP_VERSION: "14.9.4"
-            
+      REDCAP_VERSION: "15.0.1"
+
 workflows:
   version: 2
   workflows:
@@ -18,7 +18,7 @@ workflows:
       - run-tests:
           context: REDCap Tests
       - html-reports:
-          context: HTML Reports
+          context: REDCap Tests
           requires:
             - run-tests
 
@@ -40,12 +40,12 @@ commands:
           command: |
             cd << parameters.dir >>
             GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa" git clone --branch redcap-cypress --depth=1 https://github.com/aldefouw/redcap_source
-            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_042ee976ef53cbd6ec78fbf9742292ca" git clone --branch ${REDCAP_VERSION} --depth=1 git@github.com:vanderbilt-redcap/REDCap.git redcap_source/redcap_v${REDCAP_VERSION}
+            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_042ee976ef53cbd6ec78fbf9742292ca" git clone --depth=1 git@github.com:vanderbilt-redcap/REDCap.git redcap_source/redcap_v${REDCAP_VERSION}
 
 jobs:
   run-tests:
     executor: shared-executor
-    parallelism: 28
+    parallelism: 26
     environment:
       BOOTSTRAPPING_REDCAP_VERSION: "13.1.37" # Do not change this
     steps:
@@ -114,6 +114,7 @@ jobs:
             - coverage-report
             - coverage
             - cypress/videos
+            - redcap_rsvc
 
   html-reports:
     executor: shared-executor
@@ -123,6 +124,16 @@ jobs:
           at: /home/circleci/project/coverage
       - setup-redcap:
           dir: "/home/circleci/project/"
+      - run:
+          name: Push PASSED Videos to VUMC REDCap project
+          command: |
+            if git log -1 --pretty=%B | grep -q '\[video-upload\]'; then
+              echo "Attempting video upload to REDCap project ..."
+              cd /home/circleci/project/coverage/redcap_rsvc
+              node upload_videos_to_redcap_project.js $REDCAP_API_TOKEN $PROJECT_ID $REDCAP_API_URL
+            else
+              echo "Skipping video upload.  To push videos to project, use [video-upload] tag in your commit message."
+            fi          
       - run:
           name: Start Docker REDCap Container
           command: |
