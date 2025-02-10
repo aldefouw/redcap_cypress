@@ -17,6 +17,7 @@ function validateFeatureFile(filePath) {
         parser.convertFeatureFileToJSON(filePath)
     } catch (error) {
         console.error(`${filePath} is invalid - contains PARSE ERRORS.`);
+        process.exit(1) // Exit with non-zero code so run.sh stops
     }
 }
 
