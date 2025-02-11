@@ -16,9 +16,10 @@ function validateFeatureFile(filePath) {
     try {
         parser.convertFeatureFileToJSON(filePath)
     } catch (error) {
-        console.error(`${filePath} is invalid - contains PARSE ERRORS.`);
-        process.exit(1) // Exit with non-zero code so run.sh stops
+        return false
     }
+
+    return true
 }
 
 // Debugging: Log the start of glob search
@@ -35,8 +36,19 @@ if (files.length === 0) {
     console.log('No .feature files found matching the pattern.');
 } else {
     // Validate each found feature file
+    const failedFiles = []
     files.forEach(file => {
         const filePath = path.join(BASE_DIR, file); // Get full file path
-        validateFeatureFile(filePath);
+        if (!validateFeatureFile(filePath)) {
+            failedFiles.push(filePath)
+        }
     });
+
+    if (failedFiles.length !== 0) {
+        failedFiles.forEach(filePath => {
+            console.error(`${filePath} is invalid - contains PARSE ERRORS.`);
+        });
+
+        process.exit(1) // Exit with non-zero code so run.sh stops
+    }
 }
