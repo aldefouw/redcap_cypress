@@ -45,7 +45,7 @@ commands:
 jobs:
   run-tests:
     executor: shared-executor
-    parallelism: 26
+    parallelism: 1
     steps:
       - checkout
       - run:
