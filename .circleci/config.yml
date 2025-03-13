@@ -69,7 +69,7 @@ jobs:
           name: Reload REDCap
           command: |
             cd /home/circleci/project/redcap_docker
-            docker-compose down && REDCAP_VERSION=${REDCAP_VERSION} docker-compose up -d
+            docker-compose down && REDCAP_VERSION=${BOOTSTRAPPING_REDCAP_VERSION} docker-compose up -d
       - run:
           name: Permissions on coverage files
           command: |
