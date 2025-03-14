@@ -49,7 +49,7 @@ commands:
 jobs:
   run-tests:
     executor: shared-executor
-    parallelism: 26
+    parallelism: 30
     environment:
     steps:
       - checkout
