@@ -152,7 +152,7 @@ jobs:
             cd /home/circleci/project
             GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa" git clone --branch redcap-cypress --depth=1 https://github.com/aldefouw/redcap_source redcap_cypress_build_reports
             cd redcap_cypress_build_reports
-            sudo zip -r "redcap_cypress_build_reports/html-report-${REDCAP_VERSION}.zip" coverage-report/html-report/*
+            sudo zip -r "html-report-${REDCAP_VERSION}.zip" coverage-report/html-report/*
             git add "html-report-${REDCAP_VERSION}.zip"
             git commit -m "Add latest HTML Report for version ${REDCAP_VERSION}"
             GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa" git push origin redcap-cypress
