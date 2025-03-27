@@ -16,9 +16,9 @@ workflows:
   workflows:
     jobs:
       - run-tests:
-          context: REDCap Context
+          context: REDCap Tests
       - html-reports:
-          context: REDCap Context
+          context: REDCap Tests
           requires:
             - run-tests
 
