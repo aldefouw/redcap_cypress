@@ -34,20 +34,23 @@ commands:
           name: Build the REDCap Image
           command: |
             cd << parameters.dir >>
-            git clone --branch xdebug https://github.com/aldefouw/redcap_docker
+            git clone --branch xdebug https://github.com/vanderbilt-redcap/redcap_docker
       - run:
           name: Get REDCap Source
           command: |
             cd << parameters.dir >>
-            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa" git clone --branch redcap-cypress --depth=1 https://github.com/aldefouw/redcap_source
-            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_042ee976ef53cbd6ec78fbf9742292ca" git clone --depth=1 git@github.com:vanderbilt-redcap/REDCap.git redcap_source/redcap_v${REDCAP_VERSION}
+            mkdir redcap_source
+            cd redcap_source
+            git clone --depth=1 git@github.com:vanderbilt-redcap/REDCap.git redcap_v${REDCAP_VERSION}
+            cp -a redcap_v${REDCAP_VERSION}/Resources/install_files/redcap/* .
+            cp -a redcap_v${REDCAP_VERSION}/Resources/nonversioned_files/* .
+            cp ../.circleci/redcap_install_files/* .
 
 jobs:
   run-tests:
     executor: shared-executor
-    parallelism: 26
+    parallelism: 30
     environment:
-      BOOTSTRAPPING_REDCAP_VERSION: "13.1.37" # Do not change this
     steps:
       - checkout
       - run:
@@ -60,16 +63,16 @@ jobs:
           name: Start Docker REDCap Container
           command: |
             cd /home/circleci/project/redcap_docker
-            REDCAP_VERSION=${BOOTSTRAPPING_REDCAP_VERSION} docker-compose up -d
+            REDCAP_VERSION=${REDCAP_VERSION} docker-compose up -d
       - run:
           name: Install composer dependencies
           command: |
-            docker exec -it redcap_docker-app-1 sh -c "cd /var/www/html/redcap_v${BOOTSTRAPPING_REDCAP_VERSION} && COMPOSER_DISABLE_XDEBUG_WARN=1 composer install"
+            docker exec -it redcap_docker-app-1 sh -c "cd /var/www/html/redcap_v${REDCAP_VERSION} && COMPOSER_DISABLE_XDEBUG_WARN=1 composer require --dev phpunit/php-code-coverage:^11"
       - run:
           name: Reload REDCap
           command: |
             cd /home/circleci/project/redcap_docker
-            docker-compose down && REDCAP_VERSION=${BOOTSTRAPPING_REDCAP_VERSION} docker-compose up -d
+            docker-compose down && REDCAP_VERSION=${REDCAP_VERSION} docker-compose up -d
       - run:
           name: Permissions on coverage files
           command: |
@@ -146,11 +149,13 @@ jobs:
       - run:
           name: Push to Repository
           command: |
-            sudo zip -r "/home/circleci/project/redcap_source/html-report-${REDCAP_VERSION}.zip" /home/circleci/project/coverage-report/html-report/*
-            cd /home/circleci/project/redcap_source
+            cd /home/circleci/project
+            git clone --depth=1 https://github.com/vanderbilt-redcap/redcap_cypress_build_reports
+            cd redcap_cypress_build_reports
+            sudo zip -r "html-report-${REDCAP_VERSION}.zip" ../coverage-report/html-report/*
             git add "html-report-${REDCAP_VERSION}.zip"
             git commit -m "Add latest HTML Report for version ${REDCAP_VERSION}"
-            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa" git push origin redcap-cypress
+            git push origin redcap-cypress
 
       - store_artifacts:
           path: /home/circleci/project/coverage/cypress/videos
