@@ -155,7 +155,7 @@ jobs:
             sudo zip -r "html-report-${REDCAP_VERSION}.zip" ../coverage-report/html-report/*
             git add "html-report-${REDCAP_VERSION}.zip"
             git commit -m "Add latest HTML Report for version ${REDCAP_VERSION}"
-            git push
+            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_dba1897a8caca68e1a8a5c2185311de3" git push
 
       - store_artifacts:
           path: /home/circleci/project/coverage/cypress/videos
