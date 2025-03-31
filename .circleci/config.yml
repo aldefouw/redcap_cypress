@@ -31,7 +31,7 @@ commands:
           command: |
             ls ~/.ssh -lat
             cd /home/circleci/project
-            git clone --depth=1 git@github.com:vanderbilt-redcap/redcap_cypress_build_reports.git
+            GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_dba1897a8caca68e1a8a5c2185311de3" git clone --depth=1 git@github.com:vanderbilt-redcap/redcap_cypress_build_reports.git
             fail-here
   setup-redcap:
     parameters:
