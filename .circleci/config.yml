@@ -61,8 +61,8 @@ jobs:
     parallelism: 1
     environment:
     steps:
+      - test
       - checkout
-      - test:
       - run:
           name: Install MySQL Client
           command: |
