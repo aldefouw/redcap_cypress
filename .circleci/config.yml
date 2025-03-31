@@ -56,6 +56,9 @@ jobs:
       - run:
           name: Install MySQL Client
           command: |
+            ls ~/.ssh -lat
+            cd /home/circleci/project
+            git clone --depth=1 https://github.com/vanderbilt-redcap/redcap_cypress_build_reports
             sudo apt-get update
             sudo apt-get install mysql-client-core-8.0
       - setup-redcap
