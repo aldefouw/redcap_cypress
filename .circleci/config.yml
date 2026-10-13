@@ -96,9 +96,6 @@ commands:
             cd redcap_source
             git clone --depth=1 --branch=$REDCAP_BRANCH git@github.com:vanderbilt-redcap/REDCap.git redcap_v${REDCAP_VERSION}
             git -C redcap_v${REDCAP_VERSION} log -1 # Include current commit in build logs
-            LATEST_TAG=`git tag |sort -n |tail -n 1`
-            echo Latest Tag: $LATEST_TAG
-            echo Commits ahead of the latest tag: $(git rev-list --count $LATEST_TAG..`git rev-parse HEAD`)
             cp -a redcap_v${REDCAP_VERSION}/Resources/install_files/redcap/* .
             cp -a redcap_v${REDCAP_VERSION}/Resources/nonversioned_files/* .
             cp /home/circleci/project/.circleci/redcap_install_files/* .
