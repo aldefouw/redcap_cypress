@@ -13,11 +13,16 @@ module.exports = defineConfig({
         },
         baseUrl: 'http://localhost:8080',
         specPattern: [
-            'cypress/features/*.feature',
-            'redcap_rsvc/*/[ABC]/*/*.feature',
-            '!redcap_rsvc/*/[ABC]/*/*REDUNDANT*.feature',
-            'node_modules/rctf/tests/**/*.js',
-            '../redcap_source/modules/*/automated[-_]tests/**/*.feature'
+            // 'cypress/features/*.feature',
+            // 'redcap_rsvc/*/[ABC]/*/*.feature',
+            // '!redcap_rsvc/*/[ABC]/*/*REDUNDANT*.feature',
+            // 'node_modules/rctf/tests/**/*.js',
+            // '../redcap_source/modules/*/automated[-_]tests/**/*.feature'
+
+            // Only run this feature for quick testing
+            // We use B.3.16.1100. because it contains multiple files & users, but it still pretty short. 
+            // 'redcap_rsvc/*/[ABC]/*/B.3.16.1100.*.feature',
+            'redcap_rsvc/*/[ABC]/*/A.2.33.3200.*.feature',
         ],
         testIsolation: false,
         experimentalMemoryManagement: false,
