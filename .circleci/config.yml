@@ -140,7 +140,7 @@ jobs:
           command: |
             cd /home/circleci/project
             sed s/PID/$PROJECT_ID/g cypress.config.js.example > cypress.config.js
-            mv cypress.env.json.example cypress.env.json
+            cp cypress.env.json.example cypress.env.json
             # Favor the REDCAP_VERSION CircleCI parameter over the "redcap_version" value in cypress.env.json
             awk '{ gsub(/"redcap_version": ".*",/, "\"redcap_version\": \"'$REDCAP_VERSION'\","); print }' cypress.env.json > awk-temp && mv awk-temp cypress.env.json
       - restore_cache:
