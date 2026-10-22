@@ -44,7 +44,7 @@ commands:
             if [[ "$REDCAP_BRANCH" != "null" && "$REDCAP_BRANCH" != "" ]]; then
               : # Do nothing
             elif [[ ${CIRCLE_BRANCH} == "dev" ]]; then
-              REDCAP_BRANCH=security-hardening
+              REDCAP_BRANCH=master
             else # Use the tag version specified in cypress.env.json.example
               REDCAP_VERSION=`cat cypress.env.json.example|grep redcap_version|cut -d'"' -f 4`
               REDCAP_BRANCH=$REDCAP_VERSION
